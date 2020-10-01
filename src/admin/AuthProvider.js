@@ -1,8 +1,9 @@
+import config from "../config";
 
 const authProvider = {
 
     login: ({ username, password }) => {
-        return fetch("/api/login", {
+        return fetch(`http://${config.ip}:${config.serverPort}/api/login`, {
             method: "POST",
             body: JSON.stringify({ login: username, password }),
             headers: { "Content-Type": "application/json" }
@@ -16,7 +17,7 @@ const authProvider = {
     },
 
     logout: () => {
-        return fetch("/api/logout")
+        return fetch(`http://${config.ip}:${config.serverPort}/api/logout`)
             .then(response => {
                 return response.status == 200
                     ? Promise.resolve()
@@ -26,7 +27,7 @@ const authProvider = {
     },
 
     checkAuth: () => {
-        return fetch("/api/authenticate")
+        return fetch(`http://${config.ip}:${config.serverPort}/api/authenticate`)
             .then(response => {
                 return response.status == 200
                     ? Promise.resolve()
@@ -36,7 +37,7 @@ const authProvider = {
     },
 
     getPermissions: () => {
-        return fetch("/api/permissions")
+        return fetch(`http://${config.ip}:${config.serverPort}/api/permissions`)
             .then(response => response.json())
             .then(data => Promise.resolve(data.isAdmin))
             .catch(() => Promise.reject());

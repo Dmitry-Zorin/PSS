@@ -4,6 +4,7 @@ const config = require("../config");
 exports.auth = (req, res, next) => {
     const token = req.cookies.token;
     if (!token) {
+        console.log('token:', token)
         res.status(401).json({
             error: "Unauthorized: no token provided"
         });

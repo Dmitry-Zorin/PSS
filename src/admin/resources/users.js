@@ -14,8 +14,10 @@ import {
     getShowActions, getEditActions
 } from "../utils";
 
+import config from "../../config";
+
 const validateLoginExistsOnCreate = (values) => {
-    return fetch("/api/users/unique", {
+    return fetch(`http://${config.ip}:${config.serverPort}/api/users/unique`, {
         method: "POST",
         body: JSON.stringify({ login: values.login }),
         headers: { "Content-Type": "application/json" }

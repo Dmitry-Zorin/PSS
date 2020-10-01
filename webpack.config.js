@@ -12,6 +12,11 @@ module.exports = {
     },
     mode: isDevelopment ? 'development' : 'production',
     devtool: 'inline-source-map',
+    devServer: {
+        contentBase: path.join(__dirname, 'public'),
+        compress: true,
+        port: 8000
+    },
     module: {
         rules: [
             {
