@@ -1,8 +1,15 @@
 import simpleRestProvider from 'ra-data-simple-rest';
 import config from "../config";
+import { fetchUtils } from "react-admin";
 
 const apiUrl = `http://${config.ip}:${config.serverPort}/api`;
-const restProvider = simpleRestProvider(apiUrl);
+const restProvider = simpleRestProvider(apiUrl, (url, options = {}) => {
+    if (!options.headers) {
+        options.headers = new Headers({ Accept: 'application/json' });
+    }
+    options.credentials = 'include'
+    return fetchUtils.fetchJson(url, options);
+});
 
 const dataProvider = {
     ...restProvider,
@@ -22,6 +29,7 @@ const dataProvider = {
         return fetch(`${apiUrl}/${resource}`,
             {
                 method: 'POST',
+                credentials: 'include',
                 body: formData
             })
             .then(({ json }) => ({
@@ -45,6 +53,7 @@ const dataProvider = {
         return fetch(`${apiUrl}/${resource}/${params.id}`,
             {
                 method: 'PUT',
+                credentials: 'include',
                 body: formData
             })
             .then(({ json }) => ({
@@ -57,6 +66,7 @@ const dataProvider = {
         const path = `${apiUrl}/${resource}/many`;
         return fetch(path, {
             method: 'POST',
+            credentials: 'include',
             body: formData
         })
             .then(data => data.json())

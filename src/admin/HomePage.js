@@ -6,6 +6,7 @@ import {
     CardActions, Link
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import config from "../config";
 
 const useStyles = makeStyles((theme) => ({
     logo: {
@@ -79,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const tabsData = [
-    { image: "static/science.png", title: 'Система хранения результатов научных трудов Военного инновационного технополиса "ЭРА"', link: "http://localhost:3000/" },
+    { image: `http://${config.ip}:${config.serverPort}/static/science.png`, title: 'Система хранения результатов научных трудов Военного инновационного технополиса "ЭРА"', link: "http://localhost:3000/" },
 ];
 
 const HomePage = () => {
@@ -107,7 +108,7 @@ const HomePage = () => {
                 <Grid container>
                     <Grid item>
                         <div className={classes.logo}>
-                            <img src="static/logo.png" />
+                            <img src={`http://${config.ip}:${config.serverPort}/static/logo.png`} />
                         </div>
                     </Grid>
                     <Grid item xs>

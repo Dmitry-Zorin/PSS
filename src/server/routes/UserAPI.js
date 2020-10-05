@@ -29,12 +29,11 @@ function extractDataFromRequest(req) {
 }
 
 const resource = "users";
-const cors = require("cors");
 
 module.exports = function (app) {
 
     // login
-    app.post("/api/login", cors(), jsonParser, (req, res) => {
+    app.post("/api/login", jsonParser, (req, res) => {
         const { login, password } = req.body;
         User.findOne({ login })
             .then(user => {
@@ -67,17 +66,17 @@ module.exports = function (app) {
     });
 
     // logout
-    app.get("/api/logout", cors(), (req, res) => {
+    app.get("/api/logout", (req, res) => {
         res.clearCookie('token').sendStatus(200);
     });
 
     // authenticate
-    app.get("/api/authenticate", cors(), cookieParser, auth, (req, res) => {
+    app.get("/api/authenticate", cookieParser, auth, (req, res) => {
         res.sendStatus(200);
     });
 
     // permissions
-    app.get("/api/permissions", cors(), cookieParser, auth, (req, res) => {
+    app.get("/api/permissions", cookieParser, auth, (req, res) => {
         res.status(200).json({ isAdmin: req.isAdmin });
     })
 

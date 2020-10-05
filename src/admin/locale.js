@@ -24,6 +24,7 @@ module.exports = {
             undo: "Отменить",
             expand: "Раскрыть",
             close: "Закрыть",
+            unselect: "Не выбрать"
         },
         boolean: {
           true: "Да",
