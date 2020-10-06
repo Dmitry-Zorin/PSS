@@ -1,25 +1,25 @@
-const mongoose = require("mongoose");
-const schema = require('../schemas').departmentSchema;
-const createAPI = require("../utils").createAPI;
+const mongoose = require('mongoose')
+const schema = require('../schemas').departmentSchema
+const createAPI = require('../utils').createAPI
 
-const Model = mongoose.model('Department', schema);
+const Model = mongoose.model('Department', schema)
 
-function extractDataToSend(data) {
-    return {
-        id: data.id,
-        name: data.name,
-        firstCreationDate: data.firstCreationDate,
-    }
+function extractDataToSend (data) {
+	return {
+		id: data.id,
+		name: data.name,
+		firstCreationDate: data.firstCreationDate,
+	}
 }
 
-function extractDataFromRequest(req) {
-    return {
-        "name": req.body.name,
-    }
+function extractDataFromRequest (req) {
+	return {
+		'name': req.body.name,
+	}
 }
 
-const resource = "departments";
+const resource = 'departments'
 
 module.exports = function (app) {
-    createAPI(app, resource, Model, extractDataToSend, extractDataFromRequest);
+	createAPI(app, resource, Model, extractDataToSend, extractDataFromRequest)
 }
