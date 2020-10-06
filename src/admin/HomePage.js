@@ -80,19 +80,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const tabsData = [
-    { image: `http://${config.ip}:${config.serverPort}/static/science.png`, title: 'Система хранения результатов научных трудов Военного инновационного технополиса "ЭРА"', link: "http://localhost:3000/" },
+    {
+        image: `http://${config.ip}:${config.serverPort}/static/science.png`,
+        title: 'Система хранения результатов научных трудов Военного инновационного технополиса "ЭРА"',
+        link: '/'
+    },
 ];
 
 const HomePage = () => {
     const classes = useStyles();
     const cards = tabsData.map(tab => (
-        <Grid container item justify="center" xs={12} md={6} lg={4}>
+        <Grid key={tab.link} container item justify="center" xs={12} md={6} lg={4}>
             <Card className={classes.card}>
                 <Link href={`${tab.link}`}>
                     <img className={classes.cardImage} src={`${tab.image}`} />
                 </Link>
                 <div className={classes.cardContent}>
-                    <Link color="text" className={classes.cardLink} href={`${tab.link}`}>
+                    <Link className={classes.cardLink} href={`${tab.link}`}>
                         <Typography className={classes.cardContentTitle} align="center" variant="h6" component="h2">
                             {tab.title}
                         </Typography>

@@ -6,6 +6,12 @@ const app = express();
 const config = require("../config");
 const cors = require("cors");
 
+app.use(cors({
+    origin: 'http://localhost:8000',
+    exposedHeaders: ['Content-Range'],
+    credentials: true
+}))
+
 require('./routes/ArticleAPI')(app);
 require('./routes/ProgramAPI')(app);
 require('./routes/ResearchAPI')(app);
@@ -26,12 +32,6 @@ app.use(function (req, res, next) {
     res.header("Expires", 0);
     next();
 });
-
-app.use(cors({
-    origin: 'http://localhost:8000',
-    exposedHeaders: ['Content-Range'],
-    credentials: true
-}))
 
 app.use('/media', express.static(path.join(appRoot.path, "/media/")));
 

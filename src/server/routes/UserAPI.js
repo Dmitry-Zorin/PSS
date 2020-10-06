@@ -67,7 +67,7 @@ module.exports = function (app) {
 
     // logout
     app.get("/api/logout", (req, res) => {
-        res.clearCookie('token').sendStatus(200);
+        res.clearCookie("token").sendStatus(200);
     });
 
     // authenticate

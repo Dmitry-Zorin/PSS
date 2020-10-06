@@ -18,7 +18,9 @@ const authProvider = {
     },
 
     logout: () => {
-        return fetch(`http://${config.ip}:${config.serverPort}/api/logout`)
+        return fetch(`http://${config.ip}:${config.serverPort}/api/logout`, {
+            credentials: 'include',
+        })
             .then(response => {
                 return response.status == 200
                     ? Promise.resolve()
