@@ -81,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
 
 const tabsData = [
     {
-        image: `http://${config.ip}:${config.serverPort}/static/science.png`,
+        image: `http://${process.env.HOST}:${process.env.PORT}/static/science.png`,
         title: 'Система хранения результатов научных трудов Военного инновационного технополиса "ЭРА"',
         link: '/'
     },
@@ -112,7 +112,7 @@ const HomePage = () => {
                 <Grid container>
                     <Grid item>
                         <div className={classes.logo}>
-                            <img src={`http://${config.ip}:${config.serverPort}/static/logo.png`} />
+                            <img src={`http://${process.env.HOST}:${process.env.PORT}/static/logo.png`} />
                         </div>
                     </Grid>
                     <Grid item xs>

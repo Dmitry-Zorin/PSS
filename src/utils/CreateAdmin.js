@@ -8,7 +8,7 @@ const args = minimist(process.argv.slice(2));
 if (!args.login) return console.log("login required");
 if (!args.password) return console.log("password required");
 
-mongoose.connect(`mongodb://${config.ip}:${config.port}/${config.databaseName}`, config.mongodbConfig)
+mongoose.connect(`mongodb://${process.env.HOST}:${process.env.DB_PORT}/${process.env.DB}`, config.mongodbConfig)
     .then(() => {
         const User = mongoose.model("User", schema);
         User.findOne({ login: args.login })

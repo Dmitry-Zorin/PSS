@@ -2,7 +2,7 @@ import simpleRestProvider from 'ra-data-simple-rest';
 import config from "../config";
 import { fetchUtils } from "react-admin";
 
-const apiUrl = `http://${config.ip}:${config.serverPort}/api`;
+const apiUrl = `http://${process.env.HOST}:${process.env.PORT}/api`;
 const restProvider = simpleRestProvider(apiUrl, (url, options = {}) => {
     if (!options.headers) {
         options.headers = new Headers({ Accept: 'application/json' });

@@ -17,7 +17,7 @@ import {
 import config from "../../config";
 
 const validateLoginExistsOnCreate = (values) => {
-    return fetch(`http://${config.ip}:${config.serverPort}/api/users/unique`, {
+    return fetch(`http://${process.env.HOST}:${process.env.PORT}/api/users/unique`, {
         method: "POST",
         body: JSON.stringify({ login: values.login }),
         headers: { "Content-Type": "application/json" }

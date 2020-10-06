@@ -3,7 +3,7 @@ import config from "../config";
 const authProvider = {
 
     login: ({ username, password }) => {
-        return fetch(`http://${config.ip}:${config.serverPort}/api/login`, {
+        return fetch(`http://${process.env.HOST}:${process.env.PORT}/api/login`, {
             method: "POST",
             body: JSON.stringify({ login: username, password }),
             credentials: 'include',
@@ -18,7 +18,7 @@ const authProvider = {
     },
 
     logout: () => {
-        return fetch(`http://${config.ip}:${config.serverPort}/api/logout`, {
+        return fetch(`http://${process.env.HOST}:${process.env.PORT}/api/logout`, {
             credentials: 'include',
         })
             .then(response => {
@@ -30,7 +30,7 @@ const authProvider = {
     },
 
     checkAuth: () => {
-        return fetch(`http://${config.ip}:${config.serverPort}/api/authenticate`, {
+        return fetch(`http://${process.env.HOST}:${process.env.PORT}/api/authenticate`, {
             credentials: 'include',
         })
             .then(response => {
@@ -42,7 +42,7 @@ const authProvider = {
     },
 
     getPermissions: () => {
-        return fetch(`http://${config.ip}:${config.serverPort}/api/permissions`, {
+        return fetch(`http://${process.env.HOST}:${process.env.PORT}/api/permissions`, {
             credentials: 'include',
         })
             .then(response => response.json())

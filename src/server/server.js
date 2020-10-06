@@ -6,8 +6,10 @@ const app = express();
 const config = require("../config");
 const cors = require("cors");
 
+require('dotenv').config()
+
 app.use(cors({
-    origin: 'http://localhost:8000',
+    origin: `http://${process.env.HOST}:${process.env.UI_PORT}`,
     exposedHeaders: ['Content-Range'],
     credentials: true
 }))
@@ -42,10 +44,10 @@ app.use('/public', express.static(path.join(appRoot.path, "/public/")));
 app.use('/fonts', express.static(path.join(appRoot.path, "/public/fonts/")));
 
 mongoose.connect(
-    `mongodb://${config.ip}:${config.port}/${config.databaseName}`,
+    `mongodb://${process.env.HOST}:${process.env.DB_PORT}/${process.env.DB}`,
     config.mongodbConfig)
     .then(() => {
-        app.listen(config.serverPort, config.serverIP, () => {
+        app.listen(process.env.PORT, process.env.HOST, () => {
             console.log("Server has started.");
         });
     })

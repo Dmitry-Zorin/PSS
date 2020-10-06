@@ -6,7 +6,7 @@ import config from "../config";
 
 const useStyles = makeStyles({
     card: {
-        background: `url("http://${config.ip}:${config.serverPort}/static/dashboard.png") no-repeat center`,
+        background: `url("http://${process.env.HOST}:${process.env.PORT}/static/dashboard.png") no-repeat center`,
         backgroundSize: 'cover',
         height: "55em"
     },

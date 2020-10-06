@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import List from '@material-ui/core/List';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -45,7 +45,7 @@ const SubMenu = ({
     );
 
     return (
-        <Fragment>
+        <>
             {sidebarIsOpen || isOpen ? (
                 header
             ) : (
@@ -67,7 +67,7 @@ const SubMenu = ({
                 </List>
                 <Divider />
             </Collapse>
-        </Fragment>
+        </>
     );
 };
 
