@@ -2,6 +2,8 @@ import React from 'react'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { Card, Grid, Link, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
+import ScienceImg from '../static/science.png'
+import LogoImg from '../static/logo.png'
 
 const useStyles = makeStyles((theme) => ({
 	logo: {
@@ -76,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
 
 const tabsData = [
 	{
-		image: `http://${process.env.HOST}:${process.env.PORT}/static/science.png`,
+		image: ScienceImg,
 		title: 'Система хранения результатов научных трудов Военного инновационного технополиса "ЭРА"',
 		link: '/'
 	},
@@ -107,7 +109,7 @@ const HomePage = () => {
 				<Grid container>
 					<Grid item>
 						<div className={classes.logo}>
-							<img src={`http://${process.env.HOST}:${process.env.PORT}/static/logo.png`}/>
+							<img src={LogoImg}/>
 						</div>
 					</Grid>
 					<Grid item xs>

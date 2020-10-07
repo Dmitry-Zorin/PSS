@@ -2,10 +2,11 @@ import React from 'react'
 import Card from '@material-ui/core/Card'
 import { Typography } from '@material-ui/core/'
 import { makeStyles } from '@material-ui/core/styles'
+import DashboardImg from '../static/dashboard.png'
 
 const useStyles = makeStyles({
 	card: {
-		background: `url("http://${process.env.HOST}:${process.env.PORT}/static/dashboard.png") no-repeat center`,
+		background: `url("${DashboardImg}") no-repeat center`,
 		backgroundSize: 'cover',
 		height: '55em'
 	},

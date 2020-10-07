@@ -37,12 +37,6 @@ app.use(function (req, res, next) {
 
 app.use('/media', express.static(path.join(appRoot.path, '/media/')))
 
-app.use('/static', express.static(path.join(appRoot.path, '/static/')))
-
-app.use('/public', express.static(path.join(appRoot.path, '/public/')))
-
-app.use('/fonts', express.static(path.join(appRoot.path, '/public/fonts/')))
-
 mongoose.connect(
 	`mongodb://${process.env.HOST}:${process.env.DB_PORT}/${process.env.DB}`,
 	config.mongodbConfig)

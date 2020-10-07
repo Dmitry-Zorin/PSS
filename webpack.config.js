@@ -33,16 +33,20 @@ module.exports = () => {
                     use: ["style-loader", "css-loader"]
                 },
                 {
+                    test: /\.(png|jpg|ico)$/,
+                    loader: 'file-loader',
+                    options: {
+                        name: "[name].[ext]",
+                        outputPath: "static"
+                    }
+                },
+                {
                     test: /\.(woff|woff2|eot|ttf|otf)$/,
-                    use: [
-                        {
-                            loader: 'file-loader',
-                            options: {
-                                name: "[name].[ext]",
-                                outputPath: "fonts/"
-                            }
-                        }
-                    ]
+                    loader: 'file-loader',
+                    options: {
+                        name: "[name].[ext]",
+                        outputPath: "fonts"
+                    }
                 }
             ]
         },
