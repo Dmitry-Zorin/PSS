@@ -1,5 +1,5 @@
 const jsonWebToken = require('jsonwebtoken')
-const config = require('../config')
+const config = require('../mongodbConfig')
 
 exports.auth = (req, res, next) => {
 	const token = req.cookies.token
@@ -8,7 +8,7 @@ exports.auth = (req, res, next) => {
 			error: 'Unauthorized: no token provided'
 		})
 	} else {
-		jsonWebToken.verify(token, config.secretKey, (error, decoded) => {
+		jsonWebToken.verify(token, process.env.SECRET_KEY, (error, decoded) => {
 			if (error) {
 				res.status(401).json({
 					error: 'Unauthorized: invalid token'

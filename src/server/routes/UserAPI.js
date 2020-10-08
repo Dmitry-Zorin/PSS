@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const schema = require('../schemas').userSchema
 const jsonParser = require('express').json()
-const config = require('../../config')
+const config = require('../../mongodbConfig')
 const listParamsMiddleware = require('../utils').listParamsMiddleware
 const jsonWebToken = require('jsonwebtoken')
 const cookieParser = require('cookie-parser')()
@@ -51,7 +51,7 @@ module.exports = function (app) {
 							login,
 							isAdmin: user.isAdmin
 						}
-						const token = jsonWebToken.sign(payload, config.secretKey, {
+						const token = jsonWebToken.sign(payload, process.env.SECRET_KEY, {
 							expiresIn: 31536000
 						})
 						res.cookie('token', token, { httpOnly: true }).sendStatus(200)
@@ -106,7 +106,7 @@ module.exports = function (app) {
 						res.status(409).json({ error: 'Login already exists' })
 						return
 					}
-					bcrypt.hash(data.password, config.saltRounds)
+					bcrypt.hash(data.password, process.env.SALT_ROUNDS)
 						.then(hash => {
 							data.password = hash
 							data['firstCreationDate'] = new Date()

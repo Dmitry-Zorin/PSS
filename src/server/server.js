@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const appRoot = require('app-root-path')
 const express = require('express')
 const app = express()
-const config = require('../config')
+const mongodbConfig = require('../mongodbConfig')
 const cors = require('cors')
 
 require('dotenv').config()
@@ -38,8 +38,7 @@ app.use(function (req, res, next) {
 app.use('/media', express.static(path.join(appRoot.path, '/media/')))
 
 mongoose.connect(
-	`mongodb://${process.env.HOST}:${process.env.DB_PORT}/${process.env.DB}`,
-	config.mongodbConfig)
+	`mongodb://${process.env.HOST}:${process.env.DB_PORT}/${process.env.DB}`, mongodbConfig)
 	.then(() => {
 		app.listen(process.env.PORT, process.env.HOST, () => {
 			console.log('Server has started.')
