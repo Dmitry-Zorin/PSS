@@ -2,7 +2,7 @@ import React from 'react'
 import Card from '@material-ui/core/Card'
 import { Typography } from '@material-ui/core/'
 import { makeStyles } from '@material-ui/core/styles'
-import DashboardImg from '../static/dashboard.png'
+import DashboardImg from '../../static/images/dashboard.png'
 
 const useStyles = makeStyles({
 	card: {
@@ -13,8 +13,7 @@ const useStyles = makeStyles({
 	header: {
 		textAlign: 'center',
 		marginTop: '1em',
-		fontSize: '1.8em',
-		fontFamily: 'ProximaNova'
+		fontSize: '1.8em'
 	},
 })
 

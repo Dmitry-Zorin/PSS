@@ -11,13 +11,13 @@ module.exports = () => {
             index: "./src",
         },
         output: {
-            path: path.resolve(__dirname, "public"),
+            path: path.resolve(__dirname, "dist"),
             filename: "[name].bundle.js"
         },
         mode: isDevelopment ? 'development' : 'production',
         devtool: 'inline-source-map',
         devServer: {
-            contentBase: path.join(__dirname, 'public'),
+            contentBase: path.join(__dirname, 'dist'),
             compress: true,
             port: env.UI_PORT
         },
@@ -34,19 +34,11 @@ module.exports = () => {
                 },
                 {
                     test: /\.(png|jpg|ico)$/,
-                    loader: 'file-loader',
-                    options: {
-                        name: "[name].[ext]",
-                        outputPath: "static"
-                    }
+                    loader: 'file-loader'
                 },
                 {
                     test: /\.(woff|woff2|eot|ttf|otf)$/,
-                    loader: 'file-loader',
-                    options: {
-                        name: "[name].[ext]",
-                        outputPath: "fonts"
-                    }
+                    loader: 'file-loader'
                 }
             ]
         },

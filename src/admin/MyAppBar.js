@@ -7,6 +7,9 @@ import { Link } from 'react-router-dom'
 import IconButton from '@material-ui/core/IconButton'
 
 const useStyles = makeStyles({
+	header: {
+		backgroundColor: 'red'
+	},
 	title: {
 		flex: 1,
 		textOverflow: 'ellipsis',
@@ -21,7 +24,7 @@ const useStyles = makeStyles({
 const MyAppBar = props => {
 	const classes = useStyles()
 	return (
-		<AppBar {...props}>
+		<AppBar className={classes.header} {...props}>
 			<Typography
 				variant="h6"
 				color="inherit"

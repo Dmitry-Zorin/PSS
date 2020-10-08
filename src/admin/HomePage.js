@@ -2,8 +2,8 @@ import React from 'react'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { Card, Grid, Link, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import ScienceImg from '../static/science.png'
-import LogoImg from '../static/logo.png'
+import ScienceImg from '../../static/images/science.png'
+import LogoImg from '../../static/images/logo.png'
 
 const useStyles = makeStyles((theme) => ({
 	logo: {
@@ -37,7 +37,6 @@ const useStyles = makeStyles((theme) => ({
 	},
 	titleText: {
 		fontSize: '2.2em',
-		fontFamily: 'ProximaNova',
 		color: 'white',
 		[theme.breakpoints.down('sm')]: {
 			fontSize: '1.8em'
@@ -54,9 +53,6 @@ const useStyles = makeStyles((theme) => ({
 	},
 	cardContent: {
 		padding: '0.7em 0',
-	},
-	cardContentTitle: {
-		fontFamily: 'ProximaNova'
 	},
 	cardLink: {
 		color: 'black',

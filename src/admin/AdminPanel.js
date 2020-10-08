@@ -113,141 +113,149 @@ import authProvider from './AuthProvider'
 import polyglotI18nProvider from 'ra-i18n-polyglot'
 import russianMessages from './locale'
 
+import { createMuiTheme } from '@material-ui/core/styles'
 import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns'
 import ru from 'date-fns/locale/ru'
 import format from 'date-fns/format'
 
 class RuLocalizedUtils extends DateFnsUtils {
-	getCalendarHeaderText (date) {
-		return format(date, 'LLLL', { locale: this.locale })
-	}
+    getCalendarHeaderText(date) {
+        return format(date, 'LLLL', { locale: this.locale })
+    }
 
-	getDatePickerHeaderText (date) {
-		return format(date, 'EEEE, d MMMM', { locale: this.locale })
-	}
+    getDatePickerHeaderText(date) {
+        return format(date, 'EEEE, d MMMM', { locale: this.locale })
+    }
 }
 
 const i18nProvider = polyglotI18nProvider(() => russianMessages, 'ru')
 
+const theme = createMuiTheme({
+    typography: {
+        fontFamily: 'Nunito',
+    }
+})
+
 const AdminPanel = () => (
-	<MuiPickersUtilsProvider utils={RuLocalizedUtils} locale={ru}>
-		<Admin
-			layout={MyLayout}
-			customRoutes={Routes}
-			title='Технополис "ЭРА"'
-			dashboard={DashBoard}
-			i18nProvider={i18nProvider}
-			dataProvider={dataProvider}
-			authProvider={authProvider}>
-			{(permissions) => [
-				<Resource
-					name="articles"
-					icon={TextFieldsIcon}
-					options={{ label: 'Статьи' }}
-					list={ArticleList}
-					edit={permissions ? ArticleEdit : null}
-					create={permissions ? ArticleCreate : null}
-					show={ArticleShow}/>,
-				<Resource
-					name="programs"
-					icon={CodeIcon}
-					options={{ label: 'Программы' }}
-					list={ProgramList}
-					edit={permissions ? ProgramEdit : null}
-					create={permissions ? ProgramCreate : null}
-					show={ProgramShow}/>,
-				<Resource
-					name="research"
-					icon={MenuBookIcon}
-					options={{ label: 'НИР' }}
-					list={ResearchList}
-					edit={permissions ? ResearchEdit : null}
-					create={permissions ? ResearchCreate : null}
-					show={ResearchShow}/>,
-				<Resource
-					name="developments"
-					icon={DashboardIcon}
-					options={{ label: 'ОКР' }}
-					list={DevelopmentList}
-					edit={permissions ? DevelopmentEdit : null}
-					create={permissions ? DevelopmentCreate : null}
-					show={DevelopmentShow}/>,
-				<Resource
-					name="rationalization"
-					icon={EmojiObjectsIcon}
-					options={{ label: 'Рационализаторские\nпредложения' }}
-					list={RationalizationList}
-					edit={permissions ? RationalizationEdit : null}
-					create={permissions ? RationalizationCreate : null}
-					show={RationalizationShow}/>,
-				<Resource
-					name="projects"
-					icon={CardTravelIcon}
-					options={{ label: 'Инициативные\nпроекты' }}
-					list={ProjectList}
-					edit={permissions ? ProjectEdit : null}
-					create={permissions ? ProjectCreate : null}
-					show={ProjectShow}/>,
-				<Resource
-					name="abstracts"
-					icon={ListIcon}
-					options={{ label: 'Тезисы докладов' }}
-					list={AbstractList}
-					edit={permissions ? AbstractEdit : null}
-					create={permissions ? AbstractCreate : null}
-					show={AbstractShow}/>,
-				<Resource
-					name="approbations"
-					icon={CheckCircleOutlineIcon}
-					options={{ label: 'Апробации' }}
-					list={ApprobationList}
-					edit={permissions ? ApprobationEdit : null}
-					create={permissions ? ApprobationCreate : null}
-					show={ApprobationShow}/>,
-				<Resource
-					name="patents"
-					icon={CardMembershipIcon}
-					options={{ label: 'Патенты' }}
-					list={PatentList}
-					edit={permissions ? PatentEdit : null}
-					create={permissions ? PatentCreate : null}
-					show={PatentShow}/>,
-				<Resource
-					name="verifications"
-					icon={BallotIcon}
-					options={{ label: 'Испытания' }}
-					list={VerificationList}
-					edit={permissions ? VerificationEdit : null}
-					create={permissions ? VerificationCreate : null}
-					show={VerificationShow}/>,
-				<Resource
-					name="publication"
-					icon={VisibilityIcon}
-					options={{ label: 'Места публикации' }}
-					list={PublicationList}
-					edit={PublicationEdit}
-					create={PublicationCreate}
-					show={PublicationShow}/>,
-				<Resource
-					name="subdivisions"
-					icon={PieChartIcon}
-					options={{ label: 'Подразделения' }}
-					list={SubdivisionList}
-					edit={SubdivisionEdit}
-					create={SubdivisionCreate}
-					show={SubdivisionShow}/>,
-				<Resource
-					name="users"
-					icon={GroupIcon}
-					options={{ label: 'Пользователи' }}
-					list={UserList}
-					// edit={UserEdit}
-					create={UserCreate}
-					show={UserShow}/>,
-			]}
-		</Admin>
-	</MuiPickersUtilsProvider>
+    <MuiPickersUtilsProvider utils={RuLocalizedUtils} locale={ru}>
+        <Admin
+            theme={theme}
+            layout={MyLayout}
+            customRoutes={Routes}
+            title='Технополис "ЭРА"'
+            dashboard={DashBoard}
+            i18nProvider={i18nProvider}
+            dataProvider={dataProvider}
+            authProvider={authProvider}>
+            {(permissions) => [
+                <Resource
+                    name="articles"
+                    icon={TextFieldsIcon}
+                    options={{ label: 'Статьи' }}
+                    list={ArticleList}
+                    edit={permissions ? ArticleEdit : null}
+                    create={permissions ? ArticleCreate : null}
+                    show={ArticleShow}/>,
+                <Resource
+                    name="programs"
+                    icon={CodeIcon}
+                    options={{ label: 'Программы' }}
+                    list={ProgramList}
+                    edit={permissions ? ProgramEdit : null}
+                    create={permissions ? ProgramCreate : null}
+                    show={ProgramShow}/>,
+                <Resource
+                    name="research"
+                    icon={MenuBookIcon}
+                    options={{ label: 'НИР' }}
+                    list={ResearchList}
+                    edit={permissions ? ResearchEdit : null}
+                    create={permissions ? ResearchCreate : null}
+                    show={ResearchShow}/>,
+                <Resource
+                    name="developments"
+                    icon={DashboardIcon}
+                    options={{ label: 'ОКР' }}
+                    list={DevelopmentList}
+                    edit={permissions ? DevelopmentEdit : null}
+                    create={permissions ? DevelopmentCreate : null}
+                    show={DevelopmentShow}/>,
+                <Resource
+                    name="rationalization"
+                    icon={EmojiObjectsIcon}
+                    options={{ label: 'Рационализаторские\nпредложения' }}
+                    list={RationalizationList}
+                    edit={permissions ? RationalizationEdit : null}
+                    create={permissions ? RationalizationCreate : null}
+                    show={RationalizationShow}/>,
+                <Resource
+                    name="projects"
+                    icon={CardTravelIcon}
+                    options={{ label: 'Инициативные\nпроекты' }}
+                    list={ProjectList}
+                    edit={permissions ? ProjectEdit : null}
+                    create={permissions ? ProjectCreate : null}
+                    show={ProjectShow}/>,
+                <Resource
+                    name="abstracts"
+                    icon={ListIcon}
+                    options={{ label: 'Тезисы докладов' }}
+                    list={AbstractList}
+                    edit={permissions ? AbstractEdit : null}
+                    create={permissions ? AbstractCreate : null}
+                    show={AbstractShow}/>,
+                <Resource
+                    name="approbations"
+                    icon={CheckCircleOutlineIcon}
+                    options={{ label: 'Апробации' }}
+                    list={ApprobationList}
+                    edit={permissions ? ApprobationEdit : null}
+                    create={permissions ? ApprobationCreate : null}
+                    show={ApprobationShow}/>,
+                <Resource
+                    name="patents"
+                    icon={CardMembershipIcon}
+                    options={{ label: 'Патенты' }}
+                    list={PatentList}
+                    edit={permissions ? PatentEdit : null}
+                    create={permissions ? PatentCreate : null}
+                    show={PatentShow}/>,
+                <Resource
+                    name="verifications"
+                    icon={BallotIcon}
+                    options={{ label: 'Испытания' }}
+                    list={VerificationList}
+                    edit={permissions ? VerificationEdit : null}
+                    create={permissions ? VerificationCreate : null}
+                    show={VerificationShow}/>,
+                <Resource
+                    name="publication"
+                    icon={VisibilityIcon}
+                    options={{ label: 'Места публикации' }}
+                    list={PublicationList}
+                    edit={PublicationEdit}
+                    create={PublicationCreate}
+                    show={PublicationShow}/>,
+                <Resource
+                    name="subdivisions"
+                    icon={PieChartIcon}
+                    options={{ label: 'Подразделения' }}
+                    list={SubdivisionList}
+                    edit={SubdivisionEdit}
+                    create={SubdivisionCreate}
+                    show={SubdivisionShow}/>,
+                <Resource
+                    name="users"
+                    icon={GroupIcon}
+                    options={{ label: 'Пользователи' }}
+                    list={UserList}
+                    // edit={UserEdit}
+                    create={UserCreate}
+                    show={UserShow}/>,
+            ]}
+        </Admin>
+    </MuiPickersUtilsProvider>
 )
 
 export default AdminPanel
