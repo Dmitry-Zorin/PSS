@@ -10,7 +10,7 @@ const bcrypt = require('bcrypt')
 
 const User = mongoose.model('User', schema)
 
-function extractDataToSend (data) {
+function extractDataToSend(data) {
 	return {
 		id: data.id,
 		login: data.login,
@@ -20,7 +20,7 @@ function extractDataToSend (data) {
 	}
 }
 
-function extractDataFromRequest (req) {
+function extractDataFromRequest(req) {
 	return {
 		'login': req.body.login,
 		'password': req.body.password,

@@ -6,7 +6,7 @@ const Model = mongoose.model('Approbation', schema)
 const resource = 'approbations'
 const mimeTypes = ['application/x-rar-compressed', 'application/zip']
 
-function extractDataToSend (data) {
+function extractDataToSend(data) {
 	return {
 		id: data.id,
 		headline: data.headline,
@@ -24,7 +24,7 @@ function extractDataToSend (data) {
 	}
 }
 
-function extractDataFromRequest (req) {
+function extractDataFromRequest(req) {
 	return {
 		'headline': req.body.headline,
 		'description': req.body.description,

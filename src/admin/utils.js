@@ -11,13 +11,13 @@ import {
 } from 'react-admin'
 import { Box, Typography } from '@material-ui/core'
 
-export function createTitle (title, recordName) {
+export function createTitle(title, recordName) {
 	return ({ record }) => {
 		return <span>{` ${title}: ${record[recordName]}`}</span>
 	}
 }
 
-export function createEmptyPage (noPlacesMessage, addDataMessage) {
+export function createEmptyPage(noPlacesMessage, addDataMessage) {
 	return ({ basePath, resource }) => (
 		<Box textAlign="center" m={1}>
 			<Typography variant="h4" paragraph>
@@ -31,7 +31,7 @@ export function createEmptyPage (noPlacesMessage, addDataMessage) {
 	)
 }
 
-export function getShowActions () {
+export function getShowActions() {
 	return ({ permissions, basePath, data, resource }) => (
 		<TopToolbar>
 			<ListButton basePath={basePath} record={data}/>
@@ -41,7 +41,7 @@ export function getShowActions () {
 	)
 }
 
-export function getEditActions () {
+export function getEditActions() {
 	return ({ basePath, data, resource }) => (
 		<TopToolbar>
 			<ListButton basePath={basePath} record={data}/>
@@ -53,7 +53,7 @@ export function getEditActions () {
 	)
 }
 
-export function getEditActionsWithoutFile () {
+export function getEditActionsWithoutFile() {
 	return ({ basePath, data, resource }) => {
 		const dataWithoutFile = { ...data }
 		delete dataWithoutFile.file
@@ -69,7 +69,7 @@ export function getEditActionsWithoutFile () {
 	}
 }
 
-export function getBulkActionButtons () {
+export function getBulkActionButtons() {
 	return ({ permissions, ...props }) => {
 		return (permissions
 			? <React.Fragment>

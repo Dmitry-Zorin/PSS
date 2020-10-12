@@ -6,7 +6,7 @@ const Model = mongoose.model('Article', schema)
 const resource = 'articles'
 const mimeTypes = ['application/pdf',]
 
-function extractDataToSend (data) {
+function extractDataToSend(data) {
 	return {
 		id: data.id,
 		headline: data.headline,
@@ -23,7 +23,7 @@ function extractDataToSend (data) {
 	}
 }
 
-function extractDataFromRequest (req) {
+function extractDataFromRequest(req) {
 	return {
 		'headline': req.body.headline,
 		'text': req.body.text,

@@ -4,7 +4,7 @@ const createAPI = require('../utils').createAPI
 
 const Model = mongoose.model('Department', schema)
 
-function extractDataToSend (data) {
+function extractDataToSend(data) {
 	return {
 		id: data.id,
 		name: data.name,
@@ -12,7 +12,7 @@ function extractDataToSend (data) {
 	}
 }
 
-function extractDataFromRequest (req) {
+function extractDataFromRequest(req) {
 	return {
 		'name': req.body.name,
 	}

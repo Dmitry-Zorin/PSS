@@ -8,7 +8,7 @@ const shortid = require('shortid')
 const cookieParser = require('cookie-parser')()
 const auth = require('./auth').auth
 
-function listParamsMiddleware (req, res, next) {
+function listParamsMiddleware(req, res, next) {
 	const sort = JSON.parse(req.query.sort)
 	const sortField = sort[0]
 	const sortOrder = sort[1]
@@ -74,7 +74,7 @@ function listParamsMiddleware (req, res, next) {
 extractDataFromRequest: -firstCreationDate, -file
 */
 
-function createAPI (app, resource, Model, extractDataToSend, extractDataFromRequest) {
+function createAPI(app, resource, Model, extractDataToSend, extractDataFromRequest) {
 	// create
 	app.post(`/api/${resource}`, upload.array(), cookieParser, auth, jsonParser, (req, res) => {
 		if (req.isAdmin) {
@@ -140,8 +140,8 @@ function createAPI (app, resource, Model, extractDataToSend, extractDataFromRequ
 	})
 }
 
-function createAPIwithFile (app, resource, mimeTypes,
-	Model, extractDataToSend, extractDataFromRequest) {
+function createAPIwithFile(app, resource, mimeTypes,
+													 Model, extractDataToSend, extractDataFromRequest) {
 
 	const filesFolder = path.join('/media/', resource)
 

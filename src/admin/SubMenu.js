@@ -23,13 +23,13 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const SubMenu = ({
-	handleToggle,
-	sidebarIsOpen,
-	isOpen,
-	name,
-	icon,
-	children,
-}) => {
+									 handleToggle,
+									 sidebarIsOpen,
+									 isOpen,
+									 name,
+									 icon,
+									 children,
+								 }) => {
 	const translate = useTranslate()
 	const classes = useStyles()
 
