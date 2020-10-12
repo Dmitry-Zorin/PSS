@@ -86,6 +86,8 @@ import {
     ShowForm as SubdivisionShow,
 } from './resources/subdivisions'
 
+import { Timeline } from './resources/timeline'
+
 import { CreateForm as UserCreate, ListForm as UserList, ShowForm as UserShow, } from './resources/users'
 
 import Routes from './routes'
@@ -106,6 +108,7 @@ import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline'
 import BallotIcon from '@material-ui/icons/Ballot'
 import DashboardIcon from '@material-ui/icons/Dashboard'
 import CardTravelIcon from '@material-ui/icons/CardTravel'
+import TimelineIcon from '@material-ui/icons/Timeline'
 
 import dataProvider from './DataProvider'
 import authProvider from './AuthProvider'
@@ -253,6 +256,12 @@ const AdminPanel = () => (
                     // edit={UserEdit}
                     create={UserCreate}
                     show={UserShow}/>,
+                <Resource
+                    name='timeline'
+                    options={{ label: 'События' }}
+                    icon={TimelineIcon}
+                    list={Timeline}
+                />
             ]}
         </Admin>
     </MuiPickersUtilsProvider>

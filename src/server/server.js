@@ -27,6 +27,7 @@ require('./routes/ApprobationAPI')(app)
 require('./routes/VerificationAPI')(app)
 require('./routes/DevelopmentWorkAPI')(app)
 require('./routes/ProjectsAPI')(app)
+require('./routes/TimelineAPI')(app)
 
 app.use(function (req, res, next) {
 	res.header('Cache-Control', 'no-cache, no-store, must-revalidate')
