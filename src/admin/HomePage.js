@@ -1,9 +1,10 @@
 import React from 'react'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import { Card, Grid, Link, Typography } from '@material-ui/core'
+import { Card, Grid, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import ScienceImg from '../../static/images/science.png'
 import LogoImg from '../../static/images/logo.png'
+import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
 	logo: {
@@ -85,11 +86,11 @@ const HomePage = () => {
 	const cards = tabsData.map(tab => (
 		<Grid key={tab.link} container item justify="center" xs={12} md={6} lg={4}>
 			<Card className={classes.card}>
-				<Link href={`${tab.link}`}>
-					<img className={classes.cardImage} src={`${tab.image}`}/>
+				<Link to={tab.link}>
+					<img className={classes.cardImage} src={tab.image}/>
 				</Link>
 				<div className={classes.cardContent}>
-					<Link className={classes.cardLink} href={`${tab.link}`}>
+					<Link to={tab.link} className={classes.cardLink}>
 						<Typography className={classes.cardContentTitle} align="center" variant="h6" component="h2">
 							{tab.title}
 						</Typography>

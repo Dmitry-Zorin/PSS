@@ -174,7 +174,7 @@ function createAPIwithFile(app, resource, mimeTypes,
 			const modelRecord = new Model(data)
 			modelRecord.save()
 				.then(() => res.json(extractDataToSend(modelRecord)))
-				.catch(error => console.log(error))
+				.catch(console.log)
 		} else res.status(401).json({ error: 'Access denied' })
 	})
 
@@ -196,7 +196,7 @@ function createAPIwithFile(app, resource, mimeTypes,
 				data,
 				{ new: true })
 				.then(updatedData => res.json(extractDataToSend(updatedData)))
-				.catch(error => console.log(error))
+				.catch(console.log)
 		} else res.status(401).json({ error: 'Access denied' })
 	})
 
@@ -211,7 +211,7 @@ function createAPIwithFile(app, resource, mimeTypes,
 					})
 					res.json(extractDataToSend(data))
 				})
-				.catch(error => console.log(error))
+				.catch(console.log)
 		} else res.status(401).json({ error: 'Access denied' })
 	})
 
@@ -225,14 +225,14 @@ function createAPIwithFile(app, resource, mimeTypes,
 				const dataToSend = data.slice(rangeStart, rangeEnd).map(dataItem => extractDataToSend(dataItem))
 				res.set('Content-Range', contentLength).send(dataToSend)
 			})
-			.catch(error => console.log(error))
+			.catch(console.log)
 	})
 
 	// getOne
 	app.get(`/api/${resource}/:id`, cookieParser, auth, (req, res) => {
 		Model.findOne({ _id: req.params.id })
 			.then(data => res.json(extractDataToSend(data)))
-			.catch(error => console.log(error))
+			.catch(console.log)
 	})
 }
 

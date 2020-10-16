@@ -35,3 +35,5 @@ function extractDataFromRequest(req) {
 module.exports = function (app) {
 	createAPIwithFile(app, resource, mimeTypes, Model, extractDataToSend, extractDataFromRequest)
 }
+
+module.exports.AbstractModel = Model

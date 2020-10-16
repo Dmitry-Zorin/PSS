@@ -1,184 +1,142 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { ListController, Title } from 'react-admin'
 import Card from '@material-ui/core/Card'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import Avatar from '@material-ui/core/Avatar'
-import AccountCircleIcon from '@material-ui/icons/AccountCircle'
-import List from '@material-ui/core/List'
+import DescriptionIcon from '@material-ui/icons/Description'
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import { makeStyles } from '@material-ui/core/styles'
+import { Link } from 'react-router-dom'
+import CardActionArea from '@material-ui/core/CardActionArea'
+import Pagination from '@material-ui/lab/Pagination'
+import List from '@material-ui/core/List'
+import { Typography, useScrollTrigger } from '@material-ui/core'
+import Box from '@material-ui/core/Box'
+import Fab from '@material-ui/core/Fab'
+import Zoom from '@material-ui/core/Zoom'
+import red from '@material-ui/core/colors/red'
 
-const useStyles = makeStyles({
+const sort = {
+	field: 'firstCreationDate',
+	order: 'DESC'
+}
+
+const useStyles = makeStyles(theme => ({
 	list: {
+		maxWidth: 600,
 		margin: '0 auto'
 	},
 	card: {
-		width: 500,
-		margin: '10px 0'
-	}
-})
-
-export const Timeline = props => {
-	const styles = useStyles()
-	let events = [{
-		'title': 'ОБЗОР СУЩЕСТВУЮЩИХ СПЕЦИАЛЬНЫХ, ЦИФРОВЫХ И ЭЛЕКТРОННЫХ КАРТ',
-		'creationDate': '2020-04-15T21:00:00.000Z'
-	}, {
-		'title': 'НАНЕСЕНИЕ ТАКТИЧЕСКОЙ ОБСТАНОВКИ НА ЭЛЕКТРОННУЮ КАРТУ МЕСТНОСТИ С ПОМОЩЬЮ ТЕХНОЛОГИИ ЦИФРОВЫХ ЗНАКОВ В ИМИТАЦИОННО МОДЕЛИРУЮЩЕМ КОМПЛЕКСЕ «КОМБАТ»',
-		'creationDate': '2020-04-15T21:00:00.000Z'
-	}, {
-		'title': 'ПРИНЦИП РАБОТЫ С НАВИГАЦИОННОЙ АППАРАТУРОЙ ПРИ ОРИЕНТИРОВАНИИ НА МЕСТНОСТИ',
-		'creationDate': '2020-04-15T21:00:00.000Z'
-	}, {
-		'title': 'АНАЛИЗ МЕТОДОВ СВЯЗИ И УПРАВЛЕНИЯ РОЕМ БЕСПИЛОТНЫХ ЛЕТАТЕЛЬНЫХ АППАРАТОВ',
-		'creationDate': '2020-04-15T21:00:00.000Z'
-	}, {
-		'title': 'АНАЛИЗ СУЩЕСТВУЮЩИХ КОМПОЗИТНЫХ МАТЕРИАЛОВ И ОПРЕДЕЛЕНИЕ ПЕРСПЕКТИВ ИХ ДАЛЬНЕЙШЕГО РАЗВИТИЯ.',
-		'creationDate': '2020-04-15T21:00:00.000Z'
-	}, {
-		'title': 'Аналитический подход к применению схемы RANSAC в задачах визуальной навигации в динамическом окружении',
-		'creationDate': '2020-04-15T21:00:00.000Z'
-	}, {
-		'title': 'ПОСТРОЕНИЕ АНАЛОГА ФИЛЬТРА МАДЖВИКА ДЛЯ ДАННЫХ ОРИЕНТАЦИИ ДАТЧИКОВ УГЛОВЫХ СКОРОСТЕЙ И СИСТЕМЫ ТЕХНИЧЕСКОГО ЗРЕНИЯ',
-		'creationDate': '2020-04-15T21:00:00.000Z'
-	}, {
-		'title': 'РАСЧЁТ ВЕЛИЧИНЫ МАГНИТНОГО СКЛОНЕНИЯ ПРИ ПОМОЩИ ОРТОДОМ',
-		'creationDate': '2020-04-15T21:00:00.000Z'
-	}, {
-		'title': 'СОВРЕМЕННОЕ СОСТОЯНИЕ ЗЕЕМАНОВСКИХ ЛАЗЕРНЫХ ГИРОСКОПОВ',
-		'creationDate': '2020-04-15T21:00:00.000Z'
-	}, {
-		'title': 'ВНУТРЕННИЙ SLAM ДЛЯ УПРАВЛЕНИЯ МИКРО ЛЕТАТЕЛЬНЫМИ АППАРАТАМИ С ИСПОЛЬЗОВАНИЕМ МОНОКУЛЯРНОЙ КАМЕРЫ И SENSOR FUSION',
-		'creationDate': '2020-04-15T21:00:00.000Z'
-	}, {
-		'title': 'АЛГОРИТМ МОДЕЛИРОВАНИЯ ПРОЦЕССА ОКРАСКИ РАСПЫЛЕНИЕМ И ОСНОВНЫЕ АСПЕКТЫ ЕГО РЕАЛИЗАЦИИ',
-		'creationDate': '2020-04-15T21:00:00.000Z'
-	}, {
-		'title': 'МЕТОД ОБНАРУЖЕНИЯ И ПРЕДОТВРАЩЕНИЯ СТОЛКНОВЕНИЯ С ПРЕПЯТСТВИЯМИ НА ОСНОВЕ ДАННЫХ С МОНОКУЛЯРНОЙ КАМЕРЫ И АЛГОРИТМА УВЕЛИЧЕНИЯ РАЗМЕРА ДЛЯ БПЛА',
-		'creationDate': '2020-04-15T21:00:00.000Z'
-	}, {
-		'title': 'ПОСТРОЕНИЕ АНАЛОГА ФИЛЬТРА МАДЖВИКА ДЛЯ ДАННЫХ ОРИЕНТАЦИИ ДАТЧИКОВ УГЛОВЫХ СКОРОСТЕЙ И СИСТЕМЫ ТЕХНИЧЕСКОГО ЗРЕНИЯ',
-		'creationDate': '2020-04-15T21:00:00.000Z'
-	}, {
-		'title': 'ИССЛЕДОВАНИЕ ЗАВИСИМОСТИ СУММАРНОЙ ОШИБКИ ОБУЧЕНИЯ ИСКУССТВЕННОЙ НЕЙРОННОЙ СЕТИ ОТ СТЕПЕНИ ДЕТАЛИЗАЦИИ РАЗМЕТКИ ОБУЧАЮЩЕГО НАБОРА ДАННЫХ',
-		'creationDate': '2020-04-15T21:00:00.000Z'
-	}, {
-		'title': 'АЛГОРИТМЫ ОЦЕНКИ КАЧЕСТВА ЦИФРОВЫХ ИЗОБРАЖЕНИЙ',
-		'creationDate': '2020-04-15T21:00:00.000Z'
-	}, {
-		'title': 'АНАЛИЗ БИБЛИОТЕК BOOST.STATECHART И BOOST.META STATE MACHINE ДЛЯ РЕШЕНИЯ ЗАДАЧИ УПРАВЛЕНИЯ БПЛА КОПТЕРНОГО ТИПА',
-		'creationDate': '2020-04-15T21:00:00.000Z'
-	}, {
-		'title': 'АНАЛИЗ СТОХАСТИЧЕСКОГО ПОДХОДА К МОДЕЛИРОВАНИЮ БОЕВЫХ ДЕЙСТВИЙ',
-		'creationDate': '2020-04-15T21:00:00.000Z'
-	}, {
-		'title': 'МЕТОДИКА РАЗРАБОТКИ ПОЛЬЗОВАТЕЛЬСКОГО ИНТЕРФЕЙСА ДЛЯ МОБИЛЬНЫХ ТЕРМИНАЛОВ ОПЕРАТОРА РОБОТОТЕХНИЧЕСКИХ КОМПЛЕКСОВ',
-		'creationDate': '2020-04-15T21:00:00.000Z'
-	}, {
-		'title': 'ПОДХОДЫ В ОБРАБОТКЕ ИЗОБРАЖЕНИЙ ПРИ РАСПОЗНАВАНИИ ОБЪЕКТОВ',
-		'creationDate': '2020-04-15T21:00:00.000Z'
-	}, {
-		'title': 'СРАВНИТЕЛЬНЫЙ АНАЛИЗ СУЩЕСТВУЮЩИХ МЕТОДОВ МАТЕМАТИЧЕСКОГО МОДЕЛИРОВАНИЯ БОЕВЫХ ДЕЙСТВИЙ',
-		'creationDate': '2020-04-15T21:00:00.000Z'
-	}, {
-		'title': 'БЗОР ПОДХОДОВ К ОБНАРУЖЕНИЮ СОБЫТИЙ В ВИДЕОПОТОКЕ',
-		'creationDate': '2020-04-23T21:00:00.000Z'
-	}, {
-		'title': 'ОБНАРУЖЕНИЕ АКТИВНОСТЕЙ В ВИДЕОПОТОКЕ С ПОМОЩЬЮ СЕТЕЙ ВРЕМЕННЫХ СЕГМЕНТОВ',
-		'creationDate': '2020-04-23T21:00:00.000Z'
-	}, {
-		'title': 'Обзор алгоритмов исследования трехмерного пространства',
-		'creationDate': '2020-04-23T21:00:00.000Z'
-	}, {
-		'title': 'ОБЗОР СИСТЕМ ВИЗУАЛЬНО-ИНЕРЦИАЛЬНОЙ ОДОМЕТРИИ',
-		'creationDate': '2020-04-23T21:00:00.000Z'
-	}, {
-		'title': 'ИССЛЕДОВАНИЕ ПОДХОДОВ, ОСНОВАННЫХ НА ГЛУБОКИХ СВЕРТОЧНЫХ НЕЙРОННЫХ СЕТЯХ, ДЛЯ ПОВТОРНОЙ ИДЕНТИФИКАЦИИ ЛИЧНОСТИ',
-		'creationDate': '2020-04-23T21:00:00.000Z'
-	}, {
-		'title': 'РАЗРАБОТКА СИСТЕМЫ АВТОМАТИЧЕСКОГО ДЕТЕКТИРОВАНИЯ ЛЮДЕЙ В ВИДЕОПОТОКЕ',
-		'creationDate': '2020-04-23T21:00:00.000Z'
-	}, {
-		'title': 'СРАВНИТЕЛЬНЫЙ ОБЗОР МЕТОДОВ ОПТИМИЗАЦИИ ГИПЕРПАРАМЕТРОВ СВЁРТОЧНЫХ НЕЙРОННЫХ СЕТЕЙ С ИСПОЛЬЗОВАНИЕМ ДАННЫХ ИЗ ВЫБОРКИ',
-		'creationDate': '2020-04-23T21:00:00.000Z'
-	}, {
-		'title': 'СОРЕВНОВАТЕЛЬНАЯ И СПОРТИВНАЯ РОБОТОТЕХНИКА. ТИПЫ И ЗАДАЧИ СОРЕВНОВАНИЙ.',
-		'creationDate': '2020-04-23T21:00:00.000Z'
-	}, {
-		'title': 'СОКРЫТИЕ ИНФОРМАЦИИ В ИЗОБРАЖЕНИЯХ С ИСПОЛЬЗОВАНИЕМ ТЕХНИК СТЕГАНОГРАФИИ И МЕТОДОВ СЖАТИЯ',
-		'creationDate': '2020-04-23T21:00:00.000Z'
-	}, {
-		'title': 'ОБЗОР ПРИНЦИПОВ РАБОТЫ РОЯ БЕСПИЛОТНЫХ ЛЕТАТЕЛЬНЫХ АППАРАТОВ',
-		'creationDate': '2020-04-23T21:00:00.000Z'
-	}, {
-		'title': 'СРАВНИТЕЛЬНЫЙ АНАЛИЗ СУЩЕСТВУЮЩИХ МЕТОДОВ ОБЕСПЕЧЕНИЯ ВЗАИМОДЕЙСТВИЯ В РАСПРЕДЕЛЕННОЙ ВЫЧИСЛИТЕЛЬНОЙ СРЕДЕ',
-		'creationDate': '2020-04-23T21:00:00.000Z'
-	}, {
-		'title': 'КОМПЬЮТЕРНЫЕ ТРЕНАЖЁРЫ КАК ИНСТРУМЕНТ ВЫСОКОТЕХНОЛОГИЧНОГО ОБУЧЕНИЯ ОПЕРАТОРОВ УПРАВЛЕНИЮ СЛОЖНЫМИ ПРОГРАММНО-АППАРАТНЫМИ КОМПЛЕКСАМИ ВОЕННОГО И ГРАЖДАНСКОГО НАЗНАЧЕНИЯ',
-		'creationDate': '2020-04-23T21:00:00.000Z'
-	}, {
-		'title': 'МЕТОДИКА РАСЧЁТА НЕОБХОДИМОГО КОЛИЧЕСТВА ПОДКРЕПЛЕНИЙ В СЛУЧАЕ ИХ НЕСАМОСТОЯТЕЛЬНОГО ФОРМИРОВАНИЯ ОБЕИМИ ПРОТИВОБОРСТВУЮЩИМИ СТОРОНАМИ В ДИСКРЕТНЫЕ МОМЕНТЫ ВРЕМЕНИ',
-		'creationDate': '2020-04-23T21:00:00.000Z'
-	}, {
-		'title': 'СИСТЕМЫ ДИФФЕРЕНЦИАЛЬНЫХ УРАВНЕНИЙ ЛАНЧЕСТЕРА КАК ОСНОВА МАТЕМАТИЧЕСКОГО МОДЕЛИРОВАНИЯ БОЕВЫХ ДЕЙСТВИЙ',
-		'creationDate': '2020-04-23T21:00:00.000Z'
-	}, {
-		'title': 'ОБЗОР ИНСТРУМЕНТОВ СОЗДАНИЯ АННОТАЦИЙ ИСПОЛЬЗУЕМЫХ В ОБУЧЕНИИ ИСКУССТВЕННЫХ НЕЙРОННЫХ СЕТЕЙ',
-		'creationDate': '2020-04-23T21:00:00.000Z'
-	}, {
-		'title': 'ПРИМЕНЕНИЕ ТЕХНОЛОГИЙ СИТУАЦИОННОГО МОДЕЛИРОВАНИЯ НА ПРИМЕРЕ ОБЩЕВОЙСКОВОГО ТАКТИЧЕСКОГО ТРЕНАЖЕРА «КОМБАТ»',
-		'creationDate': '2020-04-23T21:00:00.000Z'
-	}]
-
-	let [page, setPage] = useState(0)
-
-	useEffect(() => {
-		if (!events) {
-			fetch(`http://${process.env.HOST}:${process.env.PORT}/api/timeline`, {
-				credentials: 'include',
-			})
-				.then(res => res.json())
-				.then(data => {
-					events = data.sort((a, b) => new Date(b.creationDate) - new Date(a.creationDate))
-				})
+		marginBottom: 15
+	},
+	margin: {
+		margin: '0 auto'
+	},
+	fab: {
+		color: 'white',
+		background: red[500],
+		'&:hover': {
+			background: red[700]
 		}
-	})
+	},
+	fabContainer: {
+		position: 'fixed',
+		bottom: theme.spacing(3),
+		right: theme.spacing(4),
+	}
+}))
+
+export const Timeline = (props) => {
+	const styles = useStyles()
 
 	return (
-		<ListController {...props}>
-			{controllerProps => (
+		<ListController {...{ ...props, sort }}>
+			{({ data, ids, page, perPage, total, setPage }) => (
 				<>
-					<Title title="События"/>
+					<Title title={`События${page > 1 ? (': страница ' + page) : ''}`}/>
 					<List className={styles.list}>
-						{events && events.slice(10 * page, 10 * (page + 1)).map((event, i) => (
-							<Card key={i} className={styles.card}>
-								<ListItem>
-									<ListItemAvatar>
-										<Avatar>
-											<AccountCircleIcon/>
-										</Avatar>
-									</ListItemAvatar>
-									<ListItemText
-										primary={
-											<div>
-												<strong>
-													Статья
-												</strong>
-												{' добавлена - '}
-												<strong>
-													{new Date(event.creationDate).toLocaleString()}
-												</strong>
-											</div>
-										}
-										secondary={event.title}
-									/>
-								</ListItem>
-							</Card>
+						{ids.map(id => (
+							<CardView key={id} event={data[id]}/>
 						))}
 					</List>
+					{total > perPage ? (
+						<Pagination
+							className={styles.margin}
+							page={page}
+							count={Math.ceil(total / perPage)}
+							onChange={(event, value) => setPage(value)}
+						/>
+					) : (
+						<Typography className={styles.margin}>
+							Результатов не найдено
+						</Typography>
+					)}
+					<ScrollTopButton/>
 				</>
 			)}
 		</ListController>
+	)
+}
+
+const CardView = ({ event }) => {
+	const styles = useStyles()
+
+	return (
+		<Card key={event.id} className={styles.card}>
+			<CardActionArea component={Link} to={`/${event.type}/${event.id}/show`}>
+				<ListItem>
+					<ListItemAvatar>
+						<Avatar>
+							<DescriptionIcon/>
+						</Avatar>
+					</ListItemAvatar>
+					<ListItemText
+						primary={
+							<Box display='flex' flexWrap='wrap'>
+								<Box flexGrow={1}>
+									<strong>
+										{event.translation}
+									</strong>
+									{` добавлена`}
+								</Box>
+								<Box>
+									{new Date(event.creationDate).toLocaleString('ru-RU')}
+								</Box>
+							</Box>
+						}
+						secondary={event.title}
+					/>
+				</ListItem>
+			</CardActionArea>
+		</Card>
+	)
+}
+
+const ScrollTopButton = () => {
+	const styles = useStyles()
+	const trigger = useScrollTrigger()
+
+	const handleClick = (event) => {
+		const anchor = (event.target.ownerDocument || document)
+			.getElementById('app')
+
+		if (anchor) {
+			anchor.scrollIntoView({
+				behavior: 'smooth',
+				block: 'start'
+			})
+		}
+	}
+
+	return (
+		<Zoom in={trigger}>
+			<div className={styles.fabContainer} onClick={handleClick}>
+				<Fab className={styles.fab}>
+					<KeyboardArrowUpIcon/>
+				</Fab>
+			</div>
+		</Zoom>
 	)
 }

@@ -5,10 +5,11 @@ import { makeStyles } from '@material-ui/core/styles'
 import HomeIcon from '@material-ui/icons/Home'
 import { Link } from 'react-router-dom'
 import IconButton from '@material-ui/core/IconButton'
+import red from '@material-ui/core/colors/red'
 
 const useStyles = makeStyles({
 	header: {
-		backgroundColor: 'red'
+		background: red[500]
 	},
 	title: {
 		flex: 1,

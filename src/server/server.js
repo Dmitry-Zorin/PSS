@@ -10,7 +10,7 @@ require('dotenv').config()
 
 app.use(cors({
 	origin: `http://${process.env.HOST}:${process.env.UI_PORT}`,
-	exposedHeaders: ['Content-Range'],
+	exposedHeaders: 'Content-Range',
 	credentials: true
 }))
 

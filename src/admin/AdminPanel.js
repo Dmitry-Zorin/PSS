@@ -258,8 +258,8 @@ const AdminPanel = () => (
 					show={UserShow}/>,
 				<Resource
 					name='timeline'
-					options={{ label: 'События' }}
 					icon={TimelineIcon}
+					options={{ label: 'События' }}
 					list={Timeline}
 				/>
 			]}
