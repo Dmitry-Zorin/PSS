@@ -86,21 +86,21 @@ import {
 	EditForm as PublicationEdit,
 	ListForm as PublicationList,
 	ShowForm as PublicationShow,
-} from './resources/publication'
+} from './resources/publications'
 
 import {
 	CreateForm as RationalizationCreate,
 	EditForm as RationalizationEdit,
 	ListForm as RationalizationList,
 	ShowForm as RationalizationShow,
-} from './resources/rationalization'
+} from './resources/rationalizations'
 
 import {
 	CreateForm as ResearchCreate,
 	EditForm as ResearchEdit,
 	ListForm as ResearchList,
 	ShowForm as ResearchShow,
-} from './resources/research'
+} from './resources/researches'
 
 import {
 	CreateForm as SubdivisionCreate,
@@ -169,7 +169,7 @@ const AdminPanel = () => (
 					create={permissions ? ProgramCreate : null}
 					show={ProgramShow}/>,
 				<Resource
-					name="research"
+					name="researches"
 					icon={MenuBookIcon}
 					options={{ label: 'НИР' }}
 					list={ResearchList}
@@ -185,7 +185,7 @@ const AdminPanel = () => (
 					create={permissions ? DevelopmentCreate : null}
 					show={DevelopmentShow}/>,
 				<Resource
-					name="rationalization"
+					name="rationalizations"
 					icon={EmojiObjectsIcon}
 					options={{ label: 'Рационализаторские\nпредложения' }}
 					list={RationalizationList}
@@ -233,7 +233,7 @@ const AdminPanel = () => (
 					create={permissions ? VerificationCreate : null}
 					show={VerificationShow}/>,
 				<Resource
-					name="publication"
+					name="publications"
 					icon={VisibilityIcon}
 					options={{ label: 'Места публикации' }}
 					list={PublicationList}

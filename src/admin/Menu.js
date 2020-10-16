@@ -21,7 +21,7 @@ const Menu = ({ onMenuClick, logout }) => {
 	const resources = useSelector(getResources)
 	const classes = useStyles()
 	const { permissions } = usePermissions()
-	const otherResources = ['publication', 'subdivisions', 'users']
+	const otherResources = ['publications', 'subdivisions', 'users']
 	const [state, setState] = useState({
 		menuOther: false,
 	})

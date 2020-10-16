@@ -110,7 +110,7 @@ export const ListForm = ({ permissions, ...props }) => (
 			<ReferenceField
 				label="Место публикации"
 				source="publicationPlace"
-				reference="publication"
+				reference="publications"
 				link="">
 				<TextField source="name"/>
 			</ReferenceField>
@@ -296,7 +296,7 @@ export const ShowForm = ({ permissions, enableActions, ...props }) => {
 				<ReferenceField
 					label="Место публикации"
 					source="publicationPlace"
-					reference="publication"
+					reference="publications"
 					link="">
 					<TextField source="name"/>
 				</ReferenceField>

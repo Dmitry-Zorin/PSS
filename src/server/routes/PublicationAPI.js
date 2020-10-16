@@ -18,7 +18,7 @@ function extractDataFromRequest(req) {
 	}
 }
 
-const resource = 'publication'
+const resource = 'publications'
 
 module.exports = function (app) {
 	createAPI(app, resource, Model, extractDataToSend, extractDataFromRequest)

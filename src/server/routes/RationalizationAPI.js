@@ -3,7 +3,7 @@ const schema = require('../schemas').rationalizationSchema
 const createAPIwithFile = require('../utils').createAPIwithFile
 
 const Model = mongoose.model('Rationalization', schema)
-const resource = 'rationalization'
+const resource = 'rationalizations'
 const mimeTypes = ['application/x-rar-compressed', 'application/zip']
 
 function extractDataToSend(data) {
@@ -35,3 +35,5 @@ function extractDataFromRequest(req) {
 module.exports = function (app) {
 	createAPIwithFile(app, resource, mimeTypes, Model, extractDataToSend, extractDataFromRequest)
 }
+
+module.exports.RationalizationModel = Model
