@@ -1,10 +1,10 @@
-import React from 'react'
-import CssBaseline from '@material-ui/core/CssBaseline'
 import { Card, Grid, Typography } from '@material-ui/core'
+import CssBaseline from '@material-ui/core/CssBaseline'
 import { makeStyles } from '@material-ui/core/styles'
-import ScienceImg from '../../static/images/science.png'
-import LogoImg from '../../static/images/logo.png'
+import React from 'react'
 import { Link } from 'react-router-dom'
+import LogoImg from '../../static/images/logo.png'
+import ScienceImg from '../../static/images/science.png'
 
 const useStyles = makeStyles((theme) => ({
 	logo: {

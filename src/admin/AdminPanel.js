@@ -1,34 +1,36 @@
+import DateFnsUtils from '@date-io/date-fns'
+
+import { createMuiTheme } from '@material-ui/core/styles'
+import BallotIcon from '@material-ui/icons/Ballot'
+import CardMembershipIcon from '@material-ui/icons/CardMembership'
+import CardTravelIcon from '@material-ui/icons/CardTravel'
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline'
+
+import CodeIcon from '@material-ui/icons/Code'
+import DashboardIcon from '@material-ui/icons/Dashboard'
+import EmojiObjectsIcon from '@material-ui/icons/EmojiObjects'
+import GroupIcon from '@material-ui/icons/Group'
+import ListIcon from '@material-ui/icons/List'
+import MenuBookIcon from '@material-ui/icons/MenuBook'
+import PieChartIcon from '@material-ui/icons/PieChart'
+import TextFieldsIcon from '@material-ui/icons/TextFields'
+import TimelineIcon from '@material-ui/icons/Timeline'
+import VisibilityIcon from '@material-ui/icons/Visibility'
+import { MuiPickersUtilsProvider } from '@material-ui/pickers'
+import format from 'date-fns/format'
+import ru from 'date-fns/locale/ru'
+
+import polyglotI18nProvider from 'ra-i18n-polyglot'
 import React from 'react'
 
 import { Admin, Resource } from 'react-admin'
+import authProvider from './AuthProvider'
 
-import {
-	CreateForm as ArticleCreate,
-	EditForm as ArticleEdit,
-	ListForm as ArticleList,
-	ShowForm as ArticleShow,
-} from './resources/articles'
+import DashBoard from './DashBoard'
 
-import {
-	CreateForm as ProgramCreate,
-	EditForm as ProgramEdit,
-	ListForm as ProgramList,
-	ShowForm as ProgramShow,
-} from './resources/programs'
-
-import {
-	CreateForm as ResearchCreate,
-	EditForm as ResearchEdit,
-	ListForm as ResearchList,
-	ShowForm as ResearchShow,
-} from './resources/research'
-
-import {
-	CreateForm as RationalizationCreate,
-	EditForm as RationalizationEdit,
-	ListForm as RationalizationList,
-	ShowForm as RationalizationShow,
-} from './resources/rationalization'
+import dataProvider from './DataProvider'
+import russianMessages from './locale'
+import MyLayout from './MyLayout'
 
 import {
 	CreateForm as AbstractCreate,
@@ -38,18 +40,18 @@ import {
 } from './resources/abstracts'
 
 import {
-	CreateForm as PatentCreate,
-	EditForm as PatentEdit,
-	ListForm as PatentList,
-	ShowForm as PatentShow,
-} from './resources/patents'
-
-import {
 	CreateForm as ApprobationCreate,
 	EditForm as ApprobationEdit,
 	ListForm as ApprobationList,
 	ShowForm as ApprobationShow,
 } from './resources/approbations'
+
+import {
+	CreateForm as ArticleCreate,
+	EditForm as ArticleEdit,
+	ListForm as ArticleList,
+	ShowForm as ArticleShow,
+} from './resources/articles'
 
 import {
 	CreateForm as DevelopmentCreate,
@@ -59,11 +61,18 @@ import {
 } from './resources/developments'
 
 import {
-	CreateForm as VerificationCreate,
-	EditForm as VerificationEdit,
-	ListForm as VerificationList,
-	ShowForm as VerificationShow,
-} from './resources/verifications'
+	CreateForm as PatentCreate,
+	EditForm as PatentEdit,
+	ListForm as PatentList,
+	ShowForm as PatentShow,
+} from './resources/patents'
+
+import {
+	CreateForm as ProgramCreate,
+	EditForm as ProgramEdit,
+	ListForm as ProgramList,
+	ShowForm as ProgramShow,
+} from './resources/programs'
 
 import {
 	CreateForm as ProjectCreate,
@@ -80,6 +89,20 @@ import {
 } from './resources/publication'
 
 import {
+	CreateForm as RationalizationCreate,
+	EditForm as RationalizationEdit,
+	ListForm as RationalizationList,
+	ShowForm as RationalizationShow,
+} from './resources/rationalization'
+
+import {
+	CreateForm as ResearchCreate,
+	EditForm as ResearchEdit,
+	ListForm as ResearchList,
+	ShowForm as ResearchShow,
+} from './resources/research'
+
+import {
 	CreateForm as SubdivisionCreate,
 	EditForm as SubdivisionEdit,
 	ListForm as SubdivisionList,
@@ -90,37 +113,14 @@ import { Timeline } from './resources/timeline'
 
 import { CreateForm as UserCreate, ListForm as UserList, ShowForm as UserShow, } from './resources/users'
 
+import {
+	CreateForm as VerificationCreate,
+	EditForm as VerificationEdit,
+	ListForm as VerificationList,
+	ShowForm as VerificationShow,
+} from './resources/verifications'
+
 import Routes from './routes'
-
-import DashBoard from './DashBoard'
-import MyLayout from './MyLayout'
-
-import CodeIcon from '@material-ui/icons/Code'
-import TextFieldsIcon from '@material-ui/icons/TextFields'
-import MenuBookIcon from '@material-ui/icons/MenuBook'
-import EmojiObjectsIcon from '@material-ui/icons/EmojiObjects'
-import VisibilityIcon from '@material-ui/icons/Visibility'
-import PieChartIcon from '@material-ui/icons/PieChart'
-import GroupIcon from '@material-ui/icons/Group'
-import ListIcon from '@material-ui/icons/List'
-import CardMembershipIcon from '@material-ui/icons/CardMembership'
-import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline'
-import BallotIcon from '@material-ui/icons/Ballot'
-import DashboardIcon from '@material-ui/icons/Dashboard'
-import CardTravelIcon from '@material-ui/icons/CardTravel'
-import TimelineIcon from '@material-ui/icons/Timeline'
-
-import dataProvider from './DataProvider'
-import authProvider from './AuthProvider'
-
-import polyglotI18nProvider from 'ra-i18n-polyglot'
-import russianMessages from './locale'
-
-import { createMuiTheme } from '@material-ui/core/styles'
-import { MuiPickersUtilsProvider } from '@material-ui/pickers'
-import DateFnsUtils from '@date-io/date-fns'
-import ru from 'date-fns/locale/ru'
-import format from 'date-fns/format'
 
 class RuLocalizedUtils extends DateFnsUtils {
 	getCalendarHeaderText(date) {

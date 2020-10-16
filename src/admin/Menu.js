@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
 import { useMediaQuery } from '@material-ui/core'
-import { getResources, MenuItemLink, usePermissions } from 'react-admin'
-import DefaultIcon from '@material-ui/icons/ViewList'
-import StarIcon from '@material-ui/icons/Star'
-import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
+import Typography from '@material-ui/core/Typography'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
+import StarIcon from '@material-ui/icons/Star'
+import DefaultIcon from '@material-ui/icons/ViewList'
+import React, { useState } from 'react'
+import { getResources, MenuItemLink, usePermissions } from 'react-admin'
+import { useSelector } from 'react-redux'
 import SubMenu from './SubMenu'
 
 const useStyles = makeStyles({

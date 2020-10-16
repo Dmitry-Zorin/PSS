@@ -28,11 +28,11 @@ import {
 	TextField,
 	TextInput
 } from 'react-admin'
-
-import { createEmptyPage, createTitle, getBulkActionButtons, getEditActionsWithoutFile, getShowActions } from '../utils'
+import { DateInput } from 'react-admin-date-inputs2'
 
 import { DescriptionField, HeadlineField } from '../CustomFields'
-import { DateInput } from 'react-admin-date-inputs2'
+
+import { createEmptyPage, createTitle, getBulkActionButtons, getEditActionsWithoutFile, getShowActions } from '../utils'
 
 const validateHeadline = [required(), minLength(1),]
 const validateAnnotation = [required(), minLength(1),]

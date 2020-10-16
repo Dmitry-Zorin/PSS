@@ -1,3 +1,4 @@
+import { Box, Typography } from '@material-ui/core'
 import React from 'react'
 import {
 	BulkDeleteButton,
@@ -9,7 +10,6 @@ import {
 	ShowButton,
 	TopToolbar
 } from 'react-admin'
-import { Box, Typography } from '@material-ui/core'
 
 export function createTitle(title, recordName) {
 	return ({ record }) => {
