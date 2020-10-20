@@ -99,7 +99,11 @@ const CardView = ({ event }) => {
 									<strong>
 										{event.translation}
 									</strong>
-									{` добавлена`}
+									{` добавлен${
+										event.wordGender === 'feminine' ? 'a'
+											: event.wordGender === 'neuter' ? 'o'
+											: ''
+									}`}
 								</Box>
 								<Box>
 									{new Date(event.creationDate).toLocaleString('ru-RU')}
