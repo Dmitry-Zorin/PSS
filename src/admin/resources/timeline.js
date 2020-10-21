@@ -29,7 +29,11 @@ const useStyles = makeStyles(theme => ({
 		margin: '0 auto'
 	},
 	card: {
+		marginLeft: 0,
 		marginBottom: 15
+	},
+	padding: {
+		padding: '1.25em'
 	},
 	margin: {
 		margin: '0 auto'
@@ -86,12 +90,7 @@ const CardView = ({ event }) => {
 	return (
 		<Card key={event.id} className={styles.card}>
 			<CardActionArea component={Link} to={`/${event.type}/${event.id}/show`}>
-				<ListItem>
-					<ListItemAvatar>
-						<Avatar>
-							<DescriptionIcon/>
-						</Avatar>
-					</ListItemAvatar>
+				<ListItem className={styles.padding}>
 					<ListItemText
 						primary={
 							<Box display='flex' flexWrap='wrap'>

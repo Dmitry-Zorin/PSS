@@ -65,7 +65,7 @@ const Filters = (props) => (
 		<ReferenceInput
 			label="Место публикации"
 			source="publicationPlace"
-			reference="publication">
+			reference="publications">
 			<SelectInput optionText="name"/>
 		</ReferenceInput>
 		<ReferenceInput
@@ -176,7 +176,7 @@ export const CreateForm = props => (
 			<ReferenceInput
 				label="Место публикации"
 				source="publicationPlace"
-				reference="publication">
+				reference="publications">
 				<SelectInput optionText="name"/>
 			</ReferenceInput>
 			<ReferenceArrayInput
@@ -238,7 +238,7 @@ export const EditForm = props => (
 			<ReferenceInput
 				label="Место публикации"
 				source="publicationPlace"
-				reference="publication">
+				reference="publications">
 				<SelectInput optionText="name"/>
 			</ReferenceInput>
 			<ReferenceArrayInput

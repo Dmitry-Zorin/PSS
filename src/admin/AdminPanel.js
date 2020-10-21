@@ -5,6 +5,7 @@ import BallotIcon from '@material-ui/icons/Ballot'
 import CardMembershipIcon from '@material-ui/icons/CardMembership'
 import CardTravelIcon from '@material-ui/icons/CardTravel'
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline'
+import FeaturedPlayListIcon from '@material-ui/icons/FeaturedPlayList'
 
 import CodeIcon from '@material-ui/icons/Code'
 import DashboardIcon from '@material-ui/icons/Dashboard'
@@ -110,6 +111,7 @@ import {
 } from './resources/subdivisions'
 
 import { Timeline } from './resources/timeline'
+import { Form16 } from './Form16'
 
 import { CreateForm as UserCreate, ListForm as UserList, ShowForm as UserShow, } from './resources/users'
 
@@ -261,6 +263,12 @@ const AdminPanel = () => (
 					icon={TimelineIcon}
 					options={{ label: 'События' }}
 					list={Timeline}
+				/>,
+				<Resource
+					name='form16'
+					icon={FeaturedPlayListIcon}
+					options={{ label: 'Справка' }}
+					list={Form16}
 				/>
 			]}
 		</Admin>
