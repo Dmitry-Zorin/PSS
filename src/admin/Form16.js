@@ -12,6 +12,7 @@ import {
 	TableCell,
 	TableRow,
 	TextRun,
+	VerticalAlign,
 	WidthType
 } from 'docx'
 import { saveAs } from 'file-saver'
@@ -41,146 +42,297 @@ export const Form16 = () => {
 	const dataProvider = useDataProvider()
 
 	const [name, setName] = useState('Зорина Дмитрия Олеговича')
-	const [author, setAuthor] = useState('горшков')
+	const [author, setAuthor] = useState('а. горшков')
+	const [title, setTitle] = useState('доктор технических наук, профессор')
 
 	const generateForm = () => {
-		dataProvider.getList('articles', {
-			filter: {
-				authors: author
-			},
+		dataProvider.getList('publications', {
+			filter: {},
 			sort: {
-				field: 'firstCreationDate',
-				order: 'DESC'
+				field: 'name',
+				order: 'ASC'
 			},
 			pagination: {
 				page: 1,
 				perPage: 999
 			}
-		})
-			.then(({ data }) => {
-				const doc = new Document()
+		}).then(res => {
+			const publications = res.data.reduce((p, e) => {
+				p[e.id] = e.name
+				return p
+			}, {})
 
-				doc.addSection({
-					properties: {},
-					children: [
-						new Paragraph({
-							text: 'СПИСОК',
-							heading: HeadingLevel.HEADING_2,
-							alignment: AlignmentType.CENTER
-						}),
-						new Paragraph({
-							text: 'научных и учебно-методических работ',
-							heading: HeadingLevel.HEADING_3,
-							alignment: AlignmentType.CENTER
-						}),
-						new Paragraph({
-							children: [
-								new TextRun({
-									text: name.split(' ')[0],
-									allCaps: true
-								}),
-								new TextRun({
-									text: ` ${name.split(' ').slice(1).join(' ')}`
+			dataProvider.getList('articles', {
+				filter: {
+					authors: author.split(' ')[1]
+				},
+				sort: {
+					field: 'firstCreationDate',
+					order: 'DESC'
+				},
+				pagination: {
+					page: 1,
+					perPage: 999
+				}
+			})
+				.then(async ({ data }) => {
+					data.forEach(e => {
+						e.firstCreationDate = new Date(e.firstCreationDate)
+					})
+
+					const pages = await Promise.all(data.map(e => (
+						fetch(`http://${process.env.HOST}:${process.env.PORT}${e.file.url}`)
+							.then(r => r.blob())
+							.then(blob => (
+								new Promise(resolve => {
+									const reader = new FileReader()
+									reader.readAsBinaryString(blob)
+									reader.onloadend = () => (
+										resolve(reader.result.match(/\/Type[\s]*\/Page[^s]/g).length)
+									)
 								})
-							],
-							heading: HeadingLevel.HEADING_3,
-							alignment: AlignmentType.CENTER
-						}),
-						new Table({
-							rows: [
-								new TableRow({
-									children: [
-										new TableCell({
-											children: [new Paragraph('№ п/п')],
-											width: {
-												size: 1,
-												type: WidthType.DXA
-											}
-										}),
-										new TableCell({
-											children: [new Paragraph('Наименование работы, ее вид')]
-										}),
-										new TableCell({
-											children: [new Paragraph('Характер работы')],
-											width: {
-												size: 1,
-												type: WidthType.DXA
-											}
-										}),
-										new TableCell({
-											children: [new Paragraph('Выходные данные')]
-										}),
-										new TableCell({
-											children: [new Paragraph('Объем в п.л. или с.')],
-											width: {
-												size: 1,
-												type: WidthType.DXA
-											}
-										}),
-										new TableCell({
-											children: [new Paragraph('Соавторы')]
-										})
-									]
-								}),
-								new TableRow({
-									children: [
-										new TableCell({
-											children: [new Paragraph('1')]
-										}),
-										new TableCell({
-											children: [new Paragraph('2')]
-										}),
-										new TableCell({
-											children: [new Paragraph('3')]
-										}),
-										new TableCell({
-											children: [new Paragraph('4')]
-										}),
-										new TableCell({
-											children: [new Paragraph('5')]
-										}),
-										new TableCell({
-											children: [new Paragraph('6')]
-										})
-									]
-								}),
-								...data.map((e, i) => (
+							))
+					)))
+
+					const doc = new Document({
+						styles: {
+							tableStyles: [
+								{
+									id: 'tableStyle',
+									name: 'Table Style',
+									quickFormat: true,
+									paragraph: {
+										size: 8
+									},
+									run: {
+										size: 8
+									}
+								}
+							]
+						}
+					})
+
+					doc.addSection({
+						properties: {},
+						margins: {
+							top: 0,
+							right: 500,
+							bottom: 0,
+							left: 500,
+						},
+						children: [
+							new Paragraph({
+								text: 'Форма N 16',
+								alignment: AlignmentType.RIGHT
+							}),
+							new Paragraph({
+								alignment: AlignmentType.CENTER,
+								heading: HeadingLevel.HEADING_2,
+								children: [
+									new TextRun({
+										text: 'СПИСОК',
+										color: '000000'
+									})
+								]
+							}),
+							new Paragraph({
+								alignment: AlignmentType.CENTER,
+								heading: HeadingLevel.HEADING_3,
+								children: [
+									new TextRun({
+										text: 'научных и учебно-методических работ',
+										color: '000000'
+									})
+								]
+							}),
+							new Paragraph({
+								alignment: AlignmentType.CENTER,
+								heading: HeadingLevel.HEADING_3,
+								children: [
+									new TextRun({
+										text: name.split(' ')[0],
+										color: '000000',
+										allCaps: true
+									}),
+									new TextRun({
+										text: ` ${name.split(' ').slice(1).join(' ')}`,
+										color: '000000'
+									})
+								]
+							}),
+							new Table({
+								width: {
+									size: 100,
+									type: WidthType.PERCENTAGE
+								},
+								rows: [
 									new TableRow({
 										children: [
 											new TableCell({
-												children: [new Paragraph(i.toString())]
+												verticalAlign: VerticalAlign.CENTER,
+												width: {
+													size: 1,
+													type: WidthType.DXA
+												},
+												children: [
+													new Paragraph({
+														text: '№ п/п',
+														alignment: AlignmentType.CENTER
+													})
+												]
 											}),
 											new TableCell({
-												children: [new Paragraph(e.headline)]
+												verticalAlign: VerticalAlign.CENTER,
+												children: [
+													new Paragraph({
+														children: [
+															new TextRun('Наименование работы,'),
+															new TextRun('ее вид').break()
+														],
+														alignment: AlignmentType.CENTER
+													})
+												]
 											}),
 											new TableCell({
-												children: [new Paragraph('Печатн.')]
+												verticalAlign: VerticalAlign.CENTER,
+												width: {
+													size: 1,
+													type: WidthType.DXA
+												},
+												children: [
+													new Paragraph({
+														text: 'Характер работы',
+														alignment: AlignmentType.CENTER
+													})
+												]
 											}),
 											new TableCell({
-												children: [new Paragraph('')]
+												verticalAlign: VerticalAlign.CENTER,
+												children: [
+													new Paragraph({
+														text: 'Выходные данные',
+														alignment: AlignmentType.CENTER
+													})
+												]
 											}),
 											new TableCell({
-												children: [new Paragraph('')]
+												width: {
+													size: 1,
+													type: WidthType.DXA
+												},
+												children: [
+													new Paragraph({
+														text: 'Объем в п.л. или с.',
+														alignment: AlignmentType.CENTER
+													})
+												]
 											}),
 											new TableCell({
-												children: [new Paragraph(e.authors.map(a => a.author).join('\n'))]
+												verticalAlign: VerticalAlign.CENTER,
+												children: [
+													new Paragraph({
+														text: 'Соавторы',
+														alignment: AlignmentType.CENTER
+													})
+												]
 											})
 										]
-									})
-								))
-							],
-							width: {
-								size: 100,
-								type: WidthType.PERCENTAGE
-							}
-						})
-					]
-				})
+									}),
+									new TableRow({
+										children: [1, 2, 3, 4, 5, 6].map(i => (
+											new TableCell({
+												children: [
+													new Paragraph({
+														text: i.toString(),
+														alignment: AlignmentType.CENTER
+													})
+												]
+											})
+										))
+									}),
+									new TableRow({
+										children: [
+											new TableCell({
+												columnSpan: 6,
+												children: [
+													new Paragraph({
+														text: 'a) научные работы',
+														alignment: AlignmentType.CENTER
+													})
+												]
+											})
+										]
+									}),
+									...data.map((e, i) => (
+										new TableRow({
+											//tableHeader: true,
+											children: [
+												new TableCell({
+													children: [
+														new Paragraph({
+															text: (i + 1).toString(),
+															alignment: AlignmentType.CENTER
+														})
+													]
+												}),
+												new TableCell({
+													children: [
+														new Paragraph(e.headline)
+													]
+												}),
+												new TableCell({
+													children: [
+														new Paragraph({
+															text: 'Печатн.',
+															alignment: AlignmentType.CENTER
+														})
+													]
+												}),
+												new TableCell({
+													children: [
+														new Paragraph(
+															`${publications[e.publicationPlace]}, ${e.firstCreationDate.getFullYear()}`
+														)
+													]
+												}),
+												new TableCell({
+													children: [
+														new Paragraph({
+															text: pages[i].toString(),
+															alignment: AlignmentType.CENTER
+														})
+													]
+												}),
+												new TableCell({
+													children: e.authors.map(a => a.author)
+														.filter(a => !a.match(new RegExp(author.split(' ')[1], 'i')))
+														.map(a => (new Paragraph(a)))
+												})
+											]
+										})
+									))
+								]
+							}),
+							new Paragraph({
+								alignment: AlignmentType.LEFT,
+								children: [
+									new TextRun({
+										text: title
+									}).break(),
+								]
+							}),
+							new Paragraph({
+								text: `${author.slice(0, 4).toUpperCase()}${author.slice(4)}`,
+								alignment: AlignmentType.RIGHT,
+							})
+						]
+					})
 
-				Packer.toBlob(doc).then(blob => {
-					saveAs(blob, 'Справка (форма 16).docx')
+					Packer.toBlob(doc).then(blob => {
+						saveAs(blob, 'Справка (форма 16).docx')
+					})
 				})
-			})
+		})
 	}
 
 	return (
@@ -194,10 +346,16 @@ export const Form16 = () => {
 					onChange={e => setName(e.target.value)}
 				/>
 				<TextField
-					label="Автор"
+					label="Автор (инициал имени, фамилия)"
 					variant="filled"
 					value={author}
 					onChange={e => setAuthor(e.target.value)}
+				/>
+				<TextField
+					label="Звание"
+					variant="filled"
+					value={title}
+					onChange={e => setTitle(e.target.value)}
 				/>
 				<Button className={styles.button} variant='contained' onClick={generateForm}>
 					СОЗДАТЬ СПРАВКУ
