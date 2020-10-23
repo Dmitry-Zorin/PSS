@@ -39,6 +39,11 @@ module.exports = () => {
                 {
                     test: /\.(woff|woff2|eot|ttf|otf)$/,
                     loader: 'file-loader'
+                },
+                {
+                    test: /\.(js)$/,
+                    exclude: /node_modules/,
+                    use: ['babel-loader', 'eslint-loader']
                 }
             ]
         },
