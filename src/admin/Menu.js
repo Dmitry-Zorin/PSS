@@ -32,8 +32,11 @@ const Menu = ({ onMenuClick, logout }) => {
 		<div>
 			<MenuItemLink
 				to="/"
-				primaryText={<Typography className={classes.menuItem} variant="body1" component="pre">Технополис
-					"ЭРА"</Typography>}
+				primaryText={(
+					<Typography className={classes.menuItem} variant="body1" component="pre">
+						Технополис "ЭРА"
+					</Typography>
+				)}
 				leftIcon={<StarIcon/>}
 				onClick={onMenuClick}
 				sidebarIsOpen={open}
@@ -44,12 +47,15 @@ const Menu = ({ onMenuClick, logout }) => {
 						<MenuItemLink
 							key={resource.name}
 							to={`/${resource.name}`}
-							primaryText={
-								<Typography className={classes.menuItem} variant="body1"
-														component="pre">{(resource.options && resource.options.label)}</Typography> ||
-								<Typography className={classes.menuItem} variant="body1"
-														component="pre">{resource.name}</Typography>
-							}
+							primaryText={(
+								<Typography className={classes.menuItem} variant="body1" component="pre">
+									{(resource.options && resource.options.label)}
+								</Typography>
+							) || (
+								<Typography className={classes.menuItem} variant="body1" component="pre">
+									{resource.name}
+								</Typography>
+							)}
 							leftIcon={
 								resource.icon ? <resource.icon/> : <DefaultIcon/>
 							}
@@ -73,12 +79,15 @@ const Menu = ({ onMenuClick, logout }) => {
 									<MenuItemLink
 										key={resource.name}
 										to={`/${resource.name}`}
-										primaryText={
-											<Typography className={classes.menuItem} variant="body1"
-																	component="pre">{(resource.options && resource.options.label)}</Typography> ||
-											<Typography className={classes.menuItem} variant="body1"
-																	component="pre">{resource.name}</Typography>
-										}
+										primaryText={(
+											<Typography className={classes.menuItem} variant="body1" component="pre">
+												{(resource.options && resource.options.label)}
+											</Typography>
+										) || (
+											<Typography className={classes.menuItem} variant="body1" component="pre">
+												{resource.name}
+											</Typography>
+										)}
 										leftIcon={
 											resource.icon ? <resource.icon/> : <DefaultIcon/>
 										}

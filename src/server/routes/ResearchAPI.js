@@ -6,6 +6,8 @@ const Model = mongoose.model('Research', schema)
 const resource = 'researches'
 const mimeTypes = ['application/x-rar-compressed', 'application/zip']
 
+const serverUrl = `http://${process.env.HOST}:${process.env.PORT}`
+
 function extractDataToSend(data) {
 	return {
 		id: data.id,
@@ -19,7 +21,7 @@ function extractDataToSend(data) {
 		category: data.category,
 		// subdivisions: data.subdivisions,
 		file: {
-			url: data.file,
+			url: `${data.file.includes('http://') ? '' : serverUrl}${data.file}`,
 			title: data.headline
 		}
 	}

@@ -140,10 +140,8 @@ function createAPI(app, resource, Model, extractDataToSend, extractDataFromReque
 	})
 }
 
-function createAPIwithFile(app, resource, mimeTypes,
-													 Model, extractDataToSend, extractDataFromRequest) {
-
-	const filesFolder = path.join('/media/', resource)
+function createAPIwithFile(app, resource, mimeTypes, Model, extractDataToSend, extractDataFromRequest) {
+	let filesFolder = path.join('/media/', resource)
 
 	const filesStorage = multer.diskStorage({
 		destination: (req, file, cb) => {

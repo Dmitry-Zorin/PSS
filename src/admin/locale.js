@@ -52,17 +52,14 @@ module.exports = {
 			},
 			references: {
 				all_missing: 'Связанных данных не найдено',
-				many_missing:
-					'Некоторые из связанных данных не доступны',
-				single_missing:
-					'Связанный объект не доступен'
+				many_missing: 'Некоторые из связанных данных не доступны',
+				single_missing: 'Связанный объект не доступен'
 			}
 		},
 		message: {
 			about: 'Справка',
 			are_you_sure: 'Вы уверены?',
-			bulk_delete_content:
-				'Вы уверены, что хотите удалить %{name}? |||| Вы уверены, что хотите удалить объекты, кол-вом %{smart_count} ?',
+			bulk_delete_content: 'Вы уверены, что хотите удалить %{name}? |||| Вы уверены, что хотите удалить объекты, кол-вом %{smart_count} ?',
 			bulk_delete_title: 'Удалить %{name} |||| Удалить %{smart_count} %{name}',
 			delete_content: 'Подтвердите удаление',
 			delete_title: '',
@@ -76,8 +73,7 @@ module.exports = {
 		},
 		navigation: {
 			no_results: 'Результатов не найдено',
-			no_more_results:
-				'Страница %{page} выходит за пределы нумерации, попробуйте предыдущую',
+			no_more_results: 'Страница %{page} выходит за пределы нумерации, попробуйте предыдущую',
 			page_out_of_boundaries: 'Страница %{page} вне границ',
 			page_out_from_end: 'Невозможно переместиться дальше последней страницы',
 			page_out_from_begin: 'Номер страницы не может быть меньше 1',
