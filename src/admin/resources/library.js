@@ -15,7 +15,6 @@ import {
 	minLength,
 	ReferenceArrayField,
 	ReferenceArrayInput,
-	ReferenceField,
 	ReferenceInput,
 	required,
 	SelectArrayInput,
@@ -118,7 +117,11 @@ export const ListForm = ({ permissions, ...props }) => (
 				source="text"
 				maxchars={250}
 			/>
-			<ReferenceArrayField label="Подразделения" reference="subdivisions" source="subdivisions">
+			<ReferenceArrayField
+				label="Подразделения"
+				reference="subdivisions"
+				source="subdivisions"
+			>
 				<SingleFieldList>
 					<ChipField source="name" />
 				</SingleFieldList>
@@ -143,10 +146,10 @@ export const ListForm = ({ permissions, ...props }) => (
 	</List>
 )
 
-export const CreateForm = props => (
+export const CreateForm = (props) => (
 	<Create
-		title="Добавить статью"
-		successMessage="Статья добавлена"
+		title="Добавить книгу"
+		successMessage="Книга добавлена"
 		undoable={false}
 		{...props}
 	>
@@ -172,7 +175,10 @@ export const CreateForm = props => (
 				label="Дата создания"
 				source="creationDate"
 				validate={validateCreationDate}
-				options={{ format: dateFormat, cancelLabel: cancelLabel }}
+				options={{
+					format: dateFormat,
+					cancelLabel: cancelLabel
+				}}
 			/>
 			<ArrayInput
 				validate={validateAuthors}
@@ -186,13 +192,6 @@ export const CreateForm = props => (
 					/>
 				</SimpleFormIterator>
 			</ArrayInput>
-			<ReferenceInput
-				label="Место публикации"
-				source="publicationPlace"
-				reference="publications"
-			>
-				<SelectInput optionText="name" />
-			</ReferenceInput>
 			<ReferenceArrayInput
 				fullWidth
 				label="Подразделения"
@@ -217,16 +216,15 @@ export const CreateForm = props => (
 	</Create>
 )
 
-export const EditForm = props => (
+export const EditForm = (props) => (
 	<Edit
 		title={<Title />}
-		successMessage="Статья обновлена"
+		successMessage="Книга обновлена"
 		undoable={false}
 		actions={<EditActions />}
-		{...props}>
-		<SimpleForm
-			submitOnEnter={false}
-		>
+		{...props}
+	>
+		<SimpleForm submitOnEnter={false}>
 			<TextInput
 				fullWidth
 				label="Название"
@@ -258,13 +256,6 @@ export const EditForm = props => (
 					/>
 				</SimpleFormIterator>
 			</ArrayInput>
-			<ReferenceInput
-				label="Место публикации"
-				source="publicationPlace"
-				reference="publications"
-			>
-				<SelectInput optionText="name" />
-			</ReferenceInput>
 			<ReferenceArrayInput
 				fullWidth
 				label="Подразделения"
@@ -326,15 +317,11 @@ export const ShowForm = ({ permissions, enableActions, ...props }) => {
 						/>
 					</SingleFieldList>
 				</ArrayField>
-				<ReferenceField
-					label="Место публикации"
-					source="publicationPlace"
-					reference="publications"
-					link=""
+				<ReferenceArrayField
+					label="Подразделения"
+					reference="subdivisions"
+					source="subdivisions"
 				>
-					<TextField source="name" />
-				</ReferenceField>
-				<ReferenceArrayField label="Подразделения" reference="subdivisions" source="subdivisions">
 					<SingleFieldList>
 						<ChipField source="name" />
 					</SingleFieldList>

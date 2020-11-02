@@ -1,23 +1,27 @@
 import DateFnsUtils from '@date-io/date-fns'
+import { blue, blueGrey, deepOrange, grey, indigo, pink, red } from '@material-ui/core/colors'
 
 import { createMuiTheme } from '@material-ui/core/styles'
-import BallotIcon from '@material-ui/icons/Ballot'
-import CardMembershipIcon from '@material-ui/icons/CardMembership'
-import CardTravelIcon from '@material-ui/icons/CardTravel'
-import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline'
 
 import CodeIcon from '@material-ui/icons/Code'
-import DashboardIcon from '@material-ui/icons/Dashboard'
+import DescriptionIcon from '@material-ui/icons/Description'
+import DeveloperBoardIcon from '@material-ui/icons/DeveloperBoard'
 import EmojiObjectsIcon from '@material-ui/icons/EmojiObjects'
 import FeaturedPlayListIcon from '@material-ui/icons/FeaturedPlayList'
 import GroupIcon from '@material-ui/icons/Group'
-import ListIcon from '@material-ui/icons/List'
 import MenuBookIcon from '@material-ui/icons/MenuBook'
 import PieChartIcon from '@material-ui/icons/PieChart'
-import TextFieldsIcon from '@material-ui/icons/TextFields'
+import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck'
+import SchoolIcon from '@material-ui/icons/School'
+import SubjectIcon from '@material-ui/icons/Subject'
+import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
 import TimelineIcon from '@material-ui/icons/Timeline'
+import TrendingUpIcon from '@material-ui/icons/TrendingUp'
+import VerifiedUserIcon from '@material-ui/icons/VerifiedUser'
 import VisibilityIcon from '@material-ui/icons/Visibility'
+
 import { MuiPickersUtilsProvider } from '@material-ui/pickers'
+
 import format from 'date-fns/format'
 import ru from 'date-fns/locale/ru'
 
@@ -61,6 +65,13 @@ import {
 	ListForm as DevelopmentList,
 	ShowForm as DevelopmentShow,
 } from './resources/developments'
+
+import {
+	CreateForm as LibraryCreate,
+	EditForm as LibraryEdit,
+	ListForm as LibraryList,
+	ShowForm as LibraryShow,
+} from './resources/library'
 
 import {
 	CreateForm as PatentCreate,
@@ -139,6 +150,18 @@ const i18nProvider = polyglotI18nProvider(() => russianMessages, 'ru')
 const theme = createMuiTheme({
 	typography: {
 		fontFamily: 'Nunito',
+	},
+	palette: {
+		primary: {
+			light: grey[700],
+			main: grey[800],
+			dark: grey[900]
+		},
+		secondary: {
+			light: red[300],
+			main: red[500],
+			dark: red[700]
+		}
 	}
 })
 
@@ -148,7 +171,7 @@ const AdminPanel = () => (
 			theme={theme}
 			layout={MyLayout}
 			customRoutes={Routes}
-			title='Технополис "ЭРА"'
+			title='Технополис «ЭРА»'
 			dashboard={DashBoard}
 			i18nProvider={i18nProvider}
 			dataProvider={dataProvider}
@@ -157,7 +180,7 @@ const AdminPanel = () => (
 			{(permissions) => [
 				<Resource
 					name="articles"
-					icon={TextFieldsIcon}
+					icon={DescriptionIcon}
 					options={{ label: 'Статьи' }}
 					list={ArticleList}
 					edit={permissions ? ArticleEdit : null}
@@ -175,7 +198,7 @@ const AdminPanel = () => (
 				/>,
 				<Resource
 					name="researches"
-					icon={MenuBookIcon}
+					icon={SchoolIcon}
 					options={{ label: 'НИР' }}
 					list={ResearchList}
 					edit={permissions ? ResearchEdit : null}
@@ -184,7 +207,7 @@ const AdminPanel = () => (
 				/>,
 				<Resource
 					name="developments"
-					icon={DashboardIcon}
+					icon={DeveloperBoardIcon}
 					options={{ label: 'ОКР' }}
 					list={DevelopmentList}
 					edit={permissions ? DevelopmentEdit : null}
@@ -202,7 +225,7 @@ const AdminPanel = () => (
 				/>,
 				<Resource
 					name="projects"
-					icon={CardTravelIcon}
+					icon={TrendingUpIcon}
 					options={{ label: 'Инициативные\nпроекты' }}
 					list={ProjectList}
 					edit={permissions ? ProjectEdit : null}
@@ -211,7 +234,7 @@ const AdminPanel = () => (
 				/>,
 				<Resource
 					name="abstracts"
-					icon={ListIcon}
+					icon={SubjectIcon}
 					options={{ label: 'Тезисы докладов' }}
 					list={AbstractList}
 					edit={permissions ? AbstractEdit : null}
@@ -220,7 +243,7 @@ const AdminPanel = () => (
 				/>,
 				<Resource
 					name="approbations"
-					icon={CheckCircleOutlineIcon}
+					icon={ThumbUpAltIcon}
 					options={{ label: 'Апробации' }}
 					list={ApprobationList}
 					edit={permissions ? ApprobationEdit : null}
@@ -229,7 +252,7 @@ const AdminPanel = () => (
 				/>,
 				<Resource
 					name="patents"
-					icon={CardMembershipIcon}
+					icon={PlaylistAddCheckIcon}
 					options={{ label: 'Патенты' }}
 					list={PatentList}
 					edit={permissions ? PatentEdit : null}
@@ -238,7 +261,7 @@ const AdminPanel = () => (
 				/>,
 				<Resource
 					name="verifications"
-					icon={BallotIcon}
+					icon={VerifiedUserIcon}
 					options={{ label: 'Испытания' }}
 					list={VerificationList}
 					edit={permissions ? VerificationEdit : null}
@@ -283,6 +306,15 @@ const AdminPanel = () => (
 					icon={FeaturedPlayListIcon}
 					options={{ label: 'Справка' }}
 					list={Form16}
+				/>,
+				<Resource
+					name='library'
+					icon={MenuBookIcon}
+					options={{ label: 'Библиотека' }}
+					list={LibraryList}
+					edit={LibraryEdit}
+					create={LibraryCreate}
+					show={LibraryShow}
 				/>
 			]}
 		</Admin>

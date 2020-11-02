@@ -22,7 +22,7 @@ export default () => {
 	return (
 		<Card className={classes.card}>
 			<Typography variant="h5" component="h5" className={classes.header}>
-				Системa хранения результатов научных трудов Военного инновационного технополиса "ЭРА"
+				Системa хранения результатов научных трудов Военного инновационного технополиса «ЭРА»
 			</Typography>
 		</Card>
 	)

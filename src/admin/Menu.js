@@ -2,7 +2,7 @@ import { useMediaQuery } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
-import StarIcon from '@material-ui/icons/Star'
+import StarBorderIcon from '@material-ui/icons/StarBorder';
 import DefaultIcon from '@material-ui/icons/ViewList'
 import React, { useState } from 'react'
 import { getResources, MenuItemLink, usePermissions } from 'react-admin'
@@ -34,10 +34,10 @@ const Menu = ({ onMenuClick, logout }) => {
 				to="/"
 				primaryText={(
 					<Typography className={classes.menuItem} variant="body1" component="pre">
-						Технополис "ЭРА"
+						Технополис «ЭРА»
 					</Typography>
 				)}
-				leftIcon={<StarIcon />}
+				leftIcon={<StarBorderIcon />}
 				onClick={onMenuClick}
 				sidebarIsOpen={open}
 			/>

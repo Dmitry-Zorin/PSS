@@ -33,7 +33,7 @@ module.exports = {
 		},
 		page: {
 			create: 'Создать %{name}',
-			dashboard: 'Технополис "ЭРА"',
+			dashboard: 'Технополис «ЭРА»',
 			edit: '%{name} #%{id}',
 			error: 'Что-то пошло не так',
 			list: '%{name}',

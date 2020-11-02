@@ -15,13 +15,6 @@ const useStyles = makeStyles(theme => ({
 			width: '100%',
 			margin: theme.spacing(1),
 		}
-	},
-	button: {
-		color: 'white',
-		background: red[500],
-		'&:hover': {
-			background: red[700]
-		}
 	}
 }))
 
@@ -32,7 +25,7 @@ export const Form16 = () => {
 
 	const [lastname, setLastname] = useState('горшков')
 	const [name, setName] = useState('горшкова с н')
-	const [title, setTitle] = useState('старший оператор 4 научной роты ФГАУ ВИТ "ЭРА"')
+	const [title, setTitle] = useState('старший оператор 4 научной роты ФГАУ ВИТ «ЭРА»')
 
 	const getPublications = () => (
 		dataProvider.getList('publications', {
@@ -129,7 +122,7 @@ export const Form16 = () => {
 					value={title}
 					onChange={e => setTitle(e.target.value)}
 				/>
-				<Button className={styles.button} variant='contained' onClick={generateForm}>
+				<Button color='secondary' variant='contained' onClick={generateForm}>
 					СОЗДАТЬ СПРАВКУ
 				</Button>
 			</form>

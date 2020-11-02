@@ -35,13 +35,6 @@ const useStyles = makeStyles(theme => ({
 	margin: {
 		margin: '0 auto'
 	},
-	fab: {
-		color: 'white',
-		background: red[500],
-		'&:hover': {
-			background: red[700]
-		}
-	},
 	fabContainer: {
 		position: 'fixed',
 		bottom: theme.spacing(3),
@@ -133,7 +126,7 @@ const ScrollTopButton = () => {
 	return (
 		<Zoom in={trigger}>
 			<div className={styles.fabContainer} onClick={handleClick}>
-				<Fab className={styles.fab}>
+				<Fab color='secondary'>
 					<KeyboardArrowUpIcon />
 				</Fab>
 			</div>

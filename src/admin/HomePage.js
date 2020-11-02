@@ -1,4 +1,6 @@
 import { Card, Grid, Typography } from '@material-ui/core'
+import CardActionArea from '@material-ui/core/CardActionArea'
+import red from '@material-ui/core/colors/red'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { makeStyles } from '@material-ui/core/styles'
 import React from 'react'
@@ -21,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 			position: 'absolute',
 			bottom: 0,
 			right: 0,
-			borderTop: '7rem solid #2196f3',
+			borderTop: `7rem solid ${red[500]}`,
 			borderLeft: '5rem solid transparent',
 			width: 0,
 		},
@@ -34,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 		justifyContent: 'center',
 		alignItems: 'center',
 		height: '5rem',
-		backgroundColor: '#2196f3',
+		backgroundColor: red[500],
 	},
 	titleText: {
 		fontSize: '2.2em',
@@ -76,29 +78,29 @@ const useStyles = makeStyles((theme) => ({
 const tabsData = [
 	{
 		image: ScienceImg,
-		title: 'Система хранения результатов научных трудов Военного инновационного технополиса "ЭРА"',
+		title: 'Система хранения результатов научных трудов Военного инновационного технополиса «ЭРА»',
 		link: '/'
 	},
 ]
 
 const HomePage = () => {
 	const classes = useStyles()
+
 	const cards = tabsData.map(tab => (
 		<Grid key={tab.link} container item justify="center" xs={12} md={6} lg={4}>
 			<Card className={classes.card}>
-				<Link to={tab.link}>
+				<CardActionArea component={Link} to={tab.link}>
 					<img className={classes.cardImage} src={tab.image} />
-				</Link>
-				<div className={classes.cardContent}>
-					<Link to={tab.link} className={classes.cardLink}>
+					<div className={classes.cardContent}>
 						<Typography className={classes.cardContentTitle} align="center" variant="h6" component="h2">
 							{tab.title}
 						</Typography>
-					</Link>
-				</div>
+					</div>
+				</CardActionArea>
 			</Card>
 		</Grid>
 	))
+
 	return (
 		<>
 			<CssBaseline />
@@ -112,7 +114,7 @@ const HomePage = () => {
 					<Grid item xs>
 						<div className={classes.title}>
 							<Typography className={classes.titleText} component="span">
-								Военный инновационный технополис "ЭРА"
+								Военный инновационный технополис «ЭРА»
 							</Typography>
 						</div>
 					</Grid>
