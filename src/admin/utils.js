@@ -26,7 +26,7 @@ export function createEmptyPage(noPlacesMessage, addDataMessage) {
 			<Typography variant="body1">
 				{addDataMessage}
 			</Typography>
-			<CreateButton basePath={basePath}/>
+			<CreateButton basePath={basePath} />
 		</Box>
 	)
 }
@@ -34,9 +34,9 @@ export function createEmptyPage(noPlacesMessage, addDataMessage) {
 export function getShowActions() {
 	return ({ permissions, basePath, data, resource }) => (
 		<TopToolbar>
-			<ListButton basePath={basePath} record={data}/>
-			{permissions && <EditButton basePath={basePath} record={data}/>}
-			<RefreshButton basePath={basePath} record={data}/>
+			<ListButton basePath={basePath} record={data} />
+			{permissions && <EditButton basePath={basePath} record={data} />}
+			<RefreshButton basePath={basePath} record={data} />
 		</TopToolbar>
 	)
 }
@@ -44,11 +44,11 @@ export function getShowActions() {
 export function getEditActions() {
 	return ({ basePath, data, resource }) => (
 		<TopToolbar>
-			<ListButton basePath={basePath} record={data}/>
-			<CreateButton basePath={basePath} record={data}/>
-			<CloneButton basePath={basePath} record={data}/>
-			<ShowButton basePath={basePath} record={data}/>
-			<RefreshButton basePath={basePath} record={data}/>
+			<ListButton basePath={basePath} record={data} />
+			<CreateButton basePath={basePath} record={data} />
+			<CloneButton basePath={basePath} record={data} />
+			<ShowButton basePath={basePath} record={data} />
+			<RefreshButton basePath={basePath} record={data} />
 		</TopToolbar>
 	)
 }
@@ -59,11 +59,11 @@ export function getEditActionsWithoutFile() {
 		delete dataWithoutFile.file
 		return (
 			<TopToolbar>
-				<ListButton basePath={basePath} record={data}/>
-				<CreateButton basePath={basePath} record={data}/>
-				<CloneButton basePath={basePath} record={dataWithoutFile}/>
-				<ShowButton basePath={basePath} record={data}/>
-				<RefreshButton basePath={basePath} record={data}/>
+				<ListButton basePath={basePath} record={data} />
+				<CreateButton basePath={basePath} record={data} />
+				<CloneButton basePath={basePath} record={dataWithoutFile} />
+				<ShowButton basePath={basePath} record={data} />
+				<RefreshButton basePath={basePath} record={data} />
 			</TopToolbar>
 		)
 	}

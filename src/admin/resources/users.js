@@ -20,7 +20,7 @@ import {
 import { createEmptyPage, createTitle, getShowActions } from '../utils'
 
 const validateLoginExistsOnCreate = (values) => {
-	return fetch(`http://${process.env.HOST}:${process.env.PORT}/api/users/unique`, {
+	return fetch(`${process.env.SERVER}/api/users/unique`, {
 		method: 'POST',
 		body: JSON.stringify({ login: values.login }),
 		headers: { 'Content-Type': 'application/json' }
@@ -47,35 +47,40 @@ const Filters = (props) => (
 		<TextInput
 			label="Поиск по логину"
 			source="login"
-			alwaysOn/>
+			alwaysOn
+		/>
 		<NullableBooleanInput
 			label="Администратор"
 			source="isAdmin"
-			displayNull/>
+			displayNull
+		/>
 	</Filter>
 )
 
 export const ListForm = props => (
 	<List
 		title="Список пользователей"
-		filters={<Filters/>}
+		filters={<Filters />}
 		perPage={25}
 		exporter={false}
 		sort={{ field: 'firstCreationDate', order: 'DESC' }}
-		empty={<Empty/>}
+		empty={<Empty />}
 		{...props}>
 		<Datagrid
 			rowClick="show"
-			expand={<ShowForm enableActions={false}/>}>
+			expand={<ShowForm enableActions={false} />}
+		>
 			<TextField
 				label="Логин"
-				source="login"/>
+				source="login"
+			/>
 			{/* <TextField
                 label="Пароль"
                 source="password" /> */}
 			<BooleanField
 				label="Администратор"
-				source="isAdmin"/>
+				source="isAdmin"
+			/>
 		</Datagrid>
 	</List>
 )
@@ -89,20 +94,24 @@ export const CreateForm = props => (
 		<SimpleForm
 			validate={validateLoginExistsOnCreate}
 			redirect="list"
-			submitOnEnter={false}>
+			submitOnEnter={false}
+		>
 			<TextInput
 				fullWidth
 				label="Логин"
 				source="login"
-				validate={validateLogin}/>
+				validate={validateLogin}
+			/>
 			<TextInput
 				fullWidth
 				label="Пароль"
 				source="password"
-				validate={validatePassword}/>
+				validate={validatePassword}
+			/>
 			<BooleanInput
 				label="Администратор"
-				source="isAdmin"/>
+				source="isAdmin"
+			/>
 		</SimpleForm>
 	</Create>
 )
@@ -133,22 +142,24 @@ export const CreateForm = props => (
 // );
 
 export const ShowForm = ({ enableActions, ...props }) => {
-	const actions = enableActions ? <ShowActions/> : false
+	const actions = enableActions ? <ShowActions /> : false
 	return (
 		<Show
-			title={<Title/>}
+			title={<Title />}
 			actions={actions}
 			{...props}>
 			<SimpleShowLayout>
 				<TextField
 					label="Логин"
-					source="login"/>
+					source="login"
+				/>
 				{/* <TextField
                     label="Пароль"
                     source="password" /> */}
 				<BooleanField
 					label="Администратор"
-					source="isAdmin"/>
+					source="isAdmin"
+				/>
 			</SimpleShowLayout>
 		</Show>
 	)

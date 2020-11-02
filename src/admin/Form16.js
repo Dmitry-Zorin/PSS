@@ -109,7 +109,7 @@ export const Form16 = () => {
 
 	return (
 		<>
-			<Title title='Справка (форма 16)'/>
+			<Title title='Справка (форма 16)' />
 			<form className={styles.form} noValidate autoComplete="off">
 				<TextField
 					label="Автор (фамилия)"

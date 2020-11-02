@@ -37,7 +37,7 @@ const Menu = ({ onMenuClick, logout }) => {
 						Технополис "ЭРА"
 					</Typography>
 				)}
-				leftIcon={<StarIcon/>}
+				leftIcon={<StarIcon />}
 				onClick={onMenuClick}
 				sidebarIsOpen={open}
 			/>
@@ -57,7 +57,7 @@ const Menu = ({ onMenuClick, logout }) => {
 								</Typography>
 							)}
 							leftIcon={
-								resource.icon ? <resource.icon/> : <DefaultIcon/>
+								resource.icon ? <resource.icon /> : <DefaultIcon />
 							}
 							onClick={onMenuClick}
 							sidebarIsOpen={open}
@@ -72,7 +72,8 @@ const Menu = ({ onMenuClick, logout }) => {
 						isOpen={state.menuOther}
 						sidebarIsOpen={open}
 						name="Прочее"
-						icon={<MoreHorizIcon/>}>
+						icon={<MoreHorizIcon />}
+					>
 						{resources.map(resource => {
 							if (otherResources.includes(resource.name))
 								return (
@@ -89,7 +90,7 @@ const Menu = ({ onMenuClick, logout }) => {
 											</Typography>
 										)}
 										leftIcon={
-											resource.icon ? <resource.icon/> : <DefaultIcon/>
+											resource.icon ? <resource.icon /> : <DefaultIcon />
 										}
 										onClick={onMenuClick}
 										sidebarIsOpen={open}

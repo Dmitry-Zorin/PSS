@@ -56,10 +56,10 @@ export const Timeline = (props) => {
 		<ListController {...{ ...props, sort }}>
 			{({ data, ids, page, perPage, total, setPage }) => (
 				<>
-					<Title title={`События${page > 1 ? (': страница ' + page) : ''}`}/>
+					<Title title={`События${page > 1 ? (': страница ' + page) : ''}`} />
 					<List className={styles.list}>
 						{ids.map(id => (
-							<CardView key={id} event={data[id]}/>
+							<CardView key={id} event={data[id]} />
 						))}
 					</List>
 					{total > perPage ? (
@@ -74,7 +74,7 @@ export const Timeline = (props) => {
 							Результатов не найдено
 						</Typography>
 					)}
-					<ScrollTopButton/>
+					<ScrollTopButton />
 				</>
 			)}
 		</ListController>
@@ -134,7 +134,7 @@ const ScrollTopButton = () => {
 		<Zoom in={trigger}>
 			<div className={styles.fabContainer} onClick={handleClick}>
 				<Fab className={styles.fab}>
-					<KeyboardArrowUpIcon/>
+					<KeyboardArrowUpIcon />
 				</Fab>
 			</div>
 		</Zoom>

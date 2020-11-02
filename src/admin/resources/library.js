@@ -15,6 +15,7 @@ import {
 	minLength,
 	ReferenceArrayField,
 	ReferenceArrayInput,
+	ReferenceField,
 	ReferenceInput,
 	required,
 	SelectArrayInput,
@@ -34,7 +35,7 @@ import { DescriptionField, HeadlineField } from '../CustomFields'
 import { createEmptyPage, createTitle, getBulkActionButtons, getEditActionsWithoutFile, getShowActions } from '../utils'
 
 const validateHeadline = [required(), minLength(1),]
-const validateDescription = [required(), minLength(1),]
+const validateAnnotation = [required(), minLength(1),]
 const validateCreationDate = [required(),]
 const validateAuthors = [required(),]
 const validateFile = [required(),]
@@ -42,9 +43,11 @@ const validateFile = [required(),]
 const dateFormat = 'dd.MM.yyyy'
 const cancelLabel = 'Отмена'
 
-const Title = createTitle('Тезисы доклада', 'headline')
-const Empty = createEmptyPage('Нет доступных тезисов докладов',
-	'Для добавления тезисов доклада нажмите кнопку "Создать"')
+const Title = createTitle('Библиотека', 'headline')
+const Empty = createEmptyPage(
+	'Нет доступных книг',
+	'Для добавления книги нажмите кнопку "Создать"'
+)
 const ShowActions = getShowActions()
 const EditActions = getEditActionsWithoutFile()
 const BulkActionButtons = getBulkActionButtons()
@@ -57,8 +60,8 @@ const Filters = (props) => (
 			alwaysOn
 		/>
 		<TextInput
-			label="Описание"
-			source="description"
+			label="Аннотация"
+			source="text"
 		/>
 		<TextInput
 			label="Автор"
@@ -75,28 +78,34 @@ const Filters = (props) => (
 		<DateInput
 			label="Дата от"
 			source="dateFrom"
-			options={{ format: dateFormat, cancelLabel: cancelLabel }}
+			options={{
+				format: dateFormat,
+				cancelLabel: cancelLabel
+			}}
 		/>
 		<DateInput
 			label="Дата до"
 			source="dateTo"
-			options={{ format: dateFormat, cancelLabel: cancelLabel }}
+			options={{
+				format: dateFormat,
+				cancelLabel: cancelLabel
+			}}
 		/>
 	</Filter>
 )
 
 export const ListForm = ({ permissions, ...props }) => (
 	<List
-		title="Список тезисов докладов"
+		title="Список книг"
 		filters={<Filters />}
 		perPage={25}
 		exporter={false}
 		sort={{ field: 'firstCreationDate', order: 'DESC' }}
 		empty={<Empty />}
 		bulkActionButtons={<BulkActionButtons permissions={permissions} />}
-		{...props}>
+		{...props}
+	>
 		<Datagrid
-			// rowClick={permissions ? "edit" : "show"}
 			rowClick="show"
 			expand={<ShowForm enableActions={false} />}
 		>
@@ -105,10 +114,15 @@ export const ListForm = ({ permissions, ...props }) => (
 				source="headline"
 			/>
 			<DescriptionField
-				label="Описание"
-				source="description"
+				label="Аннотация"
+				source="text"
 				maxchars={250}
 			/>
+			<ReferenceArrayField label="Подразделения" reference="subdivisions" source="subdivisions">
+				<SingleFieldList>
+					<ChipField source="name" />
+				</SingleFieldList>
+			</ReferenceArrayField>
 			<ArrayField
 				source="authors"
 				label="Авторы"
@@ -120,11 +134,6 @@ export const ListForm = ({ permissions, ...props }) => (
 					/>
 				</SingleFieldList>
 			</ArrayField>
-			<ReferenceArrayField label="Подразделения" reference="subdivisions" source="subdivisions">
-				<SingleFieldList>
-					<ChipField source="name" />
-				</SingleFieldList>
-			</ReferenceArrayField>
 			<DateField
 				label="Дата создания"
 				source="creationDate"
@@ -136,10 +145,11 @@ export const ListForm = ({ permissions, ...props }) => (
 
 export const CreateForm = props => (
 	<Create
-		title="Добавить тезисы доклада"
-		successMessage="Тезисы доклада добавлены"
+		title="Добавить статью"
+		successMessage="Статья добавлена"
 		undoable={false}
-		{...props}>
+		{...props}
+	>
 		<SimpleForm
 			redirect="list"
 			submitOnEnter={false}
@@ -152,10 +162,11 @@ export const CreateForm = props => (
 			/>
 			<TextInput
 				fullWidth
-				label="Описание"
+				label="Аннотация"
 				multiline
-				source="description"
-				validate={validateDescription}
+				source="text"
+				validate={validateAnnotation}
+				options={{ multiLine: true }}
 			/>
 			<DateInput
 				label="Дата создания"
@@ -175,6 +186,13 @@ export const CreateForm = props => (
 					/>
 				</SimpleFormIterator>
 			</ArrayInput>
+			<ReferenceInput
+				label="Место публикации"
+				source="publicationPlace"
+				reference="publications"
+			>
+				<SelectInput optionText="name" />
+			</ReferenceInput>
 			<ReferenceArrayInput
 				fullWidth
 				label="Подразделения"
@@ -186,8 +204,8 @@ export const CreateForm = props => (
 			</ReferenceArrayInput>
 			<FileInput
 				source="file"
-				label="Архив"
-				accept="application/x-rar-compressed, application/zip"
+				label="PDF файл"
+				accept="application/pdf"
 				validate={validateFile}
 			>
 				<FileField
@@ -202,7 +220,7 @@ export const CreateForm = props => (
 export const EditForm = props => (
 	<Edit
 		title={<Title />}
-		successMessage="Тезисы доклада обновлены"
+		successMessage="Статья обновлена"
 		undoable={false}
 		actions={<EditActions />}
 		{...props}>
@@ -217,10 +235,10 @@ export const EditForm = props => (
 			/>
 			<TextInput
 				fullWidth
-				label="Описание"
+				label="Аннотация"
 				multiline
-				source="description"
-				validate={validateDescription}
+				source="text"
+				validate={validateAnnotation}
 			/>
 			<DateInput
 				label="Дата создания"
@@ -240,6 +258,13 @@ export const EditForm = props => (
 					/>
 				</SimpleFormIterator>
 			</ArrayInput>
+			<ReferenceInput
+				label="Место публикации"
+				source="publicationPlace"
+				reference="publications"
+			>
+				<SelectInput optionText="name" />
+			</ReferenceInput>
 			<ReferenceArrayInput
 				fullWidth
 				label="Подразделения"
@@ -252,13 +277,13 @@ export const EditForm = props => (
 			<FileField
 				source="file.url"
 				title="file.title"
-				label="Архив"
+				label="PDF файл"
 				target="_blank"
 			/>
 			<FileInput
 				source="newfile"
 				label="Новый файл"
-				accept="application/x-rar-compressed, application/zip"
+				accept="application/pdf"
 			>
 				<FileField
 					source="src"
@@ -282,8 +307,8 @@ export const ShowForm = ({ permissions, enableActions, ...props }) => {
 					source="headline"
 				/>
 				<TextField
-					label="Описание"
-					source="description"
+					label="Аннотация"
+					source="text"
 				/>
 				<DateField
 					label="Дата создания"
@@ -301,6 +326,14 @@ export const ShowForm = ({ permissions, enableActions, ...props }) => {
 						/>
 					</SingleFieldList>
 				</ArrayField>
+				<ReferenceField
+					label="Место публикации"
+					source="publicationPlace"
+					reference="publications"
+					link=""
+				>
+					<TextField source="name" />
+				</ReferenceField>
 				<ReferenceArrayField label="Подразделения" reference="subdivisions" source="subdivisions">
 					<SingleFieldList>
 						<ChipField source="name" />
@@ -309,7 +342,7 @@ export const ShowForm = ({ permissions, enableActions, ...props }) => {
 				<FileField
 					source="file.url"
 					title="file.title"
-					label="Архив"
+					label="PDF файл"
 					target="_blank"
 				/>
 			</SimpleShowLayout>

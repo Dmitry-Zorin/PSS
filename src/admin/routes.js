@@ -3,5 +3,5 @@ import { Route } from 'react-router-dom'
 import MainPage from './HomePage'
 
 export default [
-	<Route exact path="/home" render={() => <MainPage/>} noLayout/>,
+	<Route exact path="/home" render={() => <MainPage />} noLayout />,
 ]

@@ -9,7 +9,7 @@ const cors = require('cors')
 require('dotenv').config()
 
 app.use(cors({
-	origin: `http://${process.env.HOST}:${process.env.UI_PORT}`,
+	origin: process.env.UI_SERVER,
 	exposedHeaders: 'Content-Range',
 	credentials: true
 }))
@@ -39,7 +39,9 @@ app.use(function (req, res, next) {
 app.use('/media', express.static(path.join(appRoot.path, '/media/')))
 
 mongoose.connect(
-	`mongodb://${process.env.HOST}:${process.env.DB_PORT}/${process.env.DB}`, mongodbConfig)
+	`mongodb://${process.env.HOST}:${process.env.DB_PORT}/${process.env.DB}`,
+	mongodbConfig
+)
 	.then(() => {
 		app.listen(process.env.PORT, process.env.HOST, () => {
 			console.log('Server has started.')

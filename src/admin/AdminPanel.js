@@ -5,11 +5,11 @@ import BallotIcon from '@material-ui/icons/Ballot'
 import CardMembershipIcon from '@material-ui/icons/CardMembership'
 import CardTravelIcon from '@material-ui/icons/CardTravel'
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline'
-import FeaturedPlayListIcon from '@material-ui/icons/FeaturedPlayList'
 
 import CodeIcon from '@material-ui/icons/Code'
 import DashboardIcon from '@material-ui/icons/Dashboard'
 import EmojiObjectsIcon from '@material-ui/icons/EmojiObjects'
+import FeaturedPlayListIcon from '@material-ui/icons/FeaturedPlayList'
 import GroupIcon from '@material-ui/icons/Group'
 import ListIcon from '@material-ui/icons/List'
 import MenuBookIcon from '@material-ui/icons/MenuBook'
@@ -30,6 +30,7 @@ import authProvider from './AuthProvider'
 import DashBoard from './DashBoard'
 
 import dataProvider from './DataProvider'
+import { Form16 } from './Form16'
 import russianMessages from './locale'
 import MyLayout from './MyLayout'
 
@@ -111,7 +112,6 @@ import {
 } from './resources/subdivisions'
 
 import { Timeline } from './resources/timeline'
-import { Form16 } from './Form16'
 
 import { CreateForm as UserCreate, ListForm as UserList, ShowForm as UserShow, } from './resources/users'
 
@@ -152,7 +152,8 @@ const AdminPanel = () => (
 			dashboard={DashBoard}
 			i18nProvider={i18nProvider}
 			dataProvider={dataProvider}
-			authProvider={authProvider}>
+			authProvider={authProvider}
+		>
 			{(permissions) => [
 				<Resource
 					name="articles"
@@ -161,7 +162,8 @@ const AdminPanel = () => (
 					list={ArticleList}
 					edit={permissions ? ArticleEdit : null}
 					create={permissions ? ArticleCreate : null}
-					show={ArticleShow}/>,
+					show={ArticleShow}
+				/>,
 				<Resource
 					name="programs"
 					icon={CodeIcon}
@@ -169,7 +171,8 @@ const AdminPanel = () => (
 					list={ProgramList}
 					edit={permissions ? ProgramEdit : null}
 					create={permissions ? ProgramCreate : null}
-					show={ProgramShow}/>,
+					show={ProgramShow}
+				/>,
 				<Resource
 					name="researches"
 					icon={MenuBookIcon}
@@ -177,7 +180,8 @@ const AdminPanel = () => (
 					list={ResearchList}
 					edit={permissions ? ResearchEdit : null}
 					create={permissions ? ResearchCreate : null}
-					show={ResearchShow}/>,
+					show={ResearchShow}
+				/>,
 				<Resource
 					name="developments"
 					icon={DashboardIcon}
@@ -185,7 +189,8 @@ const AdminPanel = () => (
 					list={DevelopmentList}
 					edit={permissions ? DevelopmentEdit : null}
 					create={permissions ? DevelopmentCreate : null}
-					show={DevelopmentShow}/>,
+					show={DevelopmentShow}
+				/>,
 				<Resource
 					name="rationalizations"
 					icon={EmojiObjectsIcon}
@@ -193,7 +198,8 @@ const AdminPanel = () => (
 					list={RationalizationList}
 					edit={permissions ? RationalizationEdit : null}
 					create={permissions ? RationalizationCreate : null}
-					show={RationalizationShow}/>,
+					show={RationalizationShow}
+				/>,
 				<Resource
 					name="projects"
 					icon={CardTravelIcon}
@@ -201,7 +207,8 @@ const AdminPanel = () => (
 					list={ProjectList}
 					edit={permissions ? ProjectEdit : null}
 					create={permissions ? ProjectCreate : null}
-					show={ProjectShow}/>,
+					show={ProjectShow}
+				/>,
 				<Resource
 					name="abstracts"
 					icon={ListIcon}
@@ -209,7 +216,8 @@ const AdminPanel = () => (
 					list={AbstractList}
 					edit={permissions ? AbstractEdit : null}
 					create={permissions ? AbstractCreate : null}
-					show={AbstractShow}/>,
+					show={AbstractShow}
+				/>,
 				<Resource
 					name="approbations"
 					icon={CheckCircleOutlineIcon}
@@ -217,7 +225,8 @@ const AdminPanel = () => (
 					list={ApprobationList}
 					edit={permissions ? ApprobationEdit : null}
 					create={permissions ? ApprobationCreate : null}
-					show={ApprobationShow}/>,
+					show={ApprobationShow}
+				/>,
 				<Resource
 					name="patents"
 					icon={CardMembershipIcon}
@@ -225,7 +234,8 @@ const AdminPanel = () => (
 					list={PatentList}
 					edit={permissions ? PatentEdit : null}
 					create={permissions ? PatentCreate : null}
-					show={PatentShow}/>,
+					show={PatentShow}
+				/>,
 				<Resource
 					name="verifications"
 					icon={BallotIcon}
@@ -233,7 +243,8 @@ const AdminPanel = () => (
 					list={VerificationList}
 					edit={permissions ? VerificationEdit : null}
 					create={permissions ? VerificationCreate : null}
-					show={VerificationShow}/>,
+					show={VerificationShow}
+				/>,
 				<Resource
 					name="publications"
 					icon={VisibilityIcon}
@@ -241,7 +252,8 @@ const AdminPanel = () => (
 					list={PublicationList}
 					edit={PublicationEdit}
 					create={PublicationCreate}
-					show={PublicationShow}/>,
+					show={PublicationShow}
+				/>,
 				<Resource
 					name="subdivisions"
 					icon={PieChartIcon}
@@ -249,7 +261,8 @@ const AdminPanel = () => (
 					list={SubdivisionList}
 					edit={SubdivisionEdit}
 					create={SubdivisionCreate}
-					show={SubdivisionShow}/>,
+					show={SubdivisionShow}
+				/>,
 				<Resource
 					name="users"
 					icon={GroupIcon}
@@ -257,7 +270,8 @@ const AdminPanel = () => (
 					list={UserList}
 					// edit={UserEdit}
 					create={UserCreate}
-					show={UserShow}/>,
+					show={UserShow}
+				/>,
 				<Resource
 					name='timeline'
 					icon={TimelineIcon}

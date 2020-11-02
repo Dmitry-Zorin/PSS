@@ -34,7 +34,7 @@ const MyAppBar = props => {
 			/>
 			<Link to="/home">
 				<IconButton className={classes.homeIcon}>
-					<HomeIcon/>
+					<HomeIcon />
 				</IconButton>
 			</Link>
 		</AppBar>

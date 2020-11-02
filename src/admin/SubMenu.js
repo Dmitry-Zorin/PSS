@@ -23,20 +23,20 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const SubMenu = ({
-									 handleToggle,
-									 sidebarIsOpen,
-									 isOpen,
-									 name,
-									 icon,
-									 children,
-								 }) => {
+	                 handleToggle,
+	                 sidebarIsOpen,
+	                 isOpen,
+	                 name,
+	                 icon,
+	                 children,
+                 }) => {
 	const translate = useTranslate()
 	const classes = useStyles()
 
 	const header = (
 		<MenuItem button onClick={handleToggle}>
 			<ListItemIcon className={classes.icon}>
-				{isOpen ? <ExpandMore/> : icon}
+				{isOpen ? <ExpandMore /> : icon}
 			</ListItemIcon>
 			<Typography className={classes.menuItem} variant="body1" component="pre">
 				{name}
@@ -65,7 +65,7 @@ const SubMenu = ({
 				>
 					{children}
 				</List>
-				<Divider/>
+				<Divider />
 			</Collapse>
 		</>
 	)

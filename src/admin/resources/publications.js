@@ -31,26 +31,29 @@ const Filters = (props) => (
 		<TextInput
 			label="Поиск по названию"
 			source="name"
-			alwaysOn/>
+			alwaysOn
+		/>
 	</Filter>
 )
 
 export const ListForm = ({ permissions, ...props }) => (
 	<List
 		title="Список мест публикации"
-		filters={<Filters/>}
+		filters={<Filters />}
 		perPage={25}
 		exporter={false}
 		sort={{ field: 'firstCreationDate', order: 'DESC' }}
-		empty={<Empty/>}
-		bulkActionButtons={<BulkActionButtons permissions={permissions}/>}
+		empty={<Empty />}
+		bulkActionButtons={<BulkActionButtons permissions={permissions} />}
 		{...props}>
 		<Datagrid
 			rowClick={permissions ? 'edit' : 'show'}
-			expand={<ShowForm enableActions={false}/>}>
+			expand={<ShowForm enableActions={false} />}
+		>
 			<TextField
 				label="Место публикации"
-				source="name"/>
+				source="name"
+			/>
 		</Datagrid>
 	</List>
 )
@@ -63,45 +66,50 @@ export const CreateForm = props => (
 		{...props}>
 		<SimpleForm
 			redirect="list"
-			submitOnEnter={false}>
+			submitOnEnter={false}
+		>
 			<TextInput
 				fullWidth
 				label="Место публикации"
 				source="name"
-				validate={validateName}/>
+				validate={validateName}
+			/>
 		</SimpleForm>
 	</Create>
 )
 
 export const EditForm = props => (
 	<Edit
-		title={<Title/>}
+		title={<Title />}
 		successMessage="Место публикации обновлено"
 		undoable={false}
-		actions={<EditActions/>}
+		actions={<EditActions />}
 		{...props}>
 		<SimpleForm
-			submitOnEnter={false}>
+			submitOnEnter={false}
+		>
 			<TextInput
 				fullWidth
 				label="Место публикации"
 				source="name"
-				validate={validateName}/>
+				validate={validateName}
+			/>
 		</SimpleForm>
 	</Edit>
 )
 
 export const ShowForm = ({ permissions, enableActions, ...props }) => {
-	const actions = enableActions ? <ShowActions permissions={permissions}/> : false
+	const actions = enableActions ? <ShowActions permissions={permissions} /> : false
 	return (
 		<Show
-			title={<Title/>}
+			title={<Title />}
 			actions={actions}
 			{...props}>
 			<SimpleShowLayout>
 				<TextField
 					label="Место публикации"
-					source="name"/>
+					source="name"
+				/>
 			</SimpleShowLayout>
 		</Show>
 	)

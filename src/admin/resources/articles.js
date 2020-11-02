@@ -55,77 +55,90 @@ const Filters = (props) => (
 		<TextInput
 			label="Поиск по названию"
 			source="headline"
-			alwaysOn/>
+			alwaysOn
+		/>
 		<TextInput
 			label="Аннотация"
-			source="text"/>
+			source="text"
+		/>
 		<TextInput
 			label="Автор"
-			source="authors"/>
+			source="authors"
+		/>
 		<ReferenceInput
 			label="Место публикации"
 			source="publicationPlace"
-			reference="publications">
-			<SelectInput optionText="name"/>
+			reference="publications"
+		>
+			<SelectInput optionText="name" />
 		</ReferenceInput>
 		<ReferenceInput
 			perPage={1000}
 			label="Подразделение"
 			source="subdivisions"
-			reference="subdivisions">
-			<SelectInput optionText="name"/>
+			reference="subdivisions"
+		>
+			<SelectInput optionText="name" />
 		</ReferenceInput>
 		<DateInput
 			label="Дата от"
 			source="dateFrom"
-			options={{ format: dateFormat, cancelLabel: cancelLabel }}/>
+			options={{ format: dateFormat, cancelLabel: cancelLabel }}
+		/>
 		<DateInput
 			label="Дата до"
 			source="dateTo"
-			options={{ format: dateFormat, cancelLabel: cancelLabel }}/>
+			options={{ format: dateFormat, cancelLabel: cancelLabel }}
+		/>
 	</Filter>
 )
 
 export const ListForm = ({ permissions, ...props }) => (
 	<List
 		title="Список статей"
-		filters={<Filters/>}
+		filters={<Filters />}
 		perPage={25}
 		exporter={false}
 		sort={{ field: 'firstCreationDate', order: 'DESC' }}
-		empty={<Empty/>}
-		bulkActionButtons={<BulkActionButtons permissions={permissions}/>}
+		empty={<Empty />}
+		bulkActionButtons={<BulkActionButtons permissions={permissions} />}
 		{...props}>
 		<Datagrid
 			// rowClick={permissions ? "edit" : "show"}
 			rowClick="show"
-			expand={<ShowForm enableActions={false}/>}>
+			expand={<ShowForm enableActions={false} />}
+		>
 			<HeadlineField
 				label="Название"
-				source="headline"/>
+				source="headline"
+			/>
 			<DescriptionField
 				label="Аннотация"
 				source="text"
-				maxchars={250}/>
+				maxchars={250}
+			/>
 			<ReferenceField
 				label="Место публикации"
 				source="publicationPlace"
 				reference="publications"
-				link="">
-				<TextField source="name"/>
+				link=""
+			>
+				<TextField source="name" />
 			</ReferenceField>
 			<ReferenceArrayField label="Подразделения" reference="subdivisions" source="subdivisions">
 				<SingleFieldList>
-					<ChipField source="name"/>
+					<ChipField source="name" />
 				</SingleFieldList>
 			</ReferenceArrayField>
 			<ArrayField
 				source="authors"
-				label="Авторы">
+				label="Авторы"
+			>
 				<SingleFieldList linkType={false}>
 					<ChipField
 						label="Автор"
-						source="author"/>
+						source="author"
+					/>
 				</SingleFieldList>
 			</ArrayField>
 			<DateField
@@ -145,56 +158,66 @@ export const CreateForm = props => (
 		{...props}>
 		<SimpleForm
 			redirect="list"
-			submitOnEnter={false}>
+			submitOnEnter={false}
+		>
 			<TextInput
 				fullWidth
 				label="Название"
 				source="headline"
-				validate={validateHeadline}/>
+				validate={validateHeadline}
+			/>
 			<TextInput
 				fullWidth
 				label="Аннотация"
 				multiline
 				source="text"
 				validate={validateAnnotation}
-				options={{ multiLine: true }}/>
+				options={{ multiLine: true }}
+			/>
 			<DateInput
 				label="Дата создания"
 				source="creationDate"
 				validate={validateCreationDate}
-				options={{ format: dateFormat, cancelLabel: cancelLabel }}/>
+				options={{ format: dateFormat, cancelLabel: cancelLabel }}
+			/>
 			<ArrayInput
 				validate={validateAuthors}
 				source="authors"
-				label="Авторы">
+				label="Авторы"
+			>
 				<SimpleFormIterator>
 					<TextInput
 						label="Автор"
-						source="author"/>
+						source="author"
+					/>
 				</SimpleFormIterator>
 			</ArrayInput>
 			<ReferenceInput
 				label="Место публикации"
 				source="publicationPlace"
-				reference="publications">
-				<SelectInput optionText="name"/>
+				reference="publications"
+			>
+				<SelectInput optionText="name" />
 			</ReferenceInput>
 			<ReferenceArrayInput
 				fullWidth
 				label="Подразделения"
 				reference="subdivisions"
 				source="subdivisions"
-				perPage={1000}>
-				<SelectArrayInput optionText="name"/>
+				perPage={1000}
+			>
+				<SelectArrayInput optionText="name" />
 			</ReferenceArrayInput>
 			<FileInput
 				source="file"
 				label="PDF файл"
 				accept="application/pdf"
-				validate={validateFile}>
+				validate={validateFile}
+			>
 				<FileField
 					source="file"
-					title="Загруженный файл"/>
+					title="Загруженный файл"
+				/>
 			</FileInput>
 		</SimpleForm>
 	</Create>
@@ -202,114 +225,132 @@ export const CreateForm = props => (
 
 export const EditForm = props => (
 	<Edit
-		title={<Title/>}
+		title={<Title />}
 		successMessage="Статья обновлена"
 		undoable={false}
-		actions={<EditActions/>}
+		actions={<EditActions />}
 		{...props}>
 		<SimpleForm
-			submitOnEnter={false}>
+			submitOnEnter={false}
+		>
 			<TextInput
 				fullWidth
 				label="Название"
 				source="headline"
-				validate={validateHeadline}/>
+				validate={validateHeadline}
+			/>
 			<TextInput
 				fullWidth
 				label="Аннотация"
 				multiline
 				source="text"
-				validate={validateAnnotation}/>
+				validate={validateAnnotation}
+			/>
 			<DateInput
 				label="Дата создания"
 				source="creationDate"
 				validate={validateCreationDate}
-				options={{ format: dateFormat, cancelLabel: cancelLabel }}/>
+				options={{ format: dateFormat, cancelLabel: cancelLabel }}
+			/>
 			<ArrayInput
 				validate={validateAuthors}
 				label="Авторы"
-				source="authors">
+				source="authors"
+			>
 				<SimpleFormIterator>
 					<TextInput
 						label="Автор"
-						source="author"/>
+						source="author"
+					/>
 				</SimpleFormIterator>
 			</ArrayInput>
 			<ReferenceInput
 				label="Место публикации"
 				source="publicationPlace"
-				reference="publications">
-				<SelectInput optionText="name"/>
+				reference="publications"
+			>
+				<SelectInput optionText="name" />
 			</ReferenceInput>
 			<ReferenceArrayInput
 				fullWidth
 				label="Подразделения"
 				reference="subdivisions"
 				source="subdivisions"
-				perPage={1000}>
-				<SelectArrayInput optionText="name"/>
+				perPage={1000}
+			>
+				<SelectArrayInput optionText="name" />
 			</ReferenceArrayInput>
 			<FileField
 				source="file.url"
 				title="file.title"
 				label="PDF файл"
-				target="_blank"/>
+				target="_blank"
+			/>
 			<FileInput
 				source="newfile"
 				label="Новый файл"
-				accept="application/pdf">
+				accept="application/pdf"
+			>
 				<FileField
 					source="src"
-					title="Загруженный файл"/>
+					title="Загруженный файл"
+				/>
 			</FileInput>
 		</SimpleForm>
 	</Edit>
 )
 
 export const ShowForm = ({ permissions, enableActions, ...props }) => {
-	const actions = enableActions ? <ShowActions permissions={permissions}/> : false
+	const actions = enableActions ? <ShowActions permissions={permissions} /> : false
 	return (
 		<Show
-			title={<Title/>}
+			title={<Title />}
 			actions={actions}
 			{...props}>
 			<SimpleShowLayout>
 				<TextField
 					label="Название"
-					source="headline"/>
+					source="headline"
+				/>
 				<TextField
 					label="Аннотация"
-					source="text"/>
+					source="text"
+				/>
 				<DateField
 					label="Дата создания"
 					source="creationDate"
-					locales="ru-RU"/>
+					locales="ru-RU"
+				/>
 				<ArrayField
 					label="Авторы"
-					source="authors">
+					source="authors"
+				>
 					<SingleFieldList linkType={false}>
 						<ChipField
 							label="Автор"
-							source="author"/>
+							source="author"
+						/>
 					</SingleFieldList>
 				</ArrayField>
 				<ReferenceField
 					label="Место публикации"
 					source="publicationPlace"
 					reference="publications"
-					link="">
-					<TextField source="name"/>
+					link=""
+				>
+					<TextField source="name" />
 				</ReferenceField>
 				<ReferenceArrayField label="Подразделения" reference="subdivisions" source="subdivisions">
 					<SingleFieldList>
-						<ChipField source="name"/>
+						<ChipField source="name" />
 					</SingleFieldList>
 				</ReferenceArrayField>
 				<FileField
 					source="file.url"
 					title="file.title"
 					label="PDF файл"
-					target="_blank"/>
+					target="_blank"
+				/>
 			</SimpleShowLayout>
 		</Show>
 	)

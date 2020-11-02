@@ -1,7 +1,7 @@
 const authProvider = {
 
 	login: ({ username, password }) => {
-		return fetch(`http://${process.env.HOST}:${process.env.PORT}/api/login`, {
+		return fetch(`${process.env.SERVER}/api/login`, {
 			method: 'POST',
 			body: JSON.stringify({ login: username, password }),
 			credentials: 'include',
@@ -16,7 +16,7 @@ const authProvider = {
 	},
 
 	logout: () => {
-		return fetch(`http://${process.env.HOST}:${process.env.PORT}/api/logout`, {
+		return fetch(`${process.env.SERVER}/api/logout`, {
 			credentials: 'include',
 		})
 			.then(response => {
@@ -28,7 +28,7 @@ const authProvider = {
 	},
 
 	checkAuth: () => {
-		return fetch(`http://${process.env.HOST}:${process.env.PORT}/api/authenticate`, {
+		return fetch(`${process.env.SERVER}/api/authenticate`, {
 			credentials: 'include',
 		})
 			.then(response => {
@@ -40,7 +40,7 @@ const authProvider = {
 	},
 
 	getPermissions: () => {
-		return fetch(`http://${process.env.HOST}:${process.env.PORT}/api/permissions`, {
+		return fetch(`${process.env.SERVER}/api/permissions`, {
 			credentials: 'include',
 		})
 			.then(response => response.json())

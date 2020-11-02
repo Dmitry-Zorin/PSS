@@ -87,7 +87,7 @@ const HomePage = () => {
 		<Grid key={tab.link} container item justify="center" xs={12} md={6} lg={4}>
 			<Card className={classes.card}>
 				<Link to={tab.link}>
-					<img className={classes.cardImage} src={tab.image}/>
+					<img className={classes.cardImage} src={tab.image} />
 				</Link>
 				<div className={classes.cardContent}>
 					<Link to={tab.link} className={classes.cardLink}>
@@ -101,12 +101,12 @@ const HomePage = () => {
 	))
 	return (
 		<>
-			<CssBaseline/>
+			<CssBaseline />
 			<Grid container>
 				<Grid container>
 					<Grid item>
 						<div className={classes.logo}>
-							<img src={LogoImg}/>
+							<img src={LogoImg} />
 						</div>
 					</Grid>
 					<Grid item xs>

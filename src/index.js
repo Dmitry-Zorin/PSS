@@ -4,6 +4,6 @@ import AdminPanel from './admin/AdminPanel'
 import './fonts.css'
 
 ReactDOM.render(
-	<AdminPanel/>,
+	<AdminPanel />,
 	document.getElementById('app')
 )

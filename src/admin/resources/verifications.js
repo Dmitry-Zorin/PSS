@@ -49,63 +49,77 @@ const Filters = (props) => (
 		<TextInput
 			label="Поиск по названию"
 			source="headline"
-			alwaysOn/>
+			alwaysOn
+		/>
 		<TextInput
 			label="Описание"
-			source="description"/>
+			source="description"
+		/>
 		<TextInput
 			label="Головной исполнитель"
-			source="headPerformer"/>
+			source="headPerformer"
+		/>
 		<TextInput
 			label="Заказчик"
-			source="customer"/>
+			source="customer"
+		/>
 		<TextInput
 			label="Cоисполнитель"
-			source="authors"/>
+			source="authors"
+		/>
 		<DateInput
 			label="Дата от"
 			source="dateFrom"
-			options={{ format: dateFormat, cancelLabel: cancelLabel }}/>
+			options={{ format: dateFormat, cancelLabel: cancelLabel }}
+		/>
 		<DateInput
 			label="Дата до"
 			source="dateTo"
-			options={{ format: dateFormat, cancelLabel: cancelLabel }}/>
+			options={{ format: dateFormat, cancelLabel: cancelLabel }}
+		/>
 	</Filter>
 )
 
 export const ListForm = ({ permissions, ...props }) => (
 	<List
 		title="Список испытаний"
-		filters={<Filters/>}
+		filters={<Filters />}
 		perPage={25}
 		exporter={false}
 		sort={{ field: 'firstCreationDate', order: 'DESC' }}
-		empty={<Empty/>}
-		bulkActionButtons={<BulkActionButtons permissions={permissions}/>}
+		empty={<Empty />}
+		bulkActionButtons={<BulkActionButtons permissions={permissions} />}
 		{...props}>
 		<Datagrid
 			rowClick="show"
-			expand={<ShowForm enableActions={false}/>}>
+			expand={<ShowForm enableActions={false} />}
+		>
 			<HeadlineField
 				label="Название"
-				source="headline"/>
+				source="headline"
+			/>
 			<DescriptionField
 				label="Описание"
 				source="description"
-				maxchars={250}/>
+				maxchars={250}
+			/>
 			<TextField
 				label="Головной исполнитель"
-				source="headPerformer"/>
+				source="headPerformer"
+			/>
 			<TextField
 				label="Заказчик"
-				source="customer"/>
+				source="customer"
+			/>
 			<ArrayField
 				source="authors"
-				label="Соисполнители">
+				label="Соисполнители"
+			>
 				<SingleFieldList linkType={false}>
 					<ChipField
 						label="Соисполнитель"
-						source="author"/>
+						source="author"
+					/>
 				</SingleFieldList>
 			</ArrayField>
 			<DateField
@@ -125,47 +139,57 @@ export const CreateForm = props => (
 		{...props}>
 		<SimpleForm
 			redirect="list"
-			submitOnEnter={false}>
+			submitOnEnter={false}
+		>
 			<TextInput
 				fullWidth
 				label="Название"
 				source="headline"
-				validate={validateHeadline}/>
+				validate={validateHeadline}
+			/>
 			<TextInput
 				fullWidth
 				label="Описание"
 				multiline
 				source="description"
-				validate={validateDescription}/>
+				validate={validateDescription}
+			/>
 			<TextInput
 				label="Головной исполнитель"
-				source="headPerformer"/>
+				source="headPerformer"
+			/>
 			<TextInput
 				label="Заказчик"
-				source="customer"/>
+				source="customer"
+			/>
 			<ArrayInput
 				validate={validateAuthors}
 				source="authors"
-				label="Соискатели">
+				label="Соискатели"
+			>
 				<SimpleFormIterator>
 					<TextInput
 						label="Соискатель"
-						source="author"/>
+						source="author"
+					/>
 				</SimpleFormIterator>
 			</ArrayInput>
 			<DateInput
 				label="Дата создания"
 				source="creationDate"
 				validate={validateCreationDate}
-				options={{ format: dateFormat, cancelLabel: cancelLabel }}/>
+				options={{ format: dateFormat, cancelLabel: cancelLabel }}
+			/>
 			<FileInput
 				source="file"
 				label="Архив"
 				accept="application/x-rar-compressed, application/zip"
-				validate={validateFile}>
+				validate={validateFile}
+			>
 				<FileField
 					source="file"
-					title="Загруженный файл"/>
+					title="Загруженный файл"
+				/>
 			</FileInput>
 		</SimpleForm>
 	</Create>
@@ -173,103 +197,123 @@ export const CreateForm = props => (
 
 export const EditForm = props => (
 	<Edit
-		title={<Title/>}
+		title={<Title />}
 		successMessage="Испытание обновлено"
 		undoable={false}
-		actions={<EditActions/>}
+		actions={<EditActions />}
 		{...props}>
 		<SimpleForm
-			submitOnEnter={false}>
+			submitOnEnter={false}
+		>
 			<TextInput
 				fullWidth
 				label="Название"
 				source="headline"
-				validate={validateHeadline}/>
+				validate={validateHeadline}
+			/>
 			<TextInput
 				fullWidth
 				label="Описание"
 				multiline
 				source="description"
-				validate={validateDescription}/>
+				validate={validateDescription}
+			/>
 			<TextInput
 				label="Головной исполнитель"
-				source="headPerformer"/>
+				source="headPerformer"
+			/>
 			<TextInput
 				label="Заказчик"
-				source="customer"/>
+				source="customer"
+			/>
 			<ArrayInput
 				validate={validateAuthors}
 				label="Соискатели"
-				source="authors">
+				source="authors"
+			>
 				<SimpleFormIterator>
 					<TextInput
 						label="Соискатель"
-						source="author"/>
+						source="author"
+					/>
 				</SimpleFormIterator>
 			</ArrayInput>
 			<DateInput
 				label="Дата создания"
 				source="creationDate"
 				validate={validateCreationDate}
-				options={{ format: dateFormat, cancelLabel: cancelLabel }}/>
+				options={{ format: dateFormat, cancelLabel: cancelLabel }}
+			/>
 			<FileField
 				source="file.url"
 				title="file.title"
 				label="Архив"
-				target="_blank"/>
+				target="_blank"
+			/>
 			<FileInput
 				source="newfile"
 				label="Новый файл"
-				accept="application/x-rar-compressed, application/zip">
+				accept="application/x-rar-compressed, application/zip"
+			>
 				<FileField
 					source="src"
-					title="Загруженный файл"/>
+					title="Загруженный файл"
+				/>
 			</FileInput>
 		</SimpleForm>
 	</Edit>
 )
 
 export const ShowForm = ({ permissions, enableActions, ...props }) => {
-	const actions = enableActions ? <ShowActions permissions={permissions}/> : false
+	const actions = enableActions ? <ShowActions permissions={permissions} /> : false
 	return (
 		<Show
-			title={<Title/>}
+			title={<Title />}
 			actions={actions}
 			{...props}>
 			<SimpleShowLayout>
 				<TextField
 					label="Название"
-					source="headline"/>
+					source="headline"
+				/>
 				<TextField
 					label="Описание"
-					source="description"/>
+					source="description"
+				/>
 				<TextField
 					label="Головной исполнитель"
-					source="headPerformer"/>
+					source="headPerformer"
+				/>
 				<TextField
 					label="Заказчик"
-					source="customer"/>
+					source="customer"
+				/>
 				<ArrayField
 					label="Соискатели"
-					source="authors">
+					source="authors"
+				>
 					<SingleFieldList linkType={false}>
 						<ChipField
 							label="Соискатель"
-							source="author"/>
+							source="author"
+						/>
 					</SingleFieldList>
 				</ArrayField>
 				<TextField
 					label="Категория"
-					source="category"/>
+					source="category"
+				/>
 				<DateField
 					label="Дата создания"
 					source="creationDate"
-					locales="ru-RU"/>
+					locales="ru-RU"
+				/>
 				<FileField
 					source="file.url"
 					title="file.title"
 					label="Архив"
-					target="_blank"/>
+					target="_blank"
+				/>
 			</SimpleShowLayout>
 		</Show>
 	)

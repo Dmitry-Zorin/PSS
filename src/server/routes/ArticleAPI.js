@@ -6,8 +6,6 @@ const Model = mongoose.model('Article', schema)
 const resource = 'articles'
 const mimeTypes = ['application/pdf',]
 
-const serverUrl = `http://${process.env.HOST}:${process.env.PORT}`
-
 function extractDataToSend(data) {
 	return {
 		id: data.id,
@@ -19,7 +17,7 @@ function extractDataToSend(data) {
 		authors: data.authors,
 		subdivisions: data.subdivisions,
 		file: {
-			url: `${data.file.includes('http://') ? '' : serverUrl}${data.file}`,
+			url: `${data.file.includes('http://') ? '' : process.env.SERVER}${data.file}`,
 			title: data.headline
 		}
 	}
