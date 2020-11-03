@@ -44,8 +44,10 @@ mongoose.connect(
 	mongodbConfig
 )
 	.then(() => {
-		app.listen(process.env.PORT, process.env.HOST, () => {
-			console.log('Server has started.')
-		})
+		app.listen(
+			process.env.PORT,
+			process.env.HOST,
+			() => console.log('Server has started.')
+		)
 	})
-	.catch(error => console.log(error))
+	.catch(console.log)

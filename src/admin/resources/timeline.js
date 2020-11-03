@@ -1,15 +1,11 @@
-import { Typography, useScrollTrigger } from '@material-ui/core'
+import { Typography } from '@material-ui/core'
 import Box from '@material-ui/core/Box'
 import Card from '@material-ui/core/Card'
 import CardActionArea from '@material-ui/core/CardActionArea'
-import red from '@material-ui/core/colors/red'
-import Fab from '@material-ui/core/Fab'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import { makeStyles } from '@material-ui/core/styles'
-import Zoom from '@material-ui/core/Zoom'
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import Pagination from '@material-ui/lab/Pagination'
 import React from 'react'
 import { ListController, Title } from 'react-admin'
@@ -34,11 +30,6 @@ const useStyles = makeStyles(theme => ({
 	},
 	margin: {
 		margin: '0 auto'
-	},
-	fabContainer: {
-		position: 'fixed',
-		bottom: theme.spacing(3),
-		right: theme.spacing(4),
 	}
 }))
 
@@ -67,7 +58,6 @@ export const Timeline = (props) => {
 							Результатов не найдено
 						</Typography>
 					)}
-					<ScrollTopButton />
 				</>
 			)}
 		</ListController>
@@ -104,32 +94,5 @@ const CardView = ({ event }) => {
 				</ListItem>
 			</CardActionArea>
 		</Card>
-	)
-}
-
-const ScrollTopButton = () => {
-	const styles = useStyles()
-	const trigger = useScrollTrigger()
-
-	const handleClick = (event) => {
-		const anchor = (event.target.ownerDocument || document)
-			.getElementById('app')
-
-		if (anchor) {
-			anchor.scrollIntoView({
-				behavior: 'smooth',
-				block: 'start'
-			})
-		}
-	}
-
-	return (
-		<Zoom in={trigger}>
-			<div className={styles.fabContainer} onClick={handleClick}>
-				<Fab color='secondary'>
-					<KeyboardArrowUpIcon />
-				</Fab>
-			</div>
-		</Zoom>
 	)
 }

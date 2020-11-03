@@ -113,6 +113,11 @@ module.exports = {
 			email: 'Некорректный email',
 			oneOf: 'Должно быть одним из: %{options}',
 			regex: 'Должно быть в формате (regexp): %{pattern}'
-		}
+		},
+		resources: {
+			subdivisions: {
+				name: 'Подразделения'
+			}
+		},
 	}
 }

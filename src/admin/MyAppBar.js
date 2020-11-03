@@ -22,7 +22,7 @@ const useStyles = makeStyles({
 	}
 })
 
-const MyAppBar = props => {
+const MyAppBar = (props) => {
 	const classes = useStyles()
 	return (
 		<AppBar className={classes.header} {...props}>

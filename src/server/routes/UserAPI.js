@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
 const schema = require('../schemas').userSchema
 const jsonParser = require('express').json()
-const config = require('../../mongodbConfig')
 const listParamsMiddleware = require('../utils').listParamsMiddleware
 const jsonWebToken = require('jsonwebtoken')
 const cookieParser = require('cookie-parser')()
@@ -35,11 +34,11 @@ module.exports = function (app) {
 	// login
 	app.post('/api/login', jsonParser, (req, res) => {
 		const { login, password } = req.body
+
 		User.findOne({ login })
 			.then(user => {
 				if (!user) {
-					res.status(401).json({ error: 'Incorrect login or password' })
-					return
+					return res.status(401).json({ error: 'Incorrect login or password' })
 				}
 				bcrypt.compare(password, user.password)
 					.then(equal => {
@@ -56,9 +55,6 @@ module.exports = function (app) {
 						})
 						res.cookie('token', token, { httpOnly: true }).sendStatus(200)
 					})
-					.catch(() => res.status(500).json({
-						error: 'Internal error, please try again'
-					}))
 			})
 			.catch(() => res.status(500).json({
 				error: 'Internal error, please try again'
@@ -99,7 +95,7 @@ module.exports = function (app) {
 	app.post(`/api/${resource}`, cookieParser, auth, jsonParser, (req, res) => {
 		if (req.isAdmin) {
 			let data = extractDataFromRequest(req)
-			console.log(data)
+
 			User.findOne({ login: data.login })
 				.then(user => {
 					if (user) {
@@ -113,7 +109,7 @@ module.exports = function (app) {
 							const modelRecord = new User(data)
 							modelRecord.save()
 								.then(() => res.json(extractDataToSend(modelRecord)))
-								.catch(error => console.log(error))
+								.catch(console.log)
 						})
 						.catch(() => res.status(500).json({
 							error: 'Internal error, please try again'
@@ -122,7 +118,9 @@ module.exports = function (app) {
 				.catch(() => res.status(500).json({
 					error: 'Internal error, please try again'
 				}))
-		} else res.status(401).json({ error: 'Access denied' })
+		} else {
+			res.status(401).json({ error: 'Access denied' })
+		}
 	})
 
 	// update

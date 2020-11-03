@@ -4,7 +4,11 @@ const createAPIwithFile = require('../utils').createAPIwithFile
 
 const Model = mongoose.model('Library', schema)
 const resource = 'library'
-const mimeTypes = ['application/pdf']
+const mimeTypes = [
+	'application/pdf',
+	'application/x-rar-compressed',
+	'application/zip'
+]
 
 const extractDataToSend = (data) => ({
 	id: data.id,
