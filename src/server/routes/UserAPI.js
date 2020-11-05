@@ -168,7 +168,8 @@ module.exports = function (app) {
 				.sort({ [sortField]: sortOrder })
 				.then(data => {
 					const contentLength = `${resource} ${rangeStart}-${rangeEnd - 1}/${data.length}`
-					const dataToSend = data.slice(rangeStart, rangeEnd).map(dataItem => extractDataToSend(dataItem))
+					const dataToSend = data.slice(rangeStart, rangeEnd)
+						.map(dataItem => extractDataToSend(dataItem))
 					res.set('Content-Range', contentLength).send(dataToSend)
 				})
 				.catch(error => console.log(error))

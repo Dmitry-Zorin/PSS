@@ -1,23 +1,21 @@
 import React from 'react'
 import {
 	ArrayInput,
-	Edit, FileField, FileInput, minLength,
-	ReferenceArrayInput, required,
+	Edit,
+	FileField,
+	FileInput,
+	minLength,
+	ReferenceArrayInput,
+	required,
 	SelectArrayInput,
 	SimpleForm,
 	SimpleFormIterator,
 	TextInput
 } from 'react-admin'
-import { DateInput } from 'react-admin-date-inputs2'
 import { createTitle, getEditActionsWithoutFile } from '../../utils'
 
-const dateFormat = 'dd.MM.yyyy'
-const cancelLabel = 'Отмена'
-
-const validateHeadline = [required(), minLength(1),]
-const validateAnnotation = [required(), minLength(1),]
-const validateCreationDate = [required(),]
-const validateAuthors = [required(),]
+const validateHeadline = [required(), minLength(1)]
+const validateAnnotation = [required(), minLength(1)]
 
 const Title = createTitle('Библиотека', 'headline')
 
@@ -26,7 +24,7 @@ const EditActions = getEditActionsWithoutFile()
 export const LibraryEdit = (props) => (
 	<Edit
 		title={<Title />}
-		successMessage="Книга обновлена"
+		successMessage="ra.resources.library.edit"
 		undoable={false}
 		actions={<EditActions />}
 		{...props}
@@ -45,14 +43,7 @@ export const LibraryEdit = (props) => (
 				source="text"
 				validate={validateAnnotation}
 			/>
-			<DateInput
-				label="Дата создания"
-				source="creationDate"
-				validate={validateCreationDate}
-				options={{ format: dateFormat, cancelLabel: cancelLabel }}
-			/>
 			<ArrayInput
-				validate={validateAuthors}
 				label="Авторы"
 				source="authors"
 			>

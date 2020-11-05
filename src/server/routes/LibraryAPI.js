@@ -14,7 +14,6 @@ const extractDataToSend = (data) => ({
 	id: data.id,
 	headline: data.headline,
 	text: data.text,
-	creationDate: data.creationDate,
 	firstCreationDate: data.firstCreationDate,
 	authors: data.authors,
 	subdivisions: data.subdivisions,
@@ -27,8 +26,7 @@ const extractDataToSend = (data) => ({
 const extractDataFromRequest = ({ body }) => ({
 	headline: body.headline,
 	text: body.text,
-	creationDate: new Date(body.creationDate),
-	authors: JSON.parse(body.authors),
+	authors: body.authors && JSON.parse(body.authors),
 	subdivisions: body.subdivisions ? JSON.parse(body.subdivisions) : undefined,
 })
 

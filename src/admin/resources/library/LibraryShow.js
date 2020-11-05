@@ -32,11 +32,6 @@ export const LibraryShow = ({ permissions, enableActions = true, ...props }) => 
 				label="Аннотация"
 				source="text"
 			/>
-			<DateField
-				label="Дата создания"
-				source="creationDate"
-				locales="ru-RU"
-			/>
 			<ArrayField
 				label="Авторы"
 				source="authors"

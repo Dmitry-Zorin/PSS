@@ -11,10 +11,6 @@ module.exports = new Schema(
 			type: String,
 			required: true,
 		},
-		creationDate: {
-			type: Date,
-			required: true
-		},
 		firstCreationDate: {
 			type: Date,
 			required: true

@@ -33,11 +33,11 @@ import { DescriptionField, HeadlineField } from '../CustomFields'
 
 import { createEmptyPage, createTitle, getBulkActionButtons, getEditActionsWithoutFile, getShowActions } from '../utils'
 
-const validateHeadline = [required(), minLength(1),]
-const validateDescription = [required(), minLength(1),]
-const validateCreationDate = [required(),]
-const validateAuthors = [required(),]
-const validateFile = [required(),]
+const validateHeadline = [required(), minLength(1)]
+const validateDescription = [required(), minLength(1)]
+const validateCreationDate = [required()]
+const validateAuthors = [required()]
+const validateFile = [required()]
 
 const dateFormat = 'dd.MM.yyyy'
 const cancelLabel = 'Отмена'

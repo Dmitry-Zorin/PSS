@@ -11,25 +11,24 @@ import React from 'react'
 import { useTranslate } from 'react-admin'
 
 const useStyles = makeStyles(theme => ({
-	icon: { minWidth: theme.spacing(5) },
+	icon: {
+		minWidth: theme.spacing(5)
+	},
 	sidebarIsOpen: {
-		paddingLeft: 25,
-		transition: 'padding-left 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms',
+		'& a': {
+			paddingLeft: theme.spacing(5),
+			transition: 'padding-left 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms',
+		}
 	},
 	sidebarIsClosed: {
-		paddingLeft: 0,
-		transition: 'padding-left 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms',
+		'& a': {
+			paddingLeft: 0,
+			transition: 'padding-left 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms',
+		}
 	},
 }))
 
-const SubMenu = ({
-	                 handleToggle,
-	                 sidebarIsOpen,
-	                 isOpen,
-	                 name,
-	                 icon,
-	                 children,
-                 }) => {
+const SubMenu = ({ handleToggle, sidebarIsOpen, isOpen, name, icon, children, }) => {
 	const translate = useTranslate()
 	const classes = useStyles()
 
@@ -38,17 +37,15 @@ const SubMenu = ({
 			<ListItemIcon className={classes.icon}>
 				{isOpen ? <ExpandMore /> : icon}
 			</ListItemIcon>
-			<Typography className={classes.menuItem} variant="body1" component="pre">
-				{name}
+			<Typography variant="inherit" color="textSecondary">
+				{translate(name)}
 			</Typography>
 		</MenuItem>
 	)
 
 	return (
 		<>
-			{sidebarIsOpen || isOpen ? (
-				header
-			) : (
+			{sidebarIsOpen || isOpen ? header : (
 				<Tooltip title={translate(name)} placement="right">
 					{header}
 				</Tooltip>
@@ -65,7 +62,6 @@ const SubMenu = ({
 				>
 					{children}
 				</List>
-				<Divider />
 			</Collapse>
 		</>
 	)

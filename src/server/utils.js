@@ -118,7 +118,8 @@ function createAPI(app, resource, Model, extractDataToSend, extractDataFromReque
 			.sort({ [sortField]: sortOrder })
 			.then(data => {
 				const contentLength = `${resource} ${rangeStart}-${rangeEnd - 1}/${data.length}`
-				const dataToSend = data.slice(rangeStart, rangeEnd).map(dataItem => extractDataToSend(dataItem))
+				const dataToSend = data.slice(rangeStart, rangeEnd)
+					.map(dataItem => extractDataToSend(dataItem))
 				res.set('Content-Range', contentLength).send(dataToSend)
 			})
 			.catch(console.log)
@@ -232,7 +233,8 @@ function createAPIwithFile(app, resource, mimeTypes, Model, extractDataToSend, e
 			.sort({ [sortField]: sortOrder })
 			.then(data => {
 				const contentLength = `${resource} ${rangeStart}-${rangeEnd - 1}/${data.length}`
-				const dataToSend = data.slice(rangeStart, rangeEnd).map(dataItem => extractDataToSend(dataItem))
+				const dataToSend = data.slice(rangeStart, rangeEnd)
+					.map(dataItem => extractDataToSend(dataItem))
 				res.set('Content-Range', contentLength).send(dataToSend)
 			})
 			.catch(console.log)

@@ -33,7 +33,6 @@ module.exports = {
 		},
 		page: {
 			create: 'Создать %{name}',
-			dashboard: 'Технополис «ЭРА»',
 			edit: '%{name} #%{id}',
 			error: 'Что-то пошло не так',
 			list: '%{name}',
@@ -117,7 +116,13 @@ module.exports = {
 		resources: {
 			subdivisions: {
 				name: 'Подразделения'
-			}
-		},
+			},
+			library: {
+				name: 'Библиотека',
+				create: 'Книга добавлена',
+				edit: 'Книга обновлена',
+			},
+			other: 'Прочее'
+		}
 	}
 }

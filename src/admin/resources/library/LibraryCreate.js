@@ -12,21 +12,15 @@ import {
 	SimpleFormIterator,
 	TextInput
 } from 'react-admin'
-import { DateInput } from 'react-admin-date-inputs2'
 
-const dateFormat = 'dd.MM.yyyy'
-const cancelLabel = 'Отмена'
-
-const validateHeadline = [required(), minLength(1),]
-const validateAnnotation = [required(), minLength(1),]
-const validateCreationDate = [required(),]
-const validateAuthors = [required(),]
-const validateFile = [required(),]
+const validateHeadline = [required(), minLength(1)]
+const validateAnnotation = [required(), minLength(1)]
+const validateFile = [required()]
 
 export const LibraryCreate = (props) => (
 	<Create
 		title="Добавить книгу"
-		successMessage="Книга добавлена"
+		successMessage="ra.resources.library.create"
 		undoable={false}
 		{...props}
 	>
@@ -48,17 +42,7 @@ export const LibraryCreate = (props) => (
 				validate={validateAnnotation}
 				options={{ multiLine: true }}
 			/>
-			<DateInput
-				label="Дата создания"
-				source="creationDate"
-				validate={validateCreationDate}
-				options={{
-					format: dateFormat,
-					cancelLabel: cancelLabel
-				}}
-			/>
 			<ArrayInput
-				validate={validateAuthors}
 				source="authors"
 				label="Авторы"
 			>

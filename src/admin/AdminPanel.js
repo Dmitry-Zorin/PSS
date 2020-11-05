@@ -133,6 +133,12 @@ const AdminPanel = () => (
 		>
 			{(permissions) => [
 				<Resource
+					name='timeline'
+					icon={TimelineIcon}
+					options={{ label: 'События' }}
+					list={Timeline}
+				/>,
+				<Resource
 					name="articles"
 					icon={DescriptionIcon}
 					options={{ label: 'Статьи' }}
@@ -171,7 +177,7 @@ const AdminPanel = () => (
 				<Resource
 					name="rationalizations"
 					icon={EmojiObjectsIcon}
-					options={{ label: 'Рационализаторские\nпредложения' }}
+					options={{ label: 'Предложения' }}
 					list={RationalizationList}
 					edit={permissions ? RationalizationEdit : null}
 					create={permissions ? RationalizationCreate : null}
@@ -180,7 +186,7 @@ const AdminPanel = () => (
 				<Resource
 					name="projects"
 					icon={TrendingUpIcon}
-					options={{ label: 'Инициативные\nпроекты' }}
+					options={{ label: 'Проекты' }}
 					list={ProjectList}
 					edit={permissions ? ProjectEdit : null}
 					create={permissions ? ProjectCreate : null}
@@ -189,7 +195,7 @@ const AdminPanel = () => (
 				<Resource
 					name="abstracts"
 					icon={SubjectIcon}
-					options={{ label: 'Тезисы докладов' }}
+					options={{ label: 'Тезисы' }}
 					list={AbstractList}
 					edit={permissions ? AbstractEdit : null}
 					create={permissions ? AbstractCreate : null}
@@ -248,12 +254,6 @@ const AdminPanel = () => (
 					// edit={UserEdit}
 					create={UserCreate}
 					show={UserShow}
-				/>,
-				<Resource
-					name='timeline'
-					icon={TimelineIcon}
-					options={{ label: 'События' }}
-					list={Timeline}
 				/>,
 				<Resource
 					name='form16'

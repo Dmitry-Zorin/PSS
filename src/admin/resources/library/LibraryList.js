@@ -3,7 +3,6 @@ import {
 	ArrayField,
 	ChipField,
 	Datagrid,
-	DateField,
 	Filter,
 	List,
 	ReferenceArrayField,
@@ -48,7 +47,7 @@ export const LibraryList = ({ permissions, ...props }) => (
 				source="headline"
 			/>
 			<DescriptionField
-				label="Аннотация"
+				label="Описание"
 				source="text"
 				maxchars={250}
 			/>
@@ -72,11 +71,6 @@ export const LibraryList = ({ permissions, ...props }) => (
 					/>
 				</SingleFieldList>
 			</ArrayField>
-			<DateField
-				label="Дата создания"
-				source="creationDate"
-				locales="ru-RU"
-			/>
 		</Datagrid>
 	</List>
 )

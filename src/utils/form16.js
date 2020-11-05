@@ -65,7 +65,7 @@ export const createForm16 = (data, name, author, title) => {
 						text: ` ${
 							name.split(' ')
 								.slice(1)
-								.map(e => (`${e[0].toUpperCase()}${e.slice(1)}`))
+								.map(e => `${e[0].toUpperCase()}${e.slice(1)}`)
 								.join(' ')
 						}`,
 						color: '000000'
@@ -270,7 +270,7 @@ const getDataTableRow = (author, name, e) => (
 			new TableCell({
 				children: e.authors.map(a => a.author)
 					.filter(a => !a.match(new RegExp(`^${author}$`, 'i')))
-					.map(a => (new Paragraph(a)))
+					.map(a => new Paragraph(a))
 			})
 		]
 	})
