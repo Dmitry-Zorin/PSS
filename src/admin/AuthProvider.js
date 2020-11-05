@@ -9,7 +9,8 @@ const authProvider = {
 			headers: { 'Content-Type': 'application/json' }
 		})
 			.then(res => {
-				userIdentity = { fullName: username }
+				localStorage.setItem('username', username)
+
 				return res.status == 200
 					? Promise.resolve()
 					: Promise.reject()
@@ -21,6 +22,7 @@ const authProvider = {
 			credentials: 'include',
 		})
 			.then(res => {
+				localStorage.clear()
 				return res.status == 200
 					? Promise.resolve()
 					: Promise.reject()
@@ -32,6 +34,9 @@ const authProvider = {
 			credentials: 'include',
 		})
 			.then(res => {
+				userIdentity = {
+					fullName: localStorage.getItem('username')
+				}
 				return res.status == 200
 					? Promise.resolve()
 					: Promise.reject()

@@ -1,6 +1,11 @@
 @font-face {
     font-family: 'Nunito';
     src: url('../static/fonts/Nunito/Nunito-Regular.ttf'),
+    url('../static/fonts/Nunito/Nunito-Italic.ttf'),
+    url('../static/fonts/Nunito/Nunito-Light.ttf'),
+    url('../static/fonts/Nunito/Nunito-LightItalic.ttf'),
+    url('../static/fonts/Nunito/Nunito-SemiBold.ttf'),
+    url('../static/fonts/Nunito/Nunito-SemiBoldItalic.ttf'),
     url('../static/fonts/Nunito/Nunito-Bold.ttf'),
-    url('../static/fonts/Nunito/Nunito-Light.ttf');
+    url('../static/fonts/Nunito/Nunito-BoldItalic.ttf');
 }

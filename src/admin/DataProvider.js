@@ -53,9 +53,7 @@ const dataProvider = {
 				credentials: 'include',
 				body: formData
 			})
-			.then(({ json }) => ({
-				data: json
-			}))
+			.then(({ json }) => ({ data: json }))
 	},
 	getMany: (resource, params) => {
 		const formData = new FormData()

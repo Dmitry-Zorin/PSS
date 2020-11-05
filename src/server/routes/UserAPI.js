@@ -9,23 +9,23 @@ const bcrypt = require('bcrypt')
 
 const User = mongoose.model('User', schema)
 
-function extractDataToSend(data) {
-	return {
+const extractDataToSend = (data) => (
+	{
 		id: data.id,
 		login: data.login,
 		password: data.password,
 		isAdmin: data.isAdmin,
 		firstCreationDate: data.firstCreationDate,
 	}
-}
+)
 
-function extractDataFromRequest(req) {
-	return {
-		'login': req.body.login,
-		'password': req.body.password,
-		'isAdmin': req.body.isAdmin,
+const extractDataFromRequest = (req) => (
+	{
+		login: req.body.login,
+		password: req.body.password,
+		isAdmin: req.body.isAdmin,
 	}
-}
+)
 
 const resource = 'users'
 
@@ -88,7 +88,8 @@ module.exports = function (app) {
 				.catch(() => res.status(500).json({
 					error: 'Internal error, please try again'
 				}))
-		} else res.status(401).json({ error: 'Access denied' })
+		}
+		else res.status(401).json({ error: 'Access denied' })
 	})
 
 	// create
@@ -118,7 +119,8 @@ module.exports = function (app) {
 				.catch(() => res.status(500).json({
 					error: 'Internal error, please try again'
 				}))
-		} else {
+		}
+		else {
 			res.status(401).json({ error: 'Access denied' })
 		}
 	})
@@ -154,7 +156,8 @@ module.exports = function (app) {
 			User.findByIdAndDelete({ _id: req.params.id })
 				.then(data => res.json(extractDataToSend(data)))
 				.catch(error => console.log(error))
-		} else res.status(401).json({ error: 'Access denied' })
+		}
+		else res.status(401).json({ error: 'Access denied' })
 	})
 
 	// getList
@@ -169,7 +172,8 @@ module.exports = function (app) {
 					res.set('Content-Range', contentLength).send(dataToSend)
 				})
 				.catch(error => console.log(error))
-		} else res.status(401).json({ error: 'Access denied' })
+		}
+		else res.status(401).json({ error: 'Access denied' })
 	})
 
 	// getOne
@@ -178,6 +182,7 @@ module.exports = function (app) {
 			User.findOne({ _id: req.params.id })
 				.then(data => res.json(extractDataToSend(data)))
 				.catch(error => console.log(error))
-		} else res.status(401).json({ error: 'Access denied' })
+		}
+		else res.status(401).json({ error: 'Access denied' })
 	})
 }
