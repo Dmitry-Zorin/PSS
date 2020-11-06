@@ -54,7 +54,7 @@ export const LibraryShow = ({ permissions, enableActions = true, ...props }) => 
 			<FileField
 				source="file.url"
 				title="file.title"
-				label="PDF файл или архив"
+				label="Файл"
 				target="_blank"
 			/>
 		</SimpleShowLayout>

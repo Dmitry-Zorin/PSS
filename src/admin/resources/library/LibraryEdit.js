@@ -15,7 +15,6 @@ import {
 import { createTitle, getEditActionsWithoutFile } from '../../utils'
 
 const validateHeadline = [required(), minLength(1)]
-const validateAnnotation = [required(), minLength(1)]
 
 const Title = createTitle('Библиотека', 'headline')
 
@@ -38,10 +37,9 @@ export const LibraryEdit = (props) => (
 			/>
 			<TextInput
 				fullWidth
-				label="Аннотация"
+				label="Описание"
 				multiline
 				source="text"
-				validate={validateAnnotation}
 			/>
 			<ArrayInput
 				label="Авторы"
@@ -66,7 +64,7 @@ export const LibraryEdit = (props) => (
 			<FileField
 				source="file.url"
 				title="file.title"
-				label="PDF файл или архив"
+				label="Файл"
 				target="_blank"
 			/>
 			<FileInput

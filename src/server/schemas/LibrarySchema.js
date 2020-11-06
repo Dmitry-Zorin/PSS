@@ -7,10 +7,7 @@ module.exports = new Schema(
 			type: String,
 			required: true,
 		},
-		text: {
-			type: String,
-			required: true,
-		},
+		text: { type: String, },
 		firstCreationDate: {
 			type: Date,
 			required: true

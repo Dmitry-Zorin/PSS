@@ -14,7 +14,6 @@ import {
 } from 'react-admin'
 
 const validateHeadline = [required(), minLength(1)]
-const validateAnnotation = [required(), minLength(1)]
 const validateFile = [required()]
 
 export const LibraryCreate = (props) => (
@@ -36,10 +35,9 @@ export const LibraryCreate = (props) => (
 			/>
 			<TextInput
 				fullWidth
-				label="Аннотация"
+				label="Описание"
 				multiline
 				source="text"
-				validate={validateAnnotation}
 				options={{ multiLine: true }}
 			/>
 			<ArrayInput
@@ -64,11 +62,16 @@ export const LibraryCreate = (props) => (
 			</ReferenceArrayInput>
 			<FileInput
 				source="file"
-				label="PDF файл или архив"
+				label="Файл"
 				accept={[
 					'application/pdf',
 					'application/x-rar-compressed',
-					'application/zip'
+					'application/zip',
+					'image/vnd.djvu',
+					'application/epub+zip',
+					'application/x-mobipocket-ebook',
+					'application/msword',
+					'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
 				]}
 				validate={validateFile}
 			>
