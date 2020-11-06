@@ -39,8 +39,10 @@ const dateFormat = 'dd.MM.yyyy'
 const cancelLabel = 'Отмена'
 
 const Title = createTitle('Научно-исследовательская работа', 'headline')
-const Empty = createEmptyPage('Нет доступных научно-исследовательских работ',
-	'Для добавления научно-исследовательская работы нажмите кнопку "Создать"')
+const Empty = createEmptyPage(
+	'Нет доступных научно-исследовательских работ',
+	'Для добавления научно-исследовательская работы нажмите кнопку "Создать"'
+)
 const ShowActions = getShowActions()
 const EditActions = getEditActionsWithoutFile()
 const BulkActionButtons = getBulkActionButtons()

@@ -39,8 +39,10 @@ const dateFormat = 'dd.MM.yyyy'
 const cancelLabel = 'Отмена'
 
 const Title = createTitle('Проект', 'headline')
-const Empty = createEmptyPage('Нет доступных проектов',
-	'Для добавления проекта нажмите кнопку "Создать"')
+const Empty = createEmptyPage(
+	'Нет доступных проектов',
+	'Для добавления проекта нажмите кнопку "Создать"'
+)
 const ShowActions = getShowActions()
 const EditActions = getEditActionsWithoutFile()
 const BulkActionButtons = getBulkActionButtons()

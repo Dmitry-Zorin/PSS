@@ -43,8 +43,10 @@ const dateFormat = 'dd.MM.yyyy'
 const cancelLabel = 'Отмена'
 
 const Title = createTitle('Тезисы доклада', 'headline')
-const Empty = createEmptyPage('Нет доступных тезисов докладов',
-	'Для добавления тезисов доклада нажмите кнопку "Создать"')
+const Empty = createEmptyPage(
+	'Нет доступных тезисов докладов',
+	'Для добавления тезисов доклада нажмите кнопку "Создать"'
+)
 const ShowActions = getShowActions()
 const EditActions = getEditActionsWithoutFile()
 const BulkActionButtons = getBulkActionButtons()

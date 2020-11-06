@@ -44,8 +44,10 @@ const dateFormat = 'dd.MM.yyyy'
 const cancelLabel = 'Отмена'
 
 const Title = createTitle('Статья', 'headline')
-const Empty = createEmptyPage('Нет доступных статей',
-	'Для добавления статьи нажмите кнопку "Создать"')
+const Empty = createEmptyPage(
+	'Нет доступных статей',
+	'Для добавления статьи нажмите кнопку "Создать"'
+)
 const ShowActions = getShowActions()
 const EditActions = getEditActionsWithoutFile()
 const BulkActionButtons = getBulkActionButtons()

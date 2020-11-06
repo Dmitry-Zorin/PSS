@@ -16,5 +16,19 @@ export default createMuiTheme({
 			main: red[500],
 			dark: red[700]
 		}
+	},
+	overrides: {
+		RaMenuItemLink: {
+			root: {
+				borderLeft: '3px solid transparent'
+			},
+			active: {
+				borderLeft: `3px solid ${red[500]}`,
+				background: 'rgba(0, 0, 0, 0.04) !important',
+				'& svg': {
+					color: 'rgba(0, 0, 0, 0.65)'
+				}
+			}
+		}
 	}
 })

@@ -39,8 +39,10 @@ const dateFormat = 'dd.MM.yyyy'
 const cancelLabel = 'Отмена'
 
 const Title = createTitle('Опытно-конструкторская работа', 'headline')
-const Empty = createEmptyPage('Нет доступных опытно-конструкторских работ',
-	'Для добавления опытно-конструкторской работы нажмите кнопку "Создать"')
+const Empty = createEmptyPage(
+	'Нет доступных опытно-конструкторских работ',
+	'Для добавления опытно-конструкторской работы нажмите кнопку "Создать"'
+)
 const ShowActions = getShowActions()
 const EditActions = getEditActionsWithoutFile()
 const BulkActionButtons = getBulkActionButtons()

@@ -10,25 +10,29 @@ const mimeTypes = [
 	'application/zip'
 ]
 
-const extractDataToSend = (data) => ({
-	id: data.id,
-	headline: data.headline,
-	text: data.text,
-	firstCreationDate: data.firstCreationDate,
-	authors: data.authors,
-	subdivisions: data.subdivisions,
-	file: {
-		url: `${data.file.includes('http://') ? '' : process.env.SERVER}${data.file}`,
-		title: data.headline
+const extractDataToSend = (data) => (
+	{
+		id: data.id,
+		headline: data.headline,
+		text: data.text,
+		firstCreationDate: data.firstCreationDate,
+		authors: data.authors,
+		subdivisions: data.subdivisions,
+		file: {
+			url: `${data.file.includes('http://') ? '' : process.env.SERVER}${data.file}`,
+			title: data.headline
+		}
 	}
-})
+)
 
-const extractDataFromRequest = ({ body }) => ({
-	headline: body.headline,
-	text: body.text,
-	authors: body.authors && JSON.parse(body.authors),
-	subdivisions: body.subdivisions ? JSON.parse(body.subdivisions) : undefined,
-})
+const extractDataFromRequest = ({ body }) => (
+	{
+		headline: body.headline,
+		text: body.text,
+		authors: body.authors && JSON.parse(body.authors),
+		subdivisions: body.subdivisions ? JSON.parse(body.subdivisions) : undefined,
+	}
+)
 
 module.exports = (app) => {
 	createAPIwithFile(app, resource, mimeTypes, Model, extractDataToSend, extractDataFromRequest)

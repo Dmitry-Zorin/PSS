@@ -38,8 +38,10 @@ const dateFormat = 'dd.MM.yyyy'
 const cancelLabel = 'Отмена'
 
 const Title = createTitle('Апробация', 'headline')
-const Empty = createEmptyPage('Нет доступных апробаций',
-	'Для добавления апробации нажмите кнопку "Создать"')
+const Empty = createEmptyPage(
+	'Нет доступных апробаций',
+	'Для добавления апробации нажмите кнопку "Создать"'
+)
 const ShowActions = getShowActions()
 const EditActions = getEditActionsWithoutFile()
 const BulkActionButtons = getBulkActionButtons()

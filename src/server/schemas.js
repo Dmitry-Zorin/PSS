@@ -1,7 +1,8 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-exports.articleSchema = new Schema({
+exports.articleSchema = new Schema(
+	{
 		headline: {
 			type: String,
 			required: true,
@@ -30,7 +31,8 @@ exports.articleSchema = new Schema({
 			required: true
 		}
 	},
-	{ versionKey: false })
+	{ versionKey: false }
+)
 
 exports.programSchema = new Schema(
 	{
@@ -57,7 +59,8 @@ exports.programSchema = new Schema(
 			required: true
 		}
 	},
-	{ versionKey: false })
+	{ versionKey: false }
+)
 
 exports.rationalizationSchema = new Schema(
 	{
@@ -84,7 +87,8 @@ exports.rationalizationSchema = new Schema(
 			required: true
 		}
 	},
-	{ versionKey: false })
+	{ versionKey: false }
+)
 
 exports.researchSchema = new Schema(
 	{
@@ -123,7 +127,8 @@ exports.researchSchema = new Schema(
 			required: true
 		}
 	},
-	{ versionKey: false })
+	{ versionKey: false }
+)
 
 exports.developmentWorkSchema = new Schema(
 	{
@@ -161,7 +166,8 @@ exports.developmentWorkSchema = new Schema(
 			required: true
 		}
 	},
-	{ versionKey: false })
+	{ versionKey: false }
+)
 
 exports.projectsSchema = new Schema(
 	{
@@ -199,7 +205,8 @@ exports.projectsSchema = new Schema(
 			required: true
 		}
 	},
-	{ versionKey: false })
+	{ versionKey: false }
+)
 
 exports.abstractSchema = new Schema(
 	{
@@ -226,7 +233,8 @@ exports.abstractSchema = new Schema(
 			required: true
 		}
 	},
-	{ versionKey: false })
+	{ versionKey: false }
+)
 
 exports.approbationSchema = new Schema(
 	{
@@ -260,7 +268,8 @@ exports.approbationSchema = new Schema(
 			required: true
 		}
 	},
-	{ versionKey: false })
+	{ versionKey: false }
+)
 
 exports.verificationSchema = new Schema(
 	{
@@ -294,7 +303,8 @@ exports.verificationSchema = new Schema(
 			required: true
 		}
 	},
-	{ versionKey: false })
+	{ versionKey: false }
+)
 
 exports.patentsSchema = new Schema(
 	{
@@ -321,9 +331,11 @@ exports.patentsSchema = new Schema(
 			required: true
 		}
 	},
-	{ versionKey: false })
+	{ versionKey: false }
+)
 
-exports.subdivisionSchema = new Schema({
+exports.subdivisionSchema = new Schema(
+	{
 		name: {
 			type: String,
 			required: true,
@@ -333,9 +345,11 @@ exports.subdivisionSchema = new Schema({
 			required: true
 		},
 	},
-	{ versionKey: false })
+	{ versionKey: false }
+)
 
-exports.publicationSchema = new Schema({
+exports.publicationSchema = new Schema(
+	{
 		name: {
 			type: String,
 			required: true,
@@ -345,9 +359,11 @@ exports.publicationSchema = new Schema({
 			required: true
 		},
 	},
-	{ versionKey: false })
+	{ versionKey: false }
+)
 
-exports.userSchema = new Schema({
+exports.userSchema = new Schema(
+	{
 		login: {
 			type: String,
 			required: true,
@@ -366,9 +382,11 @@ exports.userSchema = new Schema({
 			required: true
 		},
 	},
-	{ versionKey: false })
+	{ versionKey: false }
+)
 
-exports.departmentSchema = new Schema({
+exports.departmentSchema = new Schema(
+	{
 		name: {
 			type: String,
 			required: true,
@@ -378,4 +396,5 @@ exports.departmentSchema = new Schema({
 			required: true
 		},
 	},
-	{ versionKey: false })
+	{ versionKey: false }
+)

@@ -38,8 +38,10 @@ const dateFormat = 'dd.MM.yyyy'
 const cancelLabel = 'Отмена'
 
 const Title = createTitle('Испытание', 'headline')
-const Empty = createEmptyPage('Нет доступных испытаний',
-	'Для добавления испытания нажмите кнопку "Создать"')
+const Empty = createEmptyPage(
+	'Нет доступных испытаний',
+	'Для добавления испытания нажмите кнопку "Создать"'
+)
 const ShowActions = getShowActions()
 const EditActions = getEditActionsWithoutFile()
 const BulkActionButtons = getBulkActionButtons()

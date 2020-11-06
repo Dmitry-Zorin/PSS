@@ -8,6 +8,7 @@ const MyLayout = (props) => (
 		{...props}
 		menu={Menu}
 		appBar={MyAppBar}
-	/>)
+	/>
+)
 
 export default MyLayout

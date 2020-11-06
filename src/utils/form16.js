@@ -190,42 +190,46 @@ const getTable = (data, author, name) => (
 	})
 )
 
-const getDataTableRows = (data, author, name) => ([
-	...(data.old.length ? (
-		new TableRow({
-			children: [
-				new TableCell({
-					columnSpan: 6,
+const getDataTableRows = (data, author, name) => (
+	[
+		...(
+			data.old.length ? (
+				new TableRow({
 					children: [
-						new Paragraph({
-							text: letterStack.pop() + ') научные работы',
-							alignment: AlignmentType.CENTER
+						new TableCell({
+							columnSpan: 6,
+							children: [
+								new Paragraph({
+									text: letterStack.pop() + ') научные работы',
+									alignment: AlignmentType.CENTER
+								})
+							]
 						})
 					]
 				})
-			]
-		})
-	) : []),
-	...data.old.map(e => getDataTableRow(author, name, e)),
-	data.new.length && (
-		new TableRow({
-			children: [
-				new TableCell({
-					columnSpan: 6,
-					children: [
-						new Paragraph({
-							text: letterStack.pop() + `) научные работы${
-								data.old.length ? ' за последние три года' : ''
-							}`,
-							alignment: AlignmentType.CENTER
-						})
-					]
-				})
-			]
-		})
-	),
-	...data.new.map(e => getDataTableRow(author, name, e))
-])
+			) : []
+		),
+		...data.old.map(e => getDataTableRow(author, name, e)),
+		data.new.length && (
+			new TableRow({
+				children: [
+					new TableCell({
+						columnSpan: 6,
+						children: [
+							new Paragraph({
+								text: letterStack.pop() + `) научные работы${
+									data.old.length ? ' за последние три года' : ''
+								}`,
+								alignment: AlignmentType.CENTER
+							})
+						]
+					})
+				]
+			})
+		),
+		...data.new.map(e => getDataTableRow(author, name, e))
+	]
+)
 
 const getDataTableRow = (author, name, e) => (
 	new TableRow({
@@ -234,7 +238,9 @@ const getDataTableRow = (author, name, e) => (
 			new TableCell({
 				children: [
 					new Paragraph({
-						text: (index++).toString(),
+						text: (
+							index++
+						).toString(),
 						alignment: AlignmentType.CENTER
 					})
 				]

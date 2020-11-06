@@ -8,72 +8,74 @@ import { Link } from 'react-router-dom'
 import LogoImg from '../../static/images/logo.png'
 import ScienceImg from '../../static/images/science.png'
 
-const useStyles = makeStyles((theme) => ({
-	logo: {
-		display: 'flex',
-		alignItems: 'center',
-		paddingLeft: '1.5rem',
-		width: '18rem',
-		height: '5rem',
-		backgroundColor: 'white',
-		position: 'relative',
-		borderBottom: '0.05em solid rgba(219, 219, 219, 0.5)',
-		'&::before': {
-			content: '""',
-			position: 'absolute',
-			bottom: 0,
-			right: 0,
-			borderTop: `7rem solid ${red[500]}`,
-			borderLeft: '5rem solid transparent',
-			width: 0,
+const useStyles = makeStyles((theme) => (
+	{
+		logo: {
+			display: 'flex',
+			alignItems: 'center',
+			paddingLeft: '1.5rem',
+			width: '18rem',
+			height: '5rem',
+			backgroundColor: 'white',
+			position: 'relative',
+			borderBottom: '0.05em solid rgba(219, 219, 219, 0.5)',
+			'&::before': {
+				content: '""',
+				position: 'absolute',
+				bottom: 0,
+				right: 0,
+				borderTop: `7rem solid ${red[500]}`,
+				borderLeft: '5rem solid transparent',
+				width: 0,
+			},
+			[theme.breakpoints.down('sm')]: {
+				display: 'none'
+			},
 		},
-		[theme.breakpoints.down('sm')]: {
-			display: 'none'
+		title: {
+			display: 'flex',
+			justifyContent: 'center',
+			alignItems: 'center',
+			height: '5rem',
+			backgroundColor: red[500],
 		},
-	},
-	title: {
-		display: 'flex',
-		justifyContent: 'center',
-		alignItems: 'center',
-		height: '5rem',
-		backgroundColor: red[500],
-	},
-	titleText: {
-		fontSize: '2.2em',
-		color: 'white',
-		[theme.breakpoints.down('sm')]: {
-			fontSize: '1.8em'
+		titleText: {
+			fontSize: '2.2em',
+			color: 'white',
+			[theme.breakpoints.down('sm')]: {
+				fontSize: '1.8em'
+			},
+			[theme.breakpoints.down('xs')]: {
+				fontSize: '1.4em'
+			},
 		},
-		[theme.breakpoints.down('xs')]: {
-			fontSize: '1.4em'
+		cards: {
+			margin: '0.5rem 0',
 		},
-	},
-	cards: {
-		margin: '0.5rem 0',
-	},
-	card: {
-		maxWidth: '35rem'
-	},
-	cardContent: {
-		padding: '0.7em 0',
-	},
-	cardLink: {
-		color: 'black',
-		'&:hover': {
-			textDecoration: 'none',
+		card: {
+			maxWidth: '35rem'
+		},
+		cardContent: {
+			padding: '0.7em 0',
+		},
+		cardLink: {
+			color: 'black',
+			'&:hover': {
+				textDecoration: 'none',
+			}
+		},
+		cardImage: {
+			display: 'block',
+			width: '100%',
+			height: 'auto',
+		},
+		cardFooter: {
+			display: 'flex',
+			justifyContent: 'center',
+			marginBottom: '0.5em'
 		}
-	},
-	cardImage: {
-		display: 'block',
-		width: '100%',
-		height: 'auto',
-	},
-	cardFooter: {
-		display: 'flex',
-		justifyContent: 'center',
-		marginBottom: '0.5em'
 	}
-}))
+))
 
 const tabsData = [
 	{

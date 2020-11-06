@@ -64,14 +64,16 @@ module.exports = (app) => {
 			r.model.find(filter)
 				.sort({ [sortField]: sortOrder })
 				.then(data => {
-					events.push(...data.map(e => ({
-						id: e._id,
-						title: e.headline,
-						creationDate: e.firstCreationDate,
-						type: r.model.collection.collectionName,
-						translation: r.translation,
-						wordGender: r.wordGender
-					})))
+					events.push(...data.map(e => (
+						{
+							id: e._id,
+							title: e.headline,
+							creationDate: e.firstCreationDate,
+							type: r.model.collection.collectionName,
+							translation: r.translation,
+							wordGender: r.wordGender
+						}
+					)))
 				})
 				.catch(console.log)
 		)))

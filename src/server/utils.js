@@ -23,33 +23,39 @@ function listParamsMiddleware(req, res, next) {
 			date.setHours(0, 0, 0, 0)
 			if (result.creationDate) {
 				result.creationDate.$gte = date
-			} else {
+			}
+			else {
 				result.creationDate = {
 					$gte: date
 				}
 			}
-		} else if (key === 'dateTo') {
+		}
+		else if (key === 'dateTo') {
 			let date = new Date(filters[key])
 			date.setHours(0, 0, 0, 0)
 			date.setHours(0, 0, 0, 0)
 			if (result.creationDate) {
 				result.creationDate.$lt = date
-			} else {
+			}
+			else {
 				result.creationDate = { $lt: date }
 			}
-		} else if (key === 'authors') {
+		}
+		else if (key === 'authors') {
 			result['authors.author'] = {
 				$regex: filters[key],
 				$options: 'i'
 			}
-		} else if (
+		}
+		else if (
 			key === 'rota'
 			|| key === 'publicationPlace'
 			|| key === 'department'
 			|| key === 'isAdmin'
 		) {
 			result[key] = { $eq: filters[key] }
-		} else {
+		}
+		else {
 			result[key] = {
 				$regex: filters[key],
 				$options: 'i'
@@ -95,7 +101,8 @@ function createAPI(app, resource, Model, extractDataToSend, extractDataFromReque
 		Model.findByIdAndUpdate(
 			req.params.id,
 			extractDataFromRequest(req),
-			{ new: true })
+			{ new: true }
+		)
 			.then(data => res.json(extractDataToSend(data)))
 			.catch(console.log)
 	})
@@ -162,7 +169,8 @@ function createAPIwithFile(app, resource, mimeTypes, Model, extractDataToSend, e
 		fileFilter: (req, file, cb) => {
 			if (mimeTypes.includes(file.mimetype)) {
 				cb(null, true)
-			} else cb(null, false)
+			}
+			else cb(null, false)
 		}
 	})
 
@@ -196,14 +204,16 @@ function createAPIwithFile(app, resource, mimeTypes, Model, extractDataToSend, e
 			fs.unlink(oldFilePath, error => {
 				if (error) console.log(error)
 			})
-		} else {
+		}
+		else {
 			data.file = req.body.file
 		}
 
 		Model.findByIdAndUpdate(
 			req.params.id,
 			data,
-			{ new: true })
+			{ new: true }
+		)
 			.then(updatedData => res.json(extractDataToSend(updatedData)))
 			.catch(console.log)
 	})

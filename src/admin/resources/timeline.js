@@ -16,22 +16,24 @@ const sort = {
 	order: 'DESC'
 }
 
-const useStyles = makeStyles(theme => ({
-	list: {
-		maxWidth: 600,
-		margin: '0 auto'
-	},
-	card: {
-		marginLeft: 0,
-		marginBottom: 15
-	},
-	padding: {
-		padding: '1.25em'
-	},
-	margin: {
-		margin: '0 auto'
+const useStyles = makeStyles(theme => (
+	{
+		list: {
+			maxWidth: 600,
+			margin: '0 auto'
+		},
+		card: {
+			marginLeft: 0,
+			marginBottom: 15
+		},
+		padding: {
+			padding: '1.25em'
+		},
+		margin: {
+			margin: '0 auto'
+		}
 	}
-}))
+))
 
 export const Timeline = (props) => {
 	const styles = useStyles()
@@ -40,7 +42,10 @@ export const Timeline = (props) => {
 		<ListController {...{ ...props, sort }}>
 			{({ data, ids, page, perPage, total, setPage }) => (
 				<>
-					<Title title={`События${page > 1 ? (': страница ' + page) : ''}`} />
+					<Title title={`События${page > 1 ? (
+						': страница ' + page
+					) : ''}`}
+					/>
 					<List className={styles.list}>
 						{ids.map(id => (
 							<CardView key={id} event={data[id]} />

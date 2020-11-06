@@ -43,8 +43,10 @@ const dateFormat = 'dd.MM.yyyy'
 const cancelLabel = 'Отмена'
 
 const Title = createTitle('Программа', 'headline')
-const Empty = createEmptyPage('Нет доступных программ',
-	'Для добавления программы нажмите кнопку "Создать"')
+const Empty = createEmptyPage(
+	'Нет доступных программ',
+	'Для добавления программы нажмите кнопку "Создать"'
+)
 const ShowActions = getShowActions()
 const EditActions = getEditActionsWithoutFile()
 const BulkActionButtons = getBulkActionButtons()

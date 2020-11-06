@@ -1,5 +1,4 @@
 import Collapse from '@material-ui/core/Collapse'
-import Divider from '@material-ui/core/Divider'
 import List from '@material-ui/core/List'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -10,23 +9,23 @@ import ExpandMore from '@material-ui/icons/ExpandMore'
 import React from 'react'
 import { useTranslate } from 'react-admin'
 
-const useStyles = makeStyles(theme => ({
-	icon: {
-		minWidth: theme.spacing(5)
-	},
-	sidebarIsOpen: {
-		'& a': {
-			paddingLeft: theme.spacing(5),
-			transition: 'padding-left 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms',
-		}
-	},
-	sidebarIsClosed: {
-		'& a': {
-			paddingLeft: 0,
-			transition: 'padding-left 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms',
-		}
-	},
-}))
+const useStyles = makeStyles(theme => (
+	{
+		icon: {
+			minWidth: theme.spacing(5)
+		},
+		sidebarIsOpen: {
+			'& a': {
+				paddingLeft: theme.spacing(4),
+			}
+		},
+		sidebarIsClosed: {
+			'& a': {
+				paddingLeft: theme.spacing(2),
+			}
+		},
+	}
+))
 
 const SubMenu = ({ handleToggle, sidebarIsOpen, isOpen, name, icon, children, }) => {
 	const translate = useTranslate()

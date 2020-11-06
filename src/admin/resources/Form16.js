@@ -1,5 +1,4 @@
 import Button from '@material-ui/core/Button'
-import red from '@material-ui/core/colors/red'
 import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import React, { useState } from 'react'
@@ -7,16 +6,18 @@ import { Title, useDataProvider, useNotify } from 'react-admin'
 import { countPages } from '../../utils/fileReader'
 import { createForm16 } from '../../utils/form16'
 
-const useStyles = makeStyles(theme => ({
-	form: {
-		maxWidth: 600,
-		margin: '0 auto',
-		'& > *': {
-			width: '100%',
-			margin: theme.spacing(1),
+const useStyles = makeStyles(theme => (
+	{
+		form: {
+			maxWidth: 600,
+			margin: '0 auto',
+			'& > *': {
+				width: '100%',
+				margin: theme.spacing(1),
+			}
 		}
 	}
-}))
+))
 
 export const Form16 = () => {
 	const styles = useStyles()

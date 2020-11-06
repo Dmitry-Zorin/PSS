@@ -2,7 +2,6 @@ import React from 'react'
 import {
 	ArrayField,
 	ChipField,
-	DateField,
 	FileField,
 	ReferenceArrayField,
 	Show,

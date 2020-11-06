@@ -30,15 +30,19 @@ const validateLoginExistsOnCreate = (values) => {
 			if (data.exists) return { login: 'Логин занят' }
 			else return undefined
 		})
-		.catch(() => ({ login: 'Internal error, please try again' }))
+		.catch(() => (
+			{ login: 'Internal error, please try again' }
+		))
 }
 
 const validateLogin = [required(), minLength(1)]
 const validatePassword = [required(), minLength(8)]
 
 const Title = createTitle('Пользователи', 'login')
-const Empty = createEmptyPage('Нет зарегистрированных пользователей',
-	'Для добавления пользователя нажмите кнопку "Создать"')
+const Empty = createEmptyPage(
+	'Нет зарегистрированных пользователей',
+	'Для добавления пользователя нажмите кнопку "Создать"'
+)
 const ShowActions = getShowActions()
 // const EditActions = getEditActions();
 

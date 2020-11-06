@@ -71,10 +71,12 @@ export function getEditActionsWithoutFile() {
 
 export function getBulkActionButtons() {
 	return ({ permissions, ...props }) => {
-		return (permissions
-			? <React.Fragment>
-				<BulkDeleteButton {...props} />
-			</React.Fragment>
-			: null)
+		return (
+			permissions
+				? <React.Fragment>
+					<BulkDeleteButton {...props} />
+				</React.Fragment>
+				: null
+		)
 	}
 }

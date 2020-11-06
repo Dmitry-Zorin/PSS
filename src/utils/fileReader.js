@@ -13,7 +13,9 @@ export const countPages = (url) => (
 				const reader = new FileReader()
 				reader.readAsBinaryString(blob)
 				reader.onloadend = () => (
-					resolve((reader.result.match(/\/Type[\s]*\/Page[^s]/g) || []).length)
+					resolve((
+						reader.result.match(/\/Type[\s]*\/Page[^s]/g) || []
+					).length)
 				)
 			})
 		})

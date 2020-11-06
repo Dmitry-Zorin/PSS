@@ -20,8 +20,10 @@ import { createEmptyPage, createTitle, getBulkActionButtons, getEditActions, get
 const validateName = [required(), minLength(1)]
 
 const Title = createTitle('Отдел', 'name')
-const Empty = createEmptyPage('Нет доступных отделов',
-	'Для добавления отдела нажмите кнопку "Создать"')
+const Empty = createEmptyPage(
+	'Нет доступных отделов',
+	'Для добавления отдела нажмите кнопку "Создать"'
+)
 const ShowActions = getShowActions()
 const EditActions = getEditActions()
 const BulkActionButtons = getBulkActionButtons()

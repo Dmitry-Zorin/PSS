@@ -5,21 +5,25 @@ import Zoom from '@material-ui/core/Zoom'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import React from 'react'
 
-const useStyles = makeStyles(theme => ({
-	fabContainer: {
-		zIndex: 9000,
-		position: 'fixed',
-		bottom: theme.spacing(3),
-		right: theme.spacing(4),
+const useStyles = makeStyles(theme => (
+	{
+		fabContainer: {
+			zIndex: 9000,
+			position: 'fixed',
+			bottom: theme.spacing(3),
+			right: theme.spacing(4),
+		}
 	}
-}))
+))
 
 export const ScrollTopButton = () => {
 	const styles = useStyles()
 	const trigger = useScrollTrigger()
 
 	const handleClick = (event) => {
-		const anchor = (event.target.ownerDocument || document)
+		const anchor = (
+			event.target.ownerDocument || document
+		)
 			.getElementById('app')
 
 		if (anchor) {
