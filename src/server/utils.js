@@ -9,65 +9,67 @@ const cookieParser = require('cookie-parser')()
 const auth = require('./auth').auth
 
 function listParamsMiddleware(req, res, next) {
-	const sort = JSON.parse(req.query.sort)
-	const sortField = sort[0]
-	const sortOrder = sort[1]
-	const range = JSON.parse(req.query.range)
-	const rangeStart = range[0]
-	const rangeEnd = range[1] + 1
-	const filters = JSON.parse(req.query.filter)
+	const { query } = req
 
-	const regexFilters = Object.keys(filters).reduce((result, key) => {
+	for (const [k, v] of Object.entries(query)) {
+		query[k] = JSON.parse(v)
+	}
+
+	const { sort, range, filter } = query
+
+	const filters = {}
+
+	for (const [key, value] of Object.entries(filter)) {
 		if (key === 'dateFrom') {
-			let date = new Date(filters[key])
+			const date = new Date(value)
 			date.setHours(0, 0, 0, 0)
-			if (result.creationDate) {
-				result.creationDate.$gte = date
+			if (filters.creationDate) {
+				filters.creationDate.$gte = date
 			}
 			else {
-				result.creationDate = {
-					$gte: date
-				}
+				filters.creationDate = { $gte: date }
 			}
 		}
 		else if (key === 'dateTo') {
-			let date = new Date(filters[key])
+			const date = new Date(value)
 			date.setHours(0, 0, 0, 0)
 			date.setHours(0, 0, 0, 0)
-			if (result.creationDate) {
-				result.creationDate.$lt = date
+			if (filters.creationDate) {
+				filters.creationDate.$lt = date
 			}
 			else {
-				result.creationDate = { $lt: date }
+				filters.creationDate = { $lt: date }
 			}
 		}
 		else if (key === 'authors') {
-			result['authors.author'] = {
-				$regex: filters[key],
+			filters['authors.author'] = {
+				$regex: value,
 				$options: 'i'
 			}
 		}
-		else if (
-			key === 'rota'
-			|| key === 'publicationPlace'
-			|| key === 'department'
-			|| key === 'isAdmin'
-		) {
-			result[key] = { $eq: filters[key] }
+		else if (key === 'tags') {
+			filters['tags.tag'] = {
+				$regex: value,
+				$options: 'i'
+			}
+		}
+		else if (['rota', 'publicationPlace', 'department', 'isAdmin'].includes(key)) {
+			filters[key] = { $eq: value }
 		}
 		else {
-			result[key] = {
-				$regex: filters[key],
+			filters[key] = {
+				$regex: value,
 				$options: 'i'
 			}
 		}
-		return result
-	}, {})
+	}
 
 	req.listParams = {
-		sortField, sortOrder,
-		rangeStart, rangeEnd,
-		filter: regexFilters
+		sortField: sort[0],
+		sortOrder: sort[1],
+		rangeStart: range[0],
+		rangeEnd: range[1] + 1,
+		filter: filters
 	}
 
 	next()

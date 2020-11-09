@@ -5,20 +5,15 @@ import {
 	Datagrid,
 	Filter,
 	List,
-	ReferenceArrayField,
 	ReferenceInput,
 	SelectInput,
 	SingleFieldList,
 	TextInput
 } from 'react-admin'
-import { DateInput } from 'react-admin-date-inputs2'
-import { DescriptionField, HeadlineField } from '../../CustomFields'
+import { HeadlineField } from '../../CustomFields'
 import { createEmptyPage, getBulkActionButtons } from '../../utils'
 import { Aside } from './Aside'
 import { LibraryShow } from './LibraryShow'
-
-const dateFormat = 'dd.MM.yyyy'
-const cancelLabel = 'Отмена'
 
 const Empty = createEmptyPage(
 	'Нет доступных книг',
@@ -28,7 +23,7 @@ const BulkActionButtons = getBulkActionButtons()
 
 export const LibraryList = ({ permissions, ...props }) => (
 	<List
-		title="Список книг"
+		title="Библиотека"
 		filters={<Filters />}
 		perPage={25}
 		exporter={false}
@@ -46,28 +41,25 @@ export const LibraryList = ({ permissions, ...props }) => (
 				label="Название"
 				source="headline"
 			/>
-			<DescriptionField
-				label="Описание"
-				source="text"
-				maxchars={250}
-			/>
-			<ReferenceArrayField
-				label="Подразделения"
-				reference="subdivisions"
-				source="subdivisions"
-			>
-				<SingleFieldList>
-					<ChipField source="name" />
-				</SingleFieldList>
-			</ReferenceArrayField>
 			<ArrayField
-				source="authors"
 				label="Авторы"
+				source="authors"
 			>
 				<SingleFieldList linkType={false}>
 					<ChipField
 						label="Автор"
 						source="author"
+					/>
+				</SingleFieldList>
+			</ArrayField>
+			<ArrayField
+				label="Ключевые слова"
+				source="tags"
+			>
+				<SingleFieldList linkType={false}>
+					<ChipField
+						label="Ключевое слово"
+						source="tag"
 					/>
 				</SingleFieldList>
 			</ArrayField>
@@ -78,17 +70,23 @@ export const LibraryList = ({ permissions, ...props }) => (
 const Filters = (props) => (
 	<Filter {...props}>
 		<TextInput
-			label="Поиск по названию"
+			label="Название"
 			source="headline"
 			alwaysOn
 		/>
 		<TextInput
-			label="Аннотация"
-			source="text"
-		/>
-		<TextInput
 			label="Автор"
 			source="authors"
+			alwaysOn
+		/>
+		<TextInput
+			label="Ключевое слово"
+			source="tags"
+			alwaysOn
+		/>
+		<TextInput
+			label="Описание"
+			source="text"
 		/>
 		<ReferenceInput
 			perPage={1000}
@@ -98,21 +96,5 @@ const Filters = (props) => (
 		>
 			<SelectInput optionText="name" />
 		</ReferenceInput>
-		<DateInput
-			label="Дата от"
-			source="dateFrom"
-			options={{
-				format: dateFormat,
-				cancelLabel: cancelLabel
-			}}
-		/>
-		<DateInput
-			label="Дата до"
-			source="dateTo"
-			options={{
-				format: dateFormat,
-				cancelLabel: cancelLabel
-			}}
-		/>
 	</Filter>
 )

@@ -17,15 +17,20 @@ const dataProvider = {
 		const formData = new FormData()
 
 		for (const key in params.data) {
-			if (key == 'creationDate') {
+			if (key === 'creationDate') {
 				let date = new Date(params.data[key])
 				date.setHours(0, 0, 0, 0)
 				formData.append(key, date.toDateString())
 			}
-			else if (key == 'file') formData.append(key, params.data[key].rawFile, params.data[key].rawFile.name)
-			else if (key == 'authors') formData.append(key, JSON.stringify(params.data[key]))
-			else if (key == 'subdivisions') formData.append(key, JSON.stringify(params.data[key]))
-			else formData.append(key, params.data[key])
+			else if (key === 'file') {
+				formData.append(key, params.data[key].rawFile, params.data[key].rawFile.name)
+			}
+			else if (['subdivisions', 'authors', 'tags'].includes(key)) {
+				formData.append(key, JSON.stringify(params.data[key]))
+			}
+			else {
+				formData.append(key, params.data[key])
+			}
 		}
 
 		return fetch(`${apiUrl}/${resource}`, {
@@ -44,21 +49,18 @@ const dataProvider = {
 		const formData = new FormData()
 
 		for (const key in params.data) {
-			if (key == 'creationDate') {
+			if (key === 'creationDate') {
 				let date = new Date(params.data[key])
 				date.setHours(0, 0, 0, 0)
 				formData.append(key, date.toDateString())
 			}
-			else if (key == 'file') {
+			else if (key === 'file') {
 				formData.append(key, params.data[key].url)
 			}
-			else if (key == 'newfile' && params.data[key]) {
+			else if (key === 'newfile' && params.data[key]) {
 				formData.append(key, params.data[key].rawFile, params.data[key].rawFile.name)
 			}
-			else if (key == 'authors') {
-				formData.append(key, JSON.stringify(params.data[key]))
-			}
-			else if (key == 'subdivisions') {
+			else if (['subdivisions', 'authors', 'tags'].includes(key)) {
 				formData.append(key, JSON.stringify(params.data[key]))
 			}
 			else {

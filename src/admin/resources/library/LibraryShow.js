@@ -28,9 +28,20 @@ export const LibraryShow = ({ permissions, enableActions = true, ...props }) => 
 				source="headline"
 			/>
 			<TextField
-				label="Аннотация"
+				label="Описание"
 				source="text"
 			/>
+			<ArrayField
+				label="Ключевые слова"
+				source="tags"
+			>
+				<SingleFieldList linkType={false}>
+					<ChipField
+						label="Ключевое слово"
+						source="tag"
+					/>
+				</SingleFieldList>
+			</ArrayField>
 			<ArrayField
 				label="Авторы"
 				source="authors"
@@ -44,17 +55,17 @@ export const LibraryShow = ({ permissions, enableActions = true, ...props }) => 
 			</ArrayField>
 			<ReferenceArrayField
 				label="Подразделения"
-				reference="subdivisions"
 				source="subdivisions"
+				reference="subdivisions"
 			>
 				<SingleFieldList>
 					<ChipField source="name" />
 				</SingleFieldList>
 			</ReferenceArrayField>
 			<FileField
+				label="Файл"
 				source="file.url"
 				title="file.title"
-				label="Файл"
 				target="_blank"
 			/>
 		</SimpleShowLayout>

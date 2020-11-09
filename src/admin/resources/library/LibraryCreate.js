@@ -32,17 +32,29 @@ export const LibraryCreate = (props) => (
 				label="Название"
 				source="headline"
 				validate={validateHeadline}
+				fullWidth
 			/>
 			<TextInput
-				fullWidth
 				label="Описание"
-				multiline
 				source="text"
 				options={{ multiLine: true }}
+				multiline
+				fullWidth
 			/>
 			<ArrayInput
-				source="authors"
+				label="Ключевые слова"
+				source="tags"
+			>
+				<SimpleFormIterator>
+					<TextInput
+						label="Ключевое слово"
+						source="tag"
+					/>
+				</SimpleFormIterator>
+			</ArrayInput>
+			<ArrayInput
 				label="Авторы"
+				source="authors"
 			>
 				<SimpleFormIterator>
 					<TextInput
@@ -52,17 +64,18 @@ export const LibraryCreate = (props) => (
 				</SimpleFormIterator>
 			</ArrayInput>
 			<ReferenceArrayInput
-				fullWidth
 				label="Подразделения"
-				reference="subdivisions"
 				source="subdivisions"
+				reference="subdivisions"
 				perPage={1000}
+				fullWidth
 			>
 				<SelectArrayInput optionText="name" />
 			</ReferenceArrayInput>
 			<FileInput
-				source="file"
 				label="Файл"
+				source="file"
+				validate={validateFile}
 				accept={[
 					'application/pdf',
 					'application/x-rar-compressed',
@@ -73,11 +86,10 @@ export const LibraryCreate = (props) => (
 					'application/msword',
 					'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
 				]}
-				validate={validateFile}
 			>
 				<FileField
-					source="file"
 					title="Загруженный файл"
+					source="file"
 				/>
 			</FileInput>
 		</SimpleForm>

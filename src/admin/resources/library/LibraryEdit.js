@@ -30,17 +30,28 @@ export const LibraryEdit = (props) => (
 	>
 		<SimpleForm submitOnEnter={false}>
 			<TextInput
-				fullWidth
 				label="Название"
 				source="headline"
 				validate={validateHeadline}
+				fullWidth
 			/>
 			<TextInput
-				fullWidth
 				label="Описание"
-				multiline
 				source="text"
+				multiline
+				fullWidth
 			/>
+			<ArrayInput
+				label="Ключевые слова"
+				source="tags"
+			>
+				<SimpleFormIterator>
+					<TextInput
+						label="Ключевое слово"
+						source="tag"
+					/>
+				</SimpleFormIterator>
+			</ArrayInput>
 			<ArrayInput
 				label="Авторы"
 				source="authors"
@@ -53,32 +64,37 @@ export const LibraryEdit = (props) => (
 				</SimpleFormIterator>
 			</ArrayInput>
 			<ReferenceArrayInput
-				fullWidth
 				label="Подразделения"
-				reference="subdivisions"
 				source="subdivisions"
+				reference="subdivisions"
 				perPage={1000}
+				fullWidth
 			>
 				<SelectArrayInput optionText="name" />
 			</ReferenceArrayInput>
 			<FileField
+				label="Файл"
 				source="file.url"
 				title="file.title"
-				label="Файл"
 				target="_blank"
 			/>
 			<FileInput
-				source="newfile"
 				label="Новый файл"
+				source="newfile"
 				accept={[
 					'application/pdf',
 					'application/x-rar-compressed',
-					'application/zip'
+					'application/zip',
+					'image/vnd.djvu',
+					'application/epub+zip',
+					'application/x-mobipocket-ebook',
+					'application/msword',
+					'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
 				]}
 			>
 				<FileField
-					source="src"
 					title="Загруженный файл"
+					source="src"
 				/>
 			</FileInput>
 		</SimpleForm>

@@ -12,6 +12,7 @@ module.exports = new Schema(
 			type: Date,
 			required: true
 		},
+		tags: [{ tag: String }],
 		authors: [{ author: String }],
 		subdivisions: [String],
 		file: {

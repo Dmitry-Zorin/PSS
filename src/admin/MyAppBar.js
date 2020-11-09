@@ -32,7 +32,7 @@ const MyAppBar = (props) => {
 				className={classes.title}
 				id="react-admin-title"
 			/>
-			<Link to="/home">
+			<Link to="/">
 				<IconButton className={classes.homeIcon}>
 					<HomeIcon />
 				</IconButton>
