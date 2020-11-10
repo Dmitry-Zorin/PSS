@@ -174,7 +174,6 @@ export const CreateForm = props => (
 				multiline
 				source="text"
 				validate={validateAnnotation}
-				options={{ multiLine: true }}
 			/>
 			<DateInput
 				label="Дата создания"

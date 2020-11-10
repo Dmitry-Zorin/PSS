@@ -8,9 +8,6 @@ import { AppBar } from 'react-admin'
 import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles({
-	header: {
-		background: red[500]
-	},
 	title: {
 		flex: 1,
 		textOverflow: 'ellipsis',
@@ -25,7 +22,7 @@ const useStyles = makeStyles({
 const MyAppBar = (props) => {
 	const classes = useStyles()
 	return (
-		<AppBar className={classes.header} {...props}>
+		<AppBar color='secondary' {...props}>
 			<Typography
 				variant="h6"
 				color="inherit"

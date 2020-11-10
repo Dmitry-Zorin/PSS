@@ -90,7 +90,7 @@ export const LibraryEdit = (props) => (
 					'application/x-mobipocket-ebook',
 					'application/msword',
 					'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-				]}
+				].join(', ')}
 			>
 				<FileField
 					title="Загруженный файл"

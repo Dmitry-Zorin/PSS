@@ -24,9 +24,9 @@ export const Form16 = () => {
 	const dataProvider = useDataProvider()
 	const notify = useNotify()
 
-	const [lastname, setLastname] = useState('горшков')
-	const [name, setName] = useState('горшкова с н')
-	const [title, setTitle] = useState('старший оператор 4 научной роты ФГАУ ВИТ «ЭРА»')
+	const [lastname, setLastname] = useState() // 'горшков'
+	const [name, setName] = useState() // 'горшкова с н'
+	const [title, setTitle] = useState() // 'старший оператор 4 научной роты ФГАУ ВИТ «ЭРА»'
 
 	const getPublications = () => (
 		dataProvider.getList('publications', {
@@ -104,7 +104,7 @@ export const Form16 = () => {
 	return (
 		<>
 			<Title title='Справка (форма 16)' />
-			<form className={styles.form} noValidate autoComplete="off">
+			<form className={styles.form} autoComplete="off" noValidate>
 				<TextField
 					label="Автор (фамилия)"
 					variant="filled"
@@ -123,7 +123,11 @@ export const Form16 = () => {
 					value={title}
 					onChange={e => setTitle(e.target.value)}
 				/>
-				<Button color='secondary' variant='contained' onClick={generateForm}>
+				<Button
+					color='secondary'
+					variant='contained'
+					onClick={generateForm}
+				>
 					СОЗДАТЬ СПРАВКУ
 				</Button>
 			</form>

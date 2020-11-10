@@ -28,7 +28,6 @@ export const LibraryCreate = (props) => (
 			submitOnEnter={false}
 		>
 			<TextInput
-				fullWidth
 				label="Название"
 				source="headline"
 				validate={validateHeadline}
@@ -37,7 +36,6 @@ export const LibraryCreate = (props) => (
 			<TextInput
 				label="Описание"
 				source="text"
-				options={{ multiLine: true }}
 				multiline
 				fullWidth
 			/>
@@ -85,7 +83,7 @@ export const LibraryCreate = (props) => (
 					'application/x-mobipocket-ebook',
 					'application/msword',
 					'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-				]}
+				].join(', ')}
 			>
 				<FileField
 					title="Загруженный файл"

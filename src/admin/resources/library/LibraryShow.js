@@ -12,12 +12,13 @@ import {
 import { createTitle, getShowActions } from '../../utils'
 
 const Title = createTitle('Книга', 'headline')
+const TitleShort = createTitle('', 'headline')
 
 const ShowActions = getShowActions()
 
 export const LibraryShow = ({ permissions, enableActions = true, ...props }) => (
 	<Show
-		title={<Title />}
+		title={enableActions ? <Title /> : <TitleShort />}
 		actions={!enableActions ? undefined : (
 			<ShowActions permissions={permissions} />
 		)}
