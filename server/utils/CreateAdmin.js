@@ -1,6 +1,6 @@
 const minimist = require('minimist')
 const mongoose = require('mongoose')
-const schema = require('../server/schemas').userSchema
+const schema = require('../schemas').userSchema
 const mongodbConfig = require('../mongodbConfig')
 const bcrypt = require('bcrypt')
 

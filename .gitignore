@@ -1,6 +1,6 @@
 .idea
 .env
-.storybook
+.env.production
 
 node_modules
 

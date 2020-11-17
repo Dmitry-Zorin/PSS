@@ -306,34 +306,6 @@ exports.verificationSchema = new Schema(
 	{ versionKey: false }
 )
 
-exports.patentsSchema = new Schema(
-	{
-		headline: {
-			type: String,
-			required: true,
-		},
-		description: {
-			type: String,
-			required: true,
-		},
-		creationDate: {
-			type: Date,
-			required: true
-		},
-		firstCreationDate: {
-			type: Date,
-			required: true
-		},
-		authors: [{ author: String }],
-		subdivisions: [String],
-		file: {
-			type: String,
-			required: true
-		}
-	},
-	{ versionKey: false }
-)
-
 exports.subdivisionSchema = new Schema(
 	{
 		name: {

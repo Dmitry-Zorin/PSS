@@ -3,16 +3,18 @@ const mongoose = require('mongoose')
 const appRoot = require('app-root-path')
 const express = require('express')
 const app = express()
-const mongodbConfig = require('../mongodbConfig')
+const mongodbConfig = require('./mongodbConfig')
 const cors = require('cors')
 
 require('dotenv').config()
 
-app.use(cors({
-	origin: process.env.UI_SERVER,
-	exposedHeaders: 'Content-Range',
-	credentials: true
-}))
+if (process.env.NODE_ENV === 'development') {
+	app.use(cors({
+		origin: process.env.UI_SERVER,
+		exposedHeaders: 'Content-Range',
+		credentials: true
+	}))
+}
 
 require('./routes/ArticleAPI')(app)
 require('./routes/ProgramAPI')(app)
@@ -38,9 +40,14 @@ app.use(function (req, res, next) {
 })
 
 app.use('/media', express.static(path.join(appRoot.path, '/media/')))
+app.use(express.static(path.join(appRoot.path, '/dist/')))
+
+app.get("/*", (req, res) => {
+	res.sendFile((path.join(appRoot.path, "/dist/index.html")));
+})
 
 mongoose.connect(
-	`mongodb://${process.env.HOST}:${process.env.DB_PORT}/${process.env.DB}`,
+	`mongodb://localhost:${process.env.DB_PORT}/${process.env.DB}`,
 	mongodbConfig
 )
 	.then(() => {

@@ -25,6 +25,9 @@ const dataProvider = {
 			else if (key === 'file') {
 				formData.append(key, params.data[key].rawFile, params.data[key].rawFile.name)
 			}
+			else if (key === 'certificateFile') {
+				formData.append(key, params.data[key].rawFile, params.data[key].rawFile.name)
+			}
 			else if (['subdivisions', 'authors', 'tags'].includes(key)) {
 				formData.append(key, JSON.stringify(params.data[key]))
 			}

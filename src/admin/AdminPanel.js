@@ -53,12 +53,7 @@ import {
 } from './resources/developments'
 import { Form16 } from './resources/Form16'
 import Library from './resources/library/index'
-import {
-	CreateForm as PatentCreate,
-	EditForm as PatentEdit,
-	ListForm as PatentList,
-	ShowForm as PatentShow,
-} from './resources/patents'
+import Patents from './resources/patents/index'
 import {
 	CreateForm as ProgramCreate,
 	EditForm as ProgramEdit,
@@ -141,8 +136,8 @@ const AdminPanel = () => (
 					icon={DescriptionIcon}
 					options={{ label: 'Статьи' }}
 					list={ArticleList}
-					edit={permissions ? ArticleEdit : null}
-					create={permissions ? ArticleCreate : null}
+					edit={permissions ? ArticleEdit : undefined}
+					create={permissions ? ArticleCreate : undefined}
 					show={ArticleShow}
 				/>,
 				<Resource
@@ -150,8 +145,8 @@ const AdminPanel = () => (
 					icon={CodeIcon}
 					options={{ label: 'Программы' }}
 					list={ProgramList}
-					edit={permissions ? ProgramEdit : null}
-					create={permissions ? ProgramCreate : null}
+					edit={permissions ? ProgramEdit : undefined}
+					create={permissions ? ProgramCreate : undefined}
 					show={ProgramShow}
 				/>,
 				<Resource
@@ -159,8 +154,8 @@ const AdminPanel = () => (
 					icon={SchoolIcon}
 					options={{ label: 'НИР' }}
 					list={ResearchList}
-					edit={permissions ? ResearchEdit : null}
-					create={permissions ? ResearchCreate : null}
+					edit={permissions ? ResearchEdit : undefined}
+					create={permissions ? ResearchCreate : undefined}
 					show={ResearchShow}
 				/>,
 				<Resource
@@ -168,8 +163,8 @@ const AdminPanel = () => (
 					icon={DeveloperBoardIcon}
 					options={{ label: 'ОКР' }}
 					list={DevelopmentList}
-					edit={permissions ? DevelopmentEdit : null}
-					create={permissions ? DevelopmentCreate : null}
+					edit={permissions ? DevelopmentEdit : undefined}
+					create={permissions ? DevelopmentCreate : undefined}
 					show={DevelopmentShow}
 				/>,
 				<Resource
@@ -177,8 +172,8 @@ const AdminPanel = () => (
 					icon={EmojiObjectsIcon}
 					options={{ label: 'Предложения' }}
 					list={RationalizationList}
-					edit={permissions ? RationalizationEdit : null}
-					create={permissions ? RationalizationCreate : null}
+					edit={permissions ? RationalizationEdit : undefined}
+					create={permissions ? RationalizationCreate : undefined}
 					show={RationalizationShow}
 				/>,
 				<Resource
@@ -186,8 +181,8 @@ const AdminPanel = () => (
 					icon={TrendingUpIcon}
 					options={{ label: 'Проекты' }}
 					list={ProjectList}
-					edit={permissions ? ProjectEdit : null}
-					create={permissions ? ProjectCreate : null}
+					edit={permissions ? ProjectEdit : undefined}
+					create={permissions ? ProjectCreate : undefined}
 					show={ProjectShow}
 				/>,
 				<Resource
@@ -195,8 +190,8 @@ const AdminPanel = () => (
 					icon={SubjectIcon}
 					options={{ label: 'Тезисы' }}
 					list={AbstractList}
-					edit={permissions ? AbstractEdit : null}
-					create={permissions ? AbstractCreate : null}
+					edit={permissions ? AbstractEdit : undefined}
+					create={permissions ? AbstractCreate : undefined}
 					show={AbstractShow}
 				/>,
 				<Resource
@@ -204,26 +199,26 @@ const AdminPanel = () => (
 					icon={ThumbUpAltIcon}
 					options={{ label: 'Апробации' }}
 					list={ApprobationList}
-					edit={permissions ? ApprobationEdit : null}
-					create={permissions ? ApprobationCreate : null}
+					edit={permissions ? ApprobationEdit : undefined}
+					create={permissions ? ApprobationCreate : undefined}
 					show={ApprobationShow}
 				/>,
 				<Resource
 					name="patents"
 					icon={PlaylistAddCheckIcon}
 					options={{ label: 'Патенты' }}
-					list={PatentList}
-					edit={permissions ? PatentEdit : null}
-					create={permissions ? PatentCreate : null}
-					show={PatentShow}
+					list={Patents.list}
+					edit={permissions ? Patents.edit : undefined}
+					create={permissions ? Patents.create : undefined}
+					show={Patents.show}
 				/>,
 				<Resource
 					name="verifications"
 					icon={VerifiedUserIcon}
 					options={{ label: 'Испытания' }}
 					list={VerificationList}
-					edit={permissions ? VerificationEdit : null}
-					create={permissions ? VerificationCreate : null}
+					edit={permissions ? VerificationEdit : undefined}
+					create={permissions ? VerificationCreate : undefined}
 					show={VerificationShow}
 				/>,
 				<Resource
@@ -264,8 +259,8 @@ const AdminPanel = () => (
 					icon={MenuBookIcon}
 					options={{ label: 'Библиотека' }}
 					list={Library.list}
-					edit={Library.edit}
-					create={Library.create}
+					edit={permissions ? Library.edit : undefined}
+					create={permissions ? Library.create : undefined}
 					show={Library.show}
 				/>
 			]}

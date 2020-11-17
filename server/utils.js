@@ -159,7 +159,11 @@ function createAPIwithFile(app, resource, mimeTypes, Model, extractDataToSend, e
 		destination: (req, file, cb) => {
 			const dir = path.join(appRoot.path, filesFolder)
 			if (!fs.existsSync(dir)) fs.mkdirSync(dir)
-			cb(null, dir)
+			const certificatesDir = path.join(dir, 'certificates')
+			if (!fs.existsSync(certificatesDir)) {
+				fs.mkdirSync(certificatesDir)
+			}
+			cb(null, file.fieldname === 'certificateFile' ? certificatesDir : dir)
 		},
 		filename: (req, file, cb) => {
 			cb(null, shortid.generate() + '_' + file.originalname)
@@ -177,14 +181,21 @@ function createAPIwithFile(app, resource, mimeTypes, Model, extractDataToSend, e
 	})
 
 	// create
-	app.post(`/api/${resource}`, cookieParser, auth, formData.single('file'), (req, res) => {
+	app.post(`/api/${resource}`, cookieParser, auth, formData.fields([
+		{ name: 'file', maxCount: 1 },
+		{ name: 'certificateFile', maxCount: 1 }
+	]), (req, res) => {
 		if (!req.isAdmin) {
 			return res.status(401).json({ error: 'Access denied' })
 		}
 
 		const data = extractDataFromRequest(req)
 		data.firstCreationDate = new Date()
-		data.file = path.join(filesFolder, req.file.filename)
+		data.file = path.join(filesFolder, req.files.file[0].filename)
+
+		if (req.files.certificateFile) {
+			data.certificate.file = path.join(filesFolder, 'certificates', req.files.certificateFile[0].filename)
+		}
 
 		const modelRecord = new Model(data)
 		modelRecord.save()
@@ -202,7 +213,7 @@ function createAPIwithFile(app, resource, mimeTypes, Model, extractDataToSend, e
 
 		if (req.file) {
 			data.file = path.join(filesFolder, req.file.filename)
-			const oldFilePath = path.join(appRoot.path, req.body.file)
+			const oldFilePath = path.join(appRoot.path, req.body.file.replace(/http[^a-z]+(localhost)?[^a-z]+/, ''))
 			fs.unlink(oldFilePath, error => {
 				if (error) console.log(error)
 			})
@@ -228,7 +239,7 @@ function createAPIwithFile(app, resource, mimeTypes, Model, extractDataToSend, e
 
 		Model.findByIdAndDelete({ _id: req.params.id })
 			.then(data => {
-				const filePath = path.join(appRoot.path, data.file)
+				const filePath = path.join(appRoot.path, data.file.replace(/http[^a-z]+(localhost)?[^a-z]+/, ''))
 				fs.unlink(filePath, error => {
 					if (error) console.log(error)
 				})
