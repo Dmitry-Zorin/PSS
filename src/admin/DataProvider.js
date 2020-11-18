@@ -22,10 +22,7 @@ const dataProvider = {
 				date.setHours(0, 0, 0, 0)
 				formData.append(key, date.toDateString())
 			}
-			else if (key === 'file') {
-				formData.append(key, params.data[key].rawFile, params.data[key].rawFile.name)
-			}
-			else if (key === 'certificateFile') {
+			else if (['file', 'certificateFile'].includes(key)) {
 				formData.append(key, params.data[key].rawFile, params.data[key].rawFile.name)
 			}
 			else if (['subdivisions', 'authors', 'tags'].includes(key)) {
@@ -60,11 +57,21 @@ const dataProvider = {
 			else if (key === 'file') {
 				formData.append(key, params.data[key].url)
 			}
-			else if (key === 'newfile' && params.data[key]) {
+			else if (['newfile', 'newCertificateFile'].includes(key) && params.data[key]) {
 				formData.append(key, params.data[key].rawFile, params.data[key].rawFile.name)
 			}
 			else if (['subdivisions', 'authors', 'tags'].includes(key)) {
 				formData.append(key, JSON.stringify(params.data[key]))
+			}
+			else if (key === 'certificate') {
+				for (const subkey in params.data[key]) {
+					if (subkey === 'code') {
+						formData.append('certificateCode', params.data[key][subkey])
+					}
+					if (subkey === 'file') {
+						formData.append('certificateFile', params.data[key][subkey].url)
+					}
+				}
 			}
 			else {
 				formData.append(key, params.data[key])

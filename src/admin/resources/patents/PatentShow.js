@@ -17,6 +17,7 @@ const ShowActions = getShowActions()
 
 export const PatentShow = ({ permissions, enableActions = true, ...props }) => {
 	const actions = enableActions ? <ShowActions permissions={permissions} /> : undefined
+	console.log(props)
 	return (
 		<Show
 			title={<Title />}

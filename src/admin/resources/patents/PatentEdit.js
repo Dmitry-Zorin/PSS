@@ -35,9 +35,7 @@ export const PatentEdit = props => (
 		actions={<EditActions />}
 		{...props}
 	>
-		<SimpleForm
-			submitOnEnter={false}
-		>
+		<SimpleForm submitOnEnter={false}>
 			<TextInput
 				label="Название"
 				source="headline"
@@ -96,12 +94,12 @@ export const PatentEdit = props => (
 			</FileInput>
 			<TextInput
 				label='Код свидетельства'
-				source='certificateCode'
+				source='certificate.code'
 			/>
 			<FileField
 				label="Свидетельство"
-				source="certificateFile.url"
-				title="certificateFile.title"
+				source="certificate.file.url"
+				title="certificate.code"
 				target="_blank"
 			/>
 			<FileInput
@@ -111,7 +109,7 @@ export const PatentEdit = props => (
 			>
 				<FileField
 					title="Загруженное свидетельство"
-					source="certificate.file"
+					source="src"
 				/>
 			</FileInput>
 		</SimpleForm>

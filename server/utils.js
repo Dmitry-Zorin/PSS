@@ -163,7 +163,7 @@ function createAPIwithFile(app, resource, mimeTypes, Model, extractDataToSend, e
 			if (!fs.existsSync(certificatesDir)) {
 				fs.mkdirSync(certificatesDir)
 			}
-			cb(null, file.fieldname === 'certificateFile' ? certificatesDir : dir)
+			cb(null, ['certificateFile', 'newCertificateFile'].includes(file.fieldname) ? certificatesDir : dir)
 		},
 		filename: (req, file, cb) => {
 			cb(null, shortid.generate() + '_' + file.originalname)
@@ -204,15 +204,18 @@ function createAPIwithFile(app, resource, mimeTypes, Model, extractDataToSend, e
 	})
 
 	// update
-	app.put(`/api/${resource}/:id`, cookieParser, auth, formData.single('newfile'), (req, res) => {
+	app.put(`/api/${resource}/:id`, cookieParser, auth, formData.fields([
+		{ name: 'newfile', maxCount: 1 },
+		{ name: 'newCertificateFile', maxCount: 1 }
+	]), (req, res) => {
 		if (!req.isAdmin) {
 			return res.status(401).json({ error: 'Access denied' })
 		}
 
 		const data = extractDataFromRequest(req)
 
-		if (req.file) {
-			data.file = path.join(filesFolder, req.file.filename)
+		if (req.files && req.files.newfile) {
+			data.file = path.join(filesFolder, req.files.newfile[0].filename)
 			const oldFilePath = path.join(appRoot.path, req.body.file.replace(/http[^a-z]+(localhost)?[^a-z]+/, ''))
 			fs.unlink(oldFilePath, error => {
 				if (error) console.log(error)
@@ -220,6 +223,17 @@ function createAPIwithFile(app, resource, mimeTypes, Model, extractDataToSend, e
 		}
 		else {
 			data.file = req.body.file
+		}
+
+		if (req.files && req.files.newCertificateFile) {
+			data.certificate.file = path.join(filesFolder, 'certificates', req.files.newCertificateFile[0].filename)
+			const oldFilePath = path.join(appRoot.path, req.body.certificateFile.replace(/http[^a-z]+(localhost)?[^a-z]+/, ''))
+			fs.unlink(oldFilePath, error => {
+				if (error) console.log(error)
+			})
+		}
+		else {
+			data.certificate.file = req.body.certificateFile
 		}
 
 		Model.findByIdAndUpdate(
@@ -243,6 +257,13 @@ function createAPIwithFile(app, resource, mimeTypes, Model, extractDataToSend, e
 				fs.unlink(filePath, error => {
 					if (error) console.log(error)
 				})
+				if (data.certificate.file) {
+					const certificateFilePath = path.join(appRoot.path, data.certificate.file.replace(/http[^a-z]+(localhost)?[^a-z]+/, ''))
+					fs.unlink(certificateFilePath, error => {
+						if (error) console.log(error)
+					})
+				}
+
 				res.json(extractDataToSend(data))
 			})
 			.catch(console.log)

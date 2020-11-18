@@ -19,11 +19,11 @@ const extractDataToSend = (data) => (
 			url: `${data.file.includes('http://') ? '' : process.env.SERVER}${data.file}`,
 			title: data.headline
 		},
-		certificate: data.certificate.file ? {
+		certificate: data.certificate ? {
 			code: data.certificate.code,
-			file: {
+			file: data.certificate.file ? {
 				url: `${data.certificate.file.includes('http://') ? '' : process.env.SERVER}${data.certificate.file}`
-			}
+			} : undefined
 		} : undefined
 	}
 )
