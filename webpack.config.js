@@ -4,7 +4,6 @@ const dotenv = require('dotenv');
 
 module.exports = () => {
     const env = dotenv.config().parsed;
-    const isDevelopment = env.NODE_ENV !== 'production';
 
     return {
         entry: {
@@ -14,8 +13,7 @@ module.exports = () => {
             path: path.resolve(__dirname, "dist"),
             filename: "[name].bundle.js"
         },
-        mode: isDevelopment ? 'development' : 'production',
-        devtool: 'inline-source-map',
+        mode: env.NODE_ENV,
         devServer: {
             contentBase: path.join(__dirname, 'dist'),
             compress: true,

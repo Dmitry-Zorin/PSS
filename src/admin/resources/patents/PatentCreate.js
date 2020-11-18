@@ -77,7 +77,13 @@ export const PatentCreate = (props) => (
 			<FileInput
 				label="Архив"
 				source="file"
-				accept="application/x-rar-compressed, application/zip"
+				accept={[
+					'application/zip',
+					'application/octet-stream',
+					'application/x-rar-compressed',
+					'application/vnd.rar',
+					'application/x-7z-compressed'
+				].join(', ')}
 				validate={validateFile}
 			>
 				<FileField
