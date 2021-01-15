@@ -29,8 +29,26 @@ const authProvider = {
 			})
 			.catch(() => Promise.reject())
 	),
-	checkAuth: () => (
-		fetch(`${process.env.SERVER}/api/authenticate`, {
+	checkAuth: () => {
+		const username = localStorage.getItem('redmine_username')
+		if (username) {
+			return fetch(`${process.env.SERVER}/api/login`, {
+				method: 'POST',
+				body: JSON.stringify({ login: 'user', password: 'useruser' }),
+				credentials: 'include',
+				headers: { 'Content-Type': 'application/json' }
+			})
+				.then(res => {
+					userIdentity = { fullName: username }
+
+					return res.status == 200
+						? Promise.resolve()
+						: Promise.reject()
+				})
+				.catch(() => Promise.reject())
+		}
+
+		return fetch(`${process.env.SERVER}/api/authenticate`, {
 			credentials: 'include',
 		})
 			.then(res => {
@@ -42,7 +60,7 @@ const authProvider = {
 					: Promise.reject()
 			})
 			.catch(() => Promise.reject())
-	),
+	},
 	getPermissions: () => (
 		fetch(`${process.env.SERVER}/api/permissions`, {
 			credentials: 'include',

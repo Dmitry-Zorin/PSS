@@ -6,6 +6,7 @@ const jsonWebToken = require('jsonwebtoken')
 const cookieParser = require('cookie-parser')()
 const auth = require('../auth').auth
 const bcrypt = require('bcrypt')
+const axios = require('axios')
 
 const User = mongoose.model('User', schema)
 
@@ -29,7 +30,44 @@ const extractDataFromRequest = (req) => (
 
 const resource = 'users'
 
-module.exports = function (app) {
+module.exports = (app) => {
+
+	app.get('/login', (req, res) => {
+		const login = req.query.username
+		return axios.get(`http://10.12.21.193/users.json?name=${login}`)
+			.then(resp => {
+				console.log(resp)
+				if (!resp.data.users.length) {
+					return res.status(401).json({ error: 'Incorrect login or password' })
+				}
+				const payload = { login, isAdmin: false }
+				const token = jsonWebToken.sign(payload, process.env.SECRET_KEY, {
+					expiresIn: 31536000
+				})
+				return res.cookie('token', token, { httpOnly: true }).redirect('/')
+			})
+			.catch((err) => {
+				console.log(err)
+				res.status(401).json({ error: 'Incorrect login or password' })
+			})
+	})
+
+	app.get('/login2', (req, res) => {
+		const login = req.query.username
+		return axios.get(`http://10.12.21.193/users.json?name=${login}`)
+			.then(resp => {
+				console.log(resp)
+				if (!resp.data.users.length) {
+					return res.status(401).json({ error: 'Incorrect login or password' })
+				}
+				const payload = { login, isAdmin: false }
+				const token = jsonWebToken.sign(payload, process.env.SECRET_KEY, {
+					expiresIn: 31536000
+				})
+				return res.cookie('token', token, { httpOnly: true }).redirect('/library')
+			})
+			.catch(() => res.status(401).json({ error: 'Incorrect login or password' }))
+	})
 
 	// login
 	app.post('/api/login', jsonParser, (req, res) => {
@@ -38,18 +76,26 @@ module.exports = function (app) {
 		User.findOne({ login })
 			.then(user => {
 				if (!user) {
-					return res.status(401).json({ error: 'Incorrect login or password' })
+					return axios.get(`http://10.12.21.193/users.json?name=${login}`)
+						.then(resp => {
+							console.log(resp)
+							if (!resp.data.users.length) {
+								return res.status(401).json({ error: 'Incorrect login or password' })
+							}
+							const payload = { login, isAdmin: user.isAdmin }
+							const token = jsonWebToken.sign(payload, process.env.SECRET_KEY, {
+								expiresIn: 31536000
+							})
+							return res.cookie('token', token, { httpOnly: true }).sendStatus(200)
+						})
+						.catch(() => res.status(401).json({ error: 'Incorrect login or password' }))
 				}
 				bcrypt.compare(password, user.password)
 					.then(equal => {
 						if (!equal) {
-							res.status(401).json({ error: 'Incorrect login or password' })
-							return
+							return res.status(401).json({ error: 'Incorrect login or password' })
 						}
-						const payload = {
-							login,
-							isAdmin: user.isAdmin
-						}
+						const payload = { login, isAdmin: user.isAdmin }
 						const token = jsonWebToken.sign(payload, process.env.SECRET_KEY, {
 							expiresIn: 31536000
 						})

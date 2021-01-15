@@ -14,6 +14,7 @@ module.exports = () => {
             filename: "[name].bundle.js"
         },
         mode: env.NODE_ENV,
+        devtool: env.NODE_ENV === 'development' ? 'inline-source-map' : undefined,
         devServer: {
             contentBase: path.join(__dirname, 'dist'),
             compress: true,

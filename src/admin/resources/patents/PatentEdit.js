@@ -85,13 +85,13 @@ export const PatentEdit = props => (
 			<FileInput
 				label="Новый файл"
 				source="newfile"
-				accept={[
+				/*accept={[
 					'application/zip',
 					'application/octet-stream',
 					'application/x-rar-compressed',
 					'application/vnd.rar',
 					'application/x-7z-compressed'
-				].join(', ')}
+				].join(', ')}*/
 			>
 				<FileField
 					title="Загруженный файл"
