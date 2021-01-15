@@ -54,12 +54,7 @@ import {
 import { Form16 } from './resources/Form16'
 import Library from './resources/library/index'
 import Patents from './resources/patents/index'
-import {
-	CreateForm as ProgramCreate,
-	EditForm as ProgramEdit,
-	ListForm as ProgramList,
-	ShowForm as ProgramShow,
-} from './resources/programs'
+import Programs from './resources/programs/index'
 import {
 	CreateForm as ProjectCreate,
 	EditForm as ProjectEdit,
@@ -144,10 +139,10 @@ const AdminPanel = () => (
 					name="programs"
 					icon={CodeIcon}
 					options={{ label: 'Программы' }}
-					list={ProgramList}
-					edit={permissions ? ProgramEdit : undefined}
-					create={permissions ? ProgramCreate : undefined}
-					show={ProgramShow}
+					list={Programs.list}
+					edit={permissions ? Programs.edit : undefined}
+					create={permissions ? Programs.create : undefined}
+					show={Programs.show}
 				/>,
 				<Resource
 					name="researches"

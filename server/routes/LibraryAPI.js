@@ -5,18 +5,6 @@ const createAPIwithFile = require('../utils').createAPIwithFile
 const Model = mongoose.model('Library', schema)
 const resource = 'library'
 
-// https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types
-const mimeTypes = [
-	'application/pdf',
-	'application/x-rar-compressed',
-	'application/zip',
-	'image/vnd.djvu',
-	'application/epub+zip',
-	'application/x-mobipocket-ebook',
-	'application/msword',
-	'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-]
-
 const extractDataToSend = (data) => (
 	{
 		id: data.id,
@@ -44,7 +32,7 @@ const extractDataFromRequest = ({ body }) => (
 )
 
 module.exports = (app) => {
-	createAPIwithFile(app, resource, mimeTypes, Model, extractDataToSend, extractDataFromRequest)
+	createAPIwithFile(app, resource, Model, extractDataToSend, extractDataFromRequest)
 }
 
 module.exports.LibraryModel = Model

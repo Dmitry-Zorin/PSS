@@ -85,36 +85,9 @@ export const PatentEdit = props => (
 			<FileInput
 				label="Новый файл"
 				source="newfile"
-				/*accept={[
-					'application/zip',
-					'application/octet-stream',
-					'application/x-rar-compressed',
-					'application/vnd.rar',
-					'application/x-7z-compressed'
-				].join(', ')}*/
 			>
 				<FileField
 					title="Загруженный файл"
-					source="src"
-				/>
-			</FileInput>
-			<TextInput
-				label='Код свидетельства'
-				source='certificate.code'
-			/>
-			<FileField
-				label="Свидетельство"
-				source="certificate.file.url"
-				title="certificate.code"
-				target="_blank"
-			/>
-			<FileInput
-				label="Новое свидетельство"
-				source="newCertificateFile"
-				accept="application/pdf"
-			>
-				<FileField
-					title="Загруженное свидетельство"
 					source="src"
 				/>
 			</FileInput>

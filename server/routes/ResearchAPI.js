@@ -4,7 +4,6 @@ const createAPIwithFile = require('../utils').createAPIwithFile
 
 const Model = mongoose.model('Research', schema)
 const resource = 'researches'
-const mimeTypes = ['application/x-rar-compressed', 'application/zip']
 
 function extractDataToSend(data) {
 	return {
@@ -39,7 +38,7 @@ function extractDataFromRequest(req) {
 }
 
 module.exports = function (app) {
-	createAPIwithFile(app, resource, mimeTypes, Model, extractDataToSend, extractDataFromRequest)
+	createAPIwithFile(app, resource, Model, extractDataToSend, extractDataFromRequest)
 }
 
 module.exports.ResearchModel = Model

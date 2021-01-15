@@ -34,34 +34,6 @@ exports.articleSchema = new Schema(
 	{ versionKey: false }
 )
 
-exports.programSchema = new Schema(
-	{
-		headline: {
-			type: String,
-			required: true,
-		},
-		description: {
-			type: String,
-			required: true,
-		},
-		creationDate: {
-			type: Date,
-			required: true
-		},
-		firstCreationDate: {
-			type: Date,
-			required: true
-		},
-		authors: [{ author: String }],
-		subdivisions: [String],
-		file: {
-			type: String,
-			required: true
-		}
-	},
-	{ versionKey: false }
-)
-
 exports.rationalizationSchema = new Schema(
 	{
 		headline: {

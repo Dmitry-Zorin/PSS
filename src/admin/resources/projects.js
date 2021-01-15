@@ -203,7 +203,6 @@ export const CreateForm = props => (
 			<FileInput
 				source="file"
 				label="Архив"
-				accept="application/x-rar-compressed, application/zip"
 				validate={validateFile}
 			>
 				<FileField
@@ -278,7 +277,6 @@ export const EditForm = props => (
 			<FileInput
 				source="newfile"
 				label="Новый файл"
-				accept="application/x-rar-compressed, application/zip"
 			>
 				<FileField
 					source="src"

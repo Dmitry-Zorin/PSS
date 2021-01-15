@@ -1,12 +1,8 @@
 import React from 'react'
 import {
 	ArrayInput,
-	Create,
-	FileField,
-	FileInput,
-	minLength,
-	ReferenceArrayInput,
-	required,
+	Create, FileField, FileInput, minLength,
+	ReferenceArrayInput, required,
 	SelectArrayInput,
 	SimpleForm,
 	SimpleFormIterator,
@@ -23,29 +19,28 @@ const validateFile = [required()]
 const dateFormat = 'dd.MM.yyyy'
 const cancelLabel = 'Отмена'
 
-export const PatentCreate = (props) => (
+export const ProgramCreate = props => (
 	<Create
-		title="Добавить патент"
-		successMessage="Патент добавлен"
+		title="Добавить программу"
+		successMessage="Программа добавлена"
 		undoable={false}
-		{...props}
-	>
+		{...props}>
 		<SimpleForm
 			redirect="list"
 			submitOnEnter={false}
 		>
 			<TextInput
+				fullWidth
 				label="Название"
 				source="headline"
 				validate={validateHeadline}
-				fullWidth
 			/>
 			<TextInput
+				fullWidth
 				label="Описание"
+				multiline
 				source="description"
 				validate={validateDescription}
-				fullWidth
-				multiline
 			/>
 			<DateInput
 				label="Дата создания"
@@ -54,9 +49,9 @@ export const PatentCreate = (props) => (
 				options={{ format: dateFormat, cancelLabel: cancelLabel }}
 			/>
 			<ArrayInput
-				label="Авторы"
-				source="authors"
 				validate={validateAuthors}
+				source="authors"
+				label="Авторы"
 			>
 				<SimpleFormIterator>
 					<TextInput
@@ -66,22 +61,35 @@ export const PatentCreate = (props) => (
 				</SimpleFormIterator>
 			</ArrayInput>
 			<ReferenceArrayInput
-				label="Подразделения"
-				source="subdivisions"
-				reference="subdivisions"
-				perPage={1000}
 				fullWidth
+				label="Подразделения"
+				reference="subdivisions"
+				source="subdivisions"
+				perPage={1000}
 			>
 				<SelectArrayInput optionText="name" />
 			</ReferenceArrayInput>
 			<FileInput
-				label="Архив"
 				source="file"
+				label="Архив с программой"
 				validate={validateFile}
 			>
 				<FileField
-					title="Загруженный файл"
 					source="file"
+					title="Загруженный файл"
+				/>
+			</FileInput>
+			<TextInput
+				label='Код свидетельства'
+				source='certificateCode'
+			/>
+			<FileInput
+				label="Свидетельство"
+				source="certificateFile"
+			>
+				<FileField
+					title="Загруженное свидетельство"
+					source="certificateFile"
 				/>
 			</FileInput>
 		</SimpleForm>

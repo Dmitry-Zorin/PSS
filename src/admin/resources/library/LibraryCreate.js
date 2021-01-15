@@ -74,16 +74,6 @@ export const LibraryCreate = (props) => (
 				label="Файл"
 				source="file"
 				validate={validateFile}
-				accept={[
-					'application/pdf',
-					'application/x-rar-compressed',
-					'application/zip',
-					'image/vnd.djvu',
-					'application/epub+zip',
-					'application/x-mobipocket-ebook',
-					'application/msword',
-					'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-				].join(', ')}
 			>
 				<FileField
 					title="Загруженный файл"

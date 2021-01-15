@@ -152,7 +152,7 @@ function createAPI(app, resource, Model, extractDataToSend, extractDataFromReque
 	})
 }
 
-function createAPIwithFile(app, resource, mimeTypes, Model, extractDataToSend, extractDataFromRequest) {
+function createAPIwithFile(app, resource, Model, extractDataToSend, extractDataFromRequest) {
 	let filesFolder = path.join('/media/', resource)
 
 	const filesStorage = multer.diskStorage({
@@ -172,12 +172,6 @@ function createAPIwithFile(app, resource, mimeTypes, Model, extractDataToSend, e
 
 	const formData = multer({
 		storage: filesStorage,
-		fileFilter: (req, file, cb) => {
-			if (mimeTypes.includes(file.mimetype)) {
-				cb(null, true)
-			}
-			else cb(null, false)
-		}
 	})
 
 	// create
@@ -224,13 +218,16 @@ function createAPIwithFile(app, resource, mimeTypes, Model, extractDataToSend, e
 		else {
 			data.file = req.body.file
 		}
-
-		if (req.files && req.files.newCertificateFile) {
-			data.certificate.file = path.join(filesFolder, 'certificates', req.files.newCertificateFile[0].filename)
-			const oldFilePath = path.join(appRoot.path, req.body.certificateFile.replace(/http[^a-z]+(localhost)?[^a-z]+/, ''))
-			fs.unlink(oldFilePath, error => {
-				if (error) console.log(error)
-			})
+		if (req.files && req.files.newCertificateFile || req.body.certificateCode === 'null') {
+			if (req.body.certificateCode !== 'null') {
+				data.certificate.file = path.join(filesFolder, 'certificates', req.files.newCertificateFile[0].filename)
+			}
+			if (req.body.certificateFile) {
+				const oldFilePath = path.join(appRoot.path, req.body.certificateFile.replace(/http[^a-z]+(localhost)?[^a-z]+/, ''))
+				fs.unlink(oldFilePath, error => {
+					if (error) console.log(error)
+				})
+			}
 		}
 		else {
 			data.certificate.file = req.body.certificateFile

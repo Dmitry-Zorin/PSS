@@ -1,51 +1,50 @@
 import React from 'react'
 import {
 	ArrayInput,
-	Create,
-	FileField,
-	FileInput,
-	minLength,
-	ReferenceArrayInput,
-	required,
+	Edit, FileField, FileInput, minLength,
+	ReferenceArrayInput, required,
 	SelectArrayInput,
 	SimpleForm,
 	SimpleFormIterator,
 	TextInput
 } from 'react-admin'
 import { DateInput } from 'react-admin-date-inputs2'
+import { createTitle, getEditActionsWithoutFile } from '../../utils'
 
 const validateHeadline = [required(), minLength(1)]
 const validateDescription = [required(), minLength(1)]
 const validateCreationDate = [required()]
 const validateAuthors = [required()]
-const validateFile = [required()]
 
 const dateFormat = 'dd.MM.yyyy'
 const cancelLabel = 'Отмена'
 
-export const PatentCreate = (props) => (
-	<Create
-		title="Добавить патент"
-		successMessage="Патент добавлен"
+const Title = createTitle('Программа', 'headline')
+
+const EditActions = getEditActionsWithoutFile()
+
+export const ProgramEdit = (props) => (
+	<Edit
+		title={<Title />}
+		successMessage="Программа обновлена"
 		undoable={false}
-		{...props}
-	>
+		actions={<EditActions />}
+		{...props}>
 		<SimpleForm
-			redirect="list"
 			submitOnEnter={false}
 		>
 			<TextInput
+				fullWidth
 				label="Название"
 				source="headline"
 				validate={validateHeadline}
-				fullWidth
 			/>
 			<TextInput
+				fullWidth
 				label="Описание"
+				multiline
 				source="description"
 				validate={validateDescription}
-				fullWidth
-				multiline
 			/>
 			<DateInput
 				label="Дата создания"
@@ -54,9 +53,9 @@ export const PatentCreate = (props) => (
 				options={{ format: dateFormat, cancelLabel: cancelLabel }}
 			/>
 			<ArrayInput
+				validate={validateAuthors}
 				label="Авторы"
 				source="authors"
-				validate={validateAuthors}
 			>
 				<SimpleFormIterator>
 					<TextInput
@@ -66,24 +65,48 @@ export const PatentCreate = (props) => (
 				</SimpleFormIterator>
 			</ArrayInput>
 			<ReferenceArrayInput
-				label="Подразделения"
-				source="subdivisions"
-				reference="subdivisions"
-				perPage={1000}
 				fullWidth
+				label="Подразделения"
+				reference="subdivisions"
+				source="subdivisions"
+				perPage={1000}
 			>
 				<SelectArrayInput optionText="name" />
 			</ReferenceArrayInput>
+			<FileField
+				source="file.url"
+				title="file.title"
+				label="Архив с программой"
+				target="_blank"
+			/>
 			<FileInput
-				label="Архив"
-				source="file"
-				validate={validateFile}
+				source="newfile"
+				label="Новый файл"
 			>
 				<FileField
+					source="src"
 					title="Загруженный файл"
-					source="file"
+				/>
+			</FileInput>
+			<TextInput
+				label='Код свидетельства'
+				source='certificate.code'
+			/>
+			<FileField
+				label="Свидетельство"
+				source="certificate.file.url"
+				title="certificate.code"
+				target="_blank"
+			/>
+			<FileInput
+				label="Новое свидетельство"
+				source="newCertificateFile"
+			>
+				<FileField
+					title="Загруженное свидетельство"
+					source="src"
 				/>
 			</FileInput>
 		</SimpleForm>
-	</Create>
+	</Edit>
 )

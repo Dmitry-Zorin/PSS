@@ -212,7 +212,6 @@ export const CreateForm = props => (
 			<FileInput
 				source="file"
 				label="PDF файл"
-				accept="application/pdf"
 				validate={validateFile}
 			>
 				<FileField
@@ -290,7 +289,6 @@ export const EditForm = props => (
 			<FileInput
 				source="newfile"
 				label="Новый файл"
-				accept="application/pdf"
 			>
 				<FileField
 					source="src"

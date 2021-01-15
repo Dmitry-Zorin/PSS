@@ -4,13 +4,6 @@ const createAPIwithFile = require('../utils').createAPIwithFile
 
 const Model = mongoose.model('Patents', schema)
 const resource = 'patents'
-const mimeTypes = [
-	'application/zip',
-	'application/octet-stream',
-	'application/x-rar-compressed',
-	'application/vnd.rar',
-	'application/x-7z-compressed'
-]
 
 const extractDataToSend = (data) => (
 	{
@@ -24,13 +17,7 @@ const extractDataToSend = (data) => (
 		file: {
 			url: `${data.file.includes('http://') ? '' : process.env.SERVER}${data.file}`,
 			title: data.headline
-		},
-		certificate: data.certificate ? {
-			code: data.certificate.code,
-			file: data.certificate.file ? {
-				url: `${data.certificate.file.includes('http://') ? '' : process.env.SERVER}${data.certificate.file}`
-			} : undefined
-		} : undefined
+		}
 	}
 )
 
@@ -41,14 +28,11 @@ const extractDataFromRequest = (req) => (
 		creationDate: new Date(req.body.creationDate),
 		authors: JSON.parse(req.body.authors),
 		subdivisions: req.body.subdivisions ? JSON.parse(req.body.subdivisions) : undefined,
-		certificate: {
-			code: req.body.certificateCode
-		}
 	}
 )
 
 module.exports = (app) => {
-	createAPIwithFile(app, resource, mimeTypes, Model, extractDataToSend, extractDataFromRequest)
+	createAPIwithFile(app, resource, Model, extractDataToSend, extractDataFromRequest)
 }
 
 module.exports.PatentsModel = Model

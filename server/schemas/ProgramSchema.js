@@ -24,6 +24,10 @@ module.exports = new Schema(
 		file: {
 			type: String,
 			required: true
+		},
+		certificate: {
+			code: String,
+			file: String
 		}
 	},
 	{ versionKey: false }

@@ -1,13 +1,12 @@
 const mongoose = require('mongoose')
-const schema = require('../schemas').programSchema
+const schema = require('../schemas/ProgramSchema')
 const createAPIwithFile = require('../utils').createAPIwithFile
 
 const Model = mongoose.model('Program', schema)
 const resource = 'programs'
-const mimeTypes = ['application/x-rar-compressed', 'application/zip']
 
-function extractDataToSend(data) {
-	return {
+const extractDataToSend = (data) => (
+	{
 		id: data.id,
 		headline: data.headline,
 		description: data.description,
@@ -18,22 +17,31 @@ function extractDataToSend(data) {
 		file: {
 			url: `${data.file.includes('http://') ? '' : process.env.SERVER}${data.file}`,
 			title: data.headline
+		},
+		certificate: data.certificate ? {
+			code: data.certificate.code !== 'null' ? data.certificate.code : undefined,
+			file: data.certificate.file ? {
+				url: `${data.certificate.file.includes('http://') ? '' : process.env.SERVER}${data.certificate.file}`
+			} : undefined
+		} : undefined
+	}
+)
+
+const extractDataFromRequest = (req) => (
+	{
+		headline: req.body.headline,
+		description: req.body.description,
+		creationDate: new Date(req.body.creationDate),
+		authors: JSON.parse(req.body.authors),
+		subdivisions: req.body.subdivisions ? JSON.parse(req.body.subdivisions) : undefined,
+		certificate: {
+			code: req.body.certificateCode
 		}
 	}
-}
-
-function extractDataFromRequest(req) {
-	return {
-		'headline': req.body.headline,
-		'description': req.body.description,
-		'creationDate': new Date(req.body.creationDate),
-		'authors': JSON.parse(req.body.authors),
-		'subdivisions': req.body.subdivisions ? JSON.parse(req.body.subdivisions) : undefined,
-	}
-}
+)
 
 module.exports = function (app) {
-	createAPIwithFile(app, resource, mimeTypes, Model, extractDataToSend, extractDataFromRequest)
+	createAPIwithFile(app, resource, Model, extractDataToSend, extractDataFromRequest)
 }
 
 module.exports.ProgramModel = Model

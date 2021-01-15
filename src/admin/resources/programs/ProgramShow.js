@@ -2,7 +2,8 @@ import React from 'react'
 import {
 	ArrayField,
 	ChipField,
-	DateField, FileField,
+	DateField,
+	FileField,
 	ReferenceArrayField,
 	Show,
 	SimpleShowLayout,
@@ -11,18 +12,16 @@ import {
 } from 'react-admin'
 import { createTitle, getShowActions } from '../../utils'
 
-const Title = createTitle('Петент', 'headline')
-
+const Title = createTitle('Программа', 'headline')
 const ShowActions = getShowActions()
 
-export const PatentShow = ({ permissions, enableActions = true, ...props }) => {
-	const actions = enableActions ? <ShowActions permissions={permissions} /> : undefined
+export const ProgramShow = ({ permissions, enableActions = true, ...props }) => {
+	const actions = enableActions ? <ShowActions permissions={permissions} /> : false
 	return (
 		<Show
 			title={<Title />}
 			actions={actions}
-			{...props}
-		>
+			{...props}>
 			<SimpleShowLayout>
 				<TextField
 					label="Название"
@@ -48,19 +47,27 @@ export const PatentShow = ({ permissions, enableActions = true, ...props }) => {
 						/>
 					</SingleFieldList>
 				</ArrayField>
-				<ReferenceArrayField
-					label="Подразделения"
-					source="subdivisions"
-					reference="subdivisions"
-				>
+				<ReferenceArrayField label="Подразделения" reference="subdivisions" source="subdivisions">
 					<SingleFieldList>
 						<ChipField source="name" />
 					</SingleFieldList>
 				</ReferenceArrayField>
 				<FileField
-					label="Архив"
 					source="file.url"
 					title="file.title"
+					label="Архив с программой"
+					target="_blank"
+				/>
+				<ChipField
+					label='Код свидетельства'
+					source='certificate.code'
+					emptyText='-'
+				/>
+				<FileField
+					label="Свидетельство"
+					source="certificate.file.url"
+					title="certificate.code"
+					emptyText='-'
 					target="_blank"
 				/>
 			</SimpleShowLayout>
