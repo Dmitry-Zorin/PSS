@@ -10,6 +10,7 @@ import PieChartIcon from '@material-ui/icons/PieChart'
 import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck'
 import SchoolIcon from '@material-ui/icons/School'
 import SubjectIcon from '@material-ui/icons/Subject'
+import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle'
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
 import TimelineIcon from '@material-ui/icons/Timeline'
 import TrendingUpIcon from '@material-ui/icons/TrendingUp'
@@ -51,6 +52,7 @@ import {
 	ListForm as DevelopmentList,
 	ShowForm as DevelopmentShow,
 } from './resources/developments'
+import Employees from './resources/employees/index'
 import { Form16 } from './resources/Form16'
 import Library from './resources/library/index'
 import Patents from './resources/patents/index'
@@ -257,6 +259,15 @@ const AdminPanel = () => (
 					edit={permissions ? Library.edit : undefined}
 					create={permissions ? Library.create : undefined}
 					show={Library.show}
+				/>,
+				<Resource
+					name='employees'
+					icon={SupervisedUserCircleIcon}
+					options={{ label: 'Сотрудники' }}
+					list={Employees.list}
+					edit={permissions ? Employees.edit : undefined}
+					create={permissions ? Employees.create : undefined}
+					show={Employees.show}
 				/>
 			]}
 		</Admin>
