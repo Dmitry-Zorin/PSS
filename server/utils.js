@@ -229,7 +229,7 @@ function createAPIwithFile(app, resource, Model, extractDataToSend, extractDataF
 				})
 			}
 		}
-		else {
+		else if (req.body.certificateFile) {
 			data.certificate.file = req.body.certificateFile
 		}
 
@@ -254,7 +254,7 @@ function createAPIwithFile(app, resource, Model, extractDataToSend, extractDataF
 				fs.unlink(filePath, error => {
 					if (error) console.log(error)
 				})
-				if (data.certificate.file) {
+				if (data?.certificate?.file) {
 					const certificateFilePath = path.join(appRoot.path, data.certificate.file.replace(/http[^a-z]+(localhost)?[^a-z]+/, ''))
 					fs.unlink(certificateFilePath, error => {
 						if (error) console.log(error)

@@ -32,6 +32,8 @@ require('./routes/ProjectsAPI')(app)
 require('./routes/TimelineAPI')(app)
 require('./routes/LibraryAPI')(app)
 require('./routes/EmployeesAPI')(app)
+require('./routes/CharacterAPI')(app)
+require('./routes/OtherApi')(app)
 
 app.use(function (req, res, next) {
 	res.header('Cache-Control', 'no-cache, no-store, must-revalidate')

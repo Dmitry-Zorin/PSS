@@ -1,9 +1,9 @@
 import React from 'react'
 import {
 	ArrayInput,
-	Edit, FileField, FileInput, minLength,
-	ReferenceArrayInput, required,
-	SelectArrayInput,
+	Edit, FileField, FileInput, minLength, NumberInput,
+	ReferenceArrayInput, ReferenceInput, required,
+	SelectArrayInput, SelectInput,
 	SimpleForm,
 	SimpleFormIterator,
 	TextInput
@@ -12,21 +12,21 @@ import { DateInput } from 'react-admin-date-inputs2'
 import { createTitle, getEditActionsWithoutFile } from '../../utils'
 
 const validateHeadline = [required(), minLength(1)]
-const validateDescription = [required(), minLength(1)]
+const validateAnnotation = [required(), minLength(1)]
 const validateCreationDate = [required()]
 const validateAuthors = [required()]
 
 const dateFormat = 'dd.MM.yyyy'
 const cancelLabel = 'Отмена'
 
-const Title = createTitle('Программа', 'headline')
+const Title = createTitle('Статья', 'headline')
 
 const EditActions = getEditActionsWithoutFile()
 
-export const ProgramEdit = (props) => (
+export const ArticleEdit = (props) => (
 	<Edit
 		title={<Title />}
-		successMessage="Программа обновлена"
+		successMessage="Статья обновлена"
 		undoable={false}
 		actions={<EditActions />}
 		{...props}>
@@ -39,10 +39,10 @@ export const ProgramEdit = (props) => (
 			/>
 			<TextInput
 				fullWidth
-				label="Описание"
+				label="Аннотация"
 				multiline
-				source="description"
-				validate={validateDescription}
+				source="text"
+				validate={validateAnnotation}
 			/>
 			<DateInput
 				label="Дата создания"
@@ -62,6 +62,13 @@ export const ProgramEdit = (props) => (
 					/>
 				</SimpleFormIterator>
 			</ArrayInput>
+			<ReferenceInput
+				label="Место публикации"
+				source="publicationPlace"
+				reference="publications"
+			>
+				<SelectInput optionText="name" />
+			</ReferenceInput>
 			<ReferenceArrayInput
 				fullWidth
 				label="Подразделения"
@@ -71,10 +78,27 @@ export const ProgramEdit = (props) => (
 			>
 				<SelectArrayInput optionText="name" />
 			</ReferenceArrayInput>
+			<TextInput
+				label="Выходные данные"
+				source="exitData"
+				fullWidth
+				multiline
+			/>
+			<NumberInput
+				label="Кол-во страниц"
+				source="pages"
+			/>
+			<ReferenceInput
+				label="Характер работы"
+				source="character"
+				reference="characters"
+			>
+				<SelectInput optionText="name" />
+			</ReferenceInput>
 			<FileField
 				source="file.url"
 				title="file.title"
-				label="Архив с программой"
+				label="PDF файл"
 				target="_blank"
 			/>
 			<FileInput
@@ -84,25 +108,6 @@ export const ProgramEdit = (props) => (
 				<FileField
 					source="src"
 					title="Загруженный файл"
-				/>
-			</FileInput>
-			<TextInput
-				label='Код свидетельства'
-				source='certificate.code'
-			/>
-			<FileField
-				label="Свидетельство"
-				source="certificate.file.url"
-				title="certificate.code"
-				target="_blank"
-			/>
-			<FileInput
-				label="Новое свидетельство"
-				source="newCertificateFile"
-			>
-				<FileField
-					title="Загруженное свидетельство"
-					source="src"
 				/>
 			</FileInput>
 		</SimpleForm>

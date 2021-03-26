@@ -1,39 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-exports.articleSchema = new Schema(
-	{
-		headline: {
-			type: String,
-			required: true,
-		},
-		text: {
-			type: String,
-			required: true,
-		},
-		creationDate: {
-			type: Date,
-			required: true
-		},
-		firstCreationDate: {
-			type: Date,
-			required: true
-		},
-		publicationPlace: {
-			type: Schema.Types.ObjectId,
-			required: false,
-			ref: 'PublicationPlace',
-		},
-		authors: [{ author: String }],
-		subdivisions: [String],
-		file: {
-			type: String,
-			required: true
-		}
-	},
-	{ versionKey: false }
-)
-
 exports.rationalizationSchema = new Schema(
 	{
 		headline: {

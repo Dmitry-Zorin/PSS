@@ -1,19 +1,18 @@
 const mongoose = require('mongoose')
-const schema = require('../schemas/ArticleSchema')
+const schema = require('../schemas/OtherSchema')
 const createAPIwithFile = require('../utils').createAPIwithFile
 
-const Model = mongoose.model('Article', schema)
-const resource = 'articles'
+const Model = mongoose.model('Other', schema)
+const resource = 'others'
 
 const extractDataToSend = (data) => ({
 		id: data.id,
+		type: data.type,
 		headline: data.headline,
 		text: data.text,
 		creationDate: data.creationDate,
 		firstCreationDate: data.firstCreationDate,
-		publicationPlace: data.publicationPlace || undefined,
 		authors: data.authors,
-		subdivisions: data.subdivisions,
 		exitData: data.exitData !== 'null' ? data.exitData : undefined,
 		pages: data.pages !== 0 ? data.pages : undefined,
 		character: data.character !== 'null' ? data.character : undefined,
@@ -24,12 +23,11 @@ const extractDataToSend = (data) => ({
 })
 
 const extractDataFromRequest = (req) => ({
+		type: req.body.type,
 		headline: req.body.headline,
 		text: req.body.text,
 		creationDate: new Date(req.body.creationDate),
-		publicationPlace: req.body.publicationPlace,
 		authors: JSON.parse(req.body.authors),
-		subdivisions: req.body.subdivisions ? JSON.parse(req.body.subdivisions) : undefined,
 		exitData: req.body.exitData,
 		pages: req.body.pages !== 'null' ? req.body.pages : 0,
 		character: req.body.character

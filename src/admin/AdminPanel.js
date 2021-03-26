@@ -15,6 +15,7 @@ import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
 import TimelineIcon from '@material-ui/icons/Timeline'
 import TrendingUpIcon from '@material-ui/icons/TrendingUp'
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser'
+import LocalLibraryIcon from '@material-ui/icons/LocalLibrary'
 import VisibilityIcon from '@material-ui/icons/Visibility'
 import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 import format from 'date-fns/format'
@@ -41,22 +42,19 @@ import {
 	ShowForm as ApprobationShow,
 } from './resources/approbations'
 import {
-	CreateForm as ArticleCreate,
-	EditForm as ArticleEdit,
-	ListForm as ArticleList,
-	ShowForm as ArticleShow,
-} from './resources/articles'
-import {
 	CreateForm as DevelopmentCreate,
 	EditForm as DevelopmentEdit,
 	ListForm as DevelopmentList,
 	ShowForm as DevelopmentShow,
 } from './resources/developments'
+import {CreateForm as CharacterCreate} from './resources/characters'
 import Employees from './resources/employees/index'
 import { Form16 } from './resources/Form16'
+import Article from './resources/articles/index'
 import Library from './resources/library/index'
 import Patents from './resources/patents/index'
 import Programs from './resources/programs/index'
+import Others from './resources/others/index'
 import {
 	CreateForm as ProjectCreate,
 	EditForm as ProjectEdit,
@@ -108,6 +106,7 @@ class RuLocalizedUtils extends DateFnsUtils {
 }
 
 const i18nProvider = polyglotI18nProvider(() => russianMessages, 'ru')
+let k = 0
 
 const AdminPanel = () => (
 	<MuiPickersUtilsProvider utils={RuLocalizedUtils} locale={ru}>
@@ -123,21 +122,34 @@ const AdminPanel = () => (
 		>
 			{(permissions) => [
 				<Resource
+					key={k++}
 					name='timeline'
 					icon={TimelineIcon}
 					options={{ label: 'События' }}
 					list={Timeline}
 				/>,
 				<Resource
+					key={k++}
+					name='library'
+					icon={LocalLibraryIcon}
+					options={{ label: 'Библиотека' }}
+					list={Library.list}
+					edit={permissions ? Library.edit : undefined}
+					create={permissions ? Library.create : undefined}
+					show={Library.show}
+				/>,
+				<Resource
+					key={k++}
 					name="articles"
 					icon={DescriptionIcon}
 					options={{ label: 'Статьи' }}
-					list={ArticleList}
-					edit={permissions ? ArticleEdit : undefined}
-					create={permissions ? ArticleCreate : undefined}
-					show={ArticleShow}
+					list={Article.list}
+					edit={permissions ? Article.edit : undefined}
+					create={permissions ? Article.create : undefined}
+					show={Article.show}
 				/>,
 				<Resource
+					key={k++}
 					name="programs"
 					icon={CodeIcon}
 					options={{ label: 'Программы' }}
@@ -147,6 +159,7 @@ const AdminPanel = () => (
 					show={Programs.show}
 				/>,
 				<Resource
+					key={k++}
 					name="researches"
 					icon={SchoolIcon}
 					options={{ label: 'НИР' }}
@@ -156,6 +169,7 @@ const AdminPanel = () => (
 					show={ResearchShow}
 				/>,
 				<Resource
+					key={k++}
 					name="developments"
 					icon={DeveloperBoardIcon}
 					options={{ label: 'ОКР' }}
@@ -165,6 +179,7 @@ const AdminPanel = () => (
 					show={DevelopmentShow}
 				/>,
 				<Resource
+					key={k++}
 					name="rationalizations"
 					icon={EmojiObjectsIcon}
 					options={{ label: 'Предложения' }}
@@ -174,6 +189,7 @@ const AdminPanel = () => (
 					show={RationalizationShow}
 				/>,
 				<Resource
+					key={k++}
 					name="projects"
 					icon={TrendingUpIcon}
 					options={{ label: 'Проекты' }}
@@ -183,6 +199,7 @@ const AdminPanel = () => (
 					show={ProjectShow}
 				/>,
 				<Resource
+					key={k++}
 					name="abstracts"
 					icon={SubjectIcon}
 					options={{ label: 'Тезисы' }}
@@ -192,6 +209,7 @@ const AdminPanel = () => (
 					show={AbstractShow}
 				/>,
 				<Resource
+					key={k++}
 					name="approbations"
 					icon={ThumbUpAltIcon}
 					options={{ label: 'Апробации' }}
@@ -201,6 +219,7 @@ const AdminPanel = () => (
 					show={ApprobationShow}
 				/>,
 				<Resource
+					key={k++}
 					name="patents"
 					icon={PlaylistAddCheckIcon}
 					options={{ label: 'Патенты' }}
@@ -210,6 +229,7 @@ const AdminPanel = () => (
 					show={Patents.show}
 				/>,
 				<Resource
+					key={k++}
 					name="verifications"
 					icon={VerifiedUserIcon}
 					options={{ label: 'Испытания' }}
@@ -219,6 +239,7 @@ const AdminPanel = () => (
 					show={VerificationShow}
 				/>,
 				<Resource
+					key={k++}
 					name="publications"
 					icon={VisibilityIcon}
 					options={{ label: 'Места публикации' }}
@@ -228,6 +249,7 @@ const AdminPanel = () => (
 					show={PublicationShow}
 				/>,
 				<Resource
+					key={k++}
 					name="subdivisions"
 					icon={PieChartIcon}
 					options={{ label: 'Подразделения' }}
@@ -237,6 +259,7 @@ const AdminPanel = () => (
 					show={SubdivisionShow}
 				/>,
 				<Resource
+					key={k++}
 					name="users"
 					icon={GroupIcon}
 					options={{ label: 'Пользователи' }}
@@ -246,21 +269,24 @@ const AdminPanel = () => (
 					show={UserShow}
 				/>,
 				<Resource
+					key={k++}
+					name='others'
+					icon={MenuBookIcon}
+					options={{ label: 'Научные труды'}}
+					list={Others.list}
+					edit={permissions ? Others.edit : undefined}
+					create={permissions ? Others.create : undefined}
+					show={Others.show}
+				/>,
+				<Resource
+					key={k++}
 					name='form16'
 					icon={FeaturedPlayListIcon}
 					options={{ label: 'Справка' }}
 					list={Form16}
 				/>,
 				<Resource
-					name='library'
-					icon={MenuBookIcon}
-					options={{ label: 'Библиотека' }}
-					list={Library.list}
-					edit={permissions ? Library.edit : undefined}
-					create={permissions ? Library.create : undefined}
-					show={Library.show}
-				/>,
-				<Resource
+					key={k++}
 					name='employees'
 					icon={SupervisedUserCircleIcon}
 					options={{ label: 'Сотрудники' }}
@@ -268,7 +294,12 @@ const AdminPanel = () => (
 					edit={permissions ? Employees.edit : undefined}
 					create={permissions ? Employees.create : undefined}
 					show={Employees.show}
-				/>
+				/>,
+				<Resource
+					key={k++}
+					name="characters"
+					create={CharacterCreate}
+				/>,
 			]}
 		</Admin>
 	</MuiPickersUtilsProvider>
