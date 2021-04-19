@@ -4,7 +4,7 @@ const auth = require('../auth').auth
 
 const resources = {
 	abstracts: {
-		model: require('./AbstractAPI').AbstractModel,
+		model: require('./ThesisAPI').AbstractModel,
 		translation: 'Тезис доклада',
 		wordGender: 'masculine'
 	},

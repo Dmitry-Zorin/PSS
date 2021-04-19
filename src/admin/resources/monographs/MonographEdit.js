@@ -1,14 +1,9 @@
 import React from 'react'
 import {
 	ArrayInput,
-	Edit,
-	FileField,
-	FileInput,
-	minLength,
-	NumberInput,
-	ReferenceInput,
-	required,
-	SelectInput,
+	Edit, FileField, FileInput, minLength, NumberInput,
+	ReferenceArrayInput, ReferenceInput, required,
+	SelectArrayInput, SelectInput,
 	SimpleForm,
 	SimpleFormIterator,
 	TextInput
@@ -16,58 +11,47 @@ import {
 import { DateInput } from 'react-admin-date-inputs2'
 import { createTitle, getEditActionsWithoutFile } from '../../utils'
 
-const validate = [required()]
-const validateLength = [required(), minLength(1)]
+const validateHeadline = [required(), minLength(1)]
+const validateAnnotation = [required(), minLength(1)]
+const validateCreationDate = [required()]
+const validateAuthors = [required()]
 
 const dateFormat = 'dd.MM.yyyy'
 const cancelLabel = 'Отмена'
 
-const Title = createTitle('Научный труд', 'headline')
+const Title = createTitle('Монография', 'headline')
 
 const EditActions = getEditActionsWithoutFile()
 
-export const OtherEdit = (props) => (
+export const MonographEdit = (props) => (
 	<Edit
 		title={<Title />}
-		successMessage="Статья обновлена"
+		successMessage="Монография обновлена"
 		undoable={false}
 		actions={<EditActions />}
 		{...props}>
 		<SimpleForm submitOnEnter={false}>
 			<TextInput
-				label="Тип работы"
-				source="type"
-				validate={validateLength}
 				fullWidth
-			/>
-			<ReferenceInput
-				label="Категория"
-				source="category"
-				reference="categories"
-			>
-				<SelectInput optionText="name"/>
-			</ReferenceInput>
-			<TextInput
 				label="Название"
 				source="headline"
-				validate={validateLength}
-				fullWidth
+				validate={validateHeadline}
 			/>
 			<TextInput
-				label="Описание"
-				source="text"
-				validate={validateLength}
 				fullWidth
+				label="Аннотация"
 				multiline
+				source="text"
+				validate={validateAnnotation}
 			/>
 			<DateInput
 				label="Дата создания"
 				source="creationDate"
-				validate={validate}
+				validate={validateCreationDate}
 				options={{ format: dateFormat, cancelLabel: cancelLabel }}
 			/>
 			<ArrayInput
-				validate={validate}
+				validate={validateAuthors}
 				label="Авторы"
 				source="authors"
 			>
@@ -78,6 +62,22 @@ export const OtherEdit = (props) => (
 					/>
 				</SimpleFormIterator>
 			</ArrayInput>
+			<ReferenceInput
+				label="Место публикации"
+				source="publicationPlace"
+				reference="publications"
+			>
+				<SelectInput optionText="name" />
+			</ReferenceInput>
+			<ReferenceArrayInput
+				fullWidth
+				label="Подразделения"
+				reference="subdivisions"
+				source="subdivisions"
+				perPage={1000}
+			>
+				<SelectArrayInput optionText="name" />
+			</ReferenceArrayInput>
 			<TextInput
 				label="Выходные данные"
 				source="exitData"
@@ -98,7 +98,7 @@ export const OtherEdit = (props) => (
 			<FileField
 				source="file.url"
 				title="file.title"
-				label="Файл"
+				label="PDF файл"
 				target="_blank"
 			/>
 			<FileInput

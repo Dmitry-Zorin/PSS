@@ -147,7 +147,7 @@ exports.projectsSchema = new Schema(
 	{ versionKey: false }
 )
 
-exports.abstractSchema = new Schema(
+exports.thesisSchema = new Schema(
 	{
 		headline: {
 			type: String,

@@ -37,6 +37,13 @@ export const OtherCreate = (props) => (
                 validate={validateLength}
 				fullWidth
             />
+            <ReferenceInput
+                label="Категория"
+                source="category"
+                reference="categories"
+            >
+                <SelectInput optionText="name"/>
+            </ReferenceInput>
             <TextInput
                 label="Название"
                 source="headline"

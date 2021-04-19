@@ -8,6 +8,7 @@ const resource = 'others'
 const extractDataToSend = (data) => ({
 		id: data.id,
 		type: data.type,
+		category: data.category,
 		headline: data.headline,
 		text: data.text,
 		creationDate: data.creationDate,
@@ -24,6 +25,7 @@ const extractDataToSend = (data) => ({
 
 const extractDataFromRequest = (req) => ({
 		type: req.body.type,
+		category: req.body.category,
 		headline: req.body.headline,
 		text: req.body.text,
 		creationDate: new Date(req.body.creationDate),

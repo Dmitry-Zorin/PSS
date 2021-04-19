@@ -10,15 +10,15 @@ import {
 import {createEmptyPage} from "../utils"
 
 const Empty = createEmptyPage(
-    'Нет доступных характеров работы',
-    'Для добавления нового характера работы нажмите кнопку "Создать"'
+    'Нет доступных категорий',
+    'Для добавления новой категории нажмите кнопку "Создать"'
 )
 const validateName = [required(), minLength(1)]
 
 export const CreateForm = props => (
     <Create
-        title="Добавить новый характер работы"
-        successMessage="Характер работы добавлен"
+        title="Добавить новую категорию"
+        successMessage="Категория добавлено"
         undoable={false}
         {...props}>
         <SimpleForm
@@ -37,7 +37,7 @@ export const CreateForm = props => (
 
 export const ListForm = props => (
     <List
-        title="Список характеров работы"
+        title="Список категорий"
         perPage={25}
         exporter={false}
         sort={{ field: 'firstCreationDate', order: 'DESC' }}

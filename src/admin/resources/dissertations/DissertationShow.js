@@ -5,6 +5,7 @@ import {
     DateField,
     FileField,
     NumberField,
+    ReferenceArrayField,
     ReferenceField,
     Show,
     SimpleShowLayout,
@@ -13,10 +14,10 @@ import {
 } from 'react-admin'
 import {createTitle, getShowActions} from '../../utils'
 
-const Title = createTitle('Научный труд', 'headline')
+const Title = createTitle('Диссертация', 'headline')
 const ShowActions = getShowActions()
 
-export const OtherShow = ({permissions, enableActions = true, ...props}) => {
+export const DissertationShow = ({permissions, enableActions = true, ...props}) => {
     const actions = enableActions ? <ShowActions permissions={permissions}/> : false
     return (
         <Show
@@ -25,22 +26,11 @@ export const OtherShow = ({permissions, enableActions = true, ...props}) => {
             {...props}>
             <SimpleShowLayout>
                 <TextField
-                    label="Тип работы"
-                    source="type"
-                />
-                <ReferenceField
-                    label="Категория"
-                    source="category"
-                    reference="categories"
-                >
-                    <ChipField source="name"/>
-                </ReferenceField>
-                <TextField
                     label="Название"
                     source="headline"
                 />
                 <TextField
-                    label="Описание"
+                    label="Аннотация"
                     source="text"
                 />
                 <DateField
@@ -59,6 +49,19 @@ export const OtherShow = ({permissions, enableActions = true, ...props}) => {
                         />
                     </SingleFieldList>
                 </ArrayField>
+                <ReferenceField
+                    label="Место публикации"
+                    source="publicationPlace"
+                    reference="publications"
+                    link=""
+                >
+                    <TextField source="name"/>
+                </ReferenceField>
+                <ReferenceArrayField label="Подразделения" reference="subdivisions" source="subdivisions">
+                    <SingleFieldList>
+                        <ChipField source="name"/>
+                    </SingleFieldList>
+                </ReferenceArrayField>
                 <TextField
                     label="Выходные данные"
                     source="exitData"
@@ -79,7 +82,7 @@ export const OtherShow = ({permissions, enableActions = true, ...props}) => {
                 <FileField
                     source="file.url"
                     title="file.title"
-                    label="Файл"
+                    label="PDF файл"
                     target="_blank"
                 />
             </SimpleShowLayout>

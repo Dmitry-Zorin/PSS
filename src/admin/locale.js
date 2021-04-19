@@ -123,7 +123,11 @@ module.exports = {
 				create: 'Книга добавлена',
 				edit: 'Книга обновлена',
 			},
-			other: 'Прочее'
+			other: 'Прочее',
+			category1: 'Категория А',
+			category2: 'Категория Б',
+			category3: 'Категория В',
+			rest: 'Другие'
 		}
 	}
 }

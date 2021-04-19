@@ -5,22 +5,24 @@ import {
 	Datagrid,
 	DateField,
 	Filter,
-	List,
-	SingleFieldList,
-	TextField,
+	List, NumberInput,
+	ReferenceArrayField, ReferenceField,
+	ReferenceInput,
+	SelectInput,
+	SingleFieldList, TextField,
 	TextInput
 } from 'react-admin'
 import { DateInput } from 'react-admin-date-inputs2'
 import { DescriptionField, HeadlineField } from '../../CustomFields'
 import { createEmptyPage, getBulkActionButtons } from '../../utils'
-import {OtherShow} from "./OtherShow"
+import {DissertationShow} from "./DissertationShow"
 
 const dateFormat = 'dd.MM.yyyy'
 const cancelLabel = 'Отмена'
 
 const Empty = createEmptyPage(
-	'Нет доступных научных трудов',
-	'Для добавления научного труда нажмите кнопку "Создать"'
+	'Нет доступных диссертаций',
+	'Для добавления диссертации нажмите кнопку "Создать"'
 )
 const BulkActionButtons = getBulkActionButtons()
 
@@ -32,13 +34,28 @@ const Filters = (props) => (
 			alwaysOn
 		/>
 		<TextInput
-			label="Описание"
+			label="Аннотация"
 			source="text"
 		/>
 		<TextInput
 			label="Автор"
 			source="authors"
 		/>
+		<ReferenceInput
+			label="Место публикации"
+			source="publicationPlace"
+			reference="publications"
+		>
+			<SelectInput optionText="name" />
+		</ReferenceInput>
+		<ReferenceInput
+			perPage={1000}
+			label="Подразделение"
+			source="subdivisions"
+			reference="subdivisions"
+		>
+			<SelectInput optionText="name" />
+		</ReferenceInput>
 		<DateInput
 			label="Дата от"
 			source="dateFrom"
@@ -56,9 +73,9 @@ const Filters = (props) => (
 	</Filter>
 )
 
-export const OtherList = ({ permissions, ...props }) => (
+export const DissertationList = ({ permissions, ...props }) => (
 	<List
-		title="Список научных трудов"
+		title="Список диссертаций"
 		filters={<Filters />}
 		perPage={25}
 		exporter={false}
@@ -69,21 +86,30 @@ export const OtherList = ({ permissions, ...props }) => (
 		<Datagrid
 			// rowClick={permissions ? "edit" : "show"}
 			rowClick="show"
-			expand={<OtherShow enableActions={false} />}
+			expand={<DissertationShow enableActions={false} />}
 		>
-			<TextField
-				label="Тип работы"
-				source="type"
-			/>
 			<HeadlineField
 				label="Название"
 				source="headline"
 			/>
 			<DescriptionField
-				label="Описание"
+				label="Аннотация"
 				source="text"
 				maxchars={250}
 			/>
+			<ReferenceField
+				label="Место публикации"
+				source="publicationPlace"
+				reference="publications"
+				link=""
+			>
+				<TextField source="name" />
+			</ReferenceField>
+			<ReferenceArrayField label="Подразделения" reference="subdivisions" source="subdivisions">
+				<SingleFieldList>
+					<ChipField source="name" />
+				</SingleFieldList>
+			</ReferenceArrayField>
 			<ArrayField
 				source="authors"
 				label="Авторы"

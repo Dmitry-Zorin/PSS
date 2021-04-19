@@ -7,6 +7,11 @@ module.exports = new Schema(
 			type: String,
 			required: true,
 		},
+		category: {
+			type: Schema.Types.ObjectId,
+			ref: 'Category',
+			required: true
+		},
 		headline: {
 			type: String,
 			required: true,
@@ -33,7 +38,6 @@ module.exports = new Schema(
 		character: {
 			type: Schema.Types.ObjectId,
 			ref: 'Character',
-			default: '60599e7f6afc3f32c000e42b'
 		},
 		file: {
 			type: String
