@@ -3,7 +3,6 @@ import {makeStyles} from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import React, {useState} from 'react'
 import {Title, useDataProvider, useNotify} from 'react-admin'
-import {countPages} from '../../utils/fileReader'
 import {createForm16} from '../../utils/form16'
 
 const useStyles = makeStyles(theme => (
@@ -24,60 +23,38 @@ export const Form16 = () => {
     const dataProvider = useDataProvider()
     const notify = useNotify()
 
-    const [lastname, setLastname] = useState('Колузов') // 'горшков'
-    const [name, setName] = useState('Колузова Андрей Владимирович') // 'горшкова с н'
-    const [title, setTitle] = useState('Начальник 14 ЛИ') // 'старший оператор 4 научной роты ФГАУ ВИТ «ЭРА»'
+    const [lastname, setLastname] = useState('Колузов')
+    const [name, setName] = useState('Колузова Андрей Владимирович')
+    const [title, setTitle] = useState('Начальник 14 ЛИ')
 
     const getPublications = () => (
         dataProvider.getList('publications', {
             filter: {},
-            sort: {
-                field: 'name',
-                order: 'ASC'
-            },
-            pagination: {
-                page: 1,
-                perPage: 999
-            }
+            sort: {field: 'name', order: 'ASC'},
+            pagination: {page: 1, perPage: 999}
         })
     )
 
     const getCharacters = () => (
         dataProvider.getList('characters', {
             filter: {},
-            sort: {
-                field: 'name',
-                order: 'ASC'
-            },
-            pagination: {
-                page: 1,
-                perPage: 999
-            }
+            sort: {field: 'name', order: 'ASC'},
+            pagination: {page: 1, perPage: 999}
         })
     )
 
     const getResource = (resource, author) => (
         dataProvider.getList(resource, {
-            filter: {
-                authors: author
-            },
-            sort: {
-                field: 'firstCreationDate',
-                order: 'DESC'
-            },
-            pagination: {
-                page: 1,
-                perPage: 999
-            }
+            filter: {authors: author},
+            sort: {field: 'firstCreationDate', order: 'DESC'},
+            pagination: {page: 1, perPage: 999}
         })
     )
 
     const generateForm = async () => {
         const resourceData = new Array(3).fill(null).map(() => ({old: [], new: []}))
         const author = `${lastname} ${name.split(' ')[1][0]}.${name.split(' ')[2][0]}.`
-        const date = new Date()
-
-        date.setFullYear(date.getFullYear() - 3)
+        const date = new Date().getFullYear() - 3
 
         const publications = await getPublications().then(res => (
             res.data.reduce((p, e) => {
@@ -94,24 +71,23 @@ export const Form16 = () => {
         ))
 
         return Promise.all([
-                ['articles', 'abstracts'],
-                ['programs', 'patents'],
-                []
+                ['articles', 'monographs', 'abstracts', 'dissertations'],
+                ['programs', 'patents', 'reports'],
+                ['textbooks']
             ].map((docs, i) => (
                 Promise.all(docs.map(e => getResource(e, author).then(({data}) => (
                     Promise.all(data.map(e => {
-                        e.firstCreationDate = new Date(e.firstCreationDate)
-                        e.numberOfPages = e.pages || 3 + 10 * Math.random() | 0 //await countPages(e.file.url)
+                        e.numberOfPages = e.pages || 3 + 10 * Math.random() | 0
                         e.publicationPlace = publications[e.publicationPlace] || ''
                         e.character = characters[e.character] || '-----'
                     })).then(() => {
                         resourceData[i].old = [
                             ...resourceData[i].old,
-                            ...data.filter(e => e.firstCreationDate < date)
+                            ...data.filter(e => e.creationDate < date)
                         ]
                         resourceData[i].new = [
                             ...resourceData[i].new,
-                            ...data.filter(e => e.firstCreationDate >= date)
+                            ...data.filter(e => e.creationDate >= date)
                         ]
                         if (!resourceData[i].old.length) {
                             resourceData[i].old = resourceData[i].new

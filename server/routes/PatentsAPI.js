@@ -6,33 +6,33 @@ const Model = mongoose.model('Patents', schema)
 const resource = 'patents'
 
 const extractDataToSend = (data) => (
-	{
-		id: data.id,
-		headline: data.headline,
-		description: data.description,
-		creationDate: data.creationDate,
-		firstCreationDate: data.firstCreationDate,
-		authors: data.authors,
-		subdivisions: data.subdivisions,
-		file: {
-			url: `${data.file.includes('http://') ? '' : process.env.SERVER}${data.file}`,
-			title: data.headline
-		}
-	}
+    {
+        id: data.id,
+        headline: data.headline,
+        description: data.description,
+        creationDate: data.creationDate,
+        firstCreationDate: data.firstCreationDate,
+        authors: data.authors,
+        subdivisions: data.subdivisions,
+        file: {
+            url: `${data.file.includes('http://') ? '' : process.env.SERVER}${data.file}`,
+            title: data.headline
+        }
+    }
 )
 
 const extractDataFromRequest = (req) => (
-	{
-		headline: req.body.headline,
-		description: req.body.description,
-		creationDate: new Date(req.body.creationDate),
-		authors: JSON.parse(req.body.authors),
-		subdivisions: req.body.subdivisions ? JSON.parse(req.body.subdivisions) : undefined,
-	}
+    {
+        headline: req.body.headline,
+        description: req.body.description,
+        creationDate: req.body.creationDate,
+        authors: JSON.parse(req.body.authors),
+        subdivisions: req.body.subdivisions ? JSON.parse(req.body.subdivisions) : undefined,
+    }
 )
 
 module.exports = (app) => {
-	createAPIwithFile(app, resource, Model, extractDataToSend, extractDataFromRequest)
+    createAPIwithFile(app, resource, Model, extractDataToSend, extractDataFromRequest)
 }
 
 module.exports.PatentsModel = Model

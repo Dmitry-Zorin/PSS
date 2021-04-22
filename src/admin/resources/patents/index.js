@@ -1,11 +1,11 @@
-import { PatentCreate } from './PatentCreate'
-import { PatentEdit } from './PatentEdit'
-import { PatentList } from './PatentList'
-import { PatentShow } from './PatentShow'
+import {PatentCreate} from './PatentCreate'
+import {PatentEdit} from './PatentEdit'
+import {PatentList} from './PatentList'
+import {PatentShow} from './PatentShow'
 
 export default {
-	list: PatentList,
-	create: PatentCreate,
-	edit: PatentEdit,
-	show: PatentShow,
+    list: PatentList,
+    create: PatentCreate,
+    edit: PatentEdit,
+    show: PatentShow,
 }

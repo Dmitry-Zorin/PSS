@@ -1,12 +1,6 @@
 import React from 'react'
 
-import {
-    Create, Datagrid, List,
-    minLength,
-    required,
-    SimpleForm, TextField,
-    TextInput,
-} from 'react-admin'
+import {Create, Datagrid, List, minLength, required, SimpleForm, TextField, TextInput,} from 'react-admin'
 import {createEmptyPage} from "../utils"
 
 const Empty = createEmptyPage(
@@ -40,8 +34,8 @@ export const ListForm = props => (
         title="Список характеров работы"
         perPage={25}
         exporter={false}
-        sort={{ field: 'firstCreationDate', order: 'DESC' }}
-        empty={<Empty />}
+        sort={{field: 'firstCreationDate', order: 'DESC'}}
+        empty={<Empty/>}
         {...props}
     >
         <Datagrid>

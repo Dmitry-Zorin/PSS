@@ -5,21 +5,21 @@ const createAPI = require('../utils').createAPI
 const Model = mongoose.model('PublicationPlace', schema)
 
 function extractDataToSend(data) {
-	return {
-		id: data.id,
-		name: data.name,
-		firstCreationDate: data.firstCreationDate,
-	}
+    return {
+        id: data.id,
+        name: data.name,
+        firstCreationDate: data.firstCreationDate,
+    }
 }
 
 function extractDataFromRequest(req) {
-	return {
-		'name': req.body.name,
-	}
+    return {
+        'name': req.body.name,
+    }
 }
 
 const resource = 'publications'
 
 module.exports = function (app) {
-	createAPI(app, resource, Model, extractDataToSend, extractDataFromRequest)
+    createAPI(app, resource, Model, extractDataToSend, extractDataFromRequest)
 }

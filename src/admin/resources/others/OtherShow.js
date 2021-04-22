@@ -2,7 +2,6 @@ import React from 'react'
 import {
     ArrayField,
     ChipField,
-    DateField,
     FileField,
     NumberField,
     ReferenceField,
@@ -43,10 +42,9 @@ export const OtherShow = ({permissions, enableActions = true, ...props}) => {
                     label="Описание"
                     source="text"
                 />
-                <DateField
-                    label="Дата создания"
+                <TextField
+                    label="Год создания"
                     source="creationDate"
-                    locales="ru-RU"
                 />
                 <ArrayField
                     label="Авторы"

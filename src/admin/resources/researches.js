@@ -6,13 +6,13 @@ import {
 	ChipField,
 	Create,
 	Datagrid,
-	DateField,
 	Edit,
 	FileField,
 	FileInput,
 	Filter,
 	List,
 	minLength,
+	NumberInput,
 	required,
 	SelectInput,
 	Show,
@@ -23,11 +23,9 @@ import {
 	TextField,
 	TextInput
 } from 'react-admin'
-import { DateInput } from 'react-admin-date-inputs2'
+import {DescriptionField, HeadlineField} from '../CustomFields'
 
-import { DescriptionField, HeadlineField } from '../CustomFields'
-
-import { createEmptyPage, createTitle, getBulkActionButtons, getEditActionsWithoutFile, getShowActions } from '../utils'
+import {createEmptyPage, createTitle, getBulkActionButtons, getEditActionsWithoutFile, getShowActions} from '../utils'
 
 const validateHeadline = [required(), minLength(1)]
 const validateDescription = [required(), minLength(1)]
@@ -35,347 +33,296 @@ const validateCreationDate = [required()]
 const validateAuthors = [required()]
 const validateFile = [required()]
 
-const dateFormat = 'dd.MM.yyyy'
-const cancelLabel = 'Отмена'
-
 const Title = createTitle('Научно-исследовательская работа', 'headline')
 const Empty = createEmptyPage(
-	'Нет доступных научно-исследовательских работ',
-	'Для добавления научно-исследовательская работы нажмите кнопку "Создать"'
+    'Нет доступных научно-исследовательских работ',
+    'Для добавления научно-исследовательская работы нажмите кнопку "Создать"'
 )
 const ShowActions = getShowActions()
 const EditActions = getEditActionsWithoutFile()
 const BulkActionButtons = getBulkActionButtons()
 
 const categoryChoices = [
-	{ id: '1', name: '1' },
-	{ id: '2', name: '2' },
-	{ id: '3', name: '3' },
-	{ id: 'ГОЗ', name: 'ГОЗ' },
+    {id: '1', name: '1'},
+    {id: '2', name: '2'},
+    {id: '3', name: '3'},
+    {id: 'ГОЗ', name: 'ГОЗ'},
 ]
 
 const Filters = (props) => (
-	<Filter {...props}>
-		<TextInput
-			label="Поиск по названию"
-			source="headline"
-			alwaysOn
-		/>
-		<TextInput
-			label="Описание"
-			source="description"
-		/>
-		<TextInput
-			label="Головной исполнитель"
-			source="headPerformer"
-		/>
-		<TextInput
-			label="Заказчик"
-			source="customer"
-		/>
-		<TextInput
-			label="Cоисполнитель"
-			source="authors"
-		/>
-		<SelectInput
-			label="Категория"
-			source="category"
-			choices={categoryChoices}
-		/>
-		{/* <ReferenceInput
-            perPage={1000}
-            label="Подразделение"
-            source="subdivisions"
-            reference="subdivisions">
-            <SelectInput optionText="name" />
-        </ReferenceInput> */}
-		<DateInput
-			label="Дата от"
-			source="dateFrom"
-			options={{ format: dateFormat, cancelLabel: cancelLabel }}
-		/>
-		<DateInput
-			label="Дата до"
-			source="dateTo"
-			options={{ format: dateFormat, cancelLabel: cancelLabel }}
-		/>
-	</Filter>
+    <Filter {...props}>
+        <TextInput
+            label="Поиск по названию"
+            source="headline"
+            alwaysOn
+        />
+        <TextInput
+            label="Описание"
+            source="description"
+        />
+        <TextInput
+            label="Головной исполнитель"
+            source="headPerformer"
+        />
+        <TextInput
+            label="Заказчик"
+            source="customer"
+        />
+        <TextInput
+            label="Cоисполнитель"
+            source="authors"
+        />
+        <SelectInput
+            label="Категория"
+            source="category"
+            choices={categoryChoices}
+        />
+    </Filter>
 )
 
-export const ListForm = ({ permissions, ...props }) => (
-	<List
-		title="Список научно-исследовательских работ"
-		filters={<Filters />}
-		perPage={25}
-		exporter={false}
-		sort={{ field: 'firstCreationDate', order: 'DESC' }}
-		empty={<Empty />}
-		bulkActionButtons={<BulkActionButtons permissions={permissions} />}
-		{...props}>
-		<Datagrid
-			// rowClick={permissions ? "edit" : "show"}
-			rowClick="show"
-			expand={<ShowForm enableActions={false} />}
-		>
-			<HeadlineField
-				label="Название"
-				source="headline"
-			/>
-			<DescriptionField
-				label="Описание"
-				source="description"
-				maxchars={250}
-			/>
-			<TextField
-				label="Головной исполнитель"
-				source="headPerformer"
-			/>
-			<TextField
-				label="Заказчик"
-				source="customer"
-			/>
-			<ArrayField
-				source="authors"
-				label="Соисполнители"
-			>
-				<SingleFieldList linkType={false}>
-					<ChipField
-						label="Соисполнитель"
-						source="author"
-					/>
-				</SingleFieldList>
-			</ArrayField>
-			<DateField
-				label="Дата создания"
-				source="creationDate"
-				locales="ru-RU"
-			/>
-			{/* <ReferenceArrayField label="Подразделения" reference="subdivisions" source="subdivisions">
-                <SingleFieldList>
-                    <ChipField source="name" />
+export const ListForm = ({permissions, ...props}) => (
+    <List
+        title="Список научно-исследовательских работ"
+        filters={<Filters/>}
+        perPage={25}
+        exporter={false}
+        sort={{field: 'firstCreationDate', order: 'DESC'}}
+        empty={<Empty/>}
+        bulkActionButtons={<BulkActionButtons permissions={permissions}/>}
+        {...props}>
+        <Datagrid
+            rowClick="show"
+            expand={<ShowForm enableActions={false}/>}
+        >
+            <HeadlineField
+                label="Название"
+                source="headline"
+            />
+            <DescriptionField
+                label="Описание"
+                source="description"
+                maxchars={250}
+            />
+            <TextField
+                label="Головной исполнитель"
+                source="headPerformer"
+            />
+            <TextField
+                label="Заказчик"
+                source="customer"
+            />
+            <ArrayField
+                source="authors"
+                label="Соисполнители"
+            >
+                <SingleFieldList linkType={false}>
+                    <ChipField
+                        label="Соисполнитель"
+                        source="author"
+                    />
                 </SingleFieldList>
-            </ReferenceArrayField> */}
-		</Datagrid>
-	</List>
+            </ArrayField>
+            <TextField
+                label="Год создания"
+                source="creationDate"
+            />
+        </Datagrid>
+    </List>
 )
 
 export const CreateForm = props => (
-	<Create
-		title="Добавить научно-исследовательская работу"
-		successMessage="Научно-исследовательская работа добавлена"
-		undoable={false}
-		{...props}>
-		<SimpleForm
-			redirect="list"
-			submitOnEnter={false}
-		>
-			<TextInput
-				fullWidth
-				label="Название"
-				source="headline"
-				validate={validateHeadline}
-			/>
-			<TextInput
-				fullWidth
-				label="Описание"
-				multiline
-				source="description"
-				validate={validateDescription}
-			/>
-			<TextInput
-				label="Головной исполнитель"
-				source="headPerformer"
-			/>
-			<TextInput
-				label="Заказчик"
-				source="customer"
-			/>
-			<ArrayInput
-				validate={validateAuthors}
-				source="authors"
-				label="Соискатели"
-			>
-				<SimpleFormIterator>
-					<TextInput
-						label="Соискатель"
-						source="author"
-					/>
-				</SimpleFormIterator>
-			</ArrayInput>
-			<SelectInput
-				label="Категория"
-				source="category"
-				choices={categoryChoices}
-			/>
-			<DateInput
-				label="Дата создания"
-				source="creationDate"
-				validate={validateCreationDate}
-				options={{ format: dateFormat, cancelLabel: cancelLabel }}
-			/>
-			{/* <ReferenceArrayInput
+    <Create
+        title="Добавить научно-исследовательская работу"
+        successMessage="Научно-исследовательская работа добавлена"
+        undoable={false}
+        {...props}>
+        <SimpleForm
+            redirect="list"
+            submitOnEnter={false}
+        >
+            <TextInput
                 fullWidth
-                label="Подразделения"
-                reference="subdivisions"
-                source="subdivisions"
-                perPage={1000}>
-                <SelectArrayInput optionText="name" />
-            </ReferenceArrayInput> */}
-			<FileInput
-				source="file"
-				label="Архив с научно-исследовательской работой"
-				validate={validateFile}
-			>
-				<FileField
-					source="file"
-					title="Загруженный файл"
-				/>
-			</FileInput>
-		</SimpleForm>
-	</Create>
+                label="Название"
+                source="headline"
+                validate={validateHeadline}
+            />
+            <TextInput
+                fullWidth
+                label="Описание"
+                multiline
+                source="description"
+                validate={validateDescription}
+            />
+            <TextInput
+                label="Головной исполнитель"
+                source="headPerformer"
+            />
+            <TextInput
+                label="Заказчик"
+                source="customer"
+            />
+            <ArrayInput
+                validate={validateAuthors}
+                source="authors"
+                label="Соискатели"
+            >
+                <SimpleFormIterator>
+                    <TextInput
+                        label="Соискатель"
+                        source="author"
+                    />
+                </SimpleFormIterator>
+            </ArrayInput>
+            <SelectInput
+                label="Категория"
+                source="category"
+                choices={categoryChoices}
+            />
+            <NumberInput
+                label="Год создания"
+                source="creationDate"
+                validate={validateCreationDate}
+            />
+            <FileInput
+                source="file"
+                label="Архив с научно-исследовательской работой"
+                validate={validateFile}
+            >
+                <FileField
+                    source="file"
+                    title="Загруженный файл"
+                />
+            </FileInput>
+        </SimpleForm>
+    </Create>
 )
 
 export const EditForm = props => (
-	<Edit
-		title={<Title />}
-		successMessage="Научно-исследовательская работа обновлена"
-		undoable={false}
-		actions={<EditActions />}
-		{...props}>
-		<SimpleForm
-			submitOnEnter={false}
-		>
-			<TextInput
-				fullWidth
-				label="Название"
-				source="headline"
-				validate={validateHeadline}
-			/>
-			<TextInput
-				fullWidth
-				label="Описание"
-				multiline
-				source="description"
-				validate={validateDescription}
-			/>
-			<TextInput
-				label="Головной исполнитель"
-				source="headPerformer"
-			/>
-			<TextInput
-				label="Заказчик"
-				source="customer"
-			/>
-			<ArrayInput
-				validate={validateAuthors}
-				label="Соискатели"
-				source="authors"
-			>
-				<SimpleFormIterator>
-					<TextInput
-						label="Соискатель"
-						source="author"
-					/>
-				</SimpleFormIterator>
-			</ArrayInput>
-			<SelectInput
-				label="Категория"
-				source="category"
-				choices={categoryChoices}
-			/>
-			<DateInput
-				label="Дата создания"
-				source="creationDate"
-				validate={validateCreationDate}
-				options={{ format: dateFormat, cancelLabel: cancelLabel }}
-			/>
-			{/* <ReferenceArrayInput
+    <Edit
+        title={<Title/>}
+        successMessage="Научно-исследовательская работа обновлена"
+        undoable={false}
+        actions={<EditActions/>}
+        {...props}>
+        <SimpleForm
+            submitOnEnter={false}
+        >
+            <TextInput
                 fullWidth
-                label="Подразделения"
-                reference="subdivisions"
-                source="subdivisions"
-                perPage={1000}>
-                <SelectArrayInput optionText="name" />
-            </ReferenceArrayInput> */}
-			<FileField
-				source="file.url"
-				title="file.title"
-				label="Архив с научно-исследовательской работой"
-				target="_blank"
-			/>
-			<FileInput
-				source="newfile"
-				label="Новый файл"
-			>
-				<FileField
-					source="src"
-					title="Загруженный файл"
-				/>
-			</FileInput>
-		</SimpleForm>
-	</Edit>
+                label="Название"
+                source="headline"
+                validate={validateHeadline}
+            />
+            <TextInput
+                fullWidth
+                label="Описание"
+                multiline
+                source="description"
+                validate={validateDescription}
+            />
+            <TextInput
+                label="Головной исполнитель"
+                source="headPerformer"
+            />
+            <TextInput
+                label="Заказчик"
+                source="customer"
+            />
+            <ArrayInput
+                validate={validateAuthors}
+                label="Соискатели"
+                source="authors"
+            >
+                <SimpleFormIterator>
+                    <TextInput
+                        label="Соискатель"
+                        source="author"
+                    />
+                </SimpleFormIterator>
+            </ArrayInput>
+            <SelectInput
+                label="Категория"
+                source="category"
+                choices={categoryChoices}
+            />
+            <NumberInput
+                label="Год создания"
+                source="creationDate"
+                validate={validateCreationDate}
+            />
+            <FileField
+                source="file.url"
+                title="file.title"
+                label="Архив с научно-исследовательской работой"
+                target="_blank"
+            />
+            <FileInput
+                source="newfile"
+                label="Новый файл"
+            >
+                <FileField
+                    source="src"
+                    title="Загруженный файл"
+                />
+            </FileInput>
+        </SimpleForm>
+    </Edit>
 )
 
-export const ShowForm = ({ permissions, enableActions, ...props }) => {
-	const actions = enableActions ? <ShowActions permissions={permissions} /> : false
-	return (
-		<Show
-			title={<Title />}
-			actions={actions}
-			{...props}>
-			<SimpleShowLayout>
-				<TextField
-					label="Название"
-					source="headline"
-				/>
-				<TextField
-					label="Описание"
-					source="description"
-				/>
-				<TextField
-					label="Головной исполнитель"
-					source="headPerformer"
-				/>
-				<TextField
-					label="Заказчик"
-					source="customer"
-				/>
-				<ArrayField
-					label="Соискатели"
-					source="authors"
-				>
-					<SingleFieldList linkType={false}>
-						<ChipField
-							label="Соискатель"
-							source="author"
-						/>
-					</SingleFieldList>
-				</ArrayField>
-				<TextField
-					label="Категория"
-					source="category"
-				/>
-				<DateField
-					label="Дата создания"
-					source="creationDate"
-					locales="ru-RU"
-				/>
-				{/* <ReferenceArrayField label="Подразделения" reference="subdivisions" source="subdivisions">
-                    <SingleFieldList>
-                        <ChipField source="name" />
+export const ShowForm = ({permissions, enableActions, ...props}) => {
+    const actions = enableActions ? <ShowActions permissions={permissions}/> : false
+    return (
+        <Show
+            title={<Title/>}
+            actions={actions}
+            {...props}>
+            <SimpleShowLayout>
+                <TextField
+                    label="Название"
+                    source="headline"
+                />
+                <TextField
+                    label="Описание"
+                    source="description"
+                />
+                <TextField
+                    label="Головной исполнитель"
+                    source="headPerformer"
+                />
+                <TextField
+                    label="Заказчик"
+                    source="customer"
+                />
+                <ArrayField
+                    label="Соискатели"
+                    source="authors"
+                >
+                    <SingleFieldList linkType={false}>
+                        <ChipField
+                            label="Соискатель"
+                            source="author"
+                        />
                     </SingleFieldList>
-                </ReferenceArrayField> */}
-				<FileField
-					source="file.url"
-					title="file.title"
-					label="Архив с научно-исследовательской работой"
-					target="_blank"
-				/>
-			</SimpleShowLayout>
-		</Show>
-	)
+                </ArrayField>
+                <TextField
+                    label="Категория"
+                    source="category"
+                />
+                <TextField
+                    label="Год создания"
+                    source="creationDate"
+                />
+                <FileField
+                    source="file.url"
+                    title="file.title"
+                    label="Архив с научно-исследовательской работой"
+                    target="_blank"
+                />
+            </SimpleShowLayout>
+        </Show>
+    )
 }
 
 ShowForm.defaultProps = {
-	enableActions: true,
+    enableActions: true,
 }

@@ -184,9 +184,9 @@ const getTable = (data, author, name) => (
                     })
                 ))
             }),
-            ...getDataTableRows(data[0], author, name,  'a) научные работы'),
-            ...getDataTableRows(data[1], author, name,  'б) авторские свидетельства, дипломы, патенты, лицензии, информационные карты, алгоритмы, проекты'),
-            ...getDataTableRows(data[2], author, name,  'в) учебно-методические работы')
+            ...getDataTableRows(data[0], author, name, 'a) научные работы'),
+            ...getDataTableRows(data[1], author, name, 'б) авторские свидетельства, дипломы, патенты, лицензии, информационные карты, алгоритмы, проекты'),
+            ...getDataTableRows(data[2], author, name, 'в) учебно-методические работы')
         ]
     })
 )
@@ -254,7 +254,7 @@ const getDataTableRow = (author, name, e) => (
             new TableCell({
                 children: [
                     new Paragraph(
-                        e.exitData || `${e.publicationPlace}, ${e.firstCreationDate.getFullYear()}`
+                        e.exitData || `${e.publicationPlace}, ${e.creationDate}`
                     )
                 ]
             }),

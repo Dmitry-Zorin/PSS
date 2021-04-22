@@ -5,17 +5,21 @@ import DeveloperBoardIcon from '@material-ui/icons/DeveloperBoard'
 import EmojiObjectsIcon from '@material-ui/icons/EmojiObjects'
 import FeaturedPlayListIcon from '@material-ui/icons/FeaturedPlayList'
 import GroupIcon from '@material-ui/icons/Group'
+import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile'
+import LibraryBooksIcon from '@material-ui/icons/LibraryBooks'
+import LocalLibraryIcon from '@material-ui/icons/LocalLibrary'
 import MenuBookIcon from '@material-ui/icons/MenuBook'
 import PieChartIcon from '@material-ui/icons/PieChart'
 import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck'
 import SchoolIcon from '@material-ui/icons/School'
+import ShortTextIcon from '@material-ui/icons/ShortText'
 import SubjectIcon from '@material-ui/icons/Subject'
 //import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle'
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
 import TimelineIcon from '@material-ui/icons/Timeline'
 import TrendingUpIcon from '@material-ui/icons/TrendingUp'
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser'
-import LocalLibraryIcon from '@material-ui/icons/LocalLibrary'
+import VerticalSplitIcon from '@material-ui/icons/VerticalSplit'
 import VisibilityIcon from '@material-ui/icons/Visibility'
 import {MuiPickersUtilsProvider} from '@material-ui/pickers'
 import format from 'date-fns/format'
@@ -29,37 +33,29 @@ import DashBoard from './DashBoard'
 import dataProvider from './DataProvider'
 import russianMessages from './locale'
 import MyLayout from './MyLayout'
-import {
-    CreateForm as ThesisCreate,
-    EditForm as ThesisEdit,
-    ListForm as ThesisList,
-    ShowForm as ThesisShow,
-} from './resources/theses'
+import Abstract from './resources/abstracts/index'
 import {
     CreateForm as ApprobationCreate,
     EditForm as ApprobationEdit,
     ListForm as ApprobationList,
     ShowForm as ApprobationShow,
 } from './resources/approbations'
+import Article from './resources/articles/index'
+import {CreateForm as CategoryCreate, ListForm as CategoryList} from './resources/categories'
+import {CreateForm as CharacterCreate, ListForm as CharacterList} from './resources/characters'
 import {
     CreateForm as DevelopmentCreate,
     EditForm as DevelopmentEdit,
     ListForm as DevelopmentList,
     ShowForm as DevelopmentShow,
 } from './resources/developments'
-import {CreateForm as CharacterCreate, ListForm as CharacterList} from './resources/characters'
-import {CreateForm as CategoryCreate, ListForm as CategoryList} from './resources/categories'
+import Dissertation from './resources/dissertations/index'
 //import Employees from './resources/employees/index'
 import {Form16} from './resources/Form16'
-import Article from './resources/articles/index'
 import Library from './resources/library/index'
+import Monograph from './resources/monographs/index'
 import Patents from './resources/patents/index'
 import Programs from './resources/programs/index'
-import Monograph from './resources/monographs/index'
-import Textbook from './resources/textbooks/index'
-import Report from './resources/reports/index'
-import Abstract from './resources/abstracts/index'
-import Dissertation from './resources/dissertations/index'
 //import Others from './resources/others/index'
 import {
     CreateForm as ProjectCreate,
@@ -79,6 +75,7 @@ import {
     ListForm as RationalizationList,
     ShowForm as RationalizationShow,
 } from './resources/rationalizations'
+import Report from './resources/reports/index'
 import {
     CreateForm as ResearchCreate,
     EditForm as ResearchEdit,
@@ -91,6 +88,13 @@ import {
     ListForm as SubdivisionList,
     ShowForm as SubdivisionShow,
 } from './resources/subdivisions'
+import Textbook from './resources/textbooks/index'
+import {
+    CreateForm as ThesisCreate,
+    EditForm as ThesisEdit,
+    ListForm as ThesisList,
+    ShowForm as ThesisShow,
+} from './resources/theses'
 import {Timeline} from './resources/timeline'
 import {CreateForm as UserCreate, ListForm as UserList, ShowForm as UserShow,} from './resources/users'
 import {
@@ -147,7 +151,7 @@ const AdminPanel = () => (
                 <Resource
                     key={k++}
                     name="articles"
-                    icon={DescriptionIcon}
+                    icon={VerticalSplitIcon}
                     options={{label: 'Статьи'}}
                     list={Article.list}
                     edit={permissions ? Article.edit : undefined}
@@ -188,7 +192,7 @@ const AdminPanel = () => (
                     key={k++}
                     name="rationalizations"
                     icon={EmojiObjectsIcon}
-                    options={{label: 'Рац. предложения'}}
+                    options={{label: 'Рацпредложения'}}
                     list={RationalizationList}
                     edit={permissions ? RationalizationEdit : undefined}
                     create={permissions ? RationalizationCreate : undefined}
@@ -207,7 +211,7 @@ const AdminPanel = () => (
                 <Resource
                     key={k++}
                     name="theses"
-                    icon={SubjectIcon}
+                    icon={ShortTextIcon}
                     options={{label: 'Тезисы докладов'}}
                     list={ThesisList}
                     edit={permissions ? ThesisEdit : undefined}
@@ -257,7 +261,7 @@ const AdminPanel = () => (
                 <Resource
                     key={k++}
                     name="monographs"
-                    icon={SubjectIcon}
+                    icon={DescriptionIcon}
                     options={{label: 'Монографии'}}
                     list={Monograph.list}
                     edit={permissions ? Monograph.edit : undefined}
@@ -277,7 +281,7 @@ const AdminPanel = () => (
                 <Resource
                     key={k++}
                     name="reports"
-                    icon={DescriptionIcon}
+                    icon={SubjectIcon}
                     options={{label: 'Отчеты'}}
                     list={Report.list}
                     edit={permissions ? Report.edit : undefined}
@@ -287,7 +291,7 @@ const AdminPanel = () => (
                 <Resource
                     key={k++}
                     name="abstracts"
-                    icon={DescriptionIcon}
+                    icon={InsertDriveFileIcon}
                     options={{label: 'Авторефераты'}}
                     list={Abstract.list}
                     edit={permissions ? Abstract.edit : undefined}
@@ -297,7 +301,7 @@ const AdminPanel = () => (
                 <Resource
                     key={k++}
                     name="dissertations"
-                    icon={DescriptionIcon}
+                    icon={LibraryBooksIcon}
                     options={{label: 'Диссертации'}}
                     list={Dissertation.list}
                     edit={permissions ? Dissertation.edit : undefined}

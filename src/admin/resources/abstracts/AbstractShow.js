@@ -2,7 +2,6 @@ import React from 'react'
 import {
     ArrayField,
     ChipField,
-    DateField,
     FileField,
     NumberField,
     ReferenceArrayField,
@@ -33,10 +32,9 @@ export const AbstractShow = ({permissions, enableActions = true, ...props}) => {
                     label="Аннотация"
                     source="text"
                 />
-                <DateField
-                    label="Дата создания"
+                <TextField
+                    label="Год создания"
                     source="creationDate"
-                    locales="ru-RU"
                 />
                 <ArrayField
                     label="Авторы"
@@ -57,7 +55,11 @@ export const AbstractShow = ({permissions, enableActions = true, ...props}) => {
                 >
                     <TextField source="name"/>
                 </ReferenceField>
-                <ReferenceArrayField label="Подразделения" reference="subdivisions" source="subdivisions">
+                <ReferenceArrayField
+                    label="Подразделения"
+                    reference="subdivisions"
+                    source="subdivisions"
+                >
                     <SingleFieldList>
                         <ChipField source="name"/>
                     </SingleFieldList>

@@ -1,25 +1,21 @@
 import React from 'react'
 import {
-	ArrayInput,
-	Create,
-	FileField,
-	FileInput,
-	minLength,
-	NumberInput,
-	ReferenceInput,
-	required,
-	SelectInput,
-	SimpleForm,
-	SimpleFormIterator,
-	TextInput
+    ArrayInput,
+    Create,
+    FileField,
+    FileInput,
+    minLength,
+    NumberInput,
+    ReferenceInput,
+    required,
+    SelectInput,
+    SimpleForm,
+    SimpleFormIterator,
+    TextInput
 } from 'react-admin'
-import {DateInput} from 'react-admin-date-inputs2'
-
 const validate = [required()]
 const validateLength = [required(), minLength(1)]
 
-const dateFormat = 'dd.MM.yyyy'
-const cancelLabel = 'Отмена'
 
 export const OtherCreate = (props) => (
     <Create
@@ -35,7 +31,7 @@ export const OtherCreate = (props) => (
                 label="Тип работы"
                 source="type"
                 validate={validateLength}
-				fullWidth
+                fullWidth
             />
             <ReferenceInput
                 label="Категория"
@@ -48,17 +44,17 @@ export const OtherCreate = (props) => (
                 label="Название"
                 source="headline"
                 validate={validateLength}
-				fullWidth
+                fullWidth
             />
             <TextInput
                 label="Описание"
                 source="text"
                 validate={validateLength}
-				fullWidth
-				multiline
+                fullWidth
+                multiline
             />
-            <DateInput
-                label="Дата создания"
+            <NumberInput
+                label="Год создания"
                 source="creationDate"
                 validate={validate}
                 options={{format: dateFormat, cancelLabel: cancelLabel}}
