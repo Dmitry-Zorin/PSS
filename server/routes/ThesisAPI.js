@@ -35,4 +35,4 @@ module.exports = function (app) {
     createAPIwithFile(app, resource, Model, extractDataToSend, extractDataFromRequest)
 }
 
-module.exports.AbstractModel = Model
+module.exports.ArticleModel = Model

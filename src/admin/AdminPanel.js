@@ -324,20 +324,9 @@ const AdminPanel = () => (
                     icon={GroupIcon}
                     options={{label: 'Пользователи'}}
                     list={UserList}
-                    // edit={UserEdit}
                     create={UserCreate}
                     show={UserShow}
                 />,
-                /*<Resource
-                    key={k++}
-                    name='others'
-                    icon={MenuBookIcon}
-                    options={{label: 'Научные труды'}}
-                    list={Others.list}
-                    edit={permissions ? Others.edit : undefined}
-                    create={permissions ? Others.create : undefined}
-                    show={Others.show}
-                />,*/
                 <Resource
                     key={k++}
                     name='form16'

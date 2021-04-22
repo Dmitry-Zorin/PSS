@@ -3,8 +3,33 @@ const cookieParser = require('cookie-parser')()
 const auth = require('../auth').auth
 
 const resources = {
+    monographs: {
+        model: require('./MonographAPI').ArticleModel,
+        translation: 'Монография',
+        wordGender: 'feminine'
+    },
     abstracts: {
-        model: require('./ThesisAPI').AbstractModel,
+        model: require('./AbstractAPI').ArticleModel,
+        translation: 'Афтореферат',
+        wordGender: 'masculine'
+    },
+    dissertations: {
+        model: require('./DissertationAPI').ArticleModel,
+        translation: 'Диссертация',
+        wordGender: 'feminine'
+    },
+    reports: {
+        model: require('./ReportAPI').ArticleModel,
+        translation: 'Отчет',
+        wordGender: 'masculine'
+    },
+    textbooks: {
+        model: require('./TextbookAPI').ArticleModel,
+        translation: 'Учебник',
+        wordGender: 'masculine'
+    },
+    theses: {
+        model: require('./ThesisAPI').ArticleModel,
         translation: 'Тезис доклада',
         wordGender: 'masculine'
     },
@@ -40,7 +65,7 @@ const resources = {
     },
     rationalizations: {
         model: require('./RationalizationAPI').RationalizationModel,
-        translation: 'Рационализаторское предложение',
+        translation: 'Рацпредложение',
         wordGender: 'neuter'
     },
     researches: {

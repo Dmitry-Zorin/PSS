@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const schema = require('../schemas/ArticleSchema')
 const createAPIwithFile = require('../utils').createAPIwithFile
 
-const Model = mongoose.model('Monography', schema)
+const Model = mongoose.model('Monograph', schema)
 const resource = 'monographs'
 
 const extractDataToSend = (data) => ({

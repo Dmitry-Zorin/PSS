@@ -16,75 +16,75 @@ import {saveAs} from 'file-saver'
 let index = 1
 
 export const createForm16 = (data, name, author, title) => {
-    const doc = new Document()
-
-    doc.addSection({
-        properties: {},
-        margins: {
-            top: 0,
-            right: 500,
-            bottom: 0,
-            left: 500,
-        },
-        children: [
-            new Paragraph({
-                text: 'Форма N 16',
-                alignment: AlignmentType.RIGHT
-            }),
-            new Paragraph({
-                alignment: AlignmentType.CENTER,
-                heading: HeadingLevel.HEADING_2,
-                children: [
-                    new TextRun({
-                        text: 'СПИСОК',
-                        color: '000000'
-                    })
-                ]
-            }),
-            new Paragraph({
-                alignment: AlignmentType.CENTER,
-                heading: HeadingLevel.HEADING_3,
-                children: [
-                    new TextRun({
-                        text: 'научных и учебно-методических работ',
-                        color: '000000'
-                    })
-                ]
-            }),
-            new Paragraph({
-                alignment: AlignmentType.CENTER,
-                heading: HeadingLevel.HEADING_3,
-                children: [
-                    new TextRun({
-                        text: name.split(' ')[0],
-                        color: '000000',
-                        allCaps: true
-                    }),
-                    new TextRun({
-                        text: ` ${
-                            name.split(' ')
-                                .slice(1)
-                                .map(e => `${e[0].toUpperCase()}${e.slice(1)}`)
-                                .join(' ')
-                        }`,
-                        color: '000000'
-                    })
-                ]
-            }),
-            getTable(data, author, name),
-            new Paragraph({
-                alignment: AlignmentType.LEFT,
-                children: [
-                    new TextRun({
-                        text: title
-                    }).break(),
-                ]
-            }),
-            new Paragraph({
-                text: `${name.split(' ')[1][0].toUpperCase()}. ${author[0].toUpperCase()}${author.split(' ')[0].slice(1)}`,
-                alignment: AlignmentType.RIGHT,
-            })
-        ]
+    const doc = new Document({
+        sections: [{
+            properties: {},
+            margins: {
+                top: 0,
+                right: 500,
+                bottom: 0,
+                left: 500,
+            },
+            children: [
+                new Paragraph({
+                    text: 'Форма N 16',
+                    alignment: AlignmentType.RIGHT
+                }),
+                new Paragraph({
+                    alignment: AlignmentType.CENTER,
+                    heading: HeadingLevel.HEADING_2,
+                    children: [
+                        new TextRun({
+                            text: 'СПИСОК',
+                            color: '000000'
+                        })
+                    ]
+                }),
+                new Paragraph({
+                    alignment: AlignmentType.CENTER,
+                    heading: HeadingLevel.HEADING_3,
+                    children: [
+                        new TextRun({
+                            text: 'научных и учебно-методических работ',
+                            color: '000000'
+                        })
+                    ]
+                }),
+                new Paragraph({
+                    alignment: AlignmentType.CENTER,
+                    heading: HeadingLevel.HEADING_3,
+                    children: [
+                        new TextRun({
+                            text: name.split(' ')[0],
+                            color: '000000',
+                            allCaps: true
+                        }),
+                        new TextRun({
+                            text: ` ${
+                                name.split(' ')
+                                    .slice(1)
+                                    .map(e => `${e[0].toUpperCase()}${e.slice(1)}`)
+                                    .join(' ')
+                            }`,
+                            color: '000000'
+                        })
+                    ]
+                }),
+                new Paragraph({}),
+                getTable(data, author, name),
+                new Paragraph({}),
+                new Paragraph({
+                    text: title,
+                }),
+                new Paragraph({
+                    text: `${name.split(' ')[1][0].toUpperCase()}. ${author[0].toUpperCase()}${author.split(' ')[0].slice(1)}`,
+                    alignment: AlignmentType.RIGHT,
+                }),
+                new Paragraph({
+                    text: `« __» __________ ${new Date().getFullYear()} г`
+                })
+            ]
+        }]
     })
 
     Packer.toBlob(doc).then(blob => {
@@ -118,10 +118,7 @@ const getTable = (data, author, name) => (
                         verticalAlign: VerticalAlign.CENTER,
                         children: [
                             new Paragraph({
-                                children: [
-                                    new TextRun('Наименование работы,'),
-                                    new TextRun('ее вид').break()
-                                ],
+                                text: 'Наименование учебных изданий, научных трудов и патентов на изобретения и иные объекты интеллектуальной собственности',
                                 alignment: AlignmentType.CENTER
                             })
                         ]
@@ -134,7 +131,7 @@ const getTable = (data, author, name) => (
                         },
                         children: [
                             new Paragraph({
-                                text: 'Характер работы',
+                                text: 'Форма учебных изданий и научных трудов',
                                 alignment: AlignmentType.CENTER
                             })
                         ]
@@ -156,7 +153,7 @@ const getTable = (data, author, name) => (
                         },
                         children: [
                             new Paragraph({
-                                text: 'Объем в п.л. или с.',
+                                text: 'Объём',
                                 alignment: AlignmentType.CENTER
                             })
                         ]
@@ -231,9 +228,7 @@ const getDataTableRow = (author, name, e) => (
             new TableCell({
                 children: [
                     new Paragraph({
-                        text: (
-                            index++
-                        ).toString(),
+                        text: (index++).toString(),
                         alignment: AlignmentType.CENTER
                     })
                 ]

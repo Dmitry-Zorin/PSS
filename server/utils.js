@@ -135,11 +135,12 @@ function createAPIwithFile(app, resource, Model, extractDataToSend, extractDataF
         destination: (req, file, cb) => {
             const dir = path.join(appRoot.path, filesFolder)
             if (!fs.existsSync(dir)) fs.mkdirSync(dir)
-            const certificatesDir = path.join(dir, 'certificates')
-            if (!fs.existsSync(certificatesDir)) {
-                fs.mkdirSync(certificatesDir)
+            if (!['certificateFile', 'newCertificateFile'].includes(file.fieldname)) {
+                return cb(null, dir)
             }
-            cb(null, ['certificateFile', 'newCertificateFile'].includes(file.fieldname) ? certificatesDir : dir)
+            const certificatesDir = path.join(dir, 'certificates')
+            if (!fs.existsSync(certificatesDir)) fs.mkdirSync(certificatesDir)
+            cb(null, certificatesDir)
         },
         filename: (req, file, cb) => {
             cb(null, shortid.generate() + '_' + file.originalname)
