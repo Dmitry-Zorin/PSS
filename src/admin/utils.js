@@ -10,6 +10,7 @@ import {
     ShowButton,
     TopToolbar
 } from 'react-admin'
+
 export function createTitle(title, recordName) {
     return ({record}) => {
         return <span>{` ${title}: ${record[recordName]}`}</span>

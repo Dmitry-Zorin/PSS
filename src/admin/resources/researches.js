@@ -1,37 +1,34 @@
 import React from 'react'
 
 import {
-	ArrayField,
-	ArrayInput,
-	ChipField,
-	Create,
-	Datagrid,
-	Edit,
-	FileField,
-	FileInput,
-	Filter,
-	List,
-	minLength,
-	NumberInput,
-	required,
-	SelectInput,
-	Show,
-	SimpleForm,
-	SimpleFormIterator,
-	SimpleShowLayout,
-	SingleFieldList,
-	TextField,
-	TextInput
+    ArrayField,
+    ArrayInput,
+    ChipField,
+    Create,
+    Datagrid,
+    Edit,
+    FileField,
+    FileInput,
+    Filter,
+    List,
+    minLength,
+    NumberInput,
+    required,
+    SelectInput,
+    Show,
+    SimpleForm,
+    SimpleFormIterator,
+    SimpleShowLayout,
+    SingleFieldList,
+    TextField,
+    TextInput
 } from 'react-admin'
 import {DescriptionField, HeadlineField} from '../CustomFields'
 
 import {createEmptyPage, createTitle, getBulkActionButtons, getEditActionsWithoutFile, getShowActions} from '../utils'
 
-const validateHeadline = [required(), minLength(1)]
-const validateDescription = [required(), minLength(1)]
-const validateCreationDate = [required()]
-const validateAuthors = [required()]
-const validateFile = [required()]
+const validateText = [required(), minLength(1)]
+const validateRequired = [required()]
 
 const Title = createTitle('Научно-исследовательская работа', 'headline')
 const Empty = createEmptyPage(
@@ -144,14 +141,14 @@ export const CreateForm = props => (
                 fullWidth
                 label="Название"
                 source="headline"
-                validate={validateHeadline}
+                validate={validateText}
             />
             <TextInput
-                fullWidth
                 label="Описание"
-                multiline
                 source="description"
-                validate={validateDescription}
+                validate={validateText}
+                fullWidth
+                multiline
             />
             <TextInput
                 label="Головной исполнитель"
@@ -162,7 +159,7 @@ export const CreateForm = props => (
                 source="customer"
             />
             <ArrayInput
-                validate={validateAuthors}
+                validate={validateRequired}
                 source="authors"
                 label="Соискатели"
             >
@@ -181,12 +178,16 @@ export const CreateForm = props => (
             <NumberInput
                 label="Год создания"
                 source="creationDate"
-                validate={validateCreationDate}
+                validate={validateRequired}
+            />
+            <NumberInput
+                label="Объем"
+                source="volume"
             />
             <FileInput
                 source="file"
                 label="Архив с научно-исследовательской работой"
-                validate={validateFile}
+                validate={validateRequired}
             >
                 <FileField
                     source="file"
@@ -204,21 +205,19 @@ export const EditForm = props => (
         undoable={false}
         actions={<EditActions/>}
         {...props}>
-        <SimpleForm
-            submitOnEnter={false}
-        >
+        <SimpleForm submitOnEnter={false}>
             <TextInput
                 fullWidth
                 label="Название"
                 source="headline"
-                validate={validateHeadline}
+                validate={validateText}
             />
             <TextInput
-                fullWidth
                 label="Описание"
-                multiline
                 source="description"
-                validate={validateDescription}
+                validate={validateText}
+                fullWidth
+                multiline
             />
             <TextInput
                 label="Головной исполнитель"
@@ -229,7 +228,7 @@ export const EditForm = props => (
                 source="customer"
             />
             <ArrayInput
-                validate={validateAuthors}
+                validate={validateRequired}
                 label="Соискатели"
                 source="authors"
             >
@@ -248,7 +247,11 @@ export const EditForm = props => (
             <NumberInput
                 label="Год создания"
                 source="creationDate"
-                validate={validateCreationDate}
+                validate={validateRequired}
+            />
+            <NumberInput
+                label="Объем"
+                source="volume"
             />
             <FileField
                 source="file.url"
@@ -308,9 +311,14 @@ export const ShowForm = ({permissions, enableActions, ...props}) => {
                     label="Категория"
                     source="category"
                 />
-                <TextField
+                <ChipField
                     label="Год создания"
                     source="creationDate"
+                />
+                <TextField
+                    label="Объем"
+                    source="volume"
+                    emptyText="-"
                 />
                 <FileField
                     source="file.url"

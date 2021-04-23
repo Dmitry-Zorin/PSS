@@ -77,7 +77,6 @@ export const Form16 = () => {
             ].map((docs, i) => (
                 Promise.all(docs.map(e => getResource(e, author).then(({data}) => (
                     Promise.all(data.map(e => {
-                        e.numberOfPages = e.pages || 3 + 10 * Math.random() | 0
                         e.publicationPlace = publications[e.publicationPlace] || ''
                         e.character = characters[e.character] || '-----'
                     })).then(() => {

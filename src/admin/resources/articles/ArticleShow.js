@@ -3,7 +3,6 @@ import {
     ArrayField,
     ChipField,
     FileField,
-    NumberField,
     ReferenceArrayField,
     ReferenceField,
     Show,
@@ -32,9 +31,14 @@ export const ArticleShow = ({permissions, enableActions = true, ...props}) => {
                     label="Аннотация"
                     source="text"
                 />
-                <TextField
+                <ChipField
                     label="Год создания"
                     source="creationDate"
+                />
+                <TextField
+                    label="Объем"
+                    source="volume"
+                    emptyText="-"
                 />
                 <ArrayField
                     label="Авторы"
@@ -67,11 +71,6 @@ export const ArticleShow = ({permissions, enableActions = true, ...props}) => {
                 <TextField
                     label="Выходные данные"
                     source="exitData"
-                    emptyText='-'
-                />
-                <NumberField
-                    label="Кол-во страниц"
-                    source="pages"
                     emptyText='-'
                 />
                 <ReferenceField

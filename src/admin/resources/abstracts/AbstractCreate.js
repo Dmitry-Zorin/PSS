@@ -16,10 +16,8 @@ import {
     TextInput
 } from 'react-admin'
 
-const validateHeadline = [required(), minLength(1)]
-const validateAnnotation = [required(), minLength(1)]
-const validateCreationDate = [required()]
-const validateAuthors = [required()]
+const validateText = [required(), minLength(1)]
+const validateRequired = [required()]
 
 export const AbstractCreate = (props) => (
     <Create
@@ -35,22 +33,26 @@ export const AbstractCreate = (props) => (
                 fullWidth
                 label="Название"
                 source="headline"
-                validate={validateHeadline}
+                validate={validateText}
             />
             <TextInput
-                fullWidth
                 label="Аннотация"
-                multiline
                 source="text"
-                validate={validateAnnotation}
+                validate={validateText}
+                fullWidth
+                multiline
             />
             <NumberInput
                 label="Год создания"
                 source="creationDate"
-                validate={validateCreationDate}
+                validate={validateRequired}
+            />
+            <NumberInput
+                label="Объем"
+                source="volume"
             />
             <ArrayInput
-                validate={validateAuthors}
+                validate={validateRequired}
                 source="authors"
                 label="Авторы"
             >
@@ -89,10 +91,6 @@ export const AbstractCreate = (props) => (
                 source="exitData"
                 fullWidth
                 multiline
-            />
-            <NumberInput
-                label="Кол-во страниц"
-                source="pages"
             />
             <FileInput
                 source="file"

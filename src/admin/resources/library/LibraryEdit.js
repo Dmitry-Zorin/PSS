@@ -14,7 +14,7 @@ import {
 } from 'react-admin'
 import {createTitle, getEditActionsWithoutFile} from '../../utils'
 
-const validateHeadline = [required(), minLength(1)]
+const validateText = [required(), minLength(1)]
 
 const Title = createTitle('Библиотека', 'headline')
 
@@ -32,7 +32,7 @@ export const LibraryEdit = (props) => (
             <TextInput
                 label="Название"
                 source="headline"
-                validate={validateHeadline}
+                validate={validateText}
                 fullWidth
             />
             <TextInput

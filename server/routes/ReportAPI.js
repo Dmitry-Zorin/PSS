@@ -11,11 +11,11 @@ const extractDataToSend = (data) => ({
     text: data.text,
     creationDate: data.creationDate,
     firstCreationDate: data.firstCreationDate,
+    volume: data.volume,
     publicationPlace: data.publicationPlace || undefined,
     authors: data.authors,
     subdivisions: data.subdivisions,
     exitData: data.exitData !== 'null' ? data.exitData : undefined,
-    pages: data.pages !== 0 ? data.pages : undefined,
     character: data.character !== 'null' ? data.character : undefined,
     file: {
         url: `${data.file.includes('http://') ? '' : process.env.SERVER}${data.file}`,
@@ -27,11 +27,11 @@ const extractDataFromRequest = (req) => ({
     headline: req.body.headline,
     text: req.body.text,
     creationDate: req.body.creationDate,
+    volume: req.body.volume,
     publicationPlace: req.body.publicationPlace,
     authors: JSON.parse(req.body.authors),
     subdivisions: req.body.subdivisions ? JSON.parse(req.body.subdivisions) : undefined,
     exitData: req.body.exitData,
-    pages: req.body.pages !== 'null' ? req.body.pages : 0,
     character: req.body.character
 })
 

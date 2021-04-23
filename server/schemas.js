@@ -19,6 +19,10 @@ exports.rationalizationSchema = new Schema(
             type: Number,
             required: true
         },
+        volume: {
+            type: Number,
+            required: false
+        },
         authors: [{author: String}],
         subdivisions: [String],
         file: {
@@ -46,6 +50,10 @@ exports.researchSchema = new Schema(
         firstCreationDate: {
             type: Number,
             required: true
+        },
+        volume: {
+            type: Number,
+            required: false
         },
         headPerformer: {
             type: String,
@@ -86,6 +94,10 @@ exports.developmentWorkSchema = new Schema(
         firstCreationDate: {
             type: Number,
             required: true
+        },
+        volume: {
+            type: Number,
+            required: false
         },
         headPerformer: {
             type: String,
@@ -165,6 +177,10 @@ exports.thesisSchema = new Schema(
             type: Number,
             required: true
         },
+        volume: {
+            type: Number,
+            required: false
+        },
         authors: [{author: String}],
         subdivisions: [String],
         file: {
@@ -192,6 +208,10 @@ exports.approbationSchema = new Schema(
         firstCreationDate: {
             type: Number,
             required: true
+        },
+        volume: {
+            type: Number,
+            required: false
         },
         headPerformer: {
             type: String,
@@ -227,6 +247,10 @@ exports.verificationSchema = new Schema(
         firstCreationDate: {
             type: Number,
             required: true
+        },
+        volume: {
+            type: Number,
+            required: false
         },
         headPerformer: {
             type: String,

@@ -13,11 +13,9 @@ import {
     SimpleFormIterator,
     TextInput
 } from 'react-admin'
-const validateHeadline = [required(), minLength(1)]
-const validateDescription = [required(), minLength(1)]
-const validateCreationDate = [required()]
-const validateAuthors = [required()]
-const validateFile = [required()]
+
+const validateText = [required(), minLength(1)]
+const validateRequired = [required()]
 
 export const PatentCreate = (props) => (
     <Create
@@ -33,25 +31,29 @@ export const PatentCreate = (props) => (
             <TextInput
                 label="Название"
                 source="headline"
-                validate={validateHeadline}
+                validate={validateText}
                 fullWidth
             />
             <TextInput
                 label="Описание"
                 source="description"
-                validate={validateDescription}
+                validate={validateText}
                 fullWidth
                 multiline
             />
             <NumberInput
                 label="Год создания"
                 source="creationDate"
-                validate={validateCreationDate}
+                validate={validateRequired}
+            />
+            <NumberInput
+                label="Объем"
+                source="volume"
             />
             <ArrayInput
                 label="Авторы"
                 source="authors"
-                validate={validateAuthors}
+                validate={validateRequired}
             >
                 <SimpleFormIterator>
                     <TextInput
@@ -72,7 +74,7 @@ export const PatentCreate = (props) => (
             <FileInput
                 label="Архив"
                 source="file"
-                validate={validateFile}
+                validate={validateRequired}
             >
                 <FileField
                     title="Загруженный файл"

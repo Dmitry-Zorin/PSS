@@ -32,9 +32,14 @@ export const PatentShow = ({permissions, enableActions = true, ...props}) => {
                     label="Описание"
                     source="description"
                 />
-                <TextField
+                <ChipField
                     label="Год создания"
                     source="creationDate"
+                />
+                <TextField
+                    label="Объем"
+                    source="volume"
+                    emptyText="-"
                 />
                 <ArrayField
                     label="Авторы"

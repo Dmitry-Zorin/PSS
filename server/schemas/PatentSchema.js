@@ -19,6 +19,10 @@ module.exports = new Schema(
             type: Number,
             required: true
         },
+        volume: {
+            type: Number,
+            required: false
+        },
         authors: [{author: String}],
         subdivisions: [String],
         file: {

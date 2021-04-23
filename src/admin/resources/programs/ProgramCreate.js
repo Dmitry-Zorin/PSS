@@ -1,23 +1,21 @@
 import React from 'react'
 import {
-	ArrayInput,
-	Create,
-	FileField,
-	FileInput,
-	minLength,
-	NumberInput,
-	ReferenceArrayInput,
-	required,
-	SelectArrayInput,
-	SimpleForm,
-	SimpleFormIterator,
-	TextInput
+    ArrayInput,
+    Create,
+    FileField,
+    FileInput,
+    minLength,
+    NumberInput,
+    ReferenceArrayInput,
+    required,
+    SelectArrayInput,
+    SimpleForm,
+    SimpleFormIterator,
+    TextInput
 } from 'react-admin'
-const validateHeadline = [required(), minLength(1)]
-const validateDescription = [required(), minLength(1)]
-const validateCreationDate = [required()]
-const validateAuthors = [required()]
-const validateFile = [required()]
+
+const validateText = [required(), minLength(1)]
+const validateRequired = [required()]
 
 export const ProgramCreate = props => (
     <Create
@@ -33,22 +31,22 @@ export const ProgramCreate = props => (
                 fullWidth
                 label="Название"
                 source="headline"
-                validate={validateHeadline}
+                validate={validateText}
             />
             <TextInput
-                fullWidth
                 label="Описание"
-                multiline
                 source="description"
-                validate={validateDescription}
+                validate={validateText}
+                fullWidth
+                multiline
             />
             <NumberInput
                 label="Год создания"
                 source="creationDate"
-                validate={validateCreationDate}
+                validate={validateRequired}
             />
             <ArrayInput
-                validate={validateAuthors}
+                validate={validateRequired}
                 source="authors"
                 label="Авторы"
             >
@@ -71,7 +69,7 @@ export const ProgramCreate = props => (
             <FileInput
                 source="file"
                 label="Архив с программой"
-                validate={validateFile}
+                validate={validateRequired}
             >
                 <FileField
                     source="file"

@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography'
 import ExpandMore from '@material-ui/icons/ExpandMore'
 import React from 'react'
 import {useTranslate} from 'react-admin'
+
 const useStyles = makeStyles(theme => (
     {
         icon: {

@@ -59,10 +59,14 @@ export const OtherEdit = (props) => (
             <NumberInput
                 label="Год создания"
                 source="creationDate"
-                validate={validate}
+                validate={validateRequired}
+            />
+            <NumberInput
+                label="Объем"
+                source="volume"
             />
             <ArrayInput
-                validate={validate}
+                validate={validateRequired}
                 label="Авторы"
                 source="authors"
             >
@@ -78,10 +82,6 @@ export const OtherEdit = (props) => (
                 source="exitData"
                 fullWidth
                 multiline
-            />
-            <NumberInput
-                label="Кол-во страниц"
-                source="pages"
             />
             <ReferenceInput
                 label="Характер работы"

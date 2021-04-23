@@ -1,24 +1,22 @@
 import React from 'react'
 import {
-	ArrayInput,
-	Edit,
-	FileField,
-	FileInput,
-	minLength,
-	NumberInput,
-	ReferenceArrayInput,
-	required,
-	SelectArrayInput,
-	SimpleForm,
-	SimpleFormIterator,
-	TextInput
+    ArrayInput,
+    Edit,
+    FileField,
+    FileInput,
+    minLength,
+    NumberInput,
+    ReferenceArrayInput,
+    required,
+    SelectArrayInput,
+    SimpleForm,
+    SimpleFormIterator,
+    TextInput
 } from 'react-admin'
 import {createTitle, getEditActionsWithoutFile} from '../../utils'
 
-const validateHeadline = [required(), minLength(1)]
-const validateDescription = [required(), minLength(1)]
-const validateCreationDate = [required()]
-const validateAuthors = [required()]
+const validateText = [required(), minLength(1)]
+const validateRequired = [required()]
 const Title = createTitle('Петент', 'headline')
 
 const EditActions = getEditActionsWithoutFile()
@@ -35,25 +33,29 @@ export const PatentEdit = props => (
             <TextInput
                 label="Название"
                 source="headline"
-                validate={validateHeadline}
+                validate={validateText}
                 fullWidth
             />
             <TextInput
                 label="Описание"
                 source="description"
-                validate={validateDescription}
+                validate={validateText}
                 fullWidth
                 multiline
             />
             <NumberInput
                 label="Год создания"
                 source="creationDate"
-                validate={validateCreationDate}
+                validate={validateRequired}
+            />
+            <NumberInput
+                label="Объем"
+                source="volume"
             />
             <ArrayInput
                 label="Авторы"
                 source="authors"
-                validate={validateAuthors}
+                validate={validateRequired}
             >
                 <SimpleFormIterator>
                     <TextInput

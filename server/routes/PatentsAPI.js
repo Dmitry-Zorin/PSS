@@ -12,6 +12,7 @@ const extractDataToSend = (data) => (
         description: data.description,
         creationDate: data.creationDate,
         firstCreationDate: data.firstCreationDate,
+        volume: data.volume,
         authors: data.authors,
         subdivisions: data.subdivisions,
         file: {
@@ -26,6 +27,7 @@ const extractDataFromRequest = (req) => (
         headline: req.body.headline,
         description: req.body.description,
         creationDate: req.body.creationDate,
+        volume: req.body.volume,
         authors: JSON.parse(req.body.authors),
         subdivisions: req.body.subdivisions ? JSON.parse(req.body.subdivisions) : undefined,
     }

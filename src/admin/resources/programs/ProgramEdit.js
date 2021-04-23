@@ -1,24 +1,23 @@
 import React from 'react'
 import {
-	ArrayInput,
-	Edit,
-	FileField,
-	FileInput,
-	minLength,
-	NumberInput,
-	ReferenceArrayInput,
-	required,
-	SelectArrayInput,
-	SimpleForm,
-	SimpleFormIterator,
-	TextInput
+    ArrayInput,
+    Edit,
+    FileField,
+    FileInput,
+    minLength,
+    NumberInput,
+    ReferenceArrayInput,
+    required,
+    SelectArrayInput,
+    SimpleForm,
+    SimpleFormIterator,
+    TextInput
 } from 'react-admin'
 import {createTitle, getEditActionsWithoutFile} from '../../utils'
 
-const validateHeadline = [required(), minLength(1)]
-const validateDescription = [required(), minLength(1)]
-const validateCreationDate = [required()]
-const validateAuthors = [required()]
+const validateText = [required(), minLength(1)]
+const validateRequired = [required()]
+
 const Title = createTitle('Программа', 'headline')
 
 const EditActions = getEditActionsWithoutFile()
@@ -35,22 +34,22 @@ export const ProgramEdit = (props) => (
                 fullWidth
                 label="Название"
                 source="headline"
-                validate={validateHeadline}
+                validate={validateText}
             />
             <TextInput
-                fullWidth
                 label="Описание"
-                multiline
                 source="description"
-                validate={validateDescription}
+                validate={validateText}
+                fullWidth
+                multiline
             />
             <NumberInput
                 label="Год создания"
                 source="creationDate"
-                validate={validateCreationDate}
+                validate={validateRequired}
             />
             <ArrayInput
-                validate={validateAuthors}
+                validate={validateRequired}
                 label="Авторы"
                 source="authors"
             >

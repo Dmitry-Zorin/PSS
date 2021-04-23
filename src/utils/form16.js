@@ -81,7 +81,7 @@ export const createForm16 = (data, name, author, title) => {
                     alignment: AlignmentType.RIGHT,
                 }),
                 new Paragraph({
-                    text: `« __» __________ ${new Date().getFullYear()} г`
+                    text: `«___» __________ ${new Date().getFullYear()} г`
                 })
             ]
         }]
@@ -256,7 +256,7 @@ const getDataTableRow = (author, name, e) => (
             new TableCell({
                 children: [
                     new Paragraph({
-                        text: e.numberOfPages.toString(),
+                        text: (e.volume || '').toString(),
                         alignment: AlignmentType.CENTER
                     })
                 ]

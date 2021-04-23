@@ -119,31 +119,6 @@ export const CreateForm = props => (
     </Create>
 )
 
-// export const EditForm = props => (
-//     <Edit
-//         title={<Title />}
-//         successMessage="Пользователь обновлён"
-//         undoable={false}
-//         actions={<EditActions />}
-//         {...props}>
-//         <SimpleForm
-//             submitOnEnter={false}>
-//             <TextField
-//                 fullWidth
-//                 label="Логин"
-//                 source="login" />
-//             <TextInput
-//                 fullWidth
-//                 label="Пароль"
-//                 source="password"
-//                 validate={validatePassword} />
-//             <BooleanInput
-//                 label="Администратор"
-//                 source="isAdmin" />
-//         </SimpleForm>
-//     </Edit>
-// );
-
 export const ShowForm = ({enableActions, ...props}) => {
     const actions = enableActions ? <ShowActions/> : false
     return (

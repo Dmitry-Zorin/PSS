@@ -19,6 +19,10 @@ module.exports = new Schema(
             type: Number,
             required: true
         },
+        volume: {
+            type: Number,
+            required: false
+        },
         publicationPlace: {
             type: Schema.Types.ObjectId,
             ref: 'PublicationPlace',
@@ -27,9 +31,6 @@ module.exports = new Schema(
         subdivisions: [String],
         exitData: {
             type: String
-        },
-        pages: {
-            type: Number
         },
         character: {
             type: Schema.Types.ObjectId,

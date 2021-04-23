@@ -86,9 +86,7 @@ export const EditForm = props => (
         undoable={false}
         actions={<EditActions/>}
         {...props}>
-        <SimpleForm
-            submitOnEnter={false}
-        >
+        <SimpleForm submitOnEnter={false}>
             <TextInput
                 fullWidth
                 label="Место публикации"

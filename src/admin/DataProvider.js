@@ -1,5 +1,6 @@
 import simpleRestProvider from 'ra-data-simple-rest'
 import {fetchUtils} from 'react-admin'
+
 const apiUrl = `${process.env.SERVER}/api`
 
 const restProvider = simpleRestProvider(apiUrl, (url, options = {}) => {

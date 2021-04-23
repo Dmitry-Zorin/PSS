@@ -17,10 +17,9 @@ import {
 } from 'react-admin'
 import {createTitle, getEditActionsWithoutFile} from '../../utils'
 
-const validateHeadline = [required(), minLength(1)]
-const validateAnnotation = [required(), minLength(1)]
-const validateCreationDate = [required()]
-const validateAuthors = [required()]
+const validateText = [required(), minLength(1)]
+const validateRequired = [required()]
+
 const Title = createTitle('Статья', 'headline')
 
 const EditActions = getEditActionsWithoutFile()
@@ -37,22 +36,26 @@ export const ArticleEdit = (props) => (
                 fullWidth
                 label="Название"
                 source="headline"
-                validate={validateHeadline}
+                validate={validateText}
             />
             <TextInput
-                fullWidth
                 label="Аннотация"
-                multiline
                 source="text"
-                validate={validateAnnotation}
+                validate={validateText}
+                fullWidth
+                multiline
             />
             <NumberInput
                 label="Год создания"
                 source="creationDate"
-                validate={validateCreationDate}
+                validate={validateRequired}
+            />
+            <NumberInput
+                label="Объем"
+                source="volume"
             />
             <ArrayInput
-                validate={validateAuthors}
+                validate={validateRequired}
                 label="Авторы"
                 source="authors"
             >
@@ -84,10 +87,6 @@ export const ArticleEdit = (props) => (
                 source="exitData"
                 fullWidth
                 multiline
-            />
-            <NumberInput
-                label="Кол-во страниц"
-                source="pages"
             />
             <ReferenceInput
                 label="Характер работы"

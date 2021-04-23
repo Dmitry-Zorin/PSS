@@ -14,8 +14,9 @@ import {
     SimpleFormIterator,
     TextInput
 } from 'react-admin'
-const validateHeadline = [required(), minLength(1)]
-const validateFile = [required()]
+
+const validateText = [required(), minLength(1)]
+const validateRequired = [required()]
 
 export const EmployeeCreate = (props) => (
     <Create
@@ -37,7 +38,7 @@ export const EmployeeCreate = (props) => (
             <TextInput
                 label="Название"
                 source="headline"
-                validate={validateHeadline}
+                validate={validateText}
                 fullWidth
             />
             <TextInput
@@ -80,7 +81,7 @@ export const EmployeeCreate = (props) => (
             <FileInput
                 label="Файл"
                 source="file"
-                validate={validateFile}
+                validate={validateRequired}
             >
                 <FileField
                     title="Загруженный файл"

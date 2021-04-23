@@ -30,7 +30,7 @@ export const ProgramShow = ({permissions, enableActions = true, ...props}) => {
                     label="Описание"
                     source="description"
                 />
-                <TextField
+                <ChipField
                     label="Год создания"
                     source="creationDate"
                 />

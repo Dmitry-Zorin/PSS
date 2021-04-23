@@ -13,6 +13,7 @@ import {
     SimpleFormIterator,
     TextInput
 } from 'react-admin'
+
 const validate = [required()]
 const validateLength = [required(), minLength(1)]
 
@@ -56,11 +57,11 @@ export const OtherCreate = (props) => (
             <NumberInput
                 label="Год создания"
                 source="creationDate"
-                validate={validate}
+                validate={validateRequired}
                 options={{format: dateFormat, cancelLabel: cancelLabel}}
             />
             <ArrayInput
-                validate={validate}
+                validate={validateRequired}
                 source="authors"
                 label="Авторы"
             >
@@ -83,10 +84,6 @@ export const OtherCreate = (props) => (
                 source="exitData"
                 fullWidth
                 multiline
-            />
-            <NumberInput
-                label="Кол-во страниц"
-                source="pages"
             />
             <FileInput
                 source="file"
