@@ -7,6 +7,7 @@ const resource = 'patents'
 
 const extractDataToSend = (data) => (
     {
+        resource: 'Патент',
         id: data.id,
         headline: data.headline,
         description: data.description,

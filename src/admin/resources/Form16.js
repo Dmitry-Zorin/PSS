@@ -24,7 +24,7 @@ export const Form16 = () => {
     const notify = useNotify()
 
     const [lastname, setLastname] = useState('Колузов')
-    const [name, setName] = useState('Колузова Андрей Владимирович')
+    const [name, setName] = useState('Колузова Андрея Владимировича')
     const [title, setTitle] = useState('Начальник 14 ЛИ')
 
     const getPublications = () => (
@@ -75,7 +75,7 @@ export const Form16 = () => {
                 ['programs', 'patents', 'reports'],
                 ['textbooks']
             ].map((docs, i) => (
-                Promise.all(docs.map(e => getResource(e, author).then(({data}) => (
+                Promise.all(docs.map(r => getResource(r, author).then(({data}) => (
                     Promise.all(data.map(e => {
                         e.publicationPlace = publications[e.publicationPlace] || ''
                         e.character = characters[e.character] || '-----'

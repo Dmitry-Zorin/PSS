@@ -27,12 +27,18 @@ export const createForm16 = (data, name, author, title) => {
             },
             children: [
                 new Paragraph({
-                    text: 'Форма N 16',
-                    alignment: AlignmentType.RIGHT
+                    alignment: AlignmentType.RIGHT,
+                    heading: HeadingLevel.HEADING_3,
+                    children: [
+                        new TextRun({
+                            text: 'Форма N 16',
+                            color: '000000'
+                        })
+                    ]
                 }),
                 new Paragraph({
                     alignment: AlignmentType.CENTER,
-                    heading: HeadingLevel.HEADING_2,
+                    heading: HeadingLevel.HEADING_1,
                     children: [
                         new TextRun({
                             text: 'СПИСОК',
@@ -42,7 +48,7 @@ export const createForm16 = (data, name, author, title) => {
                 }),
                 new Paragraph({
                     alignment: AlignmentType.CENTER,
-                    heading: HeadingLevel.HEADING_3,
+                    heading: HeadingLevel.HEADING_2,
                     children: [
                         new TextRun({
                             text: 'научных и учебно-методических работ',
@@ -52,7 +58,7 @@ export const createForm16 = (data, name, author, title) => {
                 }),
                 new Paragraph({
                     alignment: AlignmentType.CENTER,
-                    heading: HeadingLevel.HEADING_3,
+                    heading: HeadingLevel.HEADING_2,
                     children: [
                         new TextRun({
                             text: name.split(' ')[0],
@@ -74,14 +80,32 @@ export const createForm16 = (data, name, author, title) => {
                 getTable(data, author, name),
                 new Paragraph({}),
                 new Paragraph({
-                    text: title,
+                    heading: HeadingLevel.HEADING_2,
+                    children: [
+                        new TextRun({
+                            text: title,
+                            color: '000000'
+                        })
+                    ]
                 }),
                 new Paragraph({
-                    text: `${name.split(' ')[1][0].toUpperCase()}. ${author[0].toUpperCase()}${author.split(' ')[0].slice(1)}`,
                     alignment: AlignmentType.RIGHT,
+                    heading: HeadingLevel.HEADING_2,
+                    children: [
+                        new TextRun({
+                            text: `${name.split(' ')[1][0].toUpperCase()}. ${author[0].toUpperCase()}${author.split(' ')[0].slice(1)}`,
+                            color: '000000',
+                        })
+                    ]
                 }),
                 new Paragraph({
-                    text: `«___» __________ ${new Date().getFullYear()} г`
+                    heading: HeadingLevel.HEADING_2,
+                    children: [
+                        new TextRun({
+                            text: `«___» __________ ${new Date().getFullYear()} г`,
+                            color: '000000',
+                        })
+                    ]
                 })
             ]
         }]
@@ -235,7 +259,7 @@ const getDataTableRow = (author, name, e) => (
             }),
             new TableCell({
                 children: [
-                    new Paragraph(e.headline)
+                    new Paragraph(`${e.headline} (${e.resource})`)
                 ]
             }),
             new TableCell({

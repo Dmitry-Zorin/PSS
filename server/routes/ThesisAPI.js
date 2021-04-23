@@ -7,6 +7,7 @@ const resource = 'theses'
 
 function extractDataToSend(data) {
     return {
+        resource: 'Тезис доклада',
         id: data.id,
         headline: data.headline,
         description: data.description,

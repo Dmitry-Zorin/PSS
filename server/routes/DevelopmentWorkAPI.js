@@ -7,6 +7,7 @@ const resource = 'developments'
 
 function extractDataToSend(data) {
     return {
+        resource: 'ОКР',
         id: data.id,
         headline: data.headline,
         description: data.description,

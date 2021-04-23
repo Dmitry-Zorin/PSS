@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => (
 const getSubdivisions = () => (
     dataProvider.getList('subdivisions', {
         filter: {},
-        sort: {},
+        sort: {field: 'firstCreationDate', order: 'ASC'},
         pagination: {page: 1, perPage: 999}
     })
 )

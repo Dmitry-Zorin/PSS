@@ -7,6 +7,7 @@ const resource = 'verifications'
 
 function extractDataToSend(data) {
     return {
+        resource: 'Испытание',
         id: data.id,
         headline: data.headline,
         description: data.description,

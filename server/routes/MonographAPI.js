@@ -6,6 +6,7 @@ const Model = mongoose.model('Monograph', schema)
 const resource = 'monographs'
 
 const extractDataToSend = (data) => ({
+    resource: 'Монография',
     id: data.id,
     headline: data.headline,
     text: data.text,

@@ -7,6 +7,7 @@ const resource = 'researches'
 
 function extractDataToSend(data) {
     return {
+        resource: 'НИР',
         id: data.id,
         headline: data.headline,
         description: data.description,
@@ -17,7 +18,6 @@ function extractDataToSend(data) {
         headPerformer: data.headPerformer,
         customer: data.customer,
         category: data.category,
-        // subdivisions: data.subdivisions,
         file: {
             url: `${data.file.includes('http://') ? '' : process.env.SERVER}${data.file}`,
             title: data.headline

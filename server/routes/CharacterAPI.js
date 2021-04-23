@@ -5,6 +5,7 @@ const createAPI = require('../utils').createAPI
 const Model = mongoose.model('Character', schema)
 
 const extractDataToSend = (data) => ({
+    resource: '',
     id: data.id,
     name: data.name,
     firstCreationDate: data.firstCreationDate,

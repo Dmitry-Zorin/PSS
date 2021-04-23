@@ -68,7 +68,6 @@ exports.researchSchema = new Schema(
             required: true
         },
         authors: [{author: String}],
-        // subdivisions: [String],
         file: {
             type: String,
             required: true
