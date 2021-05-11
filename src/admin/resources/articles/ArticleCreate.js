@@ -24,7 +24,8 @@ export const ArticleCreate = (props) => (
         title="Добавить статью"
         successMessage="Статья добавлена"
         undoable={false}
-        {...props}>
+        {...props}
+    >
         <SimpleForm
             redirect="list"
             submitOnEnter={false}
@@ -41,6 +42,12 @@ export const ArticleCreate = (props) => (
                 validate={validateText}
                 fullWidth
                 multiline
+            />
+            <TextInput
+                label="Вид работы"
+                source="type"
+                validate={validateText}
+                defaultValue="Статья"
             />
             <NumberInput
                 label="Год создания"

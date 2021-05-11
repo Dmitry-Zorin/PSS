@@ -259,7 +259,7 @@ const getDataTableRow = (author, name, e) => (
             }),
             new TableCell({
                 children: [
-                    new Paragraph(`${e.headline} (${e.resource})`)
+                    new Paragraph(`${e.headline} (${e.type})`)
                 ]
             }),
             new TableCell({
@@ -273,7 +273,9 @@ const getDataTableRow = (author, name, e) => (
             new TableCell({
                 children: [
                     new Paragraph(
-                        e.exitData || `${e.publicationPlace}, ${e.creationDate}`
+                        e.exitData || e.publicationPlace !== '-' ?
+                            `${e.publicationPlace}, ${e.creationDate}`
+                            : e.creationDate.toString()
                     )
                 ]
             }),

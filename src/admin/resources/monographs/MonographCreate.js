@@ -24,7 +24,8 @@ export const MonographCreate = (props) => (
         title="Добавить монографию"
         successMessage="Монография добавлена"
         undoable={false}
-        {...props}>
+        {...props}
+    >
         <SimpleForm
             redirect="list"
             submitOnEnter={false}
@@ -41,6 +42,12 @@ export const MonographCreate = (props) => (
                 validate={validateText}
                 fullWidth
                 multiline
+            />
+            <TextInput
+                label="Вид работы"
+                source="type"
+                validate={validateText}
+                defaultValue="Монография"
             />
             <NumberInput
                 label="Год создания"

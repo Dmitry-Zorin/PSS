@@ -28,7 +28,8 @@ export const OtherEdit = (props) => (
         successMessage="Статья обновлена"
         undoable={false}
         actions={<EditActions/>}
-        {...props}>
+        {...props}
+    >
         <SimpleForm submitOnEnter={false}>
             <TextInput
                 label="Тип работы"

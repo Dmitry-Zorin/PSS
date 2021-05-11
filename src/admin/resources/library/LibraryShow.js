@@ -19,10 +19,9 @@ const ShowActions = getShowActions()
 export const LibraryShow = ({permissions, enableActions = true, ...props}) => (
     <Show
         title={enableActions ? <Title/> : <TitleShort/>}
-        actions={!enableActions ? undefined : (
-            <ShowActions permissions={permissions}/>
-        )}
-        {...props}>
+        actions={enableActions && <ShowActions permissions={permissions}/>}
+        {...props}
+    >
         <SimpleShowLayout>
             <TextField
                 label="Название"

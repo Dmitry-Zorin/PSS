@@ -1,6 +1,6 @@
 import {Card, Grid, Typography} from '@material-ui/core'
 import CardActionArea from '@material-ui/core/CardActionArea'
-import red from '@material-ui/core/colors/red'
+import {blue} from "@material-ui/core/colors"
 import CssBaseline from '@material-ui/core/CssBaseline'
 import {makeStyles} from '@material-ui/core/styles'
 import React from 'react'
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => (
                 position: 'absolute',
                 bottom: 0,
                 right: 0,
-                borderTop: `7rem solid ${red[500]}`,
+                borderTop: `7rem solid ${blue[500]}`,
                 borderLeft: '5rem solid transparent',
                 width: 0,
             },
@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => (
             justifyContent: 'center',
             alignItems: 'center',
             height: '5rem',
-            backgroundColor: red[500],
+            backgroundColor: blue[500],
         },
         titleText: {
             fontSize: '2.2em',

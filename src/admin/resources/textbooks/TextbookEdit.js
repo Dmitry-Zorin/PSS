@@ -30,7 +30,8 @@ export const TextbookEdit = (props) => (
         successMessage="Учебник обновлен"
         undoable={false}
         actions={<EditActions/>}
-        {...props}>
+        {...props}
+    >
         <SimpleForm submitOnEnter={false}>
             <TextInput
                 fullWidth
@@ -44,6 +45,11 @@ export const TextbookEdit = (props) => (
                 validate={validateText}
                 fullWidth
                 multiline
+            />
+            <TextInput
+                label="Вид работы"
+                source="type"
+                validate={validateText}
             />
             <NumberInput
                 label="Год создания"

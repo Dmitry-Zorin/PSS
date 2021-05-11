@@ -42,6 +42,12 @@ export const ReportCreate = (props) => (
                 fullWidth
                 multiline
             />
+            <TextInput
+                label="Вид работы"
+                source="type"
+                validate={validateText}
+                defaultValue="Отчет"
+            />
             <NumberInput
                 label="Год создания"
                 source="creationDate"

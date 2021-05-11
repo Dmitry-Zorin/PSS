@@ -40,6 +40,12 @@ export const ProgramCreate = props => (
                 fullWidth
                 multiline
             />
+            <TextInput
+                label="Вид работы"
+                source="type"
+                validate={validateText}
+                defaultValue="Программа"
+            />
             <NumberInput
                 label="Год создания"
                 source="creationDate"

@@ -42,6 +42,12 @@ export const DissertationCreate = (props) => (
                 fullWidth
                 multiline
             />
+            <TextInput
+                label="Вид работы"
+                source="type"
+                validate={validateText}
+                defaultValue="Диссертация"
+            />
             <NumberInput
                 label="Год создания"
                 source="creationDate"

@@ -23,7 +23,8 @@ export const OtherCreate = (props) => (
         title="Добавить научный труд"
         successMessage="Научный труд добавлен"
         undoable={false}
-        {...props}>
+        {...props}
+    >
         <SimpleForm
             redirect="list"
             submitOnEnter={false}

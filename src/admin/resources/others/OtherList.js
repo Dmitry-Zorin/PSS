@@ -43,9 +43,9 @@ export const OtherList = ({permissions, ...props}) => (
         sort={{field: 'firstCreationDate', order: 'DESC'}}
         empty={<Empty/>}
         bulkActionButtons={<BulkActionButtons permissions={permissions}/>}
-        {...props}>
+        {...props}
+    >
         <Datagrid
-
             rowClick="show"
             expand={<OtherShow enableActions={false}/>}
         >

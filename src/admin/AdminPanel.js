@@ -41,7 +41,6 @@ import {
     ShowForm as ApprobationShow,
 } from './resources/approbations'
 import Article from './resources/articles/index'
-import {CreateForm as CategoryCreate, ListForm as CategoryList} from './resources/categories'
 import {CreateForm as CharacterCreate, ListForm as CharacterList} from './resources/characters'
 import {
     CreateForm as DevelopmentCreate,
@@ -351,13 +350,13 @@ const AdminPanel = () => (
                     list={CharacterList}
                     create={CharacterCreate}
                 />,
-                <Resource
+                /*<Resource
                     key={k++}
                     name="categories"
                     options={{label: 'Категории'}}
                     list={CategoryList}
                     create={CategoryCreate}
-                />,
+                />,*/
             ]}
         </Admin>
     </MuiPickersUtilsProvider>

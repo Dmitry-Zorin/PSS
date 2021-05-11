@@ -68,7 +68,8 @@ export const ListForm = props => (
         exporter={false}
         sort={{field: 'firstCreationDate', order: 'DESC'}}
         empty={<Empty/>}
-        {...props}>
+        {...props}
+    >
         <Datagrid
             rowClick="show"
             expand={<ShowForm enableActions={false}/>}
@@ -119,30 +120,23 @@ export const CreateForm = props => (
     </Create>
 )
 
-export const ShowForm = ({enableActions, ...props}) => {
-    const actions = enableActions ? <ShowActions/> : false
-    return (
-        <Show
-            title={<Title/>}
-            actions={actions}
-            {...props}>
-            <SimpleShowLayout>
-                <TextField
-                    label="Логин"
-                    source="login"
-                />
-                {/* <TextField
+export const ShowForm = ({enableActions, ...props}) => (
+    <Show
+        title={<Title/>}
+        actions={enableActions && <ShowActions permissions={permissions}/>}
+        {...props}>
+        <SimpleShowLayout>
+            <TextField
+                label="Логин"
+                source="login"
+            />
+            {/* <TextField
                     label="Пароль"
                     source="password" /> */}
-                <BooleanField
-                    label="Администратор"
-                    source="isAdmin"
-                />
-            </SimpleShowLayout>
-        </Show>
-    )
-}
-
-ShowForm.defaultProps = {
-    enableActions: true,
-}
+            <BooleanField
+                label="Администратор"
+                source="isAdmin"
+            />
+        </SimpleShowLayout>
+    </Show>
+)

@@ -6,12 +6,12 @@ const Model = mongoose.model('Report', schema)
 const resource = 'reports'
 
 const extractDataToSend = (data) => ({
-    resource: 'Отчет',
     id: data.id,
     headline: data.headline,
     text: data.text,
     creationDate: data.creationDate,
     firstCreationDate: data.firstCreationDate,
+    type: data.type || 'Отчет',
     volume: data.volume,
     publicationPlace: data.publicationPlace || undefined,
     authors: data.authors,
@@ -28,6 +28,7 @@ const extractDataFromRequest = (req) => ({
     headline: req.body.headline,
     text: req.body.text,
     creationDate: req.body.creationDate,
+    type: req.body.type,
     volume: req.body.volume,
     publicationPlace: req.body.publicationPlace,
     authors: JSON.parse(req.body.authors),

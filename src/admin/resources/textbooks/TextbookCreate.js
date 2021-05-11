@@ -24,7 +24,8 @@ export const TextbookCreate = (props) => (
         title="Добавить учебник"
         successMessage="Учебник добавлен"
         undoable={false}
-        {...props}>
+        {...props}
+    >
         <SimpleForm
             redirect="list"
             submitOnEnter={false}
@@ -41,6 +42,12 @@ export const TextbookCreate = (props) => (
                 validate={validateText}
                 fullWidth
                 multiline
+            />
+            <TextInput
+                label="Вид работы"
+                source="type"
+                validate={validateText}
+                defaultValue="Учебник"
             />
             <NumberInput
                 label="Год создания"

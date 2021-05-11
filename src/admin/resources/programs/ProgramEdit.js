@@ -43,6 +43,11 @@ export const ProgramEdit = (props) => (
                 fullWidth
                 multiline
             />
+            <TextInput
+                label="Вид работы"
+                source="type"
+                validate={validateText}
+            />
             <NumberInput
                 label="Год создания"
                 source="creationDate"

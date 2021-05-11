@@ -24,7 +24,8 @@ export const AbstractCreate = (props) => (
         title="Добавить автореферат"
         successMessage="Автореферат добавлен"
         undoable={false}
-        {...props}>
+        {...props}
+    >
         <SimpleForm
             redirect="list"
             submitOnEnter={false}
@@ -41,6 +42,12 @@ export const AbstractCreate = (props) => (
                 validate={validateText}
                 fullWidth
                 multiline
+            />
+            <TextInput
+                label="Вид работы"
+                source="type"
+                validate={validateText}
+                defaultValue="Автореферат"
             />
             <NumberInput
                 label="Год создания"

@@ -1,4 +1,4 @@
-import {blueGrey, red} from '@material-ui/core/colors'
+import {blue} from '@material-ui/core/colors'
 import {createMuiTheme} from '@material-ui/core/styles'
 
 export default createMuiTheme({
@@ -6,15 +6,10 @@ export default createMuiTheme({
         fontFamily: 'Nunito',
     },
     palette: {
-        primary: {
-            light: blueGrey[600],
-            main: blueGrey[700],
-            dark: blueGrey[800]
-        },
         secondary: {
-            light: red[300],
-            main: red[500],
-            dark: red[700]
+            light: blue[300],
+            main: blue[500],
+            dark: blue[700]
         }
     },
     overrides: {
@@ -23,7 +18,7 @@ export default createMuiTheme({
                 borderLeft: '3px solid transparent'
             },
             active: {
-                borderLeft: `3px solid ${red[500]}`,
+                borderLeft: `3px solid ${blue[500]}`,
                 background: 'rgba(0, 0, 0, 0.04) !important',
                 '& svg': {
                     color: 'rgba(0, 0, 0, 0.65)'

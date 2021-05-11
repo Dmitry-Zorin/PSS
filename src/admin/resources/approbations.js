@@ -74,7 +74,8 @@ export const ListForm = ({permissions, ...props}) => (
         sort={{field: 'firstCreationDate', order: 'DESC'}}
         empty={<Empty/>}
         bulkActionButtons={<BulkActionButtons permissions={permissions}/>}
-        {...props}>
+        {...props}
+    >
         <Datagrid
             rowClick="show"
             expand={<ShowForm enableActions={false}/>}
@@ -120,7 +121,8 @@ export const CreateForm = props => (
         title="Добавить апробацию"
         successMessage="Апробация добавлена"
         undoable={false}
-        {...props}>
+        {...props}
+    >
         <SimpleForm
             redirect="list"
             submitOnEnter={false}
@@ -187,7 +189,8 @@ export const EditForm = props => (
         successMessage="Апробация обновлена"
         undoable={false}
         actions={<EditActions/>}
-        {...props}>
+        {...props}
+    >
         <SimpleForm submitOnEnter={false}>
             <TextInput
                 fullWidth
@@ -250,64 +253,62 @@ export const EditForm = props => (
     </Edit>
 )
 
-export const ShowForm = ({permissions, enableActions, ...props}) => {
-    const actions = enableActions ? <ShowActions permissions={permissions}/> : false
-    return (
-        <Show
-            title={<Title/>}
-            actions={actions}
-            {...props}>
-            <SimpleShowLayout>
-                <TextField
-                    label="Название"
-                    source="headline"
-                />
-                <TextField
-                    label="Описание"
-                    source="description"
-                />
-                <TextField
-                    label="Головной исполнитель"
-                    source="headPerformer"
-                />
-                <TextField
-                    label="Заказчик"
-                    source="customer"
-                />
-                <ArrayField
-                    label="Соискатели"
-                    source="authors"
-                >
-                    <SingleFieldList linkType={false}>
-                        <ChipField
-                            label="Соискатель"
-                            source="author"
-                        />
-                    </SingleFieldList>
-                </ArrayField>
-                <TextField
-                    label="Категория"
-                    source="category"
-                />
-                <ChipField
-                    label="Год создания"
-                    source="creationDate"
-                />
-                <TextField
-                    label="Объем"
-                    source="volume"
-                    emptyText="-"
-                />
-                <FileField
-                    source="file.url"
-                    title="file.title"
-                    label="Архив"
-                    target="_blank"
-                />
-            </SimpleShowLayout>
-        </Show>
-    )
-}
+export const ShowForm = ({permissions, enableActions, ...props}) => (
+    <Show
+        title={<Title/>}
+        actions={enableActions && <ShowActions permissions={permissions}/>}
+        {...props}
+    >
+        <SimpleShowLayout>
+            <TextField
+                label="Название"
+                source="headline"
+            />
+            <TextField
+                label="Описание"
+                source="description"
+            />
+            <TextField
+                label="Головной исполнитель"
+                source="headPerformer"
+            />
+            <TextField
+                label="Заказчик"
+                source="customer"
+            />
+            <ArrayField
+                label="Соискатели"
+                source="authors"
+            >
+                <SingleFieldList linkType={false}>
+                    <ChipField
+                        label="Соискатель"
+                        source="author"
+                    />
+                </SingleFieldList>
+            </ArrayField>
+            <TextField
+                label="Категория"
+                source="category"
+            />
+            <ChipField
+                label="Год создания"
+                source="creationDate"
+            />
+            <TextField
+                label="Объем"
+                source="volume"
+                emptyText="-"
+            />
+            <FileField
+                source="file.url"
+                title="file.title"
+                label="Архив"
+                target="_blank"
+            />
+        </SimpleShowLayout>
+    </Show>
+)
 
 ShowForm.defaultProps = {
     enableActions: true,

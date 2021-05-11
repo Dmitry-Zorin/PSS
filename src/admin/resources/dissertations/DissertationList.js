@@ -69,7 +69,8 @@ export const DissertationList = ({permissions, ...props}) => (
         sort={{field: 'firstCreationDate', order: 'DESC'}}
         empty={<Empty/>}
         bulkActionButtons={<BulkActionButtons permissions={permissions}/>}
-        {...props}>
+        {...props}
+    >
         <Datagrid
             rowClick="show"
             expand={<DissertationShow enableActions={false}/>}

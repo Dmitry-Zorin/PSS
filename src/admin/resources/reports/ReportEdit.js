@@ -29,7 +29,8 @@ export const ReportEdit = (props) => (
         successMessage="Отчет обновлен"
         undoable={false}
         actions={<EditActions/>}
-        {...props}>
+        {...props}
+    >
         <SimpleForm submitOnEnter={false}>
             <TextInput
                 fullWidth
@@ -43,6 +44,11 @@ export const ReportEdit = (props) => (
                 validate={validateText}
                 fullWidth
                 multiline
+            />
+            <TextInput
+                label="Вид работы"
+                source="type"
+                validate={validateText}
             />
             <NumberInput
                 label="Год создания"

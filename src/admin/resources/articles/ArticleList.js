@@ -74,9 +74,9 @@ export const ArticleList = ({permissions, ...props}) => (
         sort={{field: 'firstCreationDate', order: 'DESC'}}
         empty={<Empty/>}
         bulkActionButtons={<BulkActionButtons permissions={permissions}/>}
-        {...props}>
+        {...props}
+    >
         <Datagrid
-
             rowClick="show"
             expand={<ArticleShow enableActions={false}/>}
         >

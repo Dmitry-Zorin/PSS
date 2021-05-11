@@ -46,7 +46,8 @@ export const ListForm = ({permissions, ...props}) => (
         sort={{field: 'firstCreationDate', order: 'DESC'}}
         empty={<Empty/>}
         bulkActionButtons={<BulkActionButtons permissions={permissions}/>}
-        {...props}>
+        {...props}
+    >
         <Datagrid
             rowClick={permissions ? 'edit' : 'show'}
             expand={<ShowForm enableActions={false}/>}
@@ -97,22 +98,19 @@ export const EditForm = props => (
     </Edit>
 )
 
-export const ShowForm = ({permissions, enableActions, ...props}) => {
-    const actions = enableActions ? <ShowActions permissions={permissions}/> : false
-    return (
-        <Show
-            title={<Title/>}
-            actions={actions}
-            {...props}>
-            <SimpleShowLayout>
-                <TextField
-                    label="Название"
-                    source="name"
-                />
-            </SimpleShowLayout>
-        </Show>
-    )
-}
+export const ShowForm = ({permissions, enableActions, ...props}) => (
+    <Show
+        title={<Title/>}
+        actions={enableActions && <ShowActions permissions={permissions}/>}
+        {...props}>
+        <SimpleShowLayout>
+            <TextField
+                label="Название"
+                source="name"
+            />
+        </SimpleShowLayout>
+    </Show>
+)
 
 ShowForm.defaultProps = {
     enableActions: true,

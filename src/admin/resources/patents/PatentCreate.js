@@ -41,6 +41,12 @@ export const PatentCreate = (props) => (
                 fullWidth
                 multiline
             />
+            <TextInput
+                label="Вид работы"
+                source="type"
+                validate={validateText}
+                defaultValue="Патент"
+            />
             <NumberInput
                 label="Год создания"
                 source="creationDate"
