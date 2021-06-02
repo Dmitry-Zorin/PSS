@@ -18,10 +18,10 @@ const extractDataToSend = (data) => ({
     subdivisions: data.subdivisions,
     exitData: data.exitData !== 'null' ? data.exitData : undefined,
     character: data.character !== 'null' ? data.character : undefined,
-    file: {
+    file: data.file ? {
         url: `${data.file.includes('http://') ? '' : process.env.SERVER}${data.file}`,
         title: data.headline
-    }
+    } : undefined
 })
 
 const extractDataFromRequest = (req) => ({

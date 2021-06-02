@@ -7,28 +7,16 @@ exports.rationalizationSchema = new Schema(
             type: String,
             required: true,
         },
-        description: {
-            type: String,
-            required: true,
-        },
-        creationDate: {
-            type: Number,
-            required: true
-        },
+        description: String,
+        creationDate: String,
         firstCreationDate: {
             type: Number,
             required: true
         },
-        volume: {
-            type: Number,
-            required: false
-        },
+        volume: String,
         authors: [{author: String}],
         subdivisions: [String],
-        file: {
-            type: String,
-            required: true
-        }
+        file: String
     },
     {versionKey: false}
 )
@@ -39,39 +27,18 @@ exports.researchSchema = new Schema(
             type: String,
             required: true,
         },
-        description: {
-            type: String,
-            required: true,
-        },
-        creationDate: {
-            type: Number,
-            required: true
-        },
+        description: String,
+        creationDate: String,
         firstCreationDate: {
             type: Number,
             required: true
         },
-        volume: {
-            type: Number,
-            required: false
-        },
-        headPerformer: {
-            type: String,
-            required: true,
-        },
-        customer: {
-            type: String,
-            required: true,
-        },
-        category: {
-            type: String,
-            required: true
-        },
+        volume: String,
+        headPerformer: String,
+        customer: String,
+        category: String,
         authors: [{author: String}],
-        file: {
-            type: String,
-            required: true
-        }
+        file: String,
     },
     {versionKey: false}
 )
@@ -82,39 +49,18 @@ exports.developmentWorkSchema = new Schema(
             type: String,
             required: true,
         },
-        description: {
-            type: String,
-            required: true,
-        },
-        creationDate: {
-            type: Number,
-            required: true
-        },
+        description: String,
+        creationDate: String,
         firstCreationDate: {
             type: Number,
             required: true
         },
-        volume: {
-            type: Number,
-            required: false
-        },
-        headPerformer: {
-            type: String,
-            required: true,
-        },
-        customer: {
-            type: String,
-            required: true,
-        },
-        category: {
-            type: String,
-            required: true
-        },
+        volume: String,
+        headPerformer: String,
+        customer: String,
+        category: String,
         authors: [{author: String}],
-        file: {
-            type: String,
-            required: true
-        }
+        file: String,
     },
     {versionKey: false}
 )
@@ -125,35 +71,17 @@ exports.projectsSchema = new Schema(
             type: String,
             required: true,
         },
-        description: {
-            type: String,
-            required: true,
-        },
-        creationDate: {
-            type: Number,
-            required: true
-        },
+        description: String,
+        creationDate: String,
         firstCreationDate: {
             type: Number,
             required: true
         },
-        headPerformer: {
-            type: String,
-            required: true,
-        },
-        customer: {
-            type: String,
-            required: true,
-        },
-        category: {
-            type: String,
-            required: true
-        },
+        headPerformer: String,
+        customer: String,
+        category: String,
         authors: [{author: String}],
-        file: {
-            type: String,
-            required: true
-        }
+        file: String,
     },
     {versionKey: false}
 )
@@ -164,28 +92,16 @@ exports.thesisSchema = new Schema(
             type: String,
             required: true,
         },
-        description: {
-            type: String,
-            required: true,
-        },
-        creationDate: {
-            type: Number,
-            required: true
-        },
+        description: String,
+        creationDate: String,
         firstCreationDate: {
             type: Number,
             required: true
         },
-        volume: {
-            type: Number,
-            required: false
-        },
+        volume: String,
         authors: [{author: String}],
         subdivisions: [String],
-        file: {
-            type: String,
-            required: true
-        }
+        file: String,
     },
     {versionKey: false}
 )
@@ -196,35 +112,17 @@ exports.approbationSchema = new Schema(
             type: String,
             required: true,
         },
-        description: {
-            type: String,
-            required: true,
-        },
-        creationDate: {
-            type: Number,
-            required: true
-        },
+        description: String,
+        creationDate: String,
         firstCreationDate: {
             type: Number,
             required: true
         },
-        volume: {
-            type: Number,
-            required: false
-        },
-        headPerformer: {
-            type: String,
-            required: true,
-        },
-        customer: {
-            type: String,
-            required: true,
-        },
+        volume: String,
+        headPerformer: String,
+        customer: String,
         authors: [{author: String}],
-        file: {
-            type: String,
-            required: true
-        }
+        file: String,
     },
     {versionKey: false}
 )
@@ -235,45 +133,24 @@ exports.verificationSchema = new Schema(
             type: String,
             required: true,
         },
-        description: {
-            type: String,
-            required: true,
-        },
-        creationDate: {
-            type: Number,
-            required: true
-        },
+        description: String,
+        creationDate: String,
         firstCreationDate: {
             type: Number,
             required: true
         },
-        volume: {
-            type: Number,
-            required: false
-        },
-        headPerformer: {
-            type: String,
-            required: true,
-        },
-        customer: {
-            type: String,
-            required: true,
-        },
+        volume: String,
+        headPerformer: String,
+        customer: String,
         authors: [{author: String}],
-        file: {
-            type: String,
-            required: true
-        }
+        file: String,
     },
     {versionKey: false}
 )
 
 exports.subdivisionSchema = new Schema(
     {
-        name: {
-            type: String,
-            required: true,
-        },
+        name: String,
         firstCreationDate: {
             type: Number,
             required: true
@@ -284,10 +161,7 @@ exports.subdivisionSchema = new Schema(
 
 exports.publicationSchema = new Schema(
     {
-        name: {
-            type: String,
-            required: true,
-        },
+        name: String,
         firstCreationDate: {
             type: Number,
             required: true
@@ -303,10 +177,7 @@ exports.userSchema = new Schema(
             required: true,
             unique: true
         },
-        password: {
-            type: String,
-            required: true
-        },
+        password: String,
         isAdmin: {
             type: Boolean,
             default: false
@@ -321,10 +192,7 @@ exports.userSchema = new Schema(
 
 exports.departmentSchema = new Schema(
     {
-        name: {
-            type: String,
-            required: true,
-        },
+        name: String,
         firstCreationDate: {
             type: Number,
             required: true

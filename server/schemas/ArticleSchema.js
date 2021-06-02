@@ -3,24 +3,18 @@ const Schema = mongoose.Schema
 
 module.exports = new Schema(
     {
-        headline: {
+       headline: {
             type: String,
             required: true,
         },
-        text: {
-            type: String,
-            required: true,
-        },
-        creationDate: {
-            type: Number,
-            required: true
-        },
+        text: String,
+        creationDate: String,
         firstCreationDate: {
             type: Number,
             required: true
         },
         type: String,
-        volume: Number,
+        volume: String,
         publicationPlace: {
             type: Schema.Types.ObjectId,
             ref: 'PublicationPlace',

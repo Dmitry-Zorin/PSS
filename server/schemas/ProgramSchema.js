@@ -3,18 +3,12 @@ const Schema = mongoose.Schema
 
 module.exports = new Schema(
     {
-        headline: {
+       headline: {
             type: String,
             required: true,
         },
-        description: {
-            type: String,
-            required: true,
-        },
-        creationDate: {
-            type: Number,
-            required: true
-        },
+        description: String,
+        creationDate: String,
         firstCreationDate: {
             type: Number,
             required: true
@@ -22,10 +16,7 @@ module.exports = new Schema(
         type: String,
         authors: [{author: String}],
         subdivisions: [String],
-        file: {
-            type: String,
-            required: true
-        },
+        file: String,
         certificate: {
             code: String,
             file: String

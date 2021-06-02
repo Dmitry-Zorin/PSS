@@ -13,7 +13,8 @@ import SubMenu from './SubMenu'
 const menuResources = [
     'timeline',
     'library',
-    'form16'
+    'form16',
+    'employees'
 ]
 
 const category1Resources = [

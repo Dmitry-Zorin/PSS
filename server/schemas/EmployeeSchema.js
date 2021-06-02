@@ -3,22 +3,22 @@ const Schema = mongoose.Schema
 
 module.exports = new Schema(
     {
-        headline: {
-            type: String,
-            required: true,
-        },
-        text: {type: String,},
-        firstCreationDate: {
-            type: Number,
-            required: true
-        },
-        tags: [{tag: String}],
-        authors: [{author: String}],
-        subdivisions: [String],
-        file: {
-            type: String,
-            required: true
-        }
+        file: String,
+        name: String,
+        birthDate: String,
+        birthPlace: String,
+        nationality: String,
+        education: String,
+        university: String,
+        specialty: String,
+        languages: String,
+        militaryCommissariat: String,
+        militaryRank: String,
+        draftDate: String,
+        jobBefore: String,
+        researchTopic: String,
+        achievements: String,
+        jobAfter: String,
     },
     {versionKey: false}
 )

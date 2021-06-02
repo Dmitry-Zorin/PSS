@@ -162,10 +162,13 @@ function createAPIwithFile(app, resource, Model, extractDataToSend, extractDataF
 
         const data = extractDataFromRequest(req)
         data.firstCreationDate = new Date()
-        data.file = path.join(filesFolder, req.files.file[0].filename)
 
-        if (req.files.certificateFile) {
-            data.certificate.file = path.join(filesFolder, 'certificates', req.files.certificateFile[0].filename)
+        if (req.files.file) {
+            data.file = path.join(filesFolder, req.files.file[0].filename)
+
+            if (req.files.certificateFile) {
+                data.certificate.file = path.join(filesFolder, 'certificates', req.files.certificateFile[0].filename)
+            }
         }
 
         const modelRecord = new Model(data)
@@ -187,12 +190,14 @@ function createAPIwithFile(app, resource, Model, extractDataToSend, extractDataF
 
         if (req.files && req.files.newfile) {
             data.file = path.join(filesFolder, req.files.newfile[0].filename)
-            const oldFilePath = path.join(appRoot.path, req.body.file.replace(/http[^a-z]+(localhost)?[^a-z]+/, ''))
-            fs.unlink(oldFilePath, error => {
-                if (error) console.log(error)
-            })
+            if (req.body.file) {
+                const oldFilePath = path.join(appRoot.path, req.body.file.replace(/http[^a-z]+(localhost)?[^a-z]+/, ''))
+                fs.unlink(oldFilePath, error => {
+                    if (error) console.log(error)
+                })
+            }
         } else {
-            data.file = req.body.file
+            data.file = req.body.file.match(/.media.+/)[0]
         }
         if (req.files && req.files.newCertificateFile || req.body.certificateCode === 'null') {
             if (req.body.certificateCode !== 'null') {
@@ -205,7 +210,7 @@ function createAPIwithFile(app, resource, Model, extractDataToSend, extractDataF
                 })
             }
         } else if (req.body.certificateFile) {
-            data.certificate.file = req.body.certificateFile
+            data.certificate.file = req.body.certificateFile.match(/.media.+/)[0]
         }
 
         Model.findByIdAndUpdate(
@@ -225,17 +230,18 @@ function createAPIwithFile(app, resource, Model, extractDataToSend, extractDataF
 
         Model.findByIdAndDelete({_id: req.params.id})
             .then(data => {
-                const filePath = path.join(appRoot.path, data.file.replace(/http[^a-z]+(localhost)?[^a-z]+/, ''))
-                fs.unlink(filePath, error => {
-                    if (error) console.log(error)
-                })
-                if (data?.certificate?.file) {
-                    const certificateFilePath = path.join(appRoot.path, data.certificate.file.replace(/http[^a-z]+(localhost)?[^a-z]+/, ''))
-                    fs.unlink(certificateFilePath, error => {
+                if (data.file) {
+                    const filePath = path.join(appRoot.path, data.file.replace(/http[^a-z]+(localhost)?[^a-z]+/, ''))
+                    fs.unlink(filePath, error => {
                         if (error) console.log(error)
                     })
+                    if (data?.certificate?.file) {
+                        const certificateFilePath = path.join(appRoot.path, data.certificate.file.replace(/http[^a-z]+(localhost)?[^a-z]+/, ''))
+                        fs.unlink(certificateFilePath, error => {
+                            if (error) console.log(error)
+                        })
+                    }
                 }
-
                 res.json(extractDataToSend(data))
             })
             .catch(console.log)

@@ -79,15 +79,17 @@ export const createForm16 = (data, name, author, title) => {
                 new Paragraph({}),
                 getTable(data, author, name),
                 new Paragraph({}),
-                new Paragraph({
-                    heading: HeadingLevel.HEADING_2,
-                    children: [
-                        new TextRun({
-                            text: title,
-                            color: '000000'
-                        })
-                    ]
-                }),
+                ...title.split(', ').map(e => (
+                    new Paragraph({
+                        heading: HeadingLevel.HEADING_2,
+                        children: [
+                            new TextRun({
+                                text: e,
+                                color: '000000'
+                            })
+                        ]
+                    })
+                )),
                 new Paragraph({
                     alignment: AlignmentType.RIGHT,
                     heading: HeadingLevel.HEADING_2,
@@ -273,9 +275,11 @@ const getDataTableRow = (author, name, e) => (
             new TableCell({
                 children: [
                     new Paragraph(
-                        e.exitData || e.publicationPlace !== '-' ?
-                            `${e.publicationPlace}, ${e.creationDate}`
-                            : e.creationDate.toString()
+                        e.exitData || (
+                            e.publicationPlace !== '-'
+                                ? `${e.publicationPlace}, ${e.creationDate}`
+                                : e.creationDate.toString()
+                        )
                     )
                 ]
             }),

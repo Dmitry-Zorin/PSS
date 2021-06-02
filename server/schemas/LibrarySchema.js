@@ -3,7 +3,7 @@ const Schema = mongoose.Schema
 
 module.exports = new Schema(
     {
-        headline: {
+       headline: {
             type: String,
             required: true,
         },
@@ -15,10 +15,7 @@ module.exports = new Schema(
         tags: [{tag: String}],
         authors: [{author: String}],
         subdivisions: [String],
-        file: {
-            type: String,
-            required: true
-        }
+        file: String,
     },
     {versionKey: false}
 )

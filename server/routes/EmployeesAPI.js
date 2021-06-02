@@ -5,31 +5,40 @@ const createAPIwithFile = require('../utils').createAPIwithFile
 const Model = mongoose.model('Employee', schema)
 const resource = 'employees'
 
-const extractDataToSend = (data) => (
-    {
-        id: data.id,
-        headline: data.headline,
-        text: data.text,
-        firstCreationDate: data.firstCreationDate,
-        tags: data.tags,
-        authors: data.authors,
-        subdivisions: data.subdivisions,
-        file: {
-            url: `${data.file.includes('http://') ? '' : process.env.SERVER}${data.file}`,
-            title: data.headline
-        }
-    }
-)
+const props = [
+    'file',
+    'name',
+    'birthDate',
+    'birthPlace',
+    'nationality',
+    'education',
+    'university',
+    'specialty',
+    'languages',
+    'militaryCommissariat',
+    'militaryRank',
+    'draftDate',
+    'jobBefore',
+    'researchTopic',
+    'achievements',
+    'jobAfter'
+]
 
-const extractDataFromRequest = ({body}) => (
-    {
-        headline: body.headline,
-        text: body.text,
-        tags: body.tags && JSON.parse(body.tags),
-        authors: body.authors && JSON.parse(body.authors),
-        subdivisions: body.subdivisions && JSON.parse(body.subdivisions)
-    }
-)
+const extractDataToSend = (data) => props.reduce((d, e) => {
+    if (e !== 'file') d[e] = data[e]
+    return d
+}, {
+    id: data.id,
+    file: data.file ? {
+        url: `${data.file.includes('http://') ? '' : process.env.SERVER}${data.file}`,
+        title: data.name
+    } : undefined
+})
+
+const extractDataFromRequest = ({body}) => props.reduce((d, e) => {
+    d[e] = body[e]
+    return d
+}, {})
 
 module.exports = (app) => {
     createAPIwithFile(app, resource, Model, extractDataToSend, extractDataFromRequest)

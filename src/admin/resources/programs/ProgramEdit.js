@@ -31,10 +31,11 @@ export const ProgramEdit = (props) => (
         {...props}>
         <SimpleForm submitOnEnter={false}>
             <TextInput
-                fullWidth
                 label="Название"
                 source="headline"
                 validate={validateText}
+                fullWidth
+                multiline
             />
             <TextInput
                 label="Описание"
@@ -51,7 +52,6 @@ export const ProgramEdit = (props) => (
             <NumberInput
                 label="Год создания"
                 source="creationDate"
-                validate={validateRequired}
             />
             <ArrayInput
                 validate={validateRequired}

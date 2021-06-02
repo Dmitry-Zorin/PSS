@@ -3,30 +3,21 @@ const Schema = mongoose.Schema
 
 module.exports = new Schema(
     {
-        headline: {
+       headline: {
             type: String,
             required: true,
         },
-        description: {
-            type: String,
-            required: true,
-        },
-        creationDate: {
-            type: Number,
-            required: true
-        },
+        description: String,
+        creationDate: String,
         firstCreationDate: {
             type: Number,
             required: true
         },
         type: String,
-        volume: Number,
+        volume: String,
         authors: [{author: String}],
         subdivisions: [String],
-        file: {
-            type: String,
-            required: true
-        }
+        file: String,
     },
     {versionKey: false}
 )

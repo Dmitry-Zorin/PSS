@@ -14,7 +14,7 @@ import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck'
 import SchoolIcon from '@material-ui/icons/School'
 import ShortTextIcon from '@material-ui/icons/ShortText'
 import SubjectIcon from '@material-ui/icons/Subject'
-//import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle'
+import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle'
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
 import TimelineIcon from '@material-ui/icons/Timeline'
 import TrendingUpIcon from '@material-ui/icons/TrendingUp'
@@ -49,7 +49,7 @@ import {
     ShowForm as DevelopmentShow,
 } from './resources/developments'
 import Dissertation from './resources/dissertations/index'
-//import Employees from './resources/employees/index'
+import Employees from './resources/employees/index'
 import {Form16} from './resources/Form16'
 import Library from './resources/library/index'
 import Monograph from './resources/monographs/index'
@@ -333,7 +333,7 @@ const AdminPanel = () => (
                     options={{label: 'Справка'}}
                     list={Form16}
                 />,
-                /*<Resource
+                <Resource
                     key={k++}
                     name='employees'
                     icon={SupervisedUserCircleIcon}
@@ -342,7 +342,7 @@ const AdminPanel = () => (
                     edit={permissions ? Employees.edit : undefined}
                     create={permissions ? Employees.create : undefined}
                     show={Employees.show}
-                />,*/
+                />,
                 <Resource
                     key={k++}
                     name="characters"

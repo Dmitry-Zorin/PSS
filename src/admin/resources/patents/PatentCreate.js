@@ -50,7 +50,6 @@ export const PatentCreate = (props) => (
             <NumberInput
                 label="Год создания"
                 source="creationDate"
-                validate={validateRequired}
             />
             <NumberInput
                 label="Объем"

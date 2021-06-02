@@ -31,15 +31,15 @@ export const TextbookCreate = (props) => (
             submitOnEnter={false}
         >
             <TextInput
-                fullWidth
                 label="Название"
                 source="headline"
                 validate={validateText}
+                fullWidth
+                multiline
             />
             <TextInput
                 label="Аннотация"
                 source="text"
-                validate={validateText}
                 fullWidth
                 multiline
             />
@@ -52,7 +52,6 @@ export const TextbookCreate = (props) => (
             <NumberInput
                 label="Год создания"
                 source="creationDate"
-                validate={validateRequired}
             />
             <NumberInput
                 label="Объем"

@@ -1,28 +1,14 @@
 import React from 'react'
-import {
-    ArrayInput,
-    Create,
-    FileField,
-    FileInput,
-    ImageField,
-    ImageInput,
-    minLength,
-    ReferenceArrayInput,
-    required,
-    SelectArrayInput,
-    SimpleForm,
-    SimpleFormIterator,
-    TextInput
-} from 'react-admin'
+import {Create, ImageField, ImageInput, minLength, required, SimpleForm, TextInput} from 'react-admin'
 
 const validateText = [required(), minLength(1)]
-const validateRequired = [required()]
 
 export const EmployeeCreate = (props) => (
     <Create
         title="Добавить сотрудника"
         successMessage="ra.resources.employee.create"
         undoable={false}
+        style={{width: '100%', maxWidth: 1050, margin: '0 auto'}}
         {...props}
     >
         <SimpleForm
@@ -31,63 +17,89 @@ export const EmployeeCreate = (props) => (
         >
             <ImageInput
                 label="Фото"
-                source="photo"
+                source="file"
             >
-                <ImageField source="photo"/>
+                <ImageField
+                    source="src"
+                    title="Загруженное фото"
+                />
             </ImageInput>
             <TextInput
-                label="Название"
-                source="headline"
+                label="ФИО"
+                source="name"
                 validate={validateText}
                 fullWidth
             />
             <TextInput
-                label="Описание"
-                source="text"
-                multiline
+                label="Дата рождения"
+                source="birthDate"
                 fullWidth
             />
-            <ArrayInput
-                label="Ключевые слова"
-                source="tags"
-            >
-                <SimpleFormIterator>
-                    <TextInput
-                        label="Ключевое слово"
-                        source="tag"
-                    />
-                </SimpleFormIterator>
-            </ArrayInput>
-            <ArrayInput
-                label="Авторы"
-                source="authors"
-            >
-                <SimpleFormIterator>
-                    <TextInput
-                        label="Автор"
-                        source="author"
-                    />
-                </SimpleFormIterator>
-            </ArrayInput>
-            <ReferenceArrayInput
-                label="Подразделения"
-                source="subdivisions"
-                reference="subdivisions"
-                perPage={1000}
+            <TextInput
+                label="Место рождения"
+                source="birthPlace"
                 fullWidth
-            >
-                <SelectArrayInput optionText="name"/>
-            </ReferenceArrayInput>
-            <FileInput
-                label="Файл"
-                source="file"
-                validate={validateRequired}
-            >
-                <FileField
-                    title="Загруженный файл"
-                    source="file"
-                />
-            </FileInput>
+            />
+            <TextInput
+                label="Национальность"
+                source="nationality"
+                fullWidth
+            />
+            <TextInput
+                label="Образование"
+                source="education"
+                fullWidth
+            />
+            <TextInput
+                label="Окончил (когда, что)"
+                source="university"
+                fullWidth
+            />
+            <TextInput
+                label="Специальность"
+                source="specialty"
+                fullWidth
+            />
+            <TextInput
+                label="Владение иностранными языками"
+                source="languages"
+                fullWidth
+            />
+            <TextInput
+                label="Призван (каким ВК)"
+                source="militaryCommissariat"
+                fullWidth
+            />
+            <TextInput
+                label="Воинское звание"
+                source="militaryRank"
+                fullWidth
+            />
+            <TextInput
+                label="Дата призыва"
+                source="draftDate"
+                fullWidth
+            />
+            <TextInput
+                label="Работа до призыва в армию"
+                source="jobBefore"
+                fullWidth
+            />
+            <TextInput
+                label='Научная тема в ВИТ "ЭРА"'
+                source="researchTopic"
+                fullWidth
+            />
+            <TextInput
+                label='Достижения в научной деятельности во время службы в ВИТ "ЭРА"'
+                source="achievements"
+                fullWidth
+            />
+            <TextInput
+                label='Работа после увольнения из ВИТ "ЭРА"'
+                source="jobAfter"
+                fullWidth
+            />
         </SimpleForm>
     </Create>
 )

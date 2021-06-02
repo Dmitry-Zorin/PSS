@@ -1,9 +1,9 @@
-const path = require('path');
-const webpack = require("webpack");
-const dotenv = require('dotenv');
+const path = require('path')
+const webpack = require("webpack")
+const dotenv = require('dotenv')
 
 module.exports = () => {
-    const env = dotenv.config().parsed;
+    const env = dotenv.config().parsed
 
     return {
         entry: {
@@ -17,7 +17,6 @@ module.exports = () => {
         devtool: env.NODE_ENV === 'development' ? 'inline-source-map' : undefined,
         devServer: {
             contentBase: path.join(__dirname, 'dist'),
-            compress: true,
             port: env.UI_PORT
         },
         module: {
@@ -39,11 +38,6 @@ module.exports = () => {
                     test: /\.(woff|woff2|eot|ttf|otf)$/,
                     loader: 'file-loader'
                 },
-                /*{
-                    test: /\.(js)$/,
-                    exclude: /node_modules/,
-                    use: ['babel-loader', 'eslint-loader']
-                }*/
             ]
         },
         plugins: [

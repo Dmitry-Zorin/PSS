@@ -133,10 +133,11 @@ export const CreateForm = props => (
             submitOnEnter={false}
         >
             <TextInput
-                fullWidth
                 label="Название"
                 source="headline"
                 validate={validateText}
+                fullWidth
+                multiline
             />
             <TextInput
                 label="Описание"
@@ -148,7 +149,6 @@ export const CreateForm = props => (
             <NumberInput
                 label="Год создания"
                 source="creationDate"
-                validate={validateRequired}
             />
             <NumberInput
                 label="Объем"
@@ -198,10 +198,11 @@ export const EditForm = props => (
         {...props}>
         <SimpleForm submitOnEnter={false}>
             <TextInput
-                fullWidth
                 label="Название"
                 source="headline"
                 validate={validateText}
+                fullWidth
+                multiline
             />
             <TextInput
                 label="Описание"
@@ -213,7 +214,6 @@ export const EditForm = props => (
             <NumberInput
                 label="Год создания"
                 source="creationDate"
-                validate={validateRequired}
             />
             <NumberInput
                 label="Объем"

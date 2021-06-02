@@ -60,7 +60,6 @@ export const OtherEdit = (props) => (
             <NumberInput
                 label="Год создания"
                 source="creationDate"
-                validate={validateRequired}
             />
             <NumberInput
                 label="Объем"

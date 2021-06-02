@@ -28,10 +28,11 @@ export const ProgramCreate = props => (
             submitOnEnter={false}
         >
             <TextInput
-                fullWidth
                 label="Название"
                 source="headline"
                 validate={validateText}
+                fullWidth
+                multiline
             />
             <TextInput
                 label="Описание"
@@ -49,7 +50,6 @@ export const ProgramCreate = props => (
             <NumberInput
                 label="Год создания"
                 source="creationDate"
-                validate={validateRequired}
             />
             <ArrayInput
                 validate={validateRequired}

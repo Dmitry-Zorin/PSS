@@ -23,9 +23,9 @@ export const Form16 = () => {
     const dataProvider = useDataProvider()
     const notify = useNotify()
 
-    const [lastname, setLastname] = useState('Колузов')
-    const [name, setName] = useState('Колузова Андрея Владимировича')
-    const [title, setTitle] = useState('Начальник 14 ЛИ')
+    const [lastname, setLastname] = useState('Ивановский')
+    const [name, setName] = useState('Ивановского Владимира Сергеевича')
+    const [title, setTitle] = useState('Начальник Военного инновационного технополиса «ЭРА», доктор технических наук, профессор, генерал-лейтенант')
 
     const getPublications = () => (
         dataProvider.getList('publications', {
@@ -120,7 +120,7 @@ export const Form16 = () => {
                     onChange={e => setName(e.target.value)}
                 />
                 <TextField
-                    label="Звание"
+                    label="Должность"
                     variant="filled"
                     value={title}
                     onChange={e => setTitle(e.target.value)}
