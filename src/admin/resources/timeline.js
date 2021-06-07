@@ -19,12 +19,12 @@ const sort = {
 const useStyles = makeStyles(theme => (
     {
         list: {
-            maxWidth: 600,
+            maxWidth: 900,
             margin: '0 auto'
         },
         card: {
             marginLeft: 0,
-            marginBottom: 15
+            marginBottom: 20
         },
         padding: {
             padding: '1.25em'
@@ -78,7 +78,7 @@ const CardView = ({event}) => {
                 <ListItem className={styles.padding}>
                     <ListItemText
                         primary={
-                            <Box display='flex' flexWrap='wrap'>
+                            <Box display='flex' flexWrap='wrap'  mb={1}>
                                 <Box flexGrow={1}>
                                     <strong>
                                         {event.translation}
@@ -89,9 +89,7 @@ const CardView = ({event}) => {
                                             : ''
                                     }`}
                                 </Box>
-                                <Box>
-                                    {new Date(event.creationDate).toLocaleString('ru-RU')}
-                                </Box>
+                                {new Date(event.creationDate).toLocaleString('ru-RU')}
                             </Box>
                         }
                         secondary={event.title}

@@ -1,10 +1,11 @@
 import {Divider, Typography} from "@material-ui/core"
+import Box from "@material-ui/core/Box"
 import React, {useState} from "react"
+import useStyles from "../Styles"
 import CircleNumber from "./CircleNumber"
 import HoursTable from "./HoursTable"
 import PointsTable from "./PointsTable"
 import ProgressBar from "./ProgressBar"
-import useStyles from "../Styles"
 import TasksTable from "./TasksTable"
 
 const Report = () => {
@@ -81,16 +82,16 @@ const Report = () => {
     }, [])*/
 
     return !data ? null : (
-        <div style={{textAlign: 'center', marginBottom: 30}}>
+        <Box textAlign='center' mb='30px'>
             <Divider style={{margin: '30px 0'}}/>
             <Typography variant='h6' style={{marginTop: 30, fontWeight: '400'}}>
                 Оценка оператора
             </Typography>
-            <div style={{marginTop: 30, display: 'flex', width: '100%'}}>
+            <Box display='flex' width='100%'  mt='30px'>
                 <CircleNumber num={920} text='Кол-во баллов за все время службы'/>
                 <CircleNumber num={18} text='Среднеe кол-во баллов понедельно'/>
                 <CircleNumber num={14} text='Кол-во баллов за прошедшую неделю' color={1}/>
-            </div>
+            </Box>
             <Typography className={classes.subtitle}>
                 Шкала соответствия баллов за неделю
             </Typography>
@@ -114,7 +115,7 @@ const Report = () => {
             </Typography>
             <HoursTable {...{classes}}/>
             <ProgressBar steps={7} step={5} activeStep={5} {...{classes}}/>
-        </div>
+        </Box>
     )
 }
 

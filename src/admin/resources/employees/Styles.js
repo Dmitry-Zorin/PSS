@@ -5,16 +5,7 @@ const Styles = makeStyles(() => (
         container: {
             width: '100%',
             maxWidth: 1200,
-            margin: '0 auto',
-            '& .MuiFormLabel-root-411': {
-                fontSize: '1.1rem'
-            },
-            '& .MuiTypography-body2-120': {
-                fontSize: '0.95rem'
-            },
-            '& .MuiCardContent-root-291': {
-                padding: 40
-            }
+            margin: '0 auto'
         },
         photo: {
             '& > img': {

@@ -1,4 +1,5 @@
 import {Paper, Typography} from "@material-ui/core"
+import Box from "@material-ui/core/Box"
 import React from "react"
 
 const ProgressBar = ({steps = 10, activeStep = 5, step = 1}) => {
@@ -15,12 +16,13 @@ const ProgressBar = ({steps = 10, activeStep = 5, step = 1}) => {
             display: 'flex'
         }}>
             {numbers.map((e, i) => (
-                <div key={i} style={{
-                    flexGrow: 1,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                }}>
+                <Box
+                    key={i}
+                    flexGrow={1}
+                    display='flex'
+                    alignItems='center'
+                    justifyContent='center'
+                >
                     {i === activeStep && (
                         <Paper elevation={4} style={{
                             borderRadius: '100%',
@@ -37,7 +39,7 @@ const ProgressBar = ({steps = 10, activeStep = 5, step = 1}) => {
                     {i !== activeStep && (
                         <Typography style={{fontSize: 16}}>{e}</Typography>
                     )}
-                </div>
+                </Box>
             ))}
         </Paper>
     )

@@ -43,7 +43,6 @@ const Empty = createEmptyPage(
     'Для добавления пользователя нажмите кнопку "Создать"'
 )
 const ShowActions = getShowActions()
-// const EditActions = getEditActions();
 
 const Filters = (props) => (
     <Filter {...props}>

@@ -13,13 +13,54 @@ export default createMuiTheme({
         }
     },
     overrides: {
+        RaShow: {
+           root: {
+               width: '100%',
+               maxWidth: '1200px',
+               margin: '0 auto'
+           }
+        },
+        RaCreate: {
+            root: {
+                width: '100%',
+                maxWidth: '1200px',
+                margin: '0 auto'
+            }
+        },
+        RaEdit: {
+            root: {
+                width: '100%',
+                maxWidth: '1200px',
+                margin: '0 auto'
+            }
+        },
+        MuiFormControl: {
+            marginDense: {
+                margin: '0 0 30px 0 !important'
+            }
+        },
+        MuiTypography: {
+            body2: {
+                fontSize: '0.95rem'
+            }
+        },
+        MuiFormLabel: {
+            root: {
+                fontSize: '1.1rem'
+            }
+        },
+        MuiCardContent: {
+            root: {
+                padding: '40px !important'
+            }
+        },
         MuiStepIcon: {
             active: {
                 color: `${blue[500]} !important`
             },
-           completed: {
-               color: `${blue[500]} !important`
-           }
+            completed: {
+                color: `${blue[500]} !important`
+            }
         },
         RaMenuItemLink: {
             root: {
