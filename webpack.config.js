@@ -17,7 +17,8 @@ module.exports = () => {
         devtool: env.NODE_ENV === 'development' ? 'inline-source-map' : undefined,
         devServer: {
             contentBase: path.join(__dirname, 'dist'),
-            port: env.UI_PORT
+            port: env.UI_PORT,
+            hot: true
         },
         module: {
             rules: [

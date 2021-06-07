@@ -13,6 +13,14 @@ export default createMuiTheme({
         }
     },
     overrides: {
+        MuiStepIcon: {
+            active: {
+                color: `${blue[500]} !important`
+            },
+           completed: {
+               color: `${blue[500]} !important`
+           }
+        },
         RaMenuItemLink: {
             root: {
                 borderLeft: '3px solid transparent'

@@ -4,9 +4,9 @@
   "scripts": {
     "start": "concurrently --kill-others 'npm run watch' 'npm run server' 'npm run serve'",
     "server": "nodemon --watch server server/server.js",
-    "serve": "webpack serve --hot",
+    "serve": "webpack serve",
     "watch": "webpack --watch",
-    "build": "webpack -p --mode production",
+    "build": "webpack --mode production",
     "db": "mongod --dbpath 'C:/data/db'"
   },
   "devDependencies": {

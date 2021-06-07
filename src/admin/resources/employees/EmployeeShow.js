@@ -1,33 +1,16 @@
-import {makeStyles} from "@material-ui/core/styles"
+import {Divider} from "@material-ui/core"
 import {GridShowLayout, RaGrid} from 'ra-compact-ui/dist/details'
 import React from 'react'
 import {ImageField, Show, TextField} from 'react-admin'
-import {createTitle, getShowActions} from '../../utils'
 import photoPlaceholder from '../../../../static/images/photo-placeholder.jpg'
+import {createTitle, getShowActions} from '../../utils'
+import Report from "./report/Report"
+import useStyles from "./Styles"
 
 const Title = createTitle('Сотрудник', 'name')
 const TitleShort = createTitle('', 'name')
 
 const ShowActions = getShowActions()
-
-const useStyles = makeStyles(theme => (
-    {
-        photo: {
-            '& > img': {
-                width: '100%',
-                height: 'auto',
-                margin: 0
-            }
-        },
-        rightSide: {
-            display: 'flex',
-            flexDirection: 'column',
-            '& > div': {
-                flex: 1
-            }
-        }
-    }
-))
 
 export const EmployeeShow = ({permissions, enableActions = true, ...props}) => {
     const classes = useStyles()
@@ -38,25 +21,27 @@ export const EmployeeShow = ({permissions, enableActions = true, ...props}) => {
             actions={!enableActions ? undefined : (
                 <ShowActions permissions={permissions}/>
             )}
-            style={{width: '100%', maxWidth: 1050, margin: '0 auto'}}
+            className={classes.container}
             {...props}
         >
             <GridShowLayout>
                 <RaGrid container spacing={2}>
-                    <RaGrid item md={6} lg={4}>
-                        <ImageField
-                            label="Фото"
-                            source='file.url'
-                            title='file.title'
-                            emptyText={<img src={photoPlaceholder} alt='photo'/>}
-                            className={classes.photo}
-                        />
+                    <RaGrid item xs={12} md={6}>
+                        <div className={classes.rightSide}>
+                            <ImageField
+                                label={null}
+                                source='file.url'
+                                title='file.title'
+                                emptyText={<img src={photoPlaceholder} alt='photo'/>}
+                                className={classes.photo}
+                            />
+                        </div>
                     </RaGrid>
                     <RaGrid item xs className={classes.rightSide}>
                         <TextField
                             label="ФИО"
                             source="name"
-                            style={{fontSize: '1rem'}}
+                            style={{fontSize: '1.15rem', fontWeight: 'bold'}}
                         />
                         <TextField
                             label="Воинское звание"
@@ -76,8 +61,9 @@ export const EmployeeShow = ({permissions, enableActions = true, ...props}) => {
                         />
                     </RaGrid>
                 </RaGrid>
+                <Divider style={{margin: '30px 0'}}/>
                 <RaGrid container spacing={2}>
-                    <RaGrid item sm={12} md={6}>
+                    <RaGrid item xs={12} md={6}>
                         <TextField
                             label="Образование"
                             source="education"
@@ -99,7 +85,7 @@ export const EmployeeShow = ({permissions, enableActions = true, ...props}) => {
                             source="jobBefore"
                         />
                     </RaGrid>
-                    <RaGrid item sm={12} md={6}>
+                    <RaGrid item xs>
                         <TextField
                             label="Окончил (когда, что)"
                             source="university"
@@ -122,6 +108,7 @@ export const EmployeeShow = ({permissions, enableActions = true, ...props}) => {
                         />
                     </RaGrid>
                 </RaGrid>
+                <Report/>
             </GridShowLayout>
         </Show>
     )
