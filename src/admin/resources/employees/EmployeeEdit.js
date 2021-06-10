@@ -1,5 +1,5 @@
 import React from 'react'
-import {Edit, ImageField, ImageInput, minLength, required, SimpleForm, TextInput} from 'react-admin'
+import {Edit, ImageField, ImageInput, minLength, NumberInput, required, SimpleForm, TextInput} from 'react-admin'
 import photoPlaceholder from '../../../../static/images/photo-placeholder.jpg'
 import {createTitle, getEditActionsWithoutFile} from '../../utils'
 
@@ -110,6 +110,11 @@ export const EmployeeEdit = (props) => (
             <TextInput
                 label='Работа после увольнения из ВИТ "ЭРА"'
                 source="jobAfter"
+                fullWidth
+            />
+            <NumberInput
+                label='ID сотрудника в системе "Redmine"'
+                source="redmineId"
                 fullWidth
             />
         </SimpleForm>

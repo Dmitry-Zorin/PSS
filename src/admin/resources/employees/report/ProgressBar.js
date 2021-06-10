@@ -12,7 +12,7 @@ const ProgressBar = ({steps = 10, activeStep = 5, step = 1}) => {
             height: 40,
             background: 'linear-gradient(to right, #FF4040, #EAFF00 65%, #6AFF00)',
             borderRadius: 100,
-            marginTop: 30,
+            marginTop: 45,
             display: 'flex'
         }}>
             {numbers.map((e, i) => (
@@ -23,7 +23,9 @@ const ProgressBar = ({steps = 10, activeStep = 5, step = 1}) => {
                     alignItems='center'
                     justifyContent='center'
                 >
-                    {i === activeStep && (
+                    {Math.abs(e - activeStep) > step / 2 ? (
+                        <Typography style={{fontSize: 16}}>{e}</Typography>
+                    ) : (
                         <Paper elevation={4} style={{
                             borderRadius: '100%',
                             width: 50,
@@ -33,11 +35,8 @@ const ProgressBar = ({steps = 10, activeStep = 5, step = 1}) => {
                             alignItems: 'center',
                             justifyContent: 'center'
                         }}>
-                            <Typography style={{fontSize: 24}}>{e}</Typography>
+                            <Typography style={{fontSize: 24}}>{activeStep}</Typography>
                         </Paper>
-                    )}
-                    {i !== activeStep && (
-                        <Typography style={{fontSize: 16}}>{e}</Typography>
                     )}
                 </Box>
             ))}

@@ -10,7 +10,7 @@ const Styles = makeStyles(() => (
         photo: {
             '& > img': {
                 width: '100%',
-                maxHeight: 300,
+                maxHeight: 370,
                 objectFit: 'contain',
                 margin: 0
             }
@@ -40,7 +40,7 @@ const Styles = makeStyles(() => (
             color: '#737373'
         },
         subtitle: {
-            marginTop: 45,
+            marginTop: 60,
             fontSize: '1.1rem'
         }
     }

@@ -2,11 +2,11 @@ import {Table, TableBody, TableCell, TableContainer, TableRow} from "@material-u
 import React from "react"
 import useStyles from "../Styles"
 
-const TasksTable = () => {
+const TasksTable = ({data}) => {
     const classes = useStyles()
 
     return (
-        <TableContainer style={{marginTop: 30}}>
+        <TableContainer style={{marginTop: 45}}>
             <Table className={classes.table}>
                 <TableBody>
                     <TableRow>
@@ -21,9 +21,9 @@ const TasksTable = () => {
                         </TableCell>
                     </TableRow>
                     <TableRow>
-                        <TableCell>1</TableCell>
-                        <TableCell>7</TableCell>
-                        <TableCell>8</TableCell>
+                        <TableCell>{data.issuesNumber - data.issuesCompleted}</TableCell>
+                        <TableCell>{data.issuesCompleted}</TableCell>
+                        <TableCell>{data.issuesNumber}</TableCell>
                     </TableRow>
                 </TableBody>
             </Table>

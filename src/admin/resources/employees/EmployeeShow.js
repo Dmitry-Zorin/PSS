@@ -1,6 +1,6 @@
 import {Divider} from "@material-ui/core"
 import {GridShowLayout, RaGrid} from 'ra-compact-ui/dist/details'
-import React from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import {ImageField, Show, TextField} from 'react-admin'
 import photoPlaceholder from '../../../../static/images/photo-placeholder.jpg'
 import {createTitle, getShowActions} from '../../utils'
@@ -61,7 +61,7 @@ export const EmployeeShow = ({permissions, enableActions = true, ...props}) => {
                         />
                     </RaGrid>
                 </RaGrid>
-                <Divider style={{margin: '30px 0'}}/>
+                <Divider style={{margin: '30px 0 60px 0'}}/>
                 <RaGrid container spacing={2}>
                     <RaGrid item xs={12} md={6}>
                         <TextField
@@ -108,7 +108,7 @@ export const EmployeeShow = ({permissions, enableActions = true, ...props}) => {
                         />
                     </RaGrid>
                 </RaGrid>
-                <Report/>
+                <Report id={props.id}/>
             </GridShowLayout>
         </Show>
     )

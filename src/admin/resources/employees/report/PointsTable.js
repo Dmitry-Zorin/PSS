@@ -6,7 +6,7 @@ const PointsTable = () => {
     const classes = useStyles()
 
     return (
-        <TableContainer style={{marginTop: 30}}>
+        <TableContainer style={{marginTop: 45}}>
             <Table className={classes.table}>
                 <TableBody>
                     <TableRow>

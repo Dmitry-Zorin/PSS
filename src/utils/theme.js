@@ -51,7 +51,7 @@ export default createMuiTheme({
         },
         MuiCardContent: {
             root: {
-                padding: '40px !important'
+                padding: '45px !important'
             }
         },
         MuiStepIcon: {

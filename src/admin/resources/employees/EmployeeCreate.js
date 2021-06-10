@@ -1,5 +1,5 @@
 import React from 'react'
-import {Create, ImageField, ImageInput, minLength, required, SimpleForm, TextInput} from 'react-admin'
+import {Create, ImageField, ImageInput, minLength, NumberInput, required, SimpleForm, TextInput} from 'react-admin'
 
 const validateText = [required(), minLength(1)]
 
@@ -98,6 +98,11 @@ export const EmployeeCreate = (props) => (
             <TextInput
                 label='Работа после увольнения из ВИТ "ЭРА"'
                 source="jobAfter"
+                fullWidth
+            />
+            <NumberInput
+                label='ID сотрудника в системе "Redmine"'
+                source="redmineId"
                 fullWidth
             />
         </SimpleForm>

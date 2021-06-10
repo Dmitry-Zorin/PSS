@@ -2,11 +2,11 @@ import {Table, TableBody, TableCell, TableContainer, TableRow} from "@material-u
 import React from "react"
 import useStyles from "../Styles"
 
-const HoursTable = () => {
+const HoursTable = ({data}) => {
     const classes = useStyles()
 
     return (
-        <TableContainer style={{marginTop: 30}}>
+        <TableContainer style={{marginTop: 45}}>
             <Table className={classes.table}>
                 <TableBody>
                     <TableRow>
@@ -21,8 +21,8 @@ const HoursTable = () => {
                         </TableCell>
                     </TableRow>
                     <TableRow>
-                        <TableCell>5 ч.</TableCell>
-                        <TableCell>25 ч.</TableCell>
+                        <TableCell>{data.nonScienceHours} ч.</TableCell>
+                        <TableCell>{30 - data.nonScienceHours} ч.</TableCell>
                         <TableCell>30 ч.</TableCell>
                     </TableRow>
                 </TableBody>
