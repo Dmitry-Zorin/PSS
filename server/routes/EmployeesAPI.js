@@ -21,7 +21,8 @@ const props = [
     'jobBefore',
     'researchTopic',
     'achievements',
-    'jobAfter'
+    'jobAfter',
+    'redmineId'
 ]
 
 const extractDataToSend = (data) => props.reduce((d, e) => {

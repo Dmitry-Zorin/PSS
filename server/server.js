@@ -6,9 +6,13 @@ const app = express()
 const mongodbConfig = require('./mongodbConfig')
 const cors = require('cors')
 
-require('dotenv').config()
+const isDevelopment = process.env.NODE_ENV === 'development'
 
-if (process.env.NODE_ENV === 'development') {
+require('dotenv').config({
+    path: path.join(__dirname, '..', `.env.${isDevelopment ? 'dev' : 'prod'}`)
+})
+
+if (isDevelopment) {
     app.use(cors({
         origin: process.env.UI_SERVER,
         exposedHeaders: 'Content-Range',
@@ -43,7 +47,7 @@ require('./routes/DissertationAPI')(app)
 app.use(function (req, res, next) {
     res.header('Cache-Control', 'no-cache, no-store, must-revalidate')
     res.header('Pragma', 'no-cache')
-    res.header('Expires', 0)
+    res.header('Expires', '0')
     next()
 })
 
@@ -60,7 +64,7 @@ mongoose.connect(
 )
     .then(() => {
         app.listen(
-            process.env.PORT,
+            +process.env.PORT,
             process.env.HOST,
             () => console.log('Server has started.')
         )

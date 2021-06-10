@@ -197,7 +197,7 @@ function createAPIwithFile(app, resource, Model, extractDataToSend, extractDataF
                 })
             }
         } else {
-            data.file = req.body.file.match(/.media.+/)[0]
+            data.file = req.body.file ? req.body.file.match(/.media.+/)[0] : null
         }
         if (req.files && req.files.newCertificateFile || req.body.certificateCode === 'null') {
             if (req.body.certificateCode !== 'null') {
@@ -210,7 +210,7 @@ function createAPIwithFile(app, resource, Model, extractDataToSend, extractDataF
                 })
             }
         } else if (req.body.certificateFile) {
-            data.certificate.file = req.body.certificateFile.match(/.media.+/)[0]
+            data.certificate.file = req.body.certificateFile ? req.body.certificateFile.match(/.media.+/)[0]: null
         }
 
         Model.findByIdAndUpdate(
@@ -235,7 +235,7 @@ function createAPIwithFile(app, resource, Model, extractDataToSend, extractDataF
                     fs.unlink(filePath, error => {
                         if (error) console.log(error)
                     })
-                    if (data?.certificate?.file) {
+                    if (data.certificate && data.certificate.file) {
                         const certificateFilePath = path.join(appRoot.path, data.certificate.file.replace(/http[^a-z]+(localhost)?[^a-z]+/, ''))
                         fs.unlink(certificateFilePath, error => {
                             if (error) console.log(error)

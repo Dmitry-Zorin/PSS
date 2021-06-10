@@ -31,7 +31,6 @@ const extractDataFromRequest = (req) => (
 const resource = 'users'
 
 module.exports = (app) => {
-
     app.get('/login', (req, res) => {
         const login = req.query.username
         return axios.get(`http://10.12.21.193/users.json?name=${login}`)
