@@ -2,7 +2,7 @@ import {Table, TableBody, TableCell, TableContainer, TableRow} from "@material-u
 import React from "react"
 import useStyles from "../Styles"
 
-const HoursTable = ({data}) => {
+const HoursTable = ({data, numOfPeople=1}) => {
     const classes = useStyles()
 
     return (
@@ -22,8 +22,8 @@ const HoursTable = ({data}) => {
                     </TableRow>
                     <TableRow>
                         <TableCell>{data.nonScienceHours} ч.</TableCell>
-                        <TableCell>{30 - data.nonScienceHours} ч.</TableCell>
-                        <TableCell>30 ч.</TableCell>
+                        <TableCell>{30 * numOfPeople - data.nonScienceHours} ч.</TableCell>
+                        <TableCell>{30 * numOfPeople} ч.</TableCell>
                     </TableRow>
                 </TableBody>
             </Table>

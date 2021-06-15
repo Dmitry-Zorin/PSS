@@ -14,7 +14,8 @@ const menuResources = [
     'timeline',
     'library',
     'form16',
-    'employees'
+    'employees',
+    'platoons'
 ]
 
 const category1Resources = [

@@ -2,7 +2,7 @@ import {Table, TableBody, TableCell, TableContainer, TableRow, Typography} from 
 import React from "react"
 import useStyles from "../Styles"
 
-const PointsTable = () => {
+const PointsTable = ({numOfPeople=1}) => {
     const classes = useStyles()
 
     return (
@@ -30,9 +30,9 @@ const PointsTable = () => {
                         </TableCell>
                     </TableRow>
                     <TableRow>
-                        <TableCell>4-10</TableCell>
-                        <TableCell>10-20</TableCell>
-                        <TableCell>более 20</TableCell>
+                        <TableCell>{4 * numOfPeople}-{10 * numOfPeople}</TableCell>
+                        <TableCell>{10 * numOfPeople}-{20 * numOfPeople}</TableCell>
+                        <TableCell>более {20 * numOfPeople}</TableCell>
                     </TableRow>
                 </TableBody>
             </Table>

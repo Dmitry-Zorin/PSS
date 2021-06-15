@@ -45,8 +45,8 @@ export const Aside = () => {
     return (
         <Resizable
             className={styles.container}
-            defaultSize={{width: 360}}
-            minWidth={230}
+            defaultSize={{width: 475}}
+            minWidth={400}
             enable={{right: true}}
         >
             <Card>

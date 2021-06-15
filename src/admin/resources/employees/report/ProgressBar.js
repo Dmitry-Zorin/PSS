@@ -28,8 +28,8 @@ const ProgressBar = ({steps = 10, activeStep = 5, step = 1}) => {
                     ) : (
                         <Paper elevation={4} style={{
                             borderRadius: '100%',
-                            width: 50,
-                            height: 50,
+                            width: 60,
+                            height: 60,
                             border: '1px solid #ddd',
                             display: 'flex',
                             alignItems: 'center',

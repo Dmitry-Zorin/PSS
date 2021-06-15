@@ -1,6 +1,6 @@
 import {Divider} from "@material-ui/core"
 import {GridShowLayout, RaGrid} from 'ra-compact-ui/dist/details'
-import React, {useEffect, useRef, useState} from 'react'
+import React from 'react'
 import {ImageField, Show, TextField} from 'react-admin'
 import photoPlaceholder from '../../../../static/images/photo-placeholder.jpg'
 import {createTitle, getShowActions} from '../../utils'

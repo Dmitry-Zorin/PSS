@@ -11,7 +11,7 @@ const authProvider = {
             .then(res => {
                 localStorage.setItem('username', username)
 
-                return res.status == 200
+                return res.status === 200
                     ? Promise.resolve()
                     : Promise.reject()
             })
@@ -23,7 +23,7 @@ const authProvider = {
         })
             .then(res => {
                 localStorage.clear()
-                return res.status == 200
+                return res.status === 200
                     ? Promise.resolve()
                     : Promise.reject()
             })
@@ -34,14 +34,14 @@ const authProvider = {
         if (username) {
             return fetch(`${process.env.SERVER}/api/login`, {
                 method: 'POST',
-                body: JSON.stringify({login: 'user', password: 'useruser'}),
+                body: JSON.stringify({login: 'user', password: 'user'}),
                 credentials: 'include',
                 headers: {'Content-Type': 'application/json'}
             })
                 .then(res => {
                     userIdentity = {fullName: username}
 
-                    return res.status == 200
+                    return res.status === 200
                         ? Promise.resolve()
                         : Promise.reject()
                 })
@@ -55,7 +55,7 @@ const authProvider = {
                 userIdentity = {
                     fullName: localStorage.getItem('username')
                 }
-                return res.status == 200
+                return res.status === 200
                     ? Promise.resolve()
                     : Promise.reject()
             })

@@ -15,6 +15,7 @@ import SchoolIcon from '@material-ui/icons/School'
 import ShortTextIcon from '@material-ui/icons/ShortText'
 import SubjectIcon from '@material-ui/icons/Subject'
 import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle'
+import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
 import TimelineIcon from '@material-ui/icons/Timeline'
 import TrendingUpIcon from '@material-ui/icons/TrendingUp'
@@ -50,12 +51,12 @@ import {
 } from './resources/developments'
 import Dissertation from './resources/dissertations/index'
 import Employees from './resources/employees/index'
+import Platoons from './resources/platoons/index'
 import {Form16} from './resources/Form16'
 import Library from './resources/library/index'
 import Monograph from './resources/monographs/index'
 import Patents from './resources/patents/index'
 import Programs from './resources/programs/index'
-//import Others from './resources/others/index'
 import {
     CreateForm as ProjectCreate,
     EditForm as ProjectEdit,
@@ -336,12 +337,22 @@ const AdminPanel = () => (
                 <Resource
                     key={k++}
                     name='employees'
-                    icon={SupervisedUserCircleIcon}
+                    icon={AccountCircleIcon}
                     options={{label: 'Сотрудники'}}
                     list={Employees.list}
                     edit={permissions ? Employees.edit : undefined}
                     create={permissions ? Employees.create : undefined}
                     show={Employees.show}
+                />,
+                <Resource
+                    key={k++}
+                    name='platoons'
+                    icon={SupervisedUserCircleIcon}
+                    options={{label: 'Взвода'}}
+                    list={Platoons.list}
+                    edit={permissions ? Platoons.edit : undefined}
+                    create={permissions ? Platoons.create : undefined}
+                    show={Platoons.show}
                 />,
                 <Resource
                     key={k++}

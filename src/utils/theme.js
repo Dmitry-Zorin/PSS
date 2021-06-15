@@ -14,11 +14,11 @@ export default createMuiTheme({
     },
     overrides: {
         RaShow: {
-           root: {
-               width: '100%',
-               maxWidth: '1200px',
-               margin: '0 auto'
-           }
+            root: {
+                width: '100%',
+                maxWidth: '1200px',
+                margin: '0 auto'
+            }
         },
         RaCreate: {
             root: {
@@ -34,9 +34,11 @@ export default createMuiTheme({
                 margin: '0 auto'
             }
         },
-        MuiFormControl: {
-            marginDense: {
-                margin: '0 0 30px 0 !important'
+        RaLayout: {
+            root: {
+                '& .ra-field > div[class^="MuiFormControl"]': {
+                    margin: '0 0 30px 0 !important'
+                }
             }
         },
         MuiTypography: {
@@ -64,11 +66,11 @@ export default createMuiTheme({
         },
         RaMenuItemLink: {
             root: {
-                borderLeft: '3px solid transparent'
+                borderLeft: '4px solid transparent'
             },
             active: {
-                borderLeft: `3px solid ${blue[500]}`,
-                background: 'rgba(0, 0, 0, 0.04) !important',
+                borderLeft: `4px solid ${blue[500]}`,
+                background: 'rgba(0, 0, 0, 0.06) !important',
                 '& svg': {
                     color: 'rgba(0, 0, 0, 0.65)'
                 }

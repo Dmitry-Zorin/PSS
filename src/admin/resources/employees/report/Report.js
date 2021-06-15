@@ -44,7 +44,7 @@ const Report = ({id}) => {
                 const issuesNumber = issues.length
 
                 for (const {tracker, status, estimated_hours = 0} of issues) {
-                    issuesCompleted += ['Выполнена', 'Завершена'].includes(status)
+                    issuesCompleted += ['Решена', 'Закрыта'].includes(status)
                     nonScienceHours += estimated_hours * (tracker?.name !== 'Научная деятельность')
                 }
 
@@ -66,9 +66,9 @@ const Report = ({id}) => {
                 Оценка оператора
             </Typography>
             <Box display='flex' width='100%' mt='60px'>
-                <CircleNumber num={score | 0} max={1000} text='Кол-во баллов за все время службы'/>
-                <CircleNumber num={score / 50 | 0} max={20} text='Среднеe кол-во баллов понедельно'/>
-                <CircleNumber num={14 + 4 * Math.random() | 0} max={20} text='Кол-во баллов за прошедшую неделю'/>
+                <CircleNumber num={score | 0} max={1000} text='Количество баллов за все время службы'/>
+                <CircleNumber num={score / 50 | 0} max={20} text='Среднеe количество баллов понедельно'/>
+                <CircleNumber num={14 + 4 * Math.random() | 0} max={20} text='Количество баллов за прошедшую неделю'/>
             </Box>
             <Typography className={classes.subtitle}>
                 Шкала соответствия баллов за неделю
