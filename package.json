@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "concurrently --kill-others 'npm run dev' 'npm run serve'",
-    "dev": "cross-env NODE_ENV=development nodemon --watch server server/server.js",
+    "dev": "cross-env NODE_ENV=development nodemon --watch server server/index.js",
     "serve": "webpack serve --config webpack.dev.js",
     "build": "webpack  --config webpack.prod.js",
     "db": "mongod --dbpath 'C:/data/db'"

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const schema = require('../schemas').userSchema
+const schema = require('../schemas/schemas').userSchema
 const jsonParser = require('express').json()
 const listParamsMiddleware = require('../utils').listParamsMiddleware
 const jsonWebToken = require('jsonwebtoken')

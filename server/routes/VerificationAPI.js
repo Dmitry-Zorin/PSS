@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const schema = require('../schemas').verificationSchema
+const schema = require('../schemas/schemas').verificationSchema
 const createAPIwithFile = require('../utils').createAPIwithFile
 
 const Model = mongoose.model('Verification', schema)

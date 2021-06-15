@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const schema = require('../schemas').researchSchema
+const schema = require('../schemas/schemas').researchSchema
 const createAPIwithFile = require('../utils').createAPIwithFile
 
 const Model = mongoose.model('Research', schema)
