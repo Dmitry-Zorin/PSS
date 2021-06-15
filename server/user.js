@@ -16,28 +16,30 @@ if (!password) {
     process.exit(1)
 }
 
-connectToDb.then(async () => {
-    try {
-        const User = mongoose.model('User', schema)
+connectToDb
+    .then(async () => {
+        try {
+            const User = mongoose.model('User', schema)
 
-        if (await User.findOne({login: username})) {
-            return console.log('User already exists!')
+            if (await User.findOne({login: username})) {
+                return console.log('User already exists!')
+            }
+
+            await User.create({
+                login: username,
+                password: await bcrypt.hash(password, 10),
+                isAdmin: admin,
+                firstCreationDate: new Date(),
+            })
+            console.log(`${admin ? 'Admin' : 'User'} "${username}" has been added!`)
         }
-
-        await User.create({
-            login: username,
-            password: await bcrypt.hash(password, 10),
-            isAdmin: admin,
-            firstCreationDate: new Date(),
-        })
-        console.log(`${admin ? 'Admin' : 'User'} "${username}" has been added!`)
-    }
-    catch (err) {
-        console.log(err)
-        process.exit(1)
-    }
-    finally {
-        await mongoose.disconnect()
-        process.exit(0)
-    }
-})
+        catch (err) {
+            console.log(err)
+            process.exit(1)
+        }
+        finally {
+            await mongoose.disconnect()
+            process.exit(0)
+        }
+    })
+    .catch(console.log)

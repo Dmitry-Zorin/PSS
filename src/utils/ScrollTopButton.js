@@ -21,9 +21,7 @@ export const ScrollTopButton = () => {
     const trigger = useScrollTrigger()
 
     const handleClick = (event) => {
-        const anchor = (
-            event.target.ownerDocument || document
-        )
+        const anchor = (event.target.ownerDocument || document)
             .getElementById('app')
 
         if (anchor) {

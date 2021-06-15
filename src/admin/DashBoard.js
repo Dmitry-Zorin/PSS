@@ -1,5 +1,4 @@
-import {Typography} from '@material-ui/core/'
-import Card from '@material-ui/core/Card'
+import {Typography, Card} from '@material-ui/core'
 import {makeStyles} from '@material-ui/core/styles'
 import React from 'react'
 import DashboardImg from '../../static/images/dashboard.png'
@@ -17,7 +16,7 @@ const useStyles = makeStyles({
     },
 })
 
-export default () => {
+const Dashboard = () => {
     const classes = useStyles()
     return (
         <Card className={classes.card}>
@@ -27,3 +26,5 @@ export default () => {
         </Card>
     )
 }
+
+export default Dashboard

@@ -33,8 +33,10 @@ app.use((req, res, next) => {
     next()
 })
 
-connectToDb.then(() => {
-    app.listen(PORT, HOST, () => {
-        console.log('Server is running...')
+connectToDb
+    .then(() => {
+        app.listen(PORT, HOST, () => {
+            console.log('Server is running...')
+        })
     })
-})
+    .catch(console.log)

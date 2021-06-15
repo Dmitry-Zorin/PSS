@@ -15,11 +15,9 @@ const mongodbUrl = `mongodb://localhost:${DB_PORT}/${DB}`
 
 mongoose.connection.on('error', console.log)
 
-module.exports = mongoose
-    .connect(mongodbUrl, {
-        useNewUrlParser: true,
-        useCreateIndex: true,
-        useUnifiedTopology: true,
-        useFindAndModify: false
-    })
-    .catch(console.log)
+module.exports = mongoose.connect(mongodbUrl, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false
+})

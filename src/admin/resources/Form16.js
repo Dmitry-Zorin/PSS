@@ -5,6 +5,12 @@ import React, {useState} from 'react'
 import {Title, useDataProvider, useNotify} from 'react-admin'
 import {createForm16} from '../../utils/form16'
 
+const groups = [
+    ['articles', 'monographs', 'abstracts', 'dissertations'],
+    ['programs', 'patents', 'reports'],
+    ['textbooks']
+]
+
 const useStyles = makeStyles(theme => (
     {
         form: {
@@ -27,24 +33,24 @@ export const Form16 = () => {
     const [name, setName] = useState('Ивановского Владимира Сергеевича')
     const [title, setTitle] = useState('Начальник Военного инновационного технополиса «ЭРА», доктор технических наук, профессор, генерал-лейтенант')
 
-    const getPublications = () => (
-        dataProvider.getList('publications', {
+    const getPublications = async () => (
+        await dataProvider.getList('publications', {
             filter: {},
             sort: {field: 'name', order: 'ASC'},
             pagination: {page: 1, perPage: 999}
         })
     )
 
-    const getCharacters = () => (
-        dataProvider.getList('characters', {
+    const getCharacters = async () => (
+        await dataProvider.getList('characters', {
             filter: {},
             sort: {field: 'name', order: 'ASC'},
             pagination: {page: 1, perPage: 999}
         })
     )
 
-    const getResource = (resource, author) => (
-        dataProvider.getList(resource, {
+    const getResource = async (resource, author) => (
+        await dataProvider.getList(resource, {
             filter: {authors: author},
             sort: {field: 'firstCreationDate', order: 'DESC'},
             pagination: {page: 1, perPage: 999}
@@ -52,55 +58,53 @@ export const Form16 = () => {
     )
 
     const generateForm = async () => {
-        const resourceData = new Array(3).fill(null).map(() => ({old: [], new: []}))
-        const author = `${lastname} ${name.split(' ')[1][0]}.${name.split(' ')[2][0]}.`
-        const date = new Date().getFullYear() - 3
+        try {
+            const resourceData = [...Array(3).keys()].map(() => ({old: [], new: []}))
+            const author = `${lastname} ${name.split(' ')[1][0]}.${name.split(' ')[2][0]}.`
+            const date = new Date().getFullYear() - 3
 
-        const publications = await getPublications().then(res => (
-            res.data.reduce((p, e) => {
+            const publications = getPublications().data.reduce((p, e) => {
                 p[e.id] = e.name
                 return p
             }, {})
-        ))
 
-        const characters = await getCharacters().then(res => (
-            res.data.reduce((p, e) => {
+            const characters = getCharacters().data.reduce((p, e) => {
                 p[e.id] = e.name
                 return p
             }, {})
-        ))
 
-        return Promise.all([
-                ['articles', 'monographs', 'abstracts', 'dissertations'],
-                ['programs', 'patents', 'reports'],
-                ['textbooks']
-            ].map((docs, i) => (
-                Promise.all(docs.map(r => getResource(r, author).then(({data}) => (
-                    Promise.all(data.map(e => {
-                        e.publicationPlace = publications[e.publicationPlace] || ''
-                        e.character = characters[e.character] || '-----'
-                    })).then(() => {
-                        resourceData[i].old = [
-                            ...resourceData[i].old,
-                            ...data.filter(e => e.creationDate < date)
-                        ]
-                        resourceData[i].new = [
-                            ...resourceData[i].new,
-                            ...data.filter(e => e.creationDate >= date)
-                        ]
-                        if (!resourceData[i].old.length) {
-                            resourceData[i].old = resourceData[i].new
-                            resourceData[i].new = []
-                        }
-                    })
-                ))))
-            ))
-        ).then(() => {
+            for (const [i, group] of groups.entries()) {
+                for (const resource of group) {
+                    const data = getResource(resource, author).data.map(e => (
+                        Object.assign(e, {
+                            publicationPlace: publications[e.publicationPlace] || '',
+                            character: characters[e.character] || '-----'
+                        })
+                    ))
+                    resourceData[i].old = [
+                        ...resourceData[i].old,
+                        ...data.filter(e => e?.creationDate < date)
+                    ]
+                    resourceData[i].new = [
+                        ...resourceData[i].new,
+                        ...data.filter(e => e?.creationDate >= date)
+                    ]
+                    if (!resourceData[i].old.length) {
+                        resourceData[i].old = resourceData[i].new
+                        resourceData[i].new = []
+                    }
+                }
+            }
+
             if (resourceData.every(data => Object.values(data).every(e => !e.length))) {
                 return notify('ra.notification.author_not_found')
             }
+
             createForm16(resourceData, name, author, title)
-        })
+        }
+        catch (err) {
+            console.log(err)
+        }
     }
 
     return (

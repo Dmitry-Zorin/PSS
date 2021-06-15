@@ -11,14 +11,16 @@ import {
     TopToolbar
 } from 'react-admin'
 
-export function createTitle(title, recordName) {
-    return ({record}) => {
-        return <span>{` ${title}: ${record[recordName]}`}</span>
-    }
-}
+export const createTitle = (title, recordName) => (
+    ({record}) => (
+        <span>
+            {` ${title}: ${record[recordName]}`}
+        </span>
+    )
+)
 
-export function createEmptyPage(noPlacesMessage, addDataMessage) {
-    return ({basePath, resource}) => (
+export const createEmptyPage = (noPlacesMessage, addDataMessage) => (
+    ({basePath}) => (
         <Box textAlign="center" m={1}>
             <Typography variant="h4" paragraph>
                 {noPlacesMessage}
@@ -26,57 +28,58 @@ export function createEmptyPage(noPlacesMessage, addDataMessage) {
             <Typography variant="body1">
                 {addDataMessage}
             </Typography>
-            <CreateButton basePath={basePath}/>
+            <CreateButton {...{basePath}}/>
         </Box>
     )
-}
+)
 
-export function getShowActions() {
-    return ({permissions, basePath, data, resource}) => (
+export const getShowActions = () => (
+    ({permissions, basePath, data: record}) => (
         <TopToolbar>
-            <ListButton basePath={basePath} record={data}/>
-            {permissions && <EditButton basePath={basePath} record={data}/>}
-            <RefreshButton basePath={basePath} record={data}/>
+            <ListButton {...{basePath, record}}/>
+            {permissions && (
+                <EditButton  {...{basePath, record}}/>
+            )}
+            <RefreshButton  {...{basePath, record}}/>
         </TopToolbar>
     )
-}
+)
 
-export function getEditActions() {
-    return ({basePath, data, resource}) => (
+export const getEditActions = () => (
+    ({basePath, data: record}) => (
         <TopToolbar>
-            <ListButton basePath={basePath} record={data}/>
-            <CreateButton basePath={basePath} record={data}/>
-            <CloneButton basePath={basePath} record={data}/>
-            <ShowButton basePath={basePath} record={data}/>
-            <RefreshButton basePath={basePath} record={data}/>
+            <ListButton {...{basePath, record}}/>
+            <CreateButton {...{basePath, record}}/>
+            <CloneButton {...{basePath, record}}/>
+            <ShowButton {...{basePath, record}}/>
+            <RefreshButton {...{basePath, record}}/>
         </TopToolbar>
     )
-}
+)
 
-export function getEditActionsWithoutFile() {
-    return ({basePath, data, resource}) => {
-        const dataWithoutFile = {...data}
+export const getEditActionsWithoutFile = () => (
+    ({basePath, data: record}) => {
+        const dataWithoutFile = {...record}
         delete dataWithoutFile.file
+
         return (
             <TopToolbar>
-                <ListButton basePath={basePath} record={data}/>
-                <CreateButton basePath={basePath} record={data}/>
-                <CloneButton basePath={basePath} record={dataWithoutFile}/>
-                <ShowButton basePath={basePath} record={data}/>
-                <RefreshButton basePath={basePath} record={data}/>
+                <ListButton  {...{basePath, record}}/>
+                <CreateButton  {...{basePath, record}}/>
+                <CloneButton record={dataWithoutFile}  {...{basePath}}/>
+                <ShowButton  {...{basePath, record}}/>
+                <RefreshButton  {...{basePath, record}}/>
             </TopToolbar>
         )
     }
-}
+)
 
-export function getBulkActionButtons() {
-    return ({permissions, ...props}) => {
-        return (
-            permissions
-                ? <React.Fragment>
-                    <BulkDeleteButton {...props} />
-                </React.Fragment>
-                : null
+export const getBulkActionButtons = () => (
+    ({permissions, ...props}) => (
+        !permissions ? null : (
+            <React.Fragment>
+                <BulkDeleteButton {...props} />
+            </React.Fragment>
         )
-    }
-}
+    )
+)

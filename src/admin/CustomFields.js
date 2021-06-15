@@ -6,9 +6,6 @@ const useStyles = makeStyles({
         fontSize: '1.2em',
         display: 'inline-block',
         minWidth: '12rem',
-    },
-    company: {
-        minWidth: '3em'
     }
 })
 
@@ -23,14 +20,12 @@ export const HeadlineField = ({source, record = {}}) => {
 
 export const DescriptionField = ({source, maxchars = 300, record = {}}) => {
     let description = record[source]
-    if (description && description.length > maxchars)
-        description = description.slice(0, maxchars) + '…'
-    return <span>{description}</span>
-}
-
-export const RotaField = ({source, record = {}}) => {
-    const classes = useStyles()
-    if (record[source])
-        return <div className={classes.company}>{record[source]} НР</div>
-    else return null
+    if (description && description.length > maxchars) {
+        description = `${description.slice(0, maxchars)}…`
+    }
+    return (
+        <div>
+            {description}
+        </div>
+    )
 }
