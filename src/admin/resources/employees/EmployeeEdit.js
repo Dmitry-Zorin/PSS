@@ -113,6 +113,16 @@ export const EmployeeEdit = (props) => (
                 fullWidth
             />
             <NumberInput
+                label="Номер взвода"
+                source="platoonNumber"
+                fullWidth
+            />
+            <NumberInput
+                label="Номер роты"
+                source="companyNumber"
+                fullWidth
+            />
+            <NumberInput
                 label='ID сотрудника в системе "Redmine"'
                 source="redmineId"
                 fullWidth

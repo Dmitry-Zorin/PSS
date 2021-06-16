@@ -35,6 +35,21 @@ export const PlatoonCreate = (props) => (
                 source="specialty"
                 fullWidth
             />
+            <NumberInput
+                label="Номер взвода"
+                source="platoonNumber"
+                fullWidth
+            />
+            <NumberInput
+                label="Номер роты"
+                source="companyNumber"
+                fullWidth
+            />
+            <TextInput
+                label="Специальность"
+                source="specialty"
+                fullWidth
+            />
             <TextInput
                 label="Командир взвода"
                 source="platoonCommander"

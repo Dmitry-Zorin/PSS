@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const schema = require('../schemas/CategorySchema')
-const createAPI = require('../utils').createAPI
+const {createAPI} = require('../utils')
 
 const Model = mongoose.model('Category', schema)
 

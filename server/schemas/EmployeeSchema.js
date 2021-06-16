@@ -19,6 +19,8 @@ module.exports = new Schema(
         researchTopic: String,
         achievements: String,
         jobAfter: String,
+        platoonNumber: String,
+        companyNumber: String,
         redmineId: String
     },
     {versionKey: false}

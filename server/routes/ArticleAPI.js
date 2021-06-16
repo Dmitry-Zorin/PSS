@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const schema = require('../schemas/ArticleSchema')
-const createAPIwithFile = require('../utils').createAPIwithFile
+const {createAPIwithFile, getFileIfExists} = require('../utils')
 
 const Model = mongoose.model('Article', schema)
 const resource = 'articles'
@@ -18,10 +18,7 @@ const extractDataToSend = async (data) => ({
     subdivisions: data.subdivisions,
     exitData: data.exitData !== 'null' ? data.exitData : undefined,
     character: data.character !== 'null' ? data.character : undefined,
-    file: data.file ? {
-        url: `${data.file.includes('http://') ? '' : process.env.SERVER}${data.file}`,
-        title: data.headline
-    } : undefined
+    file: getFileIfExists(data)
 })
 
 const extractDataFromRequest = (req) => ({

@@ -1,11 +1,12 @@
 const mongoose = require('mongoose')
 const schema = require('../schemas/EmployeeSchema')
-const createAPIwithFile = require('../utils').createAPIwithFile
+const {createAPIwithFile, getObjectProps, getFileIfExists} = require('../utils')
 
 const Model = mongoose.model('Employee', schema)
 const resource = 'employees'
 
 const props = [
+    'id',
     'file',
     'name',
     'birthDate',
@@ -22,24 +23,18 @@ const props = [
     'researchTopic',
     'achievements',
     'jobAfter',
+    'platoonNumber',
+    'companyNumber',
     'redmineId'
 ]
 
-const extractDataToSend = (data) => props.reduce((d, e) => {
-    if (e !== 'file') d[e] = data[e]
-    return d
-}, {
-    id: data.id,
-    file: data.file ? {
-        url: `${data.file.includes('http://') ? '' : process.env.SERVER}${data.file}`,
-        title: data.name
-    } : undefined
-})
+const extractDataToSend = (data) => (
+    getObjectProps(data, props, getFileIfExists(data, {}))
+)
 
-const extractDataFromRequest = ({body}) => props.reduce((d, e) => {
-    d[e] = body[e]
-    return d
-}, {})
+const extractDataFromRequest = ({body}) => (
+    getObjectProps(body, props)
+)
 
 module.exports = (app) => {
     createAPIwithFile(app, resource, Model, extractDataToSend, extractDataFromRequest)

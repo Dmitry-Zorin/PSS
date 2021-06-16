@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const schema = require('../schemas/PatentSchema')
-const createAPIwithFile = require('../utils').createAPIwithFile
+const {createAPIwithFile, getFileIfExists} = require('../utils')
 
 const Model = mongoose.model('Patents', schema)
 const resource = 'patents'
@@ -16,10 +16,7 @@ const extractDataToSend = (data) => (
         volume: data.volume,
         authors: data.authors,
         subdivisions: data.subdivisions,
-        file: {
-            url: `${data.file.includes('http://') ? '' : process.env.SERVER}${data.file}`,
-            title: data.headline
-        }
+        file: getFileIfExists(data)
     }
 )
 

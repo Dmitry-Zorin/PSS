@@ -18,8 +18,8 @@ import {
 } from 'react-admin'
 import {createEmptyPage, createTitle, getShowActions} from '../utils'
 
-const validateLoginExistsOnCreate = (values) => {
-    return fetch(`${process.env.SERVER}/api/users/unique`, {
+const validateLoginExistsOnCreate = (values) => (
+    fetch(`${process.env.SERVER}/api/users/unique`, {
         method: 'POST',
         body: JSON.stringify({login: values.login}),
         headers: {'Content-Type': 'application/json'}
@@ -32,7 +32,7 @@ const validateLoginExistsOnCreate = (values) => {
         .catch(() => (
             {login: 'Internal error, please try again'}
         ))
-}
+)
 
 const validateLogin = [required(), minLength(1)]
 const validatePassword = [required(), minLength(8)]

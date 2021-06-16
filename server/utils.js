@@ -8,7 +8,7 @@ const shortid = require('shortid')
 const cookieParser = require('cookie-parser')()
 const auth = require('./auth').auth
 
-function listParamsMiddleware(req, res, next) {
+const listParamsMiddleware = (req, res, next) => {
     const {query} = req
 
     for (const [k, v] of Object.entries(query)) {
@@ -287,7 +287,7 @@ const createAPIwithFile = (app, resource, Model, extractDataToSend, extractDataF
                 .set('Content-Range', contentLength)
                 .send(await Promise.all(
                     modelRecord.slice(rangeStart, rangeEnd)
-                        .map(async dataItem => await extractDataToSend(dataItem))
+                        .map(async data => await extractDataToSend(data))
                 ))
         }
         catch (err) {
@@ -299,7 +299,8 @@ const createAPIwithFile = (app, resource, Model, extractDataToSend, extractDataF
     app.get(`/api/${resource}/:id`, cookieParser, auth, async (req, res) => {
         try {
             res.json(await extractDataToSend(
-                await Model.findOne({_id: req.params.id}).exec()
+                await Model.findOne({_id: req.params.id}).exec(),
+                true
             ))
         }
         catch (err) {
@@ -308,6 +309,24 @@ const createAPIwithFile = (app, resource, Model, extractDataToSend, extractDataF
     })
 }
 
+const getFileIfExists = (data, defaultObj = undefined) => (
+    !data.file ? defaultObj : {
+        file: {
+            url: `${data.file.includes('http://') ? '' : process.env.SERVER}${data.file}`,
+            title: data.headline || data.name
+        }
+    }
+)
+
+const getObjectProps = (data, props, defaultObj = {}) => (
+    props.reduce((obj, e) => {
+        obj[e] = data[e]
+        return obj
+    }, defaultObj)
+)
+
 exports.listParamsMiddleware = listParamsMiddleware
 exports.createAPI = createAPI
 exports.createAPIwithFile = createAPIwithFile
+exports.getFileIfExists = getFileIfExists
+exports.getObjectProps = getObjectProps

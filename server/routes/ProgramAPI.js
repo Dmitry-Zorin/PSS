@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const schema = require('../schemas/ProgramSchema')
-const createAPIwithFile = require('../utils').createAPIwithFile
+const {createAPIwithFile, getFileIfExists} = require('../utils')
 
 const Model = mongoose.model('Program', schema)
 const resource = 'programs'
@@ -15,10 +15,7 @@ const extractDataToSend = (data) => (
         type: data.type || 'Программа',
         authors: data.authors,
         subdivisions: data.subdivisions,
-        file: {
-            url: `${data.file.includes('http://') ? '' : process.env.SERVER}${data.file}`,
-            title: data.headline
-        },
+        file: getFileIfExists(data),
         certificate: data.certificate ? {
             code: data.certificate.code !== 'null' ? data.certificate.code : undefined,
             file: data.certificate.file ? {
@@ -42,7 +39,7 @@ const extractDataFromRequest = (req) => (
     }
 )
 
-module.exports = function (app) {
+module.exports = (app) => {
     createAPIwithFile(app, resource, Model, extractDataToSend, extractDataFromRequest)
 }
 

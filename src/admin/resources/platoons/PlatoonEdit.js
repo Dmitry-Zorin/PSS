@@ -42,6 +42,16 @@ export const PlatoonEdit = (props) => (
                 validate={validateText}
                 fullWidth
             />
+            <NumberInput
+                label="Номер взвода"
+                source="platoonNumber"
+                fullWidth
+            />
+            <NumberInput
+                label="Номер роты"
+                source="companyNumber"
+                fullWidth
+            />
             <TextInput
                 label="Специальность"
                 source="specialty"
