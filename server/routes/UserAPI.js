@@ -133,7 +133,8 @@ module.exports = (app) => {
                 .catch(() => res.status(500).json({
                     error: 'Internal error, please try again'
                 }))
-        } else res.status(401).json({error: 'Access denied'})
+        }
+        else res.status(401).json({error: 'Access denied'})
     })
 
     // create
@@ -163,7 +164,8 @@ module.exports = (app) => {
                 .catch(() => res.status(500).json({
                     error: 'Internal error, please try again'
                 }))
-        } else {
+        }
+        else {
             res.status(401).json({error: 'Access denied'})
         }
     })
@@ -174,15 +176,15 @@ module.exports = (app) => {
             User.findByIdAndDelete({_id: req.params.id})
                 .then(data => res.json(extractDataToSend(data)))
                 .catch(error => console.log(error))
-        } else res.status(401).json({error: 'Access denied'})
+        }
+        else res.status(401).json({error: 'Access denied'})
     })
 
     // getList
     app.get(`/api/${resource}`, cookieParser, auth, listParamsMiddleware, (req, res) => {
         if (req.isAdmin) {
             const {sortField, sortOrder, rangeStart, rangeEnd, filter} = req.listParams
-            User.find(filter)
-                .sort({[sortField]: sortOrder})
+            User.find(filter).sort({[sortField]: sortOrder})
                 .then(data => {
                     const contentLength = `${resource} ${rangeStart}-${rangeEnd - 1}/${data.length}`
                     const dataToSend = data.slice(rangeStart, rangeEnd)
@@ -190,7 +192,8 @@ module.exports = (app) => {
                     res.set('Content-Range', contentLength).send(dataToSend)
                 })
                 .catch(error => console.log(error))
-        } else res.status(401).json({error: 'Access denied'})
+        }
+        else res.status(401).json({error: 'Access denied'})
     })
 
     // getOne
@@ -199,6 +202,7 @@ module.exports = (app) => {
             User.findOne({_id: req.params.id})
                 .then(data => res.json(extractDataToSend(data)))
                 .catch(error => console.log(error))
-        } else res.status(401).json({error: 'Access denied'})
+        }
+        else res.status(401).json({error: 'Access denied'})
     })
 }

@@ -86,8 +86,7 @@ module.exports = (app) => {
         const events = []
 
         Promise.all(Object.values(resources).map(r => (
-            r.model.find(filter)
-                .sort({[sortField]: sortOrder})
+            r.model.find(filter).sort({[sortField]: sortOrder})
                 .then(data => {
                     events.push(...data.map(e => (
                         {

@@ -25,14 +25,17 @@ function listParamsMiddleware(req, res, next) {
                 $regex: value,
                 $options: 'i'
             }
-        } else if (key === 'tags') {
+        }
+        else if (key === 'tags') {
             filters['tags.tag'] = {
                 $regex: value,
                 $options: 'i'
             }
-        } else if (['rota', 'publicationPlace', 'department', 'isAdmin'].includes(key)) {
+        }
+        else if (['rota', 'publicationPlace', 'department', 'isAdmin'].includes(key)) {
             filters[key] = {$eq: value}
-        } else {
+        }
+        else {
             filters[key] = {
                 $regex: value,
                 $options: 'i'
@@ -51,84 +54,104 @@ function listParamsMiddleware(req, res, next) {
     next()
 }
 
-/*
-extractDataFromRequest: -firstCreationDate, -file
-*/
+const createAPI = (app, resource, Model, extractDataToSend, extractDataFromRequest) => {
 
-function createAPI(app, resource, Model, extractDataToSend, extractDataFromRequest) {
     // create
-    app.post(`/api/${resource}`, upload.array(), cookieParser, auth, jsonParser, (req, res) => {
+    app.post(`/api/${resource}`, upload.array(), cookieParser, auth, jsonParser, async (req, res) => {
         if (!req.isAdmin) {
             return res.status(401).json({error: 'Access denied'})
         }
 
-        let data = extractDataFromRequest(req)
-        data['firstCreationDate'] = new Date()
-        const modelRecord = new Model(data)
-        modelRecord.save()
-            .then(() => res.json(extractDataToSend(modelRecord)))
-            .catch(console.log)
+        try {
+            res.json(await extractDataToSend(
+                await new Model({
+                    ...extractDataFromRequest(req),
+                    firstCreationDate: new Date()
+                }).save()
+            ))
+        }
+        catch (err) {
+            console.log(err)
+        }
     })
 
     // update
-    app.put(`/api/${resource}/:id`, upload.array(), cookieParser, auth, jsonParser, (req, res) => {
+    app.put(`/api/${resource}/:id`, upload.array(), cookieParser, auth, jsonParser, async (req, res) => {
         if (!req.isAdmin) {
             return res.status(401).json({error: 'Access denied'})
         }
 
-        Model.findByIdAndUpdate(
-            req.params.id,
-            extractDataFromRequest(req),
-            {new: true}
-        )
-            .then(data => res.json(extractDataToSend(data)))
-            .catch(console.log)
+        try {
+            res.json(await extractDataToSend(
+                await Model.findByIdAndUpdate(req.params.id, extractDataFromRequest(req), {new: true}).exec()
+            ))
+        }
+        catch (err) {
+            console.log(err)
+        }
     })
 
     // delete
-    app.delete(`/api/${resource}/:id`, cookieParser, auth, (req, res) => {
+    app.delete(`/api/${resource}/:id`, cookieParser, auth, async (req, res) => {
         if (!req.isAdmin) {
             return res.status(401).json({error: 'Access denied'})
         }
 
-        Model.findByIdAndDelete({_id: req.params.id})
-            .then(data => res.json(extractDataToSend(data)))
-            .catch(console.log)
+        try {
+            res.json(await extractDataToSend(
+                await Model.findByIdAndDelete({_id: req.params.id}).exec()
+            ))
+        }
+        catch (err) {
+            console.log(err)
+        }
     })
 
     // getList
-    app.get(`/api/${resource}`, cookieParser, auth, listParamsMiddleware, (req, res) => {
+    app.get(`/api/${resource}`, cookieParser, auth, listParamsMiddleware, async (req, res) => {
         const {sortField, sortOrder, rangeStart, rangeEnd, filter} = req.listParams
-        Model.find(filter)
-            .sort({[sortField]: sortOrder})
-            .then(data => {
-                const contentLength = `${resource} ${rangeStart}-${rangeEnd - 1}/${data.length}`
-                const dataToSend = data.slice(rangeStart, rangeEnd)
-                    .map(dataItem => extractDataToSend(dataItem))
-                res.set('Content-Range', contentLength).send(dataToSend)
-            })
-            .catch(console.log)
+
+        try {
+            const modelRecord = await Model.find(filter).sort({[sortField]: sortOrder}).exec()
+            const contentLength = `${resource} ${rangeStart}-${rangeEnd - 1}/${modelRecord.length}`
+
+            res.set('Content-Range', contentLength).send(await Promise.all(
+                modelRecord.slice(rangeStart, rangeEnd)
+                    .map(async dataItem => await extractDataToSend(dataItem))
+            ))
+        }
+        catch (err) {
+            console.log(err)
+        }
     })
 
     // getOne
-    app.get(`/api/${resource}/:id`, cookieParser, auth, (req, res) => {
-        Model.findOne({_id: req.params.id})
-            .then(data => res.json(extractDataToSend(data)))
-            .catch(console.log)
+    app.get(`/api/${resource}/:id`, cookieParser, auth, async (req, res) => {
+        try {
+            res.json(await extractDataToSend(
+                await Model.findOne({_id: req.params.id}).exec()
+            ))
+        }
+        catch (err) {
+            console.log(err)
+        }
     })
 
     // getMany
-    app.post(`/api/${resource}/many`, cookieParser, auth, upload.array('ids'), (req, res) => {
-        Model.find().where('_id').in(JSON.parse(req.body.ids)).exec((error, records) => {
-            if (error) {
-                return console.log(error)
-            }
-            res.send(records.map(data => extractDataToSend(data)))
-        })
+    app.post(`/api/${resource}/many`, cookieParser, auth, upload.array('ids'), async (req, res) => {
+        try {
+            const records = await Model.find().where('_id').in(JSON.parse(req.body.ids)).exec()
+            res.send(await Promise.all(
+                records.map(async data => await extractDataToSend(data))
+            ))
+        }
+        catch (err) {
+            console.log(err)
+        }
     })
 }
 
-function createAPIwithFile(app, resource, Model, extractDataToSend, extractDataFromRequest) {
+const createAPIwithFile = (app, resource, Model, extractDataToSend, extractDataFromRequest) => {
     let filesFolder = path.join('/media/', resource)
 
     const filesStorage = multer.diskStorage({
@@ -155,118 +178,133 @@ function createAPIwithFile(app, resource, Model, extractDataToSend, extractDataF
     app.post(`/api/${resource}`, cookieParser, auth, formData.fields([
         {name: 'file', maxCount: 1},
         {name: 'certificateFile', maxCount: 1}
-    ]), (req, res) => {
+    ]), async (req, res) => {
         if (!req.isAdmin) {
             return res.status(401).json({error: 'Access denied'})
         }
 
-        const data = extractDataFromRequest(req)
-        data.firstCreationDate = new Date()
+        try {
+            const data = extractDataFromRequest(req)
+            data.firstCreationDate = new Date()
 
-        if (req.files.file) {
-            data.file = path.join(filesFolder, req.files.file[0].filename)
+            if (req.files.file) {
+                data.file = path.join(filesFolder, req.files.file[0].filename)
 
-            if (req.files.certificateFile) {
-                data.certificate.file = path.join(filesFolder, 'certificates', req.files.certificateFile[0].filename)
+                if (req.files.certificateFile) {
+                    data.certificate.file = path.join(filesFolder, 'certificates', req.files.certificateFile[0].filename)
+                }
             }
-        }
 
-        const modelRecord = new Model(data)
-        modelRecord.save()
-            .then(() => res.json(extractDataToSend(modelRecord)))
-            .catch(console.log)
+            res.json(await extractDataToSend(
+                await new Model(data).save()
+            ))
+        }
+        catch (err) {
+            console.log(err)
+        }
     })
 
     // update
     app.put(`/api/${resource}/:id`, cookieParser, auth, formData.fields([
         {name: 'newfile', maxCount: 1},
         {name: 'newCertificateFile', maxCount: 1}
-    ]), (req, res) => {
+    ]), async (req, res) => {
         if (!req.isAdmin) {
             return res.status(401).json({error: 'Access denied'})
         }
 
-        const data = extractDataFromRequest(req)
+        try {
+            const data = extractDataFromRequest(req)
 
-        if (req.files && req.files.newfile) {
-            data.file = path.join(filesFolder, req.files.newfile[0].filename)
-            if (req.body.file) {
-                const oldFilePath = path.join(appRoot.path, req.body.file.replace(/http[^a-z]+(localhost)?[^a-z]+/, ''))
-                fs.unlink(oldFilePath, error => {
-                    if (error) console.log(error)
-                })
+            if (req.files && req.files.newfile) {
+                data.file = path.join(filesFolder, req.files.newfile[0].filename)
+                if (req.body.file) {
+                    const oldFilePath = path.join(appRoot.path, req.body.file.replace(/http[^a-z]+(localhost)?[^a-z]+/, ''))
+                    fs.unlink(oldFilePath, console.log)
+                }
             }
-        } else {
-            data.file = req.body.file ? req.body.file.match(/.media.+/)[0] : null
-        }
-        if (req.files && req.files.newCertificateFile || req.body.certificateCode === 'null') {
-            if (req.body.certificateCode !== 'null') {
-                data.certificate.file = path.join(filesFolder, 'certificates', req.files.newCertificateFile[0].filename)
+            else {
+                data.file = req.body.file ? req.body.file.match(/.media.+/)[0] : null
             }
-            if (req.body.certificateFile) {
-                const oldFilePath = path.join(appRoot.path, req.body.certificateFile.replace(/http[^a-z]+(localhost)?[^a-z]+/, ''))
-                fs.unlink(oldFilePath, error => {
-                    if (error) console.log(error)
-                })
-            }
-        } else if (req.body.certificateFile) {
-            data.certificate.file = req.body.certificateFile ? req.body.certificateFile.match(/.media.+/)[0]: null
-        }
 
-        Model.findByIdAndUpdate(
-            req.params.id,
-            data,
-            {new: true}
-        )
-            .then(updatedData => res.json(extractDataToSend(updatedData)))
-            .catch(console.log)
+            if (req.files && req.files.newCertificateFile || req.body.certificateCode === 'null') {
+                if (req.body.certificateCode !== 'null') {
+                    data.certificate.file = path.join(filesFolder, 'certificates', req.files.newCertificateFile[0].filename)
+                }
+                if (req.body.certificateFile) {
+                    const oldFilePath = path.join(appRoot.path, req.body.certificateFile.replace(/http[^a-z]+(localhost)?[^a-z]+/, ''))
+                    fs.unlink(oldFilePath, console.log)
+                }
+            }
+            else if (req.body.certificateFile) {
+                data.certificate.file = req.body.certificateFile ? req.body.certificateFile.match(/.media.+/)[0] : null
+            }
+
+            res.json(await extractDataToSend(
+                await Model.findByIdAndUpdate(req.params.id, data, {new: true}).exec()
+            ))
+        }
+        catch (err) {
+            console.log(err)
+        }
     })
 
     // delete
-    app.delete(`/api/${resource}/:id`, cookieParser, auth, (req, res) => {
+    app.delete(`/api/${resource}/:id`, cookieParser, auth, async (req, res) => {
         if (!req.isAdmin) {
             return res.status(401).json({error: 'Access denied'})
         }
 
-        Model.findByIdAndDelete({_id: req.params.id})
-            .then(data => {
-                if (data.file) {
-                    const filePath = path.join(appRoot.path, data.file.replace(/http[^a-z]+(localhost)?[^a-z]+/, ''))
-                    fs.unlink(filePath, error => {
-                        if (error) console.log(error)
-                    })
-                    if (data.certificate && data.certificate.file) {
-                        const certificateFilePath = path.join(appRoot.path, data.certificate.file.replace(/http[^a-z]+(localhost)?[^a-z]+/, ''))
-                        fs.unlink(certificateFilePath, error => {
-                            if (error) console.log(error)
-                        })
-                    }
+        try {
+            const modelRecord = await Model.findByIdAndDelete({_id: req.params.id}).exec()
+
+            if (modelRecord.file) {
+                const filePath = path.join(appRoot.path, modelRecord.file.replace(/http[^a-z]+(localhost)?[^a-z]+/, ''))
+                fs.unlink(filePath, console.log)
+
+                if (modelRecord.certificate && modelRecord.certificate.file) {
+                    const certificateFilePath = path.join(appRoot.path, modelRecord.certificate.file.replace(/http[^a-z]+(localhost)?[^a-z]+/, ''))
+                    fs.unlink(certificateFilePath, console.log)
                 }
-                res.json(extractDataToSend(data))
-            })
-            .catch(console.log)
+            }
+
+            res.json(await extractDataToSend(modelRecord))
+        }
+        catch (err) {
+            console.log(err)
+        }
     })
 
     // getList
-    app.get(`/api/${resource}`, cookieParser, auth, listParamsMiddleware, (req, res) => {
+    app.get(`/api/${resource}`, cookieParser, auth, listParamsMiddleware, async (req, res) => {
         const {sortField, sortOrder, rangeStart, rangeEnd, filter} = req.listParams
 
-        Model.find(filter)
-            .sort({[sortField]: sortOrder})
-            .then(data => {
-                const contentLength = `${resource} ${rangeStart}-${rangeEnd - 1}/${data.length}`
-                const dataToSend = data.slice(rangeStart, rangeEnd)
-                    .map(dataItem => extractDataToSend(dataItem))
-                res.set('Content-Range', contentLength).send(dataToSend)
-            })
-            .catch(console.log)
+        try {
+            const modelRecord = await Model.find(filter).sort({[sortField]: sortOrder}).exec()
+            const contentLength = `${resource} ${rangeStart}-${rangeEnd - 1}/${modelRecord.length}`
+
+            res
+                .set('Content-Range', contentLength)
+                .send(await Promise.all(
+                    modelRecord.slice(rangeStart, rangeEnd)
+                        .map(async dataItem => await extractDataToSend(dataItem))
+                ))
+        }
+        catch (err) {
+            console.log(err)
+        }
     })
 
     // getOne
-    app.get(`/api/${resource}/:id`, cookieParser, auth, (req, res) => {
-        Model.findOne({_id: req.params.id})
-            .then(data => res.json(extractDataToSend(data)))
-            .catch(console.log)
+    app.get(`/api/${resource}/:id`, cookieParser, auth, async (req, res) => {
+        try {
+            res.json(await extractDataToSend(
+                await Model.findOne({_id: req.params.id}).exec()
+            ))
+        }
+        catch (err) {
+            console.log(err)
+        }
     })
 }
 

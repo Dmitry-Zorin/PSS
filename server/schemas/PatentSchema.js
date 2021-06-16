@@ -3,7 +3,7 @@ const Schema = mongoose.Schema
 
 module.exports = new Schema(
     {
-       headline: {
+        headline: {
             type: String,
             required: true,
         },

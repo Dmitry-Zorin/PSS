@@ -5,7 +5,7 @@ const createAPIwithFile = require('../utils').createAPIwithFile
 const Model = mongoose.model('Article', schema)
 const resource = 'articles'
 
-const extractDataToSend = (data) => ({
+const extractDataToSend = async (data) => ({
     id: data.id,
     headline: data.headline,
     text: data.text,
