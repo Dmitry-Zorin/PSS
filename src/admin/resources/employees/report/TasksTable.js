@@ -21,9 +21,9 @@ const TasksTable = ({data}) => {
                         </TableCell>
                     </TableRow>
                     <TableRow>
-                        <TableCell>{data.issuesNumber - data.issuesCompleted}</TableCell>
+                        <TableCell>{data.issueNumber - data.issuesCompleted}</TableCell>
                         <TableCell>{data.issuesCompleted}</TableCell>
-                        <TableCell>{data.issuesNumber}</TableCell>
+                        <TableCell>{data.issueNumber}</TableCell>
                     </TableRow>
                 </TableBody>
             </Table>

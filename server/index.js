@@ -33,9 +33,14 @@ app.use((req, res, next) => {
     next()
 })
 
+app.use((err, req, res) => {
+    console.error(err.stack)
+    res.status(500).send(null)
+})
+
 connectToDb
     .then(() => {
-        app.listen(PORT, HOST, () => {
+        app.listen(+PORT, HOST, () => {
             console.log('Server is running...')
         })
     })

@@ -1,7 +1,6 @@
 import {Divider, Typography} from "@material-ui/core"
 import Box from "@material-ui/core/Box"
 import React, {useEffect, useState} from "react"
-import dataProvider from "../../../DataProvider"
 import useStyles from "../Styles"
 import CircleNumber from "./CircleNumber"
 import HoursTable from "./HoursTable"
@@ -9,52 +8,20 @@ import PointsTable from "./PointsTable"
 import ProgressBar from "./ProgressBar"
 import TasksTable from "./TasksTable"
 
-const headers = {
-    'X-Redmine-API-Key': '5127fd8a95e7176fb72c64ae823a508aaecfea2b',
-}
-
 const Report = ({id}) => {
     const classes = useStyles()
     const [data, setData] = useState({
-        issuesNumber: 0,
+        issueNumber: 0,
         issuesCompleted: 0,
-        nonScienceHours: 0,
+        nonScienceHours: 0
     })
 
     useEffect(() => {
-        let nonScienceHours = 0
-        let issuesCompleted = 0
-        let userId
-
-        dataProvider.getOne('employees', {id})
-            .then(data => {
-                userId = data.data?.redmineId
-                const urlParams = new URLSearchParams({
-                    assigned_to_id: userId,
-                    created_date: '>=2021-06-07',
-                    due_date: '<=2021-06-11'
-                })
-                return fetch(`${process.env.REDMINE_SERVER}/issues.json?${urlParams}`, {headers})
-            })
-            .then(resp => resp.json())
-            .then(data => {
-                const issues = data?.issues
-                if (!issues) return
-
-                const issuesNumber = issues.length
-
-                for (const {tracker, status, estimated_hours = 0} of issues) {
-                    issuesCompleted += ['Решена', 'Закрыта'].includes(status)
-                    nonScienceHours += estimated_hours * (tracker?.name !== 'Научная деятельность')
-                }
-
-                setData({
-                    issuesNumber,
-                    issuesCompleted,
-                    nonScienceHours
-                })
-            })
-            .catch(console.log)
+        fetch(`${process.env.SERVER}/api/employees/${id}/redmine`, {
+            credentials: 'include'
+        })
+            .then(res => res.json())
+            .then(res => setData(res))
     }, [])
 
     const score = 900 + 100 * Math.random()
@@ -79,20 +46,28 @@ const Report = ({id}) => {
                 Отчет оператора за неделю
             </Typography>
             <Typography className={classes.textSecondary}>
-                7.05 - 11.06
+                14.05 - 18.06
             </Typography>
 
             <Typography className={classes.subtitle}>
                 Выполнение задач
             </Typography>
             <TasksTable {...{classes, data}}/>
-            <ProgressBar steps={(data.issuesNumber || 10) + 1} activeStep={data.issuesCompleted} {...{classes}}/>
+            <ProgressBar
+                value={data.issuesCompleted}
+                max={data.issueNumber}
+                {...{classes}}
+            />
 
             <Typography className={classes.subtitle}>
                 Трудозатраты
             </Typography>
             <HoursTable {...{classes, data}}/>
-            <ProgressBar steps={7} step={5} activeStep={30 - data.nonScienceHours} {...{classes}}/>
+            <ProgressBar
+                value={30 - data.nonScienceHours}
+                max={30}
+                {...{classes}}
+            />
         </Box>
     )
 }

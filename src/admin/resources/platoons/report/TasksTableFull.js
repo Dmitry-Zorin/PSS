@@ -23,18 +23,14 @@ const TasksTableFull = ({people}) => {
                             Всего задач
                         </TableCell>
                     </TableRow>
-                    {people.map(p => {
-                        const tot = 9 + Math.round(2 * Math.random())
-                        const t = +(Math.random() > 0.1)
-                        return (
-                            <TableRow key={p}>
-                                <TableCell>{p}</TableCell>
-                                <TableCell>{t}</TableCell>
-                                <TableCell>{tot - t}</TableCell>
-                                <TableCell>{tot}</TableCell>
-                            </TableRow>
-                        )
-                    })}
+                    {people.map(p => (
+                        <TableRow key={p}>
+                            <TableCell>{p.name}</TableCell>
+                            <TableCell>{p.issueNumber - p.issuesCompleted}</TableCell>
+                            <TableCell>{p.issuesCompleted}</TableCell>
+                            <TableCell>{p.issueNumber}</TableCell>
+                        </TableRow>
+                    ))}
                 </TableBody>
             </Table>
         </TableContainer>

@@ -7,12 +7,12 @@ const bcrypt = require('bcrypt')
 const {username, password, admin} = minimist(process.argv.slice(2))
 
 if (!username) {
-    console.log('Username required!')
+    console.warn('Username required!')
     process.exit(1)
 }
 
 if (!password) {
-    console.log('Password required!')
+    console.warn('Password required!')
     process.exit(1)
 }
 
@@ -22,7 +22,7 @@ connectToDb
             const User = mongoose.model('User', schema)
 
             if (await User.findOne({login: username})) {
-                return console.log('User already exists!')
+                return console.warn('User already exists!')
             }
 
             await User.create({
@@ -34,7 +34,7 @@ connectToDb
             console.log(`${admin ? 'Admin' : 'User'} "${username}" has been added!`)
         }
         catch (err) {
-            console.log(err)
+            console.error(err)
             process.exit(1)
         }
         finally {

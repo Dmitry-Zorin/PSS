@@ -23,17 +23,14 @@ const HoursTableFull = ({people}) => {
                             Всего рабочего времени
                         </TableCell>
                     </TableRow>
-                    {people.map(p => {
-                        const t = Math.random() > 0.35
-                        return (
-                            <TableRow key={p}>
-                                <TableCell>{p}</TableCell>
-                                <TableCell>{5 * t} ч.</TableCell>
-                                <TableCell>{30 - 5 * t} ч.</TableCell>
-                                <TableCell>30 ч.</TableCell>
-                            </TableRow>
-                        )
-                    })}
+                    {people.map(p => (
+                        <TableRow key={p}>
+                            <TableCell>{p.name}</TableCell>
+                            <TableCell>{p.nonScienceHours} ч.</TableCell>
+                            <TableCell>{30 - p.nonScienceHours} ч.</TableCell>
+                            <TableCell>30 ч.</TableCell>
+                        </TableRow>
+                    ))}
                 </TableBody>
             </Table>
         </TableContainer>

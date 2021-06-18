@@ -1,6 +1,6 @@
 const {listParamsMiddleware} = require('../utils')
 const cookieParser = require('cookie-parser')()
-const auth = require('../auth').auth
+const {auth} = require('../auth')
 
 const resources = {
     monographs: {
@@ -81,31 +81,35 @@ const resources = {
 }
 
 module.exports = (app) => {
-    app.get(`/api/timeline`, cookieParser, auth, listParamsMiddleware, (req, res) => {
+    app.get(`/api/timeline`, cookieParser, auth, listParamsMiddleware, async (req, res, next) => {
         const {sortField, sortOrder, rangeStart, rangeEnd, filter} = req.listParams
         const events = []
 
-        Promise.all(Object.values(resources).map(r => (
-            r.model.find(filter).sort({[sortField]: sortOrder})
-                .then(data => {
-                    events.push(...data.map(e => (
-                        {
-                            id: e._id,
-                            title: e.headline,
-                            creationDate: e.firstCreationDate,
-                            type: r.model.collection.collectionName,
-                            translation: r.translation,
-                            wordGender: r.wordGender
-                        }
-                    )))
-                })
-                .catch(console.log)
-        )))
-            .then(() => {
-                const contentLength = `timeline ${rangeStart}-${rangeEnd - 1}/${events.length}`
-                res.set('Content-Range', contentLength)
-                    .send(events.slice(rangeStart, rangeEnd))
-            })
-            .catch(console.log)
+        try {
+            for (const resource of Object.values(resources)) {
+                const record = await resource.model
+                    .find(filter)
+                    .sort({[sortField]: sortOrder})
+                    .exec()
+
+                events.push(...record.map(e => (
+                    {
+                        id: e._id,
+                        title: e.headline,
+                        creationDate: e.firstCreationDate,
+                        type: resource.model.collection.collectionName,
+                        translation: resource.translation,
+                        wordGender: resource.wordGender
+                    }
+                )))
+            }
+
+            res
+                .set('Content-Range', `timeline ${rangeStart}-${rangeEnd - 1}/${events.length}`)
+                .send(events.slice(rangeStart, rangeEnd))
+        }
+        catch (err) {
+            next(err)
+        }
     })
 }
