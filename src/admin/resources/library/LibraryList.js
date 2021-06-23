@@ -11,7 +11,7 @@ import {
     TextInput
 } from 'react-admin'
 import {HeadlineField} from '../../CustomFields'
-import {createEmptyPage, getBulkActionButtons} from '../../utils'
+import {createEmptyPage, getBulkActionButtons} from '../../../utils/raUtils'
 import {Aside} from './Aside'
 import {LibraryShow} from './LibraryShow'
 

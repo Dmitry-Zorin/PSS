@@ -214,26 +214,32 @@ const createAPIwithFile = (app, resource, Model, extractDataToSend, extractDataF
 
             if (req.files && req.files.newfile) {
                 data.file = path.join(filesFolder, req.files.newfile[0].filename)
-                if (req.body.file) {
+                if (/http/.test(req.body.file)) {
                     const oldFilePath = path.join(appRoot.path, req.body.file.replace(/http[^a-z]+(localhost)?[^a-z]+/, ''))
                     fs.unlink(oldFilePath, console.log)
                 }
             }
-            else {
-                data.file = req.body.file ? req.body.file.match(/.media.+/)[0] : null
+            else if (req.body.file) {
+                const match = req.body.file.match(/.media.+/)
+                if (match && match.length) {
+                    data.file = match[0]
+                }
             }
 
             if (req.files && req.files.newCertificateFile || req.body.certificateCode === 'null') {
                 if (req.body.certificateCode !== 'null') {
                     data.certificate.file = path.join(filesFolder, 'certificates', req.files.newCertificateFile[0].filename)
                 }
-                if (req.body.certificateFile) {
+                if (/http/.test(req.body.certificateFile)) {
                     const oldFilePath = path.join(appRoot.path, req.body.certificateFile.replace(/http[^a-z]+(localhost)?[^a-z]+/, ''))
                     fs.unlink(oldFilePath, console.log)
                 }
             }
             else if (req.body.certificateFile) {
-                data.certificate.file = req.body.certificateFile ? req.body.certificateFile.match(/.media.+/)[0] : null
+                const match = req.body.certificateFile.match(/.media.+/)
+                if (match && match.length) {
+                    data.certificate.file = match[0]
+                }
             }
 
             const record = await Model.findByIdAndUpdate(req.params.id, data, {new: true}).exec()
@@ -292,7 +298,7 @@ const createAPIwithFile = (app, resource, Model, extractDataToSend, extractDataF
     // getOne
     app.get(`/api/${resource}/:id`, cookieParser, auth, async (req, res, next) => {
         try {
-            const record =  await Model.findOne({_id: req.params.id}).exec()
+            const record = await Model.findOne({_id: req.params.id}).exec()
             res.json(await extractDataToSend(record))
         }
         catch (err) {
@@ -303,10 +309,8 @@ const createAPIwithFile = (app, resource, Model, extractDataToSend, extractDataF
 
 const getFileIfExists = (data, defaultObj = undefined) => (
     !data.file ? defaultObj : {
-        file: {
-            url: `${data.file.includes('http://') ? '' : process.env.SERVER}${data.file}`,
-            title: data.headline || data.name
-        }
+        url: `${data.file.includes('http://') ? '' : process.env.SERVER}${data.file}`,
+        title: data.headline || data.name
     }
 )
 

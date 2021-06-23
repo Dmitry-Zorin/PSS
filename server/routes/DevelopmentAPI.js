@@ -1,8 +1,8 @@
 const mongoose = require('mongoose')
-const schema = require('../schemas/schemas').developmentWorkSchema
+const schema = require('../schemas/schemas').developmentSchema
 const {createAPIwithFile, getFileIfExists} = require('../utils')
 
-const Model = mongoose.model('DevelopmentWork', schema)
+const Model = mongoose.model('Development', schema)
 const resource = 'developments'
 
 const extractDataToSend = (data) => ({

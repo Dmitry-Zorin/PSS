@@ -9,7 +9,7 @@ import {
     SingleFieldList,
     TextField
 } from 'react-admin'
-import {createTitle, getShowActions} from '../../utils'
+import {createTitle, getShowActions} from '../../../utils/raUtils'
 
 const Title = createTitle('Программа', 'headline')
 const ShowActions = getShowActions()

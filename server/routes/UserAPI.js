@@ -41,20 +41,20 @@ const generateToken = (res, login, isAdmin) => {
 
 const loginWithRedmine = async (req, res, username) => {
     const resp = await fetch(`${process.env.REDMINE_SERVER}/users.json?name=${username}`)
-    const users = resp.data.users
+    const users = res && res.data && resp.data.users
     if (!users || !users.length) {
-        return res.status(401).json({error: 'Incorrect login or password'})
+        return 1
     }
     generateToken(res, username, false)
+    res.redirect('/#')
 }
 
 module.exports = (app) => {
     app.get('/login', async (req, res, next) => {
         try {
-            const error = await loginWithRedmine(req, res, req.query.username)
-            if (!error) res.redirect('/')
-        }
-        catch (err) {
+            const errCode = await loginWithRedmine(req, res, req.query.username)
+            if (errCode) res.redirect('/#/login')
+        } catch (err) {
             next(err)
         }
     })
@@ -67,12 +67,14 @@ module.exports = (app) => {
             const user = await User.findOne({login})
 
             if (!user) {
-                const error = await loginWithRedmine(req, res, login)
-                if (!error) res.sendStatus(200)
-                return
+                const errCode = await loginWithRedmine(req, res, login)
+                return errCode
+                    ? res.status(401).json({error: 'Incorrect login or password'})
+                    : res.redirect('/#')
             }
 
-            if (!(await bcrypt.compare(password, user.password))) {
+            const passwordsMatch = await bcrypt.compare(password, user.password)
+            if (!passwordsMatch) {
                 return res.status(401).json({error: 'Incorrect login or password'})
             }
             generateToken(res, login, user.isAdmin)

@@ -10,7 +10,7 @@ import {
     SingleFieldList,
     TextField
 } from 'react-admin'
-import {createTitle, getShowActions} from '../../utils'
+import {createTitle, getShowActions} from '../../../utils/raUtils'
 
 const Title = createTitle('Отчет', 'headline')
 const ShowActions = getShowActions()

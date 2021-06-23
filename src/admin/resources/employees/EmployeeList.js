@@ -1,7 +1,6 @@
 import React from 'react'
 import {Datagrid, Filter, List, TextField, TextInput} from 'react-admin'
-import {createEmptyPage, getBulkActionButtons} from '../../utils'
-import {EmployeeShow} from './EmployeeShow'
+import {createEmptyPage, getBulkActionButtons} from '../../../utils/raUtils'
 
 const Empty = createEmptyPage(
     'Нет доступных сотрудников',
@@ -20,13 +19,18 @@ export const EmployeeList = ({permissions, ...props}) => (
         bulkActionButtons={<BulkActionButtons permissions={permissions}/>}
         {...props}
     >
-        <Datagrid
-            rowClick="show"
-            expand={<EmployeeShow enableActions={false}/>}
-        >
+        <Datagrid rowClick="show">
             <TextField
                 label="ФИО"
                 source="name"
+            />
+            <TextField
+                label="Взвод"
+                source="platoonNumber"
+            />
+            <TextField
+                label="Рота"
+                source="companyNumber"
             />
             <TextField
                 label="Специальность"
@@ -46,6 +50,14 @@ const Filters = (props) => (
             label="ФИО"
             source="name"
             alwaysOn
+        />
+        <TextInput
+            label="Взвод"
+            source="platoonNumber"
+        />
+        <TextInput
+            label="Рота"
+            source="companyNumber"
         />
         <TextInput
             label="Специальность"

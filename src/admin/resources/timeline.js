@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => (
             marginBottom: 20
         },
         padding: {
-            padding: '1.25em'
+            padding: theme.spacing(3)
         },
         margin: {
             margin: '0 auto'
@@ -42,10 +42,7 @@ export const Timeline = (props) => {
         <ListController {...{...props, sort}}>
             {({data, ids, page, perPage, total, setPage}) => (
                 <>
-                    <Title title={`События${page > 1 ? (
-                        ': страница ' + page
-                    ) : ''}`}
-                    />
+                    <Title title={`События${page > 1 ? (': страница ' + page) : ''}`}/>
                     <List className={styles.list}>
                         {ids.map(id => (
                             <CardView key={id} event={data[id]}/>
@@ -69,6 +66,12 @@ export const Timeline = (props) => {
     )
 }
 
+const genderEndings = {
+    feminine: 'a',
+    neuter: 'o',
+    masculine: ''
+}
+
 const CardView = ({event}) => {
     const styles = useStyles()
 
@@ -78,16 +81,10 @@ const CardView = ({event}) => {
                 <ListItem className={styles.padding}>
                     <ListItemText
                         primary={
-                            <Box display='flex' flexWrap='wrap'  mb={1}>
+                            <Box display='flex' flexWrap='wrap' mb={2}>
                                 <Box flexGrow={1}>
-                                    <strong>
-                                        {event.translation}
-                                    </strong>
-                                    {` добавлен${
-                                        event.wordGender === 'feminine' ? 'a'
-                                            : event.wordGender === 'neuter' ? 'o'
-                                            : ''
-                                    }`}
+                                    <b>{event.translation}</b> добавлен
+                                    {genderEndings[event.wordGender]}
                                 </Box>
                                 {new Date(event.creationDate).toLocaleString('ru-RU')}
                             </Box>

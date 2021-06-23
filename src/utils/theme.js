@@ -1,9 +1,17 @@
 import {blue} from '@material-ui/core/colors'
 import {createMuiTheme} from '@material-ui/core/styles'
 
+const raViewStyle = {
+    root: {
+        width: '100%',
+        maxWidth: '1250px',
+        margin: '0 auto'
+    }
+}
+
 export default createMuiTheme({
     typography: {
-        fontFamily: 'Nunito',
+        fontFamily: 'OpenSans'
     },
     palette: {
         secondary: {
@@ -13,42 +21,47 @@ export default createMuiTheme({
         }
     },
     overrides: {
-        RaShow: {
-            root: {
-                width: '100%',
-                maxWidth: '1200px',
-                margin: '0 auto'
-            }
-        },
-        RaCreate: {
-            root: {
-                width: '100%',
-                maxWidth: '1200px',
-                margin: '0 auto'
-            }
-        },
-        RaEdit: {
-            root: {
-                width: '100%',
-                maxWidth: '1200px',
-                margin: '0 auto'
-            }
-        },
+        RaShow: raViewStyle,
+        RaCreate: raViewStyle,
+        RaEdit: raViewStyle,
         RaLayout: {
             root: {
                 '& .ra-field > div[class^="MuiFormControl"]': {
-                    margin: '0 0 30px 0 !important'
+                    width: '100%',
+                    margin: '0 0 35px 0 !important'
                 }
             }
         },
-        MuiTypography: {
-            body2: {
-                fontSize: '0.95rem'
+        RaTabbedShowLayout: {
+            content: {
+                padding: '0 !important'
             }
         },
-        MuiFormLabel: {
+        RaSidebar: {
+            drawerPaper: {
+                width: 'unset'
+            }
+        },
+        RaMenuItemLink: {
             root: {
-                fontSize: '1.1rem'
+                borderLeft: '4px solid transparent'
+            },
+            active: {
+                borderLeft: `4px solid ${blue[500]}`,
+                background: 'rgba(0, 0, 0, 0.06) !important',
+                '& svg': {
+                    color: 'rgba(0, 0, 0, 0.65)'
+                }
+            }
+        },
+        RaLabeled: {
+            label: {
+                fontSize: '1.25rem'
+            },
+            value: {
+                '& > *': {
+                    fontSize: '1rem'
+                }
             }
         },
         MuiCardContent: {
@@ -64,16 +77,15 @@ export default createMuiTheme({
                 color: `${blue[500]} !important`
             }
         },
-        RaMenuItemLink: {
+        MuiTab: {
             root: {
-                borderLeft: '4px solid transparent'
-            },
-            active: {
-                borderLeft: `4px solid ${blue[500]}`,
-                background: 'rgba(0, 0, 0, 0.06) !important',
-                '& svg': {
-                    color: 'rgba(0, 0, 0, 0.65)'
-                }
+                flexGrow: 1,
+                maxWidth: 'unset'
+            }
+        },
+        MuiTableCell: {
+            sizeSmall: {
+                padding: 16
             }
         }
     }

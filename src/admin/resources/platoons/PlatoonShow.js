@@ -1,63 +1,36 @@
-import {GridShowLayout, RaGrid} from 'ra-compact-ui/dist/details'
+import AccountCircleIcon from "@material-ui/icons/AccountCircle"
+import AssessmentIcon from "@material-ui/icons/Assessment"
+import StarsIcon from "@material-ui/icons/Stars"
 import React from 'react'
-import {ImageField, Show, TextField, NumberField} from 'react-admin'
-import photoPlaceholder from '../../../../static/images/photo-placeholder.jpg'
-import {createTitle, getShowActions} from '../../utils'
-import Report from "./report/Report"
-import useStyles from "./Styles"
+import {Show, Tab, TabbedShowLayout} from 'react-admin'
+import {createTitle, getShowActions} from '../../../utils/raUtils'
+import Grade from "../employees/components/Grade"
+import Report from "../employees/components/Report"
+import Info from "./components/Info"
 
 const Title = createTitle('Взвод', 'name')
 const TitleShort = createTitle('', 'name')
 
 const ShowActions = getShowActions()
 
-export const PlatoonShow = ({permissions, enableActions = true, ...props}) => {
-    const classes = useStyles()
-
-    return (
-        <Show
-            title={enableActions ? <Title/> : <TitleShort/>}
-            actions={!enableActions ? undefined : (
-                <ShowActions permissions={permissions}/>
-            )}
-            className={classes.container}
-            {...props}
-        >
-            <GridShowLayout>
-                <RaGrid container spacing={2}>
-                    <RaGrid item xs={12} md={6}>
-                        <div className={classes.rightSide}>
-                            <ImageField
-                                label={null}
-                                source='file.url'
-                                title='file.title'
-                                emptyText={<img src={photoPlaceholder} alt='photo'/>}
-                                className={classes.photo}
-                            />
-                        </div>
-                    </RaGrid>
-                    <RaGrid item xs className={classes.rightSide}>
-                        <TextField
-                            label="Название"
-                            source="name"
-                            style={{fontSize: '1.15rem', fontWeight: 'bold'}}
-                        />
-                        <TextField
-                            label="Специальность"
-                            source="specialty"
-                        />
-                        <TextField
-                            label="Командир взвода"
-                            source="platoonCommander"
-                        />
-                        <NumberField
-                            label="Количество операторов"
-                            source="numOfPeople"
-                        />
-                    </RaGrid>
-                </RaGrid>
-                <Report id={props.id}/>
-            </GridShowLayout>
-        </Show>
-    )
-}
+export const PlatoonShow = ({permissions, enableActions = true, ...props}) => (
+    <Show
+        title={enableActions ? <Title/> : <TitleShort/>}
+        actions={!enableActions ? undefined : (
+            <ShowActions permissions={permissions}/>
+        )}
+        {...props}
+    >
+        <TabbedShowLayout>
+            <Tab label='Взвод' icon={<AccountCircleIcon/>}>
+                <Info/>
+            </Tab>
+            <Tab label='Оценка' path='grade' icon={<StarsIcon/>}>
+                <Grade id={props.id} resource='platoons' numOfPeople={20}/>
+            </Tab>
+            <Tab label='Отчет' path='report' icon={<AssessmentIcon/>}>
+                <Report id={props.id} resource='platoons' numOfPeople={20}/>
+            </Tab>
+        </TabbedShowLayout>
+    </Show>
+)

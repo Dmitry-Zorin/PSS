@@ -14,7 +14,7 @@ import {
 export const createTitle = (title, recordName) => (
     ({record}) => (
         <span>
-            {` ${title}: ${record[recordName]}`}
+            {title}: {record[recordName]}
         </span>
     )
 )

@@ -1,7 +1,7 @@
 import React from 'react'
 import {Edit, ImageField, ImageInput, minLength, NumberInput, required, SimpleForm, TextInput} from 'react-admin'
 import photoPlaceholder from '../../../../static/images/photo-placeholder.jpg'
-import {createTitle, getEditActionsWithoutFile} from '../../utils'
+import {createTitle, getEditActionsWithoutFile} from '../../../utils/raUtils'
 
 const validateText = [required(), minLength(1)]
 

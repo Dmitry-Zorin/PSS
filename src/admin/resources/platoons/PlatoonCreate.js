@@ -31,7 +31,7 @@ export const PlatoonCreate = (props) => (
                 fullWidth
             />
             <TextInput
-                label="Специальность"
+                label="Направление"
                 source="specialty"
                 fullWidth
             />

@@ -44,7 +44,7 @@ const resources = {
         wordGender: 'feminine'
     },
     developments: {
-        model: require('./DevelopmentWorkAPI').DevelopmentWork,
+        model: require('./DevelopmentAPI').DevelopmentWork,
         translation: 'ОКР',
         wordGender: 'feminine'
     },
@@ -106,7 +106,10 @@ module.exports = (app) => {
 
             res
                 .set('Content-Range', `timeline ${rangeStart}-${rangeEnd - 1}/${events.length}`)
-                .send(events.slice(rangeStart, rangeEnd))
+                .send(events
+                    .sort((a, b) => b.creationDate - a.creationDate)
+                    .slice(rangeStart, rangeEnd)
+                )
         }
         catch (err) {
             next(err)

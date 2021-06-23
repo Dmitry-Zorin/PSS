@@ -1,8 +1,8 @@
 import {Table, TableBody, TableCell, TableContainer, TableRow} from "@material-ui/core"
 import React from "react"
-import useStyles from "../Styles"
+import useStyles from "../../employees/Styles"
 
-const TasksTableFull = ({people}) => {
+const HoursTableFull = ({people}) => {
     const classes = useStyles()
 
     return (
@@ -14,21 +14,21 @@ const TasksTableFull = ({people}) => {
                             Оператор
                         </TableCell>
                         <TableCell className={classes.widthOneQuarter}>
-                            Невыполненых задач
+                            Повседневная деятельность
                         </TableCell>
                         <TableCell className={classes.widthOneQuarter}>
-                            Выполненых задач
+                            Научная деятельность
                         </TableCell>
                         <TableCell className={classes.widthOneQuarter}>
-                            Всего задач
+                            Всего рабочего времени
                         </TableCell>
                     </TableRow>
                     {people.map(p => (
                         <TableRow key={p}>
                             <TableCell>{p.name}</TableCell>
-                            <TableCell>{p.issueNumber - p.issuesCompleted}</TableCell>
-                            <TableCell>{p.issuesCompleted}</TableCell>
-                            <TableCell>{p.issueNumber}</TableCell>
+                            <TableCell>{p.nonScienceHours} ч.</TableCell>
+                            <TableCell>{30 - p.nonScienceHours} ч.</TableCell>
+                            <TableCell>30 ч.</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
@@ -37,4 +37,4 @@ const TasksTableFull = ({people}) => {
     )
 }
 
-export default TasksTableFull
+export default HoursTableFull

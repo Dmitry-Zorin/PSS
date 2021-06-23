@@ -43,7 +43,7 @@ exports.researchSchema = new Schema(
     {versionKey: false}
 )
 
-exports.developmentWorkSchema = new Schema(
+exports.developmentSchema = new Schema(
     {
         headline: {
             type: String,

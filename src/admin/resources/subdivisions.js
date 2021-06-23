@@ -14,7 +14,7 @@ import {
     TextField,
     TextInput,
 } from 'react-admin'
-import {createEmptyPage, createTitle, getBulkActionButtons, getEditActions, getShowActions} from '../utils'
+import {createEmptyPage, createTitle, getBulkActionButtons, getEditActions, getShowActions} from '../../utils/raUtils'
 
 const validateName = [required(), minLength(1)]
 

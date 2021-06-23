@@ -16,7 +16,7 @@ import {
     TextField,
     TextInput
 } from 'react-admin'
-import {createEmptyPage, createTitle, getShowActions} from '../utils'
+import {createEmptyPage, createTitle, getShowActions} from '../../utils/raUtils'
 
 const validateLoginExistsOnCreate = (values) => (
     fetch(`${process.env.SERVER}/api/users/unique`, {
@@ -25,13 +25,7 @@ const validateLoginExistsOnCreate = (values) => (
         headers: {'Content-Type': 'application/json'}
     })
         .then(data => data.json())
-        .then(data => {
-            if (data.exists) return {login: 'Логин занят'}
-            else return undefined
-        })
-        .catch(() => (
-            {login: 'Internal error, please try again'}
-        ))
+        .then(data => data.exists && {login: 'Логин занят'})
 )
 
 const validateLogin = [required(), minLength(1)]

@@ -29,7 +29,7 @@ import {
 } from 'react-admin'
 import {DescriptionField, HeadlineField} from '../CustomFields'
 
-import {createEmptyPage, createTitle, getBulkActionButtons, getEditActionsWithoutFile, getShowActions} from '../utils'
+import {createEmptyPage, createTitle, getBulkActionButtons, getEditActionsWithoutFile, getShowActions} from '../../utils/raUtils'
 
 const validateText = [required(), minLength(1)]
 const validateRequired = [required()]

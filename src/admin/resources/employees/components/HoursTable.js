@@ -2,7 +2,7 @@ import {Table, TableBody, TableCell, TableContainer, TableRow} from "@material-u
 import React from "react"
 import useStyles from "../Styles"
 
-const HoursTable = ({data, numOfPeople=1}) => {
+const HoursTable = ({data, numOfPeople= 1}) => {
     const classes = useStyles()
 
     return (

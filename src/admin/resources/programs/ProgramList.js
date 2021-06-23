@@ -13,7 +13,7 @@ import {
     TextInput
 } from 'react-admin'
 import {DescriptionField, HeadlineField} from '../../CustomFields'
-import {createEmptyPage, getBulkActionButtons} from '../../utils'
+import {createEmptyPage, getBulkActionButtons} from '../../../utils/raUtils'
 import {ProgramShow} from './ProgramShow'
 
 const Empty = createEmptyPage(

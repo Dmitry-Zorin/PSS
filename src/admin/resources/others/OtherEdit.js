@@ -13,7 +13,7 @@ import {
     SimpleFormIterator,
     TextInput
 } from 'react-admin'
-import {createTitle, getEditActionsWithoutFile} from '../../utils'
+import {createTitle, getEditActionsWithoutFile} from '../../../utils/raUtils'
 
 const validate = [required()]
 const validateLength = [required(), minLength(1)]

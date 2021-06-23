@@ -29,7 +29,7 @@ import theme from '../utils/theme'
 import authProvider from './AuthProvider'
 import Dashboard from './Dashboard'
 import dataProvider from './DataProvider'
-import russianMessages from './locale'
+import russianMessages from '../utils/locale'
 import MyLayout from './MyLayout'
 import Abstract from './resources/abstracts/index'
 import {
@@ -314,7 +314,7 @@ const AdminPanel = () => (
                 key={k++}
                 name='form16'
                 icon={FeaturedPlayListIcon}
-                options={{label: 'Справка'}}
+                options={{label: 'Форма №16'}}
                 list={Form16}
             />,
             <Resource
@@ -343,14 +343,7 @@ const AdminPanel = () => (
                 options={{label: 'Характеры работы'}}
                 list={CharacterList}
                 create={CharacterCreate}
-            />,
-            /*<Resource
-                key={k++}
-                name="categories"
-                options={{label: 'Категории'}}
-                list={CategoryList}
-                create={CategoryCreate}
-            />,*/
+            />
         ]}
     </Admin>
 )

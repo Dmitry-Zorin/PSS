@@ -2,23 +2,16 @@ import {makeStyles} from "@material-ui/core/styles"
 
 const Styles = makeStyles(() => (
     {
-        container: {
-            width: '100%',
-            maxWidth: 1200,
-            margin: '0 auto'
-        },
         photo: {
             '& > img': {
                 width: '100%',
-                maxHeight: 370,
-                objectFit: 'contain',
-                margin: 0
+                maxHeight: 380,
+                objectFit: 'contain'
             }
         },
         rightSide: {
             display: 'flex',
             flexDirection: 'column',
-            height: '100%',
             '& > div': {
                 flex: 1
             }

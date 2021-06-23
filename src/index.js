@@ -3,7 +3,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import AdminPanel from './admin/AdminPanel'
 import './fonts.css'
-import {ScrollTopButton} from './utils/ScrollTopButton'
+import {ScrollTopButton} from './admin/ScrollTopButton'
 import theme from './utils/theme'
 
 ReactDOM.render(

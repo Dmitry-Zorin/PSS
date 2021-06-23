@@ -15,7 +15,7 @@ const CircleNumber = ({num, text, max}) => (
             justifyContent: 'center',
         }}>
             <div>
-                <Typography variant={num.toString().length < 5 ? 'h4' : 'h5'} style={{lineHeight: 1}}>
+                <Typography variant={num?.toString()?.length < 5 ? 'h4' : 'h5'} style={{lineHeight: 1}}>
                     {num}
                 </Typography>
                 <Typography style={{color: 'rgba(0, 0, 0, 0.5)', lineHeight: 1}}>

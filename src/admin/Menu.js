@@ -5,9 +5,10 @@ import Filter3Icon from '@material-ui/icons/Filter3'
 import FilterNoneIcon from '@material-ui/icons/FilterNone'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 import DefaultIcon from '@material-ui/icons/ViewList'
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {getResources, MenuItemLink, usePermissions, useQuery} from 'react-admin'
 import {useSelector} from 'react-redux'
+import {fetchAPI} from "../utils/utils"
 import SubMenu from './SubMenu'
 
 const menuResources = [
@@ -53,13 +54,6 @@ const otherResources = [
     'characters'
 ]
 
-const queryResources = [
-    ...category1Resources,
-    ...category2Resources,
-    ...category3Resources,
-    ...restResources
-]
-
 const Menu = ({onMenuClick, logout}) => {
     const isXSmall = useMediaQuery(theme => (
         theme.breakpoints.down('xs')
@@ -73,25 +67,23 @@ const Menu = ({onMenuClick, logout}) => {
     const [showCategory3, setShowCategory3] = useState(true)
     const [showRest, setShowRest] = useState(true)
     const [showOther, setShowOther] = useState(false)
+    const [data, setData] = useState({})
 
-    const data = {}
-    for (const resource of queryResources) {
-        data[resource] = useQuery({
-            type: 'getList',
-            resource,
-            payload: {
-                filter: {},
-                sort: {field: 'firstCreationDate', order: 'DESC'},
-                pagination: {page: 1, perPage: 999}
-            }
-        }).data
-    }
+    useEffect(() => {
+        fetchAPI('resources').then(setData)
+    }, [])
 
     return (
         <>
-            {resources.filter(r => menuResources.includes(r.name)).map(resource => (
-                <CustomMenuItemLink key={resource.name} {...{resource, onMenuClick, open}}/>
-            ))}
+            {resources
+                .filter(r => menuResources.includes(r.name))
+                .map(resource => (
+                    <CustomMenuItemLink
+                        key={resource.name}
+                        {...{resource, onMenuClick, open}}
+                    />
+                ))
+            }
             <SubMenu
                 handleToggle={() => setShowCategory1(e => !e)}
                 isOpen={showCategory1}
@@ -99,9 +91,15 @@ const Menu = ({onMenuClick, logout}) => {
                 name="ra.resources.category1"
                 icon={<Filter1Icon/>}
             >
-                {resources.filter(r => category1Resources.includes(r.name)).map(resource => (
-                    <CustomMenuItemLink key={resource.name} {...{resource, data, onMenuClick, open}}/>
-                ))}
+                {resources
+                    .filter(r => category1Resources.includes(r.name))
+                    .map(resource => (
+                        <CustomMenuItemLink
+                            key={resource.name}
+                            {...{resource, data, onMenuClick, open}}
+                        />
+                    ))
+                }
             </SubMenu>
             <SubMenu
                 handleToggle={() => setShowCategory2(e => !e)}
@@ -110,9 +108,15 @@ const Menu = ({onMenuClick, logout}) => {
                 name="ra.resources.category2"
                 icon={<Filter2Icon/>}
             >
-                {resources.filter(r => category2Resources.includes(r.name)).map(resource => (
-                    <CustomMenuItemLink key={resource.name} {...{resource, data, onMenuClick, open}}/>
-                ))}
+                {resources
+                    .filter(r => category2Resources.includes(r.name))
+                    .map(resource => (
+                        <CustomMenuItemLink
+                            key={resource.name}
+                            {...{resource, data, onMenuClick, open}}
+                        />
+                    ))
+                }
             </SubMenu>
             <SubMenu
                 handleToggle={() => setShowCategory3(e => !e)}
@@ -121,9 +125,15 @@ const Menu = ({onMenuClick, logout}) => {
                 name="ra.resources.category3"
                 icon={<Filter3Icon/>}
             >
-                {resources.filter(r => category3Resources.includes(r.name)).map(resource => (
-                    <CustomMenuItemLink key={resource.name} {...{resource, data, onMenuClick, open}}/>
-                ))}
+                {resources
+                    .filter(r => category3Resources.includes(r.name))
+                    .map(resource => (
+                        <CustomMenuItemLink
+                            key={resource.name}
+                            {...{resource, data, onMenuClick, open}}
+                        />
+                    ))
+                }
             </SubMenu>
             <SubMenu
                 handleToggle={() => setShowRest(e => !e)}
@@ -132,9 +142,15 @@ const Menu = ({onMenuClick, logout}) => {
                 name="ra.resources.rest"
                 icon={<FilterNoneIcon/>}
             >
-                {resources.filter(r => restResources.includes(r.name)).map(resource => (
-                    <CustomMenuItemLink key={resource.name} {...{resource, data, onMenuClick, open}}/>
-                ))}
+                {resources
+                    .filter(r => restResources.includes(r.name))
+                    .map(resource => (
+                        <CustomMenuItemLink
+                            key={resource.name}
+                            {...{resource, data, onMenuClick, open}}
+                        />
+                    ))
+                }
             </SubMenu>
             {!permissions ? null : (
                 <SubMenu
@@ -144,9 +160,15 @@ const Menu = ({onMenuClick, logout}) => {
                     name="ra.resources.other"
                     icon={<MoreHorizIcon/>}
                 >
-                    {resources.filter(r => otherResources.includes(r.name)).map(resource => (
-                        <CustomMenuItemLink key={resource.name} {...{resource, onMenuClick, open}}/>
-                    ))}
+                    {resources
+                        .filter(r => otherResources.includes(r.name))
+                        .map(resource => (
+                            <CustomMenuItemLink
+                                key={resource.name}
+                                {...{resource, onMenuClick, open}}
+                            />
+                        ))
+                    }
                 </SubMenu>
             )}
             {isXSmall && logout}
@@ -162,11 +184,19 @@ export const CustomMenuItemLink = ({resource, data, onMenuClick, open}) => (
             <>
                 {resource?.options?.label || resource.name}
                 {data && (
-                    <Chip size='small' label={data[resource.name]?.length} style={{marginLeft: 10}}/>
+                    <Chip
+                        size='small'
+                        label={data[resource.name]}
+                        style={{marginLeft: 10, cursor: 'pointer'}}
+                    />
                 )}
             </>
         }
-        leftIcon={resource.icon ? <resource.icon/> : <DefaultIcon/>}
+        leftIcon={
+            resource.icon
+                ? <resource.icon/>
+                : <DefaultIcon/>
+        }
         onClick={onMenuClick}
         sidebarIsOpen={open}
     />

@@ -1,7 +1,7 @@
 import React from 'react'
 
 import {Create, Datagrid, List, minLength, required, SimpleForm, TextField, TextInput,} from 'react-admin'
-import {createEmptyPage} from "../utils"
+import {createEmptyPage} from "../../utils/raUtils"
 
 const Empty = createEmptyPage(
     'Нет доступных характеров работы',

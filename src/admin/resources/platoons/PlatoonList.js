@@ -1,7 +1,6 @@
 import React from 'react'
 import {Datagrid, Filter, List, TextField, TextInput} from 'react-admin'
-import {createEmptyPage, getBulkActionButtons} from '../../utils'
-import {PlatoonShow} from './PlatoonShow'
+import {createEmptyPage, getBulkActionButtons} from '../../../utils/raUtils'
 
 const Empty = createEmptyPage(
     'Нет доступных взводов',
@@ -20,16 +19,13 @@ export const PlatoonList = ({permissions, ...props}) => (
         bulkActionButtons={<BulkActionButtons permissions={permissions}/>}
         {...props}
     >
-        <Datagrid
-            rowClick="show"
-            expand={<PlatoonShow enableActions={false}/>}
-        >
+        <Datagrid rowClick="show">
             <TextField
                 label="Название"
                 source="name"
             />
             <TextField
-                label="Специальность"
+                label="Направление"
                 source="specialty"
             />
             <TextField
@@ -48,7 +44,7 @@ const Filters = (props) => (
             alwaysOn
         />
         <TextInput
-            label="Специальность"
+            label="Направление"
             source="specialty"
         />
         <TextField
