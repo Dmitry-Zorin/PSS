@@ -283,8 +283,13 @@ const createAPIwithFile = (app, resource, Model, extractDataToSend, extractDataF
         try {
             const record = await Model.find(filter).sort({[sortField]: sortOrder}).exec()
             const contentLength = `${resource} ${rangeStart}-${rangeEnd - 1}/${record.length}`
-            const data = record.slice(rangeStart, rangeEnd)
-                .map(async data => await extractDataToSend(data))
+            const data = record.slice(rangeStart, rangeEnd).map(async record => {
+                const data = await extractDataToSend(record)
+                return Object.entries(data).reduce((obj, [k, v]) => {
+                    obj[k] = ([null, 'null'].includes(v) ? '-' : v)
+                    return obj
+                }, {})
+            })
 
             res
                 .set('Content-Range', contentLength)
@@ -299,7 +304,11 @@ const createAPIwithFile = (app, resource, Model, extractDataToSend, extractDataF
     app.get(`/api/${resource}/:id`, cookieParser, auth, async (req, res, next) => {
         try {
             const record = await Model.findOne({_id: req.params.id}).exec()
-            res.json(await extractDataToSend(record))
+            const data = await extractDataToSend(record)
+            res.json(Object.entries(data).reduce((obj, [k, v]) => {
+                obj[k] = ([null, 'null'].includes(v) ? '-' : v)
+                return obj
+            }, {}))
         }
         catch (err) {
             next(err)

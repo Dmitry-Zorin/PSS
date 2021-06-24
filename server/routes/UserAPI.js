@@ -40,20 +40,22 @@ const generateToken = (res, login, isAdmin) => {
 }
 
 const loginWithRedmine = async (req, res, username) => {
-    const resp = await fetch(`${process.env.REDMINE_SERVER}/users.json?name=${username}`)
-    const users = res && res.data && resp.data.users
-    if (!users || !users.length) {
+    let resp = await fetch(`${process.env.REDMINE_SERVER}/users.json?name=${username}`, {
+	headers: {'X-Redmine-API-Key': process.env.REDMINE_KEY}
+    })
+    resp = await resp.json()
+    let user
+    if (!resp || !resp.users || !(user = resp.users.find(u => u.login.toLowerCase() === username))) {
         return 1
     }
-    generateToken(res, username, false)
-    res.redirect('/#')
+    generateToken(res, username, user.admin)
 }
 
 module.exports = (app) => {
     app.get('/login', async (req, res, next) => {
         try {
             const errCode = await loginWithRedmine(req, res, req.query.username)
-            if (errCode) res.redirect('/#/login')
+            res.redirect(errCode ? '/#/login' : '/#')
         } catch (err) {
             next(err)
         }
@@ -63,22 +65,20 @@ module.exports = (app) => {
     app.post('/api/login', jsonParser, async (req, res, next) => {
         try {
             const {login, password} = req.body
-
             const user = await User.findOne({login})
 
-            if (!user) {
-                const errCode = await loginWithRedmine(req, res, login)
-                return errCode
-                    ? res.status(401).json({error: 'Incorrect login or password'})
-                    : res.redirect('/#')
-            }
+            if (user) {
+		const passwordsMatch = await bcrypt.compare(password, user.password)
+		if (passwordsMatch) {
+		    generateToken(res, login, user.isAdmin)
+		    return res.sendStatus(200)
+		}
+	    }
 
-            const passwordsMatch = await bcrypt.compare(password, user.password)
-            if (!passwordsMatch) {
-                return res.status(401).json({error: 'Incorrect login or password'})
-            }
-            generateToken(res, login, user.isAdmin)
-            res.sendStatus(200)
+            const errCode = await loginWithRedmine(req, res, login)
+            errCode
+            	? res.status(401).json({error: 'Incorrect login or password'})
+            	: res.sendStatus(200)
         }
         catch (err) {
             next(err)

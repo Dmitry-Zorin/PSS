@@ -1,10 +1,11 @@
 const mongoose = require('mongoose')
-const fetch = require('node-fetch')
 const schema = require('../schemas/PlatoonSchema')
 const employeeSchema = require('../schemas/EmployeeSchema')
 const cookieParser = require("cookie-parser")()
 const {auth} = require("../auth")
 const {createAPIwithFile, getObjectProps, getFileIfExists} = require("../utils")
+const fetch = require("node-fetch")
+const {dateToString, getReportDates} = require("./EmployeesAPI")
 
 const Model = mongoose.model('Platoon', schema)
 const resource = 'platoons'
@@ -38,10 +39,11 @@ const getEmployees = async (platoonNumber, companyNumber) => (
         .exec()
 )
 
-const getIssues = async (limit, offset) => {
+const getIssues = async (limit, offset, startDate, dueDate) => {
     const urlParams = new URLSearchParams({
-        created_date: '>=2021-06-14',
-        due_date: '<=2021-06-18',
+        start_date: `>=${startDate}`,
+        due_date: `<=${dueDate}`,
+        status_id: '*',
         offset,
         limit
     })
@@ -57,76 +59,85 @@ module.exports = (app) => {
     createAPIwithFile(app, resource, Model, extractDataToSend, extractDataFromRequest)
 
     app.get(`/api/${resource}/:id/redmine`, cookieParser, auth, async (req, res, next) => {
-            try {
-                const response = {
-                    score: 0,
-                    data: {
-                        issueNumber: 0,
-                        issuesCompleted: 0,
-                        nonScienceHours: 0
-                    },
-                    people: []
+        try {
+            const {startDate, dueDate} = getReportDates()
+
+            const response = {
+                score: 0,
+                data: {
+                    issueNumber: 0,
+                    issuesCompleted: 0,
+                    nonScienceHours: 0,
+                    startDate: dateToString(startDate),
+                    dueDate: dateToString(dueDate),
+                },
+                people: []
+            }
+
+            if (process.env.NODE_ENV !== 'production') {
+                return res.json(response)
+            }
+
+            const {platoonNumber, companyNumber} = await Model.findById(req.params.id).exec()
+            const employees = await getEmployees(platoonNumber, companyNumber)
+            const employeeIds = employees.map(e => +e.redmineId)
+            const issues = []
+
+            const chunks = await Promise.all([...Array(4).keys()].map(i => (
+                getIssues(100, i * 100, startDate, dueDate)
+            )))
+
+            for (const chunk of chunks) {
+                issues.push(...chunk.issues.filter(i => (
+                    i.assigned_to && employeeIds.includes(+i.assigned_to.id))
+                ))
+            }
+
+            response.data.issueNumber = issues.length
+            const people = {}
+
+            for (const {assigned_to, tracker, status, estimated_hours = 0, custom_fields} of issues) {
+                const issueComplete = ['Решена', 'Закрыта'].includes(status.name)
+                const nonScienceHours = estimated_hours * (tracker.name !== 'Научная работа')
+
+                response.data.issuesCompleted += issueComplete
+                response.data.nonScienceHours += nonScienceHours
+
+                if (assigned_to.id in people) {
+                    const person = people[assigned_to.id]
+                    person.issueNumber++
+                    person.issuesCompleted += issueComplete
+                    person.nonScienceHours += nonScienceHours
                 }
-
-                if (process.env.NODE_ENV !== 'production') {
-                    return res.json(response)
-                }
-
-                const {platoonNumber, companyNumber} = await Model.findById(req.params.id).exec()
-                const employees = await getEmployees(platoonNumber, companyNumber)
-                const employeeIds = employees.map(e => e.redmineId)
-                const issues = []
-
-                let offset = 0
-                let limit = 100
-                let totalCount = 0
-
-                do {
-                    const chunk = await getIssues(limit, offset)
-                    totalCount = chunk.total_count
-                    issues.push(...chunk.issues.filter(i => employeeIds.includes(i.assigned_to_id)))
-                    offset = limit
-                    limit += 100
-                }
-                while (offset < totalCount)
-
-                response.data.issueNumber = issues.length
-                const people = {}
-
-                for (const {assigned_to_id, tracker, status, estimated_hours = 0} of issues) {
-                    const issueComplete = ['Решена', 'Закрыта'].includes(status)
-                    const nonScienceHours = estimated_hours * (tracker.name !== 'Научная деятельность')
-
-                    response.data.issuesCompleted += issueComplete
-                    response.data.nonScienceHours += nonScienceHours
-
-                    if (assigned_to_id in people) {
-                        const person = people[assigned_to_id]
-                        person.issueNumber++
-                        person.issuesCompleted += issueComplete
-                        person.nonScienceHours += nonScienceHours
-                    }
-                    else {
-                        const person = employees.find(e => +e.redmineId === +assigned_to_id)
-                        if (person) {
-                            people[assigned_to_id] = {
-                                name: person.name,
-                                issueNumber: 1,
-                                issuesCompleted: +issueComplete,
-                                nonScienceHours: nonScienceHours
-                            }
+                else {
+                    const person = employees.find(e => +e.redmineId === +assigned_to.id)
+                    if (person) {
+                        people[assigned_to.id] = {
+                            name: person.name,
+                            issueNumber: 1,
+                            issuesCompleted: +issueComplete,
+                            nonScienceHours: nonScienceHours
                         }
                     }
                 }
 
-                response.people = Object.values(people).sort((a, b) => a.name - b.name)
-                res.json(response)
+                if (custom_fields) {
+                    const difficulty = custom_fields.find(f => f.name === 'Оценка сложности').value
+                    const completion = custom_fields.find(f => f.name === 'Оценка качества выполнения').value
+                    const score = difficulty * completion
+                    if (!isNaN(score)) {
+                        response.score += score
+                    }
+                }
             }
-            catch (err) {
-                next(err)
-            }
+
+            response.people = Object.values(people).sort((a, b) => a.name - b.name)
+            res.json(response)
         }
-    )
+        catch (err) {
+            next(err)
+        }
+    })
 }
 
 module.exports.PlatoonModel = Model

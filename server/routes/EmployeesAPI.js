@@ -41,6 +41,69 @@ const extractDataFromRequest = ({body}) => (
     getObjectProps(body, props)
 )
 
+const getUserIssues = async (redmineId, startDate, dueDate) => {
+    const urlParams = new URLSearchParams({
+        assigned_to_id: redmineId,
+        start_date: `>=${startDate}`,
+        due_date: `<=${dueDate}`,
+        status_id: '*',
+        limit: 100
+    })
+    const resp = await fetch(
+        `${process.env.REDMINE_SERVER}/issues.json?${urlParams}`, {
+            headers: {'X-Redmine-API-Key': process.env.REDMINE_KEY}
+        }
+    )
+    return await resp.json()
+}
+
+module.exports = (app) => {
+    createAPIwithFile(app, resource, Model, extractDataToSend, extractDataFromRequest)
+
+    app.get(`/api/${resource}/:id/redmine`, cookieParser, auth, async (req, res, next) => {
+        try {
+            const {startDate, dueDate} = getReportDates()
+
+            const response = {
+                score: 0,
+                issueNumber: 0,
+                issuesCompleted: 0,
+                nonScienceHours: 0,
+                startDate: dateToString(startDate),
+                dueDate: dateToString(dueDate),
+            }
+
+            if (process.env.NODE_ENV !== 'production') {
+                return res.json(response)
+            }
+
+            const {redmineId} = await Model.findById(req.params.id).exec()
+            const issueData = await getUserIssues(redmineId, startDate, dueDate)
+            const issues = issueData.issues
+            response.issueNumber = issues.length
+
+            for (const {tracker, status, estimated_hours = 0, custom_fields} of issues) {
+                response.issuesCompleted += ['Решена', 'Закрыта'].includes(status.name)
+                response.nonScienceHours += estimated_hours * (tracker.name !== 'Научная работа')
+
+                if (custom_fields) {
+                    const difficulty = custom_fields.find(f => f.name === 'Оценка сложности').value
+                    const completion = custom_fields.find(f => f.name === 'Оценка качества выполнения').value
+                    const score = difficulty * completion
+                    if (!isNaN(score)) {
+                        response.score += score
+                    }
+                }
+            }
+
+            res.json(response)
+        }
+        catch (err) {
+            next(err)
+        }
+    })
+}
+
 const getReportDates = () => {
     const DAY_TO_MS = 24 * 60 * 60 * 1000
     const subtractDays = (numOfDays, date) => {
@@ -64,58 +127,6 @@ const dateToString = (date) => {
     return `${day}.${month}`
 }
 
-const getUserIssues = async (redmineId, startDate, dueDate) => {
-    const urlParams = new URLSearchParams({
-        assigned_to_id: redmineId,
-        created_date: `>=${startDate}`,
-        due_date: `<=${dueDate}`,
-        limit: 100
-    })
-    const resp = await fetch(
-        `${process.env.REDMINE_SERVER}/issues.json?${urlParams}`, {
-            headers: {'X-Redmine-API-Key': process.env.REDMINE_KEY}
-        }
-    )
-    return await resp.json()
-}
-
-module.exports = (app) => {
-    createAPIwithFile(app, resource, Model, extractDataToSend, extractDataFromRequest)
-
-    app.get(`/api/${resource}/:id/redmine`, cookieParser, auth, async (req, res, next) => {
-        try {
-            const {startDate, dueDate} = getReportDates()
-
-            const response = {
-                issueNumber: 0,
-                issuesCompleted: 0,
-                nonScienceHours: 0,
-                startDate: dateToString(startDate),
-                dueDate: dateToString(dueDate),
-                score: 0
-            }
-
-            if (process.env.NODE_ENV !== 'production') {
-                return res.json(response)
-            }
-
-            const {redmineId} = await Model.findById(req.params.id).exec()
-            const issueData = await getUserIssues(redmineId, startDate, dueDate)
-            const issues = issueData.issues
-            response.issueNumber = issues.length
-
-            for (const {tracker, status, estimated_hours = 0} of issues) {
-                response.issuesCompleted += ['Решена', 'Закрыта'].includes(status)
-                response.nonScienceHours += estimated_hours * (tracker.name !== 'Научная деятельность')
-            }
-
-            res.json(response)
-        }
-        catch (err) {
-            next(err)
-        }
-    })
-}
-
 module.exports.EmployeeModel = Model
 module.exports.getReportDates = getReportDates
+module.exports.dateToString = dateToString
