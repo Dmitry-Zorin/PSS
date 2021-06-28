@@ -6,7 +6,7 @@ export const fetchAPI = async (url, options = {}) => {
             ...options
         }
     )
-    return await resp.json()
+    return resp.json()
 }
 
 export const getResourceData = async (dataProvider, notify, author) => {

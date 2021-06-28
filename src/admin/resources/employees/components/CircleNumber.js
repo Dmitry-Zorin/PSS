@@ -8,7 +8,10 @@ const CircleNumber = ({num, text, max}) => (
             width: 90,
             height: 90,
             borderRadius: 100,
-            border: `9px solid #${['DDD', 'BFFF00', '6AFF00'][num / max < 0.5 ? 0 : num / max < 0.75 ? 1 : 2]}`,
+            border: `13px solid #${
+                ['DDD', 'BFFF00', '6AFF00']
+                    [num / max < 0.5 ? 0 : num / max < 0.75 ? 1 : 2]
+            }`,
             margin: 'auto',
             display: 'flex',
             alignItems: 'center',

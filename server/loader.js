@@ -3,8 +3,15 @@ const fs = require('fs')
 
 const routesPath = path.join(__dirname, 'routes')
 
-module.exports = (app) => {
-    for (const api of fs.readdirSync(routesPath)) {
-        require(path.join(routesPath, api))(app)
+const requireAPI = (app, _path = routesPath) => {
+    for (const api of fs.readdirSync(_path)) {
+        if (api.endsWith('.js')) {
+            require(path.join(_path, api))(app)
+        }
+        else {
+            requireAPI(app, path.join(_path, api))
+        }
     }
 }
+
+module.exports = requireAPI

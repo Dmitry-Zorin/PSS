@@ -321,7 +321,7 @@ const AdminPanel = () => (
                 key={k++}
                 name='employees'
                 icon={AccountCircleIcon}
-                options={{label: 'Сотрудники'}}
+                options={{label: 'Операторы'}}
                 list={Employees.list}
                 edit={permissions ? Employees.edit : undefined}
                 create={permissions ? Employees.create : undefined}

@@ -1,13 +1,12 @@
-import {Divider, Typography} from "@material-ui/core"
+import {Divider} from "@material-ui/core";
 import Box from "@material-ui/core/Box"
 import {GridShowLayout, RaGrid} from "ra-compact-ui/dist/details"
 import React from "react"
 import {ImageField, TextField, useRecordContext} from "react-admin"
 import photoPlaceholder from "../../../../../static/images/photo-placeholder.jpg"
 import useStyles from "../Styles"
-import ButtonForm16 from "./ButtonForm16"
 
-const Info = () => {
+const Info = ({children}) => {
     const classes = useStyles()
     const {platoonNumber, companyNumber} = useRecordContext()
 
@@ -100,15 +99,7 @@ const Info = () => {
                         />
                     </RaGrid>
                 </RaGrid>
-                <Divider style={{margin: '30px 0 60px 0'}}/>
-                <Typography variant='h6' style={{
-                    textAlign: 'center',
-                    marginTop: 30,
-                    fontWeight: 'bold'
-                }}>
-                    Форма №16
-                </Typography>
-                <ButtonForm16/>
+                {children}
             </GridShowLayout>
         </Box>
     )

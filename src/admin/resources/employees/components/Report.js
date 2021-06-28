@@ -7,42 +7,61 @@ import TasksTable from "../../employees/components/TasksTable"
 import useStyles from "../../employees/Styles"
 import HoursTableFull from "../../platoons/components/HoursTableFull"
 import TasksTableFull from "../../platoons/components/TasksTableFull"
+import {HoursChart} from "./HoursChart"
+import {TasksChart} from "./TasksChart"
 
-const Report = ({data, people, numOfPeople = 1}) => {
+const dateToString = (date) => {
+    if (!date) return ''
+    const [, month, day] = date.split('-')
+    return `${day}.${month}`
+}
+
+const Report = ({data, info}) => {
     const classes = useStyles()
+    const {whose, numOfPeople} = info
 
     return (
         <CardContent>
             <Box textAlign='center' mt='15px' mb='30px'>
                 <Typography variant='h6' style={{fontWeight: 'bold'}}>
-                    Отчет {numOfPeople > 1 ? 'взвода' : 'оператора'} за неделю
+                    Отчет {whose} за неделю
                 </Typography>
                 <Typography className={classes.textSecondary}>
-                    {data.startDate} - {data.dueDate}
+                    {dateToString(data.startDate)} - {dateToString(data.dueDate)}
                 </Typography>
 
+                {data.startDate && (
+                    <Box display='flex' flexWrap='wrap' justifyContent='space-evenly' mt='45px'>
+                        {data.issueNumber > 0 && (
+                            <TasksChart {...{data}}/>
+                        )}
+                        <HoursChart {...{data, numOfPeople}}/>
+                    </Box>
+                )}
+
                 <Typography className={classes.subtitle}>
-                    Выполнение задач
+                    <b>Выполнение задач</b>
                 </Typography>
                 <TasksTable {...{data}}/>
                 <ProgressBar
                     value={data.issuesCompleted}
                     max={data.issueNumber}
                 />
-                {numOfPeople > 1 && (
-                    <TasksTableFull {...{people}}/>
+                {data.people?.length > 0 && (
+                    <TasksTableFull people={data.people}/>
                 )}
 
+                <br/>
                 <Typography className={classes.subtitle}>
-                    Трудозатраты
+                    <b>Трудозатраты</b>
                 </Typography>
                 <HoursTable {...{data, numOfPeople}}/>
                 <ProgressBar
                     value={30 * numOfPeople - data.nonScienceHours}
                     max={30 * numOfPeople}
                 />
-                {numOfPeople > 1 && (
-                    <HoursTableFull {...{people}}/>
+                {data.people?.length > 0 && (
+                    <HoursTableFull people={data.people}/>
                 )}
             </Box>
         </CardContent>

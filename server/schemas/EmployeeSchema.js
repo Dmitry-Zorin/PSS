@@ -21,7 +21,8 @@ module.exports = new Schema(
         jobAfter: String,
         platoonNumber: String,
         companyNumber: String,
-        redmineId: String
+        redmineId: String,
+        redmineInfo: String
     },
     {versionKey: false}
 )

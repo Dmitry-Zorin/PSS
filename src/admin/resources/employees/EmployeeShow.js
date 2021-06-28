@@ -1,51 +1,37 @@
-import AccountCircleIcon from "@material-ui/icons/AccountCircle"
-import AssessmentIcon from '@material-ui/icons/Assessment'
-import StarsIcon from '@material-ui/icons/Stars'
-import React, {useEffect, useState} from 'react'
-import {Show, TabbedShowLayout, Tab} from 'react-admin'
-import {createTitle, getShowActions} from '../../../utils/raUtils'
-import {fetchAPI} from "../../../utils/utils"
-import Grade from "./components/Grade"
+import {Divider, Typography} from "@material-ui/core"
+import React from 'react'
 import Info from "./components/Info"
+import ButtonForm16 from "./components/ButtonForm16"
+import Grade from "./components/Grade"
+import {PeopleShow} from "./components/PeopleShow"
 import Report from "./components/Report"
+import AccountCircleIcon from "@material-ui/icons/AccountCircle"
 
-const Title = createTitle('Сотрудник', 'name')
-const TitleShort = createTitle('', 'name')
-const ShowActions = getShowActions()
+export const EmployeeShow = (props) => (
+    <PeopleShow
+        info={{
+            icon: <AccountCircleIcon/>,
+            resource: 'employees',
+            title: 'Сотрудник',
+            label: 'Оператор',
+            whose: 'оператора',
+            numOfPeople: 1
+        }}
+        tabs={[<Tab1/>, <Grade/>, <Report/>]}
+        {...props}
+    />
+)
 
-export const EmployeeShow = ({permissions, enableActions = true, ...props}) => {
-    const [data, setData] = useState({
-        score: 0,
-        issueNumber: 0,
-        issuesCompleted: 0,
-        nonScienceHours: 0,
-        startDate: '',
-        dueDate: ''
-    })
-
-    useEffect(() => {
-        fetchAPI(`employees/${props.id}/redmine`).then(setData)
-    }, [])
-
-    return (
-        <Show
-            title={enableActions ? <Title/> : <TitleShort/>}
-            actions={!enableActions ? undefined : (
-                <ShowActions permissions={permissions}/>
-            )}
-            {...props}
-        >
-            <TabbedShowLayout>
-                <Tab label='Оператор' icon={<AccountCircleIcon/>}>
-                    <Info/>
-                </Tab>
-                <Tab label='Оценка' path='grade' icon={<StarsIcon/>}>
-                    <Grade score={data.score}/>
-                </Tab>
-                <Tab label='Отчет' path='report' icon={<AssessmentIcon/>}>
-                    <Report data={data}/>
-                </Tab>
-            </TabbedShowLayout>
-        </Show>
-    )
-}
+const Tab1 = () => (
+    <Info>
+        <Divider style={{margin: '30px 0 60px 0'}}/>
+        <Typography variant='h6' style={{
+            textAlign: 'center',
+            marginTop: 30,
+            fontWeight: 'bold'
+        }}>
+            Форма №16
+        </Typography>
+        <ButtonForm16/>
+    </Info>
+)
