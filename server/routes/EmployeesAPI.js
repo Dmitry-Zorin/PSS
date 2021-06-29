@@ -56,10 +56,9 @@ module.exports = (app) => {
                 scores: []
             }
 
-            const employee = await Model.findById(req.params.id).exec()
-            const redmineInfo = JSON.parse(employee.redmineInfo)
-
-            Object.assign(response, redmineInfo.slice(-1)[0])
+            const {redmineInfo} = await Model.findById(req.params.id).exec()
+            Object.assign(response, redmineInfo.toObject().slice(-1)[0])
+            delete response.hours._id
 
             response.totalScore = redmineInfo.reduce((total, info) => total + info.score, 0)
             response.avgScore = response.totalScore / redmineInfo.length | 0

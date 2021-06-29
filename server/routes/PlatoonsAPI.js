@@ -58,8 +58,9 @@ module.exports = (app) => {
             const employees = await getEmployees(platoonNumber, companyNumber)
 
             for (const employee of employees) {
-                const redmineInfo = JSON.parse(employee.redmineInfo)
-                const lastWeekInfo = redmineInfo.slice(-1)[0]
+                const {redmineInfo} = employee
+                const lastWeekInfo = redmineInfo.toObject().slice(-1)[0]
+                delete lastWeekInfo.hours._id
 
                 response.startDate = lastWeekInfo.startDate
                 response.dueDate = lastWeekInfo.dueDate
@@ -70,8 +71,9 @@ module.exports = (app) => {
                 })
 
                 response.score += lastWeekInfo.score
-                response.totalScore += redmineInfo.reduce((total, info) => total + info.score, 0)
-                response.avgScore += lastWeekInfo.avgScore
+                const employeeTotalScore = redmineInfo.reduce((total, info) => total + info.score, 0)
+                response.totalScore += employeeTotalScore
+                response.avgScore += employeeTotalScore /  redmineInfo.length
 
                 const scores = redmineInfo.map(e => e.score)
                 if (!response.scores.length) {
@@ -101,6 +103,7 @@ module.exports = (app) => {
                 }
             }
 
+            response.avgScore = Math.round(response.avgScore)
             res.json(response)
         }
         catch (err) {

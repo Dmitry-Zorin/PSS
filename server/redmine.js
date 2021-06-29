@@ -28,13 +28,13 @@ module.exports.updateEmployees = async () => {
         }
 
         const firstIssues = await getIssues(0, startDate, dueDate)
-        await processIssues(firstIssues, info)
+        await processIssues(firstIssues.issues, info)
 
         const totalCount = firstIssues.total_count
         const numOfRequests = Math.floor(totalCount / 100)
 
         const requests = [...Array(numOfRequests).keys()].map(async i => {
-            const issues = await getIssues((i + 1) * 100, startDate, dueDate)
+            const {issues} = await getIssues((i + 1) * 100, startDate, dueDate)
             return processIssues(issues, info)
         })
 
@@ -46,19 +46,14 @@ module.exports.updateEmployees = async () => {
                 dueDate,
                 ...info.employees[e.redmineId]
             }
-            let newRedmineInfo
-            if (e.redmineInfo) {
-                newRedmineInfo = JSON.parse(e.redmineInfo)
-                if (newRedmineInfo.slice(-1)[0].startDate !== startDate) {
-                    newRedmineInfo.push(redmineInfo)
-                } else {
-                    newRedmineInfo = [...newRedmineInfo.slice(0, -1), redmineInfo]
-                }
+
+            if (e.redmineInfo && e.redmineInfo.length) {
+                const isSameDate = e.redmineInfo.slice(-1)[0].startDate === startDate
+                e.redmineInfo.splice(-1, +isSameDate, redmineInfo)
             }
             else {
-                newRedmineInfo = [redmineInfo]
+                e.redmineInfo = [redmineInfo]
             }
-            e.redmineInfo = JSON.stringify(newRedmineInfo)
             return e.save()
         }))
     }
@@ -101,7 +96,7 @@ const getIssues = async (offset, startDate, dueDate) => {
         limit: 100,
         offset
     })
-    const resp = fetch(
+    const resp = await fetch(
         `${process.env.REDMINE_SERVER}/issues.json?${urlParams}`, {
             headers: {'X-Redmine-API-Key': process.env.REDMINE_KEY}
         }

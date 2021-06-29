@@ -20,6 +20,10 @@ export default createMuiTheme({
             dark: blue[700]
         }
     },
+    sidebar: {
+        width: 255,
+        closedWidth: 55,
+    },
     overrides: {
         RaShow: raViewStyle,
         RaCreate: raViewStyle,
@@ -35,11 +39,6 @@ export default createMuiTheme({
         RaTabbedShowLayout: {
             content: {
                 padding: '0 !important'
-            }
-        },
-        RaSidebar: {
-            drawerPaper: {
-                width: 'unset'
             }
         },
         RaMenuItemLink: {

@@ -22,7 +22,15 @@ module.exports = new Schema(
         platoonNumber: String,
         companyNumber: String,
         redmineId: String,
-        redmineInfo: String
+        redmineInfo: [new Schema({
+            startDate: String,
+            dueDate: String,
+            score: Number,
+            issueNumber: Number,
+            issuesCompleted: Number,
+            nonScienceHours: Number,
+            hours: new Schema({}, {strict: false})
+        })]
     },
     {versionKey: false}
 )

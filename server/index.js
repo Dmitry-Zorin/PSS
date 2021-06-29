@@ -44,6 +44,7 @@ connectToDb
     .then(() => {
         app.listen(+PORT, HOST, () => {
             console.log('Server is running...')
+            updateEmployees()
             cron.schedule('0 0 * * Mon', updateEmployees)
         })
     })
