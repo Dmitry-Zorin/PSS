@@ -1,7 +1,7 @@
 import React from 'react'
 import {ArrayField, ChipField, Datagrid, Filter, List, SingleFieldList, TextField, TextInput} from 'react-admin'
-import {DescriptionField, HeadlineField} from '../../CustomFields'
 import {createEmptyPage, getBulkActionButtons} from '../../../utils/raUtils'
+import {DescriptionField, HeadlineField} from '../../CustomFields'
 import {OtherShow} from "./OtherShow"
 
 

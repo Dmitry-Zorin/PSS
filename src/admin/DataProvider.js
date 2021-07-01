@@ -3,25 +3,22 @@ import {fetchUtils} from 'react-admin'
 
 const apiUrl = `${process.env.SERVER}/api`
 
-const restProvider = simpleRestProvider(apiUrl, (url, options = {}) => {
-    if (!options.headers) {
-        options.headers = new Headers({Accept: 'application/json'})
-    }
-    options.credentials = 'include'
-    return fetchUtils.fetchJson(url, options)
-})
-
 const dataProvider = {
-    ...restProvider,
+    ...simpleRestProvider(apiUrl, (url, options = {}) => {
+        options.credentials = 'include'
+        return fetchUtils.fetchJson(url, options)
+    }),
     create: (resource, params) => {
         const formData = new FormData()
 
         for (const key in params.data) {
             if (['file', 'certificateFile'].includes(key)) {
                 formData.append(key, params.data[key].rawFile, params.data[key].rawFile.name)
-            } else if (['subdivisions', 'authors', 'tags'].includes(key)) {
+            }
+            else if (['subdivisions', 'authors', 'tags'].includes(key)) {
                 formData.append(key, JSON.stringify(params.data[key]))
-            } else {
+            }
+            else {
                 formData.append(key, params.data[key])
             }
         }
@@ -44,11 +41,14 @@ const dataProvider = {
         for (const key in params.data) {
             if (key === 'file') {
                 formData.append(key, params.data[key].url)
-            } else if (['newfile', 'newCertificateFile'].includes(key) && params.data[key]) {
+            }
+            else if (['newfile', 'newCertificateFile'].includes(key) && params.data[key]) {
                 formData.append(key, params.data[key].rawFile, params.data[key].rawFile.name)
-            } else if (['subdivisions', 'authors', 'tags'].includes(key)) {
+            }
+            else if (['subdivisions', 'authors', 'tags'].includes(key)) {
                 formData.append(key, JSON.stringify(params.data[key]))
-            } else if (key === 'certificate') {
+            }
+            else if (key === 'certificate') {
                 for (const subkey in params.data[key]) {
                     if (subkey === 'code') {
                         formData.append('certificateCode', params.data[key][subkey])
@@ -57,7 +57,8 @@ const dataProvider = {
                         formData.append('certificateFile', params.data[key][subkey].url)
                     }
                 }
-            } else {
+            }
+            else {
                 formData.append(key, params.data[key])
             }
         }

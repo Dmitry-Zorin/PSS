@@ -70,7 +70,8 @@ const Menu = ({onMenuClick, logout}) => {
     const [data, setData] = useState({})
 
     useEffect(() => {
-        fetchAPI('resources').then(setData)
+        fetchAPI('resources')
+            .then(({json}) => setData(json))
     }, [])
 
     return (

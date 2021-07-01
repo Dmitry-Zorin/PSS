@@ -1,76 +1,37 @@
-let userIdentity = {}
+import {fetchAPI} from "../utils/utils"
+
+const getPromise = (status) => (
+    Promise[status === 200 ? 'resolve' : 'reject']()
+)
+
+const userIdentity = {}
 
 const authProvider = {
-    login: ({username, password}) => (
-        fetch(`${process.env.SERVER}/api/login`, {
+    login: async ({username, password}) => {
+        localStorage.setItem('username', username)
+        const {status} = await fetchAPI('login', {
             method: 'POST',
             body: JSON.stringify({login: username, password}),
             credentials: 'include',
-            headers: {'Content-Type': 'application/json'}
+            headers: new Headers({'Content-Type': 'application/json'})
         })
-            .then(res => {
-                localStorage.setItem('username', username)
-
-                return res.status === 200
-                    ? Promise.resolve()
-                    : Promise.reject()
-            })
-            .catch(() => Promise.reject())
-    ),
-    logout: () => (
-        fetch(`${process.env.SERVER}/api/logout`, {
-            credentials: 'include',
-        })
-            .then(res => {
-                localStorage.clear()
-                return res.status === 200
-                    ? Promise.resolve()
-                    : Promise.reject()
-            })
-            .catch(() => Promise.reject())
-    ),
-    checkAuth: () => {
-        const username = localStorage.getItem('redmine_username')
-        if (username) {
-            return fetch(`${process.env.SERVER}/api/login`, {
-                method: 'POST',
-                body: JSON.stringify({login: 'user', password: 'user'}),
-                credentials: 'include',
-                headers: {'Content-Type': 'application/json'}
-            })
-                .then(res => {
-                    userIdentity = {fullName: username}
-
-                    return res.status === 200
-                        ? Promise.resolve()
-                        : Promise.reject()
-                })
-                .catch(() => Promise.reject())
-        }
-
-        return fetch(`${process.env.SERVER}/api/authenticate`, {
-            credentials: 'include',
-        })
-            .then(res => {
-                userIdentity = {
-                    fullName: localStorage.getItem('username')
-                }
-                return res.status === 200
-                    ? Promise.resolve()
-                    : Promise.reject()
-            })
-            .catch(() => Promise.reject())
+        return getPromise(status)
     },
-    getPermissions: () => (
-        fetch(`${process.env.SERVER}/api/permissions`, {
-            credentials: 'include',
-        })
-            .then(res => res.json())
-            .then(data => Promise.resolve(data.isAdmin))
-            .catch(() => Promise.reject())
-    ),
-    getIdentity: () => userIdentity,
-    checkError: console.log,
+    logout: async () => {
+        localStorage.clear()
+        const {status} = await fetchAPI('logout')
+        return getPromise(status)
+    },
+    checkAuth: async () => {
+        userIdentity.fullName = localStorage.getItem('username')
+        const {status} = await fetchAPI('authenticate')
+        return getPromise(status)
+    },
+    getPermissions: async () => {
+        const {json} = await fetchAPI('permissions')
+        return json.isAdmin
+    },
+    getIdentity: () => userIdentity
 }
 
 export default authProvider

@@ -1,9 +1,11 @@
 import {Table, TableBody, TableCell, TableContainer, TableRow} from "@material-ui/core"
 import React from "react"
+import {useRecordContext} from "react-admin"
 import useStyles from "../Styles"
 
-const HoursTable = ({data, numOfPeople= 1}) => {
+const HoursTable = ({data}) => {
     const classes = useStyles()
+    const {numOfPeople = 1} = useRecordContext()
 
     return (
         <TableContainer style={{marginTop: 45}}>

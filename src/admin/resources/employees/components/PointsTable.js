@@ -1,9 +1,11 @@
 import {Table, TableBody, TableCell, TableContainer, TableRow, Typography} from "@material-ui/core"
 import React from "react"
+import {useRecordContext} from "react-admin"
 import useStyles from "../Styles"
 
-const PointsTable = ({numOfPeople=1}) => {
+const PointsTable = () => {
     const classes = useStyles()
+    const {numOfPeople = 1} = useRecordContext()
 
     return (
         <TableContainer style={{marginTop: 45}}>
@@ -11,19 +13,19 @@ const PointsTable = ({numOfPeople=1}) => {
                 <TableBody>
                     <TableRow>
                         <TableCell className={classes.widthOneThird}>
-                            Минимальное кол-во баллов
+                            Минимальное количество баллов
                             <Typography className={classes.textSecondary}>
                                 Удовлетворительно
                             </Typography>
                         </TableCell>
                         <TableCell className={classes.widthOneThird}>
-                            Среднее кол-во баллов
+                            Среднее количество баллов
                             <Typography className={classes.textSecondary}>
                                 Хорошо
                             </Typography>
                         </TableCell>
                         <TableCell className={classes.widthOneThird}>
-                            Высокое кол-во баллов
+                            Высокое количество баллов
                             <Typography className={classes.textSecondary}>
                                 Отлично
                             </Typography>

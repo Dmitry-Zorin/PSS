@@ -4,11 +4,13 @@ const fetch = require('node-fetch')
 module.exports.updateEmployees = async () => {
     try {
         console.log('Updating redmine info...')
-        if (process.env.NODE_ENV !== 'production') {
-            return
+
+        if (process.env.NODE_ENV === 'development') {
+            const {nockRedmine} = require("./nock")
+            nockRedmine()
         }
 
-        const {startDate, dueDate} = getReportDates()
+        let {startDate, dueDate} = getReportDates()
         const employees = await EmployeeModel.find({})
         const redmineIds = employees.map(e => e.redmineId)
 
@@ -49,7 +51,8 @@ module.exports.updateEmployees = async () => {
 
             if (e.redmineInfo && e.redmineInfo.length) {
                 const isSameDate = e.redmineInfo.slice(-1)[0].startDate === startDate
-                e.redmineInfo.splice(-1, +isSameDate, redmineInfo)
+                e.redmineInfo.splice(-1, +isSameDate)
+                e.redmineInfo.push(redmineInfo)
             }
             else {
                 e.redmineInfo = [redmineInfo]

@@ -10,8 +10,8 @@ import {
     SingleFieldList,
     TextInput
 } from 'react-admin'
-import {HeadlineField} from '../../CustomFields'
 import {createEmptyPage, getBulkActionButtons} from '../../../utils/raUtils'
+import {HeadlineField} from '../../CustomFields'
 import {Aside} from './Aside'
 import {LibraryShow} from './LibraryShow'
 

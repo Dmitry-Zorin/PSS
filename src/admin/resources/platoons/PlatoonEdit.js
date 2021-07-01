@@ -67,11 +67,6 @@ export const PlatoonEdit = (props) => (
                 source="numOfPeople"
                 fullWidth
             />
-            <NumberInput
-                label='ID взвода в системе "Redmine"'
-                source="redmineId"
-                fullWidth
-            />
         </SimpleForm>
     </Edit>
 )

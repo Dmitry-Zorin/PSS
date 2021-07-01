@@ -1,7 +1,7 @@
 import AssessmentIcon from '@material-ui/icons/Assessment'
 import StarsIcon from '@material-ui/icons/Stars'
-import React, {useEffect, useState, cloneElement} from 'react'
-import {Show, TabbedShowLayout, Tab} from 'react-admin'
+import React, {cloneElement, useEffect, useState} from 'react'
+import {Show, Tab, TabbedShowLayout} from 'react-admin'
 import {createTitle, getShowActions} from '../../../../utils/raUtils'
 import {fetchAPI} from "../../../../utils/utils"
 
@@ -25,7 +25,8 @@ export const PeopleShow = ({info, tabs, ...props}) => {
     })
 
     useEffect(() => {
-        fetchAPI(`${info.resource}/${props.id}/redmine`).then(setData)
+        fetchAPI(`${info.resource}/${props.id}/redmine`)
+            .then(({json}) => setData(json))
     }, [])
 
     const {enableActions = true, permissions} = props

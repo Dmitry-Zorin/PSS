@@ -1,6 +1,7 @@
 import {CardContent, Typography} from "@material-ui/core"
 import Box from "@material-ui/core/Box"
 import React from "react"
+import {useRecordContext} from "react-admin";
 import HoursTable from "../../employees/components/HoursTable"
 import ProgressBar from "../../employees/components/ProgressBar"
 import TasksTable from "../../employees/components/TasksTable"
@@ -18,7 +19,8 @@ const dateToString = (date) => {
 
 const Report = ({data, info}) => {
     const classes = useStyles()
-    const {whose, numOfPeople} = info
+    const {numOfPeople = 1} = useRecordContext()
+    const {whose} = info
 
     return (
         <CardContent>

@@ -19,13 +19,13 @@ const extractDataToSend = (data) => ({
 })
 
 const extractDataFromRequest = (req) => ({
-        headline: req.body.headline,
-        description: req.body.description,
-        creationDate: req.body.creationDate,
-        volume: req.body.volume,
-        authors: JSON.parse(req.body.authors),
-        subdivisions: req.body.subdivisions ? JSON.parse(req.body.subdivisions) : undefined,
-    })
+    headline: req.body.headline,
+    description: req.body.description,
+    creationDate: req.body.creationDate,
+    volume: req.body.volume,
+    authors: JSON.parse(req.body.authors),
+    subdivisions: req.body.subdivisions ? JSON.parse(req.body.subdivisions) : undefined,
+})
 
 module.exports = (app) => {
     createAPIwithFile(app, resource, Model, extractDataToSend, extractDataFromRequest)

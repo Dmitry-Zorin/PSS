@@ -23,9 +23,15 @@ import {
     TextField,
     TextInput
 } from 'react-admin'
-import {DescriptionField, HeadlineField} from '../CustomFields'
 
-import {createEmptyPage, createTitle, getBulkActionButtons, getEditActionsWithoutFile, getShowActions} from '../../utils/raUtils'
+import {
+    createEmptyPage,
+    createTitle,
+    getBulkActionButtons,
+    getEditActionsWithoutFile,
+    getShowActions
+} from '../../utils/raUtils'
+import {DescriptionField, HeadlineField} from '../CustomFields'
 
 const validateText = [required(), minLength(1)]
 const validateRequired = [required()]

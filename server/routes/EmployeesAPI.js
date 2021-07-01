@@ -58,11 +58,17 @@ module.exports = (app) => {
 
             const {redmineInfo} = await Model.findById(req.params.id).exec()
             Object.assign(response, redmineInfo.toObject().slice(-1)[0])
+
+            delete response._id
             delete response.hours._id
 
             response.totalScore = redmineInfo.reduce((total, info) => total + info.score, 0)
             response.avgScore = response.totalScore / redmineInfo.length | 0
-            response.scores = redmineInfo.map(e => e.score)
+            response.scores = redmineInfo.map(e => ({
+                score: e.score,
+                startDate: e.startDate,
+                dueDate: e.dueDate
+            }))
 
             res.json(response)
         }

@@ -13,9 +13,9 @@ import {
     TextField,
     TextInput
 } from 'react-admin'
-import {DescriptionField, HeadlineField} from '../../CustomFields'
 
 import {createEmptyPage, getBulkActionButtons,} from '../../../utils/raUtils'
+import {DescriptionField, HeadlineField} from '../../CustomFields'
 import {PatentShow} from './PatentShow'
 
 const Empty = createEmptyPage(

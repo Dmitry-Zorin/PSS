@@ -41,7 +41,7 @@ const generateToken = (res, login, isAdmin) => {
 
 const loginWithRedmine = async (req, res, username) => {
     let resp = await fetch(`${process.env.REDMINE_SERVER}/users.json?name=${username}`, {
-	headers: {'X-Redmine-API-Key': process.env.REDMINE_KEY}
+        headers: {'X-Redmine-API-Key': process.env.REDMINE_KEY}
     })
     resp = await resp.json()
     let user
@@ -56,7 +56,8 @@ module.exports = (app) => {
         try {
             const errCode = await loginWithRedmine(req, res, req.query.username)
             res.redirect(errCode ? '/#/login' : '/#')
-        } catch (err) {
+        }
+        catch (err) {
             next(err)
         }
     })
@@ -68,17 +69,17 @@ module.exports = (app) => {
             const user = await User.findOne({login})
 
             if (user) {
-		const passwordsMatch = await bcrypt.compare(password, user.password)
-		if (passwordsMatch) {
-		    generateToken(res, login, user.isAdmin)
-		    return res.sendStatus(200)
-		}
-	    }
+                const passwordsMatch = await bcrypt.compare(password, user.password)
+                if (passwordsMatch) {
+                    generateToken(res, login, user.isAdmin)
+                    return res.sendStatus(200)
+                }
+            }
 
             const errCode = await loginWithRedmine(req, res, login)
             errCode
-            	? res.status(401).json({error: 'Incorrect login or password'})
-            	: res.sendStatus(200)
+                ? res.status(401).json({error: 'Incorrect login or password'})
+                : res.sendStatus(200)
         }
         catch (err) {
             next(err)
@@ -170,7 +171,7 @@ module.exports = (app) => {
 
             res
                 .set('Content-Range', contentLength)
-                .send(dataToSend)
+                .send(await Promise.all(dataToSend))
         }
         catch (err) {
             next(err)

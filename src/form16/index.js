@@ -1,11 +1,4 @@
-import {
-    AlignmentType,
-    Document,
-    HeadingLevel,
-    Packer,
-    Paragraph,
-    TextRun,
-} from 'docx'
+import {AlignmentType, Document, HeadingLevel, Packer, Paragraph, TextRun,} from 'docx'
 import {saveAs} from 'file-saver'
 import {getTable} from "./table"
 

@@ -14,7 +14,7 @@ export const getTableRow = (author, e, index) => (
             }),
             new TableCell({
                 children: [
-                    new Paragraph(`${e.headline} (${e.type})`)
+                    new Paragraph(`${e.headline}${e.type ? ` (${e.type})` : ' '}`)
                 ]
             }),
             new TableCell({

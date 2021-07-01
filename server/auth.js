@@ -14,7 +14,8 @@ exports.auth = (req, res, next) => {
             res.status(401).json({
                 error: 'Unauthorized: invalid token'
             })
-        } else {
+        }
+        else {
             req.login = decoded.login
             req.isAdmin = decoded.isAdmin
             next()

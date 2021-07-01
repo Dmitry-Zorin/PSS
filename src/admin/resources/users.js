@@ -1,5 +1,4 @@
 import React from 'react'
-
 import {
     BooleanField,
     BooleanInput,
@@ -17,16 +16,16 @@ import {
     TextInput
 } from 'react-admin'
 import {createEmptyPage, createTitle, getShowActions} from '../../utils/raUtils'
+import {fetchAPI} from "../../utils/utils"
 
-const validateLoginExistsOnCreate = (values) => (
-    fetch(`${process.env.SERVER}/api/users/unique`, {
+const validateLoginExistsOnCreate = async (values) => {
+    const {json} = fetchAPI('users/unique', {
         method: 'POST',
         body: JSON.stringify({login: values.login}),
-        headers: {'Content-Type': 'application/json'}
+        headers: new Headers({'Content-Type': 'application/json'})
     })
-        .then(data => data.json())
-        .then(data => data.exists && {login: 'Логин занят'})
-)
+    return json.exists && {login: 'Логин занят'}
+}
 
 const validateLogin = [required(), minLength(1)]
 const validatePassword = [required(), minLength(8)]
@@ -71,9 +70,6 @@ export const ListForm = props => (
                 label="Логин"
                 source="login"
             />
-            {/* <TextField
-                label="Пароль"
-                source="password" /> */}
             <BooleanField
                 label="Администратор"
                 source="isAdmin"
@@ -123,9 +119,6 @@ export const ShowForm = ({enableActions, ...props}) => (
                 label="Логин"
                 source="login"
             />
-            {/* <TextField
-                    label="Пароль"
-                    source="password" /> */}
             <BooleanField
                 label="Администратор"
                 source="isAdmin"

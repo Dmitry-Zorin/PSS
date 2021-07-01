@@ -1,11 +1,11 @@
 import {Divider, Typography} from "@material-ui/core"
+import AccountCircleIcon from "@material-ui/icons/AccountCircle"
 import React from 'react'
-import Info from "./components/Info"
 import ButtonForm16 from "./components/ButtonForm16"
 import Grade from "./components/Grade"
+import Info from "./components/Info"
 import {PeopleShow} from "./components/PeopleShow"
 import Report from "./components/Report"
-import AccountCircleIcon from "@material-ui/icons/AccountCircle"
 
 export const EmployeeShow = (props) => (
     <PeopleShow
@@ -14,8 +14,7 @@ export const EmployeeShow = (props) => (
             resource: 'employees',
             title: 'Сотрудник',
             label: 'Оператор',
-            whose: 'оператора',
-            numOfPeople: 1
+            whose: 'оператора'
         }}
         tabs={[<Tab1/>, <Grade/>, <Report/>]}
         {...props}

@@ -60,7 +60,6 @@ module.exports = (app) => {
             for (const employee of employees) {
                 const {redmineInfo} = employee
                 const lastWeekInfo = redmineInfo.toObject().slice(-1)[0]
-                delete lastWeekInfo.hours._id
 
                 response.startDate = lastWeekInfo.startDate
                 response.dueDate = lastWeekInfo.dueDate
@@ -73,20 +72,28 @@ module.exports = (app) => {
                 response.score += lastWeekInfo.score
                 const employeeTotalScore = redmineInfo.reduce((total, info) => total + info.score, 0)
                 response.totalScore += employeeTotalScore
-                response.avgScore += employeeTotalScore /  redmineInfo.length
+                response.avgScore += employeeTotalScore / redmineInfo.length
 
-                const scores = redmineInfo.map(e => e.score)
+                const scores = redmineInfo.map(e => ({
+                    score: e.score,
+                    startDate: e.startDate,
+                    dueDate: e.dueDate
+                }))
+
                 if (!response.scores.length) {
                     response.scores = scores
                 }
                 else {
                     while (scores.length < response.scores.length) {
-                        scores.unshift(0)
+                        scores.unshift({score: 0})
                     }
-                    while (response.scores.length < scores.length) {
-                        response.scores.unshift(0)
+                    const diff = scores.length - response.scores.length
+                    if (diff > 0) {
+                        response.scores.unshift(...scores.slice(0, diff).map(e => e.score = 0))
                     }
-                    response.scores = response.scores.map((e, i) => e + scores[i])
+                    response.scores.forEach((e, i) => {
+                        e.score += scores[i].score
+                    })
                 }
 
                 response.issueNumber += lastWeekInfo.issueNumber
@@ -94,12 +101,8 @@ module.exports = (app) => {
                 response.nonScienceHours += lastWeekInfo.nonScienceHours
 
                 for (const [trackerName, value] of Object.entries(lastWeekInfo.hours)) {
-                    if (response.hours[trackerName]) {
-                        response.hours[trackerName] += value
-                    }
-                    else {
-                        response.hours[trackerName] = value
-                    }
+                    if (trackerName === '_id') continue
+                    response.hours[trackerName] = (response.hours[trackerName] || 0) + value
                 }
             }
 

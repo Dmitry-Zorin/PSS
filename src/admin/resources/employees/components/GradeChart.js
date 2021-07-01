@@ -1,10 +1,10 @@
 import {useTheme} from "@material-ui/core"
-import {Line} from "react-chartjs-2"
 import React from "react"
+import {Line} from "react-chartjs-2"
 
 export const GradeChart = ({data}) => {
     const theme = useTheme()
-    const labels = [...Array(data.scores.length).keys()].map(i => `Неделя ${i + 1}`)
+    const labels = data.scores.map(e => `${dateToString(e.startDate)}-${dateToString(e.dueDate)}`)
 
     return (
         <Line
@@ -12,8 +12,8 @@ export const GradeChart = ({data}) => {
             data={{
                 labels,
                 datasets: [{
-                    data: data.scores,
-                    label: 'Оценки',
+                    data: data.scores.map(e => e.score),
+                    label: 'Количество баллов',
                     fill: false,
                     borderColor: theme.palette.secondary.main,
                     tension: 0
@@ -21,4 +21,10 @@ export const GradeChart = ({data}) => {
             }}
         />
     )
+}
+
+const dateToString = (date) => {
+    if (!date) return ''
+    const [, month, day] = date.split('-')
+    return `${day}.${month}`
 }
