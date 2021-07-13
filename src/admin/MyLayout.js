@@ -1,14 +1,25 @@
 import React from 'react'
-import {Layout} from 'react-admin'
-import Menu from './Menu'
-import MyAppBar from './MyAppBar'
+import { Layout } from 'react-admin'
+import { useSelector } from 'react-redux'
+import { getTheme } from '../theme/theme'
+import Menu from './menu/Menu'
+import MyAppBar from './appbar/MyAppBar'
+import { ScrollTopButton } from './ScrollTopButton'
 
-const MyLayout = (props) => (
-    <Layout
-        {...props}
-        menu={Menu}
-        appBar={MyAppBar}
-    />
-)
+const MyLayout = ({children, ...props}) => {
+	const theme = useSelector(state => state.theme)
+	
+	return (
+		<Layout
+			{...props}
+			theme={getTheme(theme)}
+			menu={Menu}
+			appBar={MyAppBar}
+		>
+			{children}
+			<ScrollTopButton/>
+		</Layout>
+	)
+}
 
 export default MyLayout
