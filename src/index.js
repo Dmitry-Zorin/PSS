@@ -1,9 +1,9 @@
+import './index.css'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import AdminPanel from './admin/AdminPanel'
-import './index.css'
+import App from './App'
 
 ReactDOM.render(
-	<AdminPanel/>,
+	<App/>,
 	document.getElementById('app'),
 )

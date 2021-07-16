@@ -1,12 +1,15 @@
-const Dotenv = require('dotenv-webpack')
-const {merge} = require('webpack-merge')
+const { merge } = require('webpack-merge')
 const common = require('./webpack.common.js')
 
 module.exports = merge(common, {
-    mode: 'production',
-    plugins: [
-        new Dotenv({
-            path: './.env.prod'
-        })
-    ]
+	mode: 'production',
+	module: {
+		rules: [
+			{
+				test: /\.js$/,
+				exclude: /node_modules/,
+				use: 'babel-loader',
+			},
+		],
+	},
 })

@@ -1,4 +1,4 @@
-const nock = require('nock')
+import nock from 'nock'
 
 const defaultIssueOptions = {
 	assignedToId: 306,
@@ -38,7 +38,7 @@ const createIssue = (options) => {
 	}
 }
 
-module.exports.nockRedmine = (verbose = false) => {
+export const nockRedmine = (verbose = false) => {
 	const url = '/issues.json'
 	nock(process.env.REDMINE_SERVER)
 		.get(url)

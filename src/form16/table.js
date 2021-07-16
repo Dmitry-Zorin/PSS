@@ -1,12 +1,4 @@
-import {
-	AlignmentType,
-	Paragraph,
-	Table,
-	TableCell,
-	TableRow,
-	VerticalAlign,
-	WidthType,
-} from 'docx'
+import { AlignmentType, Paragraph, Table, TableCell, TableRow, VerticalAlign, WidthType } from 'docx'
 import { getTableRows } from './tableRows'
 
 export const getTable = (data, author) => {

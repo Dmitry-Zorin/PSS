@@ -1,6 +1,6 @@
 export default {
 	shape: {
-		//borderRadius: 15
+		borderRadius: 6,
 	},
 	typography: {
 		fontWeight: 300,
@@ -29,9 +29,9 @@ export default {
 		MuiIconButton: {
 			root: {
 				'&:hover': {
-					background: 'transparent'
-				}
-			}
-		}
+					background: 'transparent',
+				},
+			},
+		},
 	},
 }

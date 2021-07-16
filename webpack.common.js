@@ -1,32 +1,29 @@
-const path = require('path')
+const CompressionPlugin = require('compression-webpack-plugin')
+const Dotenv = require('dotenv-webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-    entry: {
-        index: "./src/index.js",
-    },
-    output: {
-        path: path.resolve(__dirname, "dist"),
-        filename: "[name].bundle.js"
-    },
-    module: {
-        rules: [
-            {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                loader: 'babel-loader',
-            },
-            {
-                test: /\.css$/,
-                use: ["style-loader", "css-loader"]
-            },
-            {
-                test: /\.(png|jpg|ico)$/,
-                loader: 'file-loader'
-            },
-            {
-                test: /\.(woff|woff2|eot|ttf|otf)$/,
-                loader: 'file-loader'
-            },
-        ]
-    }
+	output: {
+		clean: true,
+	},
+	module: {
+		rules: [
+			{
+				test: /\.jpg$/,
+				type: 'asset/resource',
+			},
+			{
+				test: /\.css$/,
+				use: ['style-loader', 'css-loader'],
+			},
+		],
+	},
+	plugins: [
+		new HtmlWebpackPlugin({
+			title: 'Cистема хранения научных трудов',
+			template: './src/index.html',
+		}),
+		new CompressionPlugin(),
+		new Dotenv(),
+	],
 }

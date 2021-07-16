@@ -48,7 +48,7 @@ export default {
 				minHeight: '45px',
 				'&:hover': {
 					background: 'rgba(0, 0, 0, 0.05)',
-				}
+				},
 			},
 			active: {
 				//background: 'rgba(0, 0, 0, 0.15)',

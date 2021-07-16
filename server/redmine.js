@@ -1,13 +1,13 @@
-const { EmployeeModel } = require('./routes/EmployeesAPI')
-const fetch = require('node-fetch')
+import fetch from 'node-fetch'
+import EmployeeModel from './models/Employee.js'
 
-module.exports.updateEmployees = async () => {
+export const updateEmployees = async () => {
 	try {
 		console.log('Updating redmine info...')
 		
 		if (process.env.NODE_ENV === 'development') {
-			const { nockRedmine } = require('./nock')
-			nockRedmine()
+			const nock = await import('./nock')
+			nock.nockRedmine()
 		}
 		
 		let { startDate, dueDate } = getReportDates()

@@ -1,12 +1,13 @@
-const fs = require('fs')
-const path = require('path')
-const jsonParser = require('express').json()
-const multer = require('multer')
-const upload = multer()
-const appRoot = require('app-root-path')
-const shortid = require('shortid')
+import appRoot from 'app-root-path'
+import { json } from 'express'
+import fs from 'fs'
+import multer from 'multer'
+import path from 'path'
+import shortid from 'shortid'
 
-const listParamsMiddleware = (req, res, next) => {
+const upload = multer()
+
+export const listParamsMiddleware = (req, res, next) => {
 	const { query } = req
 	
 	for (const [k, v] of Object.entries(query)) {
@@ -30,10 +31,7 @@ const listParamsMiddleware = (req, res, next) => {
 				$options: 'i',
 			}
 		}
-		else if (['rota',
-			'publicationPlace',
-			'department',
-			'isAdmin'].includes(key)) {
+		else if (['rota', 'publicationPlace', 'department', 'isAdmin'].includes(key)) {
 			filters[key] = { $eq: value }
 		}
 		else {
@@ -55,15 +53,15 @@ const listParamsMiddleware = (req, res, next) => {
 	next()
 }
 
-const createAPI = (app,
+export const createAPI = (app,
 	resource,
 	Model,
 	extractDataToSend,
 	extractDataFromRequest) => {
 	
 	// create
-	app.post(`/api/${resource}`, upload.array(), jsonParser, async (req, res, next) => {
-		if (!req.isAdmin) {
+	app.post(`/api/${resource}`, upload.array(), json, async (req, res, next) => {
+		if (!req.user.isAdmin) {
 			return res.status(401).json({ error: 'Access denied' })
 		}
 		try {
@@ -79,8 +77,8 @@ const createAPI = (app,
 	})
 	
 	// update
-	app.put(`/api/${resource}/:id`, upload.array(), jsonParser, async (req, res, next) => {
-		if (!req.isAdmin) {
+	app.put(`/api/${resource}/:id`, upload.array(), json, async (req, res, next) => {
+		if (!req.user.isAdmin) {
 			return res.status(401).json({ error: 'Access denied' })
 		}
 		try {
@@ -98,7 +96,7 @@ const createAPI = (app,
 	
 	// delete
 	app.delete(`/api/${resource}/:id`, async (req, res, next) => {
-		if (!req.isAdmin) {
+		if (!req.user.isAdmin) {
 			return res.status(401).json({ error: 'Access denied' })
 		}
 		try {
@@ -125,8 +123,7 @@ const createAPI = (app,
 			const records = await Model.find(filter)
 				.sort({ [sortField]: sortOrder })
 				.exec()
-			const contentLength = `${resource} ${rangeStart}-${rangeEnd
-			- 1}/${records.length}`
+			const contentLength = `${resource} ${rangeStart}-${rangeEnd - 1}/${records.length}`
 			const data = records.slice(rangeStart, rangeEnd)
 				.map(async dataItem => await extractDataToSend(dataItem))
 			
@@ -166,16 +163,16 @@ const createAPI = (app,
 	})
 }
 
-const createAPIwithFile = (app,
+export const createAPIwithFile = (
+	app,
 	resource,
 	Model,
 	extractDataToSend,
-	extractDataFromRequest) => {
-	let filesFolder = path.join('/media/', resource)
-	
+	extractDataFromRequest,
+) => {
 	const filesStorage = multer.diskStorage({
 		destination: (req, file, cb) => {
-			const dir = path.join(appRoot.path, filesFolder)
+			const dir = appRoot.resolve(`../media/${resource}`)
 			if (!fs.existsSync(dir)) fs.mkdirSync(dir)
 			if (!['certificateFile', 'newCertificateFile'].includes(file.fieldname)) {
 				return cb(null, dir)
@@ -198,7 +195,7 @@ const createAPIwithFile = (app,
 		{ name: 'file', maxCount: 1 },
 		{ name: 'certificateFile', maxCount: 1 },
 	]), async (req, res, next) => {
-		if (!req.isAdmin) {
+		if (!req.user.isAdmin) {
 			return res.status(401).json({ error: 'Access denied' })
 		}
 		
@@ -211,9 +208,11 @@ const createAPIwithFile = (app,
 				
 				if (req.files.certificateFile) {
 					data.certificate.file =
-						path.join(filesFolder,
+						path.join(
+							filesFolder,
 							'certificates',
-							req.files.certificateFile[0].filename)
+							req.files.certificateFile[0].filename,
+						)
 				}
 			}
 			
@@ -230,7 +229,7 @@ const createAPIwithFile = (app,
 		{ name: 'newfile', maxCount: 1 },
 		{ name: 'newCertificateFile', maxCount: 1 },
 	]), async (req, res, next) => {
-		if (!req.isAdmin) {
+		if (!req.user.isAdmin) {
 			return res.status(401).json({ error: 'Access denied' })
 		}
 		
@@ -239,9 +238,10 @@ const createAPIwithFile = (app,
 			
 			if (req.files && req.files.newfile) {
 				data.file = path.join(filesFolder, req.files.newfile[0].filename)
-				if (/http/.test(req.body.file)) {
-					const oldFilePath = path.join(appRoot.path,
-						req.body.file.replace(/http[^a-z]+(localhost)?[^a-z]+/, ''))
+				if (/https?/.test(req.body.file)) {
+					const oldFilePath = appRoot.resolve(
+						req.body.file.replace(/https?[^a-z]+(localhost)?[^a-z]+/, '..'),
+					)
 					fs.unlink(oldFilePath, console.log)
 				}
 			}
@@ -260,10 +260,10 @@ const createAPIwithFile = (app,
 							'certificates',
 							req.files.newCertificateFile[0].filename)
 				}
-				if (/http/.test(req.body.certificateFile)) {
-					const oldFilePath = path.join(appRoot.path,
-						req.body.certificateFile.replace(/http[^a-z]+(localhost)?[^a-z]+/,
-							''))
+				if (/https?/.test(req.body.certificateFile)) {
+					const oldFilePath = appRoot.resolve(
+						req.body.certificateFile.replace(/https?[^a-z]+(localhost)?[^a-z]+/, '..'),
+					)
 					fs.unlink(oldFilePath, console.log)
 				}
 			}
@@ -286,7 +286,7 @@ const createAPIwithFile = (app,
 	
 	// delete
 	app.delete(`/api/${resource}/:id`, async (req, res, next) => {
-		if (!req.isAdmin) {
+		if (!req.user.isAdmin) {
 			return res.status(401).json({ error: 'Access denied' })
 		}
 		
@@ -295,14 +295,15 @@ const createAPIwithFile = (app,
 				.exec()
 			
 			if (record.file) {
-				const filePath = path.join(appRoot.path,
-					record.file.replace(/http[^a-z]+(localhost)?[^a-z]+/, ''))
+				const filePath = appRoot.resolve(
+					record.file.replace(/https?[^a-z]+(localhost)?[^a-z]+/, '..'),
+				)
 				fs.unlink(filePath, console.log)
 				
 				if (record.certificate && record.certificate.file) {
-					const certificateFilePath = path.join(appRoot.path,
-						record.certificate.file.replace(/http[^a-z]+(localhost)?[^a-z]+/,
-							''))
+					const certificateFilePath = appRoot.resolve(
+						record.certificate.file.replace(/https?[^a-z]+(localhost)?[^a-z]+/, '..'),
+					)
 					fs.unlink(certificateFilePath, console.log)
 				}
 			}
@@ -362,24 +363,16 @@ const createAPIwithFile = (app,
 	})
 }
 
-const getFileIfExists = (data, defaultObj = undefined) => (
+export const getFileIfExists = (data, defaultObj = undefined) => (
 	!data.file ? defaultObj : {
-		url: `${data.file.includes('http://')
-			? ''
-			: process.env.SERVER}${data.file}`,
+		url: `${data.file.includes('https?://') ? '' : process.env.SERVER}${data.file}`,
 		title: data.headline || data.name,
 	}
 )
 
-const getObjectProps = (data, props, defaultObj = {}) => (
+export const getObjectProps = (data, props, defaultObj = {}) => (
 	props.reduce((obj, e) => {
 		obj[e] = data[e]
 		return obj
 	}, defaultObj)
 )
-
-exports.listParamsMiddleware = listParamsMiddleware
-exports.createAPI = createAPI
-exports.createAPIwithFile = createAPIwithFile
-exports.getFileIfExists = getFileIfExists
-exports.getObjectProps = getObjectProps
