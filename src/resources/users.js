@@ -17,10 +17,10 @@ import {
 } from 'react-admin'
 import { createEmptyPage, createTitle, ShowActions } from '../raComponents.js'
 
-const validateLogin = [required(), minLength(1)]
+const validateUsername = [required(), minLength(1)]
 const validatePassword = [required(), minLength(8)]
 
-const Title = createTitle('Пользователи', 'login')
+const Title = createTitle('Пользователи', 'users')
 const Empty = createEmptyPage(
 	'Нет зарегистрированных пользователей',
 	'Для добавления пользователя нажмите кнопку "Создать"',
@@ -30,7 +30,7 @@ const Filters = (props) => (
 	<Filter {...props}>
 		<TextInput
 			label='Поиск по логину'
-			source='login'
+			source='username'
 			alwaysOn
 		/>
 		<NullableBooleanInput
@@ -47,7 +47,7 @@ export const ListForm = props => (
 		filters={<Filters/>}
 		perPage={25}
 		exporter={false}
-		sort={{ field: 'firstCreationDate', order: 'DESC' }}
+		sort={{ field: 'username', order: 1 }}
 		empty={<Empty/>}
 		{...props}
 	>
@@ -57,7 +57,7 @@ export const ListForm = props => (
 		>
 			<TextField
 				label='Логин'
-				source='login'
+				source='username'
 			/>
 			<BooleanField
 				label='Администратор'
@@ -80,8 +80,8 @@ export const CreateForm = props => (
 			<TextInput
 				fullWidth
 				label='Логин'
-				source='login'
-				validate={validateLogin}
+				source='username'
+				validate={validateUsername}
 			/>
 			<TextInput
 				fullWidth
@@ -105,7 +105,7 @@ export const ShowForm = ({ enableActions, ...props }) => (
 		<SimpleShowLayout>
 			<TextField
 				label='Логин'
-				source='login'
+				source='username'
 			/>
 			<BooleanField
 				label='Администратор'

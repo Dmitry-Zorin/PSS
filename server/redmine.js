@@ -124,7 +124,7 @@ const getReportDates = () => {
 	const dateToString = (date) => (
 		date.toJSON().slice(0, 10)
 	)
-	const date = new Date()
+	const date = new Date
 	while (date.getDay() !== 0) {
 		subtractDays(1, date)
 	}

@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import { verificationSchema } from '../models/schemas.js'
-import { createAPIwithFile, getFileIfExists } from '../utils.js'
+import { createAPIwithFile, getFileIfExists } from '../utils_old.js'
 
 const Model = mongoose.model('Verification', verificationSchema)
 const resource = 'verifications'

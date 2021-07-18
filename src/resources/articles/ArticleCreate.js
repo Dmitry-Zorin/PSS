@@ -6,10 +6,8 @@ import {
 	FileInput,
 	minLength,
 	NumberInput,
-	ReferenceArrayInput,
 	ReferenceInput,
 	required,
-	SelectArrayInput,
 	SelectInput,
 	SimpleForm,
 	SimpleFormIterator,
@@ -17,19 +15,10 @@ import {
 } from 'react-admin'
 
 const validateText = [required(), minLength(1)]
-const validateRequired = [required()]
 
 export const ArticleCreate = (props) => (
-	<Create
-		title='Добавить статью'
-		successMessage='Статья добавлена'
-		undoable={false}
-		{...props}
-	>
-		<SimpleForm
-			redirect='list'
-			submitOnEnter={false}
-		>
+	<Create title='Добавить статью' {...props}>
+		<SimpleForm>
 			<TextInput
 				label='Название'
 				source='headline'
@@ -39,7 +28,7 @@ export const ArticleCreate = (props) => (
 			/>
 			<TextInput
 				label='Аннотация'
-				source='text'
+				source='abstract'
 				fullWidth
 				multiline
 			/>
@@ -51,16 +40,16 @@ export const ArticleCreate = (props) => (
 			/>
 			<NumberInput
 				label='Год создания'
-				source='creationDate'
+				source='year'
 			/>
 			<NumberInput
 				label='Объем'
 				source='volume'
 			/>
 			<ArrayInput
-				validate={validateRequired}
-				source='authors'
 				label='Авторы'
+				source='authors'
+				validate={required()}
 			>
 				<SimpleFormIterator>
 					<TextInput
@@ -76,15 +65,6 @@ export const ArticleCreate = (props) => (
 			>
 				<SelectInput optionText='name'/>
 			</ReferenceInput>
-			<ReferenceArrayInput
-				fullWidth
-				label='Подразделения'
-				reference='subdivisions'
-				source='subdivisions'
-				perPage={1000}
-			>
-				<SelectArrayInput optionText='name'/>
-			</ReferenceArrayInput>
 			<ReferenceInput
 				label='Характер работы'
 				source='character'
@@ -98,14 +78,8 @@ export const ArticleCreate = (props) => (
 				fullWidth
 				multiline
 			/>
-			<FileInput
-				source='file'
-				label='PDF файл'
-			>
-				<FileField
-					source='file'
-					title='Загруженный файл'
-				/>
+			<FileInput source='file' label='Файл'>
+				<FileField source='src' title='article'/>
 			</FileInput>
 		</SimpleForm>
 	</Create>

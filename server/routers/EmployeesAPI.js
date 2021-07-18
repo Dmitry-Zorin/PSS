@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import schema from '../models/Employee.js'
-import { createAPIwithFile, getFileIfExists, getObjectProps } from '../utils.js'
+import { createAPIwithFile, getFileIfExists, getObjectProps } from '../utils_old.js'
 
 const Model = mongoose.model('Employee', schema)
 const resource = 'employees'

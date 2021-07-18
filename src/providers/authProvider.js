@@ -4,10 +4,8 @@ export let user = JSON.parse(localStorage.getItem('user'))
 
 export default {
 	login: async ({ username, password }) => {
-		const { json } = await fetchAPI('auth/login', {
-			method: 'POST',
-			body: JSON.stringify({ login: username, password }),
-		})
+		const options = { method: 'post', body: { username, password } }
+		const { json } = await fetchAPI('auth/login', options)
 		if (json?.token) {
 			localStorage.setItem('token', json.token)
 			return Promise.resolve()
@@ -23,23 +21,19 @@ export default {
 		return error ? Promise.reject() : Promise.resolve()
 	},
 	getPermissions: async () => {
-		if (user) {
-			return user.isAdmin
-		}
+		if (user) return user.isAdmin
 		const { json } = await fetchAPI('auth/permissions')
 		return json.isAdmin
 	},
 	getIdentity: async () => {
-		if (user) {
-			return user
+		if (!user) {
+			const { json } = await fetchAPI('auth/identity')
+			json.fullName = json.username
+			user = json
 		}
-		const { json } = await fetchAPI('auth/identity')
-		user = json
-		return json
+		return user
 	},
 	checkError: ({ status }) => (
-		[401, 403].includes(status)
-			? Promise.reject()
-			: Promise.resolve()
+		[401, 403].includes(status) ? Promise.reject() : Promise.resolve()
 	),
 }

@@ -1,23 +1,22 @@
 import { Router } from 'express'
-import mongoose from 'mongoose'
+import { db } from '../db.js'
 
 const router = Router()
 
 router.get('/resources', async (req, res, next) => {
 	try {
-		const collections = mongoose.connection.collections
-		const collectionCount = {}
-		for (const [name, collection] of Object.entries(collections)) {
-			collectionCount[name] = await collection.estimatedDocumentCount()
+		const collCount = {}
+		for (const coll of await db.collections()) {
+			collCount[coll.collectionName] = await coll.estimatedDocumentCount()
 		}
-		res.json(collectionCount)
+		res.json(collCount)
 	}
 	catch (err) {
 		next(err)
 	}
 })
 
-router.get('/form16', async (req, res, next) => {
+router.get('/form16/:author', async (req, res, next) => {
 	try {
 		const groups = [
 			['articles', 'monographs', 'abstracts', 'dissertations'],
@@ -25,31 +24,27 @@ router.get('/form16', async (req, res, next) => {
 			['textbooks'],
 		]
 		
-		const resourceData = [...Array(3).keys()].map(() => ({
-			old: [],
-			new: [],
-		}))
+		const resourceData = groups.map(() => ({ old: [], new: [] }))
 		const date = new Date().getFullYear() - 3
-		const collections = mongoose.connection.collections
+		const collections = await db.collections()
 		
-		const reduce = async (collection) => {
-			const collectionArray = await collection.find().toArray()
-			return collectionArray.reduce((p, e) => {
-				p[e._id] = e.name
-				return p
-			}, {})
+		const getCollObj = async (collection) => {
+			const collObj = {}
+			for (const doc of collection) {
+				collObj[doc._id] = doc.name
+			}
+			return collObj
 		}
 		
-		const publications = await reduce(collections.publicationplaces)
-		const characters = await reduce(collections.characters)
+		const publications = getCollObj(await collections.publicationplaces.find())
+		const characters = getCollObj(await collections.characters.find())
 		
 		for (const [i, group] of groups.entries()) {
 			for (const resource of group) {
-				let data = await collections[resource]
-					.find({ 'authors.author': req.query.author })
-					.toArray()
+				const collection = await collections[resource]
+					.find({ 'authors.author': req.params.author })
 				
-				data = data.map(e => (
+				const data = collection.map(e => (
 					Object.assign(e, {
 						publicationPlace: publications[e.publicationPlace] || '',
 						character: characters[e.character] || '-----',

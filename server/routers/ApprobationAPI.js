@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import { approbationSchema } from '../models/schemas.js'
-import { createAPIwithFile, getFileIfExists } from '../utils.js'
+import { createAPIwithFile, getFileIfExists } from '../utils_old.js'
 
 const Model = mongoose.model('Approbation', approbationSchema)
 const resource = 'approbations'

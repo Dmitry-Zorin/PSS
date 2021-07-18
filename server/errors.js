@@ -1,8 +1,14 @@
 export class BadRequestError extends Error {
 	constructor(message) {
-		super(message)
+		super(message || 'Invalid data')
 		this.name = 'BadRequestError'
 		this.status = 400
+	}
+}
+
+export class WrongIdFormatError extends BadRequestError {
+	constructor() {
+		super('Wrong ID format')
 	}
 }
 
@@ -19,6 +25,14 @@ export class ForbiddenError extends Error {
 		super(message)
 		this.name = 'ForbiddenError'
 		this.status = 403
+	}
+}
+
+export class NotFoundError extends Error {
+	constructor(objectName) {
+		super(`${objectName} not found`)
+		this.name = 'NotFoundError'
+		this.status = 404
 	}
 }
 

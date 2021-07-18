@@ -9,8 +9,8 @@ import { ListController, Title } from 'react-admin'
 import { Link } from 'react-router-dom'
 
 const sort = {
-	field: 'firstCreationDate',
-	order: 'DESC',
+	field: 'createdAt',
+	order: -1,
 }
 
 const useStyles = makeStyles(theme => (

@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import schema from '../models/CharacterSchema.js'
-import { createAPI } from '../utils.js'
+import { createAPI } from '../utils_old.js'
 
 const Model = mongoose.model('Character', schema)
 

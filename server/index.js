@@ -1,36 +1,32 @@
-import appRoot from 'app-root-path'
-import cors from 'cors'
-import express from 'express'
-import helmet from 'helmet'
-import './dotenv.js'
-import errorHandler from './middleware/errorHandler.js'
-import connectToDb from './mongodb.js'
-import router from './routers/router.js'
+import dbClient from './db.js'
+import './env.js'
+import logger from './logger.js'
+import server from './server.js'
 
-const app = express()
+if (!dbClient.isConnected()) {
+	process.exit(1)
+}
 
-app.use(helmet())
+const cleanUpAndExit = async (code = 1) => {
+	await dbClient.close()
+	logger.succeed('Database connection closed')
+	process.exit(code)
+}
 
-app.use(express.static(appRoot.resolve('../dist')))
-
-app.use('/media', express.static(appRoot.resolve('../media')))
-
-app.use(cors({
-	origin: process.env.UI_SERVER || false,
-	exposedHeaders: 'Content-Range',
-	credentials: true,
-}))
-
-app.use('/api', router)
-
-app.use(errorHandler)
-
-connectToDb()
-	.then(() => {
-		const url = new URL(process.env.SERVER)
-		app.listen(+url.port, url.hostname, () => {
-			console.log('Server is running...')
-			//cron.schedule('0 0 * * Mon', updateEmployees)
-		})
+for (const signal of ['SIGINT', 'SIGHUP', 'SIGUSR2']) {
+	process.on(signal, async (code) => {
+		logger.prefixText = signal === 'SIGINT' ? '\n' : ''
+		await cleanUpAndExit(code)
 	})
-	.catch(console.log)
+}
+
+process.on('uncaughtException', async (err) => {
+	console.error(err)
+	await cleanUpAndExit()
+})
+
+const { port, hostname } = new URL(process.env.SERVER)
+
+server.listen(+port, hostname, () => {
+	logger.succeed('Server is running')
+})

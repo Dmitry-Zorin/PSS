@@ -1,29 +1,14 @@
 import React from 'react'
-import {
-	ArrayField,
-	ChipField,
-	FileField,
-	ReferenceArrayField,
-	ReferenceField,
-	Show,
-	SimpleShowLayout,
-	SingleFieldList,
-	TextField,
-} from 'react-admin'
+import { ChipField, FileField, ReferenceField, Show, SimpleShowLayout, TextField, useRecordContext } from 'react-admin'
+import { httpClient } from '../../providers/dataProvider.js'
 import { createTitle, ShowActions } from '../../raComponents.js'
 
 const Title = createTitle('Статья', 'headline')
 
-export const ArticleShow = ({
-	permissions,
-	enableActions = true,
-	...props
-}) => (
+export const ArticleShow = ({ permissions, ...props }) => (
 	<Show
 		title={<Title/>}
-		actions={enableActions && (
-			<ShowActions permissions={permissions}/>
-		)}
+		actions={<ShowActions permissions={permissions}/>}
 		{...props}
 	>
 		<SimpleShowLayout>
@@ -33,7 +18,7 @@ export const ArticleShow = ({
 			/>
 			<TextField
 				label='Аннотация'
-				source='text'
+				source='abstract'
 			/>
 			<TextField
 				label='Вид работы'
@@ -42,14 +27,14 @@ export const ArticleShow = ({
 			/>
 			<ChipField
 				label='Год создания'
-				source='creationDate'
+				source='year'
 			/>
 			<TextField
 				label='Объем'
 				source='volume'
 				emptyText='-'
 			/>
-			<ArrayField
+			{/*<ArrayField
 				label='Авторы'
 				source='authors'
 			>
@@ -59,7 +44,7 @@ export const ArticleShow = ({
 						source='author'
 					/>
 				</SingleFieldList>
-			</ArrayField>
+			</ArrayField>*/}
 			<ReferenceField
 				label='Место публикации'
 				source='publicationPlace'
@@ -68,15 +53,6 @@ export const ArticleShow = ({
 			>
 				<TextField source='name'/>
 			</ReferenceField>
-			<ReferenceArrayField
-				label='Подразделения'
-				reference='subdivisions'
-				source='subdivisions'
-			>
-				<SingleFieldList>
-					<ChipField source='name'/>
-				</SingleFieldList>
-			</ReferenceArrayField>
 			<TextField
 				label='Выходные данные'
 				source='exitData'
@@ -89,12 +65,22 @@ export const ArticleShow = ({
 			>
 				<ChipField source='name'/>
 			</ReferenceField>
-			<FileField
-				source='file.url'
-				title='file.title'
-				label='PDF файл'
-				target='_blank'
-			/>
+			{React.createElement(() => {
+				const record = useRecordContext()
+				return (
+					<FileField
+						source='file.url'
+						title='file.name'
+						label='Файл'
+						//target='_blank'
+						//download={record.file.name}
+						/*onClick={async (e) => {
+							e.preventDefault()
+							saveAs(record.file.url, record.file.name)
+						}}*/
+					/>
+				)
+			})}
 		</SimpleShowLayout>
 	</Show>
 )

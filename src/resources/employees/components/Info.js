@@ -32,8 +32,8 @@ const Info = ({ children }) => {
 							style={{ fontSize: '1.15rem', fontWeight: 'bold' }}
 						/>
 						<span label='Должность' addLabel>
-                            Оператор <b>{platoonNumber}</b> взвода <b>{companyNumber}</b> НР
-                        </span>
+							Оператор <b>{platoonNumber}</b> взвода <b>{companyNumber}</b> НР
+						</span>
 						<TextField
 							label='Воинское звание'
 							source='militaryRank'

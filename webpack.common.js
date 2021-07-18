@@ -23,7 +23,7 @@ module.exports = {
 			title: 'Cистема хранения научных трудов',
 			template: './src/index.html',
 		}),
-		new CompressionPlugin(),
-		new Dotenv(),
+		new CompressionPlugin,
+		new Dotenv,
 	],
 }

@@ -16,12 +16,9 @@ export const getResourceData = async (dataProvider, notify, author) => {
 }
 
 export const saveSettings = (settings) => {
-	localStorage.setItem('user', JSON.stringify({
-		...user,
-		...settings,
-	}))
-	/*fetchAPI('users', {
-		method: 'PUT',
-		body: JSON.stringify(settings),
-	})*/
+	const userInfo = JSON.stringify({ ...user, ...settings })
+	localStorage.setItem('user', userInfo)
+	
+	const options = { method: 'put', body: settings }
+	fetchAPI('auth/identity', options)
 }

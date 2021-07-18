@@ -1,115 +1,137 @@
-import bcrypt from 'bcrypt'
 import { Router } from 'express'
-import { BadRequestError, ConflictError } from '../errors.js'
+import { db } from '../db.js'
+import { BadRequestError, ConflictError, NotFoundError } from '../errors.js'
 import adminChecker from '../middleware/adminChecker.js'
 import queryParamsParser from '../middleware/queryParamsParser.js'
-import User from '../models/User.js'
+import { generatePassword } from '../utils.js'
 
-const fieldsToSelect = {
+const projection = {
 	_id: 0,
-	id: 1,
-	createdAt: 1,
-	login: 1,
+	username: 1,
 	isAdmin: 1,
+	id: '$username',
 }
 
-const selectFields = (record) => (
-	Object.entries(record)
-		.reduce((obj, [k, v]) => {
-			if (fieldsToSelect[k]) {
-				obj[k] = v
-			}
-			return obj
-		}, {})
-)
-
+const users = db.collection('users')
 const router = Router({ mergeParams: true })
 
-router.get('/', adminChecker, queryParamsParser, async (req, res, next) => {
-	try {
-		const { filter, sort, skip, limit } = req.query
-		
-		const [{ count: [{ total }], users }] = await User
-			.aggregate()
-			.match(filter)
-			.sort(sort)
-			.facet({
-				count: [
-					{ $count: 'total' },
-				],
-				users: [
-					{ $skip: skip },
-					{ $limit: limit },
-					{ $project: fieldsToSelect },
-				],
-			})
-		
-		for (const user of users) {
-			user.id = user.login
-		}
-		
-		res
-			.set('Content-Range', `users ${skip}-${Math.min(limit, total)}/${total}`)
-			.json(users)
-	}
-	catch (err) {
-		next(err)
-	}
-})
-
-router.get('/:id', adminChecker, async (req, res, next) => {
-	try {
-		const user = await User
-			.findOne({ login: req.params.id })
-			.select(fieldsToSelect)
-		res.json(user.toObject())
-	}
-	catch (err) {
-		if (err.name === 'CastError') {
-			err = new BadRequestError('Invalid user ID')
-		}
-		next(err)
-	}
-})
-
 router.post('/', adminChecker, async (req, res, next) => {
+	let { username, password, isAdmin } = req.body
+	
+	password = await generatePassword(password)
+	
+	if (!username || !password) {
+		return next(new BadRequestError('Missing username or password'))
+	}
+	
+	if (typeof isAdmin !== 'boolean') {
+		isAdmin = false
+	}
+	
 	try {
-		const user = await User.create({
-			login: req.body.login,
-			password: await bcrypt.hash(req.body.password, 10),
-		})
-		res.status(201).json(selectFields(user.toObject()))
+		await users.insertOne({ username, password, isAdmin })
 	}
 	catch (err) {
 		if (err.name === 'MongoError' && err.code === 11000) {
 			err = new ConflictError('User already exists')
 		}
+		return next(err)
+	}
+	
+	res.status(201).json({ id: username })
+})
+
+router.get('/', adminChecker, queryParamsParser, async (req, res, next) => {
+	const { filter, sort, skip, limit } = req.query
+	
+	const pipeline = [
+		{ $match: filter },
+		{ $sort: sort },
+		{
+			$facet: {
+				count: [
+					{ $count: 'total' },
+				],
+				docs: [
+					{ $skip: skip },
+					{ $limit: limit },
+					{ $project: projection },
+				],
+			},
+		},
+		{
+			$project: {
+				total: { $arrayElemAt: ['$count.total', 0] },
+				docs: 1,
+			},
+		},
+	]
+	
+	try {
+		const [{ total, docs }] = await users.aggregate(pipeline).toArray()
+		res.set('Content-Range', `users ${skip}-${Math.min(limit, total)}/${total}`)
+		res.json(docs)
+	}
+	catch (err) {
+		if (err.name === 'MongoError') {
+			let param
+			
+			switch (err.code) {
+				case 15959:
+					param = 'filter'
+					break
+				
+				case 15972:
+					param = 'range'
+					break
+				
+				case 15973:
+				case 15974:
+					param = 'sort'
+					break
+				
+				default:
+					param = 'query'
+			}
+			err = new BadRequestError(`Invalid ${param} parameter`)
+		}
 		next(err)
 	}
 })
 
+router.get('/:id', adminChecker, async (req, res, next) => {
+	const username = req.params.id
+	const user = await users.findOne({ username }, { projection })
+	if (!user) {
+		return next(new NotFoundError('User'))
+	}
+	res.json(user)
+})
+
 router.put('/:id', adminChecker, async (req, res, next) => {
+	const username = req.params.id
+	const isAdmin = req.body.isAdmin
+	
+	if (typeof isAdmin !== 'boolean') {
+		return next(new BadRequestError)
+	}
+	
 	try {
-		await User.updateOne({ login: req.params.id }, selectFields(req.body))
+		await users.updateOne({ username }, { $set: { isAdmin } })
 		res.sendStatus(200)
 	}
 	catch (err) {
-		if (err.name === 'CastError') {
-			err = new BadRequestError('Invalid user ID')
-		}
 		next(err)
 	}
 })
 
 router.delete('/:id', adminChecker, async (req, res, next) => {
 	try {
-		await User.deleteOne({ login: req.params.id })
+		const username = req.params.id
+		await users.deleteOne({ username })
 		res.sendStatus(200)
 	}
 	catch (err) {
-		if (err.name === 'CastError') {
-			err = new BadRequestError('Invalid user ID')
-		}
 		next(err)
 	}
 })

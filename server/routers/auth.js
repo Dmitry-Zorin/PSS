@@ -1,55 +1,32 @@
-import bcrypt from 'bcrypt'
 import { Router } from 'express'
-import jsonWebToken from 'jsonwebtoken'
-import { ConflictError, UnauthorizedError } from '../errors.js'
-import User from '../models/User.js'
+import jwt from 'jsonwebtoken'
+import { db } from '../db.js'
+import { BadRequestError, ConflictError, UnauthorizedError } from '../errors.js'
+import { generatePassword, isCorrectPassword, removeEmptyProps } from '../utils.js'
 
-const generateToken = (login, isAdmin) => (
-	jsonWebToken.sign(
-		{ login, isAdmin },
-		process.env.SECRET_KEY,
-		{ expiresIn: 31536000 },
-	)
-)
+const generateToken = (username, isAdmin) => {
+	const payload = { username, isAdmin }
+	const options = { expiresIn: 31536000 }
+	return jwt.sign(payload, process.env.SECRET_KEY, options)
+}
 
+const users = db.collection('users')
 const router = Router({ mergeParams: true })
 
-router.get('/', (req, res) => {
-	res.sendStatus(204)
-})
-
-router.get('/permissions', (req, res) => {
-	res.json({ isAdmin: req.user.isAdmin })
-})
-
-router.get('/identity', async (req, res, next) => {
-	try {
-		const user = await User.findOne({ login: req.user.login })
-		res.json({
-			id: user._id,
-			fullName: user.login,
-			isAdmin: user.isAdmin,
-			locale: user.locale,
-			theme: user.theme,
-		})
-	}
-	catch (err) {
-		next(err)
-	}
-})
-
 router.post('/register', async (req, res, next) => {
+	let { username, password } = req.body
+	
+	password = await generatePassword(password)
+	
+	if (!username || !password) {
+		return next(new BadRequestError('Invalid username or password'))
+	}
+	
 	try {
-		const { login, password } = req.body
-		
-		await User.create({
-			login,
-			password: await bcrypt.hash(password, 10),
-			isAdmin: false,
-		})
-		
+		const isAdmin = false
+		await users.insertOne({ username, password, isAdmin })
 		res.status(201).json({
-			token: generateToken(login, false),
+			token: generateToken(username, isAdmin),
 		})
 	}
 	catch (err) {
@@ -61,21 +38,60 @@ router.post('/register', async (req, res, next) => {
 })
 
 router.post('/login', async (req, res, next) => {
+	const { username, password } = req.body
+	
+	if (!username || !password) {
+		return next(new BadRequestError('Missing username or password'))
+	}
+	
+	const user = await users.findOne({ username })
+	
+	if (!user) {
+		return next(new UnauthorizedError('Incorrect username'))
+	}
+	
+	if (!await isCorrectPassword(password, user.password)) {
+		return next(new UnauthorizedError('Incorrect password'))
+	}
+	
+	res.json({ token: generateToken(username, user.isAdmin) })
+})
+
+router.get('/', (req, res) => {
+	res.sendStatus(204)
+})
+
+router.get('/permissions', (req, res) => {
+	res.json({ isAdmin: req.user.isAdmin })
+})
+
+router.get('/identity', async (req, res, next) => {
 	try {
-		const { login, password } = req.body
-		const user = await User.findOne({ login })
-		
-		if (user && await bcrypt.compare(password, user.password)) {
-			return res.json({
-				token: generateToken(login, user.isAdmin),
-			})
-		}
-		
-		next(new UnauthorizedError('Incorrect login or password'))
+		const { username, isAdmin, locale, theme } = await users.findOne({ username: req.user.username })
+		res.json({ fullName: username, isAdmin, locale, theme })
 	}
 	catch (err) {
 		next(err)
 	}
+})
+
+router.put('/identity', async (req, res, next) => {
+	let { username, password, locale, theme } = req.body
+	
+	password = await generatePassword(password)
+	
+	const payload = removeEmptyProps({ username, password, locale, theme })
+	
+	if (Object.keys(payload).length) {
+		await users.updateOne({ username: req.user.username }, { $set: payload })
+	}
+	
+	res.sendStatus(200)
+})
+
+router.delete('/identity', async (req, res, next) => {
+	await users.deleteOne({ username: req.user.username })
+	res.sendStatus(200)
 })
 
 export default router

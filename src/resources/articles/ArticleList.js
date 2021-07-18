@@ -6,8 +6,6 @@ import {
 	Filter,
 	List,
 	NumberInput,
-	ReferenceArrayField,
-	ReferenceField,
 	ReferenceInput,
 	SelectInput,
 	SingleFieldList,
@@ -15,12 +13,11 @@ import {
 	TextInput,
 } from 'react-admin'
 import { DescriptionField, HeadlineField } from '../../CustomFields'
-import { createEmptyPage, BulkActionButtons } from '../../raComponents.js'
-import { ArticleShow } from './ArticleShow'
+import { createEmptyPage } from '../../raComponents.js'
 
 const Empty = createEmptyPage(
-	'Нет доступных программ',
-	'Для добавления программы нажмите кнопку "Создать"',
+	'Нет доступных статей',
+	'Для добавления статьи нажмите кнопку "Создать"',
 )
 
 const Filters = (props) => (
@@ -32,11 +29,11 @@ const Filters = (props) => (
 		/>
 		<TextInput
 			label='Аннотация'
-			source='text'
+			source='abstract'
 		/>
 		<TextInput
 			label='Автор'
-			source='authors'
+			source='authors.author'
 		/>
 		<ReferenceInput
 			label='Место публикации'
@@ -68,44 +65,27 @@ export const ArticleList = ({ permissions, ...props }) => (
 	<List
 		title='Список статей'
 		filters={<Filters/>}
-		perPage={25}
-		exporter={false}
-		sort={{ field: 'firstCreationDate', order: 'DESC' }}
+		//perPage={25}
+		//exporter={false}
+		sort={{ field: 'createdAt', order: -1 }}
 		empty={<Empty/>}
-		bulkActionButtons={<BulkActionButtons permissions={permissions}/>}
+		//bulkActionButtons={<BulkActionButtons permissions={permissions}/>}
 		{...props}
 	>
 		<Datagrid
 			rowClick='show'
-			expand={<ArticleShow enableActions={false}/>}
+			expand={(
+				<DescriptionField
+					label='Аннотация'
+					source='abstract'
+				/>
+			)}
 		>
 			<HeadlineField
 				label='Название'
 				source='headline'
 			/>
-			<DescriptionField
-				label='Аннотация'
-				source='text'
-				maxchars={250}
-			/>
-			<ReferenceField
-				label='Место публикации'
-				source='publicationPlace'
-				reference='publications'
-				link=''
-			>
-				<TextField source='name'/>
-			</ReferenceField>
-			<ReferenceArrayField
-				label='Подразделения'
-				reference='subdivisions'
-				source='subdivisions'
-			>
-				<SingleFieldList>
-					<ChipField source='name'/>
-				</SingleFieldList>
-			</ReferenceArrayField>
-			<ArrayField
+			{/*<ArrayField
 				source='authors'
 				label='Авторы'
 			>
@@ -115,7 +95,7 @@ export const ArticleList = ({ permissions, ...props }) => (
 						source='author'
 					/>
 				</SingleFieldList>
-			</ArrayField>
+			</ArrayField>*/}
 			<TextField
 				label='Год создания'
 				source='creationDate'
