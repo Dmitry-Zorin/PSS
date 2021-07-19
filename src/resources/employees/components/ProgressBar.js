@@ -1,5 +1,6 @@
 import { Paper, Typography } from '@material-ui/core'
 import Box from '@material-ui/core/Box'
+import range from 'just-range'
 import React from 'react'
 
 const maxNumOfSteps = 16
@@ -10,8 +11,7 @@ const ProgressBar = ({ value = 0, max = 0 }) => {
 	
 	const ratio = max ? value / max : 0.5
 	const numOfSteps = max ? getNumOfSteps(max) : 1
-	const values = [...Array(numOfSteps).keys()].map(e => e * max / (numOfSteps
-		- 1))
+	const values = range(numOfSteps).map(e => e * max / (numOfSteps - 1))
 	
 	return (
 		<Paper

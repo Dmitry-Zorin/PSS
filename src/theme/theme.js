@@ -1,10 +1,10 @@
 import { amber, blueGrey, indigo } from '@material-ui/core/colors'
-import merge from 'lodash/merge'
 import muiTheme from './muiTheme'
 import raTheme from './raTheme'
+import extend from 'just-extend'
 
 const createMyTheme = (theme) => (
-	merge(theme, raTheme, muiTheme)
+	extend(true, theme, raTheme, muiTheme)
 )
 
 const themes = {

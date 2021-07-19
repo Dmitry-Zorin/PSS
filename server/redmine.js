@@ -1,3 +1,4 @@
+import range from 'just-range'
 import fetch from 'node-fetch'
 import EmployeeModel from './models/Employee.js'
 
@@ -35,7 +36,7 @@ export const updateEmployees = async () => {
 		const totalCount = firstIssues.total_count
 		const numOfRequests = Math.floor(totalCount / 100)
 		
-		const requests = [...Array(numOfRequests).keys()].map(async i => {
+		const requests = range(numOfRequests).map(async i => {
 			const { issues } = await getIssues((i + 1) * 100, startDate, dueDate)
 			return processIssues(issues, info)
 		})

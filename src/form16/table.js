@@ -1,5 +1,6 @@
 import { AlignmentType, Paragraph, Table, TableCell, TableRow, VerticalAlign, WidthType } from 'docx'
 import { getTableRows } from './tableRows'
+import range from 'just-range'
 
 export const getTable = (data, author) => {
 	const index = { value: 1 }
@@ -82,7 +83,7 @@ export const getTable = (data, author) => {
 					],
 				}),
 				new TableRow({
-					children: [...Array(6).keys()].map(i => (
+					children: range(6).map(i => (
 						new TableCell({
 							children: [
 								new Paragraph({

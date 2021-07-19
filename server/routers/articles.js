@@ -5,7 +5,7 @@ import { BadRequestError, WrongIdFormatError } from '../errors.js'
 import adminChecker from '../middleware/adminChecker.js'
 import fileUploader from '../middleware/fileUploader.js'
 import queryParamsParser from '../middleware/queryParamsParser.js'
-import { projectProps, removeEmptyProps } from '../utils.js'
+import { projectTruthyProps, removeFalsyProps } from '../utils.js'
 
 const resource = 'articles'
 const resourceItem = resource.replace(/s$/, '')
@@ -35,7 +35,7 @@ router.post('/', adminChecker, fileUploader, async (req, res, next) => {
 	
 	const createResource = async (file) => {
 		body.fileId = file._id
-		const { insertedId } = await collection.insertOne(removeEmptyProps(body))
+		const { insertedId } = await collection.insertOne(removeFalsyProps(body))
 		res.status(201).json({ id: insertedId })
 	}
 	
@@ -133,40 +133,29 @@ router.get('/:id', adminChecker, async (req, res, next) => {
 router.put('/:id', adminChecker, fileUploader, async (req, res, next) => {
 	const { files, body, params } = req
 	body.file = files?.file?.[0]
+	const payload = projectTruthyProps(body, projection)
 	
-	let resourceId
-	try {
-		resourceId = new ObjectId(params.id)
-	}
-	catch (err) {
-		return next(new WrongIdFormatError)
+	if (Object.keys(payload).length) {
+		try {
+			const resourceId = new ObjectId(params.id)
+			await collection.updateOne({ _id: resourceId }, { $set: payload })
+		}
+		catch (err) {
+			return next(new WrongIdFormatError)
+		}
 	}
 	
-	try {
-		const projectedBody = projectProps(body, projection)
-		await collection.updateOne({ _id: resourceId }, { $set: projectedBody })
-		res.sendStatus(200)
-	}
-	catch (err) {
-		next(err)
-	}
+	res.sendStatus(204)
 })
 
 router.delete('/:id', adminChecker, async (req, res, next) => {
-	let resourceId
 	try {
-		resourceId = new ObjectId(req.params.id)
-	}
-	catch (err) {
-		return next(new WrongIdFormatError)
-	}
-	
-	try {
+		const resourceId = new ObjectId(req.params.id)
 		await collection.deleteOne({ _id: resourceId })
-		res.sendStatus(200)
+		res.sendStatus(204)
 	}
 	catch (err) {
-		next(err)
+		next(new WrongIdFormatError)
 	}
 })
 

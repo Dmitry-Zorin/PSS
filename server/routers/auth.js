@@ -2,7 +2,7 @@ import { Router } from 'express'
 import jwt from 'jsonwebtoken'
 import { db } from '../db.js'
 import { BadRequestError, ConflictError, UnauthorizedError } from '../errors.js'
-import { generatePassword, isCorrectPassword, removeEmptyProps } from '../utils.js'
+import { generatePassword, isCorrectPassword, removeFalsyProps } from '../utils.js'
 
 const generateToken = (username, isAdmin) => {
 	const payload = { username, isAdmin }
@@ -79,8 +79,7 @@ router.put('/identity', async (req, res, next) => {
 	let { username, password, locale, theme } = req.body
 	
 	password = await generatePassword(password)
-	
-	const payload = removeEmptyProps({ username, password, locale, theme })
+	const payload = removeFalsyProps({ username, password, locale, theme })
 	
 	if (Object.keys(payload).length) {
 		await users.updateOne({ username: req.user.username }, { $set: payload })

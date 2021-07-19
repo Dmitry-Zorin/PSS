@@ -1,8 +1,6 @@
-.idea
-.env
-.DS_Store
-
 node_modules
+dist
 
-dist/*
-!dist/index.html
+.env
+.idea
+.DS_Store
