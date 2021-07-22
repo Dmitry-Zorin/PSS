@@ -14,7 +14,7 @@ export const httpClient = (url, options = {}) => {
 	if (options.body) {
 		const body = options.body
 		if (body.file) {
-			const formData = new FormData
+			const formData = new FormData()
 			for (const [key, value] of Object.entries(body)) {
 				formData.append(key, value.rawFile || JSON.stringify(value))
 			}

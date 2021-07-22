@@ -1,0 +1,15 @@
+export default {
+	_id: 0,
+	id: '$_id',
+	headline: 1,
+	abstract: 1,
+	type: 1,
+	year: 1,
+	volume: 1,
+	authors: 1,
+	publicationPlace: 1,
+	character: 1,
+	exitDate: 1,
+	file: 1,
+	createdAt: { $toDate: '$_id' },
+}
