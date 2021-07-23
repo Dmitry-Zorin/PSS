@@ -7,7 +7,7 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 import React, { useEffect, useState } from 'react'
 import { getResources, usePermissions } from 'react-admin'
 import { useSelector } from 'react-redux'
-import { fetchAPI } from '../../requests.js'
+import { fetchApi } from '../../requests.js'
 import MenuItem from './MenuItem'
 import SubMenu from './SubMenu'
 
@@ -66,7 +66,7 @@ const Menu = () => {
 	const [data, setData] = useState({})
 	
 	useEffect(() => {
-		fetchAPI('resources').then(({ json }) => setData(json))
+		fetchApi('resources').then(({ json }) => setData(json))
 	}, [])
 	
 	return (

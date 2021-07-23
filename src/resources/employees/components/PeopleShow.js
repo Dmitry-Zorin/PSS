@@ -3,7 +3,7 @@ import StarsIcon from '@material-ui/icons/Stars'
 import React, { cloneElement, useEffect, useState } from 'react'
 import { Show, Tab, TabbedShowLayout } from 'react-admin'
 import { createTitle, ShowActions } from '../../../raComponents.js'
-import { fetchAPI } from '../../../requests.js'
+import { fetchApi } from '../../../requests.js'
 
 export const PeopleShow = ({ info, tabs, ...props }) => {
 	const Title = createTitle(info.title, 'name')
@@ -24,7 +24,7 @@ export const PeopleShow = ({ info, tabs, ...props }) => {
 	})
 	
 	useEffect(() => {
-		fetchAPI(`${info.resource}/${props.id}/redmine`)
+		fetchApi(`${info.resource}/${props.id}/redmine`)
 			.then(({ json }) => setData(json))
 	}, [])
 	

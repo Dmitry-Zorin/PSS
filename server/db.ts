@@ -9,7 +9,7 @@ import { BadRequestError, NotFoundError, WrongIdFormatError } from './errors'
 export let db: Db
 export let fileDb: Db
 
-export default async () => {
+const connectToDb = async () => {
 	const { DB_URI, DB_NAME, FILE_DB_NAME } = process.env
 	
 	if (!DB_URI || !DB_NAME || !FILE_DB_NAME) {
@@ -37,6 +37,8 @@ export default async () => {
 	logger.succeed(`Connected to database ${chalk.blue(DB_NAME)}`)
 	return client
 }
+
+export default connectToDb
 
 interface DocumentResult {
 	error?: any,

@@ -1,141 +1,112 @@
 import FormData from 'form-data'
 import dotenv from 'dotenv'
-import { fetchAPI } from '../utils'
+import { fetchApi } from '../utils'
 import 'jest-extended'
+import connectToDb, { db, fileDb } from '../db'
+import { RequestInit } from 'node-fetch'
+import { forIn } from 'lodash'
 
 dotenv.config()
 
-let token: string
+const testDocument = {
+	id: '',
+	name: 'test document',
+	desc: 'test document description',
+	wrongProp: 'some unknown property',
+}
 
-beforeAll(async () => {
-	const body = new URLSearchParams({
-		username: 'dima',
-		password: 'zorin',
-	})
-	const { json } = await fetchAPI('auth/login', token, {
+let fetchTestApi: (options: RequestInit, path?: string) => Promise<{ status: number, json: any }>
+
+const createFetchFunction = (token: string) => {
+	fetchTestApi = (options, path = '') => (
+		fetchApi(`tests/${path}`, options, token)
+	)
+}
+
+const login = async () => {
+	const { json } = await fetchApi('auth/login', {
 		method: 'post',
 		headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-		body,
+		body: new URLSearchParams({
+			username: 'dima',
+			password: 'zorin',
+		}),
 	})
-	token = json?.token
-})
+	expect(json?.token).toBeString()
+	createFetchFunction(json.token)
+}
 
-test('Create a test resource item', async () => {
-	expect(token).toBeString()
-	
-	const name = 'create'
-	const desc = 'test resource creation'
-	
+const createDocument = async () => {
 	const body = new FormData()
-	body.append('name', name)
-	body.append('desc', desc)
-	
-	const { json } = await fetchAPI('tests', token, {
-		method: 'post',
-		body,
+	forIn(testDocument, (value, key) => {
+		body.append(key, value)
 	})
-	expect(json).toBeObject()
-	
-	const { id } = json
-	expect(id).toBeString()
-	
-	const { json: json2 } = await fetchAPI(`tests/${id}`, token)
-	expect({ id, name, desc }).toMatchObject(json2)
+	const { json } = await fetchTestApi({ method: 'post', body })
+	expect(json?.id).toBeString()
+	testDocument.id = json.id
+}
+
+const cleanUpDb = async () => {
+	const testCollectionName = 'tests'
+	const dbClient = await connectToDb()
+	await Promise.all([
+		db.collection(testCollectionName).drop(),
+		fileDb.collection(`${testCollectionName}.files`).drop(),
+		fileDb.collection(`${testCollectionName}.chunks`).drop(),
+	])
+	await dbClient.close()
+}
+
+beforeAll(login)
+
+beforeEach(createDocument)
+
+afterAll(cleanUpDb)
+
+test('Find a document', async () => {
+	const { id, name, desc } = testDocument
+	const { json } = await fetchTestApi({}, id)
+	expect(json).toEqual(expect.objectContaining({ id, name, desc }))
+	expect(json.wrongProp).toBeUndefined()
 })
 
-test('Get test resource collection', async () => {
-	expect(token).toBeString()
-	
+test('Find a list of documents', async () => {
 	const query = new URLSearchParams({
 		filter: '{"name": "create"}',
 		sort: '["name", 1]',
 		range: '[0, 25]',
 	})
-	const { json } = await fetchAPI(`tests?${query}`, token)
+	const { json } = await fetchTestApi({}, `?${query}`)
 	expect(json).toBeArray()
-	
 	json.forEach((e: any) => {
-		expect(e).toBeObject()
-		expect(e.id).toBeString()
-		expect(e.name).toBeString()
-		expect(e.desc).toBeString()
-		expect(e.createdAt).toBeString()
+		expect(e).toContainAllKeys(['id', 'name', 'desc', 'createdAt'])
 	})
 })
 
-test('Get a test resource item by ID', async () => {
-	expect(token).toBeString()
+test('Update a document', async () => {
+	const { id, wrongProp } = testDocument
+	const updatedTestDocument = {
+		id,
+		name: 'updated test resource',
+		desc: 'updated test resource description',
+		wrongProp,
+	}
 	
-	const query = new URLSearchParams({
-		filter: '{}',
-		sort: '["_id", 1]',
-		range: '[0, 0]',
+	const updateBody = new FormData()
+	forIn(updatedTestDocument, (value, key) => {
+		updateBody.append(key, value)
 	})
-	const { json } = await fetchAPI(`tests?${query}`, token)
-	expect(json).toBeArrayOfSize(1)
+	await fetchTestApi({ method: 'put', body: updateBody }, id)
 	
-	const { id } = json[0]
-	expect(id).toBeString()
-	
-	const { json: json2 } = await fetchAPI(`tests/${id}`, token)
-	expect(json2).toBeObject()
-	expect(json2.id).toBe(id)
-	expect(json2.name).toBeString()
-	expect(json2.desc).toBeString()
-	expect(json2.createdAt).toBeString()
+	const { json } = await fetchTestApi({}, id)
+	const { wrongProp: _, ...expectedProps } = updatedTestDocument
+	expect(json).toEqual(expect.objectContaining(expectedProps))
+	expect(json.wrongProp).toBeUndefined()
 })
 
-test('Update a test resource item by ID', async () => {
-	expect(token).toBeString()
-	
-	const newName = 'update'
-	const newDesc = 'test resource update'
-	
-	const query = new URLSearchParams({
-		filter: '{}',
-		sort: '["_id", 1]',
-		range: '[0, 0]',
-	})
-	const { json } = await fetchAPI(`tests?${query}`, token)
-	expect(json).toBeArrayOfSize(1)
-	
-	const { id } = json[0]
-	expect(id).toBeString()
-	
-	const body = new FormData()
-	body.append('name', newName)
-	body.append('desc', newDesc)
-	
-	await fetchAPI(`tests/${id}`, token, {
-		method: 'put',
-		body,
-	})
-	const { json: json2 } = await fetchAPI(`tests/${id}`, token)
-	expect(json2).toBeObject()
-	expect(json2.id).toBe(id)
-	expect(json2.name).toBe(newName)
-	expect(json2.desc).toBe(newDesc)
-	expect(json2.createdAt).toBeString()
-})
-
-test('Delete a test resource item by ID', async () => {
-	expect(token).toBeString()
-	
-	const query = new URLSearchParams({
-		filter: '{}',
-		sort: '["_id", 1]',
-		range: '[0, 0]',
-	})
-	const { json } = await fetchAPI(`tests?${query}`, token)
-	expect(json).toBeArrayOfSize(1)
-	
-	const { id } = json[0]
-	expect(id).toBeString()
-	
-	await fetchAPI(`tests/${id}`, token, { method: 'delete' })
-	
-	const { json: json2 } = await fetchAPI(`tests/${id}`, token)
-	expect(json2).toBeObject()
-	expect(json2.error).toBeObject()
-	expect(json2.error.message).toBe('Not found')
+test('Delete a document', async () => {
+	const { id } = testDocument
+	await fetchTestApi({ method: 'delete' }, id)
+	const { json } = await fetchTestApi({}, id)
+	expect(json?.error?.message).toBe('Not found')
 })

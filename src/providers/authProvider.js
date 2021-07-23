@@ -1,11 +1,11 @@
-import { fetchAPI } from '../requests.js'
+import { fetchApi } from '../requests.js'
 
 export let user = JSON.parse(localStorage.getItem('user'))
 
 export default {
 	login: async ({ username, password }) => {
 		const options = { method: 'post', body: { username, password } }
-		const { json } = await fetchAPI('auth/login', options)
+		const { json } = await fetchApi('auth/login', options)
 		if (json?.token) {
 			localStorage.setItem('token', json.token)
 			return Promise.resolve()
@@ -17,17 +17,17 @@ export default {
 		return Promise.resolve()
 	},
 	checkAuth: async () => {
-		const { error } = await fetchAPI('auth')
+		const { error } = await fetchApi('auth')
 		return error ? Promise.reject() : Promise.resolve()
 	},
 	getPermissions: async () => {
 		if (user) return user.isAdmin
-		const { json } = await fetchAPI('auth/permissions')
+		const { json } = await fetchApi('auth/permissions')
 		return json.isAdmin
 	},
 	getIdentity: async () => {
 		if (!user) {
-			const { json } = await fetchAPI('auth/identity')
+			const { json } = await fetchApi('auth/identity')
 			json.fullName = json.username
 			user = json
 		}

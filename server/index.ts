@@ -4,7 +4,7 @@ import logger from './logger'
 const { SERVER } = process.env
 
 if (!SERVER) {
-	console.log('Missing server env2 variable. Exiting...')
+	console.log('Missing server env variable. Exiting...')
 	process.exit(1)
 }
 

@@ -18,7 +18,7 @@ export const isCorrectPassword = (password: string, hash: string) => (
 	bcrypt.compare(password, hash).catch(() => false)
 )
 
-export const fetchAPI = async (resourceUrl: string, token: string, options: RequestInit = {}) => {
+export const fetchApi = async (resourceUrl: string, options: RequestInit = {}, token?: string) => {
 	const { SERVER } = process.env
 	
 	if (!SERVER) {

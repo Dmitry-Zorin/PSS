@@ -116,7 +116,7 @@ const getIssues = async (offset, startDate, dueDate) => {
 	})
 	const resp = await fetch(
 		`${process.env.REDMINE_SERVER}/issues.json?${urlParams}`, {
-			headers: { 'X-Redmine-API-Key': process.env.REDMINE_KEY },
+			headers: { 'X-Redmine-Api-Key': process.env.REDMINE_KEY },
 		},
 	)
 	return resp.json()
