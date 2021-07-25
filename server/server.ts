@@ -1,4 +1,3 @@
-import appRoot from 'app-root-path'
 import cors from 'cors'
 import express from 'express'
 import helmet from 'helmet'
@@ -14,8 +13,7 @@ app.use(cors({
 	exposedHeaders: 'Content-Range',
 	credentials: true,
 }))
-app.use(express.static(appRoot.resolve('../dist')))
-app.use('/media', express.static(appRoot.resolve('../media')))
+app.use(express.static('../dist'))
 app.use('/api', apiRouter)
 app.use('/files', filesRouter)
 app.use(errorHandler)

@@ -1,8 +1,8 @@
-export default {
-	_id: 0,
-	id: '$_id',
+import { Projection } from './projection.interface'
+
+const tests: Projection = {
 	name: 1,
-	desc: 1,
-	file: 1,
-	createdAt: { $toDate: '$_id' },
+	desc: 1
 }
+
+export default tests

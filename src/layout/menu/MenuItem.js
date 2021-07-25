@@ -11,7 +11,7 @@ const MenuItem = ({ resource, data }) => (
 				{data && (
 					<Chip
 						size='small'
-						label={data[resource.name]}
+						label={data[resource.name] || 0}
 						style={{ marginLeft: 15 }}
 					/>
 				)}

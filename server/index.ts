@@ -1,10 +1,11 @@
 import connectToDB from './db'
 import logger from './logger'
+import { createEnvError } from './errors'
 
 const { SERVER } = process.env
 
 if (!SERVER) {
-	console.log('Missing server env variable. Exiting...')
+	console.error(createEnvError('server'))
 	process.exit(1)
 }
 

@@ -1,61 +1,39 @@
 import { NextFunction, Request, Response } from 'express'
-import { forIn, isInteger, isString, size } from 'lodash'
-import { BadRequestError } from '../errors'
+import { forIn, isInteger } from 'lodash'
+import { createBadRequestError } from '../errors'
 
-interface SearchParams {
-	match?: { [key: string]: string },
-	sort?: { [key: string]: -1 | 1 },
-	skip?: number,
-	limit?: number
+const paramValidations: Record<string, ((x: any) => boolean) | undefined> = {
+	'match': (param: any) => (
+		toString.call(param) === '[object Object]'
+	),
+	'sort': (param: any) => (
+		toString.call(param) === '[object Object]'
+		// && [-1, 1].includes(Object.values(param)[0])
+	),
+	'skip': (param: any) => (
+		isInteger(param) && param >= 0
+	),
+	'limit': (param: any) => (
+		isInteger(param) && param >= 0
+	),
 }
 
-export default (req: Request, res: Response, next: NextFunction) => {
-	const searchParams: SearchParams = {}
-	
+const listParamsChecker = (req: Request, res: Response, next: NextFunction) => {
 	try {
-		forIn(req.query, (value, key) => {
-			
-			// @ts-ignore
-			const parsed = JSON.parse(value)
-			
-			switch (key) {
-				case 'filter':
-					if (toString.call(parsed) !== '[object Object]') {
-						throw new BadRequestError('Invalid filter parameter')
-					}
-					searchParams.match = parsed
-					break
-				
-				case 'sort':
-					const [key, value] = parsed
-					if (!key || !isString(key) || ![-1, 1].includes(value)) {
-						throw new BadRequestError('Invalid sort parameter')
-					}
-					searchParams.sort = { [key]: value }
-					break
-				
-				case 'range':
-					const [from, to] = parsed
-					if (!isInteger(from) || from < 0 || !isInteger(to) || to < from) {
-						throw new BadRequestError('Invalid range parameter')
-					}
-					searchParams.skip = from
-					searchParams.limit = Math.min(to - from + 1, 50)
-					break
+		forIn(req.query, (value = '', key) => {
+			const isValidParam = paramValidations[key]
+			if (isValidParam && !isValidParam(JSON.parse(value.toString()))) {
+				throw createBadRequestError(`Invalid ${key} parameter`)
 			}
 		})
 	}
 	catch (err) {
-		if (!(err instanceof BadRequestError)) {
-			err = new BadRequestError('Invalid format of query parameters')
-		}
-		return next(err)
+		return next(err.name === 'BadRequestError' ? err : (
+			createBadRequestError('Invalid format of query parameters')
+		))
 	}
 	
-	if (size(searchParams) < 4) {
-		return next(new BadRequestError('Invalid number of query parameters'))
-	}
-	
-	res.locals.searchParams = searchParams
 	next()
 }
+
+export default listParamsChecker

@@ -5,8 +5,13 @@ import 'jest-extended'
 import connectToDb, { db, fileDb } from '../db'
 import { RequestInit } from 'node-fetch'
 import { forIn } from 'lodash'
+import fs from 'fs'
+import path from 'path'
+import { MongoClient } from 'mongodb'
 
 dotenv.config()
+
+const testCollectionName = 'tests'
 
 const testDocument = {
 	id: '',
@@ -14,6 +19,12 @@ const testDocument = {
 	desc: 'test document description',
 	wrongProp: 'some unknown property',
 }
+
+const getFile = () => (
+	fs.createReadStream(path.join(__dirname, 'test.pdf'))
+)
+
+let dbClient: MongoClient
 
 let fetchTestApi: (options: RequestInit, path?: string) => Promise<{ status: number, json: any }>
 
@@ -38,6 +49,7 @@ const login = async () => {
 
 const createDocument = async () => {
 	const body = new FormData()
+	body.append('file', getFile())
 	forIn(testDocument, (value, key) => {
 		body.append(key, value)
 	})
@@ -47,8 +59,9 @@ const createDocument = async () => {
 }
 
 const cleanUpDb = async () => {
-	const testCollectionName = 'tests'
-	const dbClient = await connectToDb()
+	if (!dbClient) {
+		dbClient = await connectToDb()
+	}
 	await Promise.all([
 		db.collection(testCollectionName).drop(),
 		fileDb.collection(`${testCollectionName}.files`).drop(),
@@ -58,28 +71,27 @@ const cleanUpDb = async () => {
 }
 
 beforeAll(login)
-
 beforeEach(createDocument)
-
 afterAll(cleanUpDb)
 
 test('Find a document', async () => {
 	const { id, name, desc } = testDocument
+	const fileId = expect.any(String)
 	const { json } = await fetchTestApi({}, id)
-	expect(json).toEqual(expect.objectContaining({ id, name, desc }))
+	expect(json).toEqual(expect.objectContaining({ id, name, desc, fileId }))
 	expect(json.wrongProp).toBeUndefined()
 })
 
 test('Find a list of documents', async () => {
 	const query = new URLSearchParams({
-		filter: '{"name": "create"}',
+		filter: JSON.stringify({ name: testDocument.name }),
 		sort: '["name", 1]',
 		range: '[0, 25]',
 	})
 	const { json } = await fetchTestApi({}, `?${query}`)
-	expect(json).toBeArray()
+	expect(json?.length).toBeGreaterThan(0)
 	json.forEach((e: any) => {
-		expect(e).toContainAllKeys(['id', 'name', 'desc', 'createdAt'])
+		expect(e).toContainAllKeys(['id', 'name', 'desc', 'createdAt', 'fileId'])
 	})
 })
 
@@ -89,8 +101,13 @@ test('Update a document', async () => {
 		id,
 		name: 'updated test resource',
 		desc: 'updated test resource description',
+		file: getFile(),
 		wrongProp,
 	}
+	
+	const resp = await fetchTestApi({}, id)
+	const fileId = resp.json.fileId
+	expect(fileId).toBeString()
 	
 	const updateBody = new FormData()
 	forIn(updatedTestDocument, (value, key) => {
@@ -99,14 +116,29 @@ test('Update a document', async () => {
 	await fetchTestApi({ method: 'put', body: updateBody }, id)
 	
 	const { json } = await fetchTestApi({}, id)
-	const { wrongProp: _, ...expectedProps } = updatedTestDocument
+	const { wrongProp: _, file, ...expectedProps } = updatedTestDocument
 	expect(json).toEqual(expect.objectContaining(expectedProps))
+	expect(json.fileId).not.toBe(fileId)
 	expect(json.wrongProp).toBeUndefined()
 })
 
 test('Delete a document', async () => {
 	const { id } = testDocument
+	
+	const resp = await fetchTestApi({}, id)
+	expect(resp.json?.error).toBeUndefined()
+	const fileId = resp.json?.fileId
+	
 	await fetchTestApi({ method: 'delete' }, id)
-	const { json } = await fetchTestApi({}, id)
-	expect(json?.error?.message).toBe('Not found')
+	
+	const { status, json } = await fetchTestApi({}, id)
+	expect(status).toBe(404)
+	expect(json?.error?.name).toBe('NotFoundError')
+	
+	if (!dbClient) {
+		dbClient = await connectToDb()
+	}
+	const coll = fileDb.collection(`${testCollectionName}.files`)
+	const file = await coll.findOne({ _id: fileId })
+	expect(file).toBeFalsy()
 })

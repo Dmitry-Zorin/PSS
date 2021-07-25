@@ -1,4 +1,5 @@
 import nock from 'nock'
+import { createEnvError } from './errors'
 
 const defaultIssueOptions = {
 	assignedToId: 306,
@@ -40,7 +41,7 @@ const createIssue = (options?: any) => {
 
 export const nockRedmine = (redmineServer: string, verbose = false) => {
 	if (!redmineServer) {
-		throw new Error('Missing redmine server env variable')
+		throw createEnvError('redmine')
 	}
 	
 	const url = '/issues.json'

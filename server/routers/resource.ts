@@ -7,28 +7,22 @@ import resourceInfoProvider from '../middleware/resourceInfoProvider'
 
 const router = Router({ mergeParams: true })
 
-router.post(
-	'/:resource',
-	adminChecker,
-	fileParser,
-	resourceInfoProvider,
-	async (req: Request, res: Response, next: NextFunction) => {
-		const { collectionName, projection } = res.locals.resourceInfo
-		const { files, body }: any = req
-		const file = files?.file?.[0]
-		const { error, doc: { id } } = await addDocument(collectionName, body, projection, file)
-		
-		if (error) {
-			return next(error)
-		}
-		
-		if (!id) {
-			return res.sendStatus(204)
-		}
-		
-		res.status(201).json({ id })
-	},
-)
+const create = async (req: Request, res: Response, next: NextFunction) => {
+	const { collectionName, projection } = res.locals.resourceInfo
+	const { error, doc } = await addDocument(collectionName, req.body, projection, req.file)
+	
+	if (error) {
+		return next(error)
+	}
+	
+	if (!doc?.id) {
+		return res.sendStatus(204)
+	}
+	
+	res.status(201).json({ id: doc.id })
+}
+
+router.post('/:resource', adminChecker, fileParser, resourceInfoProvider, create)
 
 router.get(
 	'/:resource',
@@ -36,7 +30,7 @@ router.get(
 	listParamsParser,
 	resourceInfoProvider,
 	async (req: Request, res: Response, next: NextFunction) => {
-		const { match, sort, skip, limit } = res.locals.searchParams
+		const { match = {}, sort = {}, skip = 0, limit = 50 } = req.query
 		const { collectionName, projection } = res.locals.resourceInfo
 		
 		const { error, docs } = await getDocuments(collectionName, [
@@ -49,7 +43,7 @@ router.get(
 					],
 					documents: [
 						{ $skip: skip },
-						{ $limit: limit },
+						{ $limit: Math.min(+limit, 50) },
 						{ $project: projection },
 					],
 				},
@@ -66,9 +60,9 @@ router.get(
 			return next(error)
 		}
 		
-		const [{ total, documents }] = docs as any[]
-		res.set('Content-Range', `${collectionName} ${skip}-${Math.min(limit, total)}/${total}`)
-		res.json(documents)
+		const [{ total, documents }] = docs || [{}]
+		const range = `${collectionName} ${skip}-${Math.min(+limit, total)}/${total}`
+		res.set('content-range', range).json(documents)
 	},
 )
 

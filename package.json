@@ -2,8 +2,8 @@
 	"name": "storage-system",
 	"version": "2.0.0",
 	"scripts": {
-		"start": "concurrently --kill-others 'npm run dev' 'npm run serve'",
-		"server": "nodemon --watch server server/index.ts",
+		"start": "concurrently --kill-others 'npm run serve' 'npm run server'",
+		"server": "npm start --prefix server",
 		"serve": "webpack serve --config webpack.dev.js",
 		"build": "webpack --config webpack.prod.js"
 	},
@@ -16,6 +16,7 @@
 		"file-saver": "^2.0.5",
 		"just-extend": "^4.2.1",
 		"just-range": "^2.2.0",
+		"just-reduce-object": "^1.1.0",
 		"ra-compact-ui": "^1.1.1",
 		"ra-data-simple-rest": "^3.10.4",
 		"ra-i18n-polyglot": "^3.11.4",

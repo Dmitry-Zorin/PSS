@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response, Router } from 'express'
 import { fileDb } from '../db'
-import { NotFoundError, WrongIdFormatError } from '../errors'
 import { GridFSBucket, ObjectId } from 'mongodb'
+import { createNotFoundError, wrongIdFormatError } from '../errors'
 
 const router = Router()
 
@@ -9,7 +9,7 @@ router.get('/:resource/:fileId', async (req: Request, res: Response, next: NextF
 	let { resource, fileId } = req.params
 	
 	if (!ObjectId.isValid(fileId)) {
-		return next(new WrongIdFormatError)
+		return next(wrongIdFormatError)
 	}
 	
 	const collection = fileDb.collection(resource)
@@ -18,7 +18,7 @@ router.get('/:resource/:fileId', async (req: Request, res: Response, next: NextF
 	const file = await collection.findOne({ _id }, { projection })
 	
 	if (!file) {
-		return next(new NotFoundError('File not found'))
+		return next(createNotFoundError('File not found'))
 	}
 	
 	res.attachment(file.filename)

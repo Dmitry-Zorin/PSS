@@ -1,21 +1,25 @@
-import { InternalServerError } from '../errors'
+import { createInternalServerError, createUnauthorizedError, HttpError } from '../errors'
 import { NextFunction, Request, Response } from 'express'
 
-interface CustomError extends Error {
-	status: number
+const errorHandler = (err: Error | HttpError, req: Request, res: Response, next: NextFunction) => {
+	const sendError = ({ status, ...error }: HttpError) => {
+		res.status(status).json(error)
+	}
+	
+	if (!(err instanceof Error)) {
+		return sendError(err)
+	}
+	
+	// express-jwt
+	if (err.name === 'UnauthorizedError') {
+		return sendError(createUnauthorizedError('Invalid token'))
+	}
+	
+	console.error(err)
+	
+	sendError(createInternalServerError(
+		'Oops, something went wrong while processing the request',
+	))
 }
 
-export default (err: CustomError, req: Request, res: Response, next: NextFunction) => {
-	if (!err.status || !err.message) {
-		console.error(err)
-		err = new InternalServerError(
-			'Oops, something went wrong while processing the request',
-		)
-	}
-	res.type('application/json').status(err.status).json({
-		error: {
-			name: err.name,
-			message: err.message,
-		},
-	})
-}
+export default errorHandler

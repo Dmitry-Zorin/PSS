@@ -4,19 +4,41 @@ import resourceRouter from './resource'
 import authRouter from './auth'
 import extraRouter from './extra'
 import usersRouter from './user'
+import { createEnvError } from '../errors'
+
+const { SECRET_KEY } = process.env
+
+if (!SECRET_KEY) {
+	throw createEnvError('secret_key')
+}
 
 const router = Router()
 
 router.use(json())
 router.use(urlencoded({ extended: true }))
-router.use(jwt({
-	secret: process.env.SECRET_KEY || '',
+
+const jwtHandler = jwt({
+	secret: SECRET_KEY,
 	algorithms: ['HS256'],
-}).unless({ path: /.+(login|register)/ }))
+})
+router.use(jwtHandler.unless({ path: /.+(login|register)/ }))
 
 router.use('/auth', authRouter)
 router.use('/users', usersRouter)
-router.use(resourceRouter)
 router.use(extraRouter)
+router.use(resourceRouter)
 
 export default router
+
+declare global {
+	namespace Express {
+		interface User {
+			username: string,
+			isAdmin: boolean
+		}
+		
+		interface Request {
+			user?: User | undefined;
+		}
+	}
+}

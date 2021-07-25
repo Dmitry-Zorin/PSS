@@ -22,14 +22,12 @@ test('Parse correct getList parameters', () => {
 		sort: ['username', 1],
 		range: [2, 5],
 	})
-	
 	const searchParams = {
 		match: { username: 'test' },
 		sort: { username: 1 },
 		skip: 2,
 		limit: 4,
 	}
-	
 	expect(parseGetListParams(listParams)).toEqual(searchParams)
 })
 

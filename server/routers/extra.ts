@@ -1,15 +1,15 @@
 import { NextFunction, Request, Response, Router } from 'express'
 import { db } from '../db'
 
-const router = Router()
+const extraRouter = Router()
 
-router.get('/resources', async (req: Request, res: Response, next: NextFunction) => {
+extraRouter.get('/resources', async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		const collCount: { [key: string]: number } = {}
-		for (const coll of await db.collections()) {
-			collCount[coll.collectionName] = await coll.estimatedDocumentCount()
-		}
-		res.json(collCount)
+		const collections = await db.collections()
+		const entries = collections.map(async coll => (
+			[coll.collectionName, await coll.estimatedDocumentCount()]
+		))
+		res.json(Object.fromEntries(await Promise.all(entries)))
 	}
 	catch (err) {
 		next(err)
@@ -23,7 +23,7 @@ const groups = [
 	['textbooks'],
 ]
 
-router.get('/form16/:author', async (req: Request, res: Response, next: NextFunction) => {
+extraRouter.get('/form16/:author', async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const resourceData = groups.map(() => ({ old: [], new: [] }))
 		const date = new Date().getFullYear() - 3
@@ -77,4 +77,4 @@ router.get('/form16/:author', async (req: Request, res: Response, next: NextFunc
 })
 */
 
-export default router
+export default extraRouter

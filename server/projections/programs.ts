@@ -1,8 +1,8 @@
 import defaultProjection from './default'
 import { Projection } from './projection.interface'
 
-const articles: Projection = {
+const programs: Projection = {
 	...defaultProjection
 }
 
-export default articles
+export default programs

@@ -1,34 +1,45 @@
 import bcrypt from 'bcrypt'
 import { pickBy } from 'lodash'
 import fetch, { RequestInit } from 'node-fetch'
+import { Projection } from './projections/projection.interface'
+import { createEnvError } from './errors'
 
-export const removeFalsyProps = (object: object) => (
-	pickBy(object, Boolean)
+type NonNullish = boolean | number | string | object
+
+export const removeNullishProps = (object: Record<string, any>)  => (
+	pickBy(object, value => value != null) as Record<string, NonNullish>
 )
 
-export const projectTruthyProps = (object: object, projection: any) => (
-	pickBy(object, (value, key) => projection[key] && value)
+removeNullishProps({a: [1,2]})
+
+export const projectNonNullishProps = <T>(object: Record<string, any>, projection: Projection) => (
+	pickBy(object, (value, key) => projection[key] && value) as Record<string, NonNullish>
 )
 
-export const generatePassword = (password: string, salt = 10) => (
-	!password ? '' : bcrypt.hash(password, salt).catch(() => '')
+export const generatePassword = async (password: string, salt = 10): Promise<string> => (
+	password ? bcrypt.hash(password, salt).catch(() => '') : ''
 )
 
-export const isCorrectPassword = (password: string, hash: string) => (
+export const isCorrectPassword = (password: string, hash: string): Promise<boolean> => (
 	bcrypt.compare(password, hash).catch(() => false)
 )
 
-export const fetchApi = async (resourceUrl: string, options: RequestInit = {}, token?: string) => {
+interface FetchApiResponse {
+	status: number,
+	json: any
+}
+
+export const fetchApi = async (path: string, options: RequestInit = {}, token?: string): Promise<FetchApiResponse> => {
 	const { SERVER } = process.env
 	
 	if (!SERVER) {
-		throw new Error('Missing server env parameter')
+		throw createEnvError('server')
 	}
 	
-	const resp = await fetch(`${SERVER}/api/${resourceUrl}`, {
+	const resp = await fetch(`${SERVER}/api/${path}`, {
 		...options,
 		headers: {
-			...token && { 'Authorization': `Bearer ${token}` },
+			...token && { authorization: `Bearer ${token}` },
 			...options.headers,
 		},
 	})

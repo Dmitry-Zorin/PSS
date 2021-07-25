@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response, Router } from 'express'
 import { db } from '../db'
-import { BadRequestError, ConflictError, NotFoundError } from '../errors'
+import { createBadRequestError, createConflictError, createNotFoundError } from '../errors'
 import adminChecker from '../middleware/adminChecker'
 import queryParamsParser from '../middleware/listParamsParser'
 import { generatePassword } from '../utils'
@@ -21,7 +21,7 @@ router.post('/', adminChecker, async (req: Request, res: Response, next: NextFun
 	password = await generatePassword(password)
 	
 	if (!username || !password) {
-		return next(new BadRequestError('Missing username or password'))
+		return next(createBadRequestError('Missing username or password'))
 	}
 	
 	if (typeof isAdmin !== 'boolean') {
@@ -33,7 +33,7 @@ router.post('/', adminChecker, async (req: Request, res: Response, next: NextFun
 	}
 	catch (err) {
 		if (err.name === 'MongoError' && err.code === 11000) {
-			err = new ConflictError('User already exists')
+			return next(createConflictError('User already exists'))
 		}
 		return next(err)
 	}
@@ -81,7 +81,7 @@ router.get('/:id', adminChecker, async (req: Request, res: Response, next: NextF
 	const username = req.params.id
 	const user = await users.findOne({ username }, { projection })
 	if (!user) {
-		return next(new NotFoundError('User not found'))
+		return next(createNotFoundError('User not found'))
 	}
 	res.json(user)
 })
@@ -91,7 +91,7 @@ router.put('/:id', adminChecker, async (req: Request, res: Response, next: NextF
 	const isAdmin = req.body.isAdmin
 	
 	if (typeof isAdmin !== 'boolean') {
-		return next(new BadRequestError)
+		return next(createBadRequestError('Parameter isAdmin must be boolean'))
 	}
 	
 	try {

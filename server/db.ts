@@ -4,7 +4,9 @@ import logger from './logger'
 import { projectTruthyProps } from './utils'
 import { isEmpty } from 'lodash'
 import { Readable } from 'stream'
-import { BadRequestError, NotFoundError, WrongIdFormatError } from './errors'
+import { createNotFoundError, noPropsError, wrongIdFormatError } from './errors'
+import { Projection } from './projections/projection.interface'
+import { Dictionary } from 'lodash'
 
 export let db: Db
 export let fileDb: Db
@@ -13,7 +15,7 @@ const connectToDb = async () => {
 	const { DB_URI, DB_NAME, FILE_DB_NAME } = process.env
 	
 	if (!DB_URI || !DB_NAME || !FILE_DB_NAME) {
-		return Promise.reject('Missing database env variables')
+		return Promise.reject('Database environment variables are not set')
 	}
 	
 	logger.start('Connecting to the database...')
@@ -46,10 +48,10 @@ interface DocumentResult {
 	docs?: any[],
 }
 
-export const addDocument = async (
+export const addDocument = async <T>(
 	collectionName: string,
-	document: object,
-	projection: object,
+	document: Dictionary<T>,
+	projection: Projection,
 	file?: Express.Multer.File,
 ) => {
 	const result: DocumentResult = {}
@@ -66,7 +68,7 @@ export const addDocument = async (
 	}
 	
 	if (isEmpty(payload)) {
-		result.error = new BadRequestError()
+		result.error = noPropsError
 		return result
 	}
 	
@@ -96,11 +98,11 @@ export const getDocuments = async (collectionName: string, pipeline: object[]) =
 	return result
 }
 
-export const getDocument = async (collectionName: string, documentId: string, projection: object) => {
+export const getDocument = async (collectionName: string, documentId: string, projection: Projection) => {
 	const result: DocumentResult = {}
 	
 	if (!ObjectId.isValid(documentId)) {
-		result.error = new WrongIdFormatError()
+		result.error = wrongIdFormatError
 		return result
 	}
 	
@@ -110,7 +112,7 @@ export const getDocument = async (collectionName: string, documentId: string, pr
 		const doc = await coll.findOne({ _id }, { projection })
 		
 		if (!doc) {
-			result.error = new NotFoundError('Not found')
+			result.error = createNotFoundError()
 			return result
 		}
 		
@@ -123,18 +125,18 @@ export const getDocument = async (collectionName: string, documentId: string, pr
 	return result
 }
 
-export const updateDocument = async (
+export const updateDocument = async <T>(
 	collectionName: string,
 	documentId: string,
-	updateDocument: object,
-	projection: object,
+	updateDocument: Dictionary<T>,
+	projection: Projection,
 	file?: Express.Multer.File,
 ) => {
 	const result: DocumentResult = {}
 	const payload: any = projectTruthyProps(updateDocument, projection)
 	
 	if (!ObjectId.isValid(documentId)) {
-		result.error = new WrongIdFormatError()
+		result.error = wrongIdFormatError
 		return result
 	}
 	
@@ -149,7 +151,7 @@ export const updateDocument = async (
 	}
 	
 	if (isEmpty(payload)) {
-		result.error = new BadRequestError()
+		result.error = noPropsError
 		return result
 	}
 	
@@ -159,7 +161,7 @@ export const updateDocument = async (
 		const { value } = await coll.findOneAndUpdate({ _id }, { $set: payload })
 		
 		if (!value) {
-			result.error = new NotFoundError('Not found')
+			result.error = createNotFoundError()
 		}
 		
 		if (value?.fileId) {
@@ -177,7 +179,7 @@ export const deleteDocument = async (collectionName: string, documentId: string)
 	const result: DocumentResult = {}
 	
 	if (!ObjectId.isValid(documentId)) {
-		result.error = new WrongIdFormatError()
+		result.error = wrongIdFormatError
 		return result
 	}
 	
@@ -217,7 +219,9 @@ export const deleteFile = (collectionName: string, fileId: string) => {
 	}
 	const bucket = new GridFSBucket(fileDb, { bucketName: collectionName })
 	bucket.delete(new ObjectId(fileId), (error) => {
-		console.error(error)
-		// TODO: Add mechanism to keep track of the files that failed to be deleted
+		if (error) {
+			console.error(error)
+			// TODO: Add mechanism to keep track of the files that failed to be deleted
+		}
 	})
 }
