@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import { createAPIwithFile, getFileIfExists } from '../utils_old'
+import { createApiwithFile, getFileIfExists } from '../utils_old'
 
 const schema
 from
@@ -36,7 +36,7 @@ const extractDataFromRequest = (req) => ({
 })
 
 export default (app) => {
-	createAPIwithFile(app,
+	createApiwithFile(app,
 		resource,
 		Model,
 		extractDataToSend,

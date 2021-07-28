@@ -1,34 +1,25 @@
-import { mapValues } from 'lodash'
-import listParamsParser from '../middleware/listParamsParser'
+import listParamsParser from '../app/routes/api/resources/middleware/listParamsParser'
 import { NextFunction, Request, Response } from 'express'
+import { stringifyValues } from '../utils'
 
 const parseGetListParams = (listParams: any) => {
 	const req = { query: listParams }
-	const res: any = { locals: {} }
+	const res = { locals: {} as Record<string, any> }
 	const next = (err: any) => {
-		if (err) res.locals.searchParams = err.message
+		if (err) res.locals = err.message
 	}
 	listParamsParser(req as Request, res as Response, next as NextFunction)
-	return res.locals.searchParams
+	return res.locals
 }
 
-const stringifyValues = (object: object) => (
-	mapValues(object, JSON.stringify)
-)
-
 test('Parse correct getList parameters', () => {
-	const listParams = stringifyValues({
-		filter: { username: 'test' },
-		sort: ['username', 1],
-		range: [2, 5],
-	})
-	const searchParams = {
+	const listParams = {
 		match: { username: 'test' },
 		sort: { username: 1 },
 		skip: 2,
 		limit: 4,
 	}
-	expect(parseGetListParams(listParams)).toEqual(searchParams)
+	expect(parseGetListParams(stringifyValues(listParams))).toEqual(listParams)
 })
 
 const ops: { op: string, tests: any[] }[] = [
@@ -51,12 +42,17 @@ const ops: { op: string, tests: any[] }[] = [
 		],
 	},
 	{
-		op: 'range',
+		op: 'skip',
 		tests: [
-			'[1, 2]',
-			[-1, 2],
-			[0, -2],
-			[1, 0],
+			'1',
+			-1,
+		],
+	},
+	{
+		op: 'limit',
+		tests: [
+			'1',
+			-1,
 		],
 	},
 ]

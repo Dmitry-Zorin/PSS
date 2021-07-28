@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import schema from '../models/Employee'
-import { createAPIwithFile, getFileIfExists, getObjectProps } from '../utils_old'
+import { createApiwithFile, getFileIfExists, getObjectProps } from '../utils_old'
 
 const Model = mongoose.model('Employee', schema)
 const resource = 'employees'
@@ -39,11 +39,13 @@ const extractDataFromRequest = ({ body }) => (
 )
 
 export default (app) => {
-	createAPIwithFile(app,
+	createApiwithFile(
+		app,
 		resource,
 		Model,
 		extractDataToSend,
-		extractDataFromRequest)
+		extractDataFromRequest,
+	)
 	
 	app.get(`/api/${resource}/:id/redmine`, async (req, res, next) => {
 		try {

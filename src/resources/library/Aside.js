@@ -36,7 +36,7 @@ export const Aside = () => {
 	useEffect(() => {
 		if (!subdivisions) {
 			setSubdivisions([])
-			getSubdivisions().then(res => {
+			getSubdivisions().then((res) => {
 				setSubdivisions(res.data)
 			})
 		}

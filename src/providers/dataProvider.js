@@ -8,22 +8,21 @@ export const httpClient = (url, options = {}) => {
 		authenticated: true,
 		token: `Bearer ${localStorage.getItem('token')}`,
 	}
-	if (!options.headers) {
-		options.headers = new Headers({ accept: 'application/json' })
-	}
+	options.headers ||= new Headers()
+	
 	if (options.body) {
-		const body = options.body
-		if (body.file) {
-			options.body = reduce(body, (obj, key, value) => {
-				obj.append(key, value.rawFile || JSON.stringify(value))
-				return obj
+		if (options.body.file) {
+			options.body = reduce(options.body, (result, key, value) => {
+				result.append(key, value?.rawFile || JSON.stringify(value))
+				return result
 			}, new FormData())
 		}
 		else {
 			options.headers.set('content-type', 'application/x-www-form-urlencoded')
-			options.body = new URLSearchParams(Object.entries(body))
+			options.body = new URLSearchParams(Object.entries(options.body))
 		}
 	}
+	
 	return fetchUtils.fetchJson(url, options)
 }
 
@@ -33,6 +32,7 @@ const dataProvider = {
 		const { json } = await httpClient(`${apiUrl}/${resource}`, options)
 		return { data: { ...params.data, id: json.id } }
 	},
+	
 	getList: async (resource, params) => {
 		const {
 			filter: match,
@@ -57,15 +57,18 @@ const dataProvider = {
 		const total = +headers.get('content-range').split('/').pop()
 		return { data: json, total }
 	},
+	
 	getOne: async (resource, params) => {
 		const { json } = await httpClient(`${apiUrl}/${resource}/${params.id}`)
 		return { data: json }
 	},
+	
 	update: async (resource, params) => {
 		const options = { method: 'put', body: params.data }
-		const { json } = httpClient(`${apiUrl}/${resource}/${params.id}`, options)
+		const { json } = await httpClient(`${apiUrl}/${resource}/${params.id}`, options)
 		return { data: json }
 	},
+	
 	delete: async (resource, params) => {
 		const options = {
 			method: 'delete',

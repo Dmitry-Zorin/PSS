@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import { departmentSchema } from '../models/schemas'
-import { createAPI } from '../utils_old'
+import { createApi } from '../utils_old'
 
 const Model = mongoose.model('Department', departmentSchema)
 
@@ -17,5 +17,5 @@ const extractDataFromRequest = (req) => ({
 const resource = 'departments'
 
 export default (app) => {
-	createAPI(app, resource, Model, extractDataToSend, extractDataFromRequest)
+	createApi(app, resource, Model, extractDataToSend, extractDataFromRequest)
 }

@@ -5,77 +5,77 @@ from
 
 const resources = {
 	monographs: {
-		model: require('./MonographAPI.js').ArticleModel,
+		model: require('./MonographApi.js').ArticleModel,
 		translation: 'Монография',
 		wordGender: 'feminine',
 	},
 	abstracts: {
-		model: require('./AbstractAPI.js').ArticleModel,
+		model: require('./AbstractApi.js').ArticleModel,
 		translation: 'Афтореферат',
 		wordGender: 'masculine',
 	},
 	dissertations: {
-		model: require('./DissertationAPI.js').ArticleModel,
+		model: require('./DissertationApi.js').ArticleModel,
 		translation: 'Диссертация',
 		wordGender: 'feminine',
 	},
 	reports: {
-		model: require('./ReportAPI.js').ArticleModel,
+		model: require('./ReportApi.js').ArticleModel,
 		translation: 'Отчет',
 		wordGender: 'masculine',
 	},
 	textbooks: {
-		model: require('./TextbookAPI.js').ArticleModel,
+		model: require('./TextbookApi.js').ArticleModel,
 		translation: 'Учебник',
 		wordGender: 'masculine',
 	},
 	theses: {
-		model: require('./ThesisAPI.js').ArticleModel,
+		model: require('./ThesisApi.js').ArticleModel,
 		translation: 'Тезис доклада',
 		wordGender: 'masculine',
 	},
 	approbations: {
-		model: require('./ApprobationAPI.js').ApprobationModel,
+		model: require('./ApprobationApi.js').ApprobationModel,
 		translation: 'Апробация',
 		wordGender: 'feminine',
 	},
 	articles: {
-		model: require('./ArticleAPI.js').ArticleModel,
+		model: require('./ArticleApi.js').ArticleModel,
 		translation: 'Статья',
 		wordGender: 'feminine',
 	},
 	developments: {
-		model: require('./DevelopmentAPI.js').DevelopmentWork,
+		model: require('./DevelopmentApi.js').DevelopmentWork,
 		translation: 'ОКР',
 		wordGender: 'feminine',
 	},
 	patents: {
-		model: require('./PatentsAPI.js').PatentsModel,
+		model: require('./PatentsApi.js').PatentsModel,
 		translation: 'Патент',
 		wordGender: 'masculine',
 	},
 	programs: {
-		model: require('./ProgramAPI.js').ProgramModel,
+		model: require('./ProgramApi.js').ProgramModel,
 		translation: 'Программа',
 		wordGender: 'feminine',
 	},
 	projects: {
-		model: require('./ProjectsAPI.js').ProjectsModel,
+		model: require('./ProjectsApi.js').ProjectsModel,
 		translation: 'Инициативный проект',
 		wordGender: 'masculine',
 	},
 	rationalizations: {
-		model: require('./RationalizationAPI.js').RationalizationModel,
+		model: require('./RationalizationApi.js').RationalizationModel,
 		translation: 'Рацпредложение',
 		wordGender: 'neuter',
 	},
 	researches: {
-		model: require('./ResearchAPI.js').ResearchModel,
+		model: require('./ResearchApi.js').ResearchModel,
 		translation: 'НИР',
 		wordGender: 'feminine',
 	},
 	verifications: {
-		model: require('./VerificationAPI.js').VerificationModel,
+		model: require('./VerificationApi.js').VerificationModel,
 		translation: 'Испытание',
 		wordGender: 'neuter',
 	},

@@ -9,5 +9,9 @@
 		"esModuleInterop": true,
 		"strictNullChecks": true,
 		"forceConsistentCasingInFileNames": true,
+		"typeRoots": [
+			"@types",
+			"node_modules/@types",
+		]
 	}
 }

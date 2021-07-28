@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 import LocaleSwitcher from './LocaleSwitcher'
 import ThemeSwitcher from './ThemeSwitcher'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
 	appBar: {
 		'& > * > *': {
 			color: 'inherit',

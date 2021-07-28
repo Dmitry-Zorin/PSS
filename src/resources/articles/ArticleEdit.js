@@ -104,7 +104,7 @@ export const ArticleEdit = (props) => (
 				target='_blank'
 			/>
 			<FileInput
-				source='newfile'
+				source='file'
 				label='Новый файл'
 			>
 				<FileField

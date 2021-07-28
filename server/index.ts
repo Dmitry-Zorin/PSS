@@ -1,31 +1,20 @@
-import connectToDB from './db'
 import logger from './logger'
 import { createEnvError } from './errors'
+import createApp from './app/express'
+import getDbService, { getFileService } from './db/mongo'
 
 const { SERVER } = process.env
 
 if (!SERVER) {
-	console.error(createEnvError('server'))
-	process.exit(1)
+	throw createEnvError('server')
 }
 
-connectToDB()
-	.then(async (dbClient) => {
-		for (const signal of ['SIGINT', 'SIGHUP', 'SIGTERM']) {
-			process.on(signal, async (code) => {
-				await dbClient.close()
-				process.exit(code)
-			})
-		}
-		
-		const { default: server } = await import('./server')
-		const { port, hostname } = new URL(SERVER)
-		
-		server.listen(+port, hostname, () => {
-			logger.succeed('Server is running...')
-		})
+const { port, hostname } = new URL(SERVER)
+
+getFileService().then(async (fileService) => {
+	const dbService = await getDbService(fileService)
+	const app = createApp(dbService)
+	app.listen(+port, hostname, () => {
+		logger.succeed('Server is running')
 	})
-	.catch(err => {
-		console.error(err)
-		process.exit(1)
-	})
+})

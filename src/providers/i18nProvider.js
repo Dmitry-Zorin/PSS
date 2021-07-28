@@ -6,6 +6,8 @@ import { user } from './authProvider'
 
 const { locale } = user || {}
 
-export default polyglotI18nProvider(locale => (
+const i18Provider = polyglotI18nProvider(locale => (
 	locale === 'ru' ? russianMessages : englishMessages
 ), locale || resolveBrowserLocale())
+
+export default i18Provider

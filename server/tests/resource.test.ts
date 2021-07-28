@@ -1,13 +1,11 @@
-import FormData from 'form-data'
 import dotenv from 'dotenv'
-import { fetchApi } from '../utils'
+import { fetchApi, stringifyValues } from '../utils'
 import 'jest-extended'
-import connectToDb, { db, fileDb } from '../db'
-import { RequestInit } from 'node-fetch'
-import { forIn } from 'lodash'
-import fs from 'fs'
-import path from 'path'
+import connectToDb from '../db/mongo'
 import { MongoClient } from 'mongodb'
+import { join } from 'path'
+import { createReadStream } from 'fs'
+import FormData from 'form-data'
 
 dotenv.config()
 
@@ -20,16 +18,16 @@ const testDocument = {
 	wrongProp: 'some unknown property',
 }
 
-const getFile = () => (
-	fs.createReadStream(path.join(__dirname, 'test.pdf'))
+const createFileStream = () => (
+	createReadStream(join(__dirname, 'test.pdf'))
 )
 
 let dbClient: MongoClient
 
-let fetchTestApi: (options: RequestInit, path?: string) => Promise<{ status: number, json: any }>
+let fetchTestApi: typeof fetchApi
 
 const createFetchFunction = (token: string) => {
-	fetchTestApi = (options, path = '') => (
+	fetchTestApi = (path = '', options) => (
 		fetchApi(`tests/${path}`, options, token)
 	)
 }
@@ -37,7 +35,6 @@ const createFetchFunction = (token: string) => {
 const login = async () => {
 	const { json } = await fetchApi('auth/login', {
 		method: 'post',
-		headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
 		body: new URLSearchParams({
 			username: 'dima',
 			password: 'zorin',
@@ -48,14 +45,17 @@ const login = async () => {
 }
 
 const createDocument = async () => {
-	const body = new FormData()
-	body.append('file', getFile())
-	forIn(testDocument, (value, key) => {
-		body.append(key, value)
+	const entries = Object.entries({
+		...testDocument,
+		file: createFileStream(),
 	})
-	const { json } = await fetchTestApi({ method: 'post', body })
-	expect(json?.id).toBeString()
-	testDocument.id = json.id
+	const body = entries.reduce((result, entry) => {
+		result.append(...entry)
+		return result
+	}, new FormData())
+	
+	const { json } = await fetchTestApi('', { method: 'post', body })
+	expect((testDocument.id = json?.id)).toBeString()
 }
 
 const cleanUpDb = async () => {
@@ -77,22 +77,25 @@ afterAll(cleanUpDb)
 test('Find a document', async () => {
 	const { id, name, desc } = testDocument
 	const fileId = expect.any(String)
-	const { json } = await fetchTestApi({}, id)
+	const { json } = await fetchTestApi(id)
 	expect(json).toEqual(expect.objectContaining({ id, name, desc, fileId }))
 	expect(json.wrongProp).toBeUndefined()
 })
 
 test('Find a list of documents', async () => {
-	const query = new URLSearchParams({
-		filter: JSON.stringify({ name: testDocument.name }),
-		sort: '["name", 1]',
-		range: '[0, 25]',
-	})
-	const { json } = await fetchTestApi({}, `?${query}`)
-	expect(json?.length).toBeGreaterThan(0)
-	json.forEach((e: any) => {
-		expect(e).toContainAllKeys(['id', 'name', 'desc', 'createdAt', 'fileId'])
-	})
+	const query = new URLSearchParams(stringifyValues({
+		filter: { name: testDocument.name },
+		sort: { name: 1 },
+		skip: 0,
+		limit: 25,
+	}))
+	
+	const { json } = await fetchTestApi(`?${query}`)
+	expect(json).toBeArray()
+	expect(json.length).toBeGreaterThan(0)
+	
+	const fields = ['id', 'name', 'desc', 'createdAt', 'fileId']
+	expect(json).toEqual(json.map(() => expect.toContainKeys(fields)))
 })
 
 test('Update a document', async () => {
@@ -101,21 +104,22 @@ test('Update a document', async () => {
 		id,
 		name: 'updated test resource',
 		desc: 'updated test resource description',
-		file: getFile(),
+		file: createFileStream(),
 		wrongProp,
 	}
 	
-	const resp = await fetchTestApi({}, id)
+	const resp = await fetchTestApi(id)
 	const fileId = resp.json.fileId
 	expect(fileId).toBeString()
 	
-	const updateBody = new FormData()
-	forIn(updatedTestDocument, (value, key) => {
-		updateBody.append(key, value)
-	})
-	await fetchTestApi({ method: 'put', body: updateBody }, id)
+	const entries = Object.entries(updatedTestDocument)
+	const body = entries.reduce((result, entry) => {
+		result.append(...entry)
+		return result
+	}, new FormData())
+	await fetchTestApi(id, { method: 'put', body })
 	
-	const { json } = await fetchTestApi({}, id)
+	const { json } = await fetchTestApi(id)
 	const { wrongProp: _, file, ...expectedProps } = updatedTestDocument
 	expect(json).toEqual(expect.objectContaining(expectedProps))
 	expect(json.fileId).not.toBe(fileId)
@@ -125,13 +129,13 @@ test('Update a document', async () => {
 test('Delete a document', async () => {
 	const { id } = testDocument
 	
-	const resp = await fetchTestApi({}, id)
+	const resp = await fetchTestApi(id)
 	expect(resp.json?.error).toBeUndefined()
 	const fileId = resp.json?.fileId
 	
-	await fetchTestApi({ method: 'delete' }, id)
+	await fetchTestApi(id, { method: 'delete' })
 	
-	const { status, json } = await fetchTestApi({}, id)
+	const { status, json } = await fetchTestApi(id)
 	expect(status).toBe(404)
 	expect(json?.error?.name).toBe('NotFoundError')
 	

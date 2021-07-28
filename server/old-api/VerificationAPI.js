@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import { verificationSchema } from '../models/schemas'
-import { createAPIwithFile, getFileIfExists } from '../utils_old'
+import { createApiwithFile, getFileIfExists } from '../utils_old'
 
 const Model = mongoose.model('Verification', verificationSchema)
 const resource = 'verifications'
@@ -32,7 +32,7 @@ const extractDataFromRequest = (req) => ({
 })
 
 export default (app) => {
-	createAPIwithFile(app,
+	createApiwithFile(app,
 		resource,
 		Model,
 		extractDataToSend,

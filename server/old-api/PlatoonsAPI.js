@@ -8,12 +8,12 @@ PlatoonSchema
 ')
 const { EmployeeModel }
 from.
-/EmployeesAPI')
+/EmployeesApi')
 const { auth }
 from
 ..
 /auth')
-const { createAPIwithFile, getObjectProps, getFileIfExists }
+const { createApiwithFile, getObjectProps, getFileIfExists }
 from
 ..
 /utils')
@@ -51,13 +51,16 @@ const getEmployees = async (platoonNumber, companyNumber) => (
 )
 
 export default (app) => {
-	createAPIwithFile(app,
+	createApiwithFile(
+		app,
 		resource,
 		Model,
 		extractDataToSend,
-		extractDataFromRequest)
+		extractDataFromRequest,
+	)
 	
-	app.get(`/api/${resource}/:id/redmine`,
+	app.get(
+		`/api/${resource}/:id/redmine`,
 		async (req, res, next) => {
 			try {
 				const response = {
@@ -136,5 +139,6 @@ export default (app) => {
 			catch (err) {
 				next(err)
 			}
-		})
+		},
+	)
 }

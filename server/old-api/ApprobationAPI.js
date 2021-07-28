@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import { approbationSchema } from '../models/schemas'
-import { createAPIwithFile, getFileIfExists } from '../utils_old'
+import { createApiwithFile, getFileIfExists } from '../utils_old'
 
 const Model = mongoose.model('Approbation', approbationSchema)
 const resource = 'approbations'
@@ -32,7 +32,7 @@ const extractDataFromRequest = (req) => ({
 })
 
 export default (app) => {
-	createAPIwithFile(app,
+	createApiwithFile(app,
 		resource,
 		Model,
 		extractDataToSend,

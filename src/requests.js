@@ -1,7 +1,7 @@
 import { user } from './providers/authProvider'
 import { apiUrl, httpClient } from './providers/dataProvider.js'
 
-export const fetchApi = (url, options = {}) => (
+export const fetchApi = (url, options) => (
 	httpClient(`${apiUrl}/${url}`, options)
 )
 

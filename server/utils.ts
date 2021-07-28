@@ -1,35 +1,34 @@
 import bcrypt from 'bcrypt'
-import { pickBy } from 'lodash'
-import fetch, { RequestInit } from 'node-fetch'
-import { Projection } from './projections/projection.interface'
+import { mapValues, pickBy } from 'lodash'
+import fetch from 'node-fetch'
+import { Projection } from './db/projections/types'
 import { createEnvError } from './errors'
 
 type NonNullish = boolean | number | string | object
 
-export const removeNullishProps = (object: Record<string, any>)  => (
+export const removeNullishProps = (object: Record<string, any>) => (
 	pickBy(object, value => value != null) as Record<string, NonNullish>
 )
 
-removeNullishProps({a: [1,2]})
-
 export const projectNonNullishProps = <T>(object: Record<string, any>, projection: Projection) => (
-	pickBy(object, (value, key) => projection[key] && value) as Record<string, NonNullish>
+	pickBy(object, (value, key) => projection[key] && value != null) as Record<string, NonNullish>
 )
 
-export const generatePassword = async (password: string, salt = 10): Promise<string> => (
-	password ? bcrypt.hash(password, salt).catch(() => '') : ''
+export const generatePassword = async (password: string, salt = 10) => (
+	password ? bcrypt.hash(password, salt).catch(() => null) : null
 )
 
-export const isCorrectPassword = (password: string, hash: string): Promise<boolean> => (
+export const isCorrectPassword = (password: string, hash: string) => (
 	bcrypt.compare(password, hash).catch(() => false)
 )
 
-interface FetchApiResponse {
-	status: number,
-	json: any
-}
+export const stringifyValues = (object: Record<string, any>) => (
+	mapValues(object, JSON.stringify) as unknown as Record<string, string>
+)
 
-export const fetchApi = async (path: string, options: RequestInit = {}, token?: string): Promise<FetchApiResponse> => {
+type FetchParams = Parameters<typeof fetch>
+
+export const fetchApi = async (path: FetchParams[0], options?: FetchParams[1], token?: string) => {
 	const { SERVER } = process.env
 	
 	if (!SERVER) {
@@ -40,11 +39,11 @@ export const fetchApi = async (path: string, options: RequestInit = {}, token?: 
 		...options,
 		headers: {
 			...token && { authorization: `Bearer ${token}` },
-			...options.headers,
+			...options?.headers,
 		},
 	})
 	return {
 		status: resp.status,
-		json: await resp.json().catch(() => ({})),
+		json: await resp.json().catch(() => null),
 	}
 }

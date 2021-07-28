@@ -36,10 +36,11 @@ export const createNotFoundError = (message = 'Object not found') => (
 	createError(404, 'NotFoundError', message)
 )
 
-export const createConflictError = (message: string) => (
+export const createConflictError = (message = 'Object already exists') => (
 	createError(409, 'ConflictError', message)
 )
 
-export const createInternalServerError = (message: string) => (
-	createError(500, 'InternalServerError', message)
-)
+export const createInternalServerError = () => {
+	const message = 'Oops, something went wrong while processing the request'
+	return createError(500, 'InternalServerError', message)
+}

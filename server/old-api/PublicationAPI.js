@@ -6,7 +6,7 @@ from
 /schemas/s
 chemas
 ').publicationSchema
-const { createAPI }
+const { createApi }
 from
 ..
 /utils')
@@ -26,5 +26,5 @@ const extractDataFromRequest = (req) => ({
 const resource = 'publications'
 
 export default (app) => {
-	createAPI(app, resource, Model, extractDataToSend, extractDataFromRequest)
+	createApi(app, resource, Model, extractDataToSend, extractDataFromRequest)
 }

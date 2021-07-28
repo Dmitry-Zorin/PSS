@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import schema from '../models/CategorySchema'
-import { createAPI } from '../utils_old'
+import { createApi } from '../utils_old'
 
 const Model = mongoose.model('Category', schema)
 
@@ -18,5 +18,5 @@ const extractDataFromRequest = (req) => ({
 const resource = 'categories'
 
 export default (app) => {
-	createAPI(app, resource, Model, extractDataToSend, extractDataFromRequest)
+	createApi(app, resource, Model, extractDataToSend, extractDataFromRequest)
 }
