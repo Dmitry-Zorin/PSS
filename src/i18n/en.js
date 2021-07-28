@@ -9,7 +9,7 @@ const messages = {
 			category3: 'Category C',
 			others: 'Others',
 			more: 'More',
-		}
+		},
 	},
 	resources: {
 		subdivisions: {

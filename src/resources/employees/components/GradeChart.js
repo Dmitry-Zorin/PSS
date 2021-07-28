@@ -12,13 +12,15 @@ export const GradeChart = ({ data }) => {
 			style={{ marginTop: 60 }}
 			data={{
 				labels,
-				datasets: [{
-					data: data.scores.map(e => e.score),
-					label: 'Количество баллов',
-					fill: false,
-					borderColor: theme.palette.secondary.main,
-					tension: 0,
-				}],
+				datasets: [
+					{
+						data: data.scores.map(e => e.score),
+						label: 'Количество баллов',
+						fill: false,
+						borderColor: theme.palette.secondary.main,
+						tension: 0,
+					},
+				],
 			}}
 		/>
 	)

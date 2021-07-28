@@ -22,7 +22,6 @@ const validateRequired = [required()]
 
 const Title = createTitle('Автореферат', 'headline')
 
-
 export const AbstractEdit = (props) => (
 	<Edit
 		title={<Title/>}

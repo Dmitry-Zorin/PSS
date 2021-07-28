@@ -112,8 +112,10 @@ export default (app) => {
 			}
 			
 			res
-				.set('Content-Range',
-					`timeline ${rangeStart}-${rangeEnd - 1}/${events.length}`)
+				.set(
+					'Content-Range',
+					`timeline ${rangeStart}-${rangeEnd - 1}/${events.length}`,
+				)
 				.send(events
 					.sort((a, b) => b.creationDate - a.creationDate)
 					.slice(rangeStart, rangeEnd),

@@ -1,6 +1,14 @@
-import { AlignmentType, Paragraph, Table, TableCell, TableRow, VerticalAlign, WidthType } from 'docx'
-import { getTableRows } from './tableRows'
+import {
+	AlignmentType,
+	Paragraph,
+	Table,
+	TableCell,
+	TableRow,
+	VerticalAlign,
+	WidthType,
+} from 'docx'
 import range from 'just-range'
+import { getTableRows } from './tableRows'
 
 export const getTable = (data, author) => {
 	const index = { value: 1 }
@@ -95,14 +103,18 @@ export const getTable = (data, author) => {
 					)),
 				}),
 				...getTableRows(data[0], author, index, 'a) научные работы'),
-				...getTableRows(data[1],
+				...getTableRows(
+					data[1],
 					author,
 					index,
-					'б) авторские свидетельства, дипломы, патенты, лицензии, информационные карты, алгоритмы, проекты'),
-				...getTableRows(data[2],
+					'б) авторские свидетельства, дипломы, патенты, лицензии, информационные карты, алгоритмы, проекты',
+				),
+				...getTableRows(
+					data[2],
 					author,
 					index,
-					'в) учебно-методические работы'),
+					'в) учебно-методические работы',
+				),
 			],
 		})
 	)

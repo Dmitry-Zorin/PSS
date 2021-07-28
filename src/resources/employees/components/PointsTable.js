@@ -1,4 +1,11 @@
-import { Table, TableBody, TableCell, TableContainer, TableRow, Typography } from '@material-ui/core'
+import {
+	Table,
+	TableBody,
+	TableCell,
+	TableContainer,
+	TableRow,
+	Typography,
+} from '@material-ui/core'
 import React from 'react'
 import { useRecordContext } from 'react-admin'
 import useStyles from '../Styles'

@@ -24,9 +24,9 @@ import {
 } from 'react-admin'
 import { DescriptionField, HeadlineField } from '../CustomFields'
 import {
+	BulkActionButtons,
 	createEmptyPage,
 	createTitle,
-	BulkActionButtons,
 	EditActionsWithoutFile,
 	ShowActions,
 } from '../raComponents.js'

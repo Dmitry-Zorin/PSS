@@ -1,10 +1,12 @@
 import cors from 'cors'
 import express from 'express'
 import helmet from 'helmet'
+import { DbService } from '../db/types'
+import bcrypt from '../services/bcrypt'
+import jsonwebtoken from '../services/jsonwebtoken'
 import errorHandler from './middleware/errorHandler'
 import apiRouter from './routes/api/router'
 import filesRouter from './routes/file'
-import { DbService } from '../db/types'
 
 const corsOptions = {
 	origin: process.env.UI_SERVER || false,
@@ -21,8 +23,12 @@ const createApp = (dbService: DbService) => {
 		.use('/files', filesRouter)
 		.use(errorHandler)
 	
-	app.dbService = dbService
-	app.fileService = dbService.fileService
+	app.services = {
+		db: dbService,
+		file: dbService.fileService,
+		encryption: bcrypt,
+		token: jsonwebtoken,
+	}
 	
 	return app
 }

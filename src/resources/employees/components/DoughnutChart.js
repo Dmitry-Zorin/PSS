@@ -8,11 +8,13 @@ export const DoughnutChart = ({ data, text }) => (
 			<Doughnut
 				data={{
 					labels: data.map(e => e.label),
-					datasets: [{
-						data: data.map(e => e.value),
-						backgroundColor: data.map(e => e.color),
-						borderWidth: 0,
-					}],
+					datasets: [
+						{
+							data: data.map(e => e.value),
+							backgroundColor: data.map(e => e.color),
+							borderWidth: 0,
+						},
+					],
 				}}
 				plugins={[addTextInside(text)]}
 			/>

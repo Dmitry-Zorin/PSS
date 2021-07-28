@@ -1,8 +1,18 @@
 import { Router } from 'express'
-import { checkAuth, checkPermissions, deleteIdentity, getIdentity, login, register, updateIdentity } from './handlers'
 import errorCatcher from '../../../middleware/errorCatcher'
+import { setFilter } from '../users/handlers'
+import {
+	checkAuth,
+	checkPermissions,
+	deleteIdentity,
+	getIdentity,
+	login,
+	register,
+	updateIdentity,
+} from './handlers'
 
 const authRouter = Router({ mergeParams: true })
+	.param('id', setFilter)
 	.post('/register', errorCatcher(register))
 	.post('/login', errorCatcher(login))
 	.get('/', errorCatcher(checkAuth))

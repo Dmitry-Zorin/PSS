@@ -1,5 +1,5 @@
-import { generatePassword, projectNonNullishProps, removeNullishProps } from '../utils'
 import 'jest-extended'
+import { generatePassword, projectNonNullishProps, removeNullishProps } from '../utils'
 
 const nullishObject: any = {
 	undefined: undefined,

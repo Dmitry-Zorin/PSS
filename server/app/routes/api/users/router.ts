@@ -1,8 +1,8 @@
 import { Router } from 'express'
 import adminChecker from '../../../middleware/adminChecker'
-import listParamsParser from '../resources/middleware/listParamsParser'
-import { getList } from '../resources/handlers'
 import errorCatcher from '../../../middleware/errorCatcher'
+import { getList } from '../resources/handlers'
+import listParamsParser from '../resources/middleware/listParamsParser'
 import { create, getOne, remove, update } from './handlers'
 
 const userRouter = Router({ mergeParams: true })

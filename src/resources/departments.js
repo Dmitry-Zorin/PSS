@@ -13,7 +13,13 @@ import {
 	TextField,
 	TextInput,
 } from 'react-admin'
-import { createEmptyPage, createTitle, BulkActionButtons, EditActions, ShowActions } from '../raComponents.js'
+import {
+	BulkActionButtons,
+	createEmptyPage,
+	createTitle,
+	EditActions,
+	ShowActions,
+} from '../raComponents.js'
 
 const validateName = [required(), minLength(1)]
 

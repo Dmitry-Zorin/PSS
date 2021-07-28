@@ -1,12 +1,22 @@
-import { createBadRequestError, createInternalServerError, createUnauthorizedError, HttpError } from '../../errors'
 import { NextFunction, Request, Response } from 'express'
+import {
+	createBadRequestError,
+	createInternalServerError,
+	createUnauthorizedError,
+	HttpError,
+} from '../../errors'
 
 interface UncaughtError extends Error {
 	type?: string,
 	body?: string
 }
 
-const errorHandler = (err: HttpError | UncaughtError, req: Request, res: Response, next: NextFunction) => {
+const errorHandler = (
+	err: HttpError | UncaughtError,
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) => {
 	const sendError = ({ status, ...error }: HttpError) => {
 		res.status(status).json({ error })
 	}

@@ -1,54 +1,50 @@
-import { NextFunction, Request, Response } from 'express'
-import jwt from 'jsonwebtoken'
-import { generatePassword, isCorrectPassword } from '../../../../utils'
-import { createBadRequestError, createEnvError, createUnauthorizedError } from '../../../../errors'
+import { Request, Response } from 'express'
+import { createBadRequestError, createUnauthorizedError } from '../../../../errors'
 
 const userCollection = 'users'
 
-const generateToken = (username: string, isAdmin: boolean) => {
-	const key = process.env.SECRET_KEY
-	if (!key) {
-		throw createEnvError('secret_key')
-	}
-	const payload = { username, isAdmin }
-	const options = { expiresIn: 31536000 }
-	return jwt.sign(payload, key, options)
-}
+const getFilter = (user: { username: string }) => (
+	{ username: user.username }
+)
 
-export const register = async (req: Request, res: Response, next: NextFunction) => {
-	const { username, password: originalPassword } = req.body
-	const password = await generatePassword(originalPassword)
+export const register = async (req: Request, res: Response) => {
+	const { encryption, db, token: tokenService } = res.app.services
+	const { username } = req.body
+	const password = await encryption.hash(req.body.password)
 	
 	if (!username || !password) {
-		return next(createBadRequestError('Invalid username or password'))
+		throw createBadRequestError('Invalid username or password')
 	}
 	
 	const isAdmin = false
 	const user = { username, password, isAdmin }
-	await res.app.dbService.addDocument(userCollection, user)
-	const token = generateToken(username, isAdmin)
+	await db.addDocument(userCollection, user)
+	
+	const token = tokenService.sign({ username, isAdmin })
 	res.status(201).json({ token })
 }
 
-export const login = async (req: Request, res: Response, next: NextFunction) => {
+export const login = async (req: Request, res: Response) => {
+	const { db, encryption, token } = res.app.services
 	const { username, password } = req.body
 	
 	if (!username || !password) {
-		return next(createBadRequestError('Missing username or password'))
+		throw createBadRequestError('Missing username or password')
 	}
 	
 	const projection = { password: 1, isAdmin: 1 } as const
-	const user = await res.app.dbService.getDocument(userCollection, { username }, projection)
+	const user = await db.getDocument(userCollection, { username }, projection)
 	
 	if (!user) {
-		return next(createUnauthorizedError('Incorrect username'))
+		throw createUnauthorizedError('Incorrect username')
 	}
 	
-	if (!await isCorrectPassword(password, user.password)) {
-		return next(createUnauthorizedError('Incorrect password'))
+	if (!await encryption.compare(password, user.password)) {
+		throw createUnauthorizedError('Incorrect password')
 	}
 	
-	res.json({ token: generateToken(username, user.isAdmin) })
+	const payload = { username, isAdmin: user.isAdmin }
+	res.json({ token: token.sign(payload) })
 }
 
 export const checkAuth = (req: Request, res: Response) => {
@@ -56,32 +52,30 @@ export const checkAuth = (req: Request, res: Response) => {
 }
 
 export const checkPermissions = (req: Request, res: Response) => {
-	res.json({ isAdmin: res.locals.user?.isAdmin })
+	res.json({ isAdmin: res.locals.user.isAdmin })
 }
 
 export const getIdentity = async (req: Request, res: Response) => {
-	const { username } = res.locals.user
-	const projection = {
-		username: 1,
-		isAdmin: 1,
-		locale: 1,
-		theme: 1,
-	} as const
-	
-	res.json(await res.app.dbService.getDocument(userCollection, { username }, projection))
+	const { db } = res.app.services
+	const { user } = res.locals
+	const projection = { username: 1, isAdmin: 1, locale: 1, theme: 1 } as const
+	res.json(await db.getDocument(userCollection, getFilter(user), projection))
 }
 
 export const updateIdentity = async (req: Request, res: Response) => {
-	const { username, password: originalPassword, locale, theme } = req.body
-	const password = await generatePassword(originalPassword)
-	const payload = { username, password, locale, theme }
+	const { db, encryption } = res.app.services
+	const { user } = res.locals
 	
-	await res.app.dbService.updateDocument(userCollection, { username: res.locals.user }, payload)
+	const password = await encryption.hash(req.body.password)
+	const payload = { ...req.body, password }
+	const projection = { username: 1, password: 1, locale: 1, theme: 1 } as const
+	await db.updateDocument(userCollection, getFilter(user), payload, projection)
 	res.sendStatus(200)
 }
 
 export const deleteIdentity = async (req: Request, res: Response) => {
-	const { username } = res.locals.user
-	await res.app.dbService.deleteDocument(userCollection, { username })
+	const { db } = res.app.services
+	const { user } = res.locals
+	await db.deleteDocument(userCollection, getFilter(user))
 	res.sendStatus(200)
 }

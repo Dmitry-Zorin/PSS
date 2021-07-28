@@ -20,7 +20,6 @@ const validateLength = [required(), minLength(1)]
 
 const Title = createTitle('Научный труд', 'headline')
 
-
 export const OtherEdit = (props) => (
 	<Edit
 		title={<Title/>}

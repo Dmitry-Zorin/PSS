@@ -1,7 +1,7 @@
-import logger from './logger'
-import { createEnvError } from './errors'
 import createApp from './app/express'
 import getDbService, { getFileService } from './db/mongo'
+import { createEnvError } from './errors'
+import logger from './logger'
 
 const { SERVER } = process.env
 

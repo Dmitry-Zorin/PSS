@@ -1,5 +1,14 @@
 import React from 'react'
-import { Create, ImageField, ImageInput, minLength, NumberInput, required, SimpleForm, TextInput } from 'react-admin'
+import {
+	Create,
+	ImageField,
+	ImageInput,
+	minLength,
+	NumberInput,
+	required,
+	SimpleForm,
+	TextInput,
+} from 'react-admin'
 
 const validateText = [required(), minLength(1)]
 

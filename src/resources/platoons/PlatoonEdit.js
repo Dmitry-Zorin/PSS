@@ -1,12 +1,20 @@
 import React from 'react'
-import { Edit, ImageField, ImageInput, minLength, NumberInput, required, SimpleForm, TextInput } from 'react-admin'
+import {
+	Edit,
+	ImageField,
+	ImageInput,
+	minLength,
+	NumberInput,
+	required,
+	SimpleForm,
+	TextInput,
+} from 'react-admin'
 import photoPlaceholder from '../../assets/photo-placeholder.jpg'
 import { createTitle, EditActionsWithoutFile } from '../../raComponents.js'
 
 const validateText = [required(), minLength(1)]
 
 const Title = createTitle('Взвода', 'name')
-
 
 export const PlatoonEdit = (props) => (
 	<Edit

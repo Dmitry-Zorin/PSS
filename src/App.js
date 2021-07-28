@@ -90,7 +90,11 @@ import {
 	ShowForm as ThesisShow,
 } from './resources/theses'
 import { Timeline } from './resources/timeline'
-import { CreateForm as UserCreate, ListForm as UserList, ShowForm as UserShow } from './resources/users'
+import {
+	CreateForm as UserCreate,
+	ListForm as UserList,
+	ShowForm as UserShow,
+} from './resources/users'
 import {
 	CreateForm as VerificationCreate,
 	EditForm as VerificationEdit,

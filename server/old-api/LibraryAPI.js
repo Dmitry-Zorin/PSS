@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
-import { createApiwithFile, getFileIfExists } from '../utils_old'
 import schema from '../models/LibrarySchema'
+import { createApiwithFile, getFileIfExists } from '../utils_old'
 
 const Model = mongoose.model('Library', schema)
 const resource = 'library'
@@ -29,9 +29,11 @@ const extractDataFromRequest = ({ body }) => (
 )
 
 export default (app) => {
-	createApiwithFile(app,
+	createApiwithFile(
+		app,
 		resource,
 		Model,
 		extractDataToSend,
-		extractDataFromRequest)
+		extractDataFromRequest,
+	)
 }

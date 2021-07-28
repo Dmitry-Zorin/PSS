@@ -1,5 +1,5 @@
-import { createForbiddenError } from '../../errors'
 import { NextFunction, Request, Response } from 'express'
+import { createForbiddenError } from '../../errors'
 
 // TODO: token information might be outdated
 

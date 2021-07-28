@@ -1,5 +1,3 @@
-import fetch from 'node-fetch'
-
 const { REDMINE_SERVER } = process.env
 
 /*

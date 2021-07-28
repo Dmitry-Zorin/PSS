@@ -1,11 +1,11 @@
 import dotenv from 'dotenv'
-import { fetchApi, stringifyValues } from '../utils'
+import FormData from 'form-data'
+import { createReadStream } from 'fs'
 import 'jest-extended'
-import connectToDb from '../db/mongo'
 import { MongoClient } from 'mongodb'
 import { join } from 'path'
-import { createReadStream } from 'fs'
-import FormData from 'form-data'
+import connectToDb from '../db/mongo'
+import { fetchApi, stringifyValues } from '../utils'
 
 dotenv.config()
 

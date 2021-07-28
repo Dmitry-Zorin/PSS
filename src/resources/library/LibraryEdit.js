@@ -18,7 +18,6 @@ const validateText = [required(), minLength(1)]
 
 const Title = createTitle('Библиотека', 'headline')
 
-
 export const LibraryEdit = (props) => (
 	<Edit
 		title={<Title/>}

@@ -38,9 +38,11 @@ const extractDataFromRequest = (req) => ({
 })
 
 export default (app) => {
-	createApiwithFile(app,
+	createApiwithFile(
+		app,
 		resource,
 		Model,
 		extractDataToSend,
-		extractDataFromRequest)
+		extractDataFromRequest,
+	)
 }

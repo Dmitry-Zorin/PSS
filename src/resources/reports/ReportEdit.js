@@ -21,7 +21,6 @@ const validateText = [required(), minLength(1)]
 const validateRequired = [required()]
 const Title = createTitle('Отчет', 'headline')
 
-
 export const ReportEdit = (props) => (
 	<Edit
 		title={<Title/>}

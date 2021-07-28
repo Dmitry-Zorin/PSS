@@ -1,7 +1,16 @@
 import React from 'react'
-import { ArrayField, ChipField, Datagrid, Filter, List, SingleFieldList, TextField, TextInput } from 'react-admin'
+import {
+	ArrayField,
+	ChipField,
+	Datagrid,
+	Filter,
+	List,
+	SingleFieldList,
+	TextField,
+	TextInput,
+} from 'react-admin'
 import { DescriptionField, HeadlineField } from '../../CustomFields'
-import { createEmptyPage, BulkActionButtons } from '../../raComponents.js'
+import { BulkActionButtons, createEmptyPage } from '../../raComponents.js'
 import { OtherShow } from './OtherShow'
 
 const Empty = createEmptyPage(

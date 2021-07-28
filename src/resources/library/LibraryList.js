@@ -11,7 +11,7 @@ import {
 	TextInput,
 } from 'react-admin'
 import { HeadlineField } from '../../CustomFields'
-import { createEmptyPage, BulkActionButtons } from '../../raComponents.js'
+import { BulkActionButtons, createEmptyPage } from '../../raComponents.js'
 import { Aside } from './Aside'
 import { LibraryShow } from './LibraryShow'
 

@@ -19,7 +19,6 @@ const validateText = [required(), minLength(1)]
 const validateRequired = [required()]
 const Title = createTitle('Петент', 'headline')
 
-
 export const PatentEdit = props => (
 	<Edit
 		title={<Title/>}

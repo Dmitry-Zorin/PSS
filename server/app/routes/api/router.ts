@@ -1,10 +1,10 @@
 import { json, Router, urlencoded } from 'express'
 import jwt from 'express-jwt'
-import resourceRouter from './resources/router'
+import { createEnvError } from '../../../errors'
 import authRouter from './auth/router'
 import extraRouter from './extra'
+import resourceRouter from './resources/router'
 import usersRouter from './users/router'
-import { createEnvError } from '../../../errors'
 
 const { SECRET_KEY } = process.env
 

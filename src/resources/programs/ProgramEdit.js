@@ -20,7 +20,6 @@ const validateRequired = [required()]
 
 const Title = createTitle('Программа', 'headline')
 
-
 export const ProgramEdit = (props) => (
 	<Edit
 		title={<Title/>}

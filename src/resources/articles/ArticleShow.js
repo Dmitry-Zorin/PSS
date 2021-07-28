@@ -1,6 +1,13 @@
 import React from 'react'
-import { ChipField, FileField, ReferenceField, Show, SimpleShowLayout, TextField, useRecordContext } from 'react-admin'
-import { httpClient } from '../../providers/dataProvider.js'
+import {
+	ChipField,
+	FileField,
+	ReferenceField,
+	Show,
+	SimpleShowLayout,
+	TextField,
+	useRecordContext,
+} from 'react-admin'
 import { createTitle, ShowActions } from '../../raComponents.js'
 
 const Title = createTitle('Статья', 'headline')

@@ -1,5 +1,5 @@
-import { Projection } from './projections/types'
 import { GridFSBucketReadStream } from 'mongodb'
+import { Projection } from './projections/types'
 
 interface FileInfo {
 	id: string,

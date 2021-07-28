@@ -9,7 +9,7 @@ const messages = {
 			category3: 'Категория В',
 			others: 'Другие',
 			more: 'Прочее',
-		}
+		},
 	},
 	resources: {
 		subdivisions: {

@@ -1,4 +1,3 @@
-import bcrypt from 'bcrypt'
 import { mapValues, pickBy } from 'lodash'
 import fetch from 'node-fetch'
 import { Projection } from './db/projections/types'
@@ -12,14 +11,6 @@ export const removeNullishProps = (object: Record<string, any>) => (
 
 export const projectNonNullishProps = <T>(object: Record<string, any>, projection: Projection) => (
 	pickBy(object, (value, key) => projection[key] && value != null) as Record<string, NonNullish>
-)
-
-export const generatePassword = async (password: string, salt = 10) => (
-	password ? bcrypt.hash(password, salt).catch(() => null) : null
-)
-
-export const isCorrectPassword = (password: string, hash: string) => (
-	bcrypt.compare(password, hash).catch(() => false)
 )
 
 export const stringifyValues = (object: Record<string, any>) => (
