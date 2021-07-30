@@ -1,4 +1,4 @@
-import { Services } from '../../src/app/app.types'
+import { Services } from '../../src/app/types'
 import { User } from '../../src/app/middleware/tokenParser'
 
 declare global {

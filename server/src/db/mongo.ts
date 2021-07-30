@@ -1,6 +1,6 @@
 import { isEmpty, isString } from 'lodash'
 import { ObjectId } from 'mongodb'
-import { FileService } from '../services/file/file.types'
+import { FileService } from '../services/types'
 import {
 	createConflictError,
 	createNotFoundError,
@@ -8,8 +8,8 @@ import {
 	wrongIdFormatError,
 } from '../utils/errors'
 import { projectNonNullishProps } from '../utils/utils'
-import getClient from './client.mongo'
-import { DbService, Filter } from './db.types'
+import getClient from './mongoClient'
+import { DbService, Filter } from './types'
 
 const getFilter = (argument: string | Filter) => {
 	if (!isString(argument)) {

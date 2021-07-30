@@ -1,8 +1,8 @@
 import { GridFSBucket, ObjectId } from 'mongodb'
 import { Readable } from 'stream'
-import getClient from '../../db/client.mongo'
-import { createEnvError, wrongIdFormatError } from '../../utils/errors'
-import { FileService } from './file.types'
+import getClient from '../db/mongoClient'
+import { createEnvError, wrongIdFormatError } from '../utils/errors'
+import { FileService } from './types'
 
 const { FILE_DB_NAME, SERVER } = process.env
 

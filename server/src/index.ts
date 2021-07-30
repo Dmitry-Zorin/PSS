@@ -1,10 +1,10 @@
-import createExpressApp from './src/app/app.express'
-import getMongoService from './src/db/db.mongo'
-import bcrypt from './src/services/encryption/encryption.bcrypt'
-import getGridFsService from './src/services/file/file.gridFs'
-import jsonwebtoken from './src/services/token/token.jsonwebtoken'
-import { createEnvError } from './src/utils/errors'
-import logger from './src/utils/logger'
+import createExpressApp from './app/express'
+import getMongoService from './db/mongo'
+import bcrypt from './services/bcrypt'
+import getGridFsService from './services/gridFs'
+import jsonwebtoken from './services/jsonwebtoken'
+import { createEnvError } from './utils/errors'
+import logger from './utils/logger'
 
 const { SERVER } = process.env
 

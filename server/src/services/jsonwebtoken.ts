@@ -1,6 +1,6 @@
 import jsonwebtoken from 'jsonwebtoken'
-import { createEnvError } from '../../utils/errors'
-import { TokenService } from './token.types'
+import { createEnvError } from '../utils/errors'
+import { TokenService } from './types'
 
 const getSecretKey = () => {
 	const key = process.env.SECRET_KEY

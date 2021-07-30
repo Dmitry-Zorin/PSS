@@ -1,4 +1,4 @@
-import { Projection } from '../db.types'
+import { Projection } from '../types'
 import defaultProjection from './default'
 
 const reports: Projection = {

@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt'
-import { EncryptionService } from './encryption.types'
+import { EncryptionService } from './types'
 
 const encryptionService: EncryptionService = {
 	hash: async (string, salt = 10) => (

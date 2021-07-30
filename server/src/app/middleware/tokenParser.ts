@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
-import { TokenService } from '../../services/token/token.types'
+import { TokenService } from '../../services/types'
 import { createUnauthorizedError } from '../../utils/errors'
 
 export interface User {

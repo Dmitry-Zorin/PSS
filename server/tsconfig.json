@@ -1,7 +1,5 @@
 {
 	"exclude": [
-		"**/types.ts",
-		"**/*.types.ts",
 		"**/*.test.ts"
 	],
 	"compilerOptions": {

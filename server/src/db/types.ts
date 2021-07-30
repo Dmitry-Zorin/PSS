@@ -1,4 +1,4 @@
-import { File } from '../services/file/file.types'
+import { File } from '../services/types'
 
 type Document = Record<string, any>
 
