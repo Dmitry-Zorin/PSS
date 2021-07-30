@@ -1,5 +1,5 @@
-import { Services } from '../../app/app.types'
-import { User } from '../../app/middleware/tokenParser'
+import { Services } from '../../src/app/app.types'
+import { User } from '../../src/app/middleware/tokenParser'
 
 declare global {
 	namespace Express {

@@ -1,5 +1,11 @@
 {
+	"exclude": [
+		"**/types.ts",
+		"**/*.types.ts",
+		"**/*.test.ts"
+	],
 	"compilerOptions": {
+		"sourceRoot": "src",
 		"outDir": "dist",
 		"target": "ESNext",
 		"module": "CommonJS",
@@ -12,6 +18,6 @@
 		"typeRoots": [
 			"node_modules/@types",
 			"@types",
-		],
+		]
 	}
 }
