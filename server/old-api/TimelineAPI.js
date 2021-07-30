@@ -1,8 +1,3 @@
-const { listParamsMiddleware }
-from
-..
-/utils')
-
 const resources = {
 	monographs: {
 		model: require('./MonographApi.js').ArticleModel,

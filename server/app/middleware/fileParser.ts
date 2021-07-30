@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
 import multer from 'multer'
-import { createBadRequestError } from '../../errors'
+import { createBadRequestError } from '../../utils/errors'
 
 const fileParser = (req: Request, res: Response, next: NextFunction) => {
 	multer().single('file')(req, res, (err: unknown) => {

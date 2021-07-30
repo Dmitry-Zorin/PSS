@@ -1,19 +1,10 @@
-import { GridFSBucketReadStream } from 'mongodb'
-import { Projection } from './projections/types'
-
-interface FileInfo {
-	id: string,
-	name: string,
-	url: string
-}
-
-export interface FileService {
-	addFile: (collectionName: string, file?: Express.Multer.File) => Promise<null | FileInfo>,
-	getFile: (collectionName: string, fileId: string) => GridFSBucketReadStream,
-	deleteFile: (collectionName: string, fileId: string) => void
-}
+import { File } from '../services/file/file.types'
 
 export type Document = Record<string, any>
+
+export interface Projection {
+	[key: string]: 0 | 1 | boolean | string | Projection
+}
 
 export type Filter = Record<string, number | string>
 
@@ -22,7 +13,7 @@ export interface AddDocument {
 		collectionName: string,
 		document: Document,
 		projection?: Projection,
-		file?: Express.Multer.File,
+		file?: File,
 	): Promise<any>
 }
 
@@ -41,14 +32,14 @@ export interface UpdateDocument {
 		filter: Filter,
 		updateDocument: Document,
 		projection?: Projection,
-		file?: Express.Multer.File,
+		file?: File,
 	): Promise<void>,
 	(
 		collectionName: string,
 		documentId: string,
 		updateDocument: Document,
 		projection?: Projection,
-		file?: Express.Multer.File,
+		file?: File,
 	): Promise<void>,
 }
 
@@ -58,7 +49,6 @@ export interface DeleteDocument {
 }
 
 export interface DbService {
-	fileService: FileService,
 	getCollectionNames: () => Promise<string[]>,
 	getDocumentCount: (collectionName: string) => Promise<number>,
 	addDocument: AddDocument,

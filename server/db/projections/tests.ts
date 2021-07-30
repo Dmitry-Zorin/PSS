@@ -1,4 +1,4 @@
-import { Projection } from './types'
+import { Projection } from '../db.types'
 
 const tests: Projection = {
 	name: 1,

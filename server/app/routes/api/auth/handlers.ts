@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { createBadRequestError, createUnauthorizedError } from '../../../../errors'
+import { createBadRequestError, createUnauthorizedError } from '../../../../utils/errors'
 
 const userCollection = 'users'
 
@@ -52,30 +52,26 @@ export const checkAuth = (req: Request, res: Response) => {
 }
 
 export const checkPermissions = (req: Request, res: Response) => {
-	res.json({ isAdmin: res.locals.user.isAdmin })
+	res.json({ isAdmin: req.user.isAdmin })
 }
 
 export const getIdentity = async (req: Request, res: Response) => {
 	const { db } = res.app.services
-	const { user } = res.locals
 	const projection = { username: 1, isAdmin: 1, locale: 1, theme: 1 } as const
-	res.json(await db.getDocument(userCollection, getFilter(user), projection))
+	res.json(await db.getDocument(userCollection, getFilter(req.user), projection))
 }
 
 export const updateIdentity = async (req: Request, res: Response) => {
 	const { db, encryption } = res.app.services
-	const { user } = res.locals
-	
 	const password = await encryption.hash(req.body.password)
 	const payload = { ...req.body, password }
 	const projection = { username: 1, password: 1, locale: 1, theme: 1 } as const
-	await db.updateDocument(userCollection, getFilter(user), payload, projection)
+	await db.updateDocument(userCollection, getFilter(req.user), payload, projection)
 	res.sendStatus(200)
 }
 
 export const deleteIdentity = async (req: Request, res: Response) => {
 	const { db } = res.app.services
-	const { user } = res.locals
-	await db.deleteDocument(userCollection, getFilter(user))
+	await db.deleteDocument(userCollection, getFilter(req.user))
 	res.sendStatus(200)
 }

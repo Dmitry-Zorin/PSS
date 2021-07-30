@@ -1,23 +1,3 @@
-import mongoose from 'mongoose'
-
-const schema
-from
-..
-/schemas/
-PlatoonSchema
-')
-const { EmployeeModel }
-from.
-/EmployeesApi')
-const { auth }
-from
-..
-/auth')
-const { createApiwithFile, getObjectProps, getFileIfExists }
-from
-..
-/utils')
-
 const Model = mongoose.model('Platoon', schema)
 const resource = 'platoons'
 

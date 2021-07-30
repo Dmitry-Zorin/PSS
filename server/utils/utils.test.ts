@@ -1,5 +1,4 @@
-import 'jest-extended'
-import { generatePassword, projectNonNullishProps, removeNullishProps } from '../utils'
+import { projectNonNullishProps, removeNullishProps } from './utils'
 
 const nullishObject: any = {
 	undefined: undefined,
@@ -29,16 +28,4 @@ describe('Project only non nullish props from an object', () => {
 		const object = projectNonNullishProps(testObject, { [key]: 1 })
 		expect(object).toEqual({ [key]: value })
 	})
-})
-
-test('Generate a password from a non empty string', async () => {
-	const password = await generatePassword('0', 1)
-	expect(password).toBeString()
-})
-
-test('Return empty string if the password is not a non empty string', async () => {
-	const dataTypes = ['', 0, [], {}, undefined, null, false]
-	const passwordPromises = dataTypes.map((e: any) => generatePassword(e, 1))
-	const passwords = await Promise.all(passwordPromises)
-	expect(passwords).toEqual(passwords.map(() => null))
 })

@@ -1,6 +1,6 @@
 import { mapValues, pickBy } from 'lodash'
 import fetch from 'node-fetch'
-import { Projection } from './db/projections/types'
+import { Projection } from '../db/db.types'
 import { createEnvError } from './errors'
 
 type NonNullish = boolean | number | string | object

@@ -1,5 +1,5 @@
 import nock from 'nock'
-import { createEnvError } from '../errors'
+import { createEnvError } from '../utils/errors'
 
 const defaultIssueOptions = {
 	assignedToId: 306,
@@ -48,7 +48,7 @@ export const nockRedmine = (redmineServer: string, verbose = false) => {
 	
 	nock(redmineServer)
 		.get(url)
-		.query((query) => {
+		.query(query => {
 			if (verbose) {
 				console.log(`Query for ${url}:\n${JSON.stringify(query, null, ' ')}`)
 			}

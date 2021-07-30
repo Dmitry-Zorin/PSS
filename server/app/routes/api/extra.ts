@@ -3,10 +3,10 @@ import errorCatcher from '../../middleware/errorCatcher'
 
 const extraRouter = Router()
 	.get('/resources', errorCatcher(async (req, res) => {
-		const dbs = res.app.dbService
-		const collNames = await dbs.getCollectionNames()
+		const { db } = res.app.services
+		const collNames = await db.getCollectionNames()
 		const promises = collNames.map(async (collName) => (
-			[collName, await dbs.getDocumentCount(collName)]
+			[collName, await db.getDocumentCount(collName)]
 		))
 		res.json(Object.fromEntries(await Promise.all(promises)))
 	}))

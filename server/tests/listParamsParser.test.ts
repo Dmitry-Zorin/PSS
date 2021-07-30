@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
 import listParamsParser from '../app/routes/api/resources/middleware/listParamsParser'
-import { stringifyValues } from '../utils'
+import { stringifyValues } from '../utils/utils'
 
 const parseGetListParams = (listParams: any) => {
 	const req = { query: listParams }

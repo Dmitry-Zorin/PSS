@@ -1,11 +1,10 @@
-import dotenv from 'dotenv'
+/*import dotenv from 'dotenv'
 import FormData from 'form-data'
 import { createReadStream } from 'fs'
-import 'jest-extended'
 import { MongoClient } from 'mongodb'
 import { join } from 'path'
-import connectToDb from '../db/mongo'
-import { fetchApi, stringifyValues } from '../utils'
+import connectToDb from '../db/db.mongo'
+import { fetchApi, stringifyValues } from '../utils/utils'
 
 dotenv.config()
 
@@ -146,3 +145,4 @@ test('Delete a document', async () => {
 	const file = await coll.findOne({ _id: fileId })
 	expect(file).toBeFalsy()
 })
+*/

@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
 import { isBoolean } from 'lodash'
-import { createBadRequestError } from '../../../../errors'
+import { createBadRequestError } from '../../../../utils/errors'
 
 const projection = {
 	_id: 0,

@@ -1,5 +1,5 @@
+import { Projection } from '../db.types'
 import defaultProjection from './default'
-import { Projection } from './types'
 
 const programs: Projection = {
 	...defaultProjection,

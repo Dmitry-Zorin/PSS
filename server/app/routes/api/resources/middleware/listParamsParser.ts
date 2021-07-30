@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
 import { forIn, isInteger } from 'lodash'
-import { createBadRequestError } from '../../../../../errors'
+import { createBadRequestError } from '../../../../../utils/errors'
 
 const paramValidations: Record<string, ((x: any) => boolean) | undefined> = {
 	'match': (param: any) => (

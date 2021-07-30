@@ -1,15 +1,13 @@
-import { DbService, FileService } from '../../db/types'
-import { EncryptionService, TokenService } from '../../services/types'
+import { Services } from '../../app/app.types'
+import { User } from '../../app/middleware/tokenParser'
 
 declare global {
 	namespace Express {
 		interface Application {
-			services: {
-				db: DbService,
-				file: FileService,
-				encryption: EncryptionService,
-				token: TokenService
-			}
+			services: Services
+		}
+		interface Request {
+			user: User
 		}
 	}
 }

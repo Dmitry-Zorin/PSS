@@ -1,10 +1,10 @@
 import cors from 'cors'
 import express from 'express'
+import unless from 'express-unless'
 import helmet from 'helmet'
-import { DbService } from '../db/types'
-import bcrypt from '../services/bcrypt'
-import jsonwebtoken from '../services/jsonwebtoken'
+import { Services } from './app.types'
 import errorHandler from './middleware/errorHandler'
+import createTokenParser from './middleware/tokenParser'
 import apiRouter from './routes/api/router'
 import filesRouter from './routes/file'
 
@@ -14,23 +14,23 @@ const corsOptions = {
 	credentials: true,
 }
 
-const createApp = (dbService: DbService) => {
+const createApp = (services: Services) => {
+	const tokenParser = unless(
+		createTokenParser(services.token),
+		// @ts-ignore: unless supports 2 arguments, but declared to support only 1
+		{ path: /(register|login)$/ },
+	)
+	
 	const app = express()
 		.use(helmet())
 		.use(cors(corsOptions))
+		.use(tokenParser)
 		.use(express.static('../dist'))
 		.use('/api', apiRouter)
 		.use('/files', filesRouter)
 		.use(errorHandler)
 	
-	app.services = {
-		db: dbService,
-		file: dbService.fileService,
-		encryption: bcrypt,
-		token: jsonwebtoken,
-	}
-	
-	return app
+	return { ...app, services }
 }
 
 export default createApp

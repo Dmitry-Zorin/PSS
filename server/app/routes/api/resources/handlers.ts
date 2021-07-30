@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
-import { Projection } from '../../../../db/projections/types'
-import { createNotFoundError } from '../../../../errors'
+import { Projection } from '../../../../db/db.types'
+import { createNotFoundError } from '../../../../utils/errors'
 
 export type Projections = Record<string, Projection>
 

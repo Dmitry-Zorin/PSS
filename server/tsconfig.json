@@ -1,5 +1,6 @@
 {
 	"compilerOptions": {
+		"outDir": "dist",
 		"target": "ESNext",
 		"module": "CommonJS",
 		"strict": true,
@@ -8,10 +9,9 @@
 		"noImplicitAny": true,
 		"esModuleInterop": true,
 		"strictNullChecks": true,
-		"forceConsistentCasingInFileNames": true,
 		"typeRoots": [
-			"@types",
 			"node_modules/@types",
-		]
+			"@types",
+		],
 	}
 }
