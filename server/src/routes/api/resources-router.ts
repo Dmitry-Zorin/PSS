@@ -1,8 +1,8 @@
 import { Router } from 'express'
-import { checkIfAdmin, createSafeHandler, uploadFile } from '../../../middleware'
-import * as projections from '../../../projections'
-import { Projection } from '../../../services/types'
-import { createNotFoundError } from '../../../utils/errors'
+import { checkIfAdmin, createSafeHandler, uploadFile } from '../../middleware'
+import * as projections from '../../projections'
+import { Projection } from '../../services/types'
+import { createNotFoundError } from '../../utils/errors'
 import listParamsParser from './middleware/list-params-parser'
 
 const resourceRouter = Router({ mergeParams: true })

@@ -1,7 +1,7 @@
 import FormData from 'form-data'
 import { createReadStream } from 'fs'
-import getClient, { disconnect } from '../../../services/mongo-client'
-import { fetchApi, stringifyValues } from '../../../utils/utils'
+import getClient, { disconnect } from '../../services/mongo-client'
+import { fetchApi, stringifyValues } from '../../utils/utils'
 
 const collection = 'tests'
 

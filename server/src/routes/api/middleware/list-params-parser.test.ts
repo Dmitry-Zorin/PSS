@@ -1,4 +1,4 @@
-import { stringifyValues } from '../../../../utils/utils'
+import { stringifyValues } from '../../../utils/utils'
 import listParamsParser from './list-params-parser'
 
 const parseGetListParams = (listParams: any) => {

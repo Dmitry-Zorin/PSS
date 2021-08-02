@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
 import { isInteger, reduce } from 'lodash'
-import { createBadRequestError } from '../../../../utils/errors'
+import { createBadRequestError } from '../../../utils/errors'
 
 type ListParamsKey = 'match' | 'sort' | 'skip' | 'limit'
 

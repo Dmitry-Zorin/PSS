@@ -1,9 +1,9 @@
 import { json, Router, urlencoded } from 'express'
 import { removeFile } from '../../middleware'
-import authRouter from './auth/router'
+import authRouter from './auth-router'
 import extraRouter from './extra'
-import resourceRouter from './resources/router'
-import usersRouter from './users/router'
+import resourceRouter from './resources-router'
+import usersRouter from './users-router'
 
 const apiRouter = Router()
 	.use(json())
