@@ -1,4 +1,4 @@
-import { fetchApi } from '../../utils/utils'
+import { fetchApi } from '../utils/utils'
 
 let fetchTestApi: typeof fetchApi
 

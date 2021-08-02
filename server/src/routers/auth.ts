@@ -1,7 +1,7 @@
 import { Router } from 'express'
-import { createSafeHandler } from '../../middleware'
-import { createBadRequestError, createUnauthorizedError } from '../../utils/errors'
-import { setFilter } from './users-router'
+import { createSafeHandler } from '../middleware'
+import { createBadRequestError, createUnauthorizedError } from '../utils/errors'
+import { setFilter } from './user'
 
 const userCollection = 'users'
 

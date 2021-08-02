@@ -1,30 +1,28 @@
 import { Router } from 'express'
-import { checkIfAdmin, createSafeHandler, uploadFile } from '../../middleware'
-import * as projections from '../../projections'
-import { Projection } from '../../services/types'
-import { createNotFoundError } from '../../utils/errors'
-import listParamsParser from './middleware/list-params-parser'
+import { checkIfAdmin, createSafeHandler, listParamsParser, uploadFile } from '../middleware'
+import * as projections from '../projections'
+import { Projection } from '../services/types'
+import { createNotFoundError } from '../utils/errors'
 
 const resourceRouter = Router({ mergeParams: true })
 
 resourceRouter.param('resource', (req, res, next, resource: string) => {
-		const projection = (projections as Record<string, Projection>)[resource]
-		
-		if (!projection) {
-			return next(createNotFoundError('Resource not found'))
-		}
-		
-		res.locals.projection = {
-			...projection,
-			_id: 0,
-			id: '$_id',
-			createdAt: { $toDate: '$_id' },
-			file: 1,
-		}
-		
-		next()
-	},
-)
+	const projection = (projections as Record<string, Projection>)[resource]
+	
+	if (!projection) {
+		return next(createNotFoundError('Resource not found'))
+	}
+	
+	res.locals.projection = {
+		...projection,
+		_id: 0,
+		id: '$_id',
+		createdAt: { $toDate: '$_id' },
+		file: 1,
+	}
+	
+	next()
+})
 
 resourceRouter.get('/:resource', listParamsParser, createSafeHandler(async (req, res) => {
 	const { db } = res.app.services

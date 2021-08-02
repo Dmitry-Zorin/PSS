@@ -2,8 +2,8 @@ import cors from 'cors'
 import express from 'express'
 import helmet from 'helmet'
 import { handleError, tokenParser } from './middleware'
-import apiRouter from './routes/api/router'
-import filesRouter from './routes/files'
+import apiRouter from './routers/api'
+import fileRouter from './routers/file'
 import { Services } from './types'
 
 const corsOptions = {
@@ -19,7 +19,7 @@ const createApp = (services: Services) => {
 		.use(tokenParser(services.token, { path: /(register|login)$/ }))
 		.use(express.static('../dist'))
 		.use('/api', apiRouter)
-		.use('/files', filesRouter)
+		.use('/files', fileRouter)
 		.use(handleError)
 	
 	app.services = services

@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response, Router } from 'express'
 import { isBoolean } from 'lodash'
-import { checkIfAdmin, createSafeHandler } from '../../middleware'
-import { createBadRequestError } from '../../utils/errors'
+import { checkIfAdmin, createSafeHandler } from '../middleware'
+import { createBadRequestError } from '../utils/errors'
 
 const projection = {
 	_id: 0,

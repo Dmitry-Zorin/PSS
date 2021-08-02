@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { createSafeHandler } from '../../middleware'
+import { createSafeHandler } from '../middleware'
 
 const extraRouter = Router()
 

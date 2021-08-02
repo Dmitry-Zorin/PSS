@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
 import { isInteger, reduce } from 'lodash'
-import { createBadRequestError } from '../../../utils/errors'
+import { createBadRequestError } from '../utils/errors'
 
 type ListParamsKey = 'match' | 'sort' | 'skip' | 'limit'
 
@@ -27,7 +27,7 @@ const paramValidations: Record<ListParamsKey, ((x: any) => boolean) | undefined>
 	),
 }
 
-const listParamsParser = (req: Request, res: Response, next: NextFunction) => {
+export const listParamsParser = (req: Request, res: Response, next: NextFunction) => {
 	try {
 		res.locals.listParams = reduce(req.query, (params, value, key) => {
 			const isValidParam = paramValidations[key as ListParamsKey]
@@ -48,5 +48,3 @@ const listParamsParser = (req: Request, res: Response, next: NextFunction) => {
 	}
 	next()
 }
-
-export default listParamsParser
