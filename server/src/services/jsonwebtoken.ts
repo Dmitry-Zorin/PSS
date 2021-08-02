@@ -2,18 +2,18 @@ import jsonwebtoken from 'jsonwebtoken'
 import { createEnvError } from '../utils/errors'
 import { TokenService } from './types'
 
-const getSecretKey = () => {
-	const key = process.env.SECRET_KEY
-	if (!key) throw createEnvError('secret_key')
-	return key
+const secretKey = process.env.SECRET_KEY
+
+if (!secretKey) {
+	throw createEnvError('secret_key')
 }
 
 const tokenService: TokenService = {
 	sign: (payload, expiresIn = '30 days') => {
-		return jsonwebtoken.sign(payload, getSecretKey(), { expiresIn })
+		return jsonwebtoken.sign(payload, secretKey, { expiresIn })
 	},
 	verify: (token) => (
-		jsonwebtoken.verify(token, getSecretKey()) as Record<string, boolean | number | string>
+		jsonwebtoken.verify(token, secretKey) as Record<string, boolean | number | string>
 	),
 }
 

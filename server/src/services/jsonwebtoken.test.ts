@@ -1,9 +1,5 @@
 import tokenService from './jsonwebtoken'
 
-beforeAll(() => {
-	process.env.SECRET_KEY = 'some key'
-})
-
 test('Create a token for an object', () => {
 	const object = { test: 'test' }
 	const token = tokenService.sign(object)

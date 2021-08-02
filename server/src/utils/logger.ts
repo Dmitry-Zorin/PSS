@@ -1,3 +1,11 @@
 import ora from 'ora'
 
-export default ora({ stream: process.stdout })
+const disabledLogger = new Proxy({}, {
+	get: () => () => {},
+})
+
+const logger = process.env.NODE_ENV === 'test'
+	? disabledLogger as ora.Ora
+	: ora({ stream: process.stdout })
+
+export default logger

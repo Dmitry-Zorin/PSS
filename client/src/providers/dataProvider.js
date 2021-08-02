@@ -45,7 +45,7 @@ const dataProvider = {
 			match: filter,
 			sort: { [field]: sortOrder },
 			skip,
-			limit
+			limit,
 		})
 		
 		const url = `${apiUrl}/${resource}?${new URLSearchParams(query)}`

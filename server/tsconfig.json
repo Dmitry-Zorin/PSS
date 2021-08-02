@@ -1,11 +1,8 @@
 {
-	"exclude": [
-		"**/*.test.ts"
-	],
 	"compilerOptions": {
 		"sourceRoot": "src",
 		"outDir": "dist",
-		"target": "ESNext",
+		"target": "ES2020",
 		"module": "CommonJS",
 		"strict": true,
 		"sourceMap": true,
@@ -17,5 +14,8 @@
 			"node_modules/@types",
 			"@types",
 		]
+	},
+	"watchOptions": {
+		"excludeFiles": [ "**/*.test.ts" ]
 	}
 }

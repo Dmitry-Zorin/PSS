@@ -1,7 +1,6 @@
 import { mapValues, pickBy } from 'lodash'
 import fetch, { RequestInfo, RequestInit } from 'node-fetch'
-import { Projection } from '../db/types'
-import { createEnvError } from './errors'
+import { Projection } from '../services/types'
 
 type NonNullish = boolean | number | string | object
 
@@ -18,13 +17,7 @@ export const stringifyValues = (object: Record<string, any>) => (
 )
 
 export const fetchApi = async (path: RequestInfo, options?: RequestInit, token?: string) => {
-	const { SERVER } = process.env
-	
-	if (!SERVER) {
-		throw createEnvError('server')
-	}
-	
-	const resp = await fetch(`${SERVER}/api/${path}`, {
+	const resp = await fetch(`${process.env.SERVER}/api/${path}`, {
 		...options,
 		headers: {
 			...token && { authorization: `Bearer ${token}` },
