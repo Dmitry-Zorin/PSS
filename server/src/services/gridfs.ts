@@ -1,5 +1,5 @@
 import { GridFSBucket, ObjectId } from 'mongodb'
-import { createEnvError, wrongIdFormatError } from '../utils/errors'
+import { createEnvError, createNotFoundError, wrongIdFormatError } from '../utils/errors'
 import getClient from './mongo-client'
 import { FileService } from './types'
 
@@ -18,6 +18,17 @@ const getFileService = async (): Promise<FileService> => {
 	)
 	
 	return {
+		getFileInfo: async (bucketName, fileId, projection) => {
+			if (!ObjectId.isValid(fileId)) {
+				throw wrongIdFormatError
+			}
+			const _id = new ObjectId(fileId)
+			const coll = fileDb.collection(`${bucketName}.files`)
+			const doc = await coll.findOne({ _id }, { projection })
+			if (!doc) throw createNotFoundError('File not found')
+			return doc
+		},
+		
 		upload: async (bucketName, file, filename) => {
 			if (!bucketName || !file) return null
 			
@@ -27,7 +38,7 @@ const getFileService = async (): Promise<FileService> => {
 			const fileInfo = {
 				id: uploadStream.id.toString(),
 				name: filename,
-				url: `${SERVER}/files/${uploadStream.id}`,
+				url: `${SERVER}/files/${bucketName}/${uploadStream.id}`,
 			}
 			
 			return new Promise(resolve => {

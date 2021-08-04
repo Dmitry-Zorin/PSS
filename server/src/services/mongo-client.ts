@@ -16,6 +16,7 @@ const client = new MongoClient(DB_URI, {
 })
 
 export const disconnect = async () => {
+	if (!client.isConnected()) return
 	await client.close()
 	logger.succeed('Disconnected from the database')
 }

@@ -1,4 +1,4 @@
-import encService from './bcrypt'
+import encService from '../../src/services/bcrypt'
 
 const generateRandomString = (length: number) => (
 	Math.random().toString(36).slice(2, 2 + length)

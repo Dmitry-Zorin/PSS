@@ -1,4 +1,4 @@
-import { projectNonNullishProps, removeNullishProps } from './utils'
+import { projectNonNullishProps, removeNullishProps } from '../../src/utils/utils'
 
 const nullishObject: any = {
 	undefined: undefined,
@@ -25,7 +25,7 @@ test('Remove all nullish props from an object', () => {
 
 describe('Project only non nullish props from an object', () => {
 	test.each(Object.entries(normalObject))('Test { %s: %s }', (key, value) => {
-		const object = projectNonNullishProps(testObject, { [key]: 1 })
+		const object = projectNonNullishProps(testObject, { [key]: 1 } as const)
 		expect(object).toEqual({ [key]: value })
 	})
 })

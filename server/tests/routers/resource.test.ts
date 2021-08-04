@@ -1,9 +1,7 @@
 import FormData from 'form-data'
 import { createReadStream } from 'fs'
-import getClient, { disconnect } from '../services/mongo-client'
-import { fetchApi, stringifyValues } from '../utils/utils'
-
-const collection = 'tests'
+import { stringifyValues } from '../../src/utils/utils'
+import { createFetchFunction, FetchFunction, TEST_COLLECTION_NAME } from '../helpers'
 
 const document = {
 	id: '',
@@ -12,29 +10,10 @@ const document = {
 }
 
 const createFileStream = () => (
-	createReadStream(require.resolve('./test.pdf'))
+	createReadStream(require.resolve('../test.pdf'))
 )
 
-let fetchTestApi: typeof fetchApi
-
-const createFetchFunction = (token: string) => {
-	fetchTestApi = (path = '', options) => (
-		fetchApi(`tests/${path}`, options, token)
-	)
-}
-
-const login = async () => {
-	const { json } = await fetchApi('auth/login', {
-		method: 'post',
-		body: new URLSearchParams({
-			username: 'dima',
-			password: 'zorin',
-		}),
-	})
-	expect(json.error).toBeUndefined()
-	expect(json.token).toBeString()
-	createFetchFunction(json.token)
-}
+let fetchTestApi: FetchFunction
 
 const createDocument = async () => {
 	const entries = Object.entries({
@@ -51,21 +30,11 @@ const createDocument = async () => {
 	expect((document.id = json.id)).toBeString()
 }
 
-const cleanUpDb = async () => {
-	const dbClient = await getClient()
-	const db = dbClient.db(process.env.DB_NAME)
-	const fileDb = dbClient.db(process.env.FILE_DB_NAME)
-	await Promise.all([
-		db.collection(collection).drop(),
-		fileDb.collection(`${collection}.files`).drop(),
-		fileDb.collection(`${collection}.chunks`).drop(),
-	])
-	await disconnect()
-}
+beforeAll(async () => {
+	fetchTestApi = await createFetchFunction(TEST_COLLECTION_NAME)
+})
 
-beforeAll(login)
 beforeEach(createDocument)
-afterAll(cleanUpDb)
 
 test('Find a document', async () => {
 	const file = expect.any(Object)
@@ -115,7 +84,7 @@ test('Delete a document', async () => {
 	const { id } = document
 	await fetchTestApi(id, { method: 'delete' })
 	
-	const { status, json } = await fetchTestApi(id)
-	expect(status).toBe(404)
-	expect(json.error?.name).toBe('NotFoundError')
+	const { json } = await fetchTestApi(id)
+	expect(json.error).toBeObject()
+	expect(json.error.name).toBe('NotFoundError')
 })

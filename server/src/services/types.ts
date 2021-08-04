@@ -53,7 +53,7 @@ export interface DbService {
 	deleteDocument: DeleteDocument,
 }
 
-interface FileInfo {
+export interface FileInfo {
 	id: string,
 	name: string,
 	url: string
@@ -62,6 +62,7 @@ interface FileInfo {
 export type File = NodeJS.ReadableStream
 
 export interface FileService {
+	getFileInfo: (bucketName: string, fileId: string, projection: Projection) => Promise<any>
 	upload: (bucketName: string, file: File, filename: string) => Promise<null | FileInfo>,
 	download: (bucketName: string, fileId: string) => File,
 	remove: (bucketName: string, fileId: string) => Promise<void>

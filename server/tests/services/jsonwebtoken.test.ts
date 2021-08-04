@@ -1,4 +1,4 @@
-import tokenService from './jsonwebtoken'
+import tokenService from '../../src/services/jsonwebtoken'
 
 test('Create a token for an object', () => {
 	const object = { test: 'test' }

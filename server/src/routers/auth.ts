@@ -1,9 +1,13 @@
 import { Router } from 'express'
 import { createSafeHandler } from '../middleware'
-import { createBadRequestError, createUnauthorizedError } from '../utils/errors'
+import {
+	createBadRequestError,
+	createConflictError,
+	createUnauthorizedError,
+} from '../utils/errors'
 import { setFilter } from './user'
 
-const userCollection = 'users'
+const collection = 'users'
 
 const getFilter = (user: { username: string }) => (
 	{ username: user.username }
@@ -24,7 +28,10 @@ authRouter.post('/register', createSafeHandler(async (req, res) => {
 	
 	const isAdmin = false
 	const user = { username, password, isAdmin }
-	await db.addDocument(userCollection, user)
+	
+	await db.addDocument(collection, user).catch(err => {
+		throw err?.code === 11000 ? createConflictError('Username is taken') : err
+	})
 	
 	const token = tokenService.sign({ username, isAdmin })
 	res.status(201).json({ token })
@@ -39,7 +46,7 @@ authRouter.post('/login', createSafeHandler(async (req, res) => {
 	}
 	
 	const projection = { password: 1, isAdmin: 1 } as const
-	const user = await db.getDocument(userCollection, { username }, projection)
+	const user = await db.getDocument(collection, { username }, projection)
 	
 	if (!user) {
 		throw createUnauthorizedError('Incorrect username')
@@ -64,21 +71,21 @@ authRouter.get('/permissions', createSafeHandler((req, res) => {
 authRouter.get('/identity', createSafeHandler(async (req, res) => {
 	const { db } = res.app.services
 	const projection = { username: 1, isAdmin: 1, locale: 1, theme: 1 } as const
-	res.json(await db.getDocument(userCollection, getFilter(req.user), projection))
+	res.json(await db.getDocument(collection, getFilter(req.user), projection))
 }))
 
 authRouter.put('/identity', createSafeHandler(async (req, res) => {
 	const { db, encryption } = res.app.services
 	const password = await encryption.hash(req.body.password)
 	const payload = { ...req.body, password }
-	const projection = { username: 1, password: 1, locale: 1, theme: 1 } as const
-	await db.updateDocument(userCollection, getFilter(req.user), payload, projection)
+	const projection = { password: 1, locale: 1, theme: 1 } as const
+	await db.updateDocument(collection, getFilter(req.user), payload, projection)
 	res.sendStatus(200)
 }))
 
 authRouter.delete('/identity', createSafeHandler(async (req, res) => {
 	const { db } = res.app.services
-	await db.deleteDocument(userCollection, getFilter(req.user))
+	await db.deleteDocument(collection, getFilter(req.user))
 	res.sendStatus(200)
 }))
 

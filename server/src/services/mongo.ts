@@ -1,16 +1,9 @@
 import { isEmpty, isString } from 'lodash'
 import { ObjectId } from 'mongodb'
-import {
-	createConflictError,
-	createNotFoundError,
-	noPropsError,
-	wrongIdFormatError,
-} from '../utils/errors'
+import { createNotFoundError, noPropsError, wrongIdFormatError } from '../utils/errors'
 import { projectNonNullishProps } from '../utils/utils'
 import getClient from './mongo-client'
 import { DbService, Filter } from './types'
-
-const emptyProjection = { _id: 0 } as const
 
 const getFilter = (argument: string | Filter) => {
 	if (isString(argument)) {
@@ -36,8 +29,9 @@ const getDbService = async (): Promise<DbService> => {
 	const client = await getClient()
 	const db = client.db(process.env.DB_NAME)
 	
-	const getCollection = (collectionName: string) => (
-		db.collection(collectionName)
+	await db.collection('users').createIndex(
+		{ username: 1 },
+		{ unique: true },
 	)
 	
 	return {
@@ -47,29 +41,28 @@ const getDbService = async (): Promise<DbService> => {
 		},
 		
 		getDocumentCount: (collectionName) => (
-			getCollection(collectionName).estimatedDocumentCount()
+			db.collection(collectionName).estimatedDocumentCount()
 		),
 		
-		addDocument: async (collectionName, document, projection = emptyProjection) => {
-			const payload = projectNonNullishProps(document, projection)
+		addDocument: async (collectionName, document, projection) => {
+			const payload = !projection ? document
+				: projectNonNullishProps(document, projection)
 			
 			if (isEmpty(payload)) throw noPropsError
 			
-			const coll = getCollection(collectionName)
-			const { insertedId } = await coll.insertOne(payload).catch(err => {
-				throw err.code === 11000 ? createConflictError() : err
-			})
+			const coll = db.collection(collectionName)
+			const { insertedId } = await coll.insertOne(payload)
 			return { id: insertedId.toString() }
 		},
 		
 		getDocuments: (collectionName, pipeline) => {
-			const coll = getCollection(collectionName)
+			const coll = db.collection(collectionName)
 			return coll.aggregate(pipeline).toArray()
 		},
 		
 		getDocument: async (collectionName, filterOrId, projection) => {
-			const coll = getCollection(collectionName)
 			const filter = getFilter(filterOrId)
+			const coll = db.collection(collectionName)
 			const doc = await coll.findOne(filter, { projection })
 			
 			if (!doc) throw createNotFoundError()
@@ -80,16 +73,17 @@ const getDbService = async (): Promise<DbService> => {
 			collectionName,
 			filterOrId,
 			updateDocument,
-			projection = emptyProjection,
+			projection,
 		) => {
-			const payload = projectNonNullishProps(updateDocument, projection)
+			const payload = !projection ? updateDocument
+				: projectNonNullishProps(updateDocument, projection)
 			
 			if (isEmpty(payload)) throw noPropsError
 			
-			const coll = getCollection(collectionName)
 			const filter = getFilter(filterOrId)
 			const update = { $set: payload }
 			const options = { projection: { file: { id: 1 } } }
+			const coll = db.collection(collectionName)
 			const { value } = await coll.findOneAndUpdate(filter, update, options)
 			
 			if (!value) throw createNotFoundError()
@@ -100,9 +94,9 @@ const getDbService = async (): Promise<DbService> => {
 		},
 		
 		deleteDocument: async (collectionName, filterOrId) => {
-			const coll = getCollection(collectionName)
 			const filter = getFilter(filterOrId)
 			const options = { projection: { file: { id: 1 } } }
+			const coll = db.collection(collectionName)
 			const { value } = await coll.findOneAndDelete(filter, options)
 			
 			if (value?.file?.id) {

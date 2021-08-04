@@ -1,5 +1,5 @@
-import { stringifyValues } from '../utils/utils'
-import { listParamsParser } from './list-params-parser'
+import { listParamsParser } from '../../src/middleware/list-params-parser'
+import { stringifyValues } from '../../src/utils/utils'
 
 const parseGetListParams = (listParams: any) => {
 	const req: any = { query: listParams }
@@ -18,7 +18,8 @@ test('Parse valid getList parameters', () => {
 		skip: 2,
 		limit: 4,
 	}
-	expect(parseGetListParams(stringifyValues(listParams))).toEqual(listParams)
+	const parsedParams = parseGetListParams(stringifyValues(listParams))
+	expect(parsedParams).toEqual(listParams)
 })
 
 describe('Refuse to parse invalid parameters', () => {
@@ -46,7 +47,8 @@ describe('Refuse to parse invalid parameters', () => {
 	describe.each(ops)('Invalid $op parameters', ({ op, tests }) => {
 		test.each(tests)(`Test { ${op}: %j }`, (value) => {
 			const listParams = stringifyValues({ [op]: value })
-			expect(parseGetListParams(listParams)).toBe(`Invalid ${op} parameter`)
+			const parsedParams = parseGetListParams(listParams)
+			expect(parsedParams).toBe(`Invalid ${op} parameter`)
 		})
 	})
 })

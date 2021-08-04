@@ -1,21 +1,16 @@
 import { Router } from 'express'
-import { createSafeHandler } from '../middleware/create-safe-handler'
-import { createNotFoundError } from '../utils/errors'
+import { createSafeHandler } from '../middleware'
 
 const fileRouter = Router()
 
 fileRouter.get('/:resource/:fileId', createSafeHandler(async (req, res) => {
-	const { db, file: fileService } = res.app.services
 	const { resource, fileId } = req.params
-	const projection = { file: { name: 1 } } as const
+	const fileService = res.app.services.file
 	
-	const { file } = await db.getDocument(resource, fileId, projection)
+	const projection = { filename: 1 } as const
+	const { filename } = await fileService.getFileInfo(resource, fileId, projection)
+	res.attachment(filename)
 	
-	if (!file) {
-		throw createNotFoundError('File not found')
-	}
-	
-	res.attachment(file.name)
 	fileService.download(resource, fileId).pipe(res)
 }))
 

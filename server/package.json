@@ -5,7 +5,7 @@
 		"start": "rm -rf dist && tsc -p tsconfig.prod.json && npm run serve",
 		"dev": "tsc-watch -p tsconfig.prod.json --onSuccess 'npm run serve'",
 		"serve": "node -r dotenv/config -r source-map-support/register dist/index.js",
-		"test": "NODE_ENV=test && jest"
+		"test": "jest"
 	},
 	"dependencies": {
 		"bcrypt": "^5.0.1",
@@ -45,13 +45,15 @@
 		"typescript": "^4.3.5"
 	},
 	"jest": {
+		"rootDir": "tests",
 		"preset": "ts-jest",
 		"slowTestThreshold": 15,
 		"setupFiles": [
 			"dotenv/config"
 		],
 		"setupFilesAfterEnv": [
-			"jest-extended"
-		]
+			"<rootDir>/setup.ts"
+		],
+		"globalTeardown": "<rootDir>/global-teardown.ts"
 	}
 }

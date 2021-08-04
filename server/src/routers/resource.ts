@@ -1,5 +1,12 @@
 import { Router } from 'express'
-import { checkIfAdmin, createSafeHandler, listParamsParser, uploadFile } from '../middleware'
+import {
+	checkIfAdmin,
+	createSafeHandler,
+	listParamsParser,
+	removeFile,
+	uploadFile,
+} from '../middleware'
+import createPaginationPipeline from '../pipelines/pagination'
 import * as projections from '../projections'
 import { Projection } from '../services/types'
 import { createNotFoundError } from '../utils/errors'
@@ -27,31 +34,13 @@ resourceRouter.param('resource', (req, res, next, resource: string) => {
 resourceRouter.get('/:resource', listParamsParser, createSafeHandler(async (req, res) => {
 	const { db } = res.app.services
 	const { resource } = req.params
-	const { match = {}, sort = { _id: -1 }, skip = 0, limit = 50 } = res.locals
+	const { listParams, projection } = res.locals
 	
-	const [{ total, documents }] = await db.getDocuments(resource, [
-		{ $match: match },
-		{ $sort: sort },
-		{
-			$facet: {
-				count: [
-					{ $count: 'total' },
-				],
-				documents: [
-					{ $skip: skip },
-					{ $limit: Math.min(limit, 50) },
-					{ $project: res.locals.projection },
-				],
-			},
-		},
-		{
-			$project: {
-				total: { $ifNull: [{ $arrayElemAt: ['$count.total', 0] }, 0] },
-				documents: 1,
-			},
-		},
-	])
+	const options = { ...listParams, projection }
+	const pipeline = createPaginationPipeline(options)
+	const [{ total, documents }] = await db.getDocuments(resource, pipeline)
 	
+	const { skip, limit } = listParams
 	const range = `${resource} ${skip}-${Math.min(limit, total)}/${total}`
 	res.set('content-range', range).json(documents)
 }))
@@ -86,5 +75,7 @@ resourceRouter.delete('/:resource/:id', createSafeHandler(async (req, res) => {
 	res.locals.fileToRemove = await db.deleteDocument(resource, id)
 	res.sendStatus(200)
 }))
+
+resourceRouter.use(removeFile)
 
 export default resourceRouter
