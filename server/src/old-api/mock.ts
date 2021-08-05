@@ -1,5 +1,5 @@
 import nock from 'nock'
-import { createEnvError } from '../utils/errors'
+import { createEnvError } from '../helpers/errors'
 
 const defaultIssueOptions = {
 	assignedToId: 306,

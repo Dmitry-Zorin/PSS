@@ -1,4 +1,5 @@
 import { Router } from 'express'
+import { createNotFoundError } from '../helpers/errors'
 import {
 	checkIfAdmin,
 	createSafeHandler,
@@ -8,13 +9,11 @@ import {
 } from '../middleware'
 import createPaginationPipeline from '../pipelines/pagination'
 import * as projections from '../projections'
-import { Projection } from '../services/types'
-import { createNotFoundError } from '../utils/errors'
 
 const resourceRouter = Router({ mergeParams: true })
 
 resourceRouter.param('resource', (req, res, next, resource: string) => {
-	const projection = (projections as Record<string, Projection>)[resource]
+	const projection = (projections as Record<string, any>)[resource]
 	
 	if (!projection) {
 		return next(createNotFoundError('Resource not found'))

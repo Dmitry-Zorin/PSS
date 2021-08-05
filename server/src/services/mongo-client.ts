@@ -1,6 +1,6 @@
 import { MongoClient } from 'mongodb'
-import { createEnvError } from '../utils/errors'
-import logger from '../utils/logger'
+import { createEnvError } from '../helpers/errors'
+import logger from '../helpers/logger'
 
 const EXIT_SIGNALS = ['SIGINT', 'SIGHUP', 'SIGTERM', 'SIGUSR2']
 
@@ -10,20 +10,14 @@ if (!DB_URI) {
 	throw createEnvError('db_uri')
 }
 
-const client = new MongoClient(DB_URI, {
-	useNewUrlParser: true,
-	useUnifiedTopology: true,
-})
+const client = new MongoClient(DB_URI)
 
 export const disconnect = async () => {
-	if (!client.isConnected()) return
 	await client.close()
 	logger.succeed('Disconnected from the database')
 }
 
 const getClient = async () => {
-	if (client.isConnected()) return client
-	
 	logger.start('Connecting to the database...')
 	
 	await client.connect().catch(err => {

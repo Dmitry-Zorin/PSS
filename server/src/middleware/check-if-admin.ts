@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
-import { createForbiddenError } from '../utils/errors'
+import { createForbiddenError } from '../helpers/errors'
 
 export const checkIfAdmin = (req: Request, res: Response, next: NextFunction) => {
 	next(!req.user.isAdmin && createForbiddenError(

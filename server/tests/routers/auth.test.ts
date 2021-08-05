@@ -7,7 +7,7 @@ const user = {
 }
 
 const register = async () => {
-	const options = { method: 'post', body: new URLSearchParams(user) }
+	const options = { method: 'post', body: JSON.stringify(user) }
 	const { json } = await fetchApi('auth/register', options)
 	expect(json.error).toBeUndefined()
 	expect((user.token = json.token)).toBeString()
@@ -22,7 +22,7 @@ beforeEach(register)
 afterEach(unregister)
 
 test('Cannot register another user with the same username', async () => {
-	const options = { method: 'post', body: new URLSearchParams(user) }
+	const options = { method: 'post', body: JSON.stringify(user) }
 	const { json } = await fetchApi('auth/register', options)
 	expect(json.error).toBeObject()
 	expect(json.error.name).toBe('ConflictError')
@@ -34,7 +34,7 @@ test('Update the identity settings', async () => {
 		theme: 'dark',
 		isAdmin: 'true',
 	}
-	const options = { method: 'put', body: new URLSearchParams(settings) }
+	const options = { method: 'put', body: JSON.stringify(settings) }
 	const { status } = await fetchApi('auth/identity', options, user.token)
 	expect(status).toBe(200)
 	

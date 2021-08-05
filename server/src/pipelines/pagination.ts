@@ -1,11 +1,11 @@
-import { Projection } from '../services/types'
+import { Document, Projection } from 'mongodb'
 
 interface PaginationPipelineOptions {
 	match?: any,
 	sort?: any,
 	skip?: number,
 	limit?: number,
-	projection?: Projection
+	projection?: Projection<Document>
 }
 
 const createPaginationPipeline = (options: PaginationPipelineOptions) => {

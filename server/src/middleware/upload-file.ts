@@ -12,22 +12,21 @@ export const uploadFile = (req: Request, res: Response, next: NextFunction) => {
 	
 	if (!bucketName) return next()
 	
-	const uploadQueue: Promise<void>[] = []
-	
-	const addToUploadQueue = (_: never, file: NodeJS.ReadableStream, filename: string) => {
-		const uploadPromise = app.services.file
-			.upload(bucketName, file, filename)
-			.then(fileInfo => {req.body.file = fileInfo})
-		
-		uploadQueue.push(uploadPromise)
-	}
-	
 	const busboy = new Busboy({ headers, limits })
-		.on('file', addToUploadQueue)
+		.on('file', (_, file, filename) => {
+			const uploadStream = app.services.file.upload(bucketName, file, filename)
+			const fileId = uploadStream.id.toString()
+			
+			req.body.file = {
+				id: fileId,
+				name: filename,
+				url: `${process.env.SERVER}/files/${bucketName}/${fileId}`,
+			}
+		})
 		.on('field', (fieldname, value) => {
 			req.body[fieldname] = value
 		})
-		.on('finish', () => Promise.all(uploadQueue).then(() => next()))
+		.on('finish', next)
 		.on('error', () => next())
 	
 	req.pipe(busboy)

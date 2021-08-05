@@ -1,7 +1,7 @@
 import { isEmpty, isString } from 'lodash'
 import { ObjectId } from 'mongodb'
-import { createNotFoundError, noPropsError, wrongIdFormatError } from '../utils/errors'
-import { projectNonNullishProps } from '../utils/utils'
+import { createNotFoundError, noPropsError, wrongIdFormatError } from '../helpers/errors'
+import { projectNonNullishProps } from '../helpers/utils'
 import getClient from './mongo-client'
 import { DbService, Filter } from './types'
 

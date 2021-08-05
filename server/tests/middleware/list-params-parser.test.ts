@@ -1,5 +1,5 @@
 import { listParamsParser } from '../../src/middleware/list-params-parser'
-import { stringifyValues } from '../../src/utils/utils'
+import { stringifyValues } from '../helpers'
 
 const parseGetListParams = (listParams: any) => {
 	const req: any = { query: listParams }

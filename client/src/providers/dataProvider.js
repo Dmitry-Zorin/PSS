@@ -18,8 +18,7 @@ export const httpClient = (url, options = {}) => {
 			}, new FormData())
 		}
 		else {
-			options.headers.set('content-type', 'application/x-www-form-urlencoded')
-			options.body = new URLSearchParams(Object.entries(options.body))
+			options.body = JSON.stringify(Object.entries(options.body))
 		}
 	}
 	

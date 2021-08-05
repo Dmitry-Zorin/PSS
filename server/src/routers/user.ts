@@ -1,14 +1,14 @@
 import { NextFunction, Request, Response, Router } from 'express'
 import { isBoolean } from 'lodash'
+import { createBadRequestError } from '../helpers/errors'
 import { checkIfAdmin, createSafeHandler, listParamsParser } from '../middleware'
 import createPaginationPipeline from '../pipelines/pagination'
-import { createBadRequestError } from '../utils/errors'
 
 const collection = 'users'
 
 const projection = {
 	_id: 0,
-	id: '$username',
+	id: { $toString: '$username' },
 	createdAt: { $toDate: '$_id' },
 	username: 1,
 	isAdmin: 1,

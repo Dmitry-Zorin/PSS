@@ -1,9 +1,9 @@
 import { GridFSBucket, ObjectId } from 'mongodb'
-import { createEnvError, createNotFoundError, wrongIdFormatError } from '../utils/errors'
+import { createEnvError, createNotFoundError, wrongIdFormatError } from '../helpers/errors'
 import getClient from './mongo-client'
 import { FileService } from './types'
 
-const { FILE_DB_NAME, SERVER } = process.env
+const { FILE_DB_NAME } = process.env
 
 if (!FILE_DB_NAME) {
 	throw createEnvError('file_db_name')
@@ -22,30 +22,20 @@ const getFileService = async (): Promise<FileService> => {
 			if (!ObjectId.isValid(fileId)) {
 				throw wrongIdFormatError
 			}
+			
 			const _id = new ObjectId(fileId)
-			const coll = fileDb.collection(`${bucketName}.files`)
-			const doc = await coll.findOne({ _id }, { projection })
+			const bucket = getGridFSBucket(bucketName)
+			const doc = await bucket.find({ _id }, { projection })
+			
 			if (!doc) throw createNotFoundError('File not found')
+			
 			return doc
 		},
 		
-		upload: async (bucketName, file, filename) => {
-			if (!bucketName || !file) return null
-			
+		upload: (bucketName, file, filename) => {
 			const bucket = getGridFSBucket(bucketName)
 			const uploadStream = bucket.openUploadStream(filename)
-			
-			const fileInfo = {
-				id: uploadStream.id.toString(),
-				name: filename,
-				url: `${SERVER}/files/${bucketName}/${uploadStream.id}`,
-			}
-			
-			return new Promise(resolve => {
-				file.pipe(uploadStream)
-					.once('error', () => resolve(null))
-					.once('finish', () => resolve(fileInfo))
-			})
+			return file.pipe(uploadStream as any) as any
 		},
 		
 		download: (bucketName, fileId) => {

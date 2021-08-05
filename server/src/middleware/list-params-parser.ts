@@ -1,17 +1,8 @@
-import { NextFunction, Request, Response } from 'express'
 import { isInteger, reduce } from 'lodash'
-import { createBadRequestError } from '../utils/errors'
+import { createBadRequestError } from '../helpers/errors'
+import { createSafeHandler } from './create-safe-handler'
 
-type ListParamsKey = 'match' | 'sort' | 'skip' | 'limit'
-
-interface ListParams {
-	match: any,
-	sort: any,
-	skip: number,
-	limit: number
-}
-
-const paramValidations: Record<ListParamsKey, ((x: any) => boolean) | undefined> = {
+const paramValidations: Record<string, ((x: any) => boolean) | undefined> = {
 	match: (param: any) => (
 		toString.call(param) === '[object Object]'
 	),
@@ -27,24 +18,30 @@ const paramValidations: Record<ListParamsKey, ((x: any) => boolean) | undefined>
 	),
 }
 
-export const listParamsParser = (req: Request, res: Response, next: NextFunction) => {
+const parseParamValue = (value: any) => {
 	try {
-		res.locals.listParams = reduce(req.query, (params, value, key) => {
-			const isValidParam = paramValidations[key as ListParamsKey]
-			if (isValidParam) {
-				const parsedValue = JSON.parse(value as string)
-				if (!isValidParam(parsedValue)) {
-					throw createBadRequestError(`Invalid ${key} parameter`)
-				}
-				params[key as ListParamsKey] = parsedValue
-			}
-			return params
-		}, {} as ListParams)
+		return JSON.parse(value)
 	}
 	catch (err) {
-		return next(err.name === 'BadRequestError' ? err : (
-			createBadRequestError('Invalid format of query parameters')
-		))
+		throw createBadRequestError('Invalid format of query parameters')
 	}
-	next()
 }
+
+const reduceCallback = (params: Record<string, any>, value: any, key: string) => {
+	const validateParam = paramValidations[key]
+	
+	if (validateParam) {
+		const parsedValue = parseParamValue(value)
+		if (!validateParam(parsedValue)) {
+			throw createBadRequestError(`Invalid ${key} parameter`)
+		}
+		params[key] = parsedValue
+	}
+	
+	return params
+}
+
+export const listParamsParser = createSafeHandler((req, res, next) => {
+	res.locals.listParams = reduce(req.query, reduceCallback, {} as Record<string, any>)
+	next()
+})

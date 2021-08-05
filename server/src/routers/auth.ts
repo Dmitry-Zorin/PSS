@@ -1,10 +1,10 @@
 import { Router } from 'express'
-import { createSafeHandler } from '../middleware'
 import {
 	createBadRequestError,
 	createConflictError,
 	createUnauthorizedError,
-} from '../utils/errors'
+} from '../helpers/errors'
+import { createSafeHandler } from '../middleware'
 import { setFilter } from './user'
 
 const collection = 'users'

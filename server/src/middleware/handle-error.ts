@@ -4,7 +4,7 @@ import {
 	createInternalServerError,
 	createUnauthorizedError,
 	HttpError,
-} from '../utils/errors'
+} from '../helpers/errors'
 
 interface UncaughtError extends Error {
 	type?: string,

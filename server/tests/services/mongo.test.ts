@@ -1,6 +1,6 @@
-import { TEST_COLLECTION_NAME } from '../helpers'
 import mongo from '../../src/services/mongo'
-import { DbService, Projection } from '../../src/services/types'
+import { DbService } from '../../src/services/types'
+import { TEST_COLLECTION_NAME } from '../helpers'
 
 const document = {
 	id: '',
@@ -10,11 +10,11 @@ const document = {
 	file: { id: 'file ID' },
 }
 
-export const projection: Projection = {
+export const projection = {
 	name: 1,
 	desc: 1,
 	file: 1,
-}
+} as const
 
 let db: DbService
 

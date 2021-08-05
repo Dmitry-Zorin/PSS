@@ -1,4 +1,4 @@
-import { projectNonNullishProps, removeNullishProps } from '../../src/utils/utils'
+import { projectNonNullishProps, removeNullishProps } from '../../src/helpers/utils'
 
 const nullishObject: any = {
 	undefined: undefined,

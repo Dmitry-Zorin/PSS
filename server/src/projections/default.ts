@@ -1,6 +1,4 @@
-import { Projection } from '../services/types'
-
-export const defaultProjection: Projection = {
+export const defaultProjection = {
 	headline: 1,
 	description: 1,
 	type: 1,

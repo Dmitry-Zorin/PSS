@@ -1,8 +1,4 @@
-type Document = Record<string, any>
-
-export interface Projection {
-	[key: string]: 0 | 1 | boolean | string | Projection
-}
+import { Document, GridFSBucketReadStream, GridFSBucketWriteStream, Projection } from 'mongodb'
 
 export type Filter = Record<string, number | string>
 
@@ -10,7 +6,7 @@ interface AddDocument {
 	(
 		collectionName: string,
 		document: Document,
-		projection?: Projection,
+		projection?: Projection<Document>,
 	): Promise<{ id: string }>
 }
 
@@ -19,8 +15,8 @@ interface GetDocuments {
 }
 
 interface GetDocument {
-	(collectionName: string, filter: Filter, projection: Projection): Promise<any>,
-	(collectionName: string, documentId: string, projection: Projection): Promise<any>,
+	(collectionName: string, filter: Filter, projection: Projection<Document>): Promise<any>,
+	(collectionName: string, documentId: string, projection: Projection<Document>): Promise<any>,
 }
 
 interface UpdateDocument {
@@ -28,13 +24,13 @@ interface UpdateDocument {
 		collectionName: string,
 		filter: Filter,
 		updateDocument: Document,
-		projection?: Projection,
+		projection?: Projection<Document>,
 	): Promise<void | string>,
 	(
 		collectionName: string,
 		documentId: string,
 		updateDocument: Document,
-		projection?: Projection,
+		projection?: Projection<Document>,
 	): Promise<void | string>,
 }
 
@@ -53,18 +49,18 @@ export interface DbService {
 	deleteDocument: DeleteDocument,
 }
 
-export interface FileInfo {
-	id: string,
-	name: string,
-	url: string
-}
-
-export type File = NodeJS.ReadableStream
-
 export interface FileService {
-	getFileInfo: (bucketName: string, fileId: string, projection: Projection) => Promise<any>
-	upload: (bucketName: string, file: File, filename: string) => Promise<null | FileInfo>,
-	download: (bucketName: string, fileId: string) => File,
+	getFileInfo: (
+		bucketName: string,
+		fileId: string,
+		projection: Projection<Document>,
+	) => Promise<any>
+	upload: (
+		bucketName: string,
+		file: NodeJS.ReadableStream,
+		filename: string,
+	) => GridFSBucketWriteStream,
+	download: (bucketName: string, fileId: string) => GridFSBucketReadStream,
 	remove: (bucketName: string, fileId: string) => Promise<void>
 }
 

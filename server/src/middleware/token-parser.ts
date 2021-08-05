@@ -1,10 +1,9 @@
 import { NextFunction, Request, Response } from 'express'
 import unless from 'express-unless'
-import { TokenService } from '../services/types'
+import { createUnauthorizedError } from '../helpers/errors'
 import { User } from '../types'
-import { createUnauthorizedError } from '../utils/errors'
 
-export const tokenParser = (tokenService: TokenService, unlessOptions?: unless.Options) => {
+export const tokenParser = (unlessOptions?: unless.Options) => {
 	const middleware = (req: Request, res: Response, next: NextFunction) => {
 		const { authorization } = req.headers
 		
@@ -14,14 +13,14 @@ export const tokenParser = (tokenService: TokenService, unlessOptions?: unless.O
 		
 		try {
 			const token = authorization!.split(' ')[1]
-			req.user = tokenService.verify(token) as unknown as User
+			req.user = req.app.services.token.verify(token) as unknown as User
+			next()
 		}
 		catch {
-			return next(createUnauthorizedError('Authorization token expired'))
+			next(createUnauthorizedError('Authorization token expired'))
 		}
-		
-		next()
 	}
+	
 	return unlessOptions
 		? unless.bind(middleware)(unlessOptions)
 		: middleware

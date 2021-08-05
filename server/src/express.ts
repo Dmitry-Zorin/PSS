@@ -14,17 +14,16 @@ const corsOptions = {
 
 const createApp = (services: Services) => {
 	const app = express()
+	app.services = services
+	
+	return app
 		.use(helmet())
 		.use(cors(corsOptions))
-		.use(tokenParser(services.token, { path: /(register|login)$/ }))
+		.use(tokenParser({ path: /(register|login)$/ }))
 		.use(express.static('../dist'))
 		.use('/api', apiRouter)
 		.use('/files', fileRouter)
 		.use(handleError)
-	
-	app.services = services
-	
-	return app
 }
 
 export default createApp

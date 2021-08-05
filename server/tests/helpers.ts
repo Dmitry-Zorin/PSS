@@ -1,3 +1,5 @@
+import FormData from 'form-data'
+import { isString, mapValues } from 'lodash'
 import fetch, { RequestInfo, RequestInit } from 'node-fetch'
 
 export const TEST_COLLECTION_NAME = 'tests'
@@ -7,12 +9,13 @@ const testUser = {
 	password: 'zorin',
 }
 
-export const fetchApi = async (path: RequestInfo, options?: RequestInit, token?: string) => {
+export const fetchApi = async (path: RequestInfo, options = {} as RequestInit, token?: string) => {
 	const resp = await fetch(`${process.env.SERVER}/api/${path}`, {
 		...options,
 		headers: {
 			...token && { authorization: `Bearer ${token}` },
-			...options?.headers,
+			...isString(options.body) && { 'content-type': 'application/json' },
+			...options.headers,
 		},
 	})
 	return {
@@ -24,7 +27,7 @@ export const fetchApi = async (path: RequestInfo, options?: RequestInit, token?:
 export const login = async () => {
 	const { json } = await fetchApi('auth/login', {
 		method: 'post',
-		body: new URLSearchParams(testUser),
+		body: JSON.stringify(testUser),
 	})
 	expect(json.error).toBeUndefined()
 	expect(json.token).toBeString()
@@ -42,3 +45,14 @@ export const createFetchFunction = async (basePath?: string): Promise<FetchFunct
 		return fetchApi(_path, options, token)
 	}
 }
+
+export const stringifyValues = (object: Record<string, any>) => (
+	mapValues(object, JSON.stringify) as unknown as Record<string, string>
+)
+
+export const createFormData = (object: any) => (
+	Object.entries(object).reduce((result, entry) => {
+		result.append(...entry)
+		return result
+	}, new FormData())
+)

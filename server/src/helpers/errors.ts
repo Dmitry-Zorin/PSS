@@ -8,8 +8,8 @@ export interface HttpError {
 	status: number
 }
 
-const createError = (status: number, name: string, message: string): HttpError => (
-	{ status, name, message }
+const createError = (status: number, name: string, message: string) => (
+	Object.freeze({ status, name, message } as HttpError)
 )
 
 export const createBadRequestError = (message: string) => (

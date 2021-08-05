@@ -1,7 +1,11 @@
-import FormData from 'form-data'
 import { createReadStream } from 'fs'
-import { stringifyValues } from '../../src/utils/utils'
-import { createFetchFunction, FetchFunction, TEST_COLLECTION_NAME } from '../helpers'
+import {
+	createFetchFunction,
+	createFormData,
+	FetchFunction,
+	stringifyValues,
+	TEST_COLLECTION_NAME,
+} from '../helpers'
 
 const document = {
 	id: '',
@@ -16,15 +20,10 @@ const createFileStream = () => (
 let fetchTestApi: FetchFunction
 
 const createDocument = async () => {
-	const entries = Object.entries({
+	const body = createFormData({
 		...document,
 		file: createFileStream(),
 	})
-	const body = entries.reduce((result, entry) => {
-		result.append(...entry)
-		return result
-	}, new FormData())
-	
 	const { json } = await fetchTestApi('', { method: 'post', body })
 	expect(json.error).toBeUndefined()
 	expect((document.id = json.id)).toBeString()
@@ -44,7 +43,7 @@ test('Find a document', async () => {
 })
 
 test('Find a list of documents', async () => {
-	const query = new URLSearchParams(stringifyValues({
+	const query = JSON.stringify(stringifyValues({
 		filter: { name: document.name },
 		sort: { name: 1 },
 		skip: 0,
@@ -61,17 +60,13 @@ test('Find a list of documents', async () => {
 
 test('Update a document', async () => {
 	const updatedDocument = {
-		name: 'updated test resource',
-		desc: 'updated test resource description',
+		name: 'updated test name',
+		desc: 'updated test description',
 		file: createFileStream(),
 	}
-	const entries = Object.entries(updatedDocument)
-	const body = entries.reduce((result, entry) => {
-		result.append(...entry)
-		return result
-	}, new FormData())
 	
 	const { id } = document
+	const body = createFormData(updatedDocument)
 	await fetchTestApi(id, { method: 'put', body })
 	
 	const { file, ...expectedProps } = updatedDocument
