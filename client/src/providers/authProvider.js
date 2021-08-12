@@ -1,4 +1,4 @@
-import { fetchApi } from '../requests.js'
+import { fetchApi } from '../requests'
 
 export let user = JSON.parse(localStorage.getItem('user'))
 

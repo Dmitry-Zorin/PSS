@@ -1,26 +1,30 @@
-import { Document, Projection } from 'mongodb'
+import { values } from 'lodash'
+import { filter } from 'lodash/fp'
+import { Projection } from '../services/types'
 
 interface PaginationPipelineOptions {
 	match?: any,
 	sort?: any,
 	skip?: number,
 	limit?: number,
-	projection?: Projection<Document>
+	projection?: Projection
 }
 
-const createPaginationPipeline = (options: PaginationPipelineOptions) => {
+const filterPipeline = filter((e: object) => values(e)[0])
+
+const getPaginationPipeline = (options: PaginationPipelineOptions) => {
 	const { match, sort, skip, limit, projection } = options
-	return [
-		match && { $match: match },
-		sort && { $sort: sort },
+	return filterPipeline([
+		{ $match: match },
+		{ $sort: sort },
 		{
 			$facet: {
 				count: [{ $count: 'total' }],
-				documents: [
-					limit && { $limit: limit },
-					skip && { $skip: skip },
-					projection && { $project: projection },
-				].filter(Boolean),
+				documents: filterPipeline([
+					{ $limit: limit },
+					{ $skip: skip },
+					{ $project: projection },
+				]),
 			},
 		},
 		{
@@ -29,7 +33,7 @@ const createPaginationPipeline = (options: PaginationPipelineOptions) => {
 				documents: 1,
 			},
 		},
-	].filter(Boolean)
+	])
 }
 
-export default createPaginationPipeline
+export default getPaginationPipeline

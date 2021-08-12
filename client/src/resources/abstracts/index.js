@@ -1,11 +1,13 @@
-import { AbstractCreate } from './AbstractCreate.js'
-import { AbstractEdit } from './AbstractEdit.js'
-import { AbstractList } from './AbstractList.js'
-import { AbstractShow } from './AbstractShow.js'
+import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile'
+import { AbstractCreate } from './AbstractCreate'
+import { AbstractEdit } from './AbstractEdit'
+import { AbstractList } from './AbstractList'
+import { AbstractShow } from './AbstractShow'
 
-export default {
-	list: AbstractList,
+export const abstracts = {
+	icon: InsertDriveFileIcon,
 	create: AbstractCreate,
-	edit: AbstractEdit,
+	list: AbstractList,
 	show: AbstractShow,
+	edit: AbstractEdit,
 }

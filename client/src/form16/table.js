@@ -8,7 +8,7 @@ import {
 	WidthType,
 } from 'docx'
 import range from 'just-range'
-import { getTableRows } from './tableRows.js'
+import { getTableRows } from './tableRows'
 
 export const getTable = (data, author) => {
 	const index = { value: 1 }

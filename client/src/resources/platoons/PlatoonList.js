@@ -1,6 +1,6 @@
 import React from 'react'
 import { Datagrid, Filter, List, TextField, TextInput } from 'react-admin'
-import { BulkActionButtons, createEmptyPage } from '../../raComponents.js'
+import { BulkActionButtons, createEmptyPage } from '../../components/inputs'
 
 const Empty = createEmptyPage(
 	'Нет доступных взводов',

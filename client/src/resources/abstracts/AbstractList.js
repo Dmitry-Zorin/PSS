@@ -5,17 +5,13 @@ import {
 	Datagrid,
 	Filter,
 	List,
-	ReferenceArrayField,
-	ReferenceField,
-	ReferenceInput,
-	SelectInput,
 	SingleFieldList,
 	TextField,
 	TextInput,
 } from 'react-admin'
-import { DescriptionField, HeadlineField } from '../../CustomFields.js'
-import { BulkActionButtons, createEmptyPage } from '../../raComponents.js'
-import { AbstractShow } from './AbstractShow.js'
+import { BulkActionButtons, createEmptyPage } from '../../components/old'
+import { DescriptionField } from '../../CustomFields'
+import { AbstractShow } from './AbstractShow'
 
 const Empty = createEmptyPage(
 	'Нет доступных авторефератов',
@@ -26,7 +22,7 @@ const Filters = (props) => (
 	<Filter {...props}>
 		<TextInput
 			label='Поиск по названию'
-			source='headline'
+			source='title'
 			alwaysOn
 		/>
 		<TextInput
@@ -37,21 +33,6 @@ const Filters = (props) => (
 			label='Автор'
 			source='authors'
 		/>
-		<ReferenceInput
-			label='Место публикации'
-			source='publicationPlace'
-			reference='publications'
-		>
-			<SelectInput optionText='name'/>
-		</ReferenceInput>
-		<ReferenceInput
-			perPage={1000}
-			label='Подразделение'
-			source='subdivisions'
-			reference='subdivisions'
-		>
-			<SelectInput optionText='name'/>
-		</ReferenceInput>
 		<TextInput
 			label='Выходные данные'
 			source='exitData'
@@ -73,32 +54,14 @@ export const AbstractList = ({ permissions, ...props }) => (
 			rowClick='show'
 			expand={<AbstractShow enableActions={false}/>}
 		>
-			<HeadlineField
-				label='Название'
-				source='headline'
+			<TextField
+				source='title'
 			/>
 			<DescriptionField
 				label='Аннотация'
 				source='text'
 				maxchars={250}
 			/>
-			<ReferenceField
-				label='Место публикации'
-				source='publicationPlace'
-				reference='publications'
-				link=''
-			>
-				<TextField source='name'/>
-			</ReferenceField>
-			<ReferenceArrayField
-				label='Подразделения'
-				reference='subdivisions'
-				source='subdivisions'
-			>
-				<SingleFieldList>
-					<ChipField source='name'/>
-				</SingleFieldList>
-			</ReferenceArrayField>
 			<ArrayField
 				source='authors'
 				label='Авторы'

@@ -7,11 +7,13 @@ export const clearDb = async () => {
 	const dbClient = await getClient()
 	
 	const db = dbClient.db(process.env.DB_NAME)
-	await db.collection(TEST_COLLECTION_NAME).drop()
+	await db.collection(TEST_COLLECTION_NAME).drop().catch(() => {})
 	
 	const fileDb = dbClient.db(process.env.FILE_DB_NAME)
 	const bucket = new GridFSBucket(fileDb, { bucketName: TEST_COLLECTION_NAME })
-	bucket.drop(disconnect)
+	await bucket.drop().catch(() => {})
+	
+	await disconnect()
 }
 
 export default clearDb

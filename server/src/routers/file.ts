@@ -1,17 +1,20 @@
 import { Router } from 'express'
-import { createSafeHandler } from '../middleware'
+import { createUnauthorizedError } from '../helpers/errors'
+import { safeHandler } from '../middleware'
 
 const fileRouter = Router()
 
-fileRouter.get('/:resource/:fileId', createSafeHandler(async (req, res) => {
+fileRouter.get('/:resource/:fileId', safeHandler(async (req, res) => {
 	const { resource, fileId } = req.params
-	const fileService = res.app.services.file
+	const { fs, crypt } = res.app.services
+	const { filekey } = req.query
 	
-	const projection = { filename: 1 } as const
-	const { filename } = await fileService.getFileInfo(resource, fileId, projection)
-	res.attachment(filename)
+	if (!await crypt.compare(fileId, filekey as string)) {
+		throw createUnauthorizedError('Invalid file filekey')
+	}
 	
-	fileService.download(resource, fileId).pipe(res)
+	const { file, stream } = await fs.download(resource, fileId)
+	stream.pipe(res.attachment(file.filename))
 }))
 
 export default fileRouter

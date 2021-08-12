@@ -1,16 +1,7 @@
 import React from 'react'
-import {
-	Datagrid,
-	Filter,
-	List,
-	NumberInput,
-	ReferenceInput,
-	SelectInput,
-	TextField,
-	TextInput,
-} from 'react-admin'
-import { DescriptionField, HeadlineField } from '../../CustomFields.js'
-import { createEmptyPage } from '../../raComponents.js'
+import { Datagrid, Filter, List, NumberInput, TextField, TextInput } from 'react-admin'
+import { createEmptyPage } from '../../components/old'
+import { DescriptionField, HeadlineField } from '../../CustomFields'
 
 const Empty = createEmptyPage(
 	'Нет доступных статей',
@@ -32,21 +23,6 @@ const Filters = (props) => (
 			label='Автор'
 			source='authors.author'
 		/>
-		<ReferenceInput
-			label='Место публикации'
-			source='publicationPlace'
-			reference='publications'
-		>
-			<SelectInput optionText='name'/>
-		</ReferenceInput>
-		<ReferenceInput
-			perPage={1000}
-			label='Подразделение'
-			source='subdivisions'
-			reference='subdivisions'
-		>
-			<SelectInput optionText='name'/>
-		</ReferenceInput>
 		<NumberInput
 			label='Год создания'
 			source='creationDate'
@@ -79,8 +55,7 @@ export const ArticleList = ({ permissions, ...props }) => (
 			)}
 		>
 			<HeadlineField
-				label='Название'
-				source='headline'
+				source='title'
 			/>
 			{/*<ArrayField
 				source='authors'

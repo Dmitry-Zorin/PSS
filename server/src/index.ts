@@ -15,9 +15,9 @@ if (!SERVER) {
 const createApp = async () => (
 	createExpressApp({
 		db: await mongo(),
-		file: await gridFs(),
-		token: jsonwebtoken,
-		encryption: bcrypt,
+		fs: await gridFs(),
+		jwt: jsonwebtoken,
+		crypt: bcrypt,
 	})
 )
 

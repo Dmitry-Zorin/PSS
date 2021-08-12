@@ -1,6 +1,6 @@
 import { isInteger, reduce } from 'lodash'
 import { createBadRequestError } from '../helpers/errors'
-import { createSafeHandler } from './create-safe-handler'
+import { safeHandler } from './safe-handler'
 
 const paramValidations: Record<string, ((x: any) => boolean) | undefined> = {
 	match: (param: any) => (
@@ -41,7 +41,9 @@ const reduceCallback = (params: Record<string, any>, value: any, key: string) =>
 	return params
 }
 
-export const listParamsParser = createSafeHandler((req, res, next) => {
-	res.locals.listParams = reduce(req.query, reduceCallback, {} as Record<string, any>)
-	next()
-})
+export const listParamsParser = () => (
+	safeHandler((req, res, next) => {
+		res.locals.listParams = reduce(req.query, reduceCallback, {} as Record<string, any>)
+		next()
+	})
+)

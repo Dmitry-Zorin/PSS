@@ -3,7 +3,7 @@ import { GridShowLayout, RaGrid } from 'ra-compact-ui/dist/details'
 import React from 'react'
 import { ImageField, NumberField, TextField } from 'react-admin'
 import photoPlaceholder from '../../../assets/photo-placeholder.jpg'
-import useStyles from '../../employees/Styles.js'
+import useStyles from '../../employees/Styles'
 
 const Info = () => {
 	const classes = useStyles()

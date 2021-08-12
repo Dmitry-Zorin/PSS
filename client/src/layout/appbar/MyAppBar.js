@@ -5,15 +5,14 @@ import HomeIcon from '@material-ui/icons/Home'
 import React from 'react'
 import { AppBar } from 'react-admin'
 import { Link } from 'react-router-dom'
-import LocaleSwitcher from './LocaleSwitcher.js'
-import ThemeSwitcher from './ThemeSwitcher.js'
+import LocaleSwitcher from './LocaleSwitcher'
+import ThemeSwitcher from './ThemeSwitcher'
 
 const useStyles = makeStyles(() => ({
 	appBar: {
 		'& > * > *': {
 			color: 'inherit',
 			borderRadius: 50,
-			padding: 12,
 		},
 	},
 	title: {

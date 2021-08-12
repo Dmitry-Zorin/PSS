@@ -6,16 +6,14 @@ import {
 	FileInput,
 	minLength,
 	NumberInput,
-	ReferenceArrayInput,
 	ReferenceInput,
 	required,
-	SelectArrayInput,
 	SelectInput,
 	SimpleForm,
 	SimpleFormIterator,
 	TextInput,
 } from 'react-admin'
-import { createTitle, EditActionsWithoutFile } from '../../raComponents.js'
+import { createTitle, EditActionsWithoutFile } from '../../components/old'
 
 const validateText = [required(), minLength(1)]
 const validateRequired = [required()]
@@ -69,22 +67,6 @@ export const MonographEdit = (props) => (
 					/>
 				</SimpleFormIterator>
 			</ArrayInput>
-			<ReferenceInput
-				label='Место публикации'
-				source='publicationPlace'
-				reference='publications'
-			>
-				<SelectInput optionText='name'/>
-			</ReferenceInput>
-			<ReferenceArrayInput
-				fullWidth
-				label='Подразделения'
-				reference='subdivisions'
-				source='subdivisions'
-				perPage={1000}
-			>
-				<SelectArrayInput optionText='name'/>
-			</ReferenceArrayInput>
 			<TextInput
 				label='Выходные данные'
 				source='exitData'

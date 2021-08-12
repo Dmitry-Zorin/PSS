@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button'
 import React from 'react'
 import { useDataProvider, useNotify, useRecordContext } from 'react-admin'
 import { createForm16 } from '../../../form16'
-import { getResourceData } from '../../../requests.js'
+import { getResourceData } from '../../../requests'
 
 const ButtonForm16 = () => {
 	const dataProvider = useDataProvider()

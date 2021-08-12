@@ -12,9 +12,9 @@ import {
 	TextField,
 	TextInput,
 } from 'react-admin'
-import { DescriptionField, HeadlineField } from '../../CustomFields.js'
-import { BulkActionButtons, createEmptyPage } from '../../raComponents.js'
-import { PatentShow } from './PatentShow.js'
+import { DescriptionField, HeadlineField } from '../../CustomFields'
+import { BulkActionButtons, createEmptyPage } from '../../components/inputs'
+import { PatentShow } from './PatentShow'
 
 const Empty = createEmptyPage(
 	'Нет доступных патентов',

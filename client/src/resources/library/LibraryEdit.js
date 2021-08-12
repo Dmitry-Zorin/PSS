@@ -12,7 +12,7 @@ import {
 	SimpleFormIterator,
 	TextInput,
 } from 'react-admin'
-import { createTitle, EditActionsWithoutFile } from '../../raComponents.js'
+import { createTitle, EditActionsWithoutFile } from '../../components/inputs'
 
 const validateText = [required(), minLength(1)]
 

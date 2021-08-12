@@ -2,7 +2,7 @@ import { createFetchFunction, FetchFunction } from '../helpers'
 
 const user = {
 	id: '',
-	username: 'test username',
+	username: 'user test username',
 	isAdmin: false,
 }
 
@@ -12,7 +12,7 @@ const createUser = async () => {
 	const body = JSON.stringify({ ...user, password: 'test' })
 	const { json } = await fetchTestApi('', { method: 'post', body })
 	expect(json.error).toBeUndefined()
-	expect((user.id = json.id)).toBeString()
+	expect((user.id = json.id)).toBe(user.username)
 }
 
 const deleteUser = async () => {

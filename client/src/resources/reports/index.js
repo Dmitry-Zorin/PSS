@@ -1,7 +1,7 @@
-import { ReportCreate } from './ReportCreate.js'
-import { ReportEdit } from './ReportEdit.js'
-import { ReportList } from './ReportList.js'
-import { ReportShow } from './ReportShow.js'
+import { ReportCreate } from './ReportCreate'
+import { ReportEdit } from './ReportEdit'
+import { ReportList } from './ReportList'
+import { ReportShow } from './ReportShow'
 
 export default {
 	list: ReportList,

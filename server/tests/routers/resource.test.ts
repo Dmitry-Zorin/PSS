@@ -1,4 +1,4 @@
-import { createReadStream } from 'fs'
+import { Readable } from 'stream'
 import {
 	createFetchFunction,
 	createFormData,
@@ -9,21 +9,21 @@ import {
 
 const document = {
 	id: '',
-	name: 'test name',
-	desc: 'test description',
+	name: 'resource test name',
+	desc: 'resource test description',
 }
 
+const filename = 'test file'
+
 const createFileStream = () => (
-	createReadStream(require.resolve('../test.pdf'))
+	Readable.from(filename)
 )
 
 let fetchTestApi: FetchFunction
 
 const createDocument = async () => {
-	const body = createFormData({
-		...document,
-		file: createFileStream(),
-	})
+	const docWithFile = { ...document, file: createFileStream() }
+	const body = createFormData(docWithFile, filename)
 	const { json } = await fetchTestApi('', { method: 'post', body })
 	expect(json.error).toBeUndefined()
 	expect((document.id = json.id)).toBeString()
@@ -36,15 +36,14 @@ beforeAll(async () => {
 beforeEach(createDocument)
 
 test('Find a document', async () => {
-	const file = expect.any(Object)
 	const { json } = await fetchTestApi(document.id)
-	expect(json).toEqual(expect.objectContaining({ ...document, file }))
+	expect(json).toEqual(expect.objectContaining(document))
 	expect(json.file).toContainAllKeys(['id', 'name', 'url'])
 })
 
 test('Find a list of documents', async () => {
-	const query = JSON.stringify(stringifyValues({
-		filter: { name: document.name },
+	const query = new URLSearchParams(stringifyValues({
+		match: { name: document.name },
 		sort: { name: 1 },
 		skip: 0,
 		limit: 25,
@@ -60,13 +59,13 @@ test('Find a list of documents', async () => {
 
 test('Update a document', async () => {
 	const updatedDocument = {
-		name: 'updated test name',
-		desc: 'updated test description',
+		name: 'updated resource test name',
+		desc: 'updated resource test description',
 		file: createFileStream(),
 	}
 	
 	const { id } = document
-	const body = createFormData(updatedDocument)
+	const body = createFormData(updatedDocument, filename)
 	await fetchTestApi(id, { method: 'put', body })
 	
 	const { file, ...expectedProps } = updatedDocument

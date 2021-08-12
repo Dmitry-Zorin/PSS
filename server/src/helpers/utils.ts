@@ -2,13 +2,14 @@ import { pickBy } from 'lodash'
 
 type NonNullish = boolean | number | string | object
 
-export const removeNullishProps = (object: Record<string, any>) => (
-	pickBy(object, value => value != null) as Record<string, NonNullish>
+type Object = Record<string, any>
+
+type FilteredObject = Record<string, NonNullish>
+
+export const removeNullishProps = (object: Object) => (
+	pickBy(object, value => value != null) as FilteredObject
 )
 
-export const projectNonNullishProps = <T>(
-	object: Record<string, any>,
-	projection: Record<string, any>,
-) => (
-	pickBy(object, (value, key) => projection[key] && value != null) as Record<string, NonNullish>
+export const projectNonNullishProps = (object: Object, projection: Object) => (
+	pickBy(object, (value, key) => projection[key] && value != null) as FilteredObject
 )

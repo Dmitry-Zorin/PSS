@@ -1,6 +1,6 @@
 import jsonwebtoken from 'jsonwebtoken'
 import { createEnvError } from '../helpers/errors'
-import { TokenService } from './types'
+import { JwtService } from './types'
 
 const secretKey = process.env.SECRET_KEY
 
@@ -8,7 +8,7 @@ if (!secretKey) {
 	throw createEnvError('secret_key')
 }
 
-const tokenService: TokenService = {
+const jwtService: JwtService = {
 	sign: (payload, expiresIn = '30 days') => {
 		return jsonwebtoken.sign(payload, secretKey, { expiresIn })
 	},
@@ -17,4 +17,4 @@ const tokenService: TokenService = {
 	),
 }
 
-export default tokenService
+export default jwtService

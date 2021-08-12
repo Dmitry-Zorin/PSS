@@ -12,11 +12,7 @@ import {
 	List,
 	minLength,
 	NumberInput,
-	ReferenceArrayField,
-	ReferenceArrayInput,
-	ReferenceInput,
 	required,
-	SelectArrayInput,
 	SelectInput,
 	Show,
 	SimpleForm,
@@ -26,23 +22,30 @@ import {
 	TextField,
 	TextInput,
 } from 'react-admin'
-import { DescriptionField, HeadlineField } from '../CustomFields.js'
+import { DescriptionField, HeadlineField } from '../../CustomFields'
 import {
 	BulkActionButtons,
 	createEmptyPage,
 	createTitle,
 	EditActionsWithoutFile,
 	ShowActions,
-} from '../raComponents.js'
+} from '../../components/inputs'
 
 const validateText = [required(), minLength(1)]
 const validateRequired = [required()]
 
-const Title = createTitle('Рационализаторское предложение', 'headline')
+const Title = createTitle('Научно-исследовательская работа', 'headline')
 const Empty = createEmptyPage(
-	'Нет доступных рационализаторских предложений',
-	'Для добавления рационализаторского предложения нажмите кнопку "Создать"',
+	'Нет доступных научно-исследовательских работ',
+	'Для добавления научно-исследовательская работы нажмите кнопку "Создать"',
 )
+
+const categoryChoices = [
+	{ id: '1', name: '1' },
+	{ id: '2', name: '2' },
+	{ id: '3', name: '3' },
+	{ id: 'ГОЗ', name: 'ГОЗ' },
+]
 
 const Filters = (props) => (
 	<Filter {...props}>
@@ -56,23 +59,28 @@ const Filters = (props) => (
 			source='description'
 		/>
 		<TextInput
-			label='Автор'
+			label='Головной исполнитель'
+			source='headPerformer'
+		/>
+		<TextInput
+			label='Заказчик'
+			source='customer'
+		/>
+		<TextInput
+			label='Cоисполнитель'
 			source='authors'
 		/>
-		<ReferenceInput
-			perPage={1000}
-			label='Подразделение'
-			source='subdivisions'
-			reference='subdivisions'
-		>
-			<SelectInput optionText='name'/>
-		</ReferenceInput>
+		<SelectInput
+			label='Категория'
+			source='category'
+			choices={categoryChoices}
+		/>
 	</Filter>
 )
 
 export const ListForm = ({ permissions, ...props }) => (
 	<List
-		title='Список рационализаторских предложений'
+		title='Список научно-исследовательских работ'
 		filters={<Filters/>}
 		perPage={25}
 		exporter={false}
@@ -94,22 +102,21 @@ export const ListForm = ({ permissions, ...props }) => (
 				source='description'
 				maxchars={250}
 			/>
-			<ReferenceArrayField
-				label='Подразделения'
-				reference='subdivisions'
-				source='subdivisions'
-			>
-				<SingleFieldList>
-					<ChipField source='name'/>
-				</SingleFieldList>
-			</ReferenceArrayField>
+			<TextField
+				label='Головной исполнитель'
+				source='headPerformer'
+			/>
+			<TextField
+				label='Заказчик'
+				source='customer'
+			/>
 			<ArrayField
 				source='authors'
-				label='Авторы'
+				label='Соисполнители'
 			>
 				<SingleFieldList linkType={false}>
 					<ChipField
-						label='Автор'
+						label='Соисполнитель'
 						source='author'
 					/>
 				</SingleFieldList>
@@ -124,11 +131,10 @@ export const ListForm = ({ permissions, ...props }) => (
 
 export const CreateForm = props => (
 	<Create
-		title='Добавить рационализаторское предложение'
-		successMessage='Рационализаторское предложение добавлено'
+		title='Добавить научно-исследовательская работу'
+		successMessage='Научно-исследовательская работа добавлена'
 		undoable={false}
-		{...props}
-	>
+		{...props}>
 		<SimpleForm
 			redirect='list'
 			submitOnEnter={false}
@@ -147,6 +153,31 @@ export const CreateForm = props => (
 				fullWidth
 				multiline
 			/>
+			<TextInput
+				label='Головной исполнитель'
+				source='headPerformer'
+			/>
+			<TextInput
+				label='Заказчик'
+				source='customer'
+			/>
+			<ArrayInput
+				validate={validateRequired}
+				source='authors'
+				label='Соискатели'
+			>
+				<SimpleFormIterator>
+					<TextInput
+						label='Соискатель'
+						source='author'
+					/>
+				</SimpleFormIterator>
+			</ArrayInput>
+			<SelectInput
+				label='Категория'
+				source='category'
+				choices={categoryChoices}
+			/>
 			<NumberInput
 				label='Год создания'
 				source='creationDate'
@@ -155,30 +186,9 @@ export const CreateForm = props => (
 				label='Объем'
 				source='volume'
 			/>
-			<ArrayInput
-				validate={validateRequired}
-				source='authors'
-				label='Авторы'
-			>
-				<SimpleFormIterator>
-					<TextInput
-						label='Автор'
-						source='author'
-					/>
-				</SimpleFormIterator>
-			</ArrayInput>
-			<ReferenceArrayInput
-				fullWidth
-				label='Подразделения'
-				reference='subdivisions'
-				source='subdivisions'
-				perPage={1000}
-			>
-				<SelectArrayInput optionText='name'/>
-			</ReferenceArrayInput>
 			<FileInput
 				source='file'
-				label='Архив'
+				label='Архив с научно-исследовательской работой'
 				validate={validateRequired}
 			>
 				<FileField
@@ -193,7 +203,7 @@ export const CreateForm = props => (
 export const EditForm = props => (
 	<Edit
 		title={<Title/>}
-		successMessage='Рационализаторское предложение обновлено'
+		successMessage='Научно-исследовательская работа обновлена'
 		undoable={false}
 		actions={<EditActionsWithoutFile/>}
 		{...props}>
@@ -212,6 +222,31 @@ export const EditForm = props => (
 				fullWidth
 				multiline
 			/>
+			<TextInput
+				label='Головной исполнитель'
+				source='headPerformer'
+			/>
+			<TextInput
+				label='Заказчик'
+				source='customer'
+			/>
+			<ArrayInput
+				validate={validateRequired}
+				label='Соискатели'
+				source='authors'
+			>
+				<SimpleFormIterator>
+					<TextInput
+						label='Соискатель'
+						source='author'
+					/>
+				</SimpleFormIterator>
+			</ArrayInput>
+			<SelectInput
+				label='Категория'
+				source='category'
+				choices={categoryChoices}
+			/>
 			<NumberInput
 				label='Год создания'
 				source='creationDate'
@@ -220,31 +255,10 @@ export const EditForm = props => (
 				label='Объем'
 				source='volume'
 			/>
-			<ArrayInput
-				validate={validateRequired}
-				label='Авторы'
-				source='authors'
-			>
-				<SimpleFormIterator>
-					<TextInput
-						label='Автор'
-						source='author'
-					/>
-				</SimpleFormIterator>
-			</ArrayInput>
-			<ReferenceArrayInput
-				fullWidth
-				label='Подразделения'
-				reference='subdivisions'
-				source='subdivisions'
-				perPage={1000}
-			>
-				<SelectArrayInput optionText='name'/>
-			</ReferenceArrayInput>
 			<FileField
 				source='file.url'
 				title='file.title'
-				label='Архив'
+				label='Архив с научно-исследовательской работой'
 				target='_blank'
 			/>
 			<FileInput
@@ -274,6 +288,29 @@ export const ShowForm = ({ permissions, enableActions, ...props }) => (
 				label='Описание'
 				source='description'
 			/>
+			<TextField
+				label='Головной исполнитель'
+				source='headPerformer'
+			/>
+			<TextField
+				label='Заказчик'
+				source='customer'
+			/>
+			<ArrayField
+				label='Соискатели'
+				source='authors'
+			>
+				<SingleFieldList linkType={false}>
+					<ChipField
+						label='Соискатель'
+						source='author'
+					/>
+				</SingleFieldList>
+			</ArrayField>
+			<TextField
+				label='Категория'
+				source='category'
+			/>
 			<ChipField
 				label='Год создания'
 				source='creationDate'
@@ -283,30 +320,10 @@ export const ShowForm = ({ permissions, enableActions, ...props }) => (
 				source='volume'
 				emptyText='-'
 			/>
-			<ArrayField
-				label='Авторы'
-				source='authors'
-			>
-				<SingleFieldList linkType={false}>
-					<ChipField
-						label='Автор'
-						source='author'
-					/>
-				</SingleFieldList>
-			</ArrayField>
-			<ReferenceArrayField
-				label='Подразделения'
-				reference='subdivisions'
-				source='subdivisions'
-			>
-				<SingleFieldList>
-					<ChipField source='name'/>
-				</SingleFieldList>
-			</ReferenceArrayField>
 			<FileField
 				source='file.url'
 				title='file.title'
-				label='Архив'
+				label='Архив с научно-исследовательской работой'
 				target='_blank'
 			/>
 		</SimpleShowLayout>

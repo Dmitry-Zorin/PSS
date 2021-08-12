@@ -1,7 +1,7 @@
-import { ProgramCreate } from './ProgramCreate.js'
-import { ProgramEdit } from './ProgramEdit.js'
-import { ProgramList } from './ProgramList.js'
-import { ProgramShow } from './ProgramShow.js'
+import { ProgramCreate } from './ProgramCreate'
+import { ProgramEdit } from './ProgramEdit'
+import { ProgramList } from './ProgramList'
+import { ProgramShow } from './ProgramShow'
 
 export default {
 	list: ProgramList,

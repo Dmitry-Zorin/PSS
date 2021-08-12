@@ -1,15 +1,15 @@
 import { Router } from 'express'
-import { createSafeHandler } from '../middleware'
+import { zipObject } from 'lodash'
+import { safeHandler } from '../middleware'
 
 const extraRouter = Router()
 
-extraRouter.get('/resources', createSafeHandler(async (req, res) => {
+extraRouter.get('/resources', safeHandler(async (req, res) => {
 	const { db } = res.app.services
 	const collNames = await db.getCollectionNames()
-	const promises = collNames.map(async collName => (
-		[collName, await db.getDocumentCount(collName)]
-	))
-	res.json(Object.fromEntries(await Promise.all(promises)))
+	const countPromises = collNames.map(db.getDocumentCount)
+	const docCounts = await Promise.all(countPromises)
+	res.json(zipObject(collNames, docCounts))
 }))
 
 /*

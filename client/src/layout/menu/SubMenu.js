@@ -1,6 +1,7 @@
 import Collapse from '@material-ui/core/Collapse'
 import { makeStyles } from '@material-ui/core/styles'
 import ExpandMore from '@material-ui/icons/ExpandMore'
+import capitalize from 'just-capitalize'
 import React from 'react'
 import { MenuItemLink, useTranslate } from 'react-admin'
 import { useSelector } from 'react-redux'
@@ -37,7 +38,7 @@ const SubMenu = ({
 		<>
 			<MenuItemLink
 				to='#'
-				primaryText={translate(name)}
+				primaryText={translate(name, { _: capitalize(name) })}
 				leftIcon={isOpen ? <ExpandMore/> : icon}
 				onClick={handleToggle}
 				className={classes.active}

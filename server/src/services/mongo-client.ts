@@ -1,3 +1,4 @@
+import { memoize } from 'lodash'
 import { MongoClient } from 'mongodb'
 import { createEnvError } from '../helpers/errors'
 import logger from '../helpers/logger'
@@ -12,29 +13,26 @@ if (!DB_URI) {
 
 const client = new MongoClient(DB_URI)
 
+EXIT_SIGNALS.forEach(signal => {
+	process.on(signal, async (code) => {
+		await client.close()
+		process.exit(code)
+	})
+})
+
 export const disconnect = async () => {
 	await client.close()
 	logger.succeed('Disconnected from the database')
 }
 
-const getClient = async () => {
+const getClient = memoize(async () => {
 	logger.start('Connecting to the database...')
-	
 	await client.connect().catch(err => {
 		logger.fail('Connection to the database failed')
 		throw err
 	})
-	
 	logger.succeed('Connected to the database')
-	
-	EXIT_SIGNALS.forEach(signal => {
-		process.on(signal, async code => {
-			await client.close()
-			process.exit(code)
-		})
-	})
-	
 	return client
-}
+})
 
 export default getClient

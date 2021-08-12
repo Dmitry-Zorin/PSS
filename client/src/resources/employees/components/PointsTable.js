@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core'
 import React from 'react'
 import { useRecordContext } from 'react-admin'
-import useStyles from '../Styles.js'
+import useStyles from '../Styles'
 
 const PointsTable = () => {
 	const classes = useStyles()

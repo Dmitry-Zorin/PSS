@@ -1,4 +1,6 @@
-import { Document, GridFSBucketReadStream, GridFSBucketWriteStream, Projection } from 'mongodb'
+import { Document, GridFSFile, Projection as ProjectionOf } from 'mongodb'
+
+export type Projection = ProjectionOf<Document>
 
 export type Filter = Record<string, number | string>
 
@@ -6,7 +8,7 @@ interface AddDocument {
 	(
 		collectionName: string,
 		document: Document,
-		projection?: Projection<Document>,
+		projection?: Projection,
 	): Promise<{ id: string }>
 }
 
@@ -15,8 +17,8 @@ interface GetDocuments {
 }
 
 interface GetDocument {
-	(collectionName: string, filter: Filter, projection: Projection<Document>): Promise<any>,
-	(collectionName: string, documentId: string, projection: Projection<Document>): Promise<any>,
+	(collectionName: string, filter: Filter, projection: Projection): Promise<any>,
+	(collectionName: string, documentId: string, projection: Projection): Promise<any>,
 }
 
 interface UpdateDocument {
@@ -24,13 +26,13 @@ interface UpdateDocument {
 		collectionName: string,
 		filter: Filter,
 		updateDocument: Document,
-		projection?: Projection<Document>,
+		projection?: Projection,
 	): Promise<void | string>,
 	(
 		collectionName: string,
 		documentId: string,
 		updateDocument: Document,
-		projection?: Projection<Document>,
+		projection?: Projection,
 	): Promise<void | string>,
 }
 
@@ -49,27 +51,28 @@ export interface DbService {
 	deleteDocument: DeleteDocument,
 }
 
-export interface FileService {
-	getFileInfo: (
-		bucketName: string,
-		fileId: string,
-		projection: Projection<Document>,
-	) => Promise<any>
-	upload: (
-		bucketName: string,
-		file: NodeJS.ReadableStream,
-		filename: string,
-	) => GridFSBucketWriteStream,
-	download: (bucketName: string, fileId: string) => GridFSBucketReadStream,
-	remove: (bucketName: string, fileId: string) => Promise<void>
+interface UploadFileResult {
+	id: string,
+	stream: NodeJS.WritableStream
 }
 
-export interface EncryptionService {
+interface DownloadFileResult {
+	file: GridFSFile,
+	stream: NodeJS.ReadWriteStream
+}
+
+export interface FsService {
+	upload: (bucketName: string, file: NodeJS.ReadableStream, filename: string) => UploadFileResult,
+	download: (bucketName: string, fileId: string) => Promise<DownloadFileResult>,
+	delete: (bucketName: string, fileId: string) => Promise<void>
+}
+
+export interface CryptService {
 	hash: (string: string, salt?: number) => Promise<null | string>,
 	compare: (string: string, hash: string) => Promise<boolean>
 }
 
-export interface TokenService {
-	sign: (payload: Record<string, boolean | number | string>, expiresIn?: number | string) => string,
-	verify: (token: string) => Record<string, boolean | number | string>
+export interface JwtService {
+	sign: (payload: Record<string, any>, expiresIn?: number | string) => string,
+	verify: (token: string) => Record<string, any>
 }

@@ -1,21 +1,21 @@
-import tokenService from '../../src/services/jsonwebtoken'
+import jwt from '../../src/services/jsonwebtoken'
 
 test('Create a token for an object', () => {
 	const object = { test: 'test' }
-	const token = tokenService.sign(object)
+	const token = jwt.sign(object)
 	expect(token).toBeString()
 	
-	const { iat, exp, ...objectFromToken } = tokenService.verify(token)
+	const { iat, exp, ...objectFromToken } = jwt.verify(token)
 	expect(objectFromToken).toEqual(object)
 	expect(+exp - +iat).toEqual(30 * 24 * 60 * 60)
 })
 
 test('Receive an error if the token expired', () => {
-	const token = tokenService.sign({}, 0)
+	const token = jwt.sign({}, 0)
 	expect(token).toBeString()
 	
 	try {
-		tokenService.verify(token)
+		jwt.verify(token)
 	}
 	catch (err) {
 		expect(err).toBeInstanceOf(Error)

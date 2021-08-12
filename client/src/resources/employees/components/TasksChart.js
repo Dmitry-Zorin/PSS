@@ -1,6 +1,6 @@
 import { Typography } from '@material-ui/core'
 import React from 'react'
-import { DoughnutChart } from './DoughnutChart.js'
+import { DoughnutChart } from './DoughnutChart'
 
 const activities = new Map([
 	['completed', { label: 'Выполненых', color: '#6AFF00' }],

@@ -1,10 +1,9 @@
-import { NextFunction, Request, Response } from 'express'
 import unless from 'express-unless'
 import { createUnauthorizedError } from '../helpers/errors'
-import { User } from '../types'
+import { RequestHandler } from './types'
 
 export const tokenParser = (unlessOptions?: unless.Options) => {
-	const middleware = (req: Request, res: Response, next: NextFunction) => {
+	const middleware: RequestHandler = (req, res, next) => {
 		const { authorization } = req.headers
 		
 		if (!authorization) {
@@ -12,8 +11,9 @@ export const tokenParser = (unlessOptions?: unless.Options) => {
 		}
 		
 		try {
+			const { jwt } = req.app.services
 			const token = authorization!.split(' ')[1]
-			req.user = req.app.services.token.verify(token) as unknown as User
+			req.user = jwt.verify(token) as any
 			next()
 		}
 		catch {

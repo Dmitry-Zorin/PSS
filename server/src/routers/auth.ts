@@ -4,7 +4,7 @@ import {
 	createConflictError,
 	createUnauthorizedError,
 } from '../helpers/errors'
-import { createSafeHandler } from '../middleware'
+import { safeHandler } from '../middleware'
 import { setFilter } from './user'
 
 const collection = 'users'
@@ -17,10 +17,10 @@ const authRouter = Router({ mergeParams: true })
 
 authRouter.param('id', setFilter)
 
-authRouter.post('/register', createSafeHandler(async (req, res) => {
-	const { encryption, db, token: tokenService } = res.app.services
+authRouter.post('/register', safeHandler(async (req, res) => {
+	const { crypt, db, jwt } = res.app.services
 	const { username } = req.body
-	const password = await encryption.hash(req.body.password)
+	const password = await crypt.hash(req.body.password)
 	
 	if (!username || !password) {
 		throw createBadRequestError('Invalid username or password')
@@ -33,12 +33,12 @@ authRouter.post('/register', createSafeHandler(async (req, res) => {
 		throw err?.code === 11000 ? createConflictError('Username is taken') : err
 	})
 	
-	const token = tokenService.sign({ username, isAdmin })
+	const token = jwt.sign({ username, isAdmin })
 	res.status(201).json({ token })
 }))
 
-authRouter.post('/login', createSafeHandler(async (req, res) => {
-	const { db, encryption, token } = res.app.services
+authRouter.post('/login', safeHandler(async (req, res) => {
+	const { db, crypt, jwt } = res.app.services
 	const { username, password } = req.body
 	
 	if (!username || !password) {
@@ -52,38 +52,38 @@ authRouter.post('/login', createSafeHandler(async (req, res) => {
 		throw createUnauthorizedError('Incorrect username')
 	}
 	
-	if (!await encryption.compare(password, user.password)) {
+	if (!await crypt.compare(password, user.password)) {
 		throw createUnauthorizedError('Incorrect password')
 	}
 	
 	const payload = { username, isAdmin: user.isAdmin }
-	res.json({ token: token.sign(payload) })
+	res.json({ token: jwt.sign(payload) })
 }))
 
-authRouter.get('/', createSafeHandler((req, res) => {
+authRouter.get('/', safeHandler((req, res) => {
 	res.sendStatus(204)
 }))
 
-authRouter.get('/permissions', createSafeHandler((req, res) => {
+authRouter.get('/permissions', safeHandler((req, res) => {
 	res.json({ isAdmin: req.user.isAdmin })
 }))
 
-authRouter.get('/identity', createSafeHandler(async (req, res) => {
+authRouter.get('/identity', safeHandler(async (req, res) => {
 	const { db } = res.app.services
 	const projection = { username: 1, isAdmin: 1, locale: 1, theme: 1 } as const
 	res.json(await db.getDocument(collection, getFilter(req.user), projection))
 }))
 
-authRouter.put('/identity', createSafeHandler(async (req, res) => {
-	const { db, encryption } = res.app.services
-	const password = await encryption.hash(req.body.password)
+authRouter.put('/identity', safeHandler(async (req, res) => {
+	const { db, crypt } = res.app.services
+	const password = await crypt.hash(req.body.password)
 	const payload = { ...req.body, password }
 	const projection = { password: 1, locale: 1, theme: 1 } as const
 	await db.updateDocument(collection, getFilter(req.user), payload, projection)
 	res.sendStatus(200)
 }))
 
-authRouter.delete('/identity', createSafeHandler(async (req, res) => {
+authRouter.delete('/identity', safeHandler(async (req, res) => {
 	const { db } = res.app.services
 	await db.deleteDocument(collection, getFilter(req.user))
 	res.sendStatus(200)

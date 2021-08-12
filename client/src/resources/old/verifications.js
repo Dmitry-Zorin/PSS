@@ -13,7 +13,6 @@ import {
 	minLength,
 	NumberInput,
 	required,
-	SelectInput,
 	Show,
 	SimpleForm,
 	SimpleFormIterator,
@@ -22,30 +21,23 @@ import {
 	TextField,
 	TextInput,
 } from 'react-admin'
-import { DescriptionField, HeadlineField } from '../CustomFields.js'
+import { DescriptionField, HeadlineField } from '../../CustomFields'
 import {
 	BulkActionButtons,
 	createEmptyPage,
 	createTitle,
 	EditActionsWithoutFile,
 	ShowActions,
-} from '../raComponents.js'
+} from '../../components/inputs'
 
 const validateText = [required(), minLength(1)]
 const validateRequired = [required()]
 
-const Title = createTitle('Научно-исследовательская работа', 'headline')
+const Title = createTitle('Испытание', 'headline')
 const Empty = createEmptyPage(
-	'Нет доступных научно-исследовательских работ',
-	'Для добавления научно-исследовательская работы нажмите кнопку "Создать"',
+	'Нет доступных испытаний',
+	'Для добавления испытания нажмите кнопку "Создать"',
 )
-
-const categoryChoices = [
-	{ id: '1', name: '1' },
-	{ id: '2', name: '2' },
-	{ id: '3', name: '3' },
-	{ id: 'ГОЗ', name: 'ГОЗ' },
-]
 
 const Filters = (props) => (
 	<Filter {...props}>
@@ -70,17 +62,12 @@ const Filters = (props) => (
 			label='Cоисполнитель'
 			source='authors'
 		/>
-		<SelectInput
-			label='Категория'
-			source='category'
-			choices={categoryChoices}
-		/>
 	</Filter>
 )
 
 export const ListForm = ({ permissions, ...props }) => (
 	<List
-		title='Список научно-исследовательских работ'
+		title='Список испытаний'
 		filters={<Filters/>}
 		perPage={25}
 		exporter={false}
@@ -131,8 +118,8 @@ export const ListForm = ({ permissions, ...props }) => (
 
 export const CreateForm = props => (
 	<Create
-		title='Добавить научно-исследовательская работу'
-		successMessage='Научно-исследовательская работа добавлена'
+		title='Добавить испытание'
+		successMessage='Испытание добавлено'
 		undoable={false}
 		{...props}>
 		<SimpleForm
@@ -173,11 +160,6 @@ export const CreateForm = props => (
 					/>
 				</SimpleFormIterator>
 			</ArrayInput>
-			<SelectInput
-				label='Категория'
-				source='category'
-				choices={categoryChoices}
-			/>
 			<NumberInput
 				label='Год создания'
 				source='creationDate'
@@ -188,7 +170,7 @@ export const CreateForm = props => (
 			/>
 			<FileInput
 				source='file'
-				label='Архив с научно-исследовательской работой'
+				label='Архив'
 				validate={validateRequired}
 			>
 				<FileField
@@ -203,7 +185,7 @@ export const CreateForm = props => (
 export const EditForm = props => (
 	<Edit
 		title={<Title/>}
-		successMessage='Научно-исследовательская работа обновлена'
+		successMessage='Испытание обновлено'
 		undoable={false}
 		actions={<EditActionsWithoutFile/>}
 		{...props}>
@@ -242,23 +224,14 @@ export const EditForm = props => (
 					/>
 				</SimpleFormIterator>
 			</ArrayInput>
-			<SelectInput
-				label='Категория'
-				source='category'
-				choices={categoryChoices}
-			/>
 			<NumberInput
 				label='Год создания'
 				source='creationDate'
 			/>
-			<NumberInput
-				label='Объем'
-				source='volume'
-			/>
 			<FileField
 				source='file.url'
 				title='file.title'
-				label='Архив с научно-исследовательской работой'
+				label='Архив'
 				target='_blank'
 			/>
 			<FileInput
@@ -323,7 +296,7 @@ export const ShowForm = ({ permissions, enableActions, ...props }) => (
 			<FileField
 				source='file.url'
 				title='file.title'
-				label='Архив с научно-исследовательской работой'
+				label='Архив'
 				target='_blank'
 			/>
 		</SimpleShowLayout>

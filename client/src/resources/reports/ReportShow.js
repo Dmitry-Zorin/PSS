@@ -3,14 +3,13 @@ import {
 	ArrayField,
 	ChipField,
 	FileField,
-	ReferenceArrayField,
 	ReferenceField,
 	Show,
 	SimpleShowLayout,
 	SingleFieldList,
 	TextField,
 } from 'react-admin'
-import { createTitle, ShowActions } from '../../raComponents.js'
+import { createTitle, ShowActions } from '../../components/inputs'
 
 const Title = createTitle('Отчет', 'headline')
 
@@ -53,23 +52,6 @@ export const ReportShow = ({ permissions, enableActions = true, ...props }) => (
 					/>
 				</SingleFieldList>
 			</ArrayField>
-			<ReferenceField
-				label='Место публикации'
-				source='publicationPlace'
-				reference='publications'
-				link=''
-			>
-				<TextField source='name'/>
-			</ReferenceField>
-			<ReferenceArrayField
-				label='Подразделения'
-				reference='subdivisions'
-				source='subdivisions'
-			>
-				<SingleFieldList>
-					<ChipField source='name'/>
-				</SingleFieldList>
-			</ReferenceArrayField>
 			<TextField
 				label='Выходные данные'
 				source='exitData'

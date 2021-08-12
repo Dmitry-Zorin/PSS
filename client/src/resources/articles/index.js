@@ -1,11 +1,13 @@
-import { ArticleCreate } from './ArticleCreate.js'
-import { ArticleEdit } from './ArticleEdit.js'
-import { ArticleList } from './ArticleList.js'
-import { ArticleShow } from './ArticleShow.js'
+import VerticalSplitIcon from '@material-ui/icons/VerticalSplit'
+import { ArticleCreate } from './ArticleCreate'
+import { ArticleEdit } from './ArticleEdit'
+import { ArticleList } from './ArticleList'
+import { ArticleShow } from './ArticleShow'
 
-export default {
-	list: ArticleList,
+export const articles = {
+	icon: VerticalSplitIcon,
 	create: ArticleCreate,
-	edit: ArticleEdit,
+	list: ArticleList,
 	show: ArticleShow,
+	edit: ArticleEdit,
 }

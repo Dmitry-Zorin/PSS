@@ -1,9 +1,9 @@
 import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle'
 import React from 'react'
-import Grade from '../employees/components/Grade.js'
-import { PeopleShow } from '../employees/components/PeopleShow.js'
-import Report from '../employees/components/Report.js'
-import Info from './components/Info.js'
+import Grade from '../employees/components/Grade'
+import { PeopleShow } from '../employees/components/PeopleShow'
+import Report from '../employees/components/Report'
+import Info from './components/Info'
 
 export const PlatoonShow = (props) => (
 	<PeopleShow

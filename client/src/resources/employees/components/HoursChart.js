@@ -1,7 +1,7 @@
 import { Typography } from '@material-ui/core'
 import React from 'react'
 import { useRecordContext } from 'react-admin'
-import { DoughnutChart } from './DoughnutChart.js'
+import { DoughnutChart } from './DoughnutChart'
 
 const colors = [
 	'#00aeff',

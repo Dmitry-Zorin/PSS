@@ -2,8 +2,8 @@ import AssessmentIcon from '@material-ui/icons/Assessment'
 import StarsIcon from '@material-ui/icons/Stars'
 import React, { cloneElement, useEffect, useState } from 'react'
 import { Show, Tab, TabbedShowLayout } from 'react-admin'
-import { createTitle, ShowActions } from '../../../raComponents.js'
-import { fetchApi } from '../../../requests.js'
+import { createTitle, ShowActions } from '../../../components/inputs'
+import { fetchApi } from '../../../requests'
 
 export const PeopleShow = ({ info, tabs, ...props }) => {
 	const Title = createTitle(info.title, 'name')

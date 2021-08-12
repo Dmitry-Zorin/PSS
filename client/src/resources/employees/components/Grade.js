@@ -2,10 +2,10 @@ import { CardContent, Typography } from '@material-ui/core'
 import Box from '@material-ui/core/Box'
 import React from 'react'
 import { useRecordContext } from 'react-admin'
-import useStyles from '../Styles.js'
-import CircleNumber from './CircleNumber.js'
-import { GradeChart } from './GradeChart.js'
-import PointsTable from './PointsTable.js'
+import useStyles from '../Styles'
+import CircleNumber from './CircleNumber'
+import { GradeChart } from './GradeChart'
+import PointsTable from './PointsTable'
 
 const Grade = ({ data, info }) => {
 	const classes = useStyles()

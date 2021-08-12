@@ -1,5 +1,5 @@
 import { AlignmentType, Paragraph, TableCell, TableRow } from 'docx'
-import { getTableRow } from './tableRow.js'
+import { getTableRow } from './tableRow'
 
 export const getTableRows = (data, author, index, text) => {
 	const getRows = (key) => {

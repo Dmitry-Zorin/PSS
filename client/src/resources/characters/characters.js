@@ -9,7 +9,7 @@ import {
 	TextField,
 	TextInput,
 } from 'react-admin'
-import { createEmptyPage } from '../raComponents.js'
+import { createEmptyPage } from '../../components/old'
 
 const Empty = createEmptyPage(
 	'Нет доступных характеров работы',

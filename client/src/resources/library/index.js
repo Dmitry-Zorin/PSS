@@ -1,7 +1,7 @@
-import { LibraryCreate } from './LibraryCreate.js'
-import { LibraryEdit } from './LibraryEdit.js'
-import { LibraryList } from './LibraryList.js'
-import { LibraryShow } from './LibraryShow.js'
+import { LibraryCreate } from './LibraryCreate'
+import { LibraryEdit } from './LibraryEdit'
+import { LibraryList } from './LibraryList'
+import { LibraryShow } from './LibraryShow'
 
 export default {
 	list: LibraryList,

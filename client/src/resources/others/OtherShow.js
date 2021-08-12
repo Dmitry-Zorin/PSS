@@ -9,7 +9,7 @@ import {
 	SingleFieldList,
 	TextField,
 } from 'react-admin'
-import { createTitle, ShowActions } from '../../raComponents.js'
+import { createTitle, ShowActions } from '../../components/inputs'
 
 const Title = createTitle('Научный труд', 'headline')
 

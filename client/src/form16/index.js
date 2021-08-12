@@ -1,6 +1,6 @@
 import { AlignmentType, Document, HeadingLevel, Packer, Paragraph, TextRun } from 'docx'
 import { saveAs } from 'file-saver'
-import { getTable } from './table.js'
+import { getTable } from './table'
 
 export const createForm16 = async (data, name, author, title) => {
 	const doc = new Document({

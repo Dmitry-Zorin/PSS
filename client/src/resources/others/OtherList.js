@@ -9,9 +9,9 @@ import {
 	TextField,
 	TextInput,
 } from 'react-admin'
-import { DescriptionField, HeadlineField } from '../../CustomFields.js'
-import { BulkActionButtons, createEmptyPage } from '../../raComponents.js'
-import { OtherShow } from './OtherShow.js'
+import { DescriptionField, HeadlineField } from '../../CustomFields'
+import { BulkActionButtons, createEmptyPage } from '../../components/inputs'
+import { OtherShow } from './OtherShow'
 
 const Empty = createEmptyPage(
 	'Нет доступных научных трудов',

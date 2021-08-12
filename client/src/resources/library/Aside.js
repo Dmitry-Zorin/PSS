@@ -4,7 +4,7 @@ import AccountTreeIcon from '@material-ui/icons/AccountTree'
 import { Resizable } from 're-resizable'
 import React, { useEffect, useState } from 'react'
 import { FilterList, FilterListItem } from 'react-admin'
-import dataProvider from '../../providers/dataProvider.js'
+import dataProvider from '../../providers/dataProvider'
 
 const useStyles = makeStyles(theme => (
 	{

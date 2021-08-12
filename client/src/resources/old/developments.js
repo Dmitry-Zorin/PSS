@@ -22,14 +22,14 @@ import {
 	TextField,
 	TextInput,
 } from 'react-admin'
-import { DescriptionField, HeadlineField } from '../CustomFields.js'
+import { DescriptionField, HeadlineField } from '../../CustomFields'
 import {
 	BulkActionButtons,
 	createEmptyPage,
 	createTitle,
 	EditActionsWithoutFile,
 	ShowActions,
-} from '../raComponents.js'
+} from '../../components/inputs'
 
 const validateText = [required(), minLength(1)]
 const validateRequired = [required()]

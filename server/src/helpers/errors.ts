@@ -9,7 +9,7 @@ export interface HttpError {
 }
 
 const createError = (status: number, name: string, message: string) => (
-	Object.freeze({ status, name, message } as HttpError)
+	{ name, message, status } as Readonly<HttpError>
 )
 
 export const createBadRequestError = (message: string) => (
@@ -40,7 +40,8 @@ export const createConflictError = (message = 'Object already exists') => (
 	createError(409, 'ConflictError', message)
 )
 
-export const createInternalServerError = () => {
-	const message = 'Oops, something went wrong while processing the request'
-	return createError(500, 'InternalServerError', message)
-}
+export const internalServerError = createError(
+	500,
+	'InternalServerError',
+	'Oops, something went wrong while processing the request',
+)

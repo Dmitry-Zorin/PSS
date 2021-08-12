@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt'
-import { EncryptionService } from './types'
+import { CryptService } from './types'
 
-const encryptionService: EncryptionService = {
+const cryptService: CryptService = {
 	hash: async (string, salt = 10) => (
 		string ? bcrypt.hash(string, salt).catch(() => null) : null
 	),
@@ -10,4 +10,4 @@ const encryptionService: EncryptionService = {
 	),
 }
 
-export default encryptionService
+export default cryptService

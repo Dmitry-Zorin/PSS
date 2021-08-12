@@ -4,8 +4,8 @@ import { TEST_COLLECTION_NAME } from '../helpers'
 
 const document = {
 	id: '',
-	name: 'test name',
-	desc: 'test description',
+	name: 'mongo test name',
+	desc: 'mongo test description',
 	wrongProp: 'some invalid property',
 	file: { id: 'file ID' },
 }
@@ -39,7 +39,10 @@ test('Get the number of documents in a collection', async () => {
 })
 
 test('Find all the documents from a collection', async () => {
-	const pipeline = [{ $project: projection }]
+	const pipeline = [
+		{ $match: { name: document.name } },
+		{ $project: projection },
+	]
 	const docs = await db.getDocuments(TEST_COLLECTION_NAME, pipeline)
 	expect(docs).toBeArray()
 	expect(docs.length).toBeGreaterThan(0)
@@ -58,11 +61,11 @@ test('Find a specific document from a collection', async () => {
 	expect(doc1).toEqual(doc2)
 	expect(doc1).toEqual(expect.objectContaining({ name, desc }))
 	expect(doc1.wrongProp).toBeUndefined()
-}, 60000)
+})
 
 test('Update a document from a collection', async () => {
-	const name = 'updated test name'
-	const desc = 'updated test description'
+	const name = 'updated mongo test name'
+	const desc = 'updated mongo test description'
 	
 	const { id, wrongProp, file } = document
 	const updatedDocument = { name, desc, wrongProp }

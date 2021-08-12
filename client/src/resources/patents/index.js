@@ -1,7 +1,7 @@
-import { PatentCreate } from './PatentCreate.js'
-import { PatentEdit } from './PatentEdit.js'
-import { PatentList } from './PatentList.js'
-import { PatentShow } from './PatentShow.js'
+import { PatentCreate } from './PatentCreate'
+import { PatentEdit } from './PatentEdit'
+import { PatentList } from './PatentList'
+import { PatentShow } from './PatentShow'
 
 export default {
 	list: PatentList,

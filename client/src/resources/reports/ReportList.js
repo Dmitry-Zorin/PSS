@@ -5,17 +5,13 @@ import {
 	Datagrid,
 	Filter,
 	List,
-	ReferenceArrayField,
-	ReferenceField,
-	ReferenceInput,
-	SelectInput,
 	SingleFieldList,
 	TextField,
 	TextInput,
 } from 'react-admin'
-import { DescriptionField, HeadlineField } from '../../CustomFields.js'
-import { BulkActionButtons, createEmptyPage } from '../../raComponents.js'
-import { ReportShow } from './ReportShow.js'
+import { DescriptionField, HeadlineField } from '../../CustomFields'
+import { BulkActionButtons, createEmptyPage } from '../../components/inputs'
+import { ReportShow } from './ReportShow'
 
 const Empty = createEmptyPage(
 	'Нет доступных отчетов',
@@ -37,21 +33,6 @@ const Filters = (props) => (
 			label='Автор'
 			source='authors'
 		/>
-		<ReferenceInput
-			label='Место публикации'
-			source='publicationPlace'
-			reference='publications'
-		>
-			<SelectInput optionText='name'/>
-		</ReferenceInput>
-		<ReferenceInput
-			perPage={1000}
-			label='Подразделение'
-			source='subdivisions'
-			reference='subdivisions'
-		>
-			<SelectInput optionText='name'/>
-		</ReferenceInput>
 		
 		<TextInput
 			label='Выходные данные'
@@ -84,23 +65,6 @@ export const ReportList = ({ permissions, ...props }) => (
 				source='text'
 				maxchars={250}
 			/>
-			<ReferenceField
-				label='Место публикации'
-				source='publicationPlace'
-				reference='publications'
-				link=''
-			>
-				<TextField source='name'/>
-			</ReferenceField>
-			<ReferenceArrayField
-				label='Подразделения'
-				reference='subdivisions'
-				source='subdivisions'
-			>
-				<SingleFieldList>
-					<ChipField source='name'/>
-				</SingleFieldList>
-			</ReferenceArrayField>
 			<ArrayField
 				source='authors'
 				label='Авторы'

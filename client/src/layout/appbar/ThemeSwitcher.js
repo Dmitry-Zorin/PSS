@@ -2,7 +2,7 @@ import IconButton from '@material-ui/core/IconButton'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { DarkModeSwitch } from 'react-toggle-dark-mode'
-import { saveSettings } from '../../requests.js'
+import { saveSettings } from '../../requests'
 
 const ThemeSwitcher = () => {
 	const dispatch = useDispatch()

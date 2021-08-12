@@ -1,7 +1,7 @@
 import { amber, blueGrey, indigo } from '@material-ui/core/colors'
 import extend from 'just-extend'
-import muiTheme from './muiTheme.js'
-import raTheme from './raTheme.js'
+import muiTheme from './muiTheme'
+import raTheme from './raTheme'
 
 const createMyTheme = (theme) => (
 	extend(true, theme, raTheme, muiTheme)

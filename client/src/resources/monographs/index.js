@@ -1,11 +1,13 @@
-import { MonographCreate } from './MonographCreate.js'
-import { MonographEdit } from './MonographEdit.js'
-import { MonographList } from './MonographList.js'
-import { MonographShow } from './MonographShow.js'
+import DescriptionIcon from '@material-ui/icons/Description'
+import { MonographCreate } from './MonographCreate'
+import { MonographEdit } from './MonographEdit'
+import { MonographList } from './MonographList'
+import { MonographShow } from './MonographShow'
 
-export default {
-	list: MonographList,
+export const monographs = {
+	icon: DescriptionIcon,
 	create: MonographCreate,
-	edit: MonographEdit,
+	list: MonographList,
 	show: MonographShow,
+	edit: MonographEdit,
 }

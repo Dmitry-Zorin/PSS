@@ -7,9 +7,9 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 import React, { useEffect, useState } from 'react'
 import { getResources, usePermissions } from 'react-admin'
 import { useSelector } from 'react-redux'
-import { fetchApi } from '../../requests.js'
-import MenuItem from './MenuItem.js'
-import SubMenu from './SubMenu.js'
+import { fetchApi } from '../../requests'
+import MenuItem from './MenuItem'
+import SubMenu from './SubMenu'
 
 const menuResources = [
 	'timeline',
@@ -47,10 +47,7 @@ const restResources = [
 ]
 
 const otherResources = [
-	'publications',
-	'subdivisions',
 	'users',
-	'categories',
 	'characters',
 ]
 

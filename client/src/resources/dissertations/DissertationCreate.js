@@ -6,10 +6,8 @@ import {
 	FileInput,
 	minLength,
 	NumberInput,
-	ReferenceArrayInput,
 	ReferenceInput,
 	required,
-	SelectArrayInput,
 	SelectInput,
 	SimpleForm,
 	SimpleFormIterator,
@@ -68,22 +66,6 @@ export const DissertationCreate = (props) => (
 					/>
 				</SimpleFormIterator>
 			</ArrayInput>
-			<ReferenceInput
-				label='Место публикации'
-				source='publicationPlace'
-				reference='publications'
-			>
-				<SelectInput optionText='name'/>
-			</ReferenceInput>
-			<ReferenceArrayInput
-				fullWidth
-				label='Подразделения'
-				reference='subdivisions'
-				source='subdivisions'
-				perPage={1000}
-			>
-				<SelectArrayInput optionText='name'/>
-			</ReferenceArrayInput>
 			<ReferenceInput
 				label='Характер работы'
 				source='character'

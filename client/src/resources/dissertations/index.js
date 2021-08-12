@@ -1,11 +1,13 @@
-import { DissertationCreate } from './DissertationCreate.js'
-import { DissertationEdit } from './DissertationEdit.js'
-import { DissertationList } from './DissertationList.js'
-import { DissertationShow } from './DissertationShow.js'
+import LibraryBooksIcon from '@material-ui/icons/LibraryBooks'
+import { DissertationCreate } from './DissertationCreate'
+import { DissertationEdit } from './DissertationEdit'
+import { DissertationList } from './DissertationList'
+import { DissertationShow } from './DissertationShow'
 
-export default {
-	list: DissertationList,
+export const dissertations = {
+	icon: LibraryBooksIcon,
 	create: DissertationCreate,
-	edit: DissertationEdit,
+	list: DissertationList,
 	show: DissertationShow,
+	edit: DissertationEdit,
 }

@@ -6,7 +6,7 @@ import TextField from '@material-ui/core/TextField'
 import React, { useState } from 'react'
 import { Title, useDataProvider, useNotify } from 'react-admin'
 import { createForm16 } from '../form16'
-import { getResourceData } from '../requests.js'
+import { getResourceData } from '../requests'
 
 const useStyles = makeStyles(() => (
 	{

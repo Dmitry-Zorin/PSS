@@ -1,7 +1,7 @@
-import { PlatoonCreate } from './PlatoonCreate.js'
-import { PlatoonEdit } from './PlatoonEdit.js'
-import { PlatoonList } from './PlatoonList.js'
-import { PlatoonShow } from './PlatoonShow.js'
+import { PlatoonCreate } from './PlatoonCreate'
+import { PlatoonEdit } from './PlatoonEdit'
+import { PlatoonList } from './PlatoonList'
+import { PlatoonShow } from './PlatoonShow'
 
 export default {
 	list: PlatoonList,

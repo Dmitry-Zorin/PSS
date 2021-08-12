@@ -15,7 +15,7 @@ import {
 	TextField,
 	TextInput,
 } from 'react-admin'
-import { createEmptyPage, createTitle, ShowActions } from '../raComponents.js'
+import { createEmptyPage, createTitle, ShowActions } from '../components/old'
 
 const validateUsername = [required(), minLength(1)]
 const validatePassword = [required(), minLength(8)]

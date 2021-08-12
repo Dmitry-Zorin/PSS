@@ -1,9 +1,15 @@
-const CompressionPlugin = require('compression-webpack-plugin')
 const Dotenv = require('dotenv-webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const path = require('path')
 
 module.exports = {
+	entry: {
+		main: path.join(__dirname, 'src/index.js'),
+	},
 	output: {
+		path: path.join(__dirname, 'dist'),
+		filename: '[name].bundle.js',
 		clean: true,
 	},
 	module: {
@@ -14,16 +20,15 @@ module.exports = {
 			},
 			{
 				test: /\.css$/,
-				use: ['style-loader', 'css-loader'],
+				use: [MiniCssExtractPlugin.loader, 'css-loader'],
 			},
 		],
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
-			title: 'Cистема хранения научных трудов',
-			template: './src/index.html',
+			template: path.join(__dirname, 'src/index.html'),
 		}),
-		new CompressionPlugin(),
+		new MiniCssExtractPlugin(),
 		new Dotenv(),
 	],
 }

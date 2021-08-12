@@ -1,8 +1,11 @@
 const { merge } = require('webpack-merge')
-const common = require('./webpack.common.js')
+const common = require('./webpack.common')
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 
 module.exports = merge(common, {
 	mode: 'production',
+	target: 'browserslist',
+	devtool: 'source-map',
 	module: {
 		rules: [
 			{
@@ -10,6 +13,12 @@ module.exports = merge(common, {
 				exclude: /node_modules/,
 				use: 'babel-loader',
 			},
+		],
+	},
+	optimization: {
+		minimizer: [
+			'...',
+			new CssMinimizerPlugin(),
 		],
 	},
 })

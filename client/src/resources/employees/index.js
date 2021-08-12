@@ -1,7 +1,7 @@
-import { EmployeeCreate } from './EmployeeCreate.js'
-import { EmployeeEdit } from './EmployeeEdit.js'
-import { EmployeeList } from './EmployeeList.js'
-import { EmployeeShow } from './EmployeeShow.js'
+import { EmployeeCreate } from './EmployeeCreate'
+import { EmployeeEdit } from './EmployeeEdit'
+import { EmployeeList } from './EmployeeList'
+import { EmployeeShow } from './EmployeeShow'
 
 export default {
 	list: EmployeeList,

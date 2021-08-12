@@ -1,11 +1,11 @@
 import { Divider, Typography } from '@material-ui/core'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import React from 'react'
-import ButtonForm16 from './components/ButtonForm16.js'
-import Grade from './components/Grade.js'
-import Info from './components/Info.js'
-import { PeopleShow } from './components/PeopleShow.js'
-import Report from './components/Report.js'
+import ButtonForm16 from './components/ButtonForm16'
+import Grade from './components/Grade'
+import Info from './components/Info'
+import { PeopleShow } from './components/PeopleShow'
+import Report from './components/Report'
 
 export const EmployeeShow = (props) => (
 	<PeopleShow

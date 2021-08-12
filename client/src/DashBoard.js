@@ -1,6 +1,7 @@
 import { Card, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import React from 'react'
+import { useTranslate } from 'react-admin'
 
 const useStyles = makeStyles({
 	card: {
@@ -15,10 +16,12 @@ const useStyles = makeStyles({
 
 const Dashboard = () => {
 	const classes = useStyles()
+	const translate = useTranslate()
+	
 	return (
 		<Card className={classes.card}>
 			<Typography className={classes.header}>
-				Системa хранения научных трудов
+				{translate('metadata.title')}
 			</Typography>
 		</Card>
 	)

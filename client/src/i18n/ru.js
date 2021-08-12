@@ -2,6 +2,10 @@ import russianMessages from 'ra-language-russian'
 
 const messages = {
 	...russianMessages,
+	metadata: {
+		lang: 'Русский',
+		title: 'Системa хранения научных трудов',
+	},
 	layout: {
 		menu: {
 			category1: 'Категория А',
@@ -12,23 +16,34 @@ const messages = {
 		},
 	},
 	resources: {
-		subdivisions: {
-			name: 'Подразделения',
+		articles: {
+			name: 'Статьи',
+			fields: {
+				title: 'Название',
+				description: 'Описание',
+				type: 'Тип работы',
+				year: 'Год создания',
+				volume: 'Объем',
+				authors: 'Авторы',
+				author: 'Автор',
+				character: 'Характер работы',
+				exitData: 'Выходные данные',
+				file: 'Файл',
+			},
+			titles: {
+				create: 'Добавить статью',
+				edit: 'Редактирование статьи',
+				show: 'Просмотр статьи',
+			},
 		},
-		library: {
-			name: 'Библиотека',
-			create: 'Книга добавлена',
-			edit: 'Книга обновлена',
+		abstracts: {
+			name: 'Авторефераты',
 		},
-		employee: {
-			name: 'Сотрудники',
-			create: 'Сотрудник добавлен',
-			edit: 'Сотрудник обновлен',
+		monographs: {
+			name: 'Монографии',
 		},
-		platoon: {
-			name: 'Группы',
-			create: 'Группа добавлена',
-			edit: 'Группа обновлена',
+		dissertations: {
+			name: 'Диссертации',
 		},
 	},
 }

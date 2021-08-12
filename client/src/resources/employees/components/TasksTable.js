@@ -1,6 +1,6 @@
 import { Table, TableBody, TableCell, TableContainer, TableRow } from '@material-ui/core'
 import React from 'react'
-import useStyles from '../Styles.js'
+import useStyles from '../Styles'
 
 const TasksTable = ({ data }) => {
 	const classes = useStyles()

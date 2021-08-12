@@ -10,10 +10,10 @@ import {
 	SingleFieldList,
 	TextInput,
 } from 'react-admin'
-import { HeadlineField } from '../../CustomFields.js'
-import { BulkActionButtons, createEmptyPage } from '../../raComponents.js'
-import { Aside } from './Aside.js'
-import { LibraryShow } from './LibraryShow.js'
+import { HeadlineField } from '../../CustomFields'
+import { BulkActionButtons, createEmptyPage } from '../../components/inputs'
+import { Aside } from './Aside'
+import { LibraryShow } from './LibraryShow'
 
 const Empty = createEmptyPage(
 	'Нет доступных книг',
