@@ -4,7 +4,7 @@ import { pipeline } from 'stream'
 import { createGunzip, createGzip } from 'zlib'
 import { createEnvError, createNotFoundError, wrongIdFormatError } from '../helpers/errors'
 import file from '../routers/file'
-import getClient from './mongo-client'
+import client from './mongo-client'
 import { FsService } from './types'
 
 const { FILE_DB_NAME } = process.env
@@ -14,7 +14,6 @@ if (!FILE_DB_NAME) {
 }
 
 const getFsService = async (): Promise<FsService> => {
-	const client = await getClient()
 	const fileDb = client.db(FILE_DB_NAME)
 	
 	const getGridFSBucket = memoize((bucketName: string) => (

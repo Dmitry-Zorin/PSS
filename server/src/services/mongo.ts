@@ -2,7 +2,7 @@ import { isEmpty, isString } from 'lodash'
 import { ObjectId } from 'mongodb'
 import { createNotFoundError, noPropsError, wrongIdFormatError } from '../helpers/errors'
 import { projectNonNullishProps } from '../helpers/utils'
-import getClient from './mongo-client'
+import client from './mongo-client'
 import { DbService, Filter } from './types'
 
 const getFilter = (argument: string | Filter) => {
@@ -26,7 +26,6 @@ const getFilter = (argument: string | Filter) => {
 }
 
 const getDbService = async (): Promise<DbService> => {
-	const client = await getClient()
 	const db = client.db(process.env.DB_NAME)
 	
 	await db.collection('users').createIndex(

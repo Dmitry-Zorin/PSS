@@ -1,10 +1,11 @@
-import createExpressApp from './express'
+import Express from './express'
 import { createEnvError } from './helpers/errors'
 import logger from './helpers/logger'
 import bcrypt from './services/bcrypt'
-import gridFs from './services/gridfs'
+import GridFs from './services/gridfs'
 import jsonwebtoken from './services/jsonwebtoken'
-import mongo from './services/mongo'
+import Mongo from './services/mongo'
+import client from './services/mongo-client'
 
 const { SERVER } = process.env
 
@@ -12,18 +13,23 @@ if (!SERVER) {
 	throw createEnvError('server')
 }
 
-const createApp = async () => (
-	createExpressApp({
-		db: await mongo(),
-		fs: await gridFs(),
+logger.start('Connecting to the database...')
+const promise = client.connect()
+
+promise.then(async () => {
+	const app = Express({
+		db: await Mongo(),
+		fs: await GridFs(),
 		jwt: jsonwebtoken,
 		crypt: bcrypt,
 	})
-)
-
-createApp().then(app => {
 	const { port, hostname } = new URL(SERVER)
 	app.listen(+port, hostname, () => {
 		logger.succeed('Server is running')
 	})
+})
+
+promise.catch(err => {
+	logger.fail('Connection to the database failed')
+	throw err
 })
