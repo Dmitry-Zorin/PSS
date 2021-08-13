@@ -2,7 +2,7 @@ import mapValues from 'just-map-values'
 import reduce from 'just-reduce-object'
 import { fetchUtils } from 'react-admin'
 
-export const apiUrl = `${process.env.SERVER}/api`
+export const apiUrl = `${import.meta.env.VITE_SERVER}/api`
 
 const getUser = () => ({
 	authenticated: true,

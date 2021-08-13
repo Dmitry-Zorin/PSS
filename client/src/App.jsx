@@ -30,7 +30,7 @@ const App = () => {
 			customReducers={{ theme: themeReducer }}
 		>
 			{(permissions) => (
-				entries(resources).map(([name, props]) => (
+				entries({ ...resources }).map(([name, props]) => (
 					<Resource
 						{...props}
 						key={name}
