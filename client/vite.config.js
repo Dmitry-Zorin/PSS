@@ -2,15 +2,11 @@ import reactRefresh from '@vitejs/plugin-react-refresh'
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-	plugins: [reactRefresh()],
-	esbuild: {
-		loader: 'jsx',
+	server: {
+		port: 8000,
 	},
-	optimizeDeps: {
-		esbuildOptions: {
-			loader: {
-				'.js': 'jsx',
-			},
-		},
+	plugins: [reactRefresh()],
+	build: {
+		sourcemap: 'hidden',
 	},
 })
