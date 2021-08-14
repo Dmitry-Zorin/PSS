@@ -1,5 +1,5 @@
 import { isInteger, reduce } from 'lodash'
-import { createBadRequestError } from '../helpers/errors'
+import { BadRequestError } from '../helpers/errors'
 import { safeHandler } from './safe-handler'
 
 const paramValidations: Record<string, ((x: any) => boolean) | undefined> = {
@@ -23,7 +23,7 @@ const parseParamValue = (value: any) => {
 		return JSON.parse(value)
 	}
 	catch (err) {
-		throw createBadRequestError('Invalid format of query parameters')
+		throw BadRequestError('Invalid format of query parameters')
 	}
 }
 
@@ -33,7 +33,7 @@ const reduceCallback = (params: Record<string, any>, value: any, key: string) =>
 	if (validateParam) {
 		const parsedValue = parseParamValue(value)
 		if (!validateParam(parsedValue)) {
-			throw createBadRequestError(`Invalid ${key} parameter`)
+			throw BadRequestError(`Invalid ${key} parameter`)
 		}
 		params[key] = parsedValue
 	}

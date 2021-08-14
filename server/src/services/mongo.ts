@@ -1,6 +1,6 @@
 import { isEmpty, isString } from 'lodash'
 import { ObjectId } from 'mongodb'
-import { createNotFoundError, noPropsError, wrongIdFormatError } from '../helpers/errors'
+import { noPropsError, NotFoundError, wrongIdFormatError } from '../helpers/errors'
 import { projectNonNullishProps } from '../helpers/utils'
 import client from './mongo-client'
 import { DbService, Filter } from './types'
@@ -64,7 +64,7 @@ const getDbService = async (): Promise<DbService> => {
 			const coll = db.collection(collectionName)
 			const doc = await coll.findOne(filter, { projection })
 			
-			if (!doc) throw createNotFoundError()
+			if (!doc) throw NotFoundError()
 			return doc
 		},
 		
@@ -85,7 +85,7 @@ const getDbService = async (): Promise<DbService> => {
 			const coll = db.collection(collectionName)
 			const { value } = await coll.findOneAndUpdate(filter, update, options)
 			
-			if (!value) throw createNotFoundError()
+			if (!value) throw NotFoundError()
 			
 			if (value?.file?.id) {
 				return value.file.id

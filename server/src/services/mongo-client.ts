@@ -1,12 +1,12 @@
 import { MongoClient } from 'mongodb'
-import { createEnvError } from '../helpers/errors'
+import { EnvError } from '../helpers/errors'
 
 const EXIT_SIGNALS = ['SIGINT', 'SIGHUP', 'SIGTERM', 'SIGUSR2']
 
 const { DB_URI } = process.env
 
 if (!DB_URI) {
-	throw createEnvError('db_uri')
+	throw EnvError('db_uri')
 }
 
 const client = new MongoClient(DB_URI)

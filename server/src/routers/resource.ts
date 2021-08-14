@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { mapValues } from 'lodash'
-import { createNotFoundError } from '../helpers/errors'
+import { NotFoundError } from '../helpers/errors'
 import { adminChecker, fileUploader, listParamsParser, safeHandler } from '../middleware'
 import getPaginationPipeline from '../pipelines/pagination'
 import * as projections from '../projections'
@@ -27,7 +27,7 @@ const resourceRouter = Router({ mergeParams: true })
 resourceRouter.param('resource', (req, res, next, resource: string) => {
 	const projection = extendedProjections[resource]
 	if (!projection) {
-		return next(createNotFoundError('Resource not found'))
+		return next(NotFoundError('Resource not found'))
 	}
 	res.locals.projection = projection
 	next()
@@ -81,7 +81,7 @@ resourceRouter.put('/:resource/:id', fileUploader(), safeHandler(async (req, res
 	}
 }))
 
-// resourceRouter.delete('/:resource', createSafeHandler(async (req, res) => {
+// resourceRouter.delete('/:resource', SafeHandler(async (req, res) => {
 // 	const { db, file } = res.app.services
 // 	const { resource } = req.params
 // 	const { ids } = req.query

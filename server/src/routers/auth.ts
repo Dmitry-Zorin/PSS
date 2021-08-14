@@ -1,9 +1,5 @@
 import { Router } from 'express'
-import {
-	createBadRequestError,
-	createConflictError,
-	createUnauthorizedError,
-} from '../helpers/errors'
+import { BadRequestError, ConflictError, UnauthorizedError } from '../helpers/errors'
 import { safeHandler } from '../middleware'
 import { setFilter } from './user'
 
@@ -23,14 +19,14 @@ authRouter.post('/register', safeHandler(async (req, res) => {
 	const password = await crypt.hash(req.body.password)
 	
 	if (!username || !password) {
-		throw createBadRequestError('Invalid username or password')
+		throw BadRequestError('Invalid username or password')
 	}
 	
 	const isAdmin = false
 	const user = { username, password, isAdmin }
 	
 	await db.addDocument(collection, user).catch(err => {
-		throw err?.code === 11000 ? createConflictError('Username is taken') : err
+		throw err?.code === 11000 ? ConflictError('Username is taken') : err
 	})
 	
 	const token = jwt.sign({ username, isAdmin })
@@ -42,18 +38,18 @@ authRouter.post('/login', safeHandler(async (req, res) => {
 	const { username, password } = req.body
 	
 	if (!username || !password) {
-		throw createBadRequestError('Missing username or password')
+		throw BadRequestError('Missing username or password')
 	}
 	
 	const projection = { password: 1, isAdmin: 1 } as const
 	const user = await db.getDocument(collection, { username }, projection)
 	
 	if (!user) {
-		throw createUnauthorizedError('Incorrect username')
+		throw UnauthorizedError('Incorrect username')
 	}
 	
 	if (!await crypt.compare(password, user.password)) {
-		throw createUnauthorizedError('Incorrect password')
+		throw UnauthorizedError('Incorrect password')
 	}
 	
 	const payload = { username, isAdmin: user.isAdmin }

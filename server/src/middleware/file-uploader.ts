@@ -1,6 +1,6 @@
 import Busboy from 'busboy'
 import { finished } from 'stream/promises'
-import { createBadRequestError } from '../helpers/errors'
+import { BadRequestError } from '../helpers/errors'
 import { RequestHandler } from './types'
 
 const MEGABYTE = 2 ** 20
@@ -30,8 +30,8 @@ export const fileUploader = (): RequestHandler => (
 		try {
 			const busboy = new Busboy({ headers: req.headers, limits })
 				.on('finish', () => uploadPromise.then(next))
-				.on('limit', () => next(createBadRequestError('File too large')))
-				.on('error', () => next(createBadRequestError('Cannot upload file')))
+				.on('limit', () => next(BadRequestError('File too large')))
+				.on('error', () => next(BadRequestError('Cannot upload file')))
 			
 			busboy.on('field', (fieldname, value) => {
 				req.body[fieldname] = parseField(value)

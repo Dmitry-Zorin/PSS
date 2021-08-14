@@ -1,4 +1,4 @@
-export const createEnvError = (variable: string) => (
+export const EnvError = (variable: string) => (
 	`Environment variable ${variable.toUpperCase()} is not set`
 )
 
@@ -8,39 +8,39 @@ export interface HttpError {
 	status: number
 }
 
-const createError = (status: number, name: string, message: string) => (
+const Error = (status: number, name: string, message: string) => (
 	{ name, message, status } as Readonly<HttpError>
 )
 
-export const createBadRequestError = (message: string) => (
-	createError(400, 'BadRequestError', message)
+export const BadRequestError = (message: string) => (
+	Error(400, 'BadRequestError', message)
 )
 
 export const wrongIdFormatError = (
-	createBadRequestError('Wrong object ID format')
+	BadRequestError('Wrong object ID format')
 )
 
 export const noPropsError = (
-	createBadRequestError('Object missing any allowed properties')
+	BadRequestError('Object missing any allowed properties')
 )
 
-export const createUnauthorizedError = (message: string) => (
-	createError(401, 'UnauthorizedError', message)
+export const UnauthorizedError = (message: string) => (
+	Error(401, 'UnauthorizedError', message)
 )
 
-export const createForbiddenError = (message: string) => (
-	createError(403, 'ForbiddenError', message)
+export const ForbiddenError = (message: string) => (
+	Error(403, 'ForbiddenError', message)
 )
 
-export const createNotFoundError = (message = 'Object not found') => (
-	createError(404, 'NotFoundError', message)
+export const NotFoundError = (message = 'Object not found') => (
+	Error(404, 'NotFoundError', message)
 )
 
-export const createConflictError = (message = 'Object already exists') => (
-	createError(409, 'ConflictError', message)
+export const ConflictError = (message = 'Object already exists') => (
+	Error(409, 'ConflictError', message)
 )
 
-export const internalServerError = createError(
+export const internalServerError = Error(
 	500,
 	'InternalServerError',
 	'Oops, something went wrong while processing the request',

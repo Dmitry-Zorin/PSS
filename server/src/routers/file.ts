@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { createUnauthorizedError } from '../helpers/errors'
+import { UnauthorizedError } from '../helpers/errors'
 import { safeHandler } from '../middleware'
 
 const fileRouter = Router()
@@ -10,7 +10,7 @@ fileRouter.get('/:resource/:fileId', safeHandler(async (req, res) => {
 	const { filekey } = req.query
 	
 	if (!await crypt.compare(fileId, filekey as string)) {
-		throw createUnauthorizedError('Invalid file filekey')
+		throw UnauthorizedError('Invalid file filekey')
 	}
 	
 	const { file, stream } = await fs.download(resource, fileId)

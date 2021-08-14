@@ -12,7 +12,7 @@ const corsOptions = {
 	credentials: true,
 }
 
-const createApp = (services: Services) => {
+const App = (services: Services) => {
 	const app = express()
 	app.services = services
 	return app
@@ -23,4 +23,4 @@ const createApp = (services: Services) => {
 		.use(errorHandler())
 }
 
-export default createApp
+export default App

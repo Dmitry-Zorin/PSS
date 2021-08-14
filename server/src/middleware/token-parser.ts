@@ -1,5 +1,5 @@
 import unless from 'express-unless'
-import { createUnauthorizedError } from '../helpers/errors'
+import { UnauthorizedError } from '../helpers/errors'
 import { RequestHandler } from './types'
 
 export const tokenParser = (unlessOptions?: unless.Options) => {
@@ -7,7 +7,7 @@ export const tokenParser = (unlessOptions?: unless.Options) => {
 		const { authorization } = req.headers
 		
 		if (!authorization) {
-			return next(createUnauthorizedError('Missing authorization token'))
+			return next(UnauthorizedError('Missing authorization token'))
 		}
 		
 		try {
@@ -17,7 +17,7 @@ export const tokenParser = (unlessOptions?: unless.Options) => {
 			next()
 		}
 		catch {
-			next(createUnauthorizedError('Authorization token expired'))
+			next(UnauthorizedError('Authorization token expired'))
 		}
 	}
 	

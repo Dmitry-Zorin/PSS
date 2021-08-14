@@ -2,7 +2,7 @@ import { memoize } from 'lodash'
 import { GridFSBucket, ObjectId } from 'mongodb'
 import { pipeline } from 'stream'
 import { createGunzip, createGzip } from 'zlib'
-import { createEnvError, createNotFoundError, wrongIdFormatError } from '../helpers/errors'
+import { EnvError, NotFoundError, wrongIdFormatError } from '../helpers/errors'
 import file from '../routers/file'
 import client from './mongo-client'
 import { FsService } from './types'
@@ -10,7 +10,7 @@ import { FsService } from './types'
 const { FILE_DB_NAME } = process.env
 
 if (!FILE_DB_NAME) {
-	throw createEnvError('file_db_name')
+	throw EnvError('file_db_name')
 }
 
 const getFsService = async (): Promise<FsService> => {
@@ -47,7 +47,7 @@ const getFsService = async (): Promise<FsService> => {
 			})
 			
 			const file: any = await filePromise.catch(() => {
-				throw createNotFoundError('File not found')
+				throw NotFoundError('File not found')
 			})
 			
 			const gunzip = createGunzip()

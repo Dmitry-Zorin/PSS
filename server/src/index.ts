@@ -1,5 +1,5 @@
 import Express from './express'
-import { createEnvError } from './helpers/errors'
+import { EnvError } from './helpers/errors'
 import logger from './helpers/logger'
 import bcrypt from './services/bcrypt'
 import GridFs from './services/gridfs'
@@ -10,7 +10,7 @@ import client from './services/mongo-client'
 const { SERVER } = process.env
 
 if (!SERVER) {
-	throw createEnvError('server')
+	throw EnvError('server')
 }
 
 logger.start('Connecting to the database...')

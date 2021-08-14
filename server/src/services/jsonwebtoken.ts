@@ -1,11 +1,11 @@
 import jsonwebtoken from 'jsonwebtoken'
-import { createEnvError } from '../helpers/errors'
+import { EnvError } from '../helpers/errors'
 import { JwtService } from './types'
 
 const secretKey = process.env.SECRET_KEY
 
 if (!secretKey) {
-	throw createEnvError('secret_key')
+	throw EnvError('secret_key')
 }
 
 const jwtService: JwtService = {

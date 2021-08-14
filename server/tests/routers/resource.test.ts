@@ -15,9 +15,7 @@ const document = {
 
 const filename = 'test file'
 
-const createFileStream = () => (
-	Readable.from(filename)
-)
+const createFileStream = () => Readable.from(filename)
 
 let fetchTestApi: FetchFunction
 

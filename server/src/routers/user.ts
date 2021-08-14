@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response, Router } from 'express'
 import { isBoolean } from 'lodash'
-import { createBadRequestError } from '../helpers/errors'
+import { BadRequestError } from '../helpers/errors'
 import { adminChecker, listParamsParser, safeHandler } from '../middleware'
 import getPaginationPipeline from '../pipelines/pagination'
 
@@ -35,11 +35,11 @@ userRouter.post('/', safeHandler(async (req, res) => {
 	const password = await crypt.hash(req.body.password)
 	
 	if (!username || !password) {
-		throw createBadRequestError('Missing username or password')
+		throw BadRequestError('Missing username or password')
 	}
 	
 	if (!isBoolean(isAdmin)) {
-		throw createBadRequestError('Parameter isAdmin must be boolean')
+		throw BadRequestError('Parameter isAdmin must be boolean')
 	}
 	
 	const document = { username, password, isAdmin }
@@ -73,7 +73,7 @@ userRouter.put('/:id', safeHandler(async (req, res) => {
 	const isAdmin = req.body.isAdmin
 	
 	if (!isBoolean(isAdmin)) {
-		throw createBadRequestError('Parameter isAdmin must be boolean')
+		throw BadRequestError('Parameter isAdmin must be boolean')
 	}
 	
 	await db.updateDocument(collection, filter, { isAdmin })

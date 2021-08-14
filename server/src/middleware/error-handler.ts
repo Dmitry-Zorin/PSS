@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from 'express'
 import {
-	createBadRequestError,
-	createUnauthorizedError,
+	BadRequestError,
 	HttpError,
 	internalServerError,
+	UnauthorizedError,
 } from '../helpers/errors'
 
 interface UncaughtError extends Error {
@@ -23,14 +23,14 @@ export const errorHandler = () => (
 		
 		// express.json
 		if (err?.type === 'entity.parse.failed') {
-			return sendError(createBadRequestError(
+			return sendError(BadRequestError(
 				`Invalid Content-Type request header or body (${err?.body})`),
 			)
 		}
 		
 		// express-jwt
 		if (err.name === 'UnauthorizedError') {
-			return sendError(createUnauthorizedError('Invalid token'))
+			return sendError(UnauthorizedError('Invalid token'))
 		}
 		
 		console.error(err)
