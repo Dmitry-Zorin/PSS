@@ -25,11 +25,8 @@ export const fileUploader = (): RequestHandler => (
 		const bucketName = req.params.resource
 		const { fs } = req.app.services
 		
-		let uploadPromise = Promise.resolve()
-		
 		try {
 			const busboy = new Busboy({ headers: req.headers, limits })
-				.on('finish', () => uploadPromise.then(next))
 				.on('limit', () => next(BadRequestError('File too large')))
 				.on('error', () => next(BadRequestError('Cannot upload file')))
 			
@@ -40,7 +37,10 @@ export const fileUploader = (): RequestHandler => (
 			busboy.on('file', (_, file, filename) => {
 				const { id, stream } = fs.upload(bucketName, file, filename)
 				req.body.file = { id, name: filename }
-				uploadPromise = finished(stream)
+				
+				busboy.on('finish', () => {
+					finished(stream).then(next)
+				})
 			})
 			
 			req.pipe(busboy)

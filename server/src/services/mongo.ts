@@ -26,6 +26,7 @@ const getFilter = (argument: string | Filter) => {
 }
 
 const getDbService = async (): Promise<DbService> => {
+	await client.connect()
 	const db = client.db(process.env.DB_NAME)
 	
 	await db.collection('users').createIndex(

@@ -14,6 +14,7 @@ if (!FILE_DB_NAME) {
 }
 
 const getFsService = async (): Promise<FsService> => {
+	await client.connect()
 	const fileDb = client.db(FILE_DB_NAME)
 	
 	const getGridFSBucket = memoize((bucketName: string) => (
