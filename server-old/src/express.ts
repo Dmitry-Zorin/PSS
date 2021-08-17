@@ -16,6 +16,7 @@ const App = (services: Services) => {
 	const app = express()
 		.use(helmet())
 		.use(cors(corsOptions))
+		.use(express.static('../client/dist'))
 		.use('/api', apiRouter)
 		.use('/files', fileRouter)
 		.use(errorHandler())

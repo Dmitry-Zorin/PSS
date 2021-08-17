@@ -1,6 +1,6 @@
 import { values } from 'lodash'
 import { filter } from 'lodash/fp'
-import { Projection } from '../types'
+import { Projection } from '../services/types'
 
 interface PaginationPipelineOptions {
 	match?: any,
@@ -19,7 +19,7 @@ const getPaginationPipeline = (options: PaginationPipelineOptions) => {
 		{ $sort: sort },
 		{
 			$facet: {
-				count: [ { $count: 'total' } ],
+				count: [{ $count: 'total' }],
 				documents: filterPipeline([
 					{ $limit: limit },
 					{ $skip: skip },
@@ -29,7 +29,7 @@ const getPaginationPipeline = (options: PaginationPipelineOptions) => {
 		},
 		{
 			$project: {
-				total: { $ifNull: [ { $arrayElemAt: [ '$count.total', 0 ] }, 0 ] },
+				total: { $ifNull: [{ $arrayElemAt: ['$count.total', 0] }, 0] },
 				documents: 1,
 			},
 		},

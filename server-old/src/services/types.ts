@@ -5,11 +5,7 @@ export type Projection = ProjectionOf<Document>
 export type Filter = Record<string, number | string>
 
 interface AddDocument {
-	(
-		collectionName: string,
-		document: Document,
-		projection?: Projection,
-	): Promise<{ id: string }>
+	(collectionName: string, document: Document, projection?: Projection): Promise<{ id: string }>
 }
 
 interface GetDocuments {

@@ -1,16 +1,16 @@
 {
 	"compilerOptions": {
-		"noEmit": true,
-		"target": "ES2021",
 		"module": "CommonJS",
-		"strict": true,
-		"skipLibCheck": true,
-		"noImplicitAny": true,
+		"target": "ES2021",
+		"outDir": "dist",
+		"sourceMap": true,
+		"removeComments": true,
+		"incremental": true,
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true,
 		"esModuleInterop": true,
-		"strictNullChecks": true,
-		"typeRoots": [
-			"node_modules/@types",
-			"@types",
-		]
+		"skipLibCheck": true,
+		"allowSyntheticDefaultImports": true,
+		"strict": true,
 	}
 }

@@ -1,13 +1,8 @@
-import { CryptService, DbService, FsService, JwtService } from './services/types'
+import { Document, Projection as ProjectionOf } from 'mongodb'
 
-export interface Services {
-	db: DbService,
-	fs: FsService,
-	crypt: CryptService,
-	jwt: JwtService
-}
-
-export interface User {
+export interface UserType {
 	username: string,
 	isAdmin: boolean
 }
+
+export type Projection = ProjectionOf<Document>

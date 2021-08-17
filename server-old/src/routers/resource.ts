@@ -37,13 +37,13 @@ resourceRouter.get('/:resource', listParamsParser(), safeHandler(async (req, res
 	const { db } = res.app.services
 	const { resource } = req.params
 	const { listParams, projection } = res.locals
-	
+
 	const options = { ...listParams, projection }
 	const pipeline = getPaginationPipeline(options)
-	const [{ total, documents }] = await db.getDocuments(resource, pipeline)
-	
+	const [ { total, documents } ] = await db.getDocuments(resource, pipeline)
+
 	const { skip, limit } = listParams
-	const range = `${resource} ${skip}-${Math.min(limit, total)}/${total}`
+	const range = `${ resource } ${ skip }-${ Math.min(limit, total) }/${ total }`
 	res.set('content-range', range).json(documents)
 }))
 
@@ -51,11 +51,11 @@ resourceRouter.get('/:resource/:id', safeHandler(async (req, res) => {
 	const { db, crypt } = res.app.services
 	const { resource, id } = req.params
 	const { file, ...doc } = await db.getDocument(resource, id, res.locals.projection)
-	
+
 	if (!file) return res.json(doc)
-	
+
 	const filekey = await crypt.hash(file.id)
-	const url = `${SERVER}/files/${resource}/${file.id}?filekey=${filekey}`
+	const url = `${ SERVER }/files/${ resource }/${ file.id }?filekey=${ filekey }`
 	res.json({ ...doc, file: { ...file, url } })
 }))
 
@@ -75,7 +75,7 @@ resourceRouter.put('/:resource/:id', fileUploader(), safeHandler(async (req, res
 	const { params: { resource, id }, body } = req
 	const fileId = await db.updateDocument(resource, id, body, projection)
 	res.sendStatus(200)
-	
+
 	if (fileId) {
 		await fs.delete(resource, fileId)
 	}
@@ -95,7 +95,7 @@ resourceRouter.delete('/:resource/:id', safeHandler(async (req, res) => {
 	const { resource, id } = req.params
 	const fileId = await db.deleteDocument(resource, id)
 	res.sendStatus(200)
-	
+
 	if (fileId) {
 		await fs.delete(resource, fileId)
 	}
