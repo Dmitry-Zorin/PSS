@@ -1,9 +1,13 @@
 import { BadRequestException } from '@nestjs/common'
 
-export const wrongIdFormatError = (
-	new BadRequestException('Wrong ID format')
-)
+export class WrongIdFormatException extends BadRequestException {
+	constructor() {
+		super('Wrong ID format')
+	}
+}
 
-export const noPropsError = (
-	new BadRequestException('Object missing any allowed properties')
-)
+export class NoValidPropsException extends BadRequestException {
+	constructor() {
+		super('Request body missing any valid properties')
+	}
+}

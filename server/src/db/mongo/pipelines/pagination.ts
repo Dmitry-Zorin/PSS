@@ -1,18 +1,18 @@
 import { values } from 'lodash'
 import { filter } from 'lodash/fp'
-import { Projection } from '../types'
+import { DocumentProjection, Pipeline } from '../mongo.types'
 
-interface PaginationPipelineOptions {
+export interface PaginationPipelineOptions {
 	match?: any,
 	sort?: any,
 	skip?: number,
 	limit?: number,
-	projection?: Projection
+	projection?: DocumentProjection
 }
 
 const filterPipeline = filter((e: object) => values(e)[0])
 
-const getPaginationPipeline = (options: PaginationPipelineOptions) => {
+export const getPaginationPipeline = (options: PaginationPipelineOptions): Pipeline => {
 	const { match, sort, skip, limit, projection } = options
 	return filterPipeline([
 		{ $match: match },
@@ -35,5 +35,3 @@ const getPaginationPipeline = (options: PaginationPipelineOptions) => {
 		},
 	])
 }
-
-export default getPaginationPipeline

@@ -1,18 +1,22 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { MongoClient } from 'mongodb'
-import logger from '../logger'
+import logger from '../../logger'
+
+const connect = async (client: MongoClient) => {
+	logger.start('Connecting to the database...')
+	await client.connect().catch(err => {
+		logger.fail('Connection to the database failed')
+		throw err
+	})
+	logger.succeed('Connected to the database')
+}
 
 const clientFactory = {
-	provide: 'DB_CLIENT',
+	provide: 'MONGO_CLIENT',
 	useFactory: async (config: ConfigService) => {
 		const client = new MongoClient(config.get('DB_URI')!)
-		logger.start('Connecting to the database...')
-		await client.connect().catch(err => {
-			logger.fail('Connection to the database failed')
-			throw err
-		})
-		logger.succeed('Connected to the database')
+		await connect(client)
 		return client
 	},
 	inject: [ ConfigService ],
@@ -23,4 +27,4 @@ const clientFactory = {
 	providers: [ clientFactory ],
 	exports: [ clientFactory ],
 })
-export class DbClientModule {}
+export class ClientModule {}

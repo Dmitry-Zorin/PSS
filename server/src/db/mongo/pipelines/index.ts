@@ -1,0 +1,1 @@
+export { getPaginationPipeline } from './pagination'

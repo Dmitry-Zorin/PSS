@@ -1,27 +1,21 @@
-import { Body, ConflictException, Controller, Delete, Get, HttpCode, NotFoundException, Post, Put, UnauthorizedException } from '@nestjs/common'
+import { Body, Controller, Delete, Get, HttpCode, Post, Put, UnauthorizedException } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { compare, hash } from 'bcrypt'
-import { DbService } from '../../db/db.service'
 import { User } from '../../decorators'
 import { Public } from '../../jwt/jwt.guard'
-import { UserType } from '../../types'
-
-const COLLECTION = 'users'
+import { Roles, UserType } from '../../types'
+import { AuthService } from './auth.service'
 
 interface UserCredentials {
 	username: string,
 	password: string
 }
 
-const getFilter = (user: { username: string }) => (
-	{ username: user.username }
-)
-
 @Controller()
 export class AuthController {
 	constructor(
-		private readonly db: DbService,
-		private readonly jwt: JwtService,
+		private readonly jwtService: JwtService,
+		private readonly authService: AuthService,
 	) {}
 
 	@Public()
@@ -33,40 +27,33 @@ export class AuthController {
 			throw new UnauthorizedException('Missing username')
 		}
 
-		const hashed = await hash(password, 10).catch(() => {
+		const hashedPassword = await hash(password, 10).catch(() => {
 			throw new UnauthorizedException('Invalid password')
 		})
 
-		const user = { username, password: hashed, isAdmin: false }
-
-		await this.db.addDocument(COLLECTION, user).catch(err => {
-			if (err?.code !== 11000) throw err
-			throw new ConflictException('User already exists')
-		})
-
-		const { password: _, ...userInfo } = user
-		return { token: this.jwt.sign(userInfo) }
+		const userInfo = { username, role: Roles.USER }
+		const user = { ...userInfo, password: hashedPassword }
+		await this.authService.addUser(user)
+		return { token: this.jwtService.sign(userInfo) }
 	}
 
 	@Public()
 	@Post('login')
 	async login(@Body() body: UserCredentials) {
 		const { username, password } = body
+
 		if (!username || !password) {
 			throw new UnauthorizedException('Missing username or password')
 		}
 
-		const projection = { username: 1, password: 1, isAdmin: 1 } as const
-		const user = await this.db.getDocument(COLLECTION, { username }, projection).catch(() => {
-			throw new NotFoundException('User not found')
-		})
+		const user = await this.authService.getUser(username)
 
 		if (!await compare(password, user.password)) {
 			throw new UnauthorizedException('Incorrect password')
 		}
 
-		const { password: _, ...userInfo } = user
-		return { token: this.jwt.sign(userInfo) }
+		const userInfo = { username, role: user.role }
+		return { token: this.jwtService.sign(userInfo) }
 	}
 
 	@Post()
@@ -75,25 +62,23 @@ export class AuthController {
 
 	@Get('permissions')
 	getPermissions(@User() user: UserType) {
-		return { isAdmin: user.isAdmin }
+		return { role: user.role }
 	}
 
 	@Get('identity')
 	getIdentity(@User() user: UserType) {
-		const projection = { username: 1, isAdmin: 1, locale: 1, theme: 1 } as const
-		return this.db.getDocument(COLLECTION, getFilter(user), projection)
+		return this.authService.getUser(user.username)
 	}
 
 	@Put('identity')
 	async updateIdentity(@User() user: UserType, @Body() body: any) {
-		const password = await hash(body.password, 10)
-		const payload = { ...body, password }
-		const projection = { password: 1, locale: 1, theme: 1 } as const
-		await this.db.updateDocument(COLLECTION, getFilter(user), payload, projection)
+		const password = await hash(body.password, 10).catch(() => null)
+		const newUser = { ...body, password }
+		await this.authService.updateUser(user.username, newUser)
 	}
 
 	@Delete('identity')
 	async deleteIdentity(@User() user: UserType) {
-		await this.db.deleteDocument(COLLECTION, getFilter(user))
+		await this.authService.deleteUser(user.username)
 	}
 }

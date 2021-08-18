@@ -1,4 +1,4 @@
-import defaultProjection from './default'
+import defaultProjection from '../projections'
 
 export const abstracts = {
 	...defaultProjection,

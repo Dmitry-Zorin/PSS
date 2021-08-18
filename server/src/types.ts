@@ -1,8 +1,9 @@
-import { Document, Projection as ProjectionOf } from 'mongodb'
+export const enum Roles {
+	USER,
+	ADMIN
+}
 
 export interface UserType {
 	username: string,
-	isAdmin: boolean
+	role: Roles
 }
-
-export type Projection = ProjectionOf<Document>

@@ -1,11 +1,9 @@
 import { Module } from '@nestjs/common'
-import { ConfigModule } from '@nestjs/config'
-import { DbClientModule } from './db-client.module'
 import { DbService } from './db.service'
+import { MongoModule } from './mongo/mongo.module'
 
 @Module({
-	imports: [ ConfigModule, DbClientModule ],
-	providers: [ DbService ],
+	imports: [ MongoModule ],
 	exports: [ DbService ],
 })
 export class DbModule {}
