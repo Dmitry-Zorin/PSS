@@ -1,0 +1,7 @@
+{
+  "name": "storagesystem",
+  "version": "2.0.0",
+  "scripts": {
+    "start": "npm start --prefix client & npm start:dev --prefix server"
+  }
+}
