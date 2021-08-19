@@ -2,44 +2,51 @@
 
 Storage system of scientific works
 
----
+### Scripts
 
-#### Scripts
-
-- **start** - start both server and client in development mode
+### `npm start`
+start the project in development mode
 
 ## Server
 
-Backend for the storage system. Based on Nest JS framework
+Backend for the storage system
 
----
+### Technologies
 
-#### Technologies
+- [Nest JS](https://nestjs.com)
+- [Mongo DB](https://www.mongodb.com)
 
-- Nest JS
-- Mongo DB
+### Scripts
 
-#### Scripts
+#### `npm start`
+start server
 
-- **build** - build project
-- **start** - start server
-- **start:dev** - start development server
-- **start:prod** - start production server
-- **test:** - run tests
+#### `npm run start:dev`
+start development server
+
+#### `npm run start:prod`
+start production server
+
+#### `npm run build`
+build project
+
+#### `npm test`
+run tests
 
 ## Client
 
-Frontend of the storage system. Based on React Admin framework.
+Frontend of the storage system
 
----
+### Technologies
 
-#### Technologies
+- [React](https://reactjs.org)
+- [React Admin](https://marmelab.com/react-admin)
+- [Material UI](https://material-ui.com)
 
-- React
-- React Admin
-- Material UI
+### Scripts
 
-#### Scripts
+#### `npm start` 
+start development server
 
-- **start** - start development server
-- **build** - create production build
+#### `npm run build` 
+create production build
