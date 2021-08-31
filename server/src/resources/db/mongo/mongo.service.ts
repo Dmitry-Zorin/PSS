@@ -25,13 +25,13 @@ export class MongoService extends DbService {
 		})
 	}
 
+	private static getFilter(filterOrId: FilterOrId) {
+		return isString(filterOrId) ? { _id: filterOrId } : filterOrId
+	}
+
 	private getModel(resource: string) {
 		const schema = this.schemas[resource]
 		return this.connection.model<any>(schema.name, schema)
-	}
-
-	private static getFilter(filterOrId: FilterOrId) {
-		return isString(filterOrId) ? { _id: filterOrId } : filterOrId
 	}
 
 	getResources() {

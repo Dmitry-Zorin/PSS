@@ -1,9 +1,12 @@
-import { Controller } from '@nestjs/common'
+import { Controller, UseFilters, UsePipes, ValidationPipe } from '@nestjs/common'
 import { MessagePattern } from '@nestjs/microservices'
 import { AuthService } from './auth.service'
+import { HttpExceptionFilter } from './http-exception.filter'
 import { UserCredentialsDto } from './user-credentials.dto'
 
 @Controller()
+@UsePipes(new ValidationPipe())
+@UseFilters(new HttpExceptionFilter())
 export class AuthController {
 	constructor(private readonly authService: AuthService) {}
 

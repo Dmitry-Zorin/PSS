@@ -2,9 +2,9 @@ import { ConflictException, NotFoundException, UnauthorizedException } from '@ne
 import { JwtService } from '@nestjs/jwt'
 import { Test } from '@nestjs/testing'
 import { getRepositoryToken } from '@nestjs/typeorm'
+import { AuthService } from './auth.service'
 import { jwtServiceMock, parseToken } from './mock/jwt.service.mock'
 import { UserRepositoryMock } from './mock/user-repository.mock'
-import { AuthService } from './auth.service'
 import { User } from './user.entity'
 
 const TEST_USER: User = {

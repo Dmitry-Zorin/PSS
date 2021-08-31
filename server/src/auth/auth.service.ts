@@ -29,7 +29,7 @@ export class AuthService {
 	}
 
 	async createUser(user: User) {
-		const { generatedMaps } = await this.userRepository.insert(user).catch((err) => {
+		const { generatedMaps } = await this.userRepository.insert(user).catch(() => {
 			throw new ConflictException('User already exists')
 		})
 		return { ...user, ...generatedMaps[0] } as User

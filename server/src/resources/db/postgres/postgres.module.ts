@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { values } from 'lodash'
-import { PostgresService } from './postgres.service'
 import * as entities from './entities'
+import { PostgresService } from './postgres.service'
 
 @Module({
 	imports: [
@@ -16,7 +16,7 @@ import * as entities from './entities'
 				entities: values(entities),
 				synchronize: true,
 			}),
-			inject: [ConfigService]
+			inject: [ConfigService],
 		}),
 	],
 	providers: [PostgresService],

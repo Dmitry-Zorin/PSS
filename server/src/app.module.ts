@@ -18,7 +18,7 @@ import { ResourcesModule } from './resources/resources.module'
 		}),
 		GatewayModule,
 		AuthModule,
-		ResourcesModule
+		ResourcesModule,
 	],
 })
 export class AppModule {}

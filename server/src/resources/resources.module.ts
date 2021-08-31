@@ -1,8 +1,6 @@
-import { Module, ValidationPipe } from '@nestjs/common'
+import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
-import { APP_FILTER, APP_PIPE } from '@nestjs/core'
 import { object, string } from 'joi'
-import { HttpExceptionFilter } from '../auth/http-exception.filter'
 import { DbModule } from './db/db.module'
 import { ResourcesController } from './resources.controller'
 import { ResourcesService } from './resources.service'
@@ -20,16 +18,6 @@ import { ResourcesService } from './resources.service'
 		DbModule.forRoot({ db: 'postgres' }),
 	],
 	controllers: [ResourcesController],
-	providers: [
-		ResourcesService,
-		{
-			provide: APP_PIPE,
-			useClass: ValidationPipe,
-		},
-		{
-			provide: APP_FILTER,
-			useClass: HttpExceptionFilter,
-		},
-	],
+	providers: [ResourcesService],
 })
 export class ResourcesModule {}

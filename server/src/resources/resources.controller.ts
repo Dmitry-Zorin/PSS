@@ -1,10 +1,13 @@
-import { Controller } from '@nestjs/common'
+import { Controller, UseFilters, UsePipes, ValidationPipe } from '@nestjs/common'
 import { MessagePattern, Payload } from '@nestjs/microservices'
+import { HttpExceptionFilter } from '../auth/http-exception.filter'
 import { PaginationOptions } from './db/mongo/pipelines/pagination'
 import { ListParamsPipe } from './list-params.pipe'
 import { ResourcesService } from './resources.service'
 
 @Controller()
+@UsePipes(new ValidationPipe())
+@UseFilters(new HttpExceptionFilter())
 export class ResourcesController {
 	constructor(private readonly resourcesService: ResourcesService) {}
 
