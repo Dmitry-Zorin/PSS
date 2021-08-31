@@ -1,0 +1,38 @@
+{
+  "monorepo": true,
+  "root": "apps/storage-system",
+  "sourceRoot": "apps/storage-system/src",
+  "compilerOptions": {
+    "webpack": true,
+    "tsConfigPath": "apps/storage-system/tsconfig.app.json"
+  },
+  "projects": {
+    "storage-system": {
+      "type": "application",
+      "root": "apps/storage-system",
+      "entryFile": "main",
+      "sourceRoot": "apps/storage-system/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/storage-system/tsconfig.app.json"
+      }
+    },
+    "app2": {
+      "type": "application",
+      "root": "apps/app2",
+      "entryFile": "main",
+      "sourceRoot": "apps/app2/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/app2/tsconfig.app.json"
+      }
+    },
+    "app/app2": {
+      "type": "application",
+      "root": "apps/app/app2",
+      "entryFile": "main",
+      "sourceRoot": "apps/app/app2/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/app/app2/tsconfig.app.json"
+      }
+    }
+  }
+}

@@ -5,7 +5,7 @@ Storage system of scientific works
 ### Scripts
 
 ### `npm start`
-start the project in development mode
+Start the project in development mode
 
 ## Server
 
@@ -19,19 +19,19 @@ Backend for the storage system
 ### Scripts
 
 #### `npm start`
-start server
+Start server
 
 #### `npm run start:dev`
-start development server
+Start development server
 
 #### `npm run start:prod`
-start production server
+Start production server
 
 #### `npm run build`
-build project
+Build project
 
 #### `npm test`
-run tests
+Run tests
 
 ## Client
 
@@ -46,7 +46,7 @@ Frontend of the storage system
 ### Scripts
 
 #### `npm start` 
-start development server
+Start development server
 
 #### `npm run build` 
-create production build
+Create production build
