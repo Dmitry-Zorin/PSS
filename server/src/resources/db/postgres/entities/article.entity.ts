@@ -1,10 +1,16 @@
-import { BaseEntity, Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 import { File } from './file.entity'
 
 @Entity('articles')
 export class Article extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	id: string
+
+	@CreateDateColumn()
+	createdAt: Date
+
+	@UpdateDateColumn()
+	updatedAt: Date
 
 	@Column()
 	title: string

@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common'
+import { zipObject } from 'lodash'
 import { DbService } from './db/db.service'
 import { PaginationOptions } from './list-params.pipe'
 
@@ -8,6 +9,14 @@ export class ResourcesService {
 
 	create(resource: string, payload: any, file: Express.Multer.File) {
 		return this.dbService.create(resource, payload)
+	}
+
+	async countAll() {
+		const resources = this.dbService.getResources()
+		const countPromises = resources.map(resource => (
+			this.dbService.getResourceCount(resource))
+		)
+		return zipObject(resources, await Promise.all(countPromises))
 	}
 
 	findAll(resource: string, listParams: PaginationOptions) {

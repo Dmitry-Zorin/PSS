@@ -16,6 +16,11 @@ export class ResourcesController {
 		return { id }
 	}
 
+	@MessagePattern('count_all')
+	async handleCountAll() {
+		return this.resourcesService.countAll()
+	}
+
 	@MessagePattern('find_all')
 	async handleFindAll(
 		@Payload() { resource }: any,

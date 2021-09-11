@@ -2,6 +2,6 @@
   "name": "storage-system",
   "version": "2.0.0",
   "scripts": {
-    "start": "npm start --prefix client & npm start --prefix server"
+    "start": "npm start --prefix client & npm run start:dev --prefix server"
   }
 }

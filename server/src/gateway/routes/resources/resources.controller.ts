@@ -4,14 +4,19 @@ import { FileInterceptor } from '@nestjs/platform-express'
 import { Response } from 'express'
 import { firstValueFrom } from 'rxjs'
 
-@Controller(':resource')
+@Controller()
 export class ResourcesController {
 	constructor(
 		@Inject('RESOURCES_SERVICE')
 		private readonly resourcesClient: ClientProxy,
 	) {}
 
-	@Post()
+	@Get('count')
+	countAll() {
+		return this.resourcesClient.send('count_all', {})
+	}
+
+	@Post(':resource')
 	@UseInterceptors(FileInterceptor('file'))
 	async create(
 		@Body() body: unknown,
@@ -22,7 +27,7 @@ export class ResourcesController {
 		return this.resourcesClient.send('create', data)
 	}
 
-	@Get()
+	@Get(':resource')
 	async findAll(
 		@Query() query: unknown,
 		@Param('resource') resource: string,
@@ -35,7 +40,7 @@ export class ResourcesController {
 		return documents
 	}
 
-	@Get(':id')
+	@Get(':resource/:id')
 	findOne(
 		@Param('resource') resource: string,
 		@Param('id') id: string,
@@ -44,7 +49,7 @@ export class ResourcesController {
 		return this.resourcesClient.send('find_one', data)
 	}
 
-	@Put(':id')
+	@Put(':resource/:id')
 	@UseInterceptors(FileInterceptor('file'))
 	update(
 		@Body() body: unknown,
@@ -56,7 +61,7 @@ export class ResourcesController {
 		return this.resourcesClient.send('update', data)
 	}
 
-	@Delete(':id')
+	@Delete(':resource/:id')
 	remove(
 		@Param('resource') resource: string,
 		@Param('id') id: string,
