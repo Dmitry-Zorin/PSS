@@ -13,7 +13,7 @@ interface RpcException {
 @Catch()
 export class AllExceptionsFilter extends BaseExceptionFilter {
 	private static isRpcException(exception: any): exception is RpcException {
-		return exception.message.startsWith('Rpc')
+		return !!exception.message?.startsWith('Rpc')
 	}
 
 	catch(exception: RpcException | unknown, host: ArgumentsHost) {

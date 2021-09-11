@@ -29,10 +29,9 @@ export class AuthController {
 		return this.authClient.send('login', body)
 	}
 
-	@Public()
 	@Delete('unregister')
 	unregister(@User() user: UserToken) {
-		return this.authClient.send('unregister', user?.username || 'username')
+		return this.authClient.send('unregister', user.username)
 	}
 
 	@Post()

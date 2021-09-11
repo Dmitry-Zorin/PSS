@@ -34,6 +34,8 @@ const bootstrap = async () => {
 
 	await app.startAllMicroservices()
 	await app.listen(config.get('PORT')!)
+
+	process.env.SERVER = await app.getUrl()
 }
 
 bootstrap()

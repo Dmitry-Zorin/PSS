@@ -2,9 +2,6 @@ import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { MongooseModule } from '@nestjs/mongoose'
 import { MongoService } from './mongo.service'
-import { PipelinesService } from './pipelines.service'
-
-const services = [PipelinesService, MongoService]
 
 @Module({
 	imports: [
@@ -18,7 +15,7 @@ const services = [PipelinesService, MongoService]
 			inject: [ConfigService],
 		}),
 	],
-	providers: services,
-	exports: services,
+	providers: [MongoService],
+	exports: [MongoService],
 })
 export class MongoModule {}

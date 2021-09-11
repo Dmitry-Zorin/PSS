@@ -1,6 +1,6 @@
 export type FindOneResult = Promise<any>
-export type UpdateResult = Promise<string | undefined>
-export type DeleteResult = Promise<string | undefined>
+export type UpdateResult = Promise<void>
+export type DeleteResult = Promise<void>
 
 export abstract class DbService {
 	abstract getResources(): string[]

@@ -1,8 +1,7 @@
 import { Controller, UseFilters, UsePipes, ValidationPipe } from '@nestjs/common'
 import { MessagePattern, Payload } from '@nestjs/microservices'
 import { HttpExceptionFilter } from '../auth/http-exception.filter'
-import { PaginationOptions } from './db/mongo/pipelines/pagination'
-import { ListParamsPipe } from './list-params.pipe'
+import { ListParamsPipe, PaginationOptions } from './list-params.pipe'
 import { ResourcesService } from './resources.service'
 
 @Controller()
@@ -13,12 +12,13 @@ export class ResourcesController {
 
 	@MessagePattern('create')
 	async handleCreate({ resource, body, file }: any) {
-		return this.resourcesService.create(resource, body, file)
+		const id = await this.resourcesService.create(resource, body, file)
+		return { id }
 	}
 
 	@MessagePattern('find_all')
 	async handleFindAll(
-		{ resource }: any,
+		@Payload() { resource }: any,
 		@Payload(new ListParamsPipe()) listParams: PaginationOptions,
 	) {
 		const { documents, total } = await this.resourcesService.findAll(resource, listParams)
@@ -36,12 +36,14 @@ export class ResourcesController {
 	}
 
 	@MessagePattern('update')
-	handleUpdate({ resource, id, body, file }: any) {
-		return this.resourcesService.update(resource, id, body, file)
+	async handleUpdate({ resource, id, body, file }: any) {
+		await this.resourcesService.update(resource, id, body, file)
+		return null
 	}
 
 	@MessagePattern('delete')
-	handleDelete({ resource, id }: any) {
-		return this.resourcesService.remove(resource, id)
+	async handleDelete({ resource, id }: any) {
+		await this.resourcesService.remove(resource, id)
+		return null
 	}
 }

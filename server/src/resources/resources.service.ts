@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { DbService } from './db/db.service'
-import { PaginationOptions } from './db/mongo/pipelines/pagination'
+import { PaginationOptions } from './list-params.pipe'
 
 @Injectable()
 export class ResourcesService {
@@ -24,7 +24,7 @@ export class ResourcesService {
 	}
 
 	getFileUrl(resource: string, fileId: string) {
-		return `${'server'}/files/${resource}/${fileId}`
+		return `${process.env.SERVER}/files/${resource}/${fileId}`
 	}
 
 	update(resource: string, id: string, payload: any, file: Express.Multer.File) {

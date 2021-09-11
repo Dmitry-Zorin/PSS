@@ -29,7 +29,7 @@ export class ResourcesController {
 		@Res({ passthrough: true }) res: Response,
 	) {
 		const data = { resource, query }
-		const findAllObservable = this.resourcesClient.send('find-all', data)
+		const findAllObservable = this.resourcesClient.send('find_all', data)
 		const { range, documents } = await firstValueFrom(findAllObservable)
 		res.header('content-range', range)
 		return documents
@@ -41,7 +41,7 @@ export class ResourcesController {
 		@Param('id') id: string,
 	) {
 		const data = { resource, id }
-		return this.resourcesClient.send('find-one', data)
+		return this.resourcesClient.send('find_one', data)
 	}
 
 	@Put(':id')

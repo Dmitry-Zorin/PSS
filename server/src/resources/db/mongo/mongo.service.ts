@@ -2,9 +2,8 @@ import { ConflictException, Injectable, NotFoundException, Type } from '@nestjs/
 import { InjectConnection, SchemaFactory } from '@nestjs/mongoose'
 import { isString, keys, transform } from 'lodash'
 import { Connection, FilterQuery, pluralize } from 'mongoose'
+import { PaginationOptions } from '../../list-params.pipe'
 import { DbService, DeleteResult, FindOneResult, UpdateResult } from '../db.service'
-import { PipelinesService } from './pipelines.service'
-import { PaginationOptions } from './pipelines/pagination'
 import * as schemas from './schemas'
 
 type Filter = FilterQuery<any>
@@ -17,7 +16,6 @@ export class MongoService extends DbService {
 	constructor(
 		@InjectConnection()
 		private readonly connection: Connection,
-		private readonly pipelinesService: PipelinesService,
 	) {
 		super()
 		this.schemas = transform(schemas, (result, value: Type, key) => {
@@ -53,9 +51,32 @@ export class MongoService extends DbService {
 	}
 
 	async findAll(resource: string, options: PaginationOptions) {
-		const paginationPipeline = this.pipelinesService.getPaginationPipeline(options)
+		const { match, sort, skip, limit } = options
 		const model = this.getModel(resource)
-		const [result] = await model.aggregate(paginationPipeline)
+
+		const [result] = await model
+			.aggregate()
+			.match(match)
+			.sort(sort)
+			.facet({
+				count: [
+					{ $count: 'total' },
+				],
+				documents: [
+					{ $limit: limit },
+					{ $skip: skip },
+				],
+			})
+			.project({
+				total: {
+					$ifNull: [
+						{ $arrayElemAt: ['$count.total', 0] },
+						0,
+					],
+				},
+				documents: 1,
+			})
+
 		return result
 	}
 

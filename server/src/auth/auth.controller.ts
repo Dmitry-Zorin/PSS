@@ -27,6 +27,7 @@ export class AuthController {
 
 	@MessagePattern('unregister')
 	async handleUnregister(username: string) {
-		return await this.authService.removeUser(username)
+		await this.authService.removeUser(username)
+		return null
 	}
 }

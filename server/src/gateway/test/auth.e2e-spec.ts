@@ -4,10 +4,9 @@ import { Transport } from '@nestjs/microservices'
 import { Test } from '@nestjs/testing'
 import supertest from 'supertest'
 import { AuthModule } from '../../auth/auth.module'
-import { User } from '../../auth/user.entity'
 import { GatewayModule } from '../gateway.module'
 
-const TEST_USER: User = {
+const TEST_USER = {
 	username: 'username',
 	password: 'password',
 }
@@ -15,6 +14,7 @@ const TEST_USER: User = {
 describe('AuthController', () => {
 	let app: INestApplication
 	let request: supertest.SuperTest<supertest.Test>
+	let token: string
 
 	beforeAll(async () => {
 		const module = await Test.createTestingModule({
@@ -35,38 +35,42 @@ describe('AuthController', () => {
 		await app.startAllMicroservices()
 		await app.listen(80)
 
-		request = supertest('http://localhost:80/api/auth/')
+		const appUrl = await app.getUrl()
+		request = supertest(`${appUrl}/api/auth/`)
+	})
+
+	beforeEach(async () => {
+		const { body } = await request
+			.post('register')
+			.send(TEST_USER)
+			.expect(201)
+
+		expect(body).toContainKey('token')
+		token = body.token
 	})
 
 	afterEach(async () => {
 		await request
 			.delete('unregister')
-			.send({ username: TEST_USER.username })
+			.auth(token, { type: 'bearer' })
 			.expect(200)
 	})
 
 	afterAll(() => app.close())
 
-	test('register and login', async () => {
-		await request
-			.post('register')
-			.send(TEST_USER)
-			.expect(201)
-			.expect(res => {
-				expect(res.body).toContainKey('token')
-			})
-
+	test('should fail to register the same user', async () => {
 		await request
 			.post('register')
 			.send(TEST_USER)
 			.expect(409)
+	})
 
-		await request
+	test('should login the existing user', async () => {
+		const { body } = await request
 			.post('login')
 			.send(TEST_USER)
 			.expect(200)
-			.expect(res => {
-				expect(res.body).toContainKey('token')
-			})
+
+		expect(body).toContainKey('token')
 	})
 })
