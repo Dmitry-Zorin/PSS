@@ -2,8 +2,6 @@ import mapValues from 'just-map-values'
 import reduce from 'just-reduce-object'
 import { fetchUtils } from 'react-admin'
 
-export const apiUrl = `${import.meta.env.VITE_SERVER}/api`
-
 const getUser = () => ({
 	authenticated: true,
 	token: `Bearer ${localStorage.getItem('token')}`,
@@ -28,10 +26,14 @@ export const httpClient = (url, { body, ...options } = {}) => (
 	})
 )
 
+export const apiUrl = `${import.meta.env.VITE_SERVER}/api`
+
+const resourcesUrl = `${apiUrl}/resources`
+
 const dataProvider = {
 	create: async (resource, { data }) => {
 		const options = { method: 'post', body: data }
-		const { json } = await httpClient(`${apiUrl}/${resource}`, options)
+		const { json } = await httpClient(`${resourcesUrl}/${resource}`, options)
 		return { data: { ...data, id: json.id } }
 	},
 	
@@ -49,7 +51,7 @@ const dataProvider = {
 		}, value => JSON.stringify(value))
 
 		const { headers, json } = await httpClient(
-			`${apiUrl}/${resource}?${new URLSearchParams(query)}`
+			`${resourcesUrl}/${resource}?${new URLSearchParams(query)}`
 		)
 		return {
 			data: json,
@@ -58,13 +60,13 @@ const dataProvider = {
 	},
 	
 	getOne: async (resource, { id }) => {
-		const { json } = await httpClient(`${apiUrl}/${resource}/${id}`)
+		const { json } = await httpClient(`${resourcesUrl}/${resource}/${id}`)
 		return { data: json }
 	},
 	
 	update: async (resource, { id, data }) => {
 		const options = { method: 'put', body: data }
-		await httpClient(`${apiUrl}/${resource}/${id}`, options)
+		await httpClient(`${resourcesUrl}/${resource}/${id}`, options)
 		return { data: { id } }
 	},
 	
@@ -73,7 +75,7 @@ const dataProvider = {
 			method: 'delete',
 			headers: new Headers({ 'content-type': 'text/plain' }),
 		}
-		await httpClient(`${apiUrl}/${resource}/${id}`, options)
+		await httpClient(`${resourcesUrl}/${resource}/${id}`, options)
 		return { data: { id } }
 	},
 	
@@ -83,7 +85,7 @@ const dataProvider = {
 			headers: new Headers({ 'content-type': 'text/plain' }),
 		}
 		await Promise.all(ids.map(id => (
-			httpClient(`${apiUrl}/${resource}/${id}`, options)
+			httpClient(`${resourcesUrl}/${resource}/${id}`, options)
 		)))
 		return { data: ids }
 	},

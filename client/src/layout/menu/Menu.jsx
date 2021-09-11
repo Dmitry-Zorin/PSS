@@ -63,7 +63,7 @@ const Menu = () => {
 	const [data, setData] = useState({})
 	
 	useEffect(() => {
-		fetchApi('resources').then(({ json }) => setData(json))
+		fetchApi('resources/count').then(({ json }) => setData(json))
 	}, [])
 	
 	return (

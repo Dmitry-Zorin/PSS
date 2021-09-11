@@ -12,23 +12,25 @@ const authProvider = {
 		}
 		return Promise.reject()
 	},
-	
+
 	logout: () => {
 		localStorage.clear()
 		return Promise.resolve()
 	},
-	
+
 	checkAuth: async () => {
-		const { error } = await fetchApi('auth')
+		const { error } = await fetchApi('auth', { method: 'post' })
 		return error ? Promise.reject() : Promise.resolve()
 	},
-	
+
 	getPermissions: async () => {
-		if (user) return user.isAdmin
+		if (user) {
+			return user.role === 'admin'
+		}
 		const { json } = await fetchApi('auth/permissions')
-		return json.isAdmin
+		return json.role === 'admin'
 	},
-	
+
 	getIdentity: async () => {
 		if (!user) {
 			const { json } = await fetchApi('auth/identity')
@@ -38,7 +40,7 @@ const authProvider = {
 		}
 		return user
 	},
-	
+
 	checkError: ({ status }) => (
 		[401, 403].includes(status) ? Promise.reject() : Promise.resolve()
 	),
