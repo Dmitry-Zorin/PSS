@@ -40,27 +40,21 @@ const dataProvider = {
 		const { page, perPage } = pagination
 		const skip = (page - 1) * perPage
 		const limit = perPage
-		
-		const sortOrder = +/^asc$/i.test(order) - +/^desc$/i.test(order) || order
-		
+
 		const query = mapValues({
 			match: filter,
-			sort: { [field]: sortOrder },
+			sort: { [field]: order },
 			skip,
 			limit,
 		}, value => JSON.stringify(value))
-		
-		const url = `${apiUrl}/${resource}?${new URLSearchParams(query)}`
-		
-		const options = {
-			headers: new Headers({
-				Range: `${resource}=${skip}-${skip + limit}`,
-			}),
+
+		const { headers, json } = await httpClient(
+			`${apiUrl}/${resource}?${new URLSearchParams(query)}`
+		)
+		return {
+			data: json,
+			total: +headers.get('content-range').split('/').pop()
 		}
-		
-		const { headers, json } = await httpClient(url, options)
-		const total = +headers.get('content-range').split('/').pop()
-		return { data: json, total }
 	},
 	
 	getOne: async (resource, { id }) => {
