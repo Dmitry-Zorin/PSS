@@ -5,6 +5,16 @@ enum Role {
 	Admin = 'admin'
 }
 
+export enum Locale {
+	En = 'en',
+	Ru = 'ru',
+}
+
+export enum Theme {
+	Light = 'light',
+	Dark = 'dark',
+}
+
 @Entity('users')
 export class User {
 	@PrimaryColumn()
@@ -15,4 +25,10 @@ export class User {
 
 	@Column({ type: 'enum', enum: Role, default: Role.User })
 	role?: Role
+
+	@Column({ type: 'enum', enum: Locale, default: Locale.En })
+	locale?: Locale
+
+	@Column({ type: 'enum', enum: Theme, default: Theme.Light })
+	theme?: Theme
 }

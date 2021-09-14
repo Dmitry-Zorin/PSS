@@ -1,12 +1,11 @@
-import { Body, Controller, Delete, Get, HttpCode, Inject, Post } from '@nestjs/common'
+import { Body, Controller, Delete, Get, HttpCode, Inject, Post, Put } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { User } from '../../decorators'
 import { Public } from '../../jwt/jwt.guard'
-import { Role } from '../../types'
 
 interface UserToken {
 	username: string
-	role: Role
+	role: string
 }
 
 @Controller()
@@ -29,11 +28,6 @@ export class AuthController {
 		return this.authClient.send('login', body)
 	}
 
-	@Delete('unregister')
-	unregister(@User() user: UserToken) {
-		return this.authClient.send('unregister', user.username)
-	}
-
 	@Post()
 	@HttpCode(204)
 	checkAuth() {}
@@ -43,22 +37,22 @@ export class AuthController {
 		return { role: user.role }
 	}
 
-	// @Get('identity')
-	// getUserIdentity(@User() { username }: UserTokenDto) {
-	// 	return this.authClient.send('find_user', username)
-	// }
-	//
-	// @Put('identity')
-	// async updateUserIdentity(
-	// 	@User() { username }: UserTokenDto,
-	// 	@Body() body: UpdateIdentityDto,
-	// ) {
-	// 	const data = { username, payload: body }
-	// 	return this.authClient.send('update_user', data)
-	// }
-	//
-	// @Delete('identity')
-	// removeUserIdentity(@User() { username }: UserTokenDto) {
-	// 	return this.authClient.send('remove_user', username)
-	// }
+	@Get('identity')
+	findIdentity(@User() { username }: UserToken) {
+		return this.authClient.send('find_identity', username)
+	}
+
+	@Put('settings')
+	async updateSettings(
+		@User() { username }: UserToken,
+		@Body() body: unknown,
+	) {
+		const data = { username, payload: body }
+		return this.authClient.send('update_settings', data)
+	}
+
+	@Delete('unregister')
+	unregister(@User() user: UserToken) {
+		return this.authClient.send('unregister', user.username)
+	}
 }

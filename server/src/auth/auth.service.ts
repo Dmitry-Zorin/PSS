@@ -3,7 +3,12 @@ import { JwtService } from '@nestjs/jwt'
 import { InjectRepository } from '@nestjs/typeorm'
 import { compare, hash } from 'bcrypt'
 import { Repository } from 'typeorm'
-import { User } from './user.entity'
+import { Locale, Theme, User } from './user.entity'
+
+interface Settings {
+	locale?: Locale,
+	theme?: Theme
+}
 
 @Injectable()
 export class AuthService {
@@ -29,10 +34,11 @@ export class AuthService {
 	}
 
 	async createUser(user: User) {
-		const { generatedMaps } = await this.userRepository.insert(user).catch(() => {
+		const record = await this.userRepository.findOne(user.username)
+		if (record) {
 			throw new ConflictException('User already exists')
-		})
-		return { ...user, ...generatedMaps[0] } as User
+		}
+		return this.userRepository.save(user)
 	}
 
 	findUser(username: string) {
@@ -41,7 +47,12 @@ export class AuthService {
 		})
 	}
 
-	removeUser(username: string) {
-		return this.userRepository.delete(username)
+	updateSettings(username: string, settings: Settings) {
+		return this.userRepository.save({ username, ...settings })
+	}
+
+	async removeUser(username: string) {
+		const user = await this.findUser(username)
+		return this.userRepository.remove(user)
 	}
 }

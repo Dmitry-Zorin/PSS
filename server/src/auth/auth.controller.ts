@@ -1,8 +1,9 @@
 import { Controller, UseFilters, UsePipes, ValidationPipe } from '@nestjs/common'
 import { MessagePattern } from '@nestjs/microservices'
 import { AuthService } from './auth.service'
+import { UpdateSettingsDto } from './dto/update-identity.dto'
+import { UserCredentialsDto } from './dto/user-credentials.dto'
 import { HttpExceptionFilter } from './http-exception.filter'
-import { UserCredentialsDto } from './user-credentials.dto'
 
 @Controller()
 @UsePipes(new ValidationPipe())
@@ -28,6 +29,18 @@ export class AuthController {
 	@MessagePattern('unregister')
 	async handleUnregister(username: string) {
 		await this.authService.removeUser(username)
+		return null
+	}
+
+	@MessagePattern('find_identity')
+	async handleFindIdentity(username: string) {
+		const { password, ...identity } = await this.authService.findUser(username)
+		return identity
+	}
+
+	@MessagePattern('update_settings')
+	async handleUpdateSettings({ username, payload }: UpdateSettingsDto) {
+		await this.authService.updateSettings(username, payload)
 		return null
 	}
 }

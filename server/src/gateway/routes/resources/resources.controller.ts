@@ -67,6 +67,6 @@ export class ResourcesController {
 		@Param('id') id: string,
 	) {
 		const data = { resource, id }
-		return this.resourcesClient.send('delete', data)
+		return this.resourcesClient.send('remove', data)
 	}
 }

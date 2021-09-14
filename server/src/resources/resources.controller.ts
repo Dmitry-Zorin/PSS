@@ -46,8 +46,8 @@ export class ResourcesController {
 		return null
 	}
 
-	@MessagePattern('delete')
-	async handleDelete({ resource, id }: any) {
+	@MessagePattern('remove')
+	async handleRemove({ resource, id }: any) {
 		await this.resourcesService.remove(resource, id)
 		return null
 	}
