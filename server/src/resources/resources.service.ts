@@ -7,7 +7,7 @@ import { PaginationOptions } from './list-params.pipe'
 export class ResourcesService {
 	constructor(private readonly dbService: DbService) {}
 
-	create(resource: string, payload: any, file: Express.Multer.File) {
+	create(resource: string, payload: any) {
 		return this.dbService.create(resource, payload)
 	}
 
@@ -36,7 +36,7 @@ export class ResourcesService {
 		return `${process.env.SERVER}/files/${resource}/${fileId}`
 	}
 
-	update(resource: string, id: string, payload: any, file: Express.Multer.File) {
+	update(resource: string, id: string, payload: any) {
 		return this.dbService.update(resource, id, payload)
 	}
 

@@ -11,8 +11,8 @@ export class ResourcesController {
 	constructor(private readonly resourcesService: ResourcesService) {}
 
 	@MessagePattern('create')
-	async handleCreate({ resource, body, file }: any) {
-		const id = await this.resourcesService.create(resource, body, file)
+	async handleCreate({ resource, payload }: any) {
+		const id = await this.resourcesService.create(resource, payload)
 		return { id }
 	}
 
@@ -41,8 +41,8 @@ export class ResourcesController {
 	}
 
 	@MessagePattern('update')
-	async handleUpdate({ resource, id, body, file }: any) {
-		await this.resourcesService.update(resource, id, body, file)
+	async handleUpdate({ resource, id, payload }: any) {
+		await this.resourcesService.update(resource, id, payload)
 		return null
 	}
 

@@ -19,11 +19,11 @@ export class ResourcesController {
 	@Post(':resource')
 	@UseInterceptors(FileInterceptor('file'))
 	async create(
-		@Body() body: unknown,
+		@Body() body: object,
 		@Param('resource') resource: string,
 		@UploadedFile() file: Express.Multer.File,
 	) {
-		const data = { resource, body, file }
+		const data = { resource, payload: { ...body, file } }
 		return this.resourcesClient.send('create', data)
 	}
 
@@ -36,7 +36,7 @@ export class ResourcesController {
 		const data = { resource, query }
 		const findAllObservable = this.resourcesClient.send('find_all', data)
 		const { range, documents } = await firstValueFrom(findAllObservable)
-		res.header('content-range', range)
+		res.header('Content-Range', range)
 		return documents
 	}
 
@@ -52,12 +52,12 @@ export class ResourcesController {
 	@Put(':resource/:id')
 	@UseInterceptors(FileInterceptor('file'))
 	update(
-		@Body() body: unknown,
+		@Body() body: object,
 		@Param('resource') resource: string,
 		@Param('id') id: string,
 		@UploadedFile() file: Express.Multer.File,
 	) {
-		const data = { resource, id, body, file }
+		const data = { resource, id, payload: { ...body, file } }
 		return this.resourcesClient.send('update', data)
 	}
 

@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common'
 import { isNull, keys, transform } from 'lodash'
 import { omitBy } from 'lodash/fp'
 import { pluralize } from 'mongoose'
+import { FileService } from '../../file/file.service'
 import { PaginationOptions } from '../../list-params.pipe'
 import { DbService, DeleteResult, FindOneResult, UpdateResult } from '../db.service'
 import * as entities from './entities'
@@ -14,13 +15,13 @@ const omitNull = omitBy(isNull)
 export class PostgresService extends DbService {
 	private readonly entities: Record<string, Entity>
 
-	constructor() {
+	constructor(private readonly fileService: FileService) {
 		super()
 		this.entities = transform(entities, (result, value, key) => {
 			result[pluralize()!(key)] = value
 		})
 	}
-	
+
 	private getEntity(resource: string) {
 		const entity = this.entities[resource]
 		if (!entity) {
@@ -38,9 +39,20 @@ export class PostgresService extends DbService {
 	}
 
 	async create(resource: string, payload: any) {
-		const Entity = this.getEntity(resource)
 		delete payload.id
-		const { id } = await Entity.save(payload)
+		const { id: _, ...newPayload } = payload
+
+		if (payload.file) {
+			const file = await this.fileService.upload(resource, payload.file)
+			const FileEntity: any = this.getEntity('files')
+			newPayload.file = await FileEntity.save({
+				fileId: file.id,
+				name: payload.file.originalname,
+			})
+		}
+
+		const Entity = this.getEntity(resource)
+		const { id } = await Entity.save(newPayload)
 		return id
 	}
 
@@ -71,11 +83,26 @@ export class PostgresService extends DbService {
 	async update(resource: string, filterOrId: any, update: any): UpdateResult {
 		const Entity = this.getEntity(resource)
 
-		const record = await Entity.findOneOrFail(filterOrId).catch(() => {
+		const record = await Entity.findOneOrFail(filterOrId, { relations: ['file'] }).catch(() => {
 			throw new NotFoundException()
 		})
 
-		// possibly remove file
+		if (update.file) {
+			const file = await this.fileService.upload(resource, update.file)
+			const FileEntity: any = this.getEntity('files')
+
+			const updateFile: any = {
+				fileId: file.id,
+				name: update.file.originalname,
+			}
+
+			if (record.file?.fileId) {
+				await this.fileService.delete(resource, record.file.fileId)
+				updateFile.id = record.file.id
+			}
+
+			update.file = await FileEntity.save(updateFile)
+		}
 
 		update.id = record.id
 		await Entity.save(update)
@@ -86,12 +113,16 @@ export class PostgresService extends DbService {
 	async delete(resource: string, filterOrId: any): DeleteResult {
 		const Entity = this.getEntity(resource)
 
-		const record = await Entity.findOneOrFail(filterOrId).catch(() => {
+		const record = await Entity.findOneOrFail(filterOrId, { relations: ['file'] }).catch(() => {
 			throw new NotFoundException()
 		})
 
-		// remove file
-
 		await Entity.remove(record)
+
+		if (record.file?.fileId) {
+			await this.fileService.delete(resource, record.file.fileId)
+			const FileEntity: any = this.getEntity('files')
+			FileEntity.remove(record.file)
+		}
 	}
 }
