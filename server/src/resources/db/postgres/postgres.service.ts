@@ -2,7 +2,6 @@ import { Injectable, NotFoundException } from '@nestjs/common'
 import { isNull, keys, transform } from 'lodash'
 import { omitBy } from 'lodash/fp'
 import { pluralize } from 'mongoose'
-import { FileService } from '../../file/file.service'
 import { PaginationOptions } from '../../list-params.pipe'
 import { DbService, DeleteResult, FindOneResult, UpdateResult } from '../db.service'
 import * as entities from './entities'
@@ -15,7 +14,7 @@ const omitNull = omitBy(isNull)
 export class PostgresService extends DbService {
 	private readonly entities: Record<string, Entity>
 
-	constructor(private readonly fileService: FileService) {
+	constructor() {
 		super()
 		this.entities = transform(entities, (result, value, key) => {
 			result[pluralize()!(key)] = value
@@ -42,12 +41,11 @@ export class PostgresService extends DbService {
 		delete payload.id
 		const { id: _, ...newPayload } = payload
 
-		if (payload.file) {
-			const file = await this.fileService.upload(resource, payload.file)
+		if (payload.fileInfo) {
 			const FileEntity: any = this.getEntity('files')
 			newPayload.file = await FileEntity.save({
-				fileId: file.id,
-				name: payload.file.originalname,
+				fileId: payload.fileInfo.id,
+				name: payload.fileInfo.name,
 			})
 		}
 
@@ -72,7 +70,7 @@ export class PostgresService extends DbService {
 	async findOne(resource: string, id: string): FindOneResult
 	async findOne(resource: string, filterOrId: any): FindOneResult {
 		const Entity = this.getEntity(resource)
-		const record = await Entity.findOneOrFail(filterOrId).catch(() => {
+		const record = await Entity.findOneOrFail(filterOrId, { relations: ['file'] }).catch(() => {
 			throw new NotFoundException()
 		})
 		return omitNull(record)
@@ -82,47 +80,39 @@ export class PostgresService extends DbService {
 	async update(resource: string, id: string, update: any): UpdateResult
 	async update(resource: string, filterOrId: any, update: any): UpdateResult {
 		const Entity = this.getEntity(resource)
-
 		const record = await Entity.findOneOrFail(filterOrId, { relations: ['file'] }).catch(() => {
 			throw new NotFoundException()
 		})
 
-		if (update.file) {
-			const file = await this.fileService.upload(resource, update.file)
+		if (update.fileInfo) {
 			const FileEntity: any = this.getEntity('files')
-
-			const updateFile: any = {
-				fileId: file.id,
-				name: update.file.originalname,
-			}
-
-			if (record.file?.fileId) {
-				await this.fileService.delete(resource, record.file.fileId)
-				updateFile.id = record.file.id
-			}
-
-			update.file = await FileEntity.save(updateFile)
+			update.file = await FileEntity.save({
+				id: record.file?.id || undefined,
+				fileId: update.fileInfo.id,
+				name: update.fileInfo.name,
+			})
 		}
 
 		update.id = record.id
 		await Entity.save(update)
+
+		return record.file?.fileId || ''
 	}
 
 	async delete(resource: string, filter: any): DeleteResult
 	async delete(resource: string, id: string): DeleteResult
 	async delete(resource: string, filterOrId: any): DeleteResult {
 		const Entity = this.getEntity(resource)
-
 		const record = await Entity.findOneOrFail(filterOrId, { relations: ['file'] }).catch(() => {
 			throw new NotFoundException()
 		})
-
 		await Entity.remove(record)
 
-		if (record.file?.fileId) {
-			await this.fileService.delete(resource, record.file.fileId)
+		if (record.file) {
 			const FileEntity: any = this.getEntity('files')
-			FileEntity.remove(record.file)
+			await FileEntity.remove(record.file)
 		}
+
+		return record.file?.fileId || ''
 	}
 }

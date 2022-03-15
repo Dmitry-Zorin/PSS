@@ -10,15 +10,15 @@ import { ResourcesService } from './resources.service'
 export class ResourcesController {
 	constructor(private readonly resourcesService: ResourcesService) {}
 
+	@MessagePattern('count_all')
+	async handleCountAll() {
+		return this.resourcesService.countAll()
+	}
+
 	@MessagePattern('create')
 	async handleCreate({ resource, payload }: any) {
 		const id = await this.resourcesService.create(resource, payload)
 		return { id }
-	}
-
-	@MessagePattern('count_all')
-	async handleCountAll() {
-		return this.resourcesService.countAll()
 	}
 
 	@MessagePattern('find_all')
@@ -42,13 +42,11 @@ export class ResourcesController {
 
 	@MessagePattern('update')
 	async handleUpdate({ resource, id, payload }: any) {
-		await this.resourcesService.update(resource, id, payload)
-		return null
+		return this.resourcesService.update(resource, id, payload)
 	}
 
 	@MessagePattern('remove')
 	async handleRemove({ resource, id }: any) {
-		await this.resourcesService.remove(resource, id)
-		return null
+		return this.resourcesService.remove(resource, id)
 	}
 }

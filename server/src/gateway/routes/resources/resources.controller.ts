@@ -1,19 +1,33 @@
-import { Body, Controller, Delete, Get, Inject, Param, Post, Put, Query, Res, UploadedFile, UseInterceptors } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Inject, Param, Post, Put, Query, Res, StreamableFile, UploadedFile, UseInterceptors } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { Response } from 'express'
 import { firstValueFrom } from 'rxjs'
+import { FileService } from '../../../file/file.service'
+import { Public } from '../../jwt/jwt.guard'
 
 @Controller()
 export class ResourcesController {
 	constructor(
 		@Inject('RESOURCES_SERVICE')
 		private readonly resourcesClient: ClientProxy,
+		private readonly fileService: FileService,
 	) {}
 
 	@Get('count')
 	countAll() {
 		return this.resourcesClient.send('count_all', {})
+	}
+
+	@Public()
+	@Get('files/:resource/:fileId')
+	async downloadFile(
+		@Param('resource') resource: string,
+		@Param('fileId') fileId: string,
+	) {
+		const data = { resource, fileId }
+		const getFileObservable = this.resourcesClient.send('download_file', data)
+		return new StreamableFile(await firstValueFrom(getFileObservable))
 	}
 
 	@Post(':resource')
@@ -23,7 +37,12 @@ export class ResourcesController {
 		@Param('resource') resource: string,
 		@UploadedFile() file: Express.Multer.File,
 	) {
-		const data = { resource, payload: { ...body, file } }
+		const uploadResult = await this.fileService.upload(resource, file)
+		const fileInfo = {
+			id: uploadResult.id,
+			name: file.originalname,
+		}
+		const data = { resource, payload: { ...body, fileInfo } }
 		return this.resourcesClient.send('create', data)
 	}
 
@@ -51,22 +70,31 @@ export class ResourcesController {
 
 	@Put(':resource/:id')
 	@UseInterceptors(FileInterceptor('file'))
-	update(
+	async update(
 		@Body() body: object,
 		@Param('resource') resource: string,
 		@Param('id') id: string,
 		@UploadedFile() file: Express.Multer.File,
 	) {
-		const data = { resource, id, payload: { ...body, file } }
-		return this.resourcesClient.send('update', data)
+		const uploadResult = await this.fileService.upload(resource, file)
+		const fileInfo = {
+			id: uploadResult.id,
+			name: file.originalname,
+		}
+		const data = { resource, id, payload: { ...body, fileInfo } }
+		const updateObservable = this.resourcesClient.send('update', data)
+		const fileId = await firstValueFrom(updateObservable)
+		await this.fileService.delete(resource, fileId)
 	}
 
 	@Delete(':resource/:id')
-	remove(
+	async remove(
 		@Param('resource') resource: string,
 		@Param('id') id: string,
 	) {
 		const data = { resource, id }
-		return this.resourcesClient.send('remove', data)
+		const removeObservable = this.resourcesClient.send('remove', data)
+		const fileId = await firstValueFrom(removeObservable)
+		await this.fileService.delete(resource, fileId)
 	}
 }

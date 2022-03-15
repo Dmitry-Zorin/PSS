@@ -1,11 +1,11 @@
 export type FindOneResult = Promise<any>
-export type UpdateResult = Promise<void>
-export type DeleteResult = Promise<void>
+export type UpdateResult = Promise<string>
+export type DeleteResult = Promise<string>
 
 export abstract class DbService {
 	abstract getResources(): string[]
 
-	abstract getResourceCount(collection: string): Promise<number>
+	abstract getResourceCount(resource: string): Promise<number>
 
 	abstract create(resource: string, payload: any): Promise<string>
 

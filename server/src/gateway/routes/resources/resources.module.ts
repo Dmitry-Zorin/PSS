@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { ClientsModule, Transport } from '@nestjs/microservices'
+import { FileModule } from '../../../file/file.module'
 import { ResourcesController } from './resources.controller'
 
 @Module({
@@ -17,6 +18,7 @@ import { ResourcesController } from './resources.controller'
 			}),
 			inject: [ConfigService],
 		}]),
+		FileModule.forRoot({ storage: 'gridfs' }),
 	],
 	controllers: [ResourcesController],
 })

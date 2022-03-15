@@ -7,16 +7,16 @@ import { PaginationOptions } from './list-params.pipe'
 export class ResourcesService {
 	constructor(private readonly dbService: DbService) {}
 
-	create(resource: string, payload: any) {
-		return this.dbService.create(resource, payload)
-	}
-
 	async countAll() {
 		const resources = this.dbService.getResources()
 		const countPromises = resources.map(resource => (
 			this.dbService.getResourceCount(resource))
 		)
 		return zipObject(resources, await Promise.all(countPromises))
+	}
+
+	create(resource: string, payload: any) {
+		return this.dbService.create(resource, payload)
 	}
 
 	findAll(resource: string, listParams: PaginationOptions) {
