@@ -56,15 +56,15 @@ export class MongoService extends DbService {
 
 		const [result] = await model
 			.aggregate()
-			.match(match)
-			.sort(sort)
+			// .match(match)
+			// .sort(sort)
 			.facet({
 				count: [
 					{ $count: 'total' },
 				],
 				documents: [
 					{ $limit: limit },
-					{ $skip: skip },
+					// { $skip: skip },
 				],
 			})
 			.project({

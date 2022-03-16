@@ -37,12 +37,17 @@ export class ResourcesController {
 		@Param('resource') resource: string,
 		@UploadedFile() file: Express.Multer.File,
 	) {
-		const uploadResult = await this.fileService.upload(resource, file)
-		const fileInfo = {
-			id: uploadResult.id,
-			name: file.originalname,
+		const payload: any = { ...body }
+
+		if (file) {
+			const uploadResult = await this.fileService.upload(resource, file)
+			payload.fileInfo = {
+				id: uploadResult.id,
+				name: file.originalname,
+			}
 		}
-		const data = { resource, payload: { ...body, fileInfo } }
+
+		const data = { resource, payload }
 		return this.resourcesClient.send('create', data)
 	}
 
@@ -76,12 +81,17 @@ export class ResourcesController {
 		@Param('id') id: string,
 		@UploadedFile() file: Express.Multer.File,
 	) {
-		const uploadResult = await this.fileService.upload(resource, file)
-		const fileInfo = {
-			id: uploadResult.id,
-			name: file.originalname,
+		const payload: any = { ...body }
+
+		if (file) {
+			const uploadResult = await this.fileService.upload(resource, file)
+			payload.fileInfo = {
+				id: uploadResult.id,
+				name: file.originalname,
+			}
 		}
-		const data = { resource, id, payload: { ...body, fileInfo } }
+
+		const data = { resource, id, payload }
 		const updateObservable = this.resourcesClient.send('update', data)
 		const fileId = await firstValueFrom(updateObservable)
 		await this.fileService.delete(resource, fileId)

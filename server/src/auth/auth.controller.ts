@@ -26,12 +26,6 @@ export class AuthController {
 		return { token: this.authService.getToken(user) }
 	}
 
-	@MessagePattern('unregister')
-	async handleUnregister(username: string) {
-		await this.authService.removeUser(username)
-		return null
-	}
-
 	@MessagePattern('find_identity')
 	async handleFindIdentity(username: string) {
 		const { password, ...identity } = await this.authService.findUser(username)
@@ -41,6 +35,12 @@ export class AuthController {
 	@MessagePattern('update_settings')
 	async handleUpdateSettings({ username, payload }: UpdateSettingsDto) {
 		await this.authService.updateSettings(username, payload)
+		return null
+	}
+
+	@MessagePattern('unregister')
+	async handleUnregister(username: string) {
+		await this.authService.removeUser(username)
 		return null
 	}
 }

@@ -1,26 +1,27 @@
-import { omitBy } from 'lodash'
 import { User } from '../user.entity'
 
 export class UserRepositoryMock {
 	private readonly users = new Map<string, Required<User>>()
 
-	async insert(user: User) {
+	async save(user: User) {
 		if (this.users.has(user.username)) {
 			return Promise.reject()
 		}
 
 		const defaultProps = { role: 'user' }
+		const newUser = { ...defaultProps, ...user } as Required<User>
 
-		this.users.set(
-			user.username,
-			{ ...defaultProps, ...user } as Required<User>,
-		)
+		this.users.set(user.username, newUser)
 
-		return {
-			generatedMaps: [
-				omitBy(defaultProps, (_, key) => key in user),
-			],
-		}
+		return newUser
+	}
+
+	async remove(user: User) {
+		this.users.delete(user.username)
+	}
+
+	async findOne(username: string) {
+		return this.users.get(username)
 	}
 
 	async findOneOrFail(username: string) {

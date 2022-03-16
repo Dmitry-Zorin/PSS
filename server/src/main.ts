@@ -4,7 +4,7 @@ import { Transport } from '@nestjs/microservices'
 import helmet from 'helmet'
 import { AppModule } from './app.module'
 
-const bootstrap = async () => {
+async function bootstrap() {
 	const app = await NestFactory.create(AppModule)
 	const config = app.get(ConfigService)
 

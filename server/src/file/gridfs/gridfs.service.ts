@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common'
 import { InjectConnection } from '@nestjs/mongoose'
-import { GridFSBucket, ObjectId } from 'mongodb'
+import { Db, GridFSBucket, ObjectId } from 'mongodb'
 import { Connection } from 'mongoose'
 import { Readable } from 'stream'
 import { pipeline } from 'stream/promises'
@@ -16,7 +16,7 @@ export class GridFSService extends FileService {
 	}
 
 	private getGridFSBucket(resource: string) {
-		return new GridFSBucket(this.connection.db, { bucketName: resource })
+		return new GridFSBucket(this.connection.db as Db, { bucketName: resource })
 	}
 
 	async upload(resource: string, file: Express.Multer.File) {

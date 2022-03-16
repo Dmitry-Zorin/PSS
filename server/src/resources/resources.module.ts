@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
-import { object, string } from 'joi'
+import Joi from 'joi'
 import { DbModule } from './db/db.module'
 import { ResourcesController } from './resources.controller'
 import { ResourcesService } from './resources.service'
@@ -8,11 +8,11 @@ import { ResourcesService } from './resources.service'
 @Module({
 	imports: [
 		ConfigModule.forRoot({
-			validationSchema: object({
-				MONGO_URI: string().required(),
-				MONGO_DB_NAME: string().required(),
-				POSTGRES_URL: string().required(),
-				RMQ_URL: string().required(),
+			validationSchema: Joi.object({
+				MONGO_URI: Joi.string().required(),
+				MONGO_DB_NAME: Joi.string().required(),
+				POSTGRES_URL: Joi.string().required(),
+				RMQ_URL: Joi.string().required(),
 			}).unknown(),
 		}),
 		DbModule.forRoot({ db: 'postgres' }),

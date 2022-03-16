@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { APP_FILTER, APP_GUARD, RouterModule } from '@nestjs/core'
-import { object, string } from 'joi'
+import Joi from 'joi'
 import { AllExceptionsFilter } from './exception.filter'
 import { JwtGuard } from './jwt/jwt.guard'
 import { JwtModule } from './jwt/jwt.module'
@@ -11,11 +11,11 @@ import { routeModules, routes } from './routes/routes'
 	imports: [
 		JwtModule,
 		ConfigModule.forRoot({
-			validationSchema: object({
-				SECRET: string().required(),
-				RMQ_URL: string().required(),
-				AUTH_QUEUE: string().required(),
-				RESOURCES_QUEUE: string().required(),
+			validationSchema: Joi.object({
+				SECRET: Joi.string().required(),
+				RMQ_URL: Joi.string().required(),
+				AUTH_QUEUE: Joi.string().required(),
+				RESOURCES_QUEUE: Joi.string().required(),
 			}).unknown(),
 		}),
 		RouterModule.register(routes),

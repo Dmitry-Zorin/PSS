@@ -6,6 +6,8 @@ import supertest from 'supertest'
 import { AuthModule } from '../../auth/auth.module'
 import { GatewayModule } from '../gateway.module'
 
+const AUTH_URL = '/api/auth'
+
 const TEST_USER = {
 	username: 'username',
 	password: 'password',
@@ -35,13 +37,12 @@ describe('AuthController', () => {
 		await app.startAllMicroservices()
 		await app.listen(80)
 
-		const appUrl = await app.getUrl()
-		request = supertest(`${appUrl}/api/auth/`)
+		request = supertest(app.getHttpServer())
 	})
 
 	beforeEach(async () => {
 		const { body } = await request
-			.post('register')
+			.post(`${AUTH_URL}/register`)
 			.send(TEST_USER)
 			.expect(201)
 
@@ -51,23 +52,25 @@ describe('AuthController', () => {
 
 	afterEach(async () => {
 		await request
-			.delete('unregister')
+			.delete(`${AUTH_URL}/unregister`)
 			.auth(token, { type: 'bearer' })
 			.expect(200)
 	})
 
-	afterAll(() => app.close())
+	afterAll(async () => {
+		await app.close()
+	})
 
 	test('should fail to register the same user', async () => {
 		await request
-			.post('register')
+			.post(`${AUTH_URL}/register`)
 			.send(TEST_USER)
 			.expect(409)
 	})
 
 	test('should login the existing user', async () => {
 		const { body } = await request
-			.post('login')
+			.post(`${AUTH_URL}/login`)
 			.send(TEST_USER)
 			.expect(200)
 

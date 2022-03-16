@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { JwtModule } from '@nestjs/jwt'
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { object, string } from 'joi'
+import Joi from 'joi'
 import { AuthController } from './auth.controller'
 import { AuthService } from './auth.service'
 import { User } from './user.entity'
@@ -10,9 +10,9 @@ import { User } from './user.entity'
 @Module({
 	imports: [
 		ConfigModule.forRoot({
-			validationSchema: object({
-				SECRET: string().required(),
-				POSTGRES_URL: string().required(),
+			validationSchema: Joi.object({
+				SECRET: Joi.string().required(),
+				POSTGRES_URL: Joi.string().required(),
 			}).unknown(),
 		}),
 		TypeOrmModule.forRootAsync({

@@ -7,13 +7,15 @@ import { AuthModule } from '../../auth/auth.module'
 import { ResourcesModule } from '../../resources/resources.module'
 import { GatewayModule } from '../gateway.module'
 
+const AUTH_URL = '/api/auth'
+const RESOURCE_URL = '/api/resources/articles'
+
 const TEST_USER = {
 	username: `test user ${Date.now()}`,
 	password: 'password',
 }
 
-const TEST_RESOURCE = {
-	id: -1,
+const TEST_RESOURCE: any = {
 	title: 'title',
 	authors: ['author'],
 }
@@ -21,7 +23,6 @@ const TEST_RESOURCE = {
 describe('ResourcesController', () => {
 	let app: INestApplication
 	let request: supertest.SuperTest<supertest.Test>
-	let authRequest: supertest.SuperTest<supertest.Test>
 	let token: string
 
 	beforeAll(async () => {
@@ -51,15 +52,12 @@ describe('ResourcesController', () => {
 		await app.startAllMicroservices()
 		await app.listen(80)
 
-		const appUrl = await app.getUrl()
-		process.env.SERVER = appUrl
-		request = supertest(`${appUrl}/api/articles/`)
-		authRequest = supertest(`${appUrl}/api/auth/`)
+		request = supertest(app.getHttpServer())
 	})
 
 	beforeEach(async () => {
-		const res = await authRequest
-			.post('register')
+		const res = await request
+			.post(`${AUTH_URL}/register`)
 			.send(TEST_USER)
 			.expect(201)
 
@@ -67,7 +65,7 @@ describe('ResourcesController', () => {
 		token = res.body.token
 
 		const { body } = await request
-			.post('')
+			.post(RESOURCE_URL)
 			.auth(token, { type: 'bearer' })
 			.send(TEST_RESOURCE)
 			.expect(201)
@@ -78,21 +76,23 @@ describe('ResourcesController', () => {
 
 	afterEach(async () => {
 		await request
-			.delete(TEST_RESOURCE.id.toString())
+			.delete(`${RESOURCE_URL}/${TEST_RESOURCE.id}`)
 			.auth(token, { type: 'bearer' })
 			.expect(200)
 
-		await authRequest
-			.delete('unregister')
+		await request
+			.delete(`${AUTH_URL}/unregister`)
 			.auth(token, { type: 'bearer' })
 			.expect(200)
 	})
 
-	afterAll(() => app.close())
+	afterAll(async () => {
+		await app.close()
+	})
 
 	test('should find a list of resources', async () => {
 		const { body } = await request
-			.get('')
+			.get(RESOURCE_URL)
 			.auth(token, { type: 'bearer' })
 			.query({
 				match: JSON.stringify({ title: TEST_RESOURCE.title }),
@@ -108,11 +108,11 @@ describe('ResourcesController', () => {
 
 	test('should find a resource', async () => {
 		const { body } = await request
-			.get(TEST_RESOURCE.id.toString())
+			.get(`${RESOURCE_URL}/${TEST_RESOURCE.id}`)
 			.auth(token, { type: 'bearer' })
 			.expect(200)
 
-		expect(body).toEqual(TEST_RESOURCE)
+		expect(body).toEqual(expect.objectContaining(TEST_RESOURCE))
 	})
 
 	test('should update a resource', async () => {
@@ -121,16 +121,19 @@ describe('ResourcesController', () => {
 		}
 
 		await request
-			.put(TEST_RESOURCE.id.toString())
+			.put(`${RESOURCE_URL}/${TEST_RESOURCE.id}`)
 			.auth(token, { type: 'bearer' })
 			.send(resourceUpdate)
 			.expect(200)
 
 		const { body } = await request
-			.get(TEST_RESOURCE.id.toString())
+			.get(`${RESOURCE_URL}/${TEST_RESOURCE.id}`)
 			.auth(token, { type: 'bearer' })
 			.expect(200)
 
-		expect(body).toEqual({ ...TEST_RESOURCE, ...resourceUpdate })
+		expect(body).toEqual(expect.objectContaining({
+			...TEST_RESOURCE,
+			...resourceUpdate
+		}))
 	})
 })
