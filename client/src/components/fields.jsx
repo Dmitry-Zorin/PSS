@@ -29,7 +29,9 @@ export const DescriptionField = () => (
 )
 
 export const TypeField = () => (
-	<TextField source='type'/>
+	<LabeledField source='type'>
+		<TextField/>
+	</LabeledField>
 )
 
 export const YearField = () => (
@@ -39,26 +41,33 @@ export const YearField = () => (
 )
 
 export const VolumeField = () => (
-	<TextField source='volume'/>
+	<LabeledField source='volume'>
+		<ChipField/>
+	</LabeledField>
 )
 
 export const AuthorsField = ({ record }) => (
-	<ChipArrayField source='authors' record={record}/>
+	<LabeledField source='authors'>
+		<ChipArrayField record={record}/>
+	</LabeledField>
 )
 
 export const ExitDataField = () => (
-	<TextField source='exitData'/>
+	<LabeledField source='exitData'>
+		<TextField/>
+	</LabeledField>
 )
 
 export const CharactersField = () => (
-	<ReferenceField source='character' reference='characters'>
-		<ChipField source='name'/>
-	</ReferenceField>
+	<LabeledField source='character'>
+		<ReferenceField reference='characters'>
+			<ChipField source='name'/>
+		</ReferenceField>
+	</LabeledField>
 )
 
 export const DownloadFileField = () => (
-	<FileField
-		source='file.url'
-		title='file.name'
-	/>
+	<LabeledField label='File' source='file.url'>
+		<FileField title='file.name'/>
+	</LabeledField>
 )

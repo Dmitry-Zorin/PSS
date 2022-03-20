@@ -2,7 +2,6 @@ import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import React from 'react'
 import { useDataProvider, useNotify, useRecordContext } from 'react-admin'
-import { createForm16 } from '../../../form16'
 import { getResourceData } from '../../../requests'
 
 const ButtonForm16 = () => {
@@ -11,6 +10,7 @@ const ButtonForm16 = () => {
 	const { name, companyNumber, militaryRank } = useRecordContext()
 	
 	const generateForm = async () => {
+		const { createForm16 } = await import('../../../form16')
 		const title = `Оператор ${companyNumber} НР, ${militaryRank.toLowerCase()}`
 		const resourceData = await getResourceData(dataProvider, notify, name)
 		await createForm16(resourceData, name, name, title)

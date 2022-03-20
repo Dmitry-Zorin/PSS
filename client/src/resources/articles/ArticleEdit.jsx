@@ -11,7 +11,7 @@ import {
 	YearInput,
 } from '../../components/inputs'
 
-export const ArticleEdit = (props) => (
+const ArticleEdit = (props) => (
 	<Edit title='resources.articles.titles.edit' {...props}>
 		<SimpleForm>
 			<TitleInput/>
@@ -26,3 +26,5 @@ export const ArticleEdit = (props) => (
 		</SimpleForm>
 	</Edit>
 )
+
+export default ArticleEdit

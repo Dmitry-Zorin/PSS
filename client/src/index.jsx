@@ -1,11 +1,23 @@
-import React, { StrictMode } from 'react'
+import React, { lazy, StrictMode, Suspense } from 'react'
 import ReactDOM from 'react-dom'
-import App from './App'
 import './index.css'
+
+// const App = lazy(() => new Promise(resolve => setTimeout(
+// 	resolve,
+// 	100000,
+// )).then(() => import('./App')))
+
+const App = lazy(() => import('./App'))
+
+const Fallback = () => (
+	<p>Loading... Please wait...</p>
+)
 
 ReactDOM.render(
 	<StrictMode>
-		<App/>
+		<Suspense fallback={<Fallback/>}>
+			<App/>
+		</Suspense>
 	</StrictMode>,
 	document.getElementById('root'),
 )

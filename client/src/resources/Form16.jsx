@@ -5,7 +5,6 @@ import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import React, { useState } from 'react'
 import { Title, useDataProvider, useNotify } from 'react-admin'
-import { createForm16 } from '../form16'
 import { getResourceData } from '../requests'
 
 const useStyles = makeStyles(() => (
@@ -38,6 +37,7 @@ export const Form16 = () => {
 	const [title, setTitle] = useState('Доктор технических наук, профессор')
 	
 	const generateForm = async () => {
+		const { createForm16 } = await import('../form16')
 		const author = `${lastname} ${name.split(' ')[1][0]}.${name.split(' ')[2][0]}.`
 		const resourceData = await getResourceData(dataProvider, notify, author)
 		await createForm16(resourceData, name, author, title)

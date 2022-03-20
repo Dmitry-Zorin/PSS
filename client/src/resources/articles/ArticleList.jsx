@@ -34,7 +34,7 @@ const Filters = (props) => (
 	</Filter>
 )
 
-export const ArticleList = ({ permissions, ...props }) => (
+const ArticleList = ({ permissions, ...props }) => (
 	<List
 		title='Список статей'
 		filters={<Filters/>}
@@ -75,3 +75,5 @@ export const ArticleList = ({ permissions, ...props }) => (
 		</Datagrid>
 	</List>
 )
+
+export default ArticleList

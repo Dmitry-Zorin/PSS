@@ -11,7 +11,7 @@ import {
 	YearInput,
 } from '../../components/inputs'
 
-export const ArticleCreate = (props) => (
+const ArticleCreate = (props) => (
 	<Create title='resources.articles.titles.create' {...props}>
 		<SimpleForm>
 			<TitleInput/>
@@ -26,3 +26,5 @@ export const ArticleCreate = (props) => (
 		</SimpleForm>
 	</Create>
 )
+
+export default ArticleCreate

@@ -17,5 +17,5 @@ export const saveSettings = async (settings) => {
 	const userInfo = JSON.stringify({ ...user, ...settings })
 	localStorage.setItem('user', userInfo)
 	const options = { method: 'put', body: settings }
-	await fetchApi('auth/identity', options)
+	await fetchApi('auth/settings', options)
 }
