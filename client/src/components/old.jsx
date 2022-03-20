@@ -69,9 +69,9 @@ export const EditActionsWithoutFile = ({ basePath, data: record }) => {
 }
 
 export const BulkActionButtons = ({ permissions, ...props }) => (
-	permissions ? null : (
-		<React.Fragment>
+	permissions && (
+		<>
 			<BulkDeleteButton {...props}/>
-		</React.Fragment>
+		</>
 	)
 )

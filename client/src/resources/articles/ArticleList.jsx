@@ -1,7 +1,8 @@
 import React from 'react'
 import { Datagrid, Filter, List, NumberInput, TextField, TextInput } from 'react-admin'
-import { createEmptyPage } from '../../components/old'
-import { DescriptionField, HeadlineField } from '../../CustomFields'
+import { ChipArrayField } from '../../components/fields'
+import { BulkActionButtons, createEmptyPage } from '../../components/old'
+import { HeadlineField } from '../../CustomFields'
 
 const Empty = createEmptyPage(
 	'Нет доступных статей',
@@ -38,40 +39,22 @@ const ArticleList = ({ permissions, ...props }) => (
 	<List
 		title='Список статей'
 		filters={<Filters/>}
-		//perPage={25}
-		//exporter={false}
-		sort={{ field: 'createdAt', order: -1 }}
+		perPage={25}
+		exporter={false}
+		sort={{ field: 'createdAt', order: '-1' }}
 		empty={<Empty/>}
-		//bulkActionButtons={<BulkActionButtons permissions={permissions}/>}
+		bulkActionButtons={<BulkActionButtons permissions={permissions}/>}
 		{...props}
 	>
 		<Datagrid
 			rowClick='show'
-			expand={(
-				<DescriptionField
-					label='Аннотация'
-					source='abstract'
-				/>
+			expand={({ record }) => (
+				<div>{record.description || 'No description'}</div>
 			)}
 		>
-			<HeadlineField
-				source='title'
-			/>
-			{/*<ArrayField
-				source='authors'
-				label='Авторы'
-			>
-				<SingleFieldList linkType={false}>
-					<ChipField
-						label='Автор'
-						source='author'
-					/>
-				</SingleFieldList>
-			</ArrayField>*/}
-			<TextField
-				label='Год создания'
-				source='creationDate'
-			/>
+			<HeadlineField source='title'/>
+			<ChipArrayField label='Авторы' source='authors'/>
+			<TextField label='Год создания' source='creationDate'/>
 		</Datagrid>
 	</List>
 )

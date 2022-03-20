@@ -4,7 +4,7 @@ import { ChipField, FileField, Labeled, ReferenceField, TextField } from 'react-
 
 const LabeledField = ({ children, ...props }) => (
 	<Labeled {...props}>
-		{cloneElement(children, props)}
+		{cloneElement(children, { ...props, emptyText: '-' })}
 	</Labeled>
 )
 
@@ -67,7 +67,7 @@ export const CharactersField = () => (
 )
 
 export const DownloadFileField = () => (
-	<LabeledField label='File' source='file.url'>
-		<FileField title='file.name'/>
+	<LabeledField label='File'>
+		<FileField source='file.url' title='file.name'/>
 	</LabeledField>
 )
