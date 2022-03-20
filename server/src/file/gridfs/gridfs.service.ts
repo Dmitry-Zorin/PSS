@@ -22,7 +22,7 @@ export class GridFSService extends FileService {
 	async upload(resource: string, file: Express.Multer.File) {
 		const bucket = this.getGridFSBucket(resource)
 		const uploadSteam = bucket.openUploadStream(file.originalname)
-		await pipeline(Readable.from(file.buffer.toString()), uploadSteam as any).catch(err => {
+		await pipeline(Readable.from(file.buffer), uploadSteam as any).catch(err => {
 			console.error(err)
 			throw new BadRequestException('File failed to upload')
 		})

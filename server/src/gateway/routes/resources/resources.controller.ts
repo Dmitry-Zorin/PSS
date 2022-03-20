@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Inject, Param, Post, Put, Query, Res, StreamableFile, UploadedFile, UseInterceptors } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Inject, NotFoundException, Param, Post, Put, Query, Res, StreamableFile, UploadedFile, UseInterceptors } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { Response } from 'express'
@@ -21,13 +21,27 @@ export class ResourcesController {
 
 	@Public()
 	@Get('files/:resource/:fileId')
-	async downloadFile(
+	async getFile(
 		@Param('resource') resource: string,
 		@Param('fileId') fileId: string,
+		@Res({ passthrough: true }) res: Response,
 	) {
 		const data = { resource, fileId }
-		const getFileObservable = this.resourcesClient.send('download_file', data)
-		return new StreamableFile(await firstValueFrom(getFileObservable))
+		const fileInfoObservable = await this.resourcesClient.send('get_file_info', data)
+		const fileInfo = await firstValueFrom(fileInfoObservable)
+		const file = await this.fileService.download(resource, fileInfo.fileId)
+
+		res.attachment(fileInfo.name)
+
+		file.on('error', () => {
+			const error = new NotFoundException('File not found')
+			return res
+				.type('json')
+				.status(error.getStatus())
+				.json(error.getResponse())
+		})
+
+		return new StreamableFile(file)
 	}
 
 	@Post(':resource')

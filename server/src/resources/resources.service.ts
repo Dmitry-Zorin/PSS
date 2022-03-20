@@ -15,6 +15,10 @@ export class ResourcesService {
 		return zipObject(resources, await Promise.all(countPromises))
 	}
 
+	getFileInfo(resource: string, fileId: string) {
+		return this.dbService.getFileInfo(resource, fileId)
+	}
+
 	create(resource: string, payload: any) {
 		return this.dbService.create(resource, payload)
 	}
