@@ -26,11 +26,11 @@ export const LargeTextInput = ({ className, required, ...props }) => (
 )
 
 export const TitleInput = () => (
-	<LargeTextInput source='title' required/>
+	<LargeTextInput source='title' label='fields.title' required/>
 )
 
 export const DescriptionInput = () => (
-	<LargeTextInput source='description'/>
+	<LargeTextInput source='description' label='fields.description'/>
 )
 
 export const TypeInput = ({ resource }) => {
@@ -40,7 +40,12 @@ export const TypeInput = ({ resource }) => {
 		{ _: capitalize(resource) },
 	)
 	return (
-		<TextInput source='type' validate={required()} defaultValue={defaultValue}/>
+		<TextInput
+			source='type'
+			label='fields.type'
+			validate={required()}
+			defaultValue={defaultValue}
+		/>
 	)
 }
 
@@ -50,6 +55,7 @@ export const YearInput = () => {
 	return (
 		<NumberInput
 			source='year'
+			label='fields.year'
 			min={min}
 			max={max}
 			defaultValue={max}
@@ -59,13 +65,13 @@ export const YearInput = () => {
 }
 
 export const VolumeInput = () => (
-	<NumberInput source='volume'/>
+	<NumberInput source='volume' label='fields.volume'/>
 )
 
 export const AuthorsInput = () => (
-	<ArrayInput source='authors' validate={required()}>
+	<ArrayInput source='authors' label='fields.authors' validate={required()}>
 		<SimpleFormIterator>
-			<TextInput label='resources.articles.fields.author'/>
+			<TextInput label='fields.author'/>
 		</SimpleFormIterator>
 	</ArrayInput>
 )
@@ -77,17 +83,17 @@ export const CharacterInput = () => (
 )
 
 export const ExitDataInput = () => (
-	<LargeTextInput source='exitData'/>
+	<LargeTextInput source='exitData' label='fields.exitData'/>
 )
 
 export const AddFileInput = () => (
-	<FileInput source='file'>
+	<FileInput source='file' label='fields.file'>
 		<FileField title='filename'/>
 	</FileInput>
 )
 
 export const ReplaceFileInput = () => (
-	<FileInput source='file'>
+	<FileInput source='file' label='fields.file'>
 		<FileField source='url' title='name'/>
 	</FileInput>
 )

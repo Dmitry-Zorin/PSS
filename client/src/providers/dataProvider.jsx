@@ -9,7 +9,9 @@ const getUser = () => ({
 
 const createFormData = (body) => (
 	reduce(body, (result, key, value) => {
-		result.append(key, value?.rawFile ?? JSON.stringify(value))
+		const newValue = typeof value === 'string' || value?.rawFile
+			? value : JSON.stringify(value)
+		result.append(key, newValue)
 		return result
 	}, new FormData())
 )
@@ -36,7 +38,7 @@ const dataProvider = {
 		const { json } = await httpClient(`${resourcesUrl}/${resource}`, options)
 		return { data: { ...data, id: json.id } }
 	},
-	
+
 	getList: async (resource, { filter, sort, pagination }) => {
 		const { field, order } = sort
 		const { page, perPage } = pagination
@@ -51,25 +53,25 @@ const dataProvider = {
 		}, value => JSON.stringify(value))
 
 		const { headers, json } = await httpClient(
-			`${resourcesUrl}/${resource}?${new URLSearchParams(query)}`
+			`${resourcesUrl}/${resource}?${new URLSearchParams(query)}`,
 		)
 		return {
 			data: json,
-			total: +headers.get('content-range').split('/').pop()
+			total: +headers.get('content-range').split('/').pop(),
 		}
 	},
-	
+
 	getOne: async (resource, { id }) => {
 		const { json } = await httpClient(`${resourcesUrl}/${resource}/${id}`)
 		return { data: json }
 	},
-	
+
 	update: async (resource, { id, data }) => {
 		const options = { method: 'put', body: data }
 		await httpClient(`${resourcesUrl}/${resource}/${id}`, options)
 		return { data: { id } }
 	},
-	
+
 	delete: async (resource, { id }) => {
 		const options = {
 			method: 'delete',
@@ -78,7 +80,7 @@ const dataProvider = {
 		await httpClient(`${resourcesUrl}/${resource}/${id}`, options)
 		return { data: { id } }
 	},
-	
+
 	deleteMany: async (resource, { ids }) => {
 		const options = {
 			method: 'delete',

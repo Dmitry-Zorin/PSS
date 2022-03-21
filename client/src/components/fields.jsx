@@ -17,43 +17,43 @@ export const ChipArrayField = ({ record, source }) => (
 )
 
 export const TitleField = () => (
-	<LabeledField source='title'>
+	<LabeledField source='title' label='fields.title'>
 		<TextField/>
 	</LabeledField>
 )
 
 export const DescriptionField = () => (
-	<LabeledField source='description'>
+	<LabeledField source='description' label='fields.description'>
 		<TextField/>
 	</LabeledField>
 )
 
 export const TypeField = () => (
-	<LabeledField source='type'>
+	<LabeledField source='type' label='fields.type'>
 		<TextField/>
 	</LabeledField>
 )
 
 export const YearField = () => (
-	<LabeledField source='year'>
+	<LabeledField source='year' label='fields.year'>
 		<ChipField/>
 	</LabeledField>
 )
 
 export const VolumeField = () => (
-	<LabeledField source='volume'>
+	<LabeledField source='volume' label='fields.volume'>
 		<ChipField/>
 	</LabeledField>
 )
 
 export const AuthorsField = ({ record }) => (
-	<LabeledField source='authors'>
+	<LabeledField source='authors' label='fields.authors'>
 		<ChipArrayField record={record}/>
 	</LabeledField>
 )
 
 export const ExitDataField = () => (
-	<LabeledField source='exitData'>
+	<LabeledField source='exitData' label='fields.exitData'>
 		<TextField/>
 	</LabeledField>
 )
@@ -67,7 +67,7 @@ export const CharactersField = () => (
 )
 
 export const DownloadFileField = () => (
-	<LabeledField label='File'>
-		<FileField source='file.url' title='file.name'/>
+	<LabeledField source='file.url' label='fields.file'>
+		<FileField title='file.name'/>
 	</LabeledField>
 )

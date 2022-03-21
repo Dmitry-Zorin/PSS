@@ -12,32 +12,32 @@ const Empty = createEmptyPage(
 const Filters = (props) => (
 	<Filter {...props}>
 		<TextInput
-			label='Поиск по названию'
-			source='headline'
+			source='title'
+			label='fields.search'
 			alwaysOn
 		/>
 		<TextInput
-			label='Аннотация'
-			source='abstract'
+			source='description'
+			label='fields.description'
 		/>
 		<TextInput
-			label='Автор'
 			source='authors.author'
+			label='fields.author'
 		/>
 		<NumberInput
-			label='Год создания'
 			source='creationDate'
+			label='fields.year'
 		/>
 		<TextInput
-			label='Выходные данные'
 			source='exitData'
+			label='fields.exitData'
 		/>
 	</Filter>
 )
 
 const ArticleList = ({ permissions, ...props }) => (
 	<List
-		title='Список статей'
+		title='resources.articles.titles.list'
 		filters={<Filters/>}
 		perPage={25}
 		exporter={false}
@@ -49,12 +49,12 @@ const ArticleList = ({ permissions, ...props }) => (
 		<Datagrid
 			rowClick='show'
 			expand={({ record }) => (
-				<div>{record.description || 'No description'}</div>
+				<div>{record.description || 'No description //'}</div>
 			)}
 		>
-			<HeadlineField source='title'/>
-			<ChipArrayField label='Авторы' source='authors'/>
-			<TextField label='Год создания' source='creationDate'/>
+			<HeadlineField source='title' label='fields.title'/>
+			<ChipArrayField source='authors' label='fields.authors'/>
+			<TextField source='creationDate' label='fields.year'/>
 		</Datagrid>
 	</List>
 )
