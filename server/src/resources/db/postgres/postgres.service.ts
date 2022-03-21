@@ -33,10 +33,6 @@ export class PostgresService extends DbService {
 		return keys(this.entities)
 	}
 
-	getResourceCount(resource: string) {
-		return this.getEntity(resource).count()
-	}
-
 	getFileInfo(resource: string, fileId: string) {
 		const FileEntity: any = this.getEntity('files')
 		return FileEntity.findOneOrFail(fileId).catch(() => {
@@ -46,18 +42,18 @@ export class PostgresService extends DbService {
 
 	async create(resource: string, payload: any) {
 		delete payload.id
-		const { id: _, ...newPayload } = payload
+		const { id: _, ...newRecord } = payload
 
 		if (payload.fileInfo) {
 			const FileEntity: any = this.getEntity('files')
-			newPayload.file = await FileEntity.save({
+			newRecord.file = await FileEntity.save({
 				fileId: payload.fileInfo.id,
 				name: payload.fileInfo.name,
 			})
 		}
 
 		const Entity = this.getEntity(resource)
-		const { id } = await Entity.save(newPayload)
+		const { id } = await Entity.save(newRecord)
 		return id
 	}
 
@@ -91,19 +87,21 @@ export class PostgresService extends DbService {
 			throw new NotFoundException()
 		})
 
+		const { createdAt, updatedAt, file, ...newRecord } = update
+
 		if (update.fileInfo) {
 			const FileEntity: any = this.getEntity('files')
-			update.file = await FileEntity.save({
+			newRecord.file = await FileEntity.save({
 				id: record.file?.id || undefined,
 				fileId: update.fileInfo.id,
 				name: update.fileInfo.name,
 			})
 		}
 
-		update.id = record.id
-		await Entity.save(update)
+		newRecord.id = record.id
+		await Entity.save(newRecord)
 
-		return record.file?.fileId || ''
+		return update.fileInfo ? (record.file?.fileId || '') : ''
 	}
 
 	async delete(resource: string, filter: any): DeleteResult

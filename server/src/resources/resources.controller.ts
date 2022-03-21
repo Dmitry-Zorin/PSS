@@ -10,11 +10,6 @@ import { ResourcesService } from './resources.service'
 export class ResourcesController {
 	constructor(private readonly resourcesService: ResourcesService) {}
 
-	@MessagePattern('count_all')
-	async handleCountAll() {
-		return this.resourcesService.countAll()
-	}
-
 	@MessagePattern('get_file_info')
 	handleGetFileInfo({ resource, fileId }: any) {
 		return this.resourcesService.getFileInfo(resource, fileId)

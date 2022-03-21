@@ -36,11 +36,6 @@ export class MongoService extends DbService {
 		return keys(this.schemas)
 	}
 
-	getResourceCount(resource: string) {
-		const collection = this.connection.db.collection(resource)
-		return collection.estimatedDocumentCount()
-	}
-
 	getFileInfo(resource: string, fileId: string) {
 		return Promise.resolve(undefined) as any
 	}

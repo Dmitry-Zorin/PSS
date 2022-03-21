@@ -11,8 +11,6 @@ export type FileInfo = {
 export abstract class DbService {
 	abstract getResources(): string[]
 
-	abstract getResourceCount(resource: string): Promise<number>
-
 	abstract getFileInfo(resource: string, fileId: string): Promise<FileInfo>
 
 	abstract create(resource: string, payload: any): Promise<string>

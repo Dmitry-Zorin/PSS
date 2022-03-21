@@ -14,11 +14,6 @@ export class ResourcesController {
 		private readonly fileService: FileService,
 	) {}
 
-	@Get('count')
-	countAll() {
-		return this.resourcesClient.send('count_all', {})
-	}
-
 	@Public()
 	@Get('files/:resource/:fileId')
 	async getFile(
