@@ -28,13 +28,27 @@ export const httpClient = (url, { body, ...options } = {}) => (
 	})
 )
 
+const processInputData = (data) => {
+	return reduce(data, (result, key, value) => {
+		result[key] = Array.isArray(value) ? value.map(e => ({ value: e })) : value
+		return result
+	}, {})
+}
+
+const processOutputData = (data) => {
+	return reduce(data, (result, key, value) => {
+		result[key] = Array.isArray(value) ? value.map(e => e.value) : value
+		return result
+	}, {})
+}
+
 export const apiUrl = `${import.meta.env.VITE_SERVER}/api`
 
 const resourcesUrl = `${apiUrl}/resources`
 
 const dataProvider = {
 	create: async (resource, { data }) => {
-		const options = { method: 'post', body: data }
+		const options = { method: 'post', body: processOutputData(data) }
 		const { json } = await httpClient(`${resourcesUrl}/${resource}`, options)
 		return { data: { ...data, id: json.id } }
 	},
@@ -56,18 +70,18 @@ const dataProvider = {
 			`${resourcesUrl}/${resource}?${new URLSearchParams(query)}`,
 		)
 		return {
-			data: json,
+			data: json.map(processInputData),
 			total: +headers.get('content-range').split('/').pop(),
 		}
 	},
 
 	getOne: async (resource, { id }) => {
 		const { json } = await httpClient(`${resourcesUrl}/${resource}/${id}`)
-		return { data: json }
+		return { data: processInputData(json) }
 	},
 
 	update: async (resource, { id, data }) => {
-		const options = { method: 'put', body: data }
+		const options = { method: 'put', body: processOutputData(data) }
 		await httpClient(`${resourcesUrl}/${resource}/${id}`, options)
 		return { data: { id } }
 	},

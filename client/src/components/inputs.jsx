@@ -71,7 +71,7 @@ export const VolumeInput = () => (
 export const AuthorsInput = () => (
 	<ArrayInput source='authors' label='fields.authors' validate={required()}>
 		<SimpleFormIterator>
-			<TextInput label='fields.author'/>
+			<TextInput source='value' label='fields.author'/>
 		</SimpleFormIterator>
 	</ArrayInput>
 )

@@ -1,6 +1,5 @@
-import { Chip } from '@material-ui/core'
 import React, { cloneElement } from 'react'
-import { ChipField, FileField, Labeled, ReferenceField, TextField } from 'react-admin'
+import { ArrayField, ChipField, FileField, Labeled, ReferenceField, SingleFieldList, TextField } from 'react-admin'
 
 const LabeledField = ({ children, ...props }) => (
 	<Labeled {...props}>
@@ -8,12 +7,12 @@ const LabeledField = ({ children, ...props }) => (
 	</Labeled>
 )
 
-export const ChipArrayField = ({ record, source }) => (
-	<>
-		{record[source].map(item => (
-			<Chip key={item} label={item}/>
-		))}
-	</>
+export const ChipArrayField = (props) => (
+	<ArrayField {...props}>
+		<SingleFieldList linkType={false}>
+			<ChipField source='value' clickable={false}/>
+		</SingleFieldList>
+	</ArrayField>
 )
 
 export const TitleField = () => (
@@ -46,9 +45,9 @@ export const VolumeField = () => (
 	</LabeledField>
 )
 
-export const AuthorsField = ({ record }) => (
+export const AuthorsField = () => (
 	<LabeledField source='authors' label='fields.authors'>
-		<ChipArrayField record={record}/>
+		<ChipArrayField/>
 	</LabeledField>
 )
 
