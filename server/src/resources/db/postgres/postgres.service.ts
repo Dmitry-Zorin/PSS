@@ -1,12 +1,17 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
-import { isNull, keys, transform } from 'lodash'
+import { isNull, isString, keys, transform } from 'lodash'
 import { omitBy } from 'lodash/fp'
 import { pluralize } from 'mongoose'
+import { FindOptionsWhere } from 'typeorm'
 import { PaginationOptions } from '../../list-params.pipe'
 import { DbService, DeleteResult, FindOneResult, UpdateResult } from '../db.service'
+import { Article, File } from './entities'
 import * as entities from './entities'
 
-type Entity = typeof entities[keyof typeof entities]
+type Entity = Article & typeof Article
+
+type Filter = FindOptionsWhere<any>
+type FilterOrId = Filter | string
 
 const omitNull = omitBy(isNull)
 
@@ -17,8 +22,12 @@ export class PostgresService extends DbService {
 	constructor() {
 		super()
 		this.entities = transform(entities, (result, value, key) => {
-			result[pluralize()!(key)] = value
+			result[pluralize()!(key)] = value as any
 		})
+	}
+
+	private static getFilter(filterOrId: FilterOrId) {
+		return isString(filterOrId) ? { id: filterOrId } : filterOrId
 	}
 
 	private getEntity(resource: string) {
@@ -26,7 +35,7 @@ export class PostgresService extends DbService {
 		if (!entity) {
 			throw new NotFoundException('Resource not found')
 		}
-		return entity
+		return entity as Entity
 	}
 
 	getResources() {
@@ -34,8 +43,7 @@ export class PostgresService extends DbService {
 	}
 
 	getFileInfo(resource: string, fileId: string) {
-		const FileEntity: any = this.getEntity('files')
-		return FileEntity.findOneOrFail(fileId).catch(() => {
+		return File.findOneByOrFail({ id: fileId }).catch(() => {
 			throw new NotFoundException()
 		})
 	}
@@ -45,8 +53,7 @@ export class PostgresService extends DbService {
 		const { id: _, ...newRecord } = payload
 
 		if (payload.fileInfo) {
-			const FileEntity: any = this.getEntity('files')
-			newRecord.file = await FileEntity.save({
+			newRecord.file = await File.save({
 				fileId: payload.fileInfo.id,
 				name: payload.fileInfo.name,
 			})
@@ -73,7 +80,10 @@ export class PostgresService extends DbService {
 	async findOne(resource: string, id: string): FindOneResult
 	async findOne(resource: string, filterOrId: any): FindOneResult {
 		const Entity = this.getEntity(resource)
-		const record = await Entity.findOneOrFail(filterOrId, { relations: ['file'] }).catch(() => {
+		const record = await Entity.findOneOrFail({
+			where: PostgresService.getFilter(filterOrId),
+			relations: ['file'],
+		}).catch(() => {
 			throw new NotFoundException()
 		})
 		return omitNull(record)
@@ -83,15 +93,17 @@ export class PostgresService extends DbService {
 	async update(resource: string, id: string, update: any): UpdateResult
 	async update(resource: string, filterOrId: any, update: any): UpdateResult {
 		const Entity = this.getEntity(resource)
-		const record = await Entity.findOneOrFail(filterOrId, { relations: ['file'] }).catch(() => {
+		const record = await Entity.findOneOrFail({
+			where: PostgresService.getFilter(filterOrId),
+			relations: ['file'],
+		}).catch(() => {
 			throw new NotFoundException()
 		})
 
 		const { createdAt, updatedAt, file, ...newRecord } = update
 
 		if (update.fileInfo) {
-			const FileEntity: any = this.getEntity('files')
-			newRecord.file = await FileEntity.save({
+			newRecord.file = await File.save({
 				id: record.file?.id || undefined,
 				fileId: update.fileInfo.id,
 				name: update.fileInfo.name,
@@ -108,14 +120,16 @@ export class PostgresService extends DbService {
 	async delete(resource: string, id: string): DeleteResult
 	async delete(resource: string, filterOrId: any): DeleteResult {
 		const Entity = this.getEntity(resource)
-		const record = await Entity.findOneOrFail(filterOrId, { relations: ['file'] }).catch(() => {
+		const record = await Entity.findOneOrFail({
+			where: PostgresService.getFilter(filterOrId),
+			relations: ['file'],
+		}).catch(() => {
 			throw new NotFoundException()
 		})
 		await Entity.remove(record)
 
 		if (record.file) {
-			const FileEntity: any = this.getEntity('files')
-			await FileEntity.remove(record.file)
+			await File.remove(record.file)
 		}
 
 		return record.file?.fileId || ''

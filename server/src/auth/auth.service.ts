@@ -34,7 +34,7 @@ export class AuthService {
 	}
 
 	async createUser(user: User) {
-		const record = await this.userRepository.findOne(user.username)
+		const record = await this.userRepository.findOneBy({ username: user.username })
 		if (record) {
 			throw new ConflictException('User already exists')
 		}
@@ -42,7 +42,7 @@ export class AuthService {
 	}
 
 	findUser(username: string) {
-		return this.userRepository.findOneOrFail(username).catch(() => {
+		return this.userRepository.findOneByOrFail({ username }).catch(() => {
 			throw new NotFoundException('User not found')
 		})
 	}

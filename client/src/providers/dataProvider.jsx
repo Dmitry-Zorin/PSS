@@ -9,9 +9,7 @@ const getUser = () => ({
 
 const createFormData = (body) => (
 	reduce(body, (result, key, value) => {
-		const newValue = typeof value === 'string' || value?.rawFile
-			? value : JSON.stringify(value)
-		result.append(key, newValue)
+		result.append(key, value.rawFile || value)
 		return result
 	}, new FormData())
 )
@@ -28,19 +26,25 @@ export const httpClient = (url, { body, ...options } = {}) => (
 	})
 )
 
-const processInputData = (data) => {
-	return reduce(data, (result, key, value) => {
-		result[key] = Array.isArray(value) ? value.map(e => ({ value: e })) : value
+const processInputData = (data) => (
+	reduce(data, (result, key, value) => {
+		if (Array.isArray(value)) {
+			value = value.map(e => ({ value: e }))
+		}
+		result[key] = value
 		return result
 	}, {})
-}
+)
 
-const processOutputData = (data) => {
-	return reduce(data, (result, key, value) => {
-		result[key] = Array.isArray(value) ? value.map(e => e.value) : value
+const processOutputData = (data) => (
+	reduce(data, (result, key, value) => {
+		if (Array.isArray(value)) {
+			value = value.map(e => e.value)
+		}
+		result[key] = value
 		return result
 	}, {})
-}
+)
 
 export const apiUrl = `${import.meta.env.VITE_SERVER}/api`
 
@@ -77,6 +81,9 @@ const dataProvider = {
 
 	getOne: async (resource, { id }) => {
 		const { json } = await httpClient(`${resourcesUrl}/${resource}/${id}`)
+		if (json.file) {
+			json.file.url = `${resourcesUrl}/files/${resource}/${json.file.id}`
+		}
 		return { data: processInputData(json) }
 	},
 
