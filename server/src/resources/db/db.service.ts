@@ -4,7 +4,7 @@ export type DeleteResult = Promise<string>
 
 export type FileInfo = {
 	id: string,
-	fileId: string,
+	objectId: string,
 	name: string
 }
 

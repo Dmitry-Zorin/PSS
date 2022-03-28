@@ -24,7 +24,7 @@ export class ResourcesController {
 		const data = { resource, fileId }
 		const fileInfoObservable = await this.resourcesClient.send('get_file_info', data)
 		const fileInfo = await firstValueFrom(fileInfoObservable)
-		const file = await this.fileService.download(resource, fileInfo.fileId)
+		const file = await this.fileService.download(resource, fileInfo.objectId)
 
 		res.attachment(fileInfo.name)
 
@@ -49,9 +49,8 @@ export class ResourcesController {
 		const payload: any = { ...body }
 
 		if (file) {
-			const uploadResult = await this.fileService.upload(resource, file)
 			payload.fileInfo = {
-				id: uploadResult.id,
+				id: file.id,
 				name: file.originalname,
 			}
 		}
@@ -93,9 +92,8 @@ export class ResourcesController {
 		const payload: any = { ...body }
 
 		if (file) {
-			const uploadResult = await this.fileService.upload(resource, file)
 			payload.fileInfo = {
-				id: uploadResult.id,
+				id: file.id,
 				name: file.originalname,
 			}
 		}

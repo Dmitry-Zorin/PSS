@@ -32,12 +32,8 @@ export class ResourcesController {
 	}
 
 	@MessagePattern('find_one')
-	async handleFindOne({ resource, id }: any) {
-		const record = await this.resourcesService.findOne(resource, id)
-		if (record.file) {
-			record.file.url = this.resourcesService.getFileUrl(resource, record.file.id)
-		}
-		return record
+	handleFindOne({ resource, id }: any) {
+		return this.resourcesService.findOne(resource, id)
 	}
 
 	@MessagePattern('update')

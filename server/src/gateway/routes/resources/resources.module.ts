@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { ClientsModule, Transport } from '@nestjs/microservices'
+import { MulterModule } from '@nestjs/platform-express'
 import { FileModule } from '../../../file/file.module'
 import { ResourcesController } from './resources.controller'
 
@@ -18,6 +19,13 @@ import { ResourcesController } from './resources.controller'
 			}),
 			inject: [ConfigService],
 		}]),
+		MulterModule.registerAsync({
+			imports: [ConfigModule],
+			useFactory: (configService: ConfigService) => ({
+				storage: FileModule.getStorage('gridfs', configService),
+			}),
+			inject: [ConfigService],
+		}),
 		FileModule.forRoot({ storage: 'gridfs' }),
 	],
 	controllers: [ResourcesController],

@@ -6,7 +6,7 @@ export class File extends BaseEntity {
 	id: string
 
 	@Column()
-	fileId: string
+	objectId: string
 
 	@Column()
 	name: string

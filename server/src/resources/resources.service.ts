@@ -27,10 +27,6 @@ export class ResourcesService {
 		return this.dbService.findOne(resource, id)
 	}
 
-	getFileUrl(resource: string, fileId: string) {
-		return `${process.env.SERVER}/files/${resource}/${fileId}`
-	}
-
 	update(resource: string, id: string, payload: any) {
 		return this.dbService.update(resource, id, payload)
 	}

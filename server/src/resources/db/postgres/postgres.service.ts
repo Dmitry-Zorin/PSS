@@ -54,7 +54,7 @@ export class PostgresService extends DbService {
 
 		if (payload.fileInfo) {
 			newRecord.file = await File.save({
-				fileId: payload.fileInfo.id,
+				objectId: payload.fileInfo.id,
 				name: payload.fileInfo.name,
 			})
 		}
@@ -105,7 +105,7 @@ export class PostgresService extends DbService {
 		if (update.fileInfo) {
 			newRecord.file = await File.save({
 				id: record.file?.id || undefined,
-				fileId: update.fileInfo.id,
+				objectId: update.fileInfo.id,
 				name: update.fileInfo.name,
 			})
 		}
@@ -113,7 +113,7 @@ export class PostgresService extends DbService {
 		newRecord.id = record.id
 		await Entity.save(newRecord)
 
-		return update.fileInfo ? (record.file?.fileId || '') : ''
+		return update.fileInfo ? (record.file?.objectId || '') : ''
 	}
 
 	async delete(resource: string, filter: any): DeleteResult
@@ -132,6 +132,6 @@ export class PostgresService extends DbService {
 			await File.remove(record.file)
 		}
 
-		return record.file?.fileId || ''
+		return record.file?.objectId || ''
 	}
 }

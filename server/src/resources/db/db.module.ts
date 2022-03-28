@@ -1,4 +1,4 @@
-import { Global, Module } from '@nestjs/common'
+import { Module } from '@nestjs/common'
 import { DbService } from './db.service'
 import { MongoModule } from './mongo/mongo.module'
 import { MongoService } from './mongo/mongo.service'
@@ -9,7 +9,6 @@ interface Options {
 	db: 'mongo' | 'postgres'
 }
 
-@Global()
 @Module({})
 export class DbModule {
 	private static readonly dbs = {

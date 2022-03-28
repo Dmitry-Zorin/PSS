@@ -9,8 +9,6 @@ import { GridFSService } from './gridfs.service'
 			imports: [ConfigModule],
 			useFactory: (configService: ConfigService) => ({
 				uri: `${configService.get('MONGO_URI')}/${configService.get('MONGO_DB_NAME')}-files`,
-				useNewUrlParser: true,
-				useUnifiedTopology: true,
 			}),
 			inject: [ConfigService],
 		}),
