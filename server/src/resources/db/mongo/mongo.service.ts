@@ -36,10 +36,6 @@ export class MongoService extends DbService {
 		return keys(this.schemas)
 	}
 
-	getFileInfo(resource: string, fileId: string) {
-		return Promise.resolve(undefined) as any
-	}
-
 	async create(resource: string, payload: any): Promise<string> {
 		const model = this.getModel(resource)
 		const { _id } = await model.create(payload).catch(err => {

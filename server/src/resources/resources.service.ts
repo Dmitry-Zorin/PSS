@@ -6,10 +6,6 @@ import { PaginationOptions } from './list-params.pipe'
 export class ResourcesService {
 	constructor(private readonly dbService: DbService) {}
 
-	getFileInfo(resource: string, fileId: string) {
-		return this.dbService.getFileInfo(resource, fileId)
-	}
-
 	create(resource: string, payload: any) {
 		return this.dbService.create(resource, payload)
 	}

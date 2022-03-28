@@ -10,11 +10,6 @@ import { ResourcesService } from './resources.service'
 export class ResourcesController {
 	constructor(private readonly resourcesService: ResourcesService) {}
 
-	@MessagePattern('get_file_info')
-	handleGetFileInfo({ resource, fileId }: any) {
-		return this.resourcesService.getFileInfo(resource, fileId)
-	}
-
 	@MessagePattern('create')
 	async handleCreate({ resource, payload }: any) {
 		const id = await this.resourcesService.create(resource, payload)

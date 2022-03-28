@@ -42,12 +42,6 @@ export class PostgresService extends DbService {
 		return keys(this.entities)
 	}
 
-	getFileInfo(resource: string, fileId: string) {
-		return File.findOneByOrFail({ id: fileId }).catch(() => {
-			throw new NotFoundException()
-		})
-	}
-
 	async create(resource: string, payload: any) {
 		delete payload.id
 		const { id: _, ...newRecord } = payload

@@ -82,7 +82,7 @@ const dataProvider = {
 	getOne: async (resource, { id }) => {
 		const { json } = await httpClient(`${resourcesUrl}/${resource}/${id}`)
 		if (json.file) {
-			json.file.url = `${resourcesUrl}/files/${resource}/${json.file.id}`
+			json.file.url = `${resourcesUrl}/files/${resource}/${json.file.objectId}`
 		}
 		return { data: processInputData(json) }
 	},
