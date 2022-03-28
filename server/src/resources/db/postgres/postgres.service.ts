@@ -42,6 +42,10 @@ export class PostgresService extends DbService {
 		return keys(this.entities)
 	}
 
+	getResourceCount(resource: string) {
+		return this.getEntity(resource).count()
+	}
+
 	async create(resource: string, payload: any) {
 		delete payload.id
 		const { id: _, ...newRecord } = payload

@@ -4,9 +4,10 @@ import Filter2Icon from '@material-ui/icons/Filter2'
 import Filter3Icon from '@material-ui/icons/Filter3'
 import FilterNoneIcon from '@material-ui/icons/FilterNone'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { getResources, usePermissions } from 'react-admin'
 import { useSelector } from 'react-redux'
+import { fetchApi } from '../../requests'
 import MenuItem from './MenuItem'
 import SubMenu from './SubMenu'
 
@@ -59,13 +60,18 @@ const Menu = () => {
 	const [showCategory3, setShowCategory3] = useState(true)
 	const [showRest, setShowRest] = useState(true)
 	const [showOther, setShowOther] = useState(false)
+	const [data, setData] = useState({})
+
+	useEffect(() => {
+		fetchApi('resources/count').then(({ json }) => setData(json))
+	}, [])
 
 	return (
 		<Paper style={{ marginRight: 5, borderRadius: 0 }}>
 			{resources
 				.filter(r => menuResources.includes(r.name))
 				.map(resource => (
-					<MenuItem key={resource.name} {...{ resource }}/>
+					<MenuItem key={resource.name} {...{ resource, data }}/>
 				))
 			}
 			<SubMenu
@@ -77,7 +83,7 @@ const Menu = () => {
 				{resources
 					.filter(r => category1Resources.includes(r.name))
 					.map(resource => (
-						<MenuItem key={resource.name} {...{ resource }}/>
+						<MenuItem key={resource.name} {...{ resource, data }}/>
 					))
 				}
 			</SubMenu>
@@ -90,7 +96,7 @@ const Menu = () => {
 				{resources
 					.filter(r => category2Resources.includes(r.name))
 					.map(resource => (
-						<MenuItem key={resource.name} {...{ resource }}/>
+						<MenuItem key={resource.name} {...{ resource, data }}/>
 					))
 				}
 			</SubMenu>
@@ -103,7 +109,7 @@ const Menu = () => {
 				{resources
 					.filter(r => category3Resources.includes(r.name))
 					.map(resource => (
-						<MenuItem key={resource.name} {...{ resource }}/>
+						<MenuItem key={resource.name} {...{ resource, data }}/>
 					))
 				}
 			</SubMenu>
@@ -116,7 +122,7 @@ const Menu = () => {
 				{resources
 					.filter(r => restResources.includes(r.name))
 					.map(resource => (
-						<MenuItem key={resource.name} {...{ resource }}/>
+						<MenuItem key={resource.name} {...{ resource, data }}/>
 					))
 				}
 			</SubMenu>

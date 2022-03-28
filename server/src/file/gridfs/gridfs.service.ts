@@ -35,6 +35,7 @@ export class GridFSService extends FileService {
 	}
 
 	async delete(resource: string, fileId: string) {
+		if (!mongo.ObjectId.isValid(fileId)) return
 		const objectId = new mongo.ObjectId(fileId)
 		const bucket = this.getGridFSBucket(resource)
 		return bucket.delete(objectId).catch((err: any) => {

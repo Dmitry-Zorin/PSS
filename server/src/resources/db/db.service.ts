@@ -2,14 +2,10 @@ export type FindOneResult = Promise<any>
 export type UpdateResult = Promise<string>
 export type DeleteResult = Promise<string>
 
-export type FileInfo = {
-	id: string,
-	objectId: string,
-	name: string
-}
-
 export abstract class DbService {
 	abstract getResources(): string[]
+
+	abstract getResourceCount(resource: string): Promise<number>
 
 	abstract create(resource: string, payload: any): Promise<string>
 

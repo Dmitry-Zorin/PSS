@@ -1,10 +1,19 @@
 import { Injectable } from '@nestjs/common'
+import { zipObject } from 'lodash'
 import { DbService } from './db/db.service'
 import { PaginationOptions } from './list-params.pipe'
 
 @Injectable()
 export class ResourcesService {
 	constructor(private readonly dbService: DbService) {}
+
+	async countAll() {
+		const resources = this.dbService.getResources()
+		const countPromises = resources.map(resource => (
+			this.dbService.getResourceCount(resource))
+		)
+		return zipObject(resources, await Promise.all(countPromises))
+	}
 
 	create(resource: string, payload: any) {
 		return this.dbService.create(resource, payload)

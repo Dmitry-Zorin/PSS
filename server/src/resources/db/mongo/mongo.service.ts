@@ -36,6 +36,11 @@ export class MongoService extends DbService {
 		return keys(this.schemas)
 	}
 
+	getResourceCount(resource: string) {
+		const collection = this.connection.db.collection(resource)
+		return collection.estimatedDocumentCount()
+	}
+
 	async create(resource: string, payload: any): Promise<string> {
 		const model = this.getModel(resource)
 		const { _id } = await model.create(payload).catch(err => {
