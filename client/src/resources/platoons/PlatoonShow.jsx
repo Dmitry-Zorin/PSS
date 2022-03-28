@@ -1,4 +1,4 @@
-import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle'
+import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle'
 import React from 'react'
 import Grade from '../employees/components/Grade'
 import { PeopleShow } from '../employees/components/PeopleShow'

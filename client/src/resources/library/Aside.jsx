@@ -1,24 +1,9 @@
-import { Card, CardContent } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
-import AccountTreeIcon from '@material-ui/icons/AccountTree'
+import AccountTreeIcon from '@mui/icons-material/AccountTree'
+import { Card, CardContent, useTheme } from '@mui/material'
 import { Resizable } from 're-resizable'
 import React, { useEffect, useState } from 'react'
 import { FilterList, FilterListItem } from 'react-admin'
 import dataProvider from '../../providers/dataProvider'
-
-const useStyles = makeStyles(theme => (
-	{
-		container: {
-			[theme.breakpoints.up('sm')]: {
-				order: -1,
-				marginRight: '0.5em',
-			},
-			[theme.breakpoints.down('sm')]: {
-				display: 'none',
-			},
-		},
-	}
-))
 
 const getSubdivisions = () => (
 	dataProvider.getList('subdivisions', {
@@ -29,10 +14,9 @@ const getSubdivisions = () => (
 )
 
 export const Aside = () => {
-	const styles = useStyles()
-	
+	const theme = useTheme()
 	const [subdivisions, setSubdivisions] = useState()
-	
+
 	useEffect(() => {
 		if (!subdivisions) {
 			setSubdivisions([])
@@ -41,13 +25,21 @@ export const Aside = () => {
 			})
 		}
 	})
-	
+
 	return (
 		<Resizable
-			className={styles.container}
 			defaultSize={{ width: 475 }}
 			minWidth={400}
 			enable={{ right: true }}
+			sx={{
+				[theme.breakpoints.up('sm')]: {
+					order: -1,
+					marginRight: '0.5em',
+				},
+				[theme.breakpoints.down('sm')]: {
+					display: 'none',
+				},
+			}}
 		>
 			<Card>
 				<CardContent>

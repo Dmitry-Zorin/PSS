@@ -1,24 +1,23 @@
-import { Table, TableBody, TableCell, TableContainer, TableRow } from '@material-ui/core'
+import { Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material'
 import React from 'react'
 import { useRecordContext } from 'react-admin'
-import useStyles from '../Styles'
+import styles from '../Styles'
 
 const HoursTable = ({ data }) => {
-	const classes = useStyles()
 	const { numOfPeople = 1 } = useRecordContext()
 	
 	return (
 		<TableContainer style={{ marginTop: 45 }}>
-			<Table className={classes.table}>
+			<Table sx={styles.table}>
 				<TableBody>
 					<TableRow>
-						<TableCell className={classes.widthOneThird}>
+						<TableCell sx={styles.widthOneThird}>
 							Повседневная деятельность
 						</TableCell>
-						<TableCell className={classes.widthOneThird}>
+						<TableCell sx={styles.widthOneThird}>
 							Научная деятельность
 						</TableCell>
-						<TableCell className={classes.widthOneThird}>
+						<TableCell sx={styles.widthOneThird}>
 							Всего рабочего времени
 						</TableCell>
 					</TableRow>

@@ -1,27 +1,10 @@
-import Collapse from '@material-ui/core/Collapse'
-import { makeStyles } from '@material-ui/core/styles'
-import ExpandMore from '@material-ui/icons/ExpandMore'
+import ExpandMore from '@mui/icons-material/ExpandMore'
+import Box from '@mui/material/Box'
+import Collapse from '@mui/material/Collapse'
 import capitalize from 'just-capitalize'
 import React from 'react'
 import { MenuItemLink, useTranslate } from 'react-admin'
 import { useSelector } from 'react-redux'
-
-const useStyles = makeStyles(theme => ({
-	active: {
-		boxShadow: 'none',
-		background: 'transparent',
-	},
-	sidebarIsOpen: {
-		'& a': {
-			paddingLeft: theme.spacing(4),
-		},
-	},
-	sidebarIsClosed: {
-		'& a': {
-			paddingLeft: theme.spacing(2),
-		},
-	},
-}))
 
 const SubMenu = ({
 	handleToggle,
@@ -31,9 +14,8 @@ const SubMenu = ({
 	children,
 }) => {
 	const translate = useTranslate()
-	const classes = useStyles()
 	const sidebarIsOpen = useSelector(state => state.admin.ui.sidebarOpen)
-	
+
 	return (
 		<>
 			<MenuItemLink
@@ -41,18 +23,21 @@ const SubMenu = ({
 				primaryText={translate(name, { _: capitalize(name) })}
 				leftIcon={isOpen ? <ExpandMore/> : icon}
 				onClick={handleToggle}
-				className={classes.active}
+				sx={{
+					boxShadow: 'none',
+					background: 'transparent',
+				}}
 			/>
 			<Collapse in={isOpen} timeout='auto' unmountOnExit>
-				<div
-					className={
-						sidebarIsOpen
-							? classes.sidebarIsOpen
-							: classes.sidebarIsClosed
-					}
+				<Box
+					sx={{
+						'& a': {
+							paddingLeft: sidebarIsOpen ? 4 : 2,
+						},
+					}}
 				>
 					{children}
-				</div>
+				</Box>
 			</Collapse>
 		</>
 	)

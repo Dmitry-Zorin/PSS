@@ -1,17 +1,16 @@
-import { CardContent, Typography } from '@material-ui/core'
-import Box from '@material-ui/core/Box'
+import { CardContent, Typography } from '@mui/material'
+import Box from '@mui/material/Box'
 import React from 'react'
 import { useRecordContext } from 'react-admin'
-import useStyles from '../Styles'
+import styles from '../Styles'
 import CircleNumber from './CircleNumber'
 import { GradeChart } from './GradeChart'
 import PointsTable from './PointsTable'
 
 const Grade = ({ data, info }) => {
-	const classes = useStyles()
 	const { numOfPeople = 1 } = useRecordContext()
 	const { whose } = info
-	
+
 	return (
 		<CardContent>
 			<Box textAlign='center' mt='15px' mb='30px'>
@@ -35,7 +34,7 @@ const Grade = ({ data, info }) => {
 						text='Количество баллов за прошедшую неделю'
 					/>
 				</Box>
-				<Typography className={classes.subtitle}>
+				<Typography sx={styles.subtitle}>
 					Шкала соответствия баллов за неделю
 				</Typography>
 				<PointsTable/>

@@ -1,13 +1,12 @@
-import { Divider } from '@material-ui/core'
-import Box from '@material-ui/core/Box'
+import { Divider } from '@mui/material'
+import Box from '@mui/material/Box'
 import { GridShowLayout, RaGrid } from 'ra-compact-ui/dist/details'
 import React from 'react'
 import { ImageField, TextField, useRecordContext } from 'react-admin'
 import photoPlaceholder from '../../../assets/photo-placeholder.jpg'
-import useStyles from '../Styles'
+import styles from '../Styles'
 
 const Info = ({ children }) => {
-	const classes = useStyles()
 	const { platoonNumber, companyNumber } = useRecordContext()
 	
 	return (
@@ -15,17 +14,17 @@ const Info = ({ children }) => {
 			<GridShowLayout>
 				<RaGrid container spacing={2}>
 					<RaGrid item xs={12} md={6}>
-						<div className={classes.rightSide}>
+						<div sx={styles.rightSide}>
 							<ImageField
 								label={null}
 								source='file.url'
 								title='file.title'
 								emptyText={<img src={photoPlaceholder} alt='photo'/>}
-								className={classes.photo}
+								sx={styles.photo}
 							/>
 						</div>
 					</RaGrid>
-					<RaGrid item xs className={classes.rightSide}>
+					<RaGrid item xs sx={styles.rightSide}>
 						<TextField
 							label='ФИО'
 							source='name'

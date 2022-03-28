@@ -1,4 +1,4 @@
-import LibraryBooksIcon from '@material-ui/icons/LibraryBooks'
+import LibraryBooksIcon from '@mui/icons-material/LibraryBooks'
 
 export const dissertations = {
 	icon: LibraryBooksIcon,

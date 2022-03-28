@@ -1,5 +1,5 @@
-import { Divider, Typography } from '@material-ui/core'
-import AccountCircleIcon from '@material-ui/icons/AccountCircle'
+import { Divider, Typography } from '@mui/material'
+import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import React from 'react'
 import ButtonForm16 from './components/ButtonForm16'
 import Grade from './components/Grade'

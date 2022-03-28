@@ -1,4 +1,4 @@
-import SelectInput from '@material-ui/core/Select/SelectInput'
+import SelectInput from '@mui/material/Select/SelectInput'
 import capitalize from 'just-capitalize'
 import React from 'react'
 import {

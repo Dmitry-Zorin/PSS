@@ -5,35 +5,34 @@ import {
 	TableContainer,
 	TableRow,
 	Typography,
-} from '@material-ui/core'
+} from '@mui/material'
 import React from 'react'
 import { useRecordContext } from 'react-admin'
-import useStyles from '../Styles'
+import styles from '../Styles'
 
 const PointsTable = () => {
-	const classes = useStyles()
 	const { numOfPeople = 1 } = useRecordContext()
 	
 	return (
 		<TableContainer style={{ marginTop: 45 }}>
-			<Table className={classes.table}>
+			<Table sx={styles.table}>
 				<TableBody>
 					<TableRow>
-						<TableCell className={classes.widthOneThird}>
+						<TableCell sx={styles.widthOneThird}>
 							Минимальное количество баллов
-							<Typography className={classes.textSecondary}>
+							<Typography sx={styles.textSecondary}>
 								Удовлетворительно
 							</Typography>
 						</TableCell>
-						<TableCell className={classes.widthOneThird}>
+						<TableCell sx={styles.widthOneThird}>
 							Среднее количество баллов
-							<Typography className={classes.textSecondary}>
+							<Typography sx={styles.textSecondary}>
 								Хорошо
 							</Typography>
 						</TableCell>
-						<TableCell className={classes.widthOneThird}>
+						<TableCell sx={styles.widthOneThird}>
 							Высокое количество баллов
-							<Typography className={classes.textSecondary}>
+							<Typography sx={styles.textSecondary}>
 								Отлично
 							</Typography>
 						</TableCell>

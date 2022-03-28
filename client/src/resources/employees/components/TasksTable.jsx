@@ -1,22 +1,19 @@
-import { Table, TableBody, TableCell, TableContainer, TableRow } from '@material-ui/core'
+import { Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material'
 import React from 'react'
-import useStyles from '../Styles'
+import styles from '../Styles'
 
-const TasksTable = ({ data }) => {
-	const classes = useStyles()
-	
-	return (
+const TasksTable = ({ data }) => (
 		<TableContainer style={{ marginTop: 45 }}>
-			<Table className={classes.table}>
+			<Table sx={styles.table}>
 				<TableBody>
 					<TableRow>
-						<TableCell className={classes.widthOneThird}>
+						<TableCell sx={styles.widthOneThird}>
 							Невыполненых задач
 						</TableCell>
-						<TableCell className={classes.widthOneThird}>
+						<TableCell sx={styles.widthOneThird}>
 							Выполненых задач
 						</TableCell>
-						<TableCell className={classes.widthOneThird}>
+						<TableCell sx={styles.widthOneThird}>
 							Всего задач
 						</TableCell>
 					</TableRow>
@@ -29,6 +26,5 @@ const TasksTable = ({ data }) => {
 			</Table>
 		</TableContainer>
 	)
-}
 
 export default TasksTable

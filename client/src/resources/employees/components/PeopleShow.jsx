@@ -1,5 +1,5 @@
-import AssessmentIcon from '@material-ui/icons/Assessment'
-import StarsIcon from '@material-ui/icons/Stars'
+import AssessmentIcon from '@mui/icons-material/Assessment'
+import StarsIcon from '@mui/icons-material/Stars'
 import React, { cloneElement, useEffect, useState } from 'react'
 import { Show, Tab, TabbedShowLayout } from 'react-admin'
 import { createTitle, ShowActions } from '../../../components/inputs'

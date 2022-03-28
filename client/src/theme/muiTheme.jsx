@@ -6,8 +6,8 @@ export default {
 		fontWeight: 300,
 	},
 	sidebar: {
-		width: 260,
-		closedWidth: 60,
+		width: 200,
+		closedWidth: 57,
 	},
 	overrides: {
 		MuiCardContent: {

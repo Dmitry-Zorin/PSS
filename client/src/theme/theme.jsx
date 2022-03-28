@@ -1,4 +1,4 @@
-import { amber, blueGrey, indigo } from '@material-ui/core/colors'
+import { amber, blueGrey, indigo } from '@mui/material/colors'
 import extend from 'just-extend'
 import muiTheme from './muiTheme'
 import raTheme from './raTheme'
@@ -10,7 +10,7 @@ const createMyTheme = (theme) => (
 const themes = {
 	light: createMyTheme({
 		palette: {
-			type: 'light',
+			mode: 'light',
 		},
 		overrides: {
 			RaMenuItemLink: {
@@ -22,7 +22,7 @@ const themes = {
 	}),
 	dark: createMyTheme({
 		palette: {
-			type: 'dark',
+			mode: 'dark',
 			primary: {
 				light: amber[200],
 				main: amber[300],

@@ -1,28 +1,16 @@
-import { useScrollTrigger } from '@material-ui/core'
-import Fab from '@material-ui/core/Fab'
-import { makeStyles } from '@material-ui/core/styles'
-import Zoom from '@material-ui/core/Zoom'
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
+import { useScrollTrigger } from '@mui/material'
+import Box from '@mui/material/Box'
+import Fab from '@mui/material/Fab'
+import Zoom from '@mui/material/Zoom'
 import React from 'react'
 
-const useStyles = makeStyles(theme => (
-	{
-		fabContainer: {
-			zIndex: 9000,
-			position: 'fixed',
-			bottom: theme.spacing(3),
-			right: theme.spacing(4),
-		},
-	}
-))
-
 export const ScrollTopButton = () => {
-	const styles = useStyles()
 	const trigger = useScrollTrigger()
-	
+
 	const handleClick = () => {
 		const anchor = document.getElementById('app')
-		
+
 		if (anchor) {
 			anchor.scrollIntoView({
 				behavior: 'smooth',
@@ -30,14 +18,22 @@ export const ScrollTopButton = () => {
 			})
 		}
 	}
-	
+
 	return (
 		<Zoom in={trigger}>
-			<div className={styles.fabContainer} onClick={handleClick}>
+			<Box
+				sx={{
+					zIndex: 9000,
+					position: 'fixed',
+					bottom: 3,
+					right: 4,
+				}}
+				onClick={handleClick}
+			>
 				<Fab color='primary'>
 					<KeyboardArrowUpIcon/>
 				</Fab>
-			</div>
+			</Box>
 		</Zoom>
 	)
 }

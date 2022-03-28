@@ -1,42 +1,41 @@
-import { makeStyles } from '@material-ui/core/styles'
-
-const Styles = makeStyles(() => (
-	{
-		photo: {
-			'& > img': {
-				width: '100%',
-				maxHeight: 380,
-				objectFit: 'contain',
-			},
-		},
-		rightSide: {
-			display: 'flex',
-			flexDirection: 'column',
-			'& > div': {
-				flex: 1,
-			},
-		},
-		stepper: {
+const Styles = {
+	photo: {
+		'& > img': {
 			width: '100%',
+			maxHeight: 380,
+			objectFit: 'contain',
 		},
-		table: {
-			borderTop: '1px solid #ddd',
-			'& td': {
-				textAlign: 'center !important',
-			},
+	},
+	rightSide: {
+		display: 'flex',
+		flexDirection: 'column',
+		'& > div': {
+			flex: 1,
 		},
-		widthOneThird: {
-			width: '33%',
+	},
+	stepper: {
+		width: '100%',
+	},
+	table: {
+		borderTop: '1px solid #ddd',
+		'& td': {
+			textAlign: 'center !important',
 		},
-		textSecondary: {
-			fontStyle: 'italic',
-			color: '#737373',
-		},
-		subtitle: {
-			marginTop: 60,
-			fontSize: '1.1rem',
-		},
-	}
-))
+	},
+	widthOneThird: {
+		width: '33%',
+	},
+	widthOneQuarter: {
+		width: '25%'
+	},
+	textSecondary: {
+		fontStyle: 'italic',
+		color: '#737373',
+	},
+	subtitle: {
+		marginTop: 60,
+		fontSize: '1.1rem',
+	},
+}
 
 export default Styles

@@ -1,29 +1,26 @@
-import Box from '@material-ui/core/Box'
+import Box from '@mui/material/Box'
 import { GridShowLayout, RaGrid } from 'ra-compact-ui/dist/details'
 import React from 'react'
 import { ImageField, NumberField, TextField } from 'react-admin'
 import photoPlaceholder from '../../../assets/photo-placeholder.jpg'
-import useStyles from '../../employees/Styles'
+import styles from '../../employees/Styles'
 
-const Info = () => {
-	const classes = useStyles()
-	
-	return (
+const Info = () => (
 		<Box mt='15px' mb='30px'>
 			<GridShowLayout>
 				<RaGrid container spacing={2}>
 					<RaGrid item xs={12} md={6}>
-						<div className={classes.rightSide}>
+						<div sx={styles.rightSide}>
 							<ImageField
 								label={null}
 								source='file.url'
 								title='file.title'
 								emptyText={<img src={photoPlaceholder} alt='photo'/>}
-								className={classes.photo}
+								sx={styles.photo}
 							/>
 						</div>
 					</RaGrid>
-					<RaGrid item xs className={classes.rightSide}>
+					<RaGrid item xs sx={styles.rightSide}>
 						<TextField
 							label='Название'
 							source='name'
@@ -46,6 +43,5 @@ const Info = () => {
 			</GridShowLayout>
 		</Box>
 	)
-}
 
 export default Info

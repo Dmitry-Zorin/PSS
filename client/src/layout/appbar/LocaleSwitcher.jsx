@@ -1,5 +1,5 @@
-import Button from '@material-ui/core/Button'
-import LanguageIcon from '@material-ui/icons/Language'
+import Button from '@mui/material/Button'
+import LanguageIcon from '@mui/icons-material/Language'
 import React from 'react'
 import { useLocale, useSetLocale, useTranslate } from 'react-admin'
 import { Helmet } from 'react-helmet'

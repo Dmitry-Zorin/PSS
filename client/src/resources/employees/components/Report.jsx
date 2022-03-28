@@ -1,10 +1,10 @@
-import { CardContent, Typography } from '@material-ui/core'
-import Box from '@material-ui/core/Box'
+import { CardContent, Typography } from '@mui/material'
+import Box from '@mui/material/Box'
 import React from 'react'
 import { useRecordContext } from 'react-admin'
 import HoursTableFull from '../../platoons/components/HoursTableFull'
 import TasksTableFull from '../../platoons/components/TasksTableFull'
-import useStyles from '../Styles'
+import styles from '../Styles'
 import { HoursChart } from './HoursChart'
 import HoursTable from './HoursTable'
 import ProgressBar from './ProgressBar'
@@ -18,7 +18,6 @@ const dateToString = (date) => {
 }
 
 const Report = ({ data, info }) => {
-	const classes = useStyles()
 	const { numOfPeople = 1 } = useRecordContext()
 	const { whose } = info
 	
@@ -28,7 +27,7 @@ const Report = ({ data, info }) => {
 				<Typography variant='h6' style={{ fontWeight: 'bold' }}>
 					Отчет {whose} за неделю
 				</Typography>
-				<Typography className={classes.textSecondary}>
+				<Typography sx={styles.textSecondary}>
 					{dateToString(data.startDate)} - {dateToString(data.dueDate)}
 				</Typography>
 				

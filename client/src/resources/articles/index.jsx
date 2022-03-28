@@ -1,4 +1,4 @@
-import VerticalSplitIcon from '@material-ui/icons/VerticalSplit'
+import VerticalSplitIcon from '@mui/icons-material/VerticalSplit'
 
 export const articles = {
 	icon: VerticalSplitIcon,

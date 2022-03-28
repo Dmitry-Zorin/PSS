@@ -1,25 +1,22 @@
-import { Table, TableBody, TableCell, TableContainer, TableRow } from '@material-ui/core'
+import { Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material'
 import React from 'react'
-import useStyles from '../../employees/Styles'
+import styles from '../../employees/Styles'
 
-const HoursTableFull = ({ people }) => {
-	const classes = useStyles()
-	
-	return (
+const HoursTableFull = ({ people }) => (
 		<TableContainer style={{ marginTop: 45 }}>
-			<Table className={classes.table}>
+			<Table sx={styles.table}>
 				<TableBody>
 					<TableRow>
-						<TableCell className={classes.widthOneQuarter}>
+						<TableCell sx={styles.widthOneQuarter}>
 							Оператор
 						</TableCell>
-						<TableCell className={classes.widthOneQuarter}>
+						<TableCell sx={styles.widthOneQuarter}>
 							Повседневная деятельность
 						</TableCell>
-						<TableCell className={classes.widthOneQuarter}>
+						<TableCell sx={styles.widthOneQuarter}>
 							Научная деятельность
 						</TableCell>
-						<TableCell className={classes.widthOneQuarter}>
+						<TableCell sx={styles.widthOneQuarter}>
 							Всего рабочего времени
 						</TableCell>
 					</TableRow>
@@ -35,6 +32,5 @@ const HoursTableFull = ({ people }) => {
 			</Table>
 		</TableContainer>
 	)
-}
 
 export default HoursTableFull

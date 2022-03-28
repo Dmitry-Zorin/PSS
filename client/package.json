@@ -6,9 +6,11 @@
 		"build": "vite build"
 	},
 	"dependencies": {
-		"@material-ui/core": "^4.11.3",
-		"@material-ui/icons": "^4.11.2",
-		"@material-ui/lab": "^4.0.0-alpha.60",
+		"@emotion/react": "^11.8.2",
+		"@emotion/styled": "^11.8.1",
+		"@mui/icons-material": "^5.5.1",
+		"@mui/lab": "^5.0.0-alpha.75",
+		"@mui/material": "^5.5.3",
 		"chart.js": "^3.7.1",
 		"docx": "^7.3.0",
 		"file-saver": "^2.0.5",

@@ -1,4 +1,4 @@
-import IconButton from '@material-ui/core/IconButton'
+import IconButton from '@mui/material/IconButton'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { DarkModeSwitch } from 'react-toggle-dark-mode/dist'

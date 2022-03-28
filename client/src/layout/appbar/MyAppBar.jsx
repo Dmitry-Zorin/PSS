@@ -1,46 +1,40 @@
-import IconButton from '@material-ui/core/IconButton'
-import { makeStyles } from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
-import HomeIcon from '@material-ui/icons/Home'
+import HomeIcon from '@mui/icons-material/Home'
+import IconButton from '@mui/material/IconButton'
+import Typography from '@mui/material/Typography'
 import React from 'react'
 import { AppBar } from 'react-admin'
 import { Link } from 'react-router-dom'
 import LocaleSwitcher from './LocaleSwitcher'
 import ThemeSwitcher from './ThemeSwitcher'
 
-const useStyles = makeStyles(() => ({
-	appBar: {
-		'& > * > *': {
-			color: 'inherit',
-			borderRadius: 50,
-		},
-	},
-	title: {
-		flex: 1,
-		textOverflow: 'ellipsis',
-		whiteSpace: 'nowrap',
-		overflow: 'hidden',
-	},
-}))
-
-const MyAppBar = (props) => {
-	const classes = useStyles()
-	
-	return (
-		<AppBar color='primary' className={classes.appBar} {...props}>
-			<Typography
-				id='react-admin-title'
-				variant='h6'
-				color='inherit'
-				className={classes.title}
-			/>
-			<LocaleSwitcher/>
-			<ThemeSwitcher/>
-			<IconButton component={Link} to='/'>
-				<HomeIcon/>
-			</IconButton>
-		</AppBar>
-	)
-}
+const MyAppBar = (props) => (
+	<AppBar
+		color='primary'
+		sx={{
+			'& > * > *': {
+				color: 'inherit',
+				borderRadius: 50,
+			},
+		}}
+		{...props}
+	>
+		<Typography
+			id='react-admin-title'
+			variant='h6'
+			color='inherit'
+			sx={{
+				flex: 1,
+				textOverflow: 'ellipsis',
+				whiteSpace: 'nowrap',
+				overflow: 'hidden',
+			}}
+		/>
+		<LocaleSwitcher/>
+		<ThemeSwitcher/>
+		<IconButton component={Link} to='/'>
+			<HomeIcon/>
+		</IconButton>
+	</AppBar>
+)
 
 export default MyAppBar
