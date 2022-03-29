@@ -9,27 +9,35 @@ export default {
 		width: 200,
 		closedWidth: 57,
 	},
-	overrides: {
+	components: {
 		MuiCardContent: {
-			root: {
-				padding: '45px',
+			styleOverrides: {
+				root: {
+					padding: 45,
+				},
 			},
 		},
 		MuiTab: {
-			root: {
-				flexGrow: 1,
-				maxWidth: 'unset',
+			styleOverrides: {
+				root: {
+					flexGrow: 1,
+					maxWidth: 'unset',
+				},
 			},
 		},
 		MuiTableCell: {
-			sizeSmall: {
-				padding: 16,
+			styleOverrides: {
+				sizeSmall: {
+					padding: 16,
+				},
 			},
 		},
 		MuiIconButton: {
-			root: {
-				'&:hover': {
-					background: 'transparent',
+			styleOverrides: {
+				root: {
+					'&:hover': {
+						// background: 'transparent',
+					},
 				},
 			},
 		},

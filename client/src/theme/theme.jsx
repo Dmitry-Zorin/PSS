@@ -7,7 +7,7 @@ const createMyTheme = (theme) => (
 	extend(true, theme, raTheme, muiTheme)
 )
 
-const themes = {
+export const themes = {
 	light: createMyTheme({
 		palette: {
 			mode: 'light',
@@ -42,5 +42,3 @@ const themes = {
 		},
 	}),
 }
-
-export const getTheme = (name) => themes[name]

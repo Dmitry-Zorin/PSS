@@ -1,5 +1,5 @@
-import Button from '@mui/material/Button'
 import LanguageIcon from '@mui/icons-material/Language'
+import Button from '@mui/material/Button'
 import React from 'react'
 import { useLocale, useSetLocale, useTranslate } from 'react-admin'
 import { Helmet } from 'react-helmet'
@@ -9,13 +9,13 @@ const LocaleSwitcher = () => {
 	const locale = useLocale()
 	const setLocale = useSetLocale()
 	const translate = useTranslate()
-	
+
 	const switchLocale = async () => {
 		const newLocale = locale === 'en' ? 'ru' : 'en'
 		await setLocale(newLocale)
 		saveSettings({ locale: newLocale })
 	}
-	
+
 	return (
 		<>
 			<Helmet>
@@ -25,7 +25,7 @@ const LocaleSwitcher = () => {
 				</title>
 			</Helmet>
 			<Button onClick={switchLocale}>
-				<LanguageIcon/>
+				<LanguageIcon sx={{ mr: 0.5 }}/>
 				{translate('metadata.lang')}
 			</Button>
 		</>

@@ -11,9 +11,14 @@ const MyAppBar = (props) => (
 	<AppBar
 		color='primary'
 		sx={{
-			'& > * > *': {
+			'& button, a': {
 				color: 'inherit',
+				height: 48,
+				minWidth: 48,
 				borderRadius: 50,
+			},
+			'& svg': {
+				fontSize: '24px !important',
 			},
 		}}
 		{...props}

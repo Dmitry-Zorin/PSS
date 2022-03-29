@@ -1,15 +1,15 @@
 import { Chip } from '@mui/material'
 import capitalize from 'just-capitalize'
 import React from 'react'
-import { MenuItemLink, useTranslate } from 'react-admin'
-import { useSelector } from 'react-redux'
+import { MenuItemLink, useResourceDefinitions, useTranslate } from 'react-admin'
 
 const MenuItem = ({ resource, data }) => {
 	const translate = useTranslate()
-	const resources = useSelector(state => state.admin.resources)
+	const resourcesDefinitions = useResourceDefinitions()
+	const resources = Object.keys(resourcesDefinitions).map(name => resourcesDefinitions[name])
 
-	const { name, icon } = resource
-	const count = resources[name].list.total
+	const { name, icon: Icon } = resource
+	const count = 0//resources[name].list.total
 
 	return (
 		<MenuItemLink
@@ -29,7 +29,7 @@ const MenuItem = ({ resource, data }) => {
 					)}
 				</>
 			}
-			leftIcon={icon ? <icon/> : undefined}
+			leftIcon={Icon ? <Icon/> : undefined}
 		/>
 	)
 }

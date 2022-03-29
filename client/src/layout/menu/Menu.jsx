@@ -1,12 +1,11 @@
-import { Paper } from '@mui/material'
 import Filter1Icon from '@mui/icons-material/Filter1'
 import Filter2Icon from '@mui/icons-material/Filter2'
 import Filter3Icon from '@mui/icons-material/Filter3'
 import FilterNoneIcon from '@mui/icons-material/FilterNone'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
+import { Paper } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import { getResources, usePermissions } from 'react-admin'
-import { useSelector } from 'react-redux'
+import { usePermissions, useResourceDefinitions } from 'react-admin'
 import { fetchApi } from '../../requests'
 import MenuItem from './MenuItem'
 import SubMenu from './SubMenu'
@@ -52,7 +51,8 @@ const otherResources = [
 ]
 
 const Menu = () => {
-	const resources = useSelector(getResources)
+	const resourcesDefinitions = useResourceDefinitions()
+	const resources = Object.keys(resourcesDefinitions).map(name => resourcesDefinitions[name])
 	const { permissions } = usePermissions()
 
 	const [showCategory1, setShowCategory1] = useState(true)

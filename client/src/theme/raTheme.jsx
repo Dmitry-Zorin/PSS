@@ -1,13 +1,15 @@
 const raViewStyle = {
-	root: {
-		width: '100%',
-		maxWidth: '1250px',
-		margin: '0 auto',
+	styleOverrides: {
+		root: {
+			width: '100%',
+			maxWidth: '1250px',
+			margin: '0 auto',
+		},
 	},
 }
 
 export default {
-	overrides: {
+	components: {
 		RaAppBar: {
 			toolbar: {
 				minHeight: 56,
@@ -15,7 +17,7 @@ export default {
 		},
 		RaUserMenu: {
 			userButton: {
-				'& .MuiButton-iconSizeMedium svg': {
+				'& svg': {
 					fontSize: 24,
 				},
 			},

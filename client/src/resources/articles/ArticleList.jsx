@@ -43,11 +43,11 @@ const ArticleList = ({ permissions, ...props }) => (
 		exporter={false}
 		sort={{ field: 'createdAt', order: '-1' }}
 		empty={<Empty/>}
-		bulkActionButtons={<BulkActionButtons permissions={permissions}/>}
 		{...props}
 	>
 		<Datagrid
 			rowClick='show'
+			bulkActionButtons={<BulkActionButtons permissions={permissions}/>}
 			expand={({ record }) => (
 				<div>{record.description || 'No description //'}</div>
 			)}

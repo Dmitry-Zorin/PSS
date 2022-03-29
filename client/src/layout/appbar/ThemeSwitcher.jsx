@@ -1,21 +1,22 @@
 import IconButton from '@mui/material/IconButton'
 import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useTheme } from 'react-admin'
 import { DarkModeSwitch } from 'react-toggle-dark-mode/dist'
+import { user } from '../../providers/authProvider'
 import { saveSettings } from '../../requests'
+import { themes } from '../../theme/theme'
 
 const ThemeSwitcher = () => {
-	const dispatch = useDispatch()
-	const theme = useSelector(state => state.theme)
-	const [isDarkMode, setDarkMode] = useState(theme === 'dark')
-	
+	const [, setTheme] = useTheme()
+	const [isDarkMode, setDarkMode] = useState(user?.theme === 'dark')
+
 	const changeTheme = async () => {
 		setDarkMode(!isDarkMode)
-		const payload = isDarkMode ? 'light' : 'dark'
-		dispatch({ type: 'CHANGE_THEME', payload })
-		await saveSettings({ theme: payload })
+		const mode = isDarkMode ? 'light' : 'dark'
+		setTheme(themes[mode])
+		await saveSettings({ theme: mode })
 	}
-	
+
 	return (
 		<IconButton onClick={changeTheme}>
 			<DarkModeSwitch

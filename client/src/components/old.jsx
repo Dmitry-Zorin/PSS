@@ -68,10 +68,10 @@ export const EditActionsWithoutFile = ({ basePath, data: record }) => {
 	)
 }
 
-export const BulkActionButtons = ({ permissions, ...props }) => (
-	permissions && (
+export const BulkActionButtons = ({ permissions }) => (
+	!permissions ? null : (
 		<>
-			<BulkDeleteButton {...props}/>
+			<BulkDeleteButton/>
 		</>
 	)
 )

@@ -3,8 +3,7 @@ import Box from '@mui/material/Box'
 import Collapse from '@mui/material/Collapse'
 import capitalize from 'just-capitalize'
 import React from 'react'
-import { MenuItemLink, useTranslate } from 'react-admin'
-import { useSelector } from 'react-redux'
+import { MenuItemLink, useTranslate, useSidebarState } from 'react-admin'
 
 const SubMenu = ({
 	handleToggle,
@@ -14,7 +13,7 @@ const SubMenu = ({
 	children,
 }) => {
 	const translate = useTranslate()
-	const sidebarIsOpen = useSelector(state => state.admin.ui.sidebarOpen)
+	const [sidebarIsOpen] = useSidebarState()
 
 	return (
 		<>
@@ -32,7 +31,7 @@ const SubMenu = ({
 				<Box
 					sx={{
 						'& a': {
-							paddingLeft: sidebarIsOpen ? 4 : 2,
+							pl: sidebarIsOpen ? 4 : 2,
 						},
 					}}
 				>
