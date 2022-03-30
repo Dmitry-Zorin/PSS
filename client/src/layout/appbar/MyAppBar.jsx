@@ -10,6 +10,7 @@ import ThemeSwitcher from './ThemeSwitcher'
 const MyAppBar = (props) => (
 	<AppBar
 		color='primary'
+		enableColorOnDark={true}
 		sx={{
 			'& button, a': {
 				color: 'inherit',

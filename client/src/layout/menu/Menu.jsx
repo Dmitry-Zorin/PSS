@@ -3,9 +3,8 @@ import Filter2Icon from '@mui/icons-material/Filter2'
 import Filter3Icon from '@mui/icons-material/Filter3'
 import FilterNoneIcon from '@mui/icons-material/FilterNone'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
-import { Paper } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import { usePermissions, useResourceDefinitions } from 'react-admin'
+import { Menu, usePermissions, useResourceDefinitions } from 'react-admin'
 import { fetchApi } from '../../requests'
 import MenuItem from './MenuItem'
 import SubMenu from './SubMenu'
@@ -50,7 +49,7 @@ const otherResources = [
 	'characters',
 ]
 
-const Menu = () => {
+const MyMenu = (props) => {
 	const resourcesDefinitions = useResourceDefinitions()
 	const resources = Object.keys(resourcesDefinitions).map(name => resourcesDefinitions[name])
 	const { permissions } = usePermissions()
@@ -67,7 +66,7 @@ const Menu = () => {
 	}, [])
 
 	return (
-		<Paper style={{ marginRight: 5, borderRadius: 0 }}>
+		<Menu {...props}>
 			{resources
 				.filter(r => menuResources.includes(r.name))
 				.map(resource => (
@@ -141,8 +140,8 @@ const Menu = () => {
 					}
 				</SubMenu>
 			)}
-		</Paper>
+		</Menu>
 	)
 }
 
-export default Menu
+export default MyMenu

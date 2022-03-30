@@ -11,11 +11,22 @@ export const themes = {
 	light: createMyTheme({
 		palette: {
 			mode: 'light',
+			primary: {
+				light: indigo[400],
+				main: indigo[500],
+				dark: indigo[600],
+			},
+			background: {
+				default: blueGrey[50],
+			},
 		},
-		overrides: {
+		components: {
 			RaMenuItemLink: {
-				active: {
-					color: indigo[500],
+				styleOverrides: {
+					active: {
+						height: 79,
+						color: indigo[500],
+					},
 				},
 			},
 		},
@@ -33,10 +44,12 @@ export const themes = {
 				paper: blueGrey[900],
 			},
 		},
-		overrides: {
+		components: {
 			RaMenuItemLink: {
-				active: {
-					color: amber[300],
+				styleOverrides: {
+					active: {
+						color: amber[300],
+					},
 				},
 			},
 		},

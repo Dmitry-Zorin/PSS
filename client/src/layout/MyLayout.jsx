@@ -1,14 +1,16 @@
 import React from 'react'
 import { Layout } from 'react-admin'
 import MyAppBar from './appbar/MyAppBar'
-import Menu from './menu/Menu'
+import MyMenu from './menu/Menu'
+import MySidebar from './Sidebar'
 import { ScrollTopButton } from './ScrollTopButton'
 
 const MyLayout = ({ children, ...props }) => (
 	<Layout
 		{...props}
-		menu={Menu}
 		appBar={MyAppBar}
+		sidebar={MySidebar}
+		menu={MyMenu}
 	>
 		{children}
 		<ScrollTopButton/>

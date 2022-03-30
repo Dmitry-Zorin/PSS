@@ -6,10 +6,28 @@ export default {
 		fontWeight: 300,
 	},
 	sidebar: {
-		width: 200,
-		closedWidth: 57,
+		width: 250,
+		closedWidth: 56,
 	},
 	components: {
+		MuiToolbar: {
+			styleOverrides: {
+				dense: {
+					height: 56,
+				},
+			},
+		},
+		MuiMenuItem: {
+			styleOverrides: {
+				root: {
+					fontWeight: 300,
+					minHeight: '45px',
+					'&:hover': {
+						background: 'rgba(0, 0, 0, 0.05)',
+					},
+				},
+			},
+		},
 		MuiCardContent: {
 			styleOverrides: {
 				root: {
@@ -28,7 +46,7 @@ export default {
 		MuiTableCell: {
 			styleOverrides: {
 				sizeSmall: {
-					padding: 16,
+					padding: 8,
 				},
 			},
 		},
@@ -36,7 +54,7 @@ export default {
 			styleOverrides: {
 				root: {
 					'&:hover': {
-						// background: 'transparent',
+						background: 'transparent',
 					},
 				},
 			},
