@@ -6,7 +6,10 @@ const MySidebar = (props) => (
 		{...props}
 		sx={{
 			backgroundColor: 'background.paper',
-			position: 'relative !important',
+			height: 'unset',
+			'& .RaSidebar-fixed': {
+				position: 'unset',
+			},
 		}}
 	/>
 )

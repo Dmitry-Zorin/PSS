@@ -1,6 +1,12 @@
 import { fetchApi } from '../requests'
 
-export let user = JSON.parse(localStorage.getItem('user'))
+export const getUser = () => (
+	JSON.parse(localStorage.getItem('user'))
+)
+
+export const setUser = (user) => (
+	localStorage.setItem('user', JSON.stringify(user))
+)
 
 const authProvider = {
 	login: async ({ username, password }) => {
@@ -8,6 +14,9 @@ const authProvider = {
 		const { json } = await fetchApi('auth/login', options)
 		if (json?.token) {
 			localStorage.setItem('token', json.token)
+			const { json: user } = await fetchApi('auth/identity')
+			user.fullName = user.username
+			setUser(user)
 			return Promise.resolve()
 		}
 		return Promise.reject()
@@ -24,6 +33,7 @@ const authProvider = {
 	},
 
 	getPermissions: async () => {
+		const user = getUser()
 		if (user) {
 			return user.role === 'admin'
 		}
@@ -32,12 +42,7 @@ const authProvider = {
 	},
 
 	getIdentity: async () => {
-		if (!user) {
-			const { json } = await fetchApi('auth/identity')
-			json.fullName = json.username
-			user = json
-			localStorage.setItem('user', JSON.stringify(user))
-		}
+		const user = getUser()
 		return user
 	},
 

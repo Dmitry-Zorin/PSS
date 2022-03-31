@@ -9,7 +9,7 @@ export const ScrollTopButton = () => {
 	const trigger = useScrollTrigger()
 
 	const handleClick = () => {
-		const anchor = document.getElementById('app')
+		const anchor = document.getElementById('root')
 
 		if (anchor) {
 			anchor.scrollIntoView({

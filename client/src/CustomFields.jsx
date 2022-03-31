@@ -9,7 +9,6 @@ import React from 'react'
 // })
 
 export const HeadlineField = ({ source, record = {} }) => {
-	// const classes = useStyles()
 	return (
 		<div>
 			{record[source]}

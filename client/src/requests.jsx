@@ -1,4 +1,4 @@
-import { user } from './providers/authProvider'
+import { getUser, setUser } from './providers/authProvider'
 import { apiUrl, httpClient } from './providers/dataProvider'
 
 export const fetchApi = (url, options) => (
@@ -14,8 +14,7 @@ export const getResourceData = async (dataProvider, notify, author) => {
 }
 
 export const saveSettings = async (settings) => {
-	const userInfo = JSON.stringify({ ...user, ...settings })
-	localStorage.setItem('user', userInfo)
+	setUser({ ...getUser(), ...settings })
 	const options = { method: 'put', body: settings }
 	await fetchApi('auth/settings', options)
 }
