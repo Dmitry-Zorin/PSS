@@ -1,8 +1,8 @@
 import { Type } from 'class-transformer'
-import { IsEnum, IsNotEmpty, IsOptional, ValidateNested } from 'class-validator'
+import { IsEnum, IsNotEmpty, IsOptional, IsString, ValidateNested } from 'class-validator'
 import { Locale, Theme } from '../user.entity'
 
-class Settings {
+class SettingsDto {
 	@IsOptional()
 	@IsEnum(Locale)
 	locale?: Locale
@@ -13,10 +13,11 @@ class Settings {
 }
 
 export class UpdateSettingsDto {
+	@IsString()
 	@IsNotEmpty()
 	username: string
 
 	@ValidateNested()
-	@Type(() => Settings)
-	payload: Settings
+	@Type(() => SettingsDto)
+	payload: SettingsDto
 }

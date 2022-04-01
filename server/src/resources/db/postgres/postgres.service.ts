@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common'
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common'
 import { isNull, isString, keys, transform } from 'lodash'
 import { omitBy } from 'lodash/fp'
 import { pluralize } from 'mongoose'
@@ -58,7 +58,9 @@ export class PostgresService extends DbService {
 		}
 
 		const Entity = this.getEntity(resource)
-		const { id } = await Entity.save(newRecord)
+		const { id } = await Entity.save(newRecord).catch(() => {
+			throw new BadRequestException('Resource failed to save')
+		})
 		return id
 	}
 

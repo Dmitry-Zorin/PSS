@@ -1,11 +1,11 @@
 import { IsNotEmpty, IsString } from 'class-validator'
 
-export class UserCredentialsDto {
+export class RemoveResourceDto {
 	@IsString()
 	@IsNotEmpty()
-	username: string
+	resource: string
 
 	@IsString()
 	@IsNotEmpty()
-	password: string
+	id: string
 }

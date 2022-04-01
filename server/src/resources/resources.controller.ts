@@ -1,11 +1,12 @@
 import { Controller, UseFilters, UsePipes, ValidationPipe } from '@nestjs/common'
 import { MessagePattern, Payload } from '@nestjs/microservices'
 import { HttpExceptionFilter } from '../auth/http-exception.filter'
+import { CreateResourceDto, FindResourceDto, FindResourcesDto, RemoveResourceDto, UpdateResourceDto } from './dto'
 import { ListParamsPipe, PaginationOptions } from './list-params.pipe'
 import { ResourcesService } from './resources.service'
 
 @Controller()
-@UsePipes(new ValidationPipe())
+@UsePipes(new ValidationPipe({ whitelist: true }))
 @UseFilters(new HttpExceptionFilter())
 export class ResourcesController {
 	constructor(private readonly resourcesService: ResourcesService) {}
@@ -16,14 +17,14 @@ export class ResourcesController {
 	}
 
 	@MessagePattern('create')
-	async handleCreate({ resource, payload }: any) {
+	async handleCreate({ resource, payload }: CreateResourceDto) {
 		const id = await this.resourcesService.create(resource, payload)
 		return { id }
 	}
 
 	@MessagePattern('find_all')
 	async handleFindAll(
-		@Payload() { resource }: any,
+		@Payload() { resource }: FindResourcesDto,
 		@Payload(new ListParamsPipe()) listParams: PaginationOptions,
 	) {
 		const { documents, total } = await this.resourcesService.findAll(resource, listParams)
@@ -32,17 +33,17 @@ export class ResourcesController {
 	}
 
 	@MessagePattern('find_one')
-	handleFindOne({ resource, id }: any) {
+	handleFindOne({ resource, id }: FindResourceDto) {
 		return this.resourcesService.findOne(resource, id)
 	}
 
 	@MessagePattern('update')
-	handleUpdate({ resource, id, payload }: any) {
+	handleUpdate({ resource, id, payload }: UpdateResourceDto) {
 		return this.resourcesService.update(resource, id, payload)
 	}
 
 	@MessagePattern('remove')
-	handleRemove({ resource, id }: any) {
+	handleRemove({ resource, id }: RemoveResourceDto) {
 		return this.resourcesService.remove(resource, id)
 	}
 }

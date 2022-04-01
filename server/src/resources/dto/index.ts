@@ -1,0 +1,5 @@
+export { CreateResourceDto } from './create-resource.dto'
+export { FindResourceDto } from './find-resource.dto'
+export { FindResourcesDto } from './find-resources.dto'
+export { UpdateResourceDto } from './update-resource.dto'
+export { RemoveResourceDto } from './remove-resource.dto'
