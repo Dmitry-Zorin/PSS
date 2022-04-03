@@ -2,14 +2,21 @@ export default {
 	shape: {
 		borderRadius: 6,
 	},
-	typography: {
-		fontWeight: 300,
-	},
 	sidebar: {
 		width: 250,
 		closedWidth: 56,
 	},
 	components: {
+		MuiTypography: {
+			styleOverrides: {
+				root: {
+					fontWeight: 300,
+				},
+				body2: {
+					fontSize: '1rem',
+				},
+			},
+		},
 		MuiToolbar: {
 			styleOverrides: {
 				dense: {
@@ -31,7 +38,7 @@ export default {
 		MuiCardContent: {
 			styleOverrides: {
 				root: {
-					padding: 45,
+					// padding: 45,
 				},
 			},
 		},
@@ -46,7 +53,7 @@ export default {
 		MuiTableCell: {
 			styleOverrides: {
 				sizeSmall: {
-					padding: 8,
+					padding: 12,
 				},
 			},
 		},
@@ -56,6 +63,14 @@ export default {
 					'&:hover': {
 						background: 'transparent',
 					},
+				},
+			},
+		},
+		MuiChip: {
+			styleOverrides: {
+				labelMedium: {
+					fontSize: '0.95rem',
+					fontWeight: 300,
 				},
 			},
 		},

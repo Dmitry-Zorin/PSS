@@ -1,15 +1,6 @@
 import { Box, Typography } from '@mui/material'
 import React from 'react'
-import {
-	BulkDeleteButton,
-	CloneButton,
-	CreateButton,
-	EditButton,
-	ListButton,
-	RefreshButton,
-	ShowButton,
-	TopToolbar,
-} from 'react-admin'
+import { BulkDeleteButton, CloneButton, CreateButton, EditButton, FilterButton, ListButton, RefreshButton, ShowButton, TopToolbar } from 'react-admin'
 
 export const createTitle = (title, recordName) => (
 	({ record }) => (
@@ -23,14 +14,23 @@ export const createEmptyPage = (noPlacesMessage, addDataMessage) => (
 	({ basePath }) => (
 		<Box textAlign='center' m={1}>
 			<Typography variant='h4' paragraph>
-				{noPlacesMessage}
+				No products available
 			</Typography>
 			<Typography variant='body1'>
-				{addDataMessage}
+				Create one or import from a file
 			</Typography>
-			<CreateButton {...{ basePath }}/>
+			<CreateButton/>
 		</Box>
 	)
+)
+
+export const ListActions = ({ filters, permissions }) => (
+	<TopToolbar>
+		<FilterButton filters={filters}/>
+		{permissions && (
+			<CreateButton/>
+		)}
+	</TopToolbar>
 )
 
 export const ShowActions = ({ permissions, basePath, data: record }) => (
@@ -56,7 +56,7 @@ export const EditActions = ({ basePath, data: record }) => (
 export const EditActionsWithoutFile = ({ basePath, data: record }) => {
 	const dataWithoutFile = { ...record }
 	delete dataWithoutFile.file
-	
+
 	return (
 		<TopToolbar>
 			<ListButton {...{ basePath, record }}/>

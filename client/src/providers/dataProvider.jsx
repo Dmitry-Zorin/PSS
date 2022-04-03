@@ -41,7 +41,9 @@ const processOutputData = (data) => (
 		if (Array.isArray(value)) {
 			value = value.map(e => e.value)
 		}
-		result[key] = value
+		if (value !== '') {
+			result[key] = value
+		}
 		return result
 	}, {})
 )
@@ -73,6 +75,7 @@ const dataProvider = {
 		const { headers, json } = await httpClient(
 			`${resourcesUrl}/${resource}?${new URLSearchParams(query)}`,
 		)
+
 		return {
 			data: json.map(processInputData),
 			total: +headers.get('content-range').split('/').pop(),

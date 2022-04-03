@@ -11,8 +11,8 @@ import {
 	YearInput,
 } from '../../components/inputs'
 
-const ArticleEdit = (props) => (
-	<Edit title='resources.articles.titles.edit' {...props}>
+const ArticleEdit = () => (
+	<Edit title='resources.articles.titles.edit'>
 		<SimpleForm>
 			<TitleInput/>
 			<DescriptionInput/>

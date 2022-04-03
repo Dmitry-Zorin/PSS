@@ -12,11 +12,10 @@ import {
 } from '../../components/fields'
 import { ShowActions } from '../../components/old'
 
-const ArticleShow = ({ permissions, ...props }) => (
+const ArticleShow = ({ permissions }) => (
 	<Show
 		title='resources.articles.titles.show'
 		actions={<ShowActions permissions={permissions}/>}
-		{...props}
 	>
 		<SimpleShowLayout>
 			<TitleField/>

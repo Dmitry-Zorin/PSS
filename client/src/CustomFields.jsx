@@ -1,13 +1,5 @@
 import React from 'react'
 
-// const useStyles = makeStyles({
-// 	headline: {
-// 		fontSize: '1.2em',
-// 		display: 'inline-block',
-// 		minWidth: '12rem',
-// 	},
-// })
-
 export const HeadlineField = ({ source, record = {} }) => {
 	return (
 		<div>

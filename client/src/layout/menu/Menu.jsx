@@ -4,7 +4,7 @@ import Filter3Icon from '@mui/icons-material/Filter3'
 import FilterNoneIcon from '@mui/icons-material/FilterNone'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 import React, { useEffect, useState } from 'react'
-import { Menu, usePermissions, useResourceDefinitions } from 'react-admin'
+import { Menu, usePermissions, useResourceDefinitions, useStore } from 'react-admin'
 import { fetchApi } from '../../requests'
 import MenuItem from './MenuItem'
 import SubMenu from './SubMenu'
@@ -50,27 +50,29 @@ const otherResources = [
 ]
 
 const MyMenu = (props) => {
-	const resourcesDefinitions = useResourceDefinitions()
-	const resources = Object.keys(resourcesDefinitions).map(name => resourcesDefinitions[name])
-	const { permissions } = usePermissions()
-
 	const [showCategory1, setShowCategory1] = useState(true)
 	const [showCategory2, setShowCategory2] = useState(true)
 	const [showCategory3, setShowCategory3] = useState(true)
 	const [showRest, setShowRest] = useState(true)
 	const [showOther, setShowOther] = useState(false)
-	const [data, setData] = useState({})
+
+	const [, setResourcesCount] = useStore('resources.count')
 
 	useEffect(() => {
-		fetchApi('resources/count').then(({ json }) => setData(json))
+		fetchApi('resources/count').then(({ json }) => {
+			setResourcesCount(json)
+		})
 	}, [])
+
+	const { permissions } = usePermissions()
+	const resources = Object.values(useResourceDefinitions())
 
 	return (
 		<Menu {...props}>
 			{resources
 				.filter(r => menuResources.includes(r.name))
 				.map(resource => (
-					<MenuItem key={resource.name} {...{ resource, data }}/>
+					<MenuItem key={resource.name} {...{ resource }}/>
 				))
 			}
 			<SubMenu
@@ -82,7 +84,7 @@ const MyMenu = (props) => {
 				{resources
 					.filter(r => category1Resources.includes(r.name))
 					.map(resource => (
-						<MenuItem key={resource.name} {...{ resource, data }}/>
+						<MenuItem key={resource.name} {...{ resource }}/>
 					))
 				}
 			</SubMenu>
@@ -95,7 +97,7 @@ const MyMenu = (props) => {
 				{resources
 					.filter(r => category2Resources.includes(r.name))
 					.map(resource => (
-						<MenuItem key={resource.name} {...{ resource, data }}/>
+						<MenuItem key={resource.name} {...{ resource }}/>
 					))
 				}
 			</SubMenu>
@@ -108,7 +110,7 @@ const MyMenu = (props) => {
 				{resources
 					.filter(r => category3Resources.includes(r.name))
 					.map(resource => (
-						<MenuItem key={resource.name} {...{ resource, data }}/>
+						<MenuItem key={resource.name} {...{ resource }}/>
 					))
 				}
 			</SubMenu>
@@ -121,7 +123,7 @@ const MyMenu = (props) => {
 				{resources
 					.filter(r => restResources.includes(r.name))
 					.map(resource => (
-						<MenuItem key={resource.name} {...{ resource, data }}/>
+						<MenuItem key={resource.name} {...{ resource }}/>
 					))
 				}
 			</SubMenu>

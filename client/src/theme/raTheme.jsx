@@ -8,19 +8,31 @@ const raViewStyle = {
 	},
 }
 
+const raLayoutStyle = {
+	styleOverrides: {
+		root: {
+			padding: '15px 40px'
+		},
+	},
+}
+
 export default {
 	components: {
 		RaShow: raViewStyle,
 		RaCreate: raViewStyle,
 		RaEdit: raViewStyle,
+		RaSimpleShowLayout: raLayoutStyle,
+		RaSimpleCreateLayout: raLayoutStyle,
+		RaSimpleEditLayout: raLayoutStyle,
 		RaLayout: {
 			styleOverrides: {
 				root: {
 					marginTop: '8px !important',
 					'& .ra-field': {
-						margin: '0 0 35px 0',
-						'& span *': {
-							fontSize: '1rem',
+						margin: '15px 0',
+						'& p': {
+							fontSize: '0.9rem',
+							fontWeight: 300,
 						},
 					},
 				},
