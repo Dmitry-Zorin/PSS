@@ -3,7 +3,7 @@ import { isInteger, isNumber, isString, transform } from 'lodash'
 
 export interface PaginationOptions {
 	match?: Record<string, unknown>,
-	sort?: Record<string, 'asc' | 'desc' | 1 | -1>,
+	sort?: Record<string, 'asc' | 'desc'>,
 	skip?: number,
 	limit: number,
 }
@@ -55,10 +55,7 @@ const paramValidations: Record<keyof PaginationOptions, (x: unknown) => boolean>
 			return false
 		}
 		const value = Object.values(param)[0]
-		return (
-			isString(value) && /^(asc|desc|1|-1)$/i.test(value)
-			|| isNumber(value) && [-1, 1].includes(value)
-		)
+		return isString(value) && ['asc', 'desc'].includes(value.toLowerCase())
 	},
 	skip: isNonNegativeInteger,
 	limit: isNonNegativeInteger,

@@ -6,7 +6,7 @@ class PaginationOptionsDto {
 	match?: Record<string, unknown>
 
 	@IsOptional()
-	sort?: Record<string, unknown>
+	sort?: Record<string, string>
 
 	@IsOptional()
 	skip?: number
