@@ -1,99 +1,19 @@
 import React from 'react'
-import {
-	ArrayInput,
-	Edit,
-	FileField,
-	FileInput,
-	minLength,
-	NumberInput,
-	ReferenceInput,
-	required,
-	SelectInput,
-	SimpleForm,
-	SimpleFormIterator,
-	TextInput,
-} from 'react-admin'
-import { createTitle, EditActionsWithoutFile } from '../../components/old'
+import { AuthorsInput, DescriptionInput, ExitDataInput, ReplaceFileInput, TitleInput, TypeInput, VolumeInput, YearInput } from '../../components/inputs'
+import MyEdit from '../MyEdit'
 
-const validateText = [required(), minLength(1)]
-const validateRequired = [required()]
-
-const Title = createTitle('Диссертация', 'headline')
-
-export const DissertationEdit = (props) => (
-	<Edit
-		title={<Title/>}
-		successMessage='Диссертация обновлена'
-		undoable={false}
-		actions={<EditActionsWithoutFile/>}
-		{...props}>
-		<SimpleForm submitOnEnter={false}>
-			<TextInput
-				label='Название'
-				source='headline'
-				validate={validateText}
-				fullWidth
-				multiline
-			/>
-			<TextInput
-				label='Аннотация'
-				source='text'
-				fullWidth
-				multiline
-			/>
-			<TextInput
-				label='Вид работы'
-				source='type'
-				validate={validateText}
-			/>
-			<NumberInput
-				label='Год создания'
-				source='creationDate'
-			/>
-			<NumberInput
-				label='Объем'
-				source='volume'
-			/>
-			<ArrayInput
-				validate={validateRequired}
-				label='Авторы'
-				source='authors'
-			>
-				<SimpleFormIterator>
-					<TextInput
-						label='Автор'
-						source='author'
-					/>
-				</SimpleFormIterator>
-			</ArrayInput>
-			<TextInput
-				label='Выходные данные'
-				source='exitData'
-				fullWidth
-				multiline
-			/>
-			<ReferenceInput
-				label='Характер работы'
-				source='character'
-				reference='characters'
-			>
-				<SelectInput optionText='name'/>
-			</ReferenceInput>
-			<FileField
-				source='file.url'
-				title='file.title'
-				label='PDF файл'
-				target='_blank'
-			/>
-			<FileInput
-				source='newfile'
-				label='Новый файл'
-			>
-				<FileField
-					source='src'
-					title='Загруженный файл'
-				/>
-			</FileInput>
-		</SimpleForm>
-	</Edit>
+const DissertationEdit = () => (
+	<MyEdit>
+		<TitleInput/>
+		<DescriptionInput/>
+		<TypeInput/>
+		<YearInput/>
+		<VolumeInput/>
+		<AuthorsInput/>
+		{/*<CharacterInput/>*/}
+		<ExitDataInput/>
+		<ReplaceFileInput/>
+	</MyEdit>
 )
+
+export default DissertationEdit

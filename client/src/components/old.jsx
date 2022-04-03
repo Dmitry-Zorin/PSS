@@ -33,13 +33,13 @@ export const ListActions = ({ filters, permissions }) => (
 	</TopToolbar>
 )
 
-export const ShowActions = ({ permissions, basePath, data: record }) => (
+export const ShowActions = ({ permissions }) => (
 	<TopToolbar>
-		<ListButton {...{ basePath, record }}/>
+		<ListButton/>
 		{permissions && (
-			<EditButton {...{ basePath, record }}/>
+			<EditButton/>
 		)}
-		<RefreshButton {...{ basePath, record }}/>
+		<RefreshButton/>
 	</TopToolbar>
 )
 

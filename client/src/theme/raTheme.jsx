@@ -4,7 +4,7 @@ const raViewStyle = {
 			width: '100%',
 			maxWidth: '1250px !important',
 			margin: '0 auto',
-		},
+		}
 	},
 }
 
@@ -22,8 +22,6 @@ export default {
 		RaCreate: raViewStyle,
 		RaEdit: raViewStyle,
 		RaSimpleShowLayout: raLayoutStyle,
-		RaSimpleCreateLayout: raLayoutStyle,
-		RaSimpleEditLayout: raLayoutStyle,
 		RaLayout: {
 			styleOverrides: {
 				root: {

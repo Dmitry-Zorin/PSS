@@ -12,7 +12,7 @@ import {
 	required,
 	required as _required,
 	SimpleFormIterator,
-	TextInput,
+	TextInput, useResourceContext,
 	useTranslate,
 } from 'react-admin'
 
@@ -33,7 +33,8 @@ export const DescriptionInput = () => (
 	<LargeTextInput source='description' label='fields.description'/>
 )
 
-export const TypeInput = ({ resource }) => {
+export const TypeInput = () => {
+	const resource = useResourceContext()
 	const translate = useTranslate()
 	const defaultValue = translate(
 		`resources.${resource}.name`,

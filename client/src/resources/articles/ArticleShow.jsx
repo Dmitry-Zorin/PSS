@@ -1,34 +1,19 @@
 import React from 'react'
-import { Show, SimpleShowLayout } from 'react-admin'
-import {
-	AuthorsField,
-	DescriptionField,
-	DownloadFileField,
-	ExitDataField,
-	TitleField,
-	TypeField,
-	VolumeField,
-	YearField,
-} from '../../components/fields'
-import { ShowActions } from '../../components/old'
+import { AuthorsField, DescriptionField, DownloadFileField, ExitDataField, TitleField, TypeField, VolumeField, YearField } from '../../components/fields'
+import MyShow from '../MyShow'
 
-const ArticleShow = ({ permissions }) => (
-	<Show
-		title='resources.articles.titles.show'
-		actions={<ShowActions permissions={permissions}/>}
-	>
-		<SimpleShowLayout>
-			<TitleField/>
-			<DescriptionField/>
-			<TypeField/>
-			<YearField/>
-			<VolumeField/>
-			<AuthorsField/>
-			{/*<CharacterField/>*/}
-			<ExitDataField/>
-			<DownloadFileField/>
-		</SimpleShowLayout>
-	</Show>
+const ArticleShow = () => (
+	<MyShow>
+		<TitleField/>
+		<DescriptionField/>
+		<TypeField/>
+		<YearField/>
+		<VolumeField/>
+		<AuthorsField/>
+		{/*<CharacterField/>*/}
+		<ExitDataField/>
+		<DownloadFileField/>
+	</MyShow>
 )
 
 export default ArticleShow

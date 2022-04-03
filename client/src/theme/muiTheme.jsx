@@ -35,13 +35,6 @@ export default {
 				},
 			},
 		},
-		MuiCardContent: {
-			styleOverrides: {
-				root: {
-					// padding: 45,
-				},
-			},
-		},
 		MuiTab: {
 			styleOverrides: {
 				root: {

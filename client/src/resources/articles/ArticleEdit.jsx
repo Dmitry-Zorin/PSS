@@ -1,30 +1,19 @@
 import React from 'react'
-import { Edit, SimpleForm } from 'react-admin'
-import {
-	AuthorsInput,
-	DescriptionInput,
-	ExitDataInput,
-	ReplaceFileInput,
-	TitleInput,
-	TypeInput,
-	VolumeInput,
-	YearInput,
-} from '../../components/inputs'
+import { AuthorsInput, DescriptionInput, ExitDataInput, ReplaceFileInput, TitleInput, TypeInput, VolumeInput, YearInput } from '../../components/inputs'
+import MyEdit from '../MyEdit'
 
 const ArticleEdit = () => (
-	<Edit title='resources.articles.titles.edit'>
-		<SimpleForm>
-			<TitleInput/>
-			<DescriptionInput/>
-			<TypeInput resource='articles'/>
-			<YearInput/>
-			<VolumeInput/>
-			<AuthorsInput/>
-			{/*<CharacterInput/>*/}
-			<ExitDataInput/>
-			<ReplaceFileInput/>
-		</SimpleForm>
-	</Edit>
+	<MyEdit>
+		<TitleInput/>
+		<DescriptionInput/>
+		<TypeInput/>
+		<YearInput/>
+		<VolumeInput/>
+		<AuthorsInput/>
+		{/*<CharacterInput/>*/}
+		<ExitDataInput/>
+		<ReplaceFileInput/>
+	</MyEdit>
 )
 
 export default ArticleEdit

@@ -1,84 +1,22 @@
 import React from 'react'
-import {
-	ArrayField,
-	ChipField,
-	Datagrid,
-	Filter,
-	List,
-	SingleFieldList,
-	TextField,
-	TextInput,
-} from 'react-admin'
-import { BulkActionButtons, createEmptyPage } from '../../components/old'
-import { DescriptionField, HeadlineField } from '../../CustomFields'
-import { MonographShow } from './MonographShow'
+import { NumberInput, TextField, TextInput } from 'react-admin'
+import { ChipArrayField } from '../../components/fields'
+import MyList from '../MyList'
 
-const Empty = createEmptyPage(
-	'Нет доступных монографий',
-	'Для добавления монографии нажмите кнопку "Создать"',
-)
-
-const Filters = (props) => (
-	<Filter {...props}>
-		<TextInput
-			label='Поиск по названию'
-			source='headline'
-			alwaysOn
-		/>
-		<TextInput
-			label='Аннотация'
-			source='text'
-		/>
-		<TextInput
-			label='Автор'
-			source='authors'
-		/>
-		<TextInput
-			label='Выходные данные'
-			source='exitData'
-		/>
-	</Filter>
-)
-
-export const MonographList = ({ permissions, ...props }) => (
-	<List
-		title='Список монографий'
-		filters={<Filters/>}
-		perPage={25}
-		exporter={false}
-		sort={{ field: 'firstCreationDate', order: 'DESC' }}
-		empty={<Empty/>}
-		bulkActionButtons={<BulkActionButtons permissions={permissions}/>}
-		{...props}
+const MonographList = () => (
+	<MyList
+		filters={[
+			<TextInput source='title' label='fields.search' alwaysOn/>,
+			<TextInput source='description' label='fields.description'/>,
+			<TextInput source='authors.author' label='fields.author'/>,
+			<NumberInput source='year' label='fields.year'/>,
+			<TextInput source='exitData' label='fields.exitData'/>,
+		]}
 	>
-		<Datagrid
-			rowClick='show'
-			expand={<MonographShow enableActions={false}/>}
-		>
-			<HeadlineField
-				label='Название'
-				source='headline'
-			/>
-			<DescriptionField
-				label='Аннотация'
-				source='text'
-				maxchars={250}
-			/>
-			<ArrayField
-				source='authors'
-				label='Авторы'
-			>
-				<SingleFieldList linkType={false}>
-					<ChipField
-						label='Автор'
-						source='author'
-					/>
-				</SingleFieldList>
-			</ArrayField>
-			<TextField
-				label='Год создания'
-				source='creationDate'
-			/>
-		</Datagrid>
-	</List>
+		<TextField source='title' label='fields.title'/>
+		<ChipArrayField source='authors' label='fields.authors'/>
+		<TextField source='year' label='fields.year'/>
+	</MyList>
 )
+
+export default MonographList

@@ -1,94 +1,19 @@
 import React from 'react'
-import {
-	ArrayInput,
-	Create,
-	FileField,
-	FileInput,
-	minLength,
-	NumberInput,
-	ReferenceInput,
-	required,
-	SelectInput,
-	SimpleForm,
-	SimpleFormIterator,
-	TextInput,
-} from 'react-admin'
+import { AddFileInput, AuthorsInput, DescriptionInput, ExitDataInput, TitleInput, TypeInput, VolumeInput, YearInput } from '../../components/inputs'
+import MyCreate from '../MyCreate'
 
-const validateText = [required(), minLength(1)]
-const validateRequired = [required()]
-
-export const AbstractCreate = (props) => (
-	<Create
-		title='Добавить автореферат'
-		successMessage='Автореферат добавлен'
-		undoable={false}
-		{...props}
-	>
-		<SimpleForm
-			redirect='list'
-			submitOnEnter={false}
-		>
-			<TextInput
-				label='Название'
-				source='headline'
-				validate={validateText}
-				fullWidth
-				multiline
-			/>
-			<TextInput
-				label='Аннотация'
-				source='text'
-				fullWidth
-				multiline
-			/>
-			<TextInput
-				label='Вид работы'
-				source='type'
-				validate={validateText}
-				defaultValue='Автореферат'
-			/>
-			<NumberInput
-				label='Год создания'
-				source='creationDate'
-			/>
-			<NumberInput
-				label='Объем'
-				source='volume'
-			/>
-			<ArrayInput
-				validate={validateRequired}
-				source='authors'
-				label='Авторы'
-			>
-				<SimpleFormIterator>
-					<TextInput
-						label='Автор'
-						source='author'
-					/>
-				</SimpleFormIterator>
-			</ArrayInput>
-			<ReferenceInput
-				label='Характер работы'
-				source='character'
-				reference='characters'
-			>
-				<SelectInput optionText='name'/>
-			</ReferenceInput>
-			<TextInput
-				label='Выходные данные'
-				source='exitData'
-				fullWidth
-				multiline
-			/>
-			<FileInput
-				source='file'
-				label='PDF файл'
-			>
-				<FileField
-					source='file'
-					title='Загруженный файл'
-				/>
-			</FileInput>
-		</SimpleForm>
-	</Create>
+const AbstractCreate = () => (
+	<MyCreate>
+		<TitleInput/>
+		<DescriptionInput/>
+		<TypeInput/>
+		<YearInput/>
+		<VolumeInput/>
+		<AuthorsInput/>
+		{/*<CharacterInput/>*/}
+		<ExitDataInput/>
+		<AddFileInput/>
+	</MyCreate>
 )
+
+export default AbstractCreate
