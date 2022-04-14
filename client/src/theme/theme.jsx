@@ -24,7 +24,6 @@ export const themes = {
 			RaMenuItemLink: {
 				styleOverrides: {
 					active: {
-						height: 79,
 						color: indigo[500],
 					},
 				},

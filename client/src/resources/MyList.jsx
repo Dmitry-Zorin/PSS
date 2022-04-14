@@ -1,23 +1,7 @@
-import React, { useEffect } from 'react'
-import { Datagrid, List, useListContext, usePermissions, useRecordContext, useResourceContext, useStore } from 'react-admin'
+import React from 'react'
+import { Datagrid, List, usePermissions, useRecordContext, useResourceContext } from 'react-admin'
 import { ListActions } from '../components/old'
-
-const ResourceCounter = () => {
-	const { data } = useListContext()
-	const resource = useResourceContext()
-	const [resourcesCount, setResourcesCount] = useStore('resources.count')
-
-	useEffect(() => {
-		if (data && resourcesCount[resource] !== data.length) {
-			setResourcesCount({
-				...resourcesCount,
-				[resource]: data.length,
-			})
-		}
-	}, [])
-
-	return null
-}
+import ResourceCounter from './ResourceCounter'
 
 const DatagridExpand = () => {
 	const record = useRecordContext()

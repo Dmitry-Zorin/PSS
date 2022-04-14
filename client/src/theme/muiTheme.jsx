@@ -7,6 +7,11 @@ export default {
 		closedWidth: 56,
 	},
 	components: {
+		MuiPaper: {
+			defaultProps: {
+				// variant: 'outlined'
+			},
+		},
 		MuiTypography: {
 			styleOverrides: {
 				root: {
@@ -32,6 +37,13 @@ export default {
 					'&:hover': {
 						background: 'rgba(0, 0, 0, 0.05)',
 					},
+				},
+			},
+		},
+		MuiCardContent: {
+			styleOverrides: {
+				root: {
+					padding: 45,
 				},
 			},
 		},

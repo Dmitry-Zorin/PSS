@@ -8,6 +8,8 @@ import authProvider from './providers/authProvider'
 import dataProvider from './providers/dataProvider'
 import i18nProvider from './providers/i18nProvider'
 import * as resources from './resources/index'
+import { Timeline } from './resources/Timeline'
+import TimelineIcon from '@mui/icons-material/Timeline'
 
 const getLazy = (components) => (
 	mapValues(components, (value) => (
@@ -26,6 +28,11 @@ const App = () => (
 			dashboard: () => import('./DashBoard'),
 		})}
 	>
+		<Resource
+			name='resources'
+			icon={TimelineIcon}
+			list={Timeline}
+		/>
 		{permissions => (
 			entries({ ...resources }).map(([name, props]) => {
 				const { list, show, create, edit, ...otherProps } = props

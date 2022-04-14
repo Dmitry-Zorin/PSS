@@ -2,11 +2,6 @@ import React, { lazy, StrictMode, Suspense } from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
 
-// const App = lazy(() => new Promise(resolve => setTimeout(
-// 	resolve,
-// 	100000,
-// )).then(() => import('./App')))
-
 const App = lazy(() => import('./App'))
 
 const Fallback = () => (

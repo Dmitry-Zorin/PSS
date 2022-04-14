@@ -1,14 +1,13 @@
 import LanguageIcon from '@mui/icons-material/Language'
 import Button from '@mui/material/Button'
 import React, { useEffect } from 'react'
-import { useLocale, useSetLocale, useTranslate } from 'react-admin'
+import { useLocaleState, useTranslate } from 'react-admin'
 import { Helmet } from 'react-helmet'
 import { getUser } from '../../providers/authProvider'
 import { saveSettings } from '../../requests'
 
 const LocaleSwitcher = () => {
-	const locale = useLocale()
-	const setLocale = useSetLocale()
+	const [locale, setLocale] = useLocaleState()
 	const translate = useTranslate()
 
 	useEffect(() => {

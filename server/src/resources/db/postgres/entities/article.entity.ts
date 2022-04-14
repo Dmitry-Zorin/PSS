@@ -1,42 +1,7 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
-import { File } from './file.entity'
+import { BaseEntity, Entity } from 'typeorm'
+import { WithCommonFields } from './common-fields.entity'
+import { WithForm16Fields } from './form16-fields.entity'
+import { WithMainFields } from './main-fields.entity'
 
 @Entity('articles')
-export class Article extends BaseEntity {
-	@PrimaryGeneratedColumn()
-	id: string
-
-	@CreateDateColumn()
-	createdAt: Date
-
-	@UpdateDateColumn()
-	updatedAt: Date
-
-	@Column()
-	title: string
-
-	@Column({ nullable: true })
-	description?: string
-
-	@Column({ nullable: true })
-	type?: string
-
-	@Column({ nullable: true })
-	year?: number
-
-	@Column({ nullable: true })
-	volume?: number
-
-	@Column('simple-array')
-	authors: string[]
-
-	@Column({ nullable: true })
-	character?: string
-
-	@Column({ nullable: true })
-	exitData?: string
-
-	@OneToOne(() => File, { nullable: true })
-	@JoinColumn()
-	file?: File
-}
+export class Article extends WithMainFields(WithCommonFields(WithForm16Fields(BaseEntity))) {}

@@ -5,8 +5,10 @@ import { pluralize } from 'mongoose'
 import { FindOptionsWhere } from 'typeorm'
 import { PaginationOptions } from '../../list-params.pipe'
 import { DbService, DeleteResult, FindOneResult, UpdateResult } from '../db.service'
-import { Article, File } from './entities'
 import * as entities from './entities'
+import { Article } from './entities'
+import { File } from './entities/file.entity'
+import { Resource } from './entities'
 
 type Entity = Article & typeof Article
 
@@ -28,6 +30,10 @@ export class PostgresService extends DbService {
 
 	private static getFilter(filterOrId: FilterOrId) {
 		return isString(filterOrId) ? { id: filterOrId } : filterOrId
+	}
+
+	private static getResourceId(resource: string, id: string) {
+		return `${resource}-${id}`
 	}
 
 	private getEntity(resource: string) {
@@ -61,6 +67,14 @@ export class PostgresService extends DbService {
 		const { id } = await Entity.save(newRecord).catch(() => {
 			throw new BadRequestException('Resource failed to save')
 		})
+
+		await Resource.save({
+			id: PostgresService.getResourceId(resource, id),
+			resource,
+			resourceId: id,
+			title: newRecord.title,
+		})
+
 		return id
 	}
 
@@ -126,7 +140,10 @@ export class PostgresService extends DbService {
 		}).catch(() => {
 			throw new NotFoundException()
 		})
+
+		const resourceId = PostgresService.getResourceId(resource, record.id)
 		await Entity.remove(record)
+		await Resource.delete(resourceId)
 
 		if (record.file) {
 			await File.remove(record.file)

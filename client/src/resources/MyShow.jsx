@@ -9,7 +9,7 @@ const MyShow = ({ children }) => {
 	return (
 		<Show
 			title={`resources.${resource}.titles.show`}
-			actions={<ShowActions permissions={permissions}/>}
+			actions={<ShowActions {...{ permissions }}/>}
 		>
 			<SimpleShowLayout>
 				{children}

@@ -1,7 +1,6 @@
 import ExpandMore from '@mui/icons-material/ExpandMore'
 import Box from '@mui/material/Box'
 import Collapse from '@mui/material/Collapse'
-import capitalize from 'just-capitalize'
 import React from 'react'
 import { MenuItemLink, useTranslate, useSidebarState } from 'react-admin'
 
@@ -19,7 +18,7 @@ const SubMenu = ({
 		<>
 			<MenuItemLink
 				to='#'
-				primaryText={translate(name, { _: capitalize(name) })}
+				primaryText={translate(name)}
 				leftIcon={isOpen ? <ExpandMore/> : icon}
 				onClick={handleToggle}
 				sx={{

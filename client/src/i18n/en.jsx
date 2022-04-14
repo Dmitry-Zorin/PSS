@@ -29,7 +29,11 @@ const messages = {
 		search: 'Search by title',
 	},
 	resources: {
+		resources: {
+			name: 'Timeline'
+		},
 		articles: {
+			name: 'Article |||| Articles',
 			titles: {
 				create: 'Add article',
 				list: 'Articles',
@@ -37,9 +41,33 @@ const messages = {
 				edit: 'Update article',
 			},
 		},
-		abstracts: {},
-		monographs: {},
-		dissertations: {},
+		abstracts: {
+			name: 'Abstract |||| Abstracts',
+			titles: {
+				create: 'Add article',
+				list: 'Articles',
+				show: 'View article',
+				edit: 'Update article',
+			},
+		},
+		monographs: {
+			name: 'Monograph |||| Monographs',
+			titles: {
+				create: 'Add article',
+				list: 'Articles',
+				show: 'View article',
+				edit: 'Update article',
+			},
+		},
+		dissertations: {
+			name: 'Dissertation |||| Dissertations',
+			titles: {
+				create: 'Add article',
+				list: 'Articles',
+				show: 'View article',
+				edit: 'Update article',
+			},
+		},
 	},
 }
 

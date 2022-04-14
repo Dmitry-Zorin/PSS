@@ -10,7 +10,7 @@ import MenuItem from './MenuItem'
 import SubMenu from './SubMenu'
 
 const menuResources = [
-	'timeline',
+	'resources',
 	'library',
 	'form16',
 	'employees',

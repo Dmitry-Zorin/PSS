@@ -1,5 +1,4 @@
 import SelectInput from '@mui/material/Select/SelectInput'
-import capitalize from 'just-capitalize'
 import React from 'react'
 import {
 	ArrayInput,
@@ -10,17 +9,17 @@ import {
 	NumberInput,
 	ReferenceInput,
 	required,
-	required as _required,
 	SimpleFormIterator,
-	TextInput, useResourceContext,
+	TextInput,
+	useResourceContext,
 	useTranslate,
 } from 'react-admin'
 
-export const LargeTextInput = ({ className, required, ...props }) => (
+export const LargeTextInput = ({ className, required: _required, ...props }) => (
 	<TextInput
 		fullWidth
 		multiline
-		validate={required ? _required() : undefined}
+		validate={_required ? required() : undefined}
 		{...props}
 	/>
 )
@@ -36,10 +35,8 @@ export const DescriptionInput = () => (
 export const TypeInput = () => {
 	const resource = useResourceContext()
 	const translate = useTranslate()
-	const defaultValue = translate(
-		`resources.${resource}.name`,
-		{ _: capitalize(resource) },
-	)
+	const defaultValue = translate(`resources.${resource}.name`, { smart_count: 1 })
+
 	return (
 		<TextInput
 			source='type'

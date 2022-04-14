@@ -9,10 +9,13 @@ export class ResourcesService {
 
 	async countAll() {
 		const resources = this.dbService.getResources()
-		const countPromises = resources.map(resource => (
-			this.dbService.getResourceCount(resource))
-		)
-		return zipObject(resources, await Promise.all(countPromises))
+		const resourceCounts = []
+		for (const resource of resources) {
+			resourceCounts.push(
+				await this.dbService.getResourceCount(resource)
+			)
+		}
+		return zipObject(resources, resourceCounts)
 	}
 
 	create(resource: string, payload: any) {
