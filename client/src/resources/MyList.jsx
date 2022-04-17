@@ -12,9 +12,14 @@ const DatagridExpand = () => {
 	)
 }
 
-const MyList = ({ children, filters }) => {
+const MyList = ({ children, filters, datagridProps, ...props }) => {
 	const { permissions } = usePermissions()
 	const resource = useResourceContext()
+
+	const defaultDatagridProps = {
+		rowClick: 'show',
+		expand: <DatagridExpand/>
+	}
 
 	return (
 		<List
@@ -23,10 +28,11 @@ const MyList = ({ children, filters }) => {
 			filters={filters}
 			sort={{ field: 'createdAt', order: 'desc' }}
 			perPage={25}
+			{...props}
 		>
 			<>
 				<ResourceCounter/>
-				<Datagrid rowClick='show' expand={<DatagridExpand/>}>
+				<Datagrid {...datagridProps || defaultDatagridProps}>
 					{children}
 				</Datagrid>
 			</>

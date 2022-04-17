@@ -26,7 +26,9 @@ export const createEmptyPage = (noPlacesMessage, addDataMessage) => (
 
 export const ListActions = ({ filters, permissions }) => (
 	<TopToolbar>
-		<FilterButton filters={filters}/>
+		{filters && (
+			<FilterButton filters={filters}/>
+		)}
 		{permissions && (
 			<CreateButton/>
 		)}

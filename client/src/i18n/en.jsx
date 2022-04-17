@@ -27,6 +27,7 @@ const messages = {
 		exitData: 'Exit data',
 		file: 'File',
 		search: 'Search by title',
+		name: 'Name'
 	},
 	resources: {
 		resources: {
@@ -68,6 +69,13 @@ const messages = {
 				edit: 'Update article',
 			},
 		},
+		characters: {
+			name: 'Character |||| Characters',
+			titles: {
+				create: 'Add character',
+				list: 'Characters',
+			},
+		}
 	},
 }
 

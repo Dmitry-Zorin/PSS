@@ -90,6 +90,13 @@ const dataProvider = {
 		return { data: processInputData(json) }
 	},
 
+	getMany: async (resource, { ids }) => ({
+		data: await Promise.all(ids.map(async (id) => {
+			const { json } = await httpClient(`${resourcesUrl}/${resource}/${id}`)
+			return processInputData(json)
+		})),
+	}),
+
 	update: async (resource, { id, data }) => {
 		const options = { method: 'put', body: processOutputData(data) }
 		await httpClient(`${resourcesUrl}/${resource}/${id}`, options)

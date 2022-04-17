@@ -27,6 +27,7 @@ const messages = {
 		exitData: 'Выходные данные',
 		file: 'Файл',
 		search: 'Поиск по названию',
+		name: 'Название'
 	},
 	resources: {
 		resources: {
@@ -72,6 +73,13 @@ const messages = {
 			},
 			created: 'добавлена',
 		},
+		characters: {
+			name: 'Характер |||| Характеры',
+			titles: {
+				create: 'Добавить характер',
+				list: 'Список характеров',
+			},
+		}
 	},
 }
 

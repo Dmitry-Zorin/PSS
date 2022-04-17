@@ -2,6 +2,10 @@ import React from 'react'
 import { AuthorsField, DescriptionField, DownloadFileField, ExitDataField, TitleField, TypeField, VolumeField, YearField } from '../../components/fields'
 import MyShow from '../MyShow'
 
+function CharacterField() {
+	return null
+}
+
 const DissertationShow = () => (
 	<MyShow>
 		<TitleField/>
@@ -10,7 +14,7 @@ const DissertationShow = () => (
 		<YearField/>
 		<VolumeField/>
 		<AuthorsField/>
-		{/*<CharacterField/>*/}
+		<CharacterField/>
 		<ExitDataField/>
 		<DownloadFileField/>
 	</MyShow>

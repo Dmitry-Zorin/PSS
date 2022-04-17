@@ -1,4 +1,3 @@
-import SelectInput from '@mui/material/Select/SelectInput'
 import React from 'react'
 import {
 	ArrayInput,
@@ -8,28 +7,23 @@ import {
 	minValue,
 	NumberInput,
 	ReferenceInput,
-	required,
 	SimpleFormIterator,
+	SelectInput,
+	required,
 	TextInput,
 	useResourceContext,
 	useTranslate,
 } from 'react-admin'
 
-export const LargeTextInput = ({ className, required: _required, ...props }) => (
+export const LargeTextInput = ({ source, className, required: _required, ...props }) => (
 	<TextInput
+		source={source}
+		label={`fields.${source}`}
 		fullWidth
 		multiline
 		validate={_required ? required() : undefined}
 		{...props}
 	/>
-)
-
-export const TitleInput = () => (
-	<LargeTextInput source='title' label='fields.title' required/>
-)
-
-export const DescriptionInput = () => (
-	<LargeTextInput source='description' label='fields.description'/>
 )
 
 export const TypeInput = () => {
@@ -78,10 +72,6 @@ export const CharacterInput = () => (
 	<ReferenceInput source='character' reference='characters'>
 		<SelectInput optionText='name'/>
 	</ReferenceInput>
-)
-
-export const ExitDataInput = () => (
-	<LargeTextInput source='exitData' label='fields.exitData'/>
 )
 
 export const AddFileInput = () => (

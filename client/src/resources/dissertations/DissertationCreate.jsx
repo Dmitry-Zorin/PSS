@@ -1,17 +1,17 @@
 import React from 'react'
-import { AddFileInput, AuthorsInput, DescriptionInput, ExitDataInput, TitleInput, TypeInput, VolumeInput, YearInput } from '../../components/inputs'
+import { AddFileInput, AuthorsInput, CharacterInput, LargeTextInput, TypeInput, VolumeInput, YearInput } from '../../components/inputs'
 import MyCreate from '../MyCreate'
 
 const DissertationCreate = () => (
 	<MyCreate>
-		<TitleInput/>
-		<DescriptionInput/>
+		<LargeTextInput source='title' required/>
+		<LargeTextInput source='description'/>
 		<TypeInput/>
 		<YearInput/>
 		<VolumeInput/>
 		<AuthorsInput/>
-		{/*<CharacterInput/>*/}
-		<ExitDataInput/>
+		<CharacterInput/>
+		<LargeTextInput source='exitData'/>
 		<AddFileInput/>
 	</MyCreate>
 )

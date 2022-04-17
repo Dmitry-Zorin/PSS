@@ -1,17 +1,17 @@
 import React from 'react'
-import { AuthorsInput, DescriptionInput, ExitDataInput, ReplaceFileInput, TitleInput, TypeInput, VolumeInput, YearInput } from '../../components/inputs'
+import { AuthorsInput, CharacterInput, LargeTextInput, ReplaceFileInput, TypeInput, VolumeInput, YearInput } from '../../components/inputs'
 import MyEdit from '../MyEdit'
 
 const AbstractEdit = () => (
 	<MyEdit>
-		<TitleInput/>
-		<DescriptionInput/>
+		<LargeTextInput source='title' required/>
+		<LargeTextInput source='description'/>
 		<TypeInput/>
 		<YearInput/>
 		<VolumeInput/>
 		<AuthorsInput/>
-		{/*<CharacterInput/>*/}
-		<ExitDataInput/>
+		<CharacterInput/>
+		<LargeTextInput source='exitData'/>
 		<ReplaceFileInput/>
 	</MyEdit>
 )

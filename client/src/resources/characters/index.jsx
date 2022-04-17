@@ -1,6 +1,5 @@
-import { CreateForm, ListForm } from './characters'
-
 export const characters = {
-	create: CreateForm,
-	list: ListForm,
+	create: () => import('./CharacterCreate'),
+	list: () => import('./CharacterList'),
+	edit: () => import('./CharacterEdit'),
 }

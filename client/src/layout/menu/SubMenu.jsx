@@ -12,7 +12,7 @@ const SubMenu = ({
 	children,
 }) => {
 	const translate = useTranslate()
-	const [sidebarIsOpen] = useSidebarState()
+	const [isSidebarOpen] = useSidebarState()
 
 	return (
 		<>
@@ -30,7 +30,7 @@ const SubMenu = ({
 				<Box
 					sx={{
 						'& a': {
-							pl: sidebarIsOpen ? 4 : 2,
+							pl: isSidebarOpen ? 4 : 2,
 						},
 					}}
 				>
