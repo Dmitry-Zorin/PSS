@@ -1,4 +1,5 @@
-import { IsNotEmpty, IsString } from 'class-validator'
+import { IsEnum, IsNotEmpty, IsString } from 'class-validator'
+import { Role } from '../db/db.service'
 
 export class FindResourceDto {
 	@IsString()
@@ -8,4 +9,8 @@ export class FindResourceDto {
 	@IsString()
 	@IsNotEmpty()
 	id: string
+
+	@IsEnum(Role)
+	@IsNotEmpty()
+	role: Role
 }

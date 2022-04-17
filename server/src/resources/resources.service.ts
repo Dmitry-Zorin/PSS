@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { zipObject } from 'lodash'
-import { DbService } from './db/db.service'
+import { DbService, Role } from './db/db.service'
 import { PaginationOptions } from './list-params.pipe'
 
 @Injectable()
@@ -22,8 +22,8 @@ export class ResourcesService {
 		return this.dbService.create(resource, payload)
 	}
 
-	findAll(resource: string, listParams: PaginationOptions) {
-		return this.dbService.findAll(resource, listParams)
+	findAll(resource: string, listParams: PaginationOptions, role: Role) {
+		return this.dbService.findAll(resource, listParams, role)
 	}
 
 	getRange(resource: string, total: number, listParams: PaginationOptions) {
@@ -31,8 +31,8 @@ export class ResourcesService {
 		return `${resource} ${skip}-${Math.min(limit, total)}/${total}`
 	}
 
-	findOne(resource: string, id: string) {
-		return this.dbService.findOne(resource, id)
+	findOne(resource: string, id: string, role: Role) {
+		return this.dbService.findOne(resource, id, role)
 	}
 
 	update(resource: string, id: string, payload: any) {

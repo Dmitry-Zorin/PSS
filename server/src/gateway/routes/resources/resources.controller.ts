@@ -4,7 +4,10 @@ import { FileInterceptor } from '@nestjs/platform-express'
 import { Response } from 'express'
 import { firstValueFrom } from 'rxjs'
 import { FileService } from '../../../file/file.service'
+import { User } from '../../decorators'
 import { Public } from '../../jwt/jwt.guard'
+import { Role, Roles } from '../../roles.guard'
+import { UserInfo } from '../auth/auth.controller'
 
 @Controller()
 export class ResourcesController {
@@ -32,6 +35,7 @@ export class ResourcesController {
 	}
 
 	@Post(':resource')
+	@Roles(Role.Admin)
 	@UseInterceptors(FileInterceptor('file'))
 	async create(
 		@Body() body: object,
@@ -55,9 +59,10 @@ export class ResourcesController {
 	async findAll(
 		@Query() query: unknown,
 		@Param('resource') resource: string,
+		@User() { role }: UserInfo,
 		@Res({ passthrough: true }) res: Response,
 	) {
-		const data = { resource, query }
+		const data = { resource, query, role }
 		const findAllObservable = this.resourcesClient.send('find_all', data)
 		const { range, documents } = await firstValueFrom(findAllObservable)
 		res.header('Content-Range', range)
@@ -68,12 +73,14 @@ export class ResourcesController {
 	findOne(
 		@Param('resource') resource: string,
 		@Param('id') id: string,
+		@User() { role }: UserInfo,
 	) {
-		const data = { resource, id }
+		const data = { resource, id, role }
 		return this.resourcesClient.send('find_one', data)
 	}
 
 	@Put(':resource/:id')
+	@Roles(Role.Admin)
 	@UseInterceptors(FileInterceptor('file'))
 	async update(
 		@Body() body: object,
@@ -97,6 +104,7 @@ export class ResourcesController {
 	}
 
 	@Delete(':resource/:id')
+	@Roles(Role.Admin)
 	async remove(
 		@Param('resource') resource: string,
 		@Param('id') id: string,

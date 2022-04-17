@@ -1,5 +1,5 @@
-import { ArgumentMetadata, BadRequestException, Injectable, PipeTransform } from '@nestjs/common'
-import { isInteger, isNumber, isString, transform } from 'lodash'
+import { BadRequestException, Injectable, PipeTransform } from '@nestjs/common'
+import { isInteger, isString, transform } from 'lodash'
 
 export interface PaginationOptions {
 	match?: Record<string, unknown>,
@@ -18,7 +18,7 @@ export class ListParamsPipe implements PipeTransform {
 		return param in paramValidations
 	}
 
-	transform(data: any, metadata: ArgumentMetadata): PaginationOptions {
+	transform(data: any): PaginationOptions {
 		return transform(data.query as Record<string, string>, (params, value, key) => {
 			if (!ListParamsPipe.isListParam(key)) return
 

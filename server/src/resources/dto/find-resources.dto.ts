@@ -1,5 +1,6 @@
 import { Type } from 'class-transformer'
-import { IsNotEmpty, IsOptional, IsString, ValidateNested } from 'class-validator'
+import { IsEnum, IsNotEmpty, IsOptional, IsString, ValidateNested } from 'class-validator'
+import { Role } from '../db/db.service'
 
 class PaginationOptionsDto {
 	@IsOptional()
@@ -23,4 +24,8 @@ export class FindResourcesDto {
 	@ValidateNested()
 	@Type(() => PaginationOptionsDto)
 	query: PaginationOptionsDto
+
+	@IsEnum(Role)
+	@IsNotEmpty()
+	role: Role
 }

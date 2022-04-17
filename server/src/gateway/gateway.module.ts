@@ -5,6 +5,7 @@ import Joi from 'joi'
 import { AllExceptionsFilter } from './exception.filter'
 import { JwtGuard } from './jwt/jwt.guard'
 import { JwtModule } from './jwt/jwt.module'
+import { RolesGuard } from './roles.guard'
 import { routeModules, routes } from './routes/routes'
 
 @Module({
@@ -25,6 +26,10 @@ import { routeModules, routes } from './routes/routes'
 		{
 			provide: APP_GUARD,
 			useClass: JwtGuard,
+		},
+		{
+			provide: APP_GUARD,
+			useClass: RolesGuard,
 		},
 		{
 			provide: APP_FILTER,

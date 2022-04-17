@@ -3,7 +3,7 @@ import { ClientProxy } from '@nestjs/microservices'
 import { User } from '../../decorators'
 import { Public } from '../../jwt/jwt.guard'
 
-interface UserToken {
+export interface UserInfo {
 	username: string
 	role: string
 }
@@ -33,18 +33,18 @@ export class AuthController {
 	checkAuth() {}
 
 	@Get('permissions')
-	getPermissions(@User() user: UserToken) {
+	getPermissions(@User() user: UserInfo) {
 		return { role: user.role }
 	}
 
 	@Get('identity')
-	findIdentity(@User() { username }: UserToken) {
+	findIdentity(@User() { username }: UserInfo) {
 		return this.authClient.send('find_identity', username)
 	}
 
 	@Put('settings')
 	async updateSettings(
-		@User() { username }: UserToken,
+		@User() { username }: UserInfo,
 		@Body() body: unknown,
 	) {
 		const data = { username, payload: body }
@@ -52,7 +52,7 @@ export class AuthController {
 	}
 
 	@Delete('unregister')
-	unregister(@User() user: UserToken) {
+	unregister(@User() user: UserInfo) {
 		return this.authClient.send('unregister', user.username)
 	}
 }

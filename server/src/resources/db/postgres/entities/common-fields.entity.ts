@@ -19,7 +19,7 @@ export function WithCommonFields<T extends Constructor>(Entity: T) {
 		@Column('simple-array')
 		authors: string[]
 
-		@OneToOne(() => File, { nullable: true })
+		@OneToOne(() => File, { nullable: true, eager: true })
 		@JoinColumn()
 		file?: File
 	}

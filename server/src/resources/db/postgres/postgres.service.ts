@@ -1,14 +1,14 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common'
 import { isNull, isString, keys, transform } from 'lodash'
 import { omitBy } from 'lodash/fp'
-import { pluralize } from 'mongoose'
+import { plural } from 'pluralize'
 import { FindOptionsWhere } from 'typeorm'
 import { PaginationOptions } from '../../list-params.pipe'
-import { DbService, DeleteResult, FindOneResult, UpdateResult } from '../db.service'
-import * as entities from './entities'
-import { Article } from './entities'
+import { DbService, DeleteResult, FindOneResult, Role, UpdateResult } from '../db.service'
+import * as adminEntities from './entities/admin'
 import { File } from './entities/file.entity'
-import { Resource } from './entities'
+import * as entities from './entities/user'
+import { Article, Resource } from './entities/user'
 
 type Entity = Article & typeof Article
 
@@ -20,11 +20,15 @@ const omitNull = omitBy(isNull)
 @Injectable()
 export class PostgresService extends DbService {
 	private readonly entities: Record<string, Entity>
+	private readonly adminEntities: Record<string, Entity>
 
 	constructor() {
 		super()
 		this.entities = transform(entities, (result, value, key) => {
-			result[pluralize()!(key)] = value as any
+			result[plural(key).toLowerCase()] = value as any
+		})
+		this.adminEntities = transform(adminEntities, (result, value, key) => {
+			result[plural(key).toLowerCase()] = value as any
 		})
 	}
 
@@ -36,8 +40,8 @@ export class PostgresService extends DbService {
 		return `${resource}-${id}`
 	}
 
-	private getEntity(resource: string) {
-		const entity = this.entities[resource]
+	private getEntity(resource: string, role = Role.Admin) {
+		const entity = (role === Role.Admin ? { ...this.entities, ...this.adminEntities } : this.entities)[resource]
 		if (!entity) {
 			throw new NotFoundException('Resource not found')
 		}
@@ -68,35 +72,42 @@ export class PostgresService extends DbService {
 			throw new BadRequestException('Resource failed to save')
 		})
 
-		await Resource.save({
-			id: PostgresService.getResourceId(resource, id),
-			resource,
-			resourceId: id,
-			title: newRecord.title,
-		})
+		if (newRecord.title) {
+			await Resource.save({
+				id: PostgresService.getResourceId(resource, id),
+				resource,
+				resourceId: id,
+				title: newRecord.title,
+			})
+		}
 
 		return id
 	}
 
-	async findAll(resource: string, options: PaginationOptions) {
+	async findAll(resource: string, options: PaginationOptions, role: Role) {
 		const { match, sort, skip, limit } = options
-		const Entity = this.getEntity(resource)
-		const [documents, total] = await Entity.findAndCount({
-			where: match,
-			order: sort,
-			take: limit,
-			skip,
-		})
-		return { documents: documents.map(omitNull), total }
+		const Entity = this.getEntity(resource, role)
+		try {
+			const [documents, total] = await Entity.findAndCount({
+				loadEagerRelations: false,
+				where: match,
+				order: sort,
+				take: limit,
+				skip,
+			})
+			return { documents: documents.map(omitNull), total }
+		}
+		catch (e: any) {
+			throw new BadRequestException(e.message)
+		}
 	}
 
-	async findOne(resource: string, filter: any): FindOneResult
-	async findOne(resource: string, id: string): FindOneResult
-	async findOne(resource: string, filterOrId: any): FindOneResult {
-		const Entity = this.getEntity(resource)
+	async findOne(resource: string, filter: any, role: Role): FindOneResult
+	async findOne(resource: string, id: string, role: Role): FindOneResult
+	async findOne(resource: string, filterOrId: any, role: Role): FindOneResult {
+		const Entity = this.getEntity(resource, role)
 		const record = await Entity.findOneOrFail({
 			where: PostgresService.getFilter(filterOrId),
-			relations: ['file'],
 		}).catch(() => {
 			throw new NotFoundException()
 		})
@@ -109,7 +120,6 @@ export class PostgresService extends DbService {
 		const Entity = this.getEntity(resource)
 		const record = await Entity.findOneOrFail({
 			where: PostgresService.getFilter(filterOrId),
-			relations: ['file'],
 		}).catch(() => {
 			throw new NotFoundException()
 		})
@@ -136,7 +146,6 @@ export class PostgresService extends DbService {
 		const Entity = this.getEntity(resource)
 		const record = await Entity.findOneOrFail({
 			where: PostgresService.getFilter(filterOrId),
-			relations: ['file'],
 		}).catch(() => {
 			throw new NotFoundException()
 		})
