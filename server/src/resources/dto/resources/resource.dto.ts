@@ -30,8 +30,9 @@ export class ResourceDto {
 	authors: string[]
 
 	@IsOptional()
-	@Length(1, 100)
-	character?: string
+	@IsInt()
+	@Min(0)
+	characterId?: number
 
 	@IsOptional()
 	@Length(1, 10000)

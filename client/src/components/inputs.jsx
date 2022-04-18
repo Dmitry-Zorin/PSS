@@ -69,7 +69,7 @@ export const AuthorsInput = () => (
 )
 
 export const CharacterInput = () => (
-	<ReferenceInput source='character' reference='characters'>
+	<ReferenceInput source='characterId' reference='characters'>
 		<SelectInput optionText='name'/>
 	</ReferenceInput>
 )

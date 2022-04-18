@@ -57,8 +57,8 @@ export const ExitDataField = () => (
 	</LabeledField>
 )
 
-export const CharactersField = () => (
-	<LabeledField source='character'>
+export const CharacterField = () => (
+	<LabeledField source='characterId'>
 		<ReferenceField reference='characters'>
 			<ChipField source='name'/>
 		</ReferenceField>

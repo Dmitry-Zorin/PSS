@@ -1,10 +1,6 @@
 import React from 'react'
-import { AuthorsField, DescriptionField, DownloadFileField, ExitDataField, TitleField, TypeField, VolumeField, YearField } from '../../components/fields'
+import { AuthorsField, DescriptionField, CharacterField, DownloadFileField, ExitDataField, TitleField, TypeField, VolumeField, YearField } from '../../components/fields'
 import MyShow from '../MyShow'
-
-function CharacterField() {
-	return null
-}
 
 const ArticleShow = () => (
 	<MyShow>
