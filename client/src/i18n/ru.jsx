@@ -12,7 +12,7 @@ const messages = {
 			category2: 'Категория Б',
 			category3: 'Категория В',
 			others: 'Другие',
-			more: 'Прочее',
+			admin: 'Администрирование',
 		},
 	},
 	fields: {

@@ -19,19 +19,28 @@ const SubMenu = ({
 			<MenuItemLink
 				to='#'
 				primaryText={translate(name)}
-				leftIcon={isOpen ? <ExpandMore/> : icon}
+				leftIcon={isOpen && !isSidebarOpen ? <ExpandMore/> : icon}
 				onClick={handleToggle}
 				sx={{
 					boxShadow: 'none',
 					background: 'transparent',
 				}}
 			/>
-			<Collapse in={isOpen} timeout='auto' unmountOnExit>
+			<Collapse
+				in={isOpen}
+				timeout='auto'
+				unmountOnExit
+				sx={{
+					...isOpen && {
+						mb: 1,
+					},
+				}}
+			>
 				<Box
 					sx={{
 						...isSidebarOpen && {
 							a: {
-								pl: '24px',
+								pl: '28px',
 							},
 						},
 					}}

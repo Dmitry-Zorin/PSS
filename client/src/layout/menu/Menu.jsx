@@ -2,7 +2,8 @@ import Filter1Icon from '@mui/icons-material/Filter1'
 import Filter2Icon from '@mui/icons-material/Filter2'
 import Filter3Icon from '@mui/icons-material/Filter3'
 import FilterNoneIcon from '@mui/icons-material/FilterNone'
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings'
+import { Divider } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { Menu, usePermissions, useResourceDefinitions, useStore } from 'react-admin'
 import { fetchApi } from '../../requests'
@@ -75,6 +76,7 @@ const MyMenu = (props) => {
 					<MenuItem key={resource.name} {...{ resource }}/>
 				))
 			}
+			<Divider/>
 			<SubMenu
 				handleToggle={() => setShowCategory1(e => !e)}
 				isOpen={showCategory1}
@@ -128,19 +130,22 @@ const MyMenu = (props) => {
 				}
 			</SubMenu>
 			{permissions && (
-				<SubMenu
-					handleToggle={() => setShowOther(e => !e)}
-					isOpen={showOther}
-					name='layout.menu.more'
-					icon={<MoreHorizIcon/>}
-				>
-					{resources
-						.filter(r => otherResources.includes(r.name))
-						.map(resource => (
-							<MenuItem key={resource.name} {...{ resource }}/>
-						))
-					}
-				</SubMenu>
+				<>
+					<Divider sx={{ mt: 1, mb: 1 }}/>
+					<SubMenu
+						handleToggle={() => setShowOther(e => !e)}
+						isOpen={showOther}
+						name='layout.menu.admin'
+						icon={<AdminPanelSettingsIcon/>}
+					>
+						{resources
+							.filter(r => otherResources.includes(r.name))
+							.map(resource => (
+								<MenuItem key={resource.name} {...{ resource }}/>
+							))
+						}
+					</SubMenu>
+				</>
 			)}
 		</Menu>
 	)

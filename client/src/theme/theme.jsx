@@ -28,6 +28,7 @@ export const themes = {
 							background: 'rgba(0, 0, 0, 0.0375)',
 						},
 						'&.RaMenuItemLink-active': {
+							borderColor: 'rgba(0, 0, 0, 0.04)',
 							background: 'rgba(0, 0, 0, 0.075)',
 							'&, & *': {
 								color: indigo[500],
@@ -59,6 +60,7 @@ export const themes = {
 							background: 'rgba(0, 0, 0, 0.05)',
 						},
 						'&.RaMenuItemLink-active': {
+							borderColor: 'rgba(255, 255, 255, 0.06)',
 							background: 'rgba(0, 0, 0, 0.1)',
 							'&, & *': {
 								color: amber[300],

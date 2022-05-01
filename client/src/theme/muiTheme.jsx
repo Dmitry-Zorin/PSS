@@ -1,3 +1,5 @@
+export const appbarHeight = 56
+
 export default {
 	shape: {
 		borderRadius: 8,
@@ -27,7 +29,7 @@ export default {
 		MuiToolbar: {
 			styleOverrides: {
 				dense: {
-					height: 56,
+					height: appbarHeight,
 				},
 			},
 		},
