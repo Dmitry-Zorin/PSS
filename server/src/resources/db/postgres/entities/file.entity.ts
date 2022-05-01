@@ -1,13 +1,17 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import { BaseEntity, Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { ResourceItem } from './index'
 
-@Entity('files')
+@Entity()
 export class File extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	id: string
 
 	@Column()
-	objectId: string
+	name: string
 
 	@Column()
-	name: string
+	fileId: string
+
+	@OneToOne(() => ResourceItem, item => item.file)
+	resourceItem: ResourceItem
 }

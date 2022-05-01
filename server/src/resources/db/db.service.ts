@@ -8,9 +8,7 @@ export type UpdateResult = Promise<string>
 export type DeleteResult = Promise<string>
 
 export abstract class DbService {
-	abstract getResources(): string[]
-
-	abstract getResourceCount(resource: string): Promise<number>
+	abstract getResourcesCount(): Promise<any>
 
 	abstract create(resource: string, payload: any): Promise<string>
 

@@ -46,7 +46,7 @@ export class ResourcesController {
 
 		if (file) {
 			payload.fileInfo = {
-				id: file.id,
+				fileId: file.id,
 				name: file.originalname,
 			}
 		}
@@ -64,9 +64,9 @@ export class ResourcesController {
 	) {
 		const data = { resource, query, role }
 		const findAllObservable = this.resourcesClient.send('find_all', data)
-		const { range, documents } = await firstValueFrom(findAllObservable)
+		const { range, records } = await firstValueFrom(findAllObservable)
 		res.header('Content-Range', range)
-		return documents
+		return records
 	}
 
 	@Get(':resource/:id')
@@ -92,7 +92,7 @@ export class ResourcesController {
 
 		if (file) {
 			payload.fileInfo = {
-				id: file.id,
+				fileId: file.id,
 				name: file.originalname,
 			}
 		}

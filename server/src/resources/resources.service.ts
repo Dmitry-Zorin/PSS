@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common'
-import { zipObject } from 'lodash'
 import { DbService, Role } from './db/db.service'
 import { PaginationOptions } from './list-params.pipe'
 
@@ -7,15 +6,8 @@ import { PaginationOptions } from './list-params.pipe'
 export class ResourcesService {
 	constructor(private readonly dbService: DbService) {}
 
-	async countAll() {
-		const resources = this.dbService.getResources()
-		const resourceCounts = []
-		for (const resource of resources) {
-			resourceCounts.push(
-				await this.dbService.getResourceCount(resource)
-			)
-		}
-		return zipObject(resources, resourceCounts)
+	countAll() {
+		return this.dbService.getResourcesCount()
 	}
 
 	create(resource: string, payload: any) {

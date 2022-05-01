@@ -10,7 +10,7 @@ import * as resources from './dto/resources'
 export class ResourceValidationPipe implements PipeTransform {
 	async transform(value: UpdateResourceDto) {
 		const dtoName = `${capitalize(singular(value.resource))}Dto`
-		const dto = (resources as any)?.[dtoName] || resources.ResourceDto
+		const dto = (resources as any)?.[dtoName] || resources.DefaultDto
 		const errors = await validate(plainToInstance(dto, value.payload))
 
 		if (errors.length) {

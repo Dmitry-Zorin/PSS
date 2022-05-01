@@ -1,21 +1,19 @@
 import { Module } from '@nestjs/common'
 import { DbService } from './db.service'
-import { MongoModule } from './mongo/mongo.module'
-import { MongoService } from './mongo/mongo.service'
 import { PostgresModule } from './postgres/postgres.module'
 import { PostgresService } from './postgres/postgres.service'
 
 interface Options {
-	db: 'mongo' | 'postgres'
+	db: 'postgres'
 }
 
 @Module({})
 export class DbModule {
 	private static readonly dbs = {
-		mongo: {
-			module: MongoModule,
-			service: MongoService,
-		},
+		// mongo: {
+		// 	module: MongoModule,
+		// 	service: MongoService,
+		// },
 		postgres: {
 			module: PostgresModule,
 			service: PostgresService,

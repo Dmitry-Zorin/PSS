@@ -28,9 +28,9 @@ export class ResourcesController {
 		@Payload() { resource, role }: FindResourcesDto,
 		@Payload(new ListParamsPipe()) listParams: PaginationOptions,
 	) {
-		const { documents, total } = await this.resourcesService.findAll(resource, listParams, role)
+		const { records, total } = await this.resourcesService.findAll(resource, listParams, role)
 		const range = this.resourcesService.getRange(resource, total, listParams)
-		return { documents, range }
+		return { records, range }
 	}
 
 	@MessagePattern('find_one')

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
-import * as entities from './entities/user'
+import * as entities from './entities'
 import * as adminEntities from './entities/admin'
 import { File } from './entities/file.entity'
 import { PostgresService } from './postgres.service'
@@ -20,6 +20,7 @@ import { PostgresService } from './postgres.service'
 					File,
 				],
 				synchronize: true,
+				logging: true
 			}),
 			inject: [ConfigService],
 		}),

@@ -15,7 +15,7 @@ export enum Theme {
 	Dark = 'dark',
 }
 
-@Entity('users')
+@Entity()
 export class User {
 	@PrimaryColumn()
 	username: string

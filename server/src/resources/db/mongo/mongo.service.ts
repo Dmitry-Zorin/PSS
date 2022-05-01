@@ -10,14 +10,14 @@ type Filter = FilterQuery<any>
 type FilterOrId = Filter | string
 
 @Injectable()
-export class MongoService extends DbService {
+export class MongoService {
 	private readonly schemas: Record<string, any>
 
 	constructor(
 		@InjectConnection()
 		private readonly connection: Connection,
 	) {
-		super()
+		// super()
 		this.schemas = transform(schemas, (result, value: Type, key) => {
 			result[pluralize()!(key)] = SchemaFactory.createForClass(value)
 		})
