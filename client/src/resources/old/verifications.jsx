@@ -28,7 +28,7 @@ import {
 	createTitle,
 	EditActionsWithoutFile,
 	ShowActions,
-} from '../../components/inputs'
+} from '../components/inputs'
 
 const validateText = [required(), minLength(1)]
 const validateRequired = [required()]

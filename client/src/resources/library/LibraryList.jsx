@@ -11,7 +11,7 @@ import {
 	TextInput,
 } from 'react-admin'
 import { HeadlineField } from '../../CustomFields'
-import { BulkActionButtons, createEmptyPage } from '../../components/inputs'
+import { BulkActionButtons, createEmptyPage } from '../components/inputs'
 import { Aside } from './Aside'
 import { LibraryShow } from './LibraryShow'
 

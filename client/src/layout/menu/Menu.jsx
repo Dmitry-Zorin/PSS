@@ -10,9 +10,9 @@ import MenuItem from './MenuItem'
 import SubMenu from './SubMenu'
 
 const menuResources = [
-	'resources',
+	'timeline',
 	'library',
-	'form16',
+	'publicationsList',
 	'employees',
 	'platoons',
 ]
@@ -45,7 +45,7 @@ const restResources = [
 ]
 
 const otherResources = [
-	'users',
+	'authors',
 	'characters',
 ]
 

@@ -8,6 +8,11 @@ const MenuItem = ({ resource }) => {
 
 	const { name, icon: Icon } = resource
 
+	if (resourcesCount && !resourcesCount?.timeline) {
+		resourcesCount.timeline = Object.values(resourcesCount).reduce((a, b) => a + b)
+	}
+	console.log(resourcesCount)
+
 	return (
 		<MenuItemLink
 			to={`/${name}`}
@@ -18,7 +23,7 @@ const MenuItem = ({ resource }) => {
 						<Chip
 							size='small'
 							label={resourcesCount[name]}
-							style={{ marginLeft: 15 }}
+							sx={{ ml: '10px', cursor: 'pointer' }}
 						/>
 					)}
 				</>

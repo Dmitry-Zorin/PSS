@@ -96,8 +96,7 @@ const dataProvider = {
 				const { json } = await httpClient(`${resourcesUrl}/${resource}/${id}`)
 				return processInputData(json)
 			}
-			catch (e) {
-				console.log(e)
+			catch {
 				return null
 			}
 		}))).filter(e => !!e),

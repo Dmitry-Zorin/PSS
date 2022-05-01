@@ -4,14 +4,14 @@ const raViewStyle = {
 			width: '100%',
 			maxWidth: '1250px !important',
 			margin: '0 auto',
-		}
+		},
 	},
 }
 
 const raLayoutStyle = {
 	styleOverrides: {
 		root: {
-			padding: '15px 40px'
+			padding: '15px 40px',
 		},
 	},
 }
@@ -26,9 +26,9 @@ export default {
 			styleOverrides: {
 				root: {
 					marginTop: '8px !important',
-					'& .ra-field': {
+					'.ra-field': {
 						margin: '15px 0',
-						'& p': {
+						p: {
 							fontSize: '0.9rem',
 							fontWeight: 300,
 						},
@@ -43,23 +43,26 @@ export default {
 				},
 			},
 		},
+		RaMenu: {
+			styleOverrides: {
+				root: {
+					'.RaMenuItemLink-icon': {
+						minWidth: 36,
+					},
+					'&.RaMenu-closed .RaMenuItemLink-icon': {
+						minWidth: 40,
+					},
+				},
+			},
+		},
 		RaMenuItemLink: {
 			styleOverrides: {
 				root: {
 					fontWeight: 300,
 					minHeight: '45px !important',
-					'&:hover': {
-						background: 'rgba(0, 0, 0, 0.05)',
-					},
-				},
-				active: {
-					background: 'rgba(0, 0, 0, 0.15)',
-					'& svg': {
-						color: 'rgba(0, 0, 0, 0.65)',
-					},
-				},
-				icon: {
-					minWidth: 45,
+					borderRadius: 8,
+					margin: 4,
+					padding: '10px 12px',
 				},
 			},
 		},

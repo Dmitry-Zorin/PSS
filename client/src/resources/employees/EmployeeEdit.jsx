@@ -10,7 +10,7 @@ import {
 	TextInput,
 } from 'react-admin'
 import photoPlaceholder from '../../assets/photo-placeholder.jpg'
-import { createTitle, EditActionsWithoutFile } from '../../components/inputs'
+import { createTitle, EditActionsWithoutFile } from '../components/inputs'
 
 const validateText = [required(), minLength(1)]
 

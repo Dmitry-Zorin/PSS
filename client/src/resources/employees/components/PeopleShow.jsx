@@ -2,7 +2,7 @@ import AssessmentIcon from '@mui/icons-material/Assessment'
 import StarsIcon from '@mui/icons-material/Stars'
 import React, { cloneElement, useEffect, useState } from 'react'
 import { Show, Tab, TabbedShowLayout } from 'react-admin'
-import { createTitle, ShowActions } from '../../../components/inputs'
+import { createTitle, ShowActions } from '../../components/inputs'
 import { fetchApi } from '../../../requests'
 
 export const PeopleShow = ({ info, tabs, ...props }) => {

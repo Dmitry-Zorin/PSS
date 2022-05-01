@@ -1,6 +1,6 @@
 import React from 'react'
 import { Show, SimpleShowLayout, usePermissions, useResourceContext } from 'react-admin'
-import { ShowActions } from '../components/old'
+import { ShowActions } from './components/old'
 
 const MyShow = ({ children }) => {
 	const resource = useResourceContext()
@@ -11,9 +11,7 @@ const MyShow = ({ children }) => {
 			title={`resources.${resource}.titles.show`}
 			actions={<ShowActions {...{ permissions }}/>}
 		>
-			<SimpleShowLayout>
-				{children}
-			</SimpleShowLayout>
+			<SimpleShowLayout children={children}/>
 		</Show>
 	)
 }

@@ -1,5 +1,4 @@
 import entries from 'just-entries'
-import mapValues from 'just-map-values'
 import React from 'react'
 import { Admin, Resource } from 'react-admin'
 import MyLayout from './layout/MyLayout'
@@ -7,14 +6,15 @@ import Lazy from './Lazy'
 import authProvider from './providers/authProvider'
 import dataProvider from './providers/dataProvider'
 import i18nProvider from './providers/i18nProvider'
-import * as resources from './resources/index'
-import { Timeline } from './resources/Timeline'
+import publications from './resources/publications'
+import PublicationsList from './resources/PublicationsList'
+import Timeline from './resources/Timeline'
 import TimelineIcon from '@mui/icons-material/Timeline'
+import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList'
+import * as adminResources from './resources/admin'
 
-const getLazy = (components) => (
-	mapValues(components, (value) => (
-		(props) => <Lazy component={value} {...props}/>
-	))
+const getLazyComponent = (component) => (
+	(props) => <Lazy component={component} {...props}/>
 )
 
 const App = () => (
@@ -24,24 +24,31 @@ const App = () => (
 		i18nProvider={i18nProvider}
 		dataProvider={dataProvider}
 		authProvider={authProvider}
-		{...getLazy({
-			dashboard: () => import('./DashBoard'),
-		})}
+		dashboard={getLazyComponent(() => import('./DashBoard'))}
 	>
 		<Resource
-			name='resources'
+			name='timeline'
 			icon={TimelineIcon}
 			list={Timeline}
 		/>
+		<Resource
+			name='publicationsList'
+			icon={FeaturedPlayListIcon}
+			list={PublicationsList}
+		/>
 		{permissions => (
-			entries({ ...resources }).map(([name, props]) => {
+			entries({ ...publications, ...adminResources }).map(([name, props]) => {
 				const { list, show, create, edit, ...otherProps } = props
 				return (
 					<Resource
 						key={name}
 						name={name}
-						{...getLazy({ list, show })}
-						{...permissions && getLazy({ create, edit })}
+						list={getLazyComponent(list || (() => import('./resources/publications/PublicationList')))}
+						show={getLazyComponent(show || (() => import('./resources/publications/PublicationShow')))}
+						{...permissions && {
+							create: getLazyComponent(create || (() => import('./resources/publications/PublicationCreate'))),
+							edit: getLazyComponent(edit || (() => import('./resources/publications/PublicationEdit'))),
+						}}
 						{...otherProps}
 					/>
 				)

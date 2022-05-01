@@ -6,9 +6,7 @@ const MyEdit = ({ children, ...props }) => {
 
 	return (
 		<Edit title={`resources.${resource}.titles.edit`} {...props}>
-			<SimpleForm>
-				{children}
-			</SimpleForm>
+			<SimpleForm children={children}/>
 		</Edit>
 	)
 }

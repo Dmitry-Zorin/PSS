@@ -7,7 +7,7 @@ const ResourceCounter = () => {
 	const [resourcesCount, setResourcesCount] = useStore('resources.count')
 
 	useEffect(() => {
-		if (data && resourcesCount?.[resource] !== data.length) {
+		if (data && ![data.length, undefined].includes(resourcesCount?.[resource])) {
 			setResourcesCount({
 				...resourcesCount,
 				[resource]: data.length,

@@ -1,6 +1,6 @@
 export default {
 	shape: {
-		borderRadius: 6,
+		borderRadius: 8,
 	},
 	sidebar: {
 		width: 250,
@@ -8,9 +8,11 @@ export default {
 	},
 	components: {
 		MuiPaper: {
-			defaultProps: {
-				// variant: 'outlined'
-			},
+			styleOverrides: {
+				root: {
+					boxShadow: 'none',
+				},
+			}
 		},
 		MuiTypography: {
 			styleOverrides: {
@@ -55,19 +57,19 @@ export default {
 				},
 			},
 		},
+		MuiTableRow: {
+			styleOverrides: {
+				root: {
+					'&:last-of-type td': {
+						borderBottom: 0,
+					},
+				},
+			},
+		},
 		MuiTableCell: {
 			styleOverrides: {
 				sizeSmall: {
 					padding: 12,
-				},
-			},
-		},
-		MuiIconButton: {
-			styleOverrides: {
-				root: {
-					'&:hover': {
-						background: 'transparent',
-					},
 				},
 			},
 		},

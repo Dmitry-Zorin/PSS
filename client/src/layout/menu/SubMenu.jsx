@@ -29,8 +29,10 @@ const SubMenu = ({
 			<Collapse in={isOpen} timeout='auto' unmountOnExit>
 				<Box
 					sx={{
-						'& a': {
-							pl: isSidebarOpen ? 4 : 2,
+						...isSidebarOpen && {
+							a: {
+								pl: '24px',
+							},
 						},
 					}}
 				>

@@ -10,9 +10,7 @@ const MyCreate = ({ children, ...props }) => {
 			redirect='list'
 			{...props}
 		>
-			<SimpleForm>
-				{children}
-			</SimpleForm>
+			<SimpleForm children={children}/>
 		</Create>
 	)
 }

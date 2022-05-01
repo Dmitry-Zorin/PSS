@@ -24,14 +24,21 @@ const messages = {
 		authors: 'Authors',
 		author: 'Author',
 		character: 'Character',
-		exitData: 'Exit data',
+		outputData: 'Output data',
 		file: 'File',
 		search: 'Search by title',
-		name: 'Name'
+		name: 'Name',
+		firstName: 'First Name',
+		lastName: 'Last name',
+		middleName: 'Middle name',
+		info: 'Info'
 	},
 	resources: {
-		resources: {
+		timeline: {
 			name: 'Timeline'
+		},
+		publicationsList: {
+			name: 'List of publications'
 		},
 		articles: {
 			name: 'Article |||| Articles',
@@ -69,11 +76,57 @@ const messages = {
 				edit: 'Update article',
 			},
 		},
+		patents: {
+			name: 'Patent |||| Patents',
+			titles: {
+				create: 'Add patent',
+				list: 'Patents',
+				show: 'View patent',
+				edit: 'Update patent',
+			},
+		},
+		reports: {
+			name: 'Report |||| Reports',
+			titles: {
+				create: 'Add report',
+				list: 'Reports',
+				show: 'View report',
+				edit: 'Update report',
+			},
+		},
+		programs: {
+			name: 'Program |||| Programs',
+			titles: {
+				create: 'Add program',
+				list: 'Programs',
+				show: 'View program',
+				edit: 'Update program',
+			},
+		},
+		textbooks: {
+			name: 'Textbook |||| Textbooks',
+			titles: {
+				create: 'Add textbook',
+				list: 'Textbooks',
+				show: 'View textbook',
+				edit: 'Update textbook',
+			},
+		},
+		authors: {
+			name: 'Author |||| Authors',
+			titles: {
+				create: 'Add author',
+				list: 'Authors',
+				show: 'View author',
+				edit: 'Update author',
+			},
+		},
 		characters: {
 			name: 'Character |||| Characters',
 			titles: {
 				create: 'Add character',
 				list: 'Characters',
+				edit: 'Update character'
 			},
 		}
 	},

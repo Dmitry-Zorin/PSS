@@ -7,13 +7,14 @@ import React from 'react'
 import { ListBase, Title, useListContext, useLocaleState, useTranslate } from 'react-admin'
 import { Link } from 'react-router-dom'
 import ResourceCounter from './ResourceCounter'
+import pluralize from 'pluralize'
 
 const sort = {
 	field: 'createdAt',
 	order: 'desc',
 }
 
-export const Timeline = () => (
+const Timeline = () => (
 	<ListBase {...{ sort }}>
 		<ResourceCounter/>
 		<Inside/>
@@ -24,7 +25,7 @@ const Inside = () => {
 	const { data, page, perPage, total, setPage } = useListContext()
 	return (
 		<>
-			<Title title='resources.resources.name'/>
+			<Title title='resources.timeline.name'/>
 			<Box
 				alignSelf='center'
 				width='100%'
@@ -54,15 +55,16 @@ const Inside = () => {
 const CardView = ({ event }) => {
 	const translate = useTranslate()
 	const [locale] = useLocaleState()
+	const resource = pluralize(event.resourceName)
 
-	const resourceName = translate(`resources.${event.resource}.name`, { smart_count: 1 })
-	const resourceMessage = translate(`resources.${event.resource}.created`, { _: 'created' })
+	const resourceName = translate(`resources.${resource}.name`, { smart_count: 1 })
+	const resourceMessage = translate(`resources.${resource}.created`, { _: 'created' })
 
 	return (
 		<Card sx={{ mt: 3 }}>
 			<CardActionArea
 				component={Link}
-				to={`/${event.resource}/${event.resourceId}/show`}
+				to={`/${resource}/${event.id}/show`}
 			>
 				<CardContent>
 					<Box
@@ -86,3 +88,5 @@ const CardView = ({ event }) => {
 		</Card>
 	)
 }
+
+export default Timeline

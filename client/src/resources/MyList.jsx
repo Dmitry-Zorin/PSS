@@ -1,6 +1,6 @@
 import React from 'react'
 import { Datagrid, List, usePermissions, useRecordContext, useResourceContext } from 'react-admin'
-import { ListActions } from '../components/old'
+import { ListActions } from './components/old'
 import ResourceCounter from './ResourceCounter'
 
 const DatagridExpand = () => {

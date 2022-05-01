@@ -23,9 +23,17 @@ export const themes = {
 		components: {
 			RaMenuItemLink: {
 				styleOverrides: {
-					active: {
-						color: indigo[500],
-					},
+					root: {
+						'&:hover': {
+							background: 'rgba(0, 0, 0, 0.0375)',
+						},
+						'&.RaMenuItemLink-active': {
+							background: 'rgba(0, 0, 0, 0.075)',
+							'&, & *': {
+								color: indigo[500],
+							},
+						},
+					}
 				},
 			},
 		},
@@ -46,8 +54,16 @@ export const themes = {
 		components: {
 			RaMenuItemLink: {
 				styleOverrides: {
-					active: {
-						color: amber[300],
+					root: {
+						'&:hover': {
+							background: 'rgba(0, 0, 0, 0.05)',
+						},
+						'&.RaMenuItemLink-active': {
+							background: 'rgba(0, 0, 0, 0.1)',
+							'&, & *': {
+								color: amber[300],
+							},
+						},
 					},
 				},
 			},
