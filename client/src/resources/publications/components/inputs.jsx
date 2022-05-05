@@ -1,5 +1,5 @@
 import React from 'react'
-import { AddFileInput, AuthorsInput, CharacterInput, LargeTextInput, TypeInput, YearInput } from '../../components/inputs'
+import { AddFileInput, AuthorsInput, CharacterInput, CoauthorsInput, LargeTextInput, TypeInput, YearInput } from '../../components/inputs'
 import { ReplaceFileInput } from '../../components/inputs'
 import { NumberInput, TextInput } from 'react-admin'
 
@@ -11,6 +11,7 @@ const CommonInputs = () => (
 		<YearInput/>
 		<NumberInput source='volume' label='fields.volume'/>
 		<AuthorsInput/>
+		<CoauthorsInput/>
 		<CharacterInput/>
 		<LargeTextInput source='outputData'/>
 	</>

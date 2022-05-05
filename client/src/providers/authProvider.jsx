@@ -10,8 +10,11 @@ export const setUser = (user) => (
 
 const authProvider = {
 	login: async ({ username, password }) => {
-		const options = { method: 'post', body: { username, password } }
-		const { json } = await fetchApi('auth/login', options)
+		const { json } = await fetchApi('auth/login', {
+			method: 'post',
+			body: { username, password }
+		})
+
 		if (json?.token) {
 			localStorage.setItem('token', json.token)
 			const { json: user } = await fetchApi('auth/identity')
@@ -19,10 +22,12 @@ const authProvider = {
 			setUser(user)
 			return Promise.resolve()
 		}
+
 		return Promise.reject()
 	},
 
 	logout: () => {
+		alert()
 		localStorage.clear()
 		return Promise.resolve()
 	},
@@ -42,13 +47,14 @@ const authProvider = {
 	},
 
 	getIdentity: async () => {
-		const user = getUser()
-		return user
+		return getUser()
 	},
 
-	checkError: ({ status }) => (
-		[401, 403].includes(status) ? Promise.reject() : Promise.resolve()
-	),
+	checkError: ({ status }) => {
+		return [401, 403].includes(status)
+			? Promise.reject()
+			: Promise.resolve()
+	},
 }
 
 export default authProvider

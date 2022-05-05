@@ -7,12 +7,14 @@ import {
 	minValue,
 	NumberInput,
 	ReferenceInput,
+	ReferenceArrayInput,
 	SimpleFormIterator,
 	SelectInput,
 	required,
 	TextInput,
 	useResourceContext,
 	useTranslate,
+	SelectArrayInput,
 } from 'react-admin'
 
 export const LargeTextInput = ({ source, label, className, required: _required, ...props }) => (
@@ -58,9 +60,24 @@ export const YearInput = () => {
 }
 
 export const AuthorsInput = () => (
-	<ArrayInput source='authors' label='fields.authors' validate={required()}>
+	<ReferenceArrayInput
+		source='authorIds'
+		reference='authors'
+		validate={required()}
+	>
+		<SelectArrayInput
+			label='fields.author'
+			optionText={(record) => (
+				`${record.lastName} ${record.firstName} ${record.middleName}`
+			)}
+		/>
+	</ReferenceArrayInput>
+)
+
+export const CoauthorsInput = () => (
+	<ArrayInput source='coauthors' label='fields.coauthors'>
 		<SimpleFormIterator>
-			<TextInput source='value' label='fields.author'/>
+			<TextInput source='value' label='fields.coauthor'/>
 		</SimpleFormIterator>
 	</ArrayInput>
 )

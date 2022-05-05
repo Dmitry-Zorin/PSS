@@ -1,8 +1,9 @@
 import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common'
+import { InjectEntityManager } from '@nestjs/typeorm'
 import { capitalize, isPlainObject, isString } from 'lodash'
 import { mapValues } from 'lodash/fp'
 import { plural, singular } from 'pluralize'
-import { BaseEntity, FindOptionsWhere } from 'typeorm'
+import { BaseEntity, EntityManager, FindManyOptions, FindOneOptions, FindOptionsWhere } from 'typeorm'
 import { PaginationOptions } from '../../list-params.pipe'
 import { DbService, DeleteResult, FindOneResult, Role, UpdateResult } from '../db.service'
 import { File, Publication, ResourceItem } from './entities'
@@ -33,6 +34,13 @@ const omitNullDeep = mapValues((e: any): any => (
 
 @Injectable()
 export class PostgresService extends DbService {
+	constructor(
+		@InjectEntityManager('resourcesConnection')
+		private readonly entityManager: EntityManager,
+	) {
+		super()
+	}
+
 	private static getResourceInfo(resource: string, role = Role.Admin): ResourceInfo {
 		const resourceName = singular(resource)
 		const entityName = capitalize(resourceName)
@@ -58,7 +66,10 @@ export class PostgresService extends DbService {
 	}
 
 	private static getFilter(filterOrId: FilterOrId) {
-		return isString(filterOrId) ? { id: filterOrId } : filterOrId
+		if (!isString(filterOrId)) {
+			return filterOrId
+		}
+		return { id: filterOrId }
 	}
 
 	async getResourcesCount() {
@@ -83,54 +94,67 @@ export class PostgresService extends DbService {
 		const entity: Record<string, any> = {
 			title,
 			description,
-			...isUserResource && {
-				resourceName,
-			},
-			file: fileInfo,
 		}
 
-		if (isUserResource) {
-			const publication = await Resource.findOneBy({
-				name: resourceName,
-			})
+		return this.entityManager.transaction(async (manager) => {
+			if (isUserResource) {
+				entity.resourceName = resourceName
 
-			if (publication?.category) {
-				entity.publication = { title, ...other }
+				const publication = await Resource.findOneBy({
+					name: resourceName,
+				})
+
+				if (publication?.category) {
+					const { authorIds, ...props } = other
+					try {
+						entity.publication = await manager.save(Publication, {
+							title,
+							authors: authorIds.map((id: string) => ({ id })),
+							...props,
+						})
+					}
+					catch {
+						throw new BadRequestException('Wrong author IDs')
+					}
+				}
+				else {
+					Object.assign(entity, other)
+				}
 			}
 			else {
 				Object.assign(entity, other)
 			}
-		}
-		else {
-			Object.assign(entity, other)
-		}
 
-		const { id } = await Entity.save(entity)
-		return id
+			if (fileInfo) {
+				entity.file = await manager.save(File, fileInfo)
+			}
+
+			const { id } = await manager.save(Entity, entity)
+			return id
+		})
 	}
 
-	async findAll(resource: string, options: PaginationOptions, role: Role) {
+	async findAll(resource: string, paginationOptions: PaginationOptions, role: Role) {
 		const resourceInfo = PostgresService.getResourceInfo(resource)
 		const { Entity, isUserResource, resourceName } = resourceInfo
-		const { match, sort, skip, limit } = options
+		const { match, sort, skip, limit } = paginationOptions
 
-		const isTimeline = resource === 'timeline'
+		const options: FindManyOptions = {
+			order: sort,
+			take: limit,
+			skip,
+		}
+
+		if (isUserResource && resource !== 'timeline') {
+			options.where = { ...match, resourceName }
+			options.relations = { publication: true }
+		}
+		else {
+			options.where = match
+		}
 
 		try {
-			const [records, total] = await Entity.findAndCount({
-				...isUserResource && !isTimeline && {
-					relations: ['publication'],
-				},
-				where: {
-					...match,
-					...isUserResource && !isTimeline && {
-						resourceName,
-					},
-				},
-				order: sort,
-				take: limit,
-				skip,
-			})
+			const [records, total] = await Entity.findAndCount(options)
 			return {
 				records: records.map(omitNullDeep),
 				total,
@@ -147,15 +171,23 @@ export class PostgresService extends DbService {
 		const resourceInfo = PostgresService.getResourceInfo(resource)
 		const { Entity, isUserResource, resourceName } = resourceInfo
 
-		const entity = await Entity.findOneOrFail({
-			...isUserResource && {
-				relations: ['publication', 'file'],
-			},
-			where: {
-				...PostgresService.getFilter(filterOrId),
-				...isUserResource && { resourceName },
-			},
-		}).catch(() => {
+		const options: FindOneOptions = {
+			loadRelationIds: false,
+		}
+		const filter = PostgresService.getFilter(filterOrId)
+
+		if (isUserResource) {
+			options.where = { ...filter, resourceName }
+			options.relations = {
+				publication: true,
+				file: true,
+			}
+		}
+		else {
+			options.where = filter
+		}
+
+		const entity = await Entity.findOneOrFail(options).catch(() => {
 			throw new NotFoundException()
 		})
 
@@ -169,36 +201,61 @@ export class PostgresService extends DbService {
 		const { Entity, isUserResource } = resourceInfo
 		const { fileInfo, title, description, ...other } = update
 
-		const entity = await Entity.findOneOrFail({
-			...isUserResource && {
-				relations: ['publication', fileInfo && 'file'].filter(Boolean),
-			},
+		const options: FindOneOptions = {
 			where: PostgresService.getFilter(filterOrId),
-		}).catch(() => {
+		}
+
+		if (isUserResource) {
+			options.relations = {
+				publication: true,
+				file: !!fileInfo,
+			}
+		}
+
+		const entity = await Entity.findOneOrFail(options).catch(() => {
 			throw new NotFoundException()
 		})
 
-		const prevFileId = entity.file?.fileId || ''
+		const { publication, file } = entity
+		const prevFileId = file?.fileId || ''
 
-		const newEntity = Entity.merge(entity, {
-			title,
-			description,
-			...!entity.publication?.id ? other : {
-				publication: {
-					id: entity.publication.id,
+		await this.entityManager.transaction(async (manager) => {
+			if (publication?.id) {
+				const { authorIds, ...props } = other
+
+				if (publication.authorIds.some((id: any) => authorIds.includes(id.toString()))) {
+					await manager
+						.createQueryBuilder()
+						.relation(Publication, 'authors')
+						.of(publication)
+						.remove(publication.authorIds)
+				}
+
+				Publication.merge(publication, {
 					title,
-					...other,
-				},
-			},
-			...fileInfo && {
-				file: {
-					id: entity.file?.id,
-					...fileInfo,
-				},
-			},
-		})
+					authors: authorIds.map((id: string) => ({ id })),
+					...props,
+				})
 
-		await Entity.save(newEntity)
+				try {
+					entity.publication = await manager.save(publication)
+				}
+				catch {
+					throw new BadRequestException('Wrong author IDs')
+				}
+			}
+			else {
+				Entity.merge(entity, other)
+			}
+
+			if (fileInfo) {
+				File.merge(file, fileInfo)
+				entity.file = await manager.save(file)
+			}
+
+			Entity.merge(entity, { title, description })
+			await manager.save(entity)
+		})
 
 		return fileInfo ? prevFileId : ''
 	}
@@ -210,24 +267,29 @@ export class PostgresService extends DbService {
 		const { Entity, isUserResource } = resourceInfo
 
 		const { id, file, publication } = await Entity.findOneOrFail({
-			...isUserResource && {
-				relations: ['publication', 'file'],
-			},
 			where: PostgresService.getFilter(filterOrId),
+			relations: {
+				...isUserResource && {
+					file: true,
+				},
+			},
+			loadRelationIds: {
+				relations: ['publication'],
+				disableMixedMap: true,
+			},
 		}).catch(() => {
 			throw new NotFoundException()
 		})
 
 		if (isUserResource) {
-			const manager = ResourceItem.getRepository().manager
-			await manager.transaction(async () => {
+			await this.entityManager.transaction(async (manager) => {
 				if (file) {
-					await File.delete(file.id)
+					await manager.delete(File, file.id)
 				}
 				if (publication) {
-					await Publication.delete(publication.id)
+					await manager.delete(Publication, publication.id)
 				}
-				await ResourceItem.delete(id)
+				await manager.delete(ResourceItem, id)
 			})
 		}
 		else {

@@ -23,6 +23,8 @@ const messages = {
 		volume: 'Объем',
 		authors: 'Авторы',
 		author: 'Автор',
+		coauthors: 'Соавторы',
+		coauthor: 'Соавтор',
 		character: 'Характер работы',
 		outputData: 'Выходные данные',
 		file: 'Файл',

@@ -1,4 +1,4 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, RelationId, UpdateDateColumn } from 'typeorm'
 import { File } from './file.entity'
 import { Publication } from './publication.entity'
 
@@ -24,7 +24,6 @@ export class ResourceItem extends BaseEntity {
 
 	@OneToOne(() => Publication, pub => pub.resourceItem, {
 		createForeignKeyConstraints: false,
-		cascade: true,
 		nullable: true,
 	})
 	@JoinColumn()
@@ -32,7 +31,6 @@ export class ResourceItem extends BaseEntity {
 
 	@OneToOne(() => File, file => file.resourceItem, {
 		createForeignKeyConstraints: false,
-		cascade: true,
 		nullable: true,
 	})
 	@JoinColumn()

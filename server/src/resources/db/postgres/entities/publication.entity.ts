@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, JoinTable, ManyToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { BaseEntity, Column, Entity, JoinTable, ManyToMany, OneToOne, PrimaryGeneratedColumn, RelationId } from 'typeorm'
 import { Author } from './admin'
 import { ResourceItem } from './resource-item.entity'
 
@@ -28,11 +28,12 @@ export class Publication extends BaseEntity {
 	@Column({ nullable: true })
 	volume?: number
 
-	@ManyToMany(() => Author, {
-		createForeignKeyConstraints: false
-	})
+	@ManyToMany(() => Author, author => author.publications)
 	@JoinTable()
 	authors: Author[]
+
+	@RelationId((publication: Publication) => publication.authors)
+	authorIds: string[]
 
 	@Column('simple-array', { nullable: true })
 	coauthors: string[]

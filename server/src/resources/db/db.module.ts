@@ -10,10 +10,6 @@ interface Options {
 @Module({})
 export class DbModule {
 	private static readonly dbs = {
-		// mongo: {
-		// 	module: MongoModule,
-		// 	service: MongoService,
-		// },
 		postgres: {
 			module: PostgresModule,
 			service: PostgresService,

@@ -26,8 +26,12 @@ export class DefaultDto {
 	volume?: number
 
 	@IsDefined()
-	@MaxLength(50, { each: true })
-	authors: string[]
+	@MaxLength(20, { each: true })
+	authorIds: string[]
+
+	@IsOptional()
+	@MaxLength(30, { each: true })
+	coauthors: string[]
 
 	@IsOptional()
 	@IsInt()
