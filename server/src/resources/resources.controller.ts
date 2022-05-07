@@ -1,8 +1,8 @@
 import { Controller, UseFilters, UsePipes, ValidationPipe } from '@nestjs/common'
 import { MessagePattern, Payload } from '@nestjs/microservices'
 import { HttpExceptionFilter } from '../auth/http-exception.filter'
-import { CreateResourceDto, FindResourceDto, FindResourcesDto, RemoveResourceDto, UpdateResourceDto } from './dto'
-import { ListParamsPipe, PaginationOptions } from './list-params.pipe'
+import { CreateDto, FindOneDto, FindListDto, RemoveDto, UpdateDto } from './dto'
+import { FindManyDto } from './dto/find-many.dto'
 import { ResourceValidationPipe } from './resource-validation.pipe'
 import { ResourcesService } from './resources.service'
 
@@ -12,39 +12,40 @@ import { ResourcesService } from './resources.service'
 export class ResourcesController {
 	constructor(private readonly resourcesService: ResourcesService) {}
 
-	@MessagePattern('count_all')
-	async handleCountAll() {
-		return this.resourcesService.countAll()
+	@MessagePattern('count')
+	async handleCount() {
+		return this.resourcesService.count()
 	}
 
 	@MessagePattern('create')
-	async handleCreate(@Payload(new ResourceValidationPipe()) { resource, payload }: CreateResourceDto) {
+	async handleCreate(@Payload(new ResourceValidationPipe()) { resource, payload }: CreateDto) {
 		const id = await this.resourcesService.create(resource, payload)
 		return { id }
 	}
 
-	@MessagePattern('find_all')
-	async handleFindAll(
-		@Payload() { resource, role }: FindResourcesDto,
-		@Payload(new ListParamsPipe()) listParams: PaginationOptions,
-	) {
-		const { records, total } = await this.resourcesService.findAll(resource, listParams, role)
-		const range = this.resourcesService.getRange(resource, total, listParams)
+	@MessagePattern('find')
+	async handleFindList({ resource, query }: FindListDto | FindManyDto) {
+		if ('ids' in query) {
+			const records = await this.resourcesService.findMany(resource, query.ids)
+			return { records }
+		}
+		const { records, total } = await this.resourcesService.findList(resource, query)
+		const range = this.resourcesService.getRange(resource, total, query)
 		return { records, range }
 	}
 
 	@MessagePattern('find_one')
-	handleFindOne({ resource, id, role }: FindResourceDto) {
-		return this.resourcesService.findOne(resource, id, role)
+	handleFindOne({ resource, id }: FindOneDto) {
+		return this.resourcesService.findOne(resource, id)
 	}
 
 	@MessagePattern('update')
-	handleUpdate({ resource, id, payload }: UpdateResourceDto) {
+	handleUpdate({ resource, id, payload }: UpdateDto) {
 		return this.resourcesService.update(resource, id, payload)
 	}
 
 	@MessagePattern('remove')
-	handleRemove({ resource, id }: RemoveResourceDto) {
+	handleRemove({ resource, id }: RemoveDto) {
 		return this.resourcesService.remove(resource, id)
 	}
 }

@@ -1,6 +1,6 @@
 import { IsDefined, IsNotEmpty, IsString } from 'class-validator'
 
-export class CreateResourceDto {
+export class CreateDto {
 	@IsString()
 	@IsNotEmpty()
 	resource: string

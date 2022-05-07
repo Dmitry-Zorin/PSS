@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import * as entities from './entities'
-import * as adminEntities from './entities/admin'
 import { PostgresService } from './postgres.service'
 
 @Module({
@@ -13,19 +12,16 @@ import { PostgresService } from './postgres.service'
 			useFactory: (configService: ConfigService) => ({
 				type: 'postgres',
 				url: configService.get('POSTGRES_URL'),
-				entities: [
-					...Object.values(entities),
-					...Object.values(adminEntities),
-				],
+				entities: Object.values(entities),
 				synchronize: true,
 				logging: true,
 			}),
 			inject: [ConfigService],
 		}),
-		TypeOrmModule.forFeature([
-			...Object.values(entities),
-			...Object.values(adminEntities),
-		], 'resourcesConnection'),
+		TypeOrmModule.forFeature(
+			Object.values(entities),
+			'resourcesConnection'
+		),
 	],
 	providers: [PostgresService],
 	exports: [PostgresService],

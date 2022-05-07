@@ -4,10 +4,8 @@ import { FileInterceptor } from '@nestjs/platform-express'
 import { Response } from 'express'
 import { firstValueFrom } from 'rxjs'
 import { FileService } from '../../../file/file.service'
-import { User } from '../../decorators'
 import { Public } from '../../jwt/jwt.guard'
 import { Role, Roles } from '../../roles.guard'
-import { UserInfo } from '../auth/auth.controller'
 
 @Controller()
 export class ResourcesController {
@@ -19,7 +17,7 @@ export class ResourcesController {
 
 	@Get('count')
 	countAll() {
-		return this.resourcesClient.send('count_all', {})
+		return this.resourcesClient.send('count', {})
 	}
 
 	@Public()
@@ -56,16 +54,18 @@ export class ResourcesController {
 	}
 
 	@Get(':resource')
-	async findAll(
-		@Query() query: unknown,
+	async find(
+		@Query() query: any,
 		@Param('resource') resource: string,
-		@User() { role }: UserInfo,
 		@Res({ passthrough: true }) res: Response,
 	) {
-		const data = { resource, query, role }
-		const findAllObservable = this.resourcesClient.send('find_all', data)
-		const { range, records } = await firstValueFrom(findAllObservable)
-		res.header('Content-Range', range)
+		console.log(query)
+		const data = { resource, query }
+		const findListObservable = this.resourcesClient.send('find', data)
+		const { range, records } = await firstValueFrom(findListObservable)
+		if (range) {
+			res.header('Content-Range', range)
+		}
 		return records
 	}
 
@@ -73,9 +73,8 @@ export class ResourcesController {
 	findOne(
 		@Param('resource') resource: string,
 		@Param('id') id: string,
-		@User() { role }: UserInfo,
 	) {
-		const data = { resource, id, role }
+		const data = { resource, id }
 		return this.resourcesClient.send('find_one', data)
 	}
 

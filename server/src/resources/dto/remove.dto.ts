@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsString } from 'class-validator'
 
-export class RemoveResourceDto {
+export class RemoveDto {
 	@IsString()
 	@IsNotEmpty()
 	resource: string

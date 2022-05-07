@@ -1,5 +1,5 @@
 import { BaseEntity, Column, Entity, JoinTable, ManyToMany, OneToOne, PrimaryGeneratedColumn, RelationId } from 'typeorm'
-import { Author } from './admin'
+import { Author } from './author.entity'
 import { ResourceItem } from './resource-item.entity'
 
 @Entity()

@@ -3,10 +3,6 @@ import { DbService, DeleteResult, FindOneResult, UpdateResult } from '../db/db.s
 export class DbServiceMock extends DbService {
 	private readonly collection = new Map<string, any>()
 
-	getResources() {
-		return []
-	}
-
 	async getResourceCount(collection: string) {
 		return 0
 	}
@@ -17,8 +13,12 @@ export class DbServiceMock extends DbService {
 		return id
 	}
 
-	findAll(resource: string, options: any) {
+	findList(resource: string, options: any) {
 		return Promise.resolve(undefined)
+	}
+
+	findMany(resource: string, options: any) {
+		return Promise.resolve([])
 	}
 
 	async findOne(resource: string, filter: any): FindOneResult
@@ -30,12 +30,16 @@ export class DbServiceMock extends DbService {
 	update(resource: string, filter: any, update: any): UpdateResult
 	update(resource: string, id: string, update: any): UpdateResult
 	update(resource: string, filterOrId: any, update: any): UpdateResult {
-		return Promise.resolve(undefined)
+		return Promise.resolve('')
 	}
 
 	delete(resource: string, filter: any): DeleteResult
 	delete(resource: string, id: string): DeleteResult
 	delete(resource: string, filterOrId: any): DeleteResult {
-		return Promise.resolve(undefined)
+		return Promise.resolve('')
+	}
+
+	getResourcesCount(): Promise<any> {
+		return Promise.resolve(undefined);
 	}
 }

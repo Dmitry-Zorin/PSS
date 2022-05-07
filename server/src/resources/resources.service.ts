@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common'
-import { DbService, Role } from './db/db.service'
-import { PaginationOptions } from './list-params.pipe'
+import { DbService } from './db/db.service'
+import { ListParams } from './dto/find-list.dto'
 
 @Injectable()
 export class ResourcesService {
 	constructor(private readonly dbService: DbService) {}
 
-	countAll() {
+	count() {
 		return this.dbService.getResourcesCount()
 	}
 
@@ -14,17 +14,21 @@ export class ResourcesService {
 		return this.dbService.create(resource, payload)
 	}
 
-	findAll(resource: string, listParams: PaginationOptions, role: Role) {
-		return this.dbService.findAll(resource, listParams, role)
+	findList(resource: string, listParams: ListParams) {
+		return this.dbService.findList(resource, listParams)
 	}
 
-	getRange(resource: string, total: number, listParams: PaginationOptions) {
+	getRange(resource: string, total: number, listParams: ListParams) {
 		const { skip = 0, limit = total } = listParams
 		return `${resource} ${skip}-${Math.min(limit, total)}/${total}`
 	}
 
-	findOne(resource: string, id: string, role: Role) {
-		return this.dbService.findOne(resource, id, role)
+	findMany(resource: string, ids: string[]) {
+		return this.dbService.findMany(resource, ids)
+	}
+
+	findOne(resource: string, id: string) {
+		return this.dbService.findOne(resource, id)
 	}
 
 	update(resource: string, id: string, payload: any) {

@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
-import { APP_FILTER, APP_GUARD, RouterModule } from '@nestjs/core'
+import { APP_FILTER, APP_GUARD, APP_PIPE, RouterModule } from '@nestjs/core'
 import Joi from 'joi'
 import { AllExceptionsFilter } from './exception.filter'
 import { JwtGuard } from './jwt/jwt.guard'
 import { JwtModule } from './jwt/jwt.module'
+import { ParseQueryPipe } from './parse-query.pipe'
 import { RolesGuard } from './roles.guard'
 import { routeModules, routes } from './routes/routes'
 
@@ -35,6 +36,10 @@ import { routeModules, routes } from './routes/routes'
 			provide: APP_FILTER,
 			useClass: AllExceptionsFilter,
 		},
+		{
+			provide: APP_PIPE,
+			useClass: ParseQueryPipe,
+		}
 	],
 })
 export class GatewayModule {}
