@@ -43,4 +43,10 @@ export class GridFSService extends FileService {
 			console.error(err)
 		})
 	}
+
+	async deleteMany(resource: string, fileIds: string[]) {
+		await Promise.all(fileIds.map(async (id) => {
+			await this.delete(resource, id)
+		}))
+	}
 }

@@ -1,11 +1,11 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common'
 import { InjectEntityManager } from '@nestjs/typeorm'
-import { capitalize, isPlainObject, isString } from 'lodash'
+import { capitalize, isPlainObject } from 'lodash'
 import { mapValues } from 'lodash/fp'
 import { plural, singular } from 'pluralize'
 import { BaseEntity, EntityManager, FindManyOptions, FindOneOptions, FindOptionsWhere } from 'typeorm'
-import { ListParams } from '../../dto/find-list.dto'
-import { DbService, DeleteResult, FindOneResult, UpdateResult } from '../db.service'
+import { FindListParamsDto } from '../../dto/find.dto'
+import { DbService } from '../db.service'
 import { File, Publication, ResourceItem, Resource } from './entities'
 import * as entities from './entities'
 
@@ -23,9 +23,6 @@ interface ResourceInfo {
 	resourceName?: string
 }
 
-type Filter = FindOptionsWhere<any>
-type FilterOrId = Filter | string
-
 const omitNullDeep = mapValues((e: any): any => (
 	isPlainObject(e) || e instanceof BaseEntity ? omitNullDeep(e) : e ?? undefined
 ))
@@ -39,7 +36,7 @@ export class PostgresService extends DbService {
 		super()
 	}
 
-	private static getResourceInfo(resource: string): ResourceInfo {
+	private static getInfo(resource: string): ResourceInfo {
 		const resourceName = singular(resource)
 		const entityName = capitalize(resourceName)
 		const Entity = (entities as unknown as Record<string, Entity>)[entityName]
@@ -54,29 +51,36 @@ export class PostgresService extends DbService {
 		}
 	}
 
-	private static getFilter(filterOrId: FilterOrId) {
-		if (!isString(filterOrId)) {
-			return filterOrId
-		}
-		return { id: filterOrId }
-	}
-
-	async getResourcesCount() {
+	async getCount() {
 		const itemsCount = await ResourceItem
 			.createQueryBuilder('item')
-			.select('item.resourceName')
+			.select('item.resourceName', 'resourceName')
 			.addSelect('count(*)')
 			.groupBy('item.resourceName')
 			.getRawMany()
 
 		return itemsCount.reduce((res, e) => {
-			res[plural(e.item_resourceName)] = +e.count
+			res[plural(e.resourceName)] = +e.count
 			return res
 		}, {})
 	}
 
-	async create(resource: string, payload: CreatePayload) {
-		const resourceInfo = PostgresService.getResourceInfo(resource)
+	async getCategories() {
+		const categories = await Resource
+			.createQueryBuilder('resource')
+			.select('resource.category', 'category')
+			.addSelect('array_agg(resource.name)', 'resources')
+			.groupBy('resource.category')
+			.getRawMany()
+
+		return categories.reduce((res, e) => {
+			res[e.category] = e.resources.map(plural)
+			return res
+		}, {})
+	}
+
+	async createOne(resource: string, payload: CreatePayload) {
+		const resourceInfo = PostgresService.getInfo(resource)
 		const { Entity, resourceName } = resourceInfo
 		const { fileInfo, title, description, ...other } = payload
 
@@ -118,13 +122,14 @@ export class PostgresService extends DbService {
 				entity.file = await manager.save(File, fileInfo)
 			}
 
+			console.log(entity)
 			const { id } = await manager.save(Entity, entity)
 			return id
 		})
 	}
 
-	async findList(resource: string, listParams: ListParams) {
-		const resourceInfo = PostgresService.getResourceInfo(resource)
+	async findList(resource: string, listParams: FindListParamsDto) {
+		const resourceInfo = PostgresService.getInfo(resource)
 		const { Entity, resourceName } = resourceInfo
 		const { match, sort, skip, limit } = listParams
 
@@ -155,7 +160,7 @@ export class PostgresService extends DbService {
 	}
 
 	async findMany(resource: string, ids: string[]) {
-		const resourceInfo = PostgresService.getResourceInfo(resource)
+		const resourceInfo = PostgresService.getInfo(resource)
 		const { Entity, resourceName } = resourceInfo
 
 		const where: FindOptionsWhere<any> = ids.map(id => ({ id }))
@@ -173,16 +178,14 @@ export class PostgresService extends DbService {
 		}
 	}
 
-	async findOne(resource: string, filter: any): FindOneResult
-	async findOne(resource: string, id: string): FindOneResult
-	async findOne(resource: string, filterOrId: any): FindOneResult {
-		const resourceInfo = PostgresService.getResourceInfo(resource)
+	async findOne(resource: string, id: string) {
+		const resourceInfo = PostgresService.getInfo(resource)
 		const { Entity, resourceName } = resourceInfo
 
 		const options: FindOneOptions = {
 			loadRelationIds: false,
 		}
-		const filter = PostgresService.getFilter(filterOrId)
+		const filter = { id }
 
 		if (resourceName) {
 			options.where = { ...filter, resourceName }
@@ -202,15 +205,13 @@ export class PostgresService extends DbService {
 		return omitNullDeep(entity)
 	}
 
-	async update(resource: string, filter: any, update: any): UpdateResult
-	async update(resource: string, id: string, update: any): UpdateResult
-	async update(resource: string, filterOrId: any, update: any): UpdateResult {
-		const resourceInfo = PostgresService.getResourceInfo(resource)
+	async updateOne(resource: string, id: string, update: any) {
+		const resourceInfo = PostgresService.getInfo(resource)
 		const { Entity, resourceName } = resourceInfo
 		const { fileInfo, title, description, ...other } = update
 
 		const options: FindOneOptions = {
-			where: PostgresService.getFilter(filterOrId),
+			where: { id },
 		}
 
 		if (resourceName) {
@@ -268,14 +269,12 @@ export class PostgresService extends DbService {
 		return fileInfo ? prevFileId : ''
 	}
 
-	async delete(resource: string, filter: any): DeleteResult
-	async delete(resource: string, id: string): DeleteResult
-	async delete(resource: string, filterOrId: any): DeleteResult {
-		const resourceInfo = PostgresService.getResourceInfo(resource)
+	async delete(resource: string, ids: string[]) {
+		const resourceInfo = PostgresService.getInfo(resource)
 		const { Entity, resourceName } = resourceInfo
 
-		const { id, file, publication } = await Entity.findOneOrFail({
-			where: PostgresService.getFilter(filterOrId),
+		const entities = await Entity.find({
+			where: ids.map(id => ({ id })),
 			relations: {
 				...resourceName && {
 					file: true,
@@ -285,25 +284,40 @@ export class PostgresService extends DbService {
 				relations: ['publication'],
 				disableMixedMap: true,
 			},
-		}).catch(() => {
-			throw new NotFoundException()
 		})
 
 		if (resourceName) {
 			await this.entityManager.transaction(async (manager) => {
-				if (file) {
-					await manager.delete(File, file.id)
+				const fileIds = entities
+					.filter(e => e.file?.id)
+					.map(e => e.file!.id)
+
+				if (fileIds.length) {
+					await manager.delete(File, fileIds)
 				}
-				if (publication) {
-					await manager.delete(Publication, publication.id)
+
+				const publicationIds = entities
+					.filter(e => e.publication?.id)
+					.map(e => e.publication!.id)
+
+				if (publicationIds.length) {
+					await manager.delete(Publication, publicationIds)
 				}
-				await manager.delete(ResourceItem, id)
+
+				await manager.delete(ResourceItem, ids)
 			})
 		}
 		else {
-			await Entity.delete(id)
+			await Entity.delete(ids)
 		}
 
-		return file?.fileId || ''
+		return entities
+			.filter(e => e.file?.fileId)
+			.map(e => e.file!.fileId)
+	}
+
+	async deleteOne(resource: string, id: string) {
+		const [fileId] = await this.delete(resource, [id])
+		return fileId || ''
 	}
 }

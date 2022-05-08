@@ -4,7 +4,7 @@ import { ResourceItem } from './resource-item.entity'
 
 @Entity()
 export class Publication extends BaseEntity {
-	@PrimaryGeneratedColumn()
+	@PrimaryGeneratedColumn('uuid')
 	id: string
 
 	@Column()

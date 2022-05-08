@@ -1,22 +1,22 @@
-export type FindOneResult = Promise<any>
-export type UpdateResult = Promise<string>
-export type DeleteResult = Promise<string>
+interface FindListResult {
+	records: any[]
+	total: number
+}
 
 export abstract class DbService {
-	abstract getResourcesCount(): Promise<any>
+	abstract getCount(): Promise<Record<string, number>>
 
-	abstract create(resource: string, payload: any): Promise<string>
+	abstract getCategories(): Promise<Record<string, string[]>>
 
-	abstract findList(resource: string, options: any): Promise<any>
+	abstract createOne(resource: string, payload: any): Promise<string>
+
+	abstract findList(resource: string, options: any): Promise<FindListResult>
 
 	abstract findMany(resource: string, ids: string[]): Promise<any[]>
 
-	abstract findOne(resource: string, filter: any): FindOneResult
-	abstract findOne(resource: string, id: string): FindOneResult
+	abstract findOne(resource: string, id: string): Promise<any>
 
-	abstract update(resource: string, filter: any, update: any): UpdateResult
-	abstract update(resource: string, id: string, update: any): UpdateResult
+	abstract updateOne(resource: string, id: string, update: any): Promise<string>
 
-	abstract delete(resource: string, filter: any): DeleteResult
-	abstract delete(resource: string, id: string): DeleteResult
+	abstract delete(resource: string, filter: any): Promise<string[]>
 }

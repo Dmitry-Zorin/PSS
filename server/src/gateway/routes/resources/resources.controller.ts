@@ -16,8 +16,13 @@ export class ResourcesController {
 	) {}
 
 	@Get('count')
-	countAll() {
-		return this.resourcesClient.send('count', {})
+	getCount() {
+		return this.resourcesClient.send('get_count', {})
+	}
+
+	@Get('categories')
+	getCategories() {
+		return this.resourcesClient.send('get_categories', {})
 	}
 
 	@Public()
@@ -59,7 +64,6 @@ export class ResourcesController {
 		@Param('resource') resource: string,
 		@Res({ passthrough: true }) res: Response,
 	) {
-		console.log(query)
 		const data = { resource, query }
 		const findListObservable = this.resourcesClient.send('find', data)
 		const { range, records } = await firstValueFrom(findListObservable)
@@ -102,14 +106,26 @@ export class ResourcesController {
 		await this.fileService.delete(resource, fileId)
 	}
 
-	@Delete(':resource/:id')
+	@Delete(':resource')
 	@Roles(Role.Admin)
 	async remove(
+		@Param('resource') resource: string,
+		@Query('ids') ids: string[],
+	) {
+		const data = { resource, ids }
+		const removeObservable = this.resourcesClient.send('remove', data)
+		const fileIds = await firstValueFrom(removeObservable)
+		await this.fileService.deleteMany(resource, fileIds)
+	}
+
+	@Delete(':resource/:id')
+	@Roles(Role.Admin)
+	async removeOne(
 		@Param('resource') resource: string,
 		@Param('id') id: string,
 	) {
 		const data = { resource, id }
-		const removeObservable = this.resourcesClient.send('remove', data)
+		const removeObservable = this.resourcesClient.send('remove-one', data)
 		const fileId = await firstValueFrom(removeObservable)
 		await this.fileService.delete(resource, fileId)
 	}

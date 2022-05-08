@@ -3,7 +3,7 @@ import { ResourceItem } from './index'
 
 @Entity()
 export class File extends BaseEntity {
-	@PrimaryGeneratedColumn()
+	@PrimaryGeneratedColumn('uuid')
 	id: string
 
 	@Column()

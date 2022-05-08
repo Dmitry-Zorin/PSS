@@ -1,8 +1,5 @@
-import { IsNotEmpty, IsString } from 'class-validator'
+import { IntersectionType } from '@nestjs/mapped-types'
 import { CreateDto } from './create.dto'
+import { IdDto } from './params/id.dto'
 
-export class UpdateDto extends CreateDto {
-	@IsString()
-	@IsNotEmpty()
-	id: string
-}
+export class UpdateDto extends IntersectionType(CreateDto, IdDto) {}

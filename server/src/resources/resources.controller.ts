@@ -1,8 +1,8 @@
 import { Controller, UseFilters, UsePipes, ValidationPipe } from '@nestjs/common'
 import { MessagePattern, Payload } from '@nestjs/microservices'
 import { HttpExceptionFilter } from '../auth/http-exception.filter'
-import { CreateDto, FindOneDto, FindListDto, RemoveDto, UpdateDto } from './dto'
-import { FindManyDto } from './dto/find-many.dto'
+import { CreateDto, FindOneDto, FindDto, UpdateDto } from './dto'
+import { RemoveDto } from './dto/remove.dto'
 import { ResourceValidationPipe } from './resource-validation.pipe'
 import { ResourcesService } from './resources.service'
 
@@ -12,9 +12,14 @@ import { ResourcesService } from './resources.service'
 export class ResourcesController {
 	constructor(private readonly resourcesService: ResourcesService) {}
 
-	@MessagePattern('count')
-	async handleCount() {
-		return this.resourcesService.count()
+	@MessagePattern('get_count')
+	async handleGetCount() {
+		return this.resourcesService.getCount()
+	}
+
+	@MessagePattern('get_categories')
+	async handleGetCategories() {
+		return this.resourcesService.getCategories()
 	}
 
 	@MessagePattern('create')
@@ -24,8 +29,8 @@ export class ResourcesController {
 	}
 
 	@MessagePattern('find')
-	async handleFindList({ resource, query }: FindListDto | FindManyDto) {
-		if ('ids' in query) {
+	async handleFindList({ resource, query }: FindDto) {
+		if (query.ids) {
 			const records = await this.resourcesService.findMany(resource, query.ids)
 			return { records }
 		}
@@ -45,7 +50,12 @@ export class ResourcesController {
 	}
 
 	@MessagePattern('remove')
-	handleRemove({ resource, id }: RemoveDto) {
-		return this.resourcesService.remove(resource, id)
+	handleRemove({ resource, ids }: RemoveDto) {
+		return this.resourcesService.remove(resource, ids)
+	}
+
+	@MessagePattern('remove-one')
+	handleRemoveOne({ resource, id }: FindOneDto) {
+		return this.resourcesService.removeOne(resource, id)
 	}
 }

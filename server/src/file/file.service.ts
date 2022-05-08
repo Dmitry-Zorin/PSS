@@ -7,5 +7,8 @@ interface DownloadResult {
 
 export abstract class FileService {
 	abstract download(resource: string, fileId: string): Promise<DownloadResult>
+
 	abstract delete(resource: string, fileId: string): Promise<void>
+
+	abstract deleteMany(resource: string, fileIds: string[]): Promise<void>
 }

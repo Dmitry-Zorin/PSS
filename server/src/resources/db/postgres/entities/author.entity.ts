@@ -3,7 +3,7 @@ import { Publication } from './publication.entity'
 
 @Entity()
 export class Author extends BaseEntity {
-	@PrimaryGeneratedColumn()
+	@PrimaryGeneratedColumn('uuid')
 	id: string
 
 	@Column()
