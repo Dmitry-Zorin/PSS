@@ -1,16 +1,45 @@
+import mapValues from 'just-map-values'
+import reduce from 'just-reduce-object'
+import { fetchUtils } from 'react-admin'
 import { getUser, setUser } from './providers/authProvider'
-import { apiUrl, httpClient } from './providers/dataProvider'
+
+export const apiUrl = `${import.meta.env.VITE_SERVER}/api`
+
+const getUserInfo = () => ({
+	authenticated: true,
+	token: `Bearer ${localStorage.getItem('token')}`,
+})
+
+const createFormData = (body) => (
+	reduce(body, (result, key, value) => {
+		result.append(key, value.rawFile || value)
+		return result
+	}, new FormData())
+)
+
+const getBody = (body) => {
+	if (body?.file) {
+		return createFormData(body)
+	}
+	return JSON.stringify(body)
+}
+
+export const httpClient = (url, { body, ...options } = {}) => (
+	fetchUtils.fetchJson(url, {
+		...options,
+		user: getUserInfo(),
+		body: getBody(body),
+	})
+)
 
 export const fetchApi = (url, options) => (
 	httpClient(`${apiUrl}/${url}`, options)
 )
 
-export const getResourceData = async (dataProvider, notify, author) => {
-	const { json } = await fetchApi(`form16?author=${author}`)
-	if (json.every(data => Object.values(data).every(e => !e.length))) {
-		return notify('ra.notification.author_not_found')
-	}
-	return json
+export const createUrlWithQueryParams = (url, query) => {
+	const serializedQuery = mapValues(query, e => JSON.stringify(e))
+	const queryParams = new URLSearchParams(serializedQuery)
+	return `${url}?${queryParams}`
 }
 
 export const saveSettings = async (settings) => {

@@ -63,12 +63,12 @@ export const AuthorsInput = () => (
 	<ReferenceArrayInput
 		source='authorIds'
 		reference='authors'
-		validate={required()}
+		// validate={required()}
 	>
 		<SelectArrayInput
 			label='fields.author'
 			optionText={(record) => (
-				`${record.lastName} ${record.firstName} ${record.middleName}`
+				`${record.lastName} ${record.firstName} ${record.middleName || ''}`
 			)}
 		/>
 	</ReferenceArrayInput>
@@ -77,7 +77,7 @@ export const AuthorsInput = () => (
 export const CoauthorsInput = () => (
 	<ArrayInput source='coauthors' label='fields.coauthors'>
 		<SimpleFormIterator>
-			<TextInput source='value' label='fields.coauthor'/>
+			<TextInput source='name' label='fields.coauthor'/>
 		</SimpleFormIterator>
 	</ArrayInput>
 )

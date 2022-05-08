@@ -1,10 +1,13 @@
 import React from 'react'
+import { ReplaceFileInput } from '../components/inputs'
 import MyEdit from '../MyEdit'
-import { EditPublicationInputs } from './components/inputs'
+import { CreateUpdateInputs } from './PublicationCreate'
 
-const PublicationEdit = () => (
+const PublicationEdit = ({ children }) => (
 	<MyEdit>
-		<EditPublicationInputs/>
+		<CreateUpdateInputs/>
+		{children}
+		<ReplaceFileInput/>
 	</MyEdit>
 )
 

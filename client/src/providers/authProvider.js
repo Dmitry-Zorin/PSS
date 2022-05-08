@@ -1,5 +1,9 @@
 import { fetchApi } from '../requests'
 
+const fetchAuth = (url, options) => (
+	fetchApi(`auth/${url}`, options)
+)
+
 export const getUser = () => (
 	JSON.parse(localStorage.getItem('user'))
 )
@@ -10,14 +14,14 @@ export const setUser = (user) => (
 
 const authProvider = {
 	login: async ({ username, password }) => {
-		const { json } = await fetchApi('auth/login', {
+		const { json } = await fetchAuth('login', {
 			method: 'post',
 			body: { username, password }
 		})
 
 		if (json?.token) {
 			localStorage.setItem('token', json.token)
-			const { json: user } = await fetchApi('auth/identity')
+			const { json: user } = await fetchAuth('identity')
 			user.fullName = user.username
 			setUser(user)
 			return Promise.resolve()
@@ -27,13 +31,14 @@ const authProvider = {
 	},
 
 	logout: () => {
-		alert()
 		localStorage.clear()
 		return Promise.resolve()
 	},
 
 	checkAuth: async () => {
-		const { error } = await fetchApi('auth', { method: 'post' })
+		const { error } = await fetchAuth('', {
+			method: 'post'
+		})
 		return error ? Promise.reject() : Promise.resolve()
 	},
 
@@ -42,7 +47,7 @@ const authProvider = {
 		if (user) {
 			return user.role === 'admin'
 		}
-		const { json } = await fetchApi('auth/permissions')
+		const { json } = await fetchAuth('permissions')
 		return json.role === 'admin'
 	},
 

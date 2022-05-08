@@ -9,7 +9,10 @@ const MenuItem = ({ resource }) => {
 	const { name, icon: Icon } = resource
 
 	if (resourcesCount && !resourcesCount?.timeline) {
-		resourcesCount.timeline = Object.values(resourcesCount).reduce((a, b) => a + b)
+		const values = Object.values(resourcesCount)
+		if (values.length) {
+			resourcesCount.timeline = values.reduce((a, b) => a + b)
+		}
 	}
 
 	return (
