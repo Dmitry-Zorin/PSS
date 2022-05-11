@@ -28,7 +28,7 @@ export default {
 			styleOverrides: {
 				root: {
 					'.RaLayout-appFrame': {
-						marginTop: appbarHeight
+						marginTop: appbarHeight,
 					},
 					'.ra-field': {
 						margin: '15px 0',
@@ -51,10 +51,10 @@ export default {
 			styleOverrides: {
 				root: {
 					'.RaSidebar-fixed': {
-						height: `calc(100vh - ${appbarHeight}px)`
-					}
-				}
-			}
+						height: `calc(100vh - ${appbarHeight}px)`,
+					},
+				},
+			},
 		},
 		RaMenu: {
 			styleOverrides: {
@@ -76,7 +76,7 @@ export default {
 					borderRadius: 8,
 					margin: 4,
 					padding: '10px 12px',
-					border: '1px solid transparent'
+					border: '1px solid transparent',
 				},
 			},
 		},

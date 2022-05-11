@@ -34,7 +34,7 @@ export const themes = {
 								color: indigo[500],
 							},
 						},
-					}
+					},
 				},
 			},
 		},

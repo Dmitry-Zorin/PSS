@@ -8,14 +8,14 @@ const ButtonForm16 = () => {
 	const dataProvider = useDataProvider()
 	const notify = useNotify()
 	const { name, companyNumber, militaryRank } = useRecordContext()
-	
+
 	const generateForm = async () => {
 		const { createForm16 } = await import('../../../form16')
 		const title = `Оператор ${companyNumber} НР, ${militaryRank.toLowerCase()}`
 		const resourceData = await getResourceData(dataProvider, notify, name)
 		await createForm16(resourceData, name, name, title)
 	}
-	
+
 	return (
 		<Box display='flex' justifyContent='center' mt='30px'>
 			<Button

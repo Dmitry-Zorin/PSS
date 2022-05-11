@@ -1,7 +1,7 @@
 import { Injectable, ValidationPipe } from '@nestjs/common'
 import { capitalize } from 'lodash'
-import { UpdateDto } from './dto'
 import { singular } from 'pluralize'
+import { UpdateDto } from './dto'
 import * as resources from './dto/resources'
 
 @Injectable()

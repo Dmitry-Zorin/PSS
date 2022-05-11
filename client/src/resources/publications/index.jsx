@@ -1,11 +1,11 @@
-import VerticalSplitIcon from '@mui/icons-material/VerticalSplit'
+import CodeIcon from '@mui/icons-material/Code'
+import DescriptionIcon from '@mui/icons-material/Description'
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile'
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks'
-import DescriptionIcon from '@mui/icons-material/Description'
+import MenuBookIcon from '@mui/icons-material/MenuBook'
 import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck'
 import SubjectIcon from '@mui/icons-material/Subject'
-import CodeIcon from '@mui/icons-material/Code'
-import MenuBookIcon from '@mui/icons-material/MenuBook'
+import VerticalSplitIcon from '@mui/icons-material/VerticalSplit'
 
 const publications = {
 	articles: {

@@ -26,7 +26,7 @@ const Styles = {
 		width: '33%',
 	},
 	widthOneQuarter: {
-		width: '25%'
+		width: '25%',
 	},
 	textSecondary: {
 		fontStyle: 'italic',

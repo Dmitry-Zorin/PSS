@@ -1,3 +1,5 @@
+import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList'
+import TimelineIcon from '@mui/icons-material/Timeline'
 import entries from 'just-entries'
 import React from 'react'
 import { Admin, Resource } from 'react-admin'
@@ -6,12 +8,10 @@ import Lazy from './Lazy'
 import authProvider from './providers/authProvider'
 import dataProvider from './providers/dataProvider'
 import i18nProvider from './providers/i18nProvider'
+import * as adminResources from './resources/admin'
 import publications from './resources/publications'
 import PublicationsList from './resources/PublicationsList'
 import Timeline from './resources/Timeline'
-import TimelineIcon from '@mui/icons-material/Timeline'
-import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList'
-import * as adminResources from './resources/admin'
 
 const getLazyComponent = (component) => (
 	(props) => <Lazy component={component} {...props}/>

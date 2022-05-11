@@ -1,14 +1,5 @@
 import React from 'react'
-import {
-	Edit,
-	ImageField,
-	ImageInput,
-	minLength,
-	NumberInput,
-	required,
-	SimpleForm,
-	TextInput,
-} from 'react-admin'
+import { Edit, ImageField, ImageInput, minLength, NumberInput, required, SimpleForm, TextInput } from 'react-admin'
 import photoPlaceholder from '../../assets/photo-placeholder.jpg'
 import { createTitle, EditActionsWithoutFile } from '../components/inputs'
 

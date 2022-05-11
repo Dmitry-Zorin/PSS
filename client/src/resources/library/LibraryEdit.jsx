@@ -1,17 +1,5 @@
 import React from 'react'
-import {
-	ArrayInput,
-	Edit,
-	FileField,
-	FileInput,
-	minLength,
-	ReferenceArrayInput,
-	required,
-	SelectArrayInput,
-	SimpleForm,
-	SimpleFormIterator,
-	TextInput,
-} from 'react-admin'
+import { ArrayInput, Edit, FileField, FileInput, minLength, ReferenceArrayInput, required, SelectArrayInput, SimpleForm, SimpleFormIterator, TextInput } from 'react-admin'
 import { createTitle, EditActionsWithoutFile } from '../components/inputs'
 
 const validateText = [required(), minLength(1)]

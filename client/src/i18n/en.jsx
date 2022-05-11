@@ -33,14 +33,14 @@ const messages = {
 		firstName: 'First Name',
 		lastName: 'Last name',
 		middleName: 'Middle name',
-		info: 'Info'
+		info: 'Info',
 	},
 	resources: {
 		timeline: {
-			name: 'Timeline'
+			name: 'Timeline',
 		},
 		publicationsList: {
-			name: 'List of publications'
+			name: 'List of publications',
 		},
 		articles: {
 			name: 'Article |||| Articles',
@@ -128,9 +128,9 @@ const messages = {
 			titles: {
 				create: 'Add character',
 				list: 'Characters',
-				edit: 'Update character'
+				edit: 'Update character',
 			},
-		}
+		},
 	},
 }
 

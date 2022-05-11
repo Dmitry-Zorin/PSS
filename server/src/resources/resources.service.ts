@@ -85,7 +85,7 @@ export class ResourcesService {
 				options.loadRelationIds = {
 					relations: [
 						publication && 'publication',
-						file && 'file'
+						file && 'file',
 					].filter(Boolean),
 					disableMixedMap: true,
 				}

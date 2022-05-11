@@ -133,7 +133,7 @@ describe('ResourcesController', () => {
 
 		expect(body).toEqual(expect.objectContaining({
 			...TEST_RESOURCE,
-			...resourceUpdate
+			...resourceUpdate,
 		}))
 	})
 })

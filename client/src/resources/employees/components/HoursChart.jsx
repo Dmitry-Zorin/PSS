@@ -11,16 +11,16 @@ const colors = [
 
 export const HoursChart = ({ data }) => {
 	const { numOfPeople = 1 } = useRecordContext()
-	
+
 	const activities = new Map([
 		['science', { label: 'Научная работа', color: '#6aff00' }],
 	])
 	activities.get('science').value = 30 * numOfPeople - data.nonScienceHours
-	
+
 	const hours = Object.entries(data.hours)
 		.filter(e => e[0] !== activities.get('science').label)
 		.sort((a, b) => b[1] - a[1])
-	
+
 	hours.forEach(([trackerName, value], i) => {
 		activities.set(trackerName, {
 			label: trackerName,
@@ -28,7 +28,7 @@ export const HoursChart = ({ data }) => {
 			value,
 		})
 	})
-	
+
 	return (
 		<div>
 			<Typography style={{ marginBottom: 15 }}>

@@ -20,7 +20,7 @@ const dateToString = (date) => {
 const Report = ({ data, info }) => {
 	const { numOfPeople = 1 } = useRecordContext()
 	const { whose } = info
-	
+
 	return (
 		<CardContent>
 			<Box textAlign='center' mt='15px' mb='30px'>
@@ -30,7 +30,7 @@ const Report = ({ data, info }) => {
 				<Typography sx={styles.textSecondary}>
 					{dateToString(data.startDate)} - {dateToString(data.dueDate)}
 				</Typography>
-				
+
 				{data.startDate && (
 					<Box
 						display='flex'
@@ -44,7 +44,7 @@ const Report = ({ data, info }) => {
 						<HoursChart {...{ data, numOfPeople }}/>
 					</Box>
 				)}
-				
+
 				<Typography className={classes.subtitle}>
 					<b>Выполнение задач</b>
 				</Typography>
@@ -56,7 +56,7 @@ const Report = ({ data, info }) => {
 				{data.people?.length > 0 && (
 					<TasksTableFull people={data.people}/>
 				)}
-				
+
 				<br/>
 				<Typography className={classes.subtitle}>
 					<b>Трудозатраты</b>

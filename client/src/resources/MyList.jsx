@@ -18,7 +18,7 @@ const MyList = ({ children, filters, datagridProps, ...props }) => {
 
 	const defaultDatagridProps = {
 		rowClick: 'show',
-		expand: <DatagridExpand/>
+		expand: <DatagridExpand/>,
 	}
 
 	return (

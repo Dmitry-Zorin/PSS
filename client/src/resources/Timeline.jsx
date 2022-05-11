@@ -3,11 +3,11 @@ import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardActionArea from '@mui/material/CardActionArea'
 import Pagination from '@mui/material/Pagination'
+import pluralize from 'pluralize'
 import React from 'react'
 import { ListBase, Title, useListContext, useLocaleState, useTranslate } from 'react-admin'
 import { Link } from 'react-router-dom'
 import ResourceCounter from './ResourceCounter'
-import pluralize from 'pluralize'
 
 const sort = {
 	field: 'createdAt',

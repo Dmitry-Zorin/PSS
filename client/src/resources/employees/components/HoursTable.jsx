@@ -5,7 +5,7 @@ import styles from '../Styles'
 
 const HoursTable = ({ data }) => {
 	const { numOfPeople = 1 } = useRecordContext()
-	
+
 	return (
 		<TableContainer style={{ marginTop: 45 }}>
 			<Table sx={styles.table}>

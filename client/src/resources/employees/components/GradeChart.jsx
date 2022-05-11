@@ -6,7 +6,7 @@ export const GradeChart = ({ data }) => {
 	const theme = useTheme()
 	const labels = data.scores.map(e => `${dateToString(e.startDate)}-${dateToString(
 		e.dueDate)}`)
-	
+
 	return (
 		<Line
 			style={{ marginTop: 60 }}

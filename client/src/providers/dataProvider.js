@@ -40,16 +40,13 @@ const dataProvider = {
 	},
 
 	getList: async (resource, { filter, sort, pagination }) => {
-		const { field, order } = sort
 		const { page, perPage } = pagination
-		const skip = (page - 1) * perPage
-		const limit = perPage
 
 		const url = createUrlWithQueryParams(resource, {
-			match: filter,
-			sort: { [field]: order },
-			skip,
-			limit,
+			filter,
+			sort,
+			skip: (page - 1) * perPage,
+			take: perPage,
 		})
 
 		const { headers, json } = await fetchResources(url)

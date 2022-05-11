@@ -8,11 +8,11 @@ const circleSize = 75
 
 const ProgressBar = ({ value = 0, max = 0 }) => {
 	if (!max) return null
-	
+
 	const ratio = max ? value / max : 0.5
 	const numOfSteps = max ? getNumOfSteps(max) : 1
 	const values = range(numOfSteps).map(e => e * max / (numOfSteps - 1))
-	
+
 	return (
 		<Paper
 			elevation={2} style={{

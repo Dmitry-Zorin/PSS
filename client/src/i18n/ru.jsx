@@ -33,14 +33,14 @@ const messages = {
 		firstName: 'Имя',
 		lastName: 'Фамилия',
 		middleName: 'Отчество',
-		info: 'Дополнительная информация'
+		info: 'Дополнительная информация',
 	},
 	resources: {
 		timeline: {
-			name: 'События'
+			name: 'События',
 		},
 		publicationsList: {
-			name: 'Список публикаций'
+			name: 'Список публикаций',
 		},
 		articles: {
 			name: 'Статья |||| Статьи',
@@ -125,7 +125,7 @@ const messages = {
 				list: 'Список авторов',
 				show: 'Информация об авторе',
 				edit: 'Редактирование информации об авторе',
-			}
+			},
 		},
 		characters: {
 			name: 'Характер работы |||| Характеры работы',

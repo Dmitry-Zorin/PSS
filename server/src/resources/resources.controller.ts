@@ -1,7 +1,7 @@
 import { Controller, UseFilters, UsePipes, ValidationPipe } from '@nestjs/common'
 import { MessagePattern, Payload } from '@nestjs/microservices'
 import { HttpExceptionFilter } from '../auth/http-exception.filter'
-import { CreateDto, FindOneDto, FindDto, UpdateDto } from './dto'
+import { CreateDto, FindDto, FindOneDto, UpdateDto } from './dto'
 import { RemoveDto } from './dto/remove.dto'
 import { PayloadValidationPipe } from './payload-validation.pipe'
 import { ResourcesService } from './resources.service'

@@ -9,12 +9,6 @@ export class FileService {
 		private readonly connection: Connection,
 	) {}
 
-	private getGridFSBucket(resource: string) {
-		return new mongo.GridFSBucket(this.connection.db, {
-			bucketName: resource,
-		})
-	}
-
 	async download(resource: string, fileId: string) {
 		if (!mongo.ObjectId.isValid(fileId)) {
 			throw new BadRequestException('Invalid file ID')
@@ -45,5 +39,11 @@ export class FileService {
 		await Promise.all(fileIds.map(async (id) => {
 			await this.delete(resource, id)
 		}))
+	}
+
+	private getGridFSBucket(resource: string) {
+		return new mongo.GridFSBucket(this.connection.db, {
+			bucketName: resource,
+		})
 	}
 }

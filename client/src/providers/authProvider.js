@@ -16,7 +16,7 @@ const authProvider = {
 	login: async ({ username, password }) => {
 		const { json } = await fetchAuth('login', {
 			method: 'post',
-			body: { username, password }
+			body: { username, password },
 		})
 
 		if (json?.token) {
@@ -37,7 +37,7 @@ const authProvider = {
 
 	checkAuth: async () => {
 		const { error } = await fetchAuth('', {
-			method: 'post'
+			method: 'post',
 		})
 		return error ? Promise.reject() : Promise.resolve()
 	},

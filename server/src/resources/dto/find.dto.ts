@@ -1,6 +1,6 @@
 import { IntersectionType, PartialType } from '@nestjs/mapped-types'
 import { Type } from 'class-transformer'
-import { IsIn, IsInt, IsNotEmpty, IsNotEmptyObject, IsObject, IsOptional, IsString, IsUUID, Max, Min, Validate, ValidateNested } from 'class-validator'
+import { IsIn, IsInt, IsNotEmpty, IsNotEmptyObject, IsObject, IsOptional, IsString, Max, Min, Validate, ValidateNested } from 'class-validator'
 import { FilterValues } from './filter-values'
 import { IdsDto } from './params/ids.dto'
 import { ResourceDto } from './params/resource.dto'

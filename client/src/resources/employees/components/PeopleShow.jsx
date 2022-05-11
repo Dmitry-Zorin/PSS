@@ -2,13 +2,13 @@ import AssessmentIcon from '@mui/icons-material/Assessment'
 import StarsIcon from '@mui/icons-material/Stars'
 import React, { cloneElement, useEffect, useState } from 'react'
 import { Show, Tab, TabbedShowLayout } from 'react-admin'
-import { createTitle, ShowActions } from '../../components/inputs'
 import { fetchApi } from '../../../requests'
+import { createTitle, ShowActions } from '../../components/inputs'
 
 export const PeopleShow = ({ info, tabs, ...props }) => {
 	const Title = createTitle(info.title, 'name')
 	const TitleShort = createTitle('', 'name')
-	
+
 	const [data, setData] = useState({
 		score: 0,
 		totalScore: 0,
@@ -22,14 +22,14 @@ export const PeopleShow = ({ info, tabs, ...props }) => {
 		scores: [],
 		people: [],
 	})
-	
+
 	useEffect(() => {
 		fetchApi(`${info.resource}/${props.id}/redmine`)
 			.then(({ json }) => setData(json))
 	}, [])
-	
+
 	const { enableActions = true, permissions } = props
-	
+
 	return (
 		<Show
 			title={enableActions ? <Title/> : <TitleShort/>}

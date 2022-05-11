@@ -10,7 +10,7 @@ const activities = new Map([
 export const TasksChart = ({ data }) => {
 	activities.get('completed').value = data.issuesCompleted
 	activities.get('uncompleted').value = data.issueNumber - data.issuesCompleted
-	
+
 	return (
 		<div>
 			<Typography style={{ marginBottom: 15 }}>

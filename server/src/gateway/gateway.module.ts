@@ -40,7 +40,7 @@ import routes from './routes/routes'
 		{
 			provide: APP_PIPE,
 			useClass: ParseQueryPipe,
-		}
+		},
 	],
 })
 export class GatewayModule {}

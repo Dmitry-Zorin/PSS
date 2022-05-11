@@ -8,7 +8,7 @@ import styles from '../Styles'
 
 const Info = ({ children }) => {
 	const { platoonNumber, companyNumber } = useRecordContext()
-	
+
 	return (
 		<Box mt='15px' mb='30px'>
 			<GridShowLayout>

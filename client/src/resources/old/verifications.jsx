@@ -1,34 +1,7 @@
 import React from 'react'
-import {
-	ArrayField,
-	ArrayInput,
-	ChipField,
-	Create,
-	Datagrid,
-	Edit,
-	FileField,
-	FileInput,
-	Filter,
-	List,
-	minLength,
-	NumberInput,
-	required,
-	Show,
-	SimpleForm,
-	SimpleFormIterator,
-	SimpleShowLayout,
-	SingleFieldList,
-	TextField,
-	TextInput,
-} from 'react-admin'
+import { ArrayField, ArrayInput, ChipField, Create, Datagrid, Edit, FileField, FileInput, Filter, List, minLength, NumberInput, required, Show, SimpleForm, SimpleFormIterator, SimpleShowLayout, SingleFieldList, TextField, TextInput } from 'react-admin'
 import { DescriptionField, HeadlineField } from '../../CustomFields'
-import {
-	BulkActionButtons,
-	createEmptyPage,
-	createTitle,
-	EditActionsWithoutFile,
-	ShowActions,
-} from '../components/inputs'
+import { BulkActionButtons, createEmptyPage, createTitle, EditActionsWithoutFile, ShowActions } from '../components/inputs'
 
 const validateText = [required(), minLength(1)]
 const validateRequired = [required()]

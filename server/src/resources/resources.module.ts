@@ -30,7 +30,7 @@ import { ResourcesService } from './resources.service'
 		}),
 		TypeOrmModule.forFeature(
 			Object.values(entities),
-			'resourcesConnection'
+			'resourcesConnection',
 		),
 	],
 	controllers: [ResourcesController],

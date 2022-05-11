@@ -14,7 +14,7 @@ export default {
 				root: {
 					boxShadow: 'none',
 				},
-			}
+			},
 		},
 		MuiTypography: {
 			styleOverrides: {

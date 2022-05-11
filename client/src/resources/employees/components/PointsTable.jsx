@@ -1,18 +1,11 @@
-import {
-	Table,
-	TableBody,
-	TableCell,
-	TableContainer,
-	TableRow,
-	Typography,
-} from '@mui/material'
+import { Table, TableBody, TableCell, TableContainer, TableRow, Typography } from '@mui/material'
 import React from 'react'
 import { useRecordContext } from 'react-admin'
 import styles from '../Styles'
 
 const PointsTable = () => {
 	const { numOfPeople = 1 } = useRecordContext()
-	
+
 	return (
 		<TableContainer style={{ marginTop: 45 }}>
 			<Table sx={styles.table}>

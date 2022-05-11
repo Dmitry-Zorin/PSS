@@ -1,14 +1,5 @@
 import React from 'react'
-import {
-	ArrayField,
-	ChipField,
-	FileField,
-	ReferenceArrayField,
-	Show,
-	SimpleShowLayout,
-	SingleFieldList,
-	TextField,
-} from 'react-admin'
+import { ArrayField, ChipField, FileField, ReferenceArrayField, Show, SimpleShowLayout, SingleFieldList, TextField } from 'react-admin'
 import { createTitle, ShowActions } from '../components/inputs'
 
 const Title = createTitle('Книга', 'headline')

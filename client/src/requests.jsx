@@ -37,7 +37,9 @@ export const fetchApi = (url, options) => (
 )
 
 export const createUrlWithQueryParams = (url, query) => {
-	const serializedQuery = mapValues(query, e => JSON.stringify(e))
+	const serializedQuery = mapValues(query, e => (
+		typeof e === 'object' ? JSON.stringify(e) : e
+	))
 	const queryParams = new URLSearchParams(serializedQuery)
 	return `${url}?${queryParams}`
 }

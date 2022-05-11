@@ -1,21 +1,5 @@
 import React from 'react'
-import {
-	ArrayInput,
-	FileField,
-	FileInput,
-	maxValue,
-	minValue,
-	NumberInput,
-	ReferenceInput,
-	ReferenceArrayInput,
-	SimpleFormIterator,
-	SelectInput,
-	required,
-	TextInput,
-	useResourceContext,
-	useTranslate,
-	SelectArrayInput,
-} from 'react-admin'
+import { ArrayInput, FileField, FileInput, maxValue, minValue, NumberInput, ReferenceArrayInput, ReferenceInput, required, SelectArrayInput, SelectInput, SimpleFormIterator, TextInput, useResourceContext, useTranslate } from 'react-admin'
 
 export const LargeTextInput = ({ source, label, className, required: _required, ...props }) => (
 	<TextInput

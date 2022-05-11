@@ -1,15 +1,5 @@
 import React from 'react'
-import {
-	ArrayField,
-	ChipField,
-	Datagrid,
-	Filter,
-	List,
-	ReferenceInput,
-	SelectInput,
-	SingleFieldList,
-	TextInput,
-} from 'react-admin'
+import { ArrayField, ChipField, Datagrid, Filter, List, ReferenceInput, SelectInput, SingleFieldList, TextInput } from 'react-admin'
 import { HeadlineField } from '../../CustomFields'
 import { BulkActionButtons, createEmptyPage } from '../components/inputs'
 import { Aside } from './Aside'
