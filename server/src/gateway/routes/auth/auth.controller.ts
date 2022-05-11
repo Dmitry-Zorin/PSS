@@ -32,6 +32,15 @@ export class AuthController {
 	@HttpCode(204)
 	checkAuth() {}
 
+	@Put('settings')
+	async updateSettings(
+		@User() { username }: UserInfo,
+		@Body() body: unknown,
+	) {
+		const data = { username, payload: body }
+		return this.authClient.send('update_settings', data)
+	}
+
 	@Get('permissions')
 	getPermissions(@User() user: UserInfo) {
 		return { role: user.role }
@@ -40,15 +49,6 @@ export class AuthController {
 	@Get('identity')
 	findIdentity(@User() { username }: UserInfo) {
 		return this.authClient.send('find_identity', username)
-	}
-
-	@Put('settings')
-	async updateSettings(
-		@User() { username }: UserInfo,
-		@Body() body: unknown,
-	) {
-		const data = { username, payload: body }
-		return this.authClient.send('update_settings', data)
 	}
 
 	@Delete('unregister')

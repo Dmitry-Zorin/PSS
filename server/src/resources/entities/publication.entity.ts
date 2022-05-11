@@ -1,9 +1,8 @@
-import { BaseEntity, Column, Entity, JoinTable, ManyToMany, OneToOne, PrimaryGeneratedColumn, RelationId } from 'typeorm'
+import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn, RelationId } from 'typeorm'
 import { Author } from './author.entity'
-import { ResourceItem } from './resource-item.entity'
 
 @Entity()
-export class Publication extends BaseEntity {
+export class Publication {
 	@PrimaryGeneratedColumn('uuid')
 	id: string
 
@@ -37,7 +36,4 @@ export class Publication extends BaseEntity {
 
 	@Column('simple-array', { nullable: true })
 	coauthors: string[]
-
-	@OneToOne(() => ResourceItem, item => item.publication)
-	resourceItem: ResourceItem
 }

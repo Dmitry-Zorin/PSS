@@ -41,14 +41,14 @@ export class AuthService {
 		return this.userRepository.save(user)
 	}
 
+	updateSettings(username: string, settings: Settings) {
+		return this.userRepository.save({ username, ...settings })
+	}
+
 	findUser(username: string) {
 		return this.userRepository.findOneByOrFail({ username }).catch(() => {
 			throw new NotFoundException('User not found')
 		})
-	}
-
-	updateSettings(username: string, settings: Settings) {
-		return this.userRepository.save({ username, ...settings })
 	}
 
 	async removeUser(username: string) {

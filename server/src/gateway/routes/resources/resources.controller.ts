@@ -1,7 +1,8 @@
-import { Body, Controller, Delete, Get, Inject, Param, Post, Put, Query, Res, StreamableFile, UploadedFile, UseInterceptors } from '@nestjs/common'
+import { BadRequestException, Body, Controller, Delete, Get, Inject, Param, Post, Put, Query, Res, StreamableFile, UploadedFile, UseInterceptors } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { Response } from 'express'
+import { isEmpty } from 'lodash'
 import { firstValueFrom } from 'rxjs'
 import { FileService } from '../../../file/file.service'
 import { Public } from '../../jwt/jwt.guard'
@@ -15,28 +16,6 @@ export class ResourcesController {
 		private readonly fileService: FileService,
 	) {}
 
-	@Get('count')
-	getCount() {
-		return this.resourcesClient.send('get_count', {})
-	}
-
-	@Get('categories')
-	getCategories() {
-		return this.resourcesClient.send('get_categories', {})
-	}
-
-	@Public()
-	@Get('files/:resource/:fileId')
-	async getFile(
-		@Param('resource') resource: string,
-		@Param('fileId') fileId: string,
-		@Res({ passthrough: true }) res: Response,
-	) {
-		const { file, filename } = await this.fileService.download(resource, fileId)
-		res.attachment(filename)
-		return new StreamableFile(file)
-	}
-
 	@Post(':resource')
 	@Roles(Role.Admin)
 	@UseInterceptors(FileInterceptor('file'))
@@ -45,17 +24,56 @@ export class ResourcesController {
 		@Param('resource') resource: string,
 		@UploadedFile() file: Express.Multer.File,
 	) {
-		const payload: any = { ...body }
-
-		if (file) {
-			payload.fileInfo = {
-				fileId: file.id,
-				name: file.originalname,
-			}
+		if (isEmpty(body)) {
+			throw new BadRequestException('Request body is missing')
 		}
 
-		const data = { resource, payload }
-		return this.resourcesClient.send('create', data)
+		return this.resourcesClient.send('create', {
+			resource,
+			payload: {
+				...body,
+				...file && {
+					file: {
+						fileId: file.id,
+						name: file.originalname,
+					},
+				},
+			},
+		})
+	}
+
+	@Put(':resource/:id')
+	@Roles(Role.Admin)
+	@UseInterceptors(FileInterceptor('file'))
+	async update(
+		@Body() body: object,
+		@Param('resource') resource: string,
+		@Param('id') id: string,
+		@UploadedFile() file: Express.Multer.File,
+	) {
+		if (isEmpty(body)) {
+			throw new BadRequestException('Request body is missing')
+		}
+
+		const updateObservable = this.resourcesClient.send('update', {
+			resource,
+			id,
+			payload: {
+				...body,
+				...file && {
+					file: {
+						fileId: file.id,
+						name: file.originalname,
+					},
+				},
+			},
+		})
+
+		const fileId = await firstValueFrom(updateObservable)
+
+		if (fileId) {
+			await this.fileService.delete(resource, fileId)
+		}
 	}
 
 	@Get(':resource')
@@ -65,8 +83,8 @@ export class ResourcesController {
 		@Res({ passthrough: true }) res: Response,
 	) {
 		const data = { resource, query }
-		const findListObservable = this.resourcesClient.send('find', data)
-		const { range, records } = await firstValueFrom(findListObservable)
+		const findObservable = this.resourcesClient.send('find', data)
+		const { range, records } = await firstValueFrom(findObservable)
 		if (range) {
 			res.header('Content-Range', range)
 		}
@@ -82,30 +100,6 @@ export class ResourcesController {
 		return this.resourcesClient.send('find_one', data)
 	}
 
-	@Put(':resource/:id')
-	@Roles(Role.Admin)
-	@UseInterceptors(FileInterceptor('file'))
-	async update(
-		@Body() body: object,
-		@Param('resource') resource: string,
-		@Param('id') id: string,
-		@UploadedFile() file: Express.Multer.File,
-	) {
-		const payload: any = { ...body }
-
-		if (file) {
-			payload.fileInfo = {
-				fileId: file.id,
-				name: file.originalname,
-			}
-		}
-
-		const data = { resource, id, payload }
-		const updateObservable = this.resourcesClient.send('update', data)
-		const fileId = await firstValueFrom(updateObservable)
-		await this.fileService.delete(resource, fileId)
-	}
-
 	@Delete(':resource')
 	@Roles(Role.Admin)
 	async remove(
@@ -115,7 +109,7 @@ export class ResourcesController {
 		const data = { resource, ids }
 		const removeObservable = this.resourcesClient.send('remove', data)
 		const fileIds = await firstValueFrom(removeObservable)
-		await this.fileService.deleteMany(resource, fileIds)
+		await this.fileService.deleteMany(resource, fileIds.filter((e: any) => e))
 	}
 
 	@Delete(':resource/:id')
@@ -125,8 +119,33 @@ export class ResourcesController {
 		@Param('id') id: string,
 	) {
 		const data = { resource, id }
-		const removeObservable = this.resourcesClient.send('remove-one', data)
-		const fileId = await firstValueFrom(removeObservable)
-		await this.fileService.delete(resource, fileId)
+		const removeOneObservable = this.resourcesClient.send('remove_one', data)
+		const fileId = await firstValueFrom(removeOneObservable)
+
+		if (fileId) {
+			await this.fileService.delete(resource, fileId)
+		}
+	}
+
+	@Public()
+	@Get('files/:resource/:fileId')
+	async getFile(
+		@Param('resource') resource: string,
+		@Param('fileId') fileId: string,
+		@Res({ passthrough: true }) res: Response,
+	) {
+		const { file, filename } = await this.fileService.download(resource, fileId)
+		res.attachment(filename)
+		return new StreamableFile(file)
+	}
+
+	@Get('count')
+	getCount() {
+		return this.resourcesClient.send('get_count', {})
+	}
+
+	@Get('categories')
+	getCategories() {
+		return this.resourcesClient.send('get_categories', {})
 	}
 }

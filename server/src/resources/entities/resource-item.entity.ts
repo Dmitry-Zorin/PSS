@@ -1,9 +1,9 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import { Column, CreateDateColumn, Entity, Index, JoinColumn, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 import { File } from './file.entity'
 import { Publication } from './publication.entity'
 
 @Entity()
-export class ResourceItem extends BaseEntity {
+export class ResourceItem {
 	@PrimaryGeneratedColumn('uuid')
 	id: string
 
@@ -13,8 +13,9 @@ export class ResourceItem extends BaseEntity {
 	@UpdateDateColumn()
 	updatedAt: Date
 
+	@Index()
 	@Column()
-	resourceName: string
+	resource: string
 
 	@Column()
 	title: string
@@ -22,14 +23,14 @@ export class ResourceItem extends BaseEntity {
 	@Column({ nullable: true })
 	description?: string
 
-	@OneToOne(() => Publication, pub => pub.resourceItem, {
+	@OneToOne(() => Publication, {
 		createForeignKeyConstraints: false,
 		nullable: true,
 	})
 	@JoinColumn()
 	publication?: Publication
 
-	@OneToOne(() => File, file => file.resourceItem, {
+	@OneToOne(() => File, {
 		createForeignKeyConstraints: false,
 		nullable: true,
 	})

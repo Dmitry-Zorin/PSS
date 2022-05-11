@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common'
-import { ConfigModule } from '@nestjs/config'
+import { ConfigModule, ConfigService } from '@nestjs/config'
+import { TypeOrmModule } from '@nestjs/typeorm'
 import Joi from 'joi'
-import { DbModule } from './db/db.module'
+import * as entities from './entities'
 import { ResourcesController } from './resources.controller'
 import { ResourcesService } from './resources.service'
 
@@ -15,7 +16,22 @@ import { ResourcesService } from './resources.service'
 				RMQ_URL: Joi.string().required(),
 			}).unknown(),
 		}),
-		DbModule.forRoot({ db: 'postgres' }),
+		TypeOrmModule.forRootAsync({
+			imports: [ConfigModule],
+			name: 'resourcesConnection',
+			useFactory: (configService: ConfigService) => ({
+				type: 'postgres',
+				url: configService.get('POSTGRES_URL'),
+				entities: Object.values(entities),
+				synchronize: true,
+				logging: true,
+			}),
+			inject: [ConfigService],
+		}),
+		TypeOrmModule.forFeature(
+			Object.values(entities),
+			'resourcesConnection'
+		),
 	],
 	controllers: [ResourcesController],
 	providers: [ResourcesService],

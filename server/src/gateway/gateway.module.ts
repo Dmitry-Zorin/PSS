@@ -7,7 +7,8 @@ import { JwtGuard } from './jwt/jwt.guard'
 import { JwtModule } from './jwt/jwt.module'
 import { ParseQueryPipe } from './parse-query.pipe'
 import { RolesGuard } from './roles.guard'
-import { routeModules, routes } from './routes/routes'
+import getRouteModules from './routes/get-route-modules'
+import routes from './routes/routes'
 
 @Module({
 	imports: [
@@ -21,7 +22,7 @@ import { routeModules, routes } from './routes/routes'
 			}).unknown(),
 		}),
 		RouterModule.register(routes),
-		...routeModules,
+		...getRouteModules(routes),
 	],
 	providers: [
 		{

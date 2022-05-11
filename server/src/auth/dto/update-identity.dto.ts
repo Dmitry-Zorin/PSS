@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer'
-import { IsEnum, IsNotEmpty, IsOptional, IsString, ValidateNested } from 'class-validator'
+import { IsEnum, IsNotEmpty, IsNotEmptyObject, IsOptional, IsString, ValidateNested } from 'class-validator'
 import { Locale, Theme } from '../user.entity'
 
 class SettingsDto {
@@ -17,6 +17,7 @@ export class UpdateSettingsDto {
 	@IsNotEmpty()
 	username: string
 
+	@IsNotEmptyObject()
 	@ValidateNested()
 	@Type(() => SettingsDto)
 	payload: SettingsDto

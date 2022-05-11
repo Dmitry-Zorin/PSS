@@ -6,8 +6,8 @@ import { UserCredentialsDto } from './dto/user-credentials.dto'
 import { HttpExceptionFilter } from './http-exception.filter'
 
 @Controller()
-@UsePipes(new ValidationPipe({ whitelist: true }))
-@UseFilters(new HttpExceptionFilter())
+@UsePipes(ValidationPipe)
+@UseFilters(HttpExceptionFilter)
 export class AuthController {
 	constructor(private readonly authService: AuthService) {}
 
@@ -26,16 +26,16 @@ export class AuthController {
 		return { token: this.authService.getToken(user) }
 	}
 
-	@MessagePattern('find_identity')
-	async handleFindIdentity(username: string) {
-		const { password, ...identity } = await this.authService.findUser(username)
-		return identity
-	}
-
 	@MessagePattern('update_settings')
 	async handleUpdateSettings({ username, payload }: UpdateSettingsDto) {
 		await this.authService.updateSettings(username, payload)
 		return null
+	}
+
+	@MessagePattern('find_identity')
+	async handleFindIdentity(username: string) {
+		const { password, ...identity } = await this.authService.findUser(username)
+		return identity
 	}
 
 	@MessagePattern('unregister')

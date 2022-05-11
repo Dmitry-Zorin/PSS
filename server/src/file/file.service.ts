@@ -1,14 +1,49 @@
-import { Readable } from 'stream'
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common'
+import { InjectConnection } from '@nestjs/mongoose'
+import { Connection, mongo } from 'mongoose'
 
-interface DownloadResult {
-	file: Readable,
-	filename: string
-}
+@Injectable()
+export class FileService {
+	constructor(
+		@InjectConnection()
+		private readonly connection: Connection,
+	) {}
 
-export abstract class FileService {
-	abstract download(resource: string, fileId: string): Promise<DownloadResult>
+	private getGridFSBucket(resource: string) {
+		return new mongo.GridFSBucket(this.connection.db, {
+			bucketName: resource,
+		})
+	}
 
-	abstract delete(resource: string, fileId: string): Promise<void>
+	async download(resource: string, fileId: string) {
+		if (!mongo.ObjectId.isValid(fileId)) {
+			throw new BadRequestException('Invalid file ID')
+		}
+		const objectId = new mongo.ObjectId(fileId)
+		const bucket = this.getGridFSBucket(resource)
+		const files = await bucket.find({ _id: objectId }).toArray()
+		if (!files.length) {
+			throw new NotFoundException('File not found')
+		}
+		return {
+			file: bucket.openDownloadStream(objectId),
+			filename: files[0].filename,
+		}
+	}
 
-	abstract deleteMany(resource: string, fileIds: string[]): Promise<void>
+	async delete(resource: string, fileId: string) {
+		if (!mongo.ObjectId.isValid(fileId)) return
+		const objectId = new mongo.ObjectId(fileId)
+		const bucket = this.getGridFSBucket(resource)
+		return bucket.delete(objectId).catch((err: any) => {
+			if (!err) return
+			console.error(err)
+		})
+	}
+
+	async deleteMany(resource: string, fileIds: string[]) {
+		await Promise.all(fileIds.map(async (id) => {
+			await this.delete(resource, id)
+		}))
+	}
 }

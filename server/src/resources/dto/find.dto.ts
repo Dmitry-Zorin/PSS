@@ -1,19 +1,32 @@
 import { IntersectionType, PartialType } from '@nestjs/mapped-types'
 import { Type } from 'class-transformer'
-import { IsInt, IsObject, IsOptional, Max, Min, Validate, ValidateNested } from 'class-validator'
-import { SortValues, VALID_SORT_VALUES } from './constraints/sort-values'
+import { IsIn, IsInt, IsNotEmpty, IsNotEmptyObject, IsObject, IsOptional, IsString, IsUUID, Max, Min, Validate, ValidateNested } from 'class-validator'
+import { FilterValues } from './filter-values'
 import { IdsDto } from './params/ids.dto'
 import { ResourceDto } from './params/resource.dto'
+
+const VALID_SORT_VALUES = ['ASC', 'DESC', 'asc', 'desc'] as const
+
+class Sort {
+	@IsString()
+	@IsNotEmpty()
+	field: string
+
+	@IsIn(VALID_SORT_VALUES)
+	order: typeof VALID_SORT_VALUES[number]
+}
 
 export class FindListParamsDto {
 	@IsOptional()
 	@IsObject()
-	match?: Record<string, unknown>
+	@Validate(FilterValues)
+	filter?: Record<string, any>
 
 	@IsOptional()
-	@IsObject()
-	@Validate(SortValues)
-	sort?: Record<string, typeof VALID_SORT_VALUES[number]>
+	@IsNotEmptyObject()
+	@ValidateNested()
+	@Type(() => Sort)
+	sort?: Sort
 
 	@IsOptional()
 	@IsInt()
@@ -24,7 +37,7 @@ export class FindListParamsDto {
 	@IsInt()
 	@Min(0)
 	@Max(100)
-	limit = 10
+	take?: number = 100
 }
 
 class FindQueryDto extends IntersectionType(
@@ -33,6 +46,7 @@ class FindQueryDto extends IntersectionType(
 ) {}
 
 export class FindDto extends ResourceDto {
+	@IsNotEmptyObject()
 	@ValidateNested()
 	@Type(() => FindQueryDto)
 	query: FindQueryDto

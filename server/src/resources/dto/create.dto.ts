@@ -1,7 +1,7 @@
-import { IsDefined } from 'class-validator'
+import { IsNotEmptyObject } from 'class-validator'
 import { ResourceDto } from './params/resource.dto'
 
 export class CreateDto extends ResourceDto {
-	@IsDefined()
+	@IsNotEmptyObject()
 	payload: any
 }

@@ -1,8 +1,8 @@
-import { BaseEntity, Column, Entity, ManyToMany, PrimaryGeneratedColumn, RelationId } from 'typeorm'
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn, RelationId } from 'typeorm'
 import { Publication } from './publication.entity'
 
 @Entity()
-export class Author extends BaseEntity {
+export class Author {
 	@PrimaryGeneratedColumn('uuid')
 	id: string
 
