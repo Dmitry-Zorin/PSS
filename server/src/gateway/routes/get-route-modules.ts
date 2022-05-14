@@ -16,7 +16,8 @@ const findRouteModules = (routes: Routes): Type[] => (
 
 		if (children?.length) {
 			const childModules = isRoutes(children)
-				? findRouteModules(children) : children
+				? findRouteModules(children)
+				: children
 
 			modules.push(...childModules)
 		}

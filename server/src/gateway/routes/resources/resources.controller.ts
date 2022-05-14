@@ -16,11 +16,26 @@ export class ResourcesController {
 		private readonly fileService: FileService,
 	) {}
 
+	@Get('count')
+	getCount() {
+		return this.resourcesClient.send('get_count', {})
+	}
+
+	@Get('categories')
+	getCategories() {
+		return this.resourcesClient.send('get_categories', {})
+	}
+
+	@Get('authors/:id/publications')
+	getAuthorPublications(@Param('id') id: string) {
+		return this.resourcesClient.send('get_author_publications', { id })
+	}
+
 	@Post(':resource')
 	@Roles(Role.Admin)
 	@UseInterceptors(FileInterceptor('file'))
 	async create(
-		@Body() body: object,
+		@Body() body: any,
 		@Param('resource') resource: string,
 		@UploadedFile() file: Express.Multer.File,
 	) {
@@ -46,7 +61,7 @@ export class ResourcesController {
 	@Roles(Role.Admin)
 	@UseInterceptors(FileInterceptor('file'))
 	async update(
-		@Body() body: object,
+		@Body() body: any,
 		@Param('resource') resource: string,
 		@Param('id') id: string,
 		@UploadedFile() file: Express.Multer.File,
@@ -137,15 +152,5 @@ export class ResourcesController {
 		const { file, filename } = await this.fileService.download(resource, fileId)
 		res.attachment(filename)
 		return new StreamableFile(file)
-	}
-
-	@Get('count')
-	getCount() {
-		return this.resourcesClient.send('get_count', {})
-	}
-
-	@Get('categories')
-	getCategories() {
-		return this.resourcesClient.send('get_categories', {})
 	}
 }

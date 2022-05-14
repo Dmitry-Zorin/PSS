@@ -34,12 +34,12 @@ import routes from './routes/routes'
 			useClass: RolesGuard,
 		},
 		{
-			provide: APP_FILTER,
-			useClass: AllExceptionsFilter,
-		},
-		{
 			provide: APP_PIPE,
 			useClass: ParseQueryPipe,
+		},
+		{
+			provide: APP_FILTER,
+			useClass: AllExceptionsFilter,
 		},
 	],
 })

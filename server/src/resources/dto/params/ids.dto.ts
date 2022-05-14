@@ -1,8 +1,7 @@
-import { IsArray, IsNotEmpty, IsString } from 'class-validator'
+import { IsArray, IsUUID } from 'class-validator'
 
 export class IdsDto {
 	@IsArray()
-	@IsString({ each: true })
-	@IsNotEmpty({ each: true })
+	@IsUUID(undefined, { each: true })
 	ids: string[]
 }

@@ -46,7 +46,7 @@ class FindQueryDto extends IntersectionType(
 ) {}
 
 export class FindDto extends ResourceDto {
-	@IsNotEmptyObject()
+	@IsObject()
 	@ValidateNested()
 	@Type(() => FindQueryDto)
 	query: FindQueryDto

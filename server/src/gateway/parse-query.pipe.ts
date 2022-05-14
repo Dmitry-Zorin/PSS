@@ -1,5 +1,5 @@
 import { ArgumentMetadata, BadRequestException, Injectable, PipeTransform } from '@nestjs/common'
-import { transform } from 'lodash'
+import { isString, transform } from 'lodash'
 
 @Injectable()
 export class ParseQueryPipe implements PipeTransform {
@@ -8,12 +8,12 @@ export class ParseQueryPipe implements PipeTransform {
 			return data
 		}
 
-		return transform(data as Record<string, string>, (params, value, key) => {
+		return transform(data as Record<string, any>, (params, value, key) => {
 			try {
-				params[key] = JSON.parse(value)
+				params[key] = isString(value) ? JSON.parse(value) : value
 			}
 			catch {
-				throw new BadRequestException(`Query parameter "${key}" has invalid format`)
+				throw new BadRequestException(`Query parameter ${key} has invalid format`)
 			}
 		}, {} as Record<string, any>)
 	}

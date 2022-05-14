@@ -20,7 +20,4 @@ export class Author {
 
 	@ManyToMany(() => Publication, publication => publication.authors)
 	publications: Publication[]
-
-	@RelationId((author: Author) => author.publications)
-	publicationIds: string[]
 }

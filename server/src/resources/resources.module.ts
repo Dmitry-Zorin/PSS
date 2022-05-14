@@ -3,6 +3,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import Joi from 'joi'
 import * as entities from './entities'
+import { OtherResourcesModule } from './other-resources/otherResources.module'
+import { ResourceItemModule } from './resource-item/resourceItem.module'
 import { ResourcesController } from './resources.controller'
 import { ResourcesService } from './resources.service'
 
@@ -22,16 +24,15 @@ import { ResourcesService } from './resources.service'
 			useFactory: (configService: ConfigService) => ({
 				type: 'postgres',
 				url: configService.get('POSTGRES_URL'),
-				entities: Object.values(entities),
 				synchronize: true,
 				logging: true,
+				entities: Object.values(entities),
 			}),
 			inject: [ConfigService],
 		}),
-		TypeOrmModule.forFeature(
-			Object.values(entities),
-			'resourcesConnection',
-		),
+		TypeOrmModule.forFeature([], 'resourcesConnection'),
+		ResourceItemModule,
+		OtherResourcesModule,
 	],
 	controllers: [ResourcesController],
 	providers: [ResourcesService],

@@ -1,7 +1,7 @@
-import { IsNotEmpty, IsString } from 'class-validator'
+import { IsString, Length } from 'class-validator'
 
 export class ResourceDto {
 	@IsString()
-	@IsNotEmpty()
+	@Length(1, 50)
 	resource: string
 }

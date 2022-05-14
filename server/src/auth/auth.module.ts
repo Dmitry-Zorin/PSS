@@ -17,6 +17,7 @@ import { User } from './user.entity'
 		}),
 		TypeOrmModule.forRootAsync({
 			imports: [ConfigModule],
+			name: 'authConnection',
 			useFactory: (configService: ConfigService) => ({
 				type: 'postgres',
 				url: configService.get('POSTGRES_URL'),
@@ -35,7 +36,7 @@ import { User } from './user.entity'
 			}),
 			inject: [ConfigService],
 		}),
-		TypeOrmModule.forFeature([User]),
+		TypeOrmModule.forFeature([User], 'authConnection'),
 	],
 	controllers: [AuthController],
 	providers: [AuthService],

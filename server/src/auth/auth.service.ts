@@ -13,7 +13,7 @@ interface Settings {
 @Injectable()
 export class AuthService {
 	constructor(
-		@InjectRepository(User)
+		@InjectRepository(User, 'authConnection')
 		private readonly userRepository: Repository<User>,
 		private readonly jwtService: JwtService,
 	) {}
