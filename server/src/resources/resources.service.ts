@@ -1,28 +1,46 @@
-import { Injectable, NotFoundException } from '@nestjs/common'
-import { InjectConnection } from '@nestjs/typeorm'
-import { DataSource, In } from 'typeorm'
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common'
+import { InjectEntityManager } from '@nestjs/typeorm'
+import { EntityManager, In } from 'typeorm'
 import { FindListParamsDto } from './dto/find.dto'
-import { Author, Resource, ResourceItem } from './entities'
-import { OtherResourcesService } from './other-resources/otherResources.service'
+import { Publication, Resource, ResourceItem } from './entities'
+import { AvailableEntities, OtherResourcesService } from './other-resources/otherResources.service'
 import { ResourceItemService } from './resource-item/resourceItem.service'
+import { omitNullDeep } from './utilities'
+
+export interface FindOptions {
+	count?: boolean
+}
+
+export interface FindResult {
+	records: Record<string, any>[]
+}
+
+export interface CountResult {
+	total: number
+}
 
 @Injectable()
 export class ResourcesService {
+	private entityClass: typeof ResourceItem | AvailableEntities[keyof AvailableEntities]
+
 	constructor(
-		@InjectConnection('resourcesConnection')
-		private readonly dataSource: DataSource,
+		@InjectEntityManager('resourcesConnection')
+		private readonly entityManager: EntityManager,
 		private readonly resourceItemService: ResourceItemService,
 		private readonly otherResourcesService: OtherResourcesService,
 	) {}
 
 	private getResourceService(resource: string) {
-		return resource in OtherResourcesService.availableEntities
-			? this.otherResourcesService
-			: this.resourceItemService
+		if (resource in OtherResourcesService.availableEntities) {
+			this.entityClass = OtherResourcesService.getEntityClass(resource)
+			return this.otherResourcesService
+		}
+		this.entityClass = ResourceItem
+		return this.resourceItemService
 	}
 
 	async getCount() {
-		const resourceItems = await this.dataSource
+		const resourceItems = await this.entityManager
 			.createQueryBuilder(ResourceItem, 'item')
 			.select('item.resource', 'resource')
 			.addSelect('count(*)', 'count')
@@ -36,7 +54,7 @@ export class ResourcesService {
 	}
 
 	async getCategories() {
-		const categories = await this.dataSource
+		const categories = await this.entityManager
 			.createQueryBuilder(Resource, 'resource')
 			.select('resource.category', 'category')
 			.addSelect('array_agg(resource.name)', 'resources')
@@ -49,17 +67,20 @@ export class ResourcesService {
 		}, {})
 	}
 
+	getTimeline() {
+		// TODO
+	}
+
 	async getAuthorPublications(id: string) {
-		const [author] = await this.dataSource.manager.find(Author, {
-			where: { id },
-			relations: {
-				publications: true,
+		const publications = await this.entityManager.find(Publication, {
+			where: {
+				authors: { id },
 			},
 		})
-		if (!author) {
-			throw new NotFoundException('Author with the provided ID does not exist')
+		if (!publications.length) {
+			throw new NotFoundException('Author with the provided ID does not have any publications')
 		}
-		return author.publications
+		return publications
 	}
 
 	create(resource: string, payload: any) {
@@ -70,22 +91,59 @@ export class ResourcesService {
 		return this.getResourceService(resource).update(resource, id, payload)
 	}
 
-	find(resource: string, params: FindListParamsDto, count?: false): Promise<{ records: any[] }>
-	find(resource: string, params: FindListParamsDto, count: true): Promise<{ records: any[], total: number }>
-	find(resource: string, params: FindListParamsDto, count = false) {
-		return this.getResourceService(resource).find(resource, params, count)
+	find(resource: string, searchParams: FindListParamsDto, options: FindOptions & { count: true }): Promise<FindResult & CountResult>
+	find(resource: string, searchParams: FindListParamsDto, options?: FindOptions): Promise<FindResult>
+	async find(resource: string, searchParams: FindListParamsDto, options = {} as FindOptions): Promise<any> {
+		const { filter, sort, skip, take } = searchParams
+		const resourceService = this.getResourceService(resource)
+		const additionalFindOptions = resourceService.getFindOptions(resource, searchParams)
+
+		const findOptions = {
+			where: filter,
+			order: {
+				...sort && {
+					[sort.field]: sort.order,
+				},
+			},
+			skip,
+			take,
+			...additionalFindOptions,
+		}
+
+		try {
+			if (options.count) {
+				const [records, total] = await this.entityManager.findAndCount(this.entityClass, findOptions)
+				return {
+					records: omitNullDeep(records),
+					total,
+				}
+			}
+			const records = await this.entityManager.find(this.entityClass, findOptions)
+			return {
+				records: omitNullDeep(records),
+			}
+		}
+		catch (e: any) {
+			throw new BadRequestException(e.message)
+		}
 	}
 
-	async findByIds(resource: string, ids: string[]) {
-		const result = await this.find(resource, {
+	findByIds(resource: string, ids: string[]) {
+		return this.find(resource, {
 			filter: {
-				id: In(ids)
+				id: In(ids),
 			},
 		})
-		if (ids.length === 1 && !result.records.length) {
+	}
+
+	async findOne(resource: string, id: string) {
+		const { records } = await this.find(resource, {
+			filter: { id },
+		})
+		if (!records.length) {
 			throw new NotFoundException()
 		}
-		return result
+		return records[0]
 	}
 
 	remove(resource: string, ids: string[]) {

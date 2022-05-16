@@ -1,5 +1,4 @@
-import { Column, CreateDateColumn, Entity, Index, JoinColumn, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
-import { File } from './file.entity'
+import { Column, CreateDateColumn, Entity, Index, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 import { Publication } from './publication.entity'
 
 @Entity()
@@ -23,17 +22,6 @@ export class ResourceItem {
 	@Column({ nullable: true })
 	description?: string
 
-	@OneToOne(() => Publication, {
-		createForeignKeyConstraints: false,
-		nullable: true,
-	})
-	@JoinColumn()
-	publication?: Publication
-
-	@OneToOne(() => File, {
-		createForeignKeyConstraints: false,
-		nullable: true,
-	})
-	@JoinColumn()
-	file?: File
+	@OneToOne(() => Publication, e => e.resourceItem)
+	publication: Publication
 }

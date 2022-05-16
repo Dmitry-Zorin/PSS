@@ -6,7 +6,10 @@ import { UserCredentialsDto } from './dto/user-credentials.dto'
 import { HttpExceptionFilter } from './http-exception.filter'
 
 @Controller()
-@UsePipes(ValidationPipe)
+@UsePipes(new ValidationPipe({
+	whitelist: true,
+	forbidNonWhitelisted: true,
+}))
 @UseFilters(HttpExceptionFilter)
 export class AuthController {
 	constructor(private readonly authService: AuthService) {}

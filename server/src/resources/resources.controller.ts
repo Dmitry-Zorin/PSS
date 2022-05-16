@@ -9,22 +9,26 @@ import { ResourcesService } from './resources.service'
 import { omitNullDeep } from './utilities'
 
 @Controller()
-@UsePipes(ValidationPipe)
+@UsePipes(new ValidationPipe({
+	whitelist: true,
+	forbidNonWhitelisted: true,
+	transform: true
+}))
 @UseFilters(HttpExceptionFilter)
 export class ResourcesController {
 	constructor(private readonly resourcesService: ResourcesService) {}
 
-	@MessagePattern('get_count')
+	@MessagePattern('count')
 	handleGetCount() {
 		return this.resourcesService.getCount()
 	}
 
-	@MessagePattern('get_categories')
+	@MessagePattern('categories')
 	handleGetCategories() {
 		return this.resourcesService.getCategories()
 	}
 
-	@MessagePattern('get_author_publications')
+	@MessagePattern('author_publications')
 	async handleGetAuthorPublications({ id }: IdDto) {
 		const publications = await this.resourcesService.getAuthorPublications(id)
 		return omitNullDeep(publications)
@@ -37,37 +41,40 @@ export class ResourcesController {
 	}
 
 	@MessagePattern('update')
-	handleUpdate(@Payload(PayloadValidationPipe) { resource, id, payload }: UpdateDto) {
-		return this.resourcesService.update(resource, id, payload)
+	async handleUpdate(@Payload(PayloadValidationPipe) { resource, id, payload }: UpdateDto) {
+		await this.resourcesService.update(resource, id, payload)
+		return null
 	}
 
 	@MessagePattern('find')
 	async handleFind({ resource, query }: FindDto) {
 		if (query.ids) {
-			return this.resourcesService.findByIds(resource, query.ids)
+			return await this.resourcesService.findByIds(resource, query.ids)
 		}
-		const { records, total } = await this.resourcesService.find(resource, query, true)
+		const { records, total } = await this.resourcesService.find(resource, query, {
+			count: true,
+		})
 		const { skip = 0, take = total } = query
 		return {
-			records: omitNullDeep(records),
+			records,
 			range: `${resource} ${skip}-${Math.min(take, total)}/${total}`,
 		}
 	}
 
 	@MessagePattern('find_one')
 	async handleFindOne({ resource, id }: FindOneDto) {
-		const { records } = await this.resourcesService.findByIds(resource, [id])
-		return omitNullDeep(records[0])
+		return this.resourcesService.findOne(resource, id)
 	}
 
 	@MessagePattern('remove')
-	handleRemove({ resource, ids }: RemoveDto) {
-		return this.resourcesService.remove(resource, ids)
+	async handleRemove({ resource, ids }: RemoveDto) {
+		await this.resourcesService.remove(resource, ids)
+		return null
 	}
 
 	@MessagePattern('remove_one')
 	async handleRemoveOne({ resource, id }: FindOneDto) {
-		const [fileId] = await this.resourcesService.remove(resource, [id])
-		return fileId
+		await this.resourcesService.remove(resource, [id])
+		return null
 	}
 }

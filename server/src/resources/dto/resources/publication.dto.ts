@@ -1,4 +1,5 @@
-import { IsArray, IsDefined, IsInt, IsNotEmpty, IsOptional, IsString, IsUUID, Length, Max, MaxLength, Min } from 'class-validator'
+import { Type } from 'class-transformer'
+import { IsArray, IsInt, IsNotEmpty, IsOptional, IsString, IsUUID, Length, Max, MaxLength, Min } from 'class-validator'
 
 export class PublicationDto {
 	@IsOptional()
@@ -8,12 +9,14 @@ export class PublicationDto {
 
 	@IsOptional()
 	@IsUUID()
+	@Type(() => Number)
 	characterId?: number
 
 	@IsOptional()
 	@IsInt()
 	@Min(1900)
 	@Max(2100)
+	@Type(() => Number)
 	year?: number
 
 	@IsOptional()
@@ -25,9 +28,9 @@ export class PublicationDto {
 	@IsInt()
 	@Min(0)
 	@Max(5000)
-	volume?: number
+	@Type(() => Number)
+	volume: number
 
-	@IsDefined()
 	@IsArray()
 	@IsUUID(undefined, { each: true })
 	authorIds: string[]
@@ -36,5 +39,5 @@ export class PublicationDto {
 	@IsString({ each: true })
 	@IsNotEmpty({ each: true })
 	@MaxLength(100, { each: true })
-	coauthors: string[]
+	coauthors?: string[]
 }

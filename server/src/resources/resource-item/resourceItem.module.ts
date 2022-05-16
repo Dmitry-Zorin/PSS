@@ -1,10 +1,15 @@
 import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { ResourceItem } from '../entities'
+import { Publication, ResourceItem } from '../entities'
 import { ResourceItemService } from './resourceItem.service'
 
 @Module({
-	imports: [TypeOrmModule.forFeature([ResourceItem], 'resourcesConnection')],
+	imports: [
+		TypeOrmModule.forFeature([
+			ResourceItem,
+			Publication,
+		], 'resourcesConnection'),
+	],
 	providers: [ResourceItemService],
 	exports: [ResourceItemService],
 })

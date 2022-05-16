@@ -1,9 +1,9 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { difference } from 'lodash'
-import { EntityManager, FindManyOptions, In, Repository } from 'typeorm'
+import { difference, isEmpty } from 'lodash'
+import { EntityManager, Repository } from 'typeorm'
 import { FindListParamsDto } from '../dto/find.dto'
-import { File, Publication, Resource, ResourceItem } from '../entities'
+import { Publication, Resource, ResourceItem } from '../entities'
 
 @Injectable()
 export class ResourceItemService {
@@ -12,12 +12,14 @@ export class ResourceItemService {
 	constructor(
 		@InjectRepository(ResourceItem, 'resourcesConnection')
 		private readonly resourceItems: Repository<ResourceItem>,
+		@InjectRepository(Publication, 'resourcesConnection')
+		private readonly publications: Repository<Publication>,
 	) {
 		this.entityManager = this.resourceItems.manager
 	}
 
 	async create(resource: string, payload: any) {
-		const { file, publication, ...resourceItem } = payload
+		const { publication, ...resourceItem } = payload
 
 		const [resourceInfo] = await this.entityManager.findBy(Resource, {
 			name: resource,
@@ -28,150 +30,96 @@ export class ResourceItemService {
 		}
 
 		return this.entityManager.transaction(async (manager) => {
+			resourceItem.resource = resource
+			const { id } = await manager.save(ResourceItem, resourceItem)
+
 			if (resourceInfo?.category) {
-				if (!publication?.authorIds) {
+				if (!publication) {
 					throw new BadRequestException('Parameter publication.authorIds is required')
 				}
 
+				publication.resourceItemId = id
 				publication.title = resourceItem.title
-				publication.authors = publication.authorIds.map((id: string) => ({ id }))
 
 				try {
-					resourceItem.publication = await manager.save(Publication, publication)
+					await manager.insert(Publication, publication)
+					await manager
+						.createQueryBuilder()
+						.relation(Publication, 'authors')
+						.of(id)
+						.add(publication.authorIds)
 				}
-				catch {
+				catch (e: any) {
+					console.log(e)
 					throw new BadRequestException('Publication has invalid format')
 				}
 			}
 
-			if (file) {
-				resourceItem.file = await manager.save(File, file)
-			}
-
-			resourceItem.resource = resource
-			return manager.save(ResourceItem, resourceItem)
+			return { id }
 		})
 	}
 
 	async update(resource: string, id: string, payload: any) {
-		const { publication, file, ...resourceItemUpdate } = payload
-
-		const [resourceItem] = await this.resourceItems.find({
-			where: { id },
-			relations: {
-				publication: !!publication,
-				file: !!file,
-			},
-		})
-
-		if (!resourceItem) {
-			throw new NotFoundException()
-		}
+		const { publication = {}, ...resourceItemUpdate } = payload
 
 		await this.entityManager.transaction(async (manager) => {
-			if (publication && resourceItem.publication) {
-				await manager
+			try {
+				await manager.update(ResourceItem, id, resourceItemUpdate)
+			}
+			catch (e: any) {
+				console.log(e)
+				throw new BadRequestException('Resource item has invalid format')
+			}
+
+			if (publication.authorIds) {
+				const relationQueryBuilder = manager
 					.createQueryBuilder()
 					.relation(Publication, 'authors')
-					.of(resourceItem.publication)
-					.addAndRemove(
-						difference(publication.authorIds, resourceItem.publication.authorIds),
-						difference(resourceItem.publication.authorIds, publication.authorIds),
-					)
+					.of(id)
 
-				publication.title = resourceItemUpdate.title
+				const prevAuthors = await relationQueryBuilder.loadMany()
+				const prevAuthorIds = prevAuthors.map(e => e.id)
+
+				await relationQueryBuilder.addAndRemove(
+					difference(publication.authorIds, prevAuthorIds),
+					difference(prevAuthorIds, publication.authorIds),
+				)
+
 				delete publication.authorIds
+			}
 
+			if (resourceItemUpdate.title) {
+				publication.title = resourceItemUpdate.title
+			}
+
+			if (!isEmpty(publication)) {
 				try {
-					await manager.update(Publication, resourceItem.publication.id, publication)
+					await manager.update(Publication, id, publication)
 				}
 				catch (e: any) {
+					console.log(e)
 					throw new BadRequestException('Publication has invalid format')
 				}
 			}
-
-			if (file && resourceItem.file) {
-				await manager.update(File, resourceItem.file.id, file)
-			}
-
-			resourceItemUpdate.resource = resource
-
-			try {
-				await manager.update(ResourceItem, resourceItem.id, resourceItemUpdate)
-			}
-			catch (e: any) {
-				throw new BadRequestException(e.message)
-			}
 		})
-
-		return resourceItem.file?.fileId || null
 	}
 
-	async find(resource: string, params: FindListParamsDto, count?: boolean) {
-		const { filter = {}, sort, skip, take } = params
-
-		const options: FindManyOptions = {
-			...sort && {
-				order: { [sort.field]: sort.order },
+	getFindOptions(resource: string, searchParams: FindListParamsDto) {
+		return {
+			where: {
+				...searchParams.filter,
+				resource,
 			},
-			skip,
-			take,
-		}
-
-		if (resource !== 'timeline') {
-			filter.resource = resource
-			options.relations = {
+			relations: {
 				publication: true,
-				file: Object.keys(filter).toString() === 'id',
-			}
-		}
-
-		options.where = filter
-
-		try {
-			return {
-				records: await this.resourceItems.find(options),
-				...count && {
-					total: await this.resourceItems.count(options),
-				},
-			}
-		}
-		catch (e: any) {
-			throw new BadRequestException(e.message)
+			},
 		}
 	}
 
 	async remove(resource: string, ids: string[]) {
-		const entities = await this.resourceItems.find({
-			where: {
-				id: In(ids),
-			},
-			relations: {
-				file: true,
-			},
-			loadRelationIds: {
-				relations: ['publication'],
-				disableMixedMap: true,
-			},
-		})
-
-		if (!entities.length) {
-			throw new NotFoundException('Resource items with the provided IDs do not exist')
-		}
-
-		const fileIds = entities.map(e => e.file?.id).filter(e => e)
-		const publicationIds = entities.map(e => e.publication?.id).filter(e => e)
-
 		await this.entityManager.transaction(async (manager) => {
-			if (fileIds.length) {
-				await manager.delete(File, fileIds)
-			}
-			if (publicationIds.length) {
-				await manager.delete(Publication, publicationIds)
-			}
+			await manager.delete(Publication, ids)
 			await manager.delete(ResourceItem, ids)
 		})
-
-		return entities.map(e => e.file?.fileId || null)
 	}
 }

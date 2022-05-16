@@ -1,5 +1,4 @@
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn, RelationId } from 'typeorm'
-import { Publication } from './publication.entity'
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
 
 @Entity()
 export class Author {
@@ -17,7 +16,4 @@ export class Author {
 
 	@Column({ nullable: true })
 	info: string
-
-	@ManyToMany(() => Publication, publication => publication.authors)
-	publications: Publication[]
 }

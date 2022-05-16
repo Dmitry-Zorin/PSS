@@ -1,8 +1,9 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common'
+import { Injectable, NotFoundException } from '@nestjs/common'
 import { InjectEntityManager } from '@nestjs/typeorm'
-import { EntityManager, In } from 'typeorm'
-import { FindListParamsDto } from '../dto/find.dto'
+import { EntityManager } from 'typeorm'
 import { Author, Character } from '../entities'
+
+export type AvailableEntities = typeof OtherResourcesService['availableEntities']
 
 @Injectable()
 export class OtherResourcesService {
@@ -16,9 +17,8 @@ export class OtherResourcesService {
 		private readonly entityManager: EntityManager,
 	) {}
 
-	private static getEntityClass(resource: string) {
-		type AvailableResource = keyof typeof OtherResourcesService['availableEntities']
-		return OtherResourcesService.availableEntities[resource as AvailableResource]
+	static getEntityClass(resource: string) {
+		return OtherResourcesService.availableEntities[resource as keyof AvailableEntities]
 	}
 
 	async create(resource: string, payload: Record<string, any>) {
@@ -26,7 +26,7 @@ export class OtherResourcesService {
 		const createResult = await this.entityManager.insert(entityClass, payload)
 		return {
 			id: createResult.identifiers[0],
-			...payload
+			...payload,
 		}
 	}
 
@@ -46,35 +46,12 @@ export class OtherResourcesService {
 		return null
 	}
 
-	async find(resource: string, params: FindListParamsDto, count?: boolean) {
-		const entityClass = OtherResourcesService.getEntityClass(resource)
-		const { filter = {}, sort, skip, take } = params
-
-		const options = {
-			where: filter,
-			...sort && {
-				order: { [sort.field]: sort.order },
-			},
-			skip,
-			take,
-		}
-
-		try {
-			return {
-				records: await this.entityManager.find(entityClass, options),
-				...count && {
-					total: await this.entityManager.count(entityClass, options),
-				},
-			}
-		}
-		catch (e: any) {
-			throw new BadRequestException(e.message)
-		}
+	getFindOptions() {
+		return {}
 	}
 
 	async remove(resource: string, ids: string[]) {
 		const entityClass = OtherResourcesService.getEntityClass(resource)
 		await this.entityManager.delete(entityClass, ids)
-		return [null]
 	}
 }

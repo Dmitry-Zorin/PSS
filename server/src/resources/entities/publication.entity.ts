@@ -1,10 +1,15 @@
-import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn, RelationId } from 'typeorm'
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToOne, PrimaryColumn, RelationId } from 'typeorm'
 import { Author } from './author.entity'
+import { ResourceItem } from './resource-item.entity'
 
 @Entity()
 export class Publication {
-	@PrimaryGeneratedColumn('uuid')
-	id: string
+	@OneToOne(() => ResourceItem, e => e.publication)
+	@JoinColumn()
+	resourceItem: ResourceItem
+
+	@PrimaryColumn()
+	resourceItemId: string
 
 	@Column()
 	title: string
@@ -27,7 +32,7 @@ export class Publication {
 	@Column({ nullable: true })
 	volume?: number
 
-	@ManyToMany(() => Author, author => author.publications)
+	@ManyToMany(() => Author)
 	@JoinTable()
 	authors: Author[]
 

@@ -3,7 +3,7 @@ import { ClientProxy } from '@nestjs/microservices'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { Response } from 'express'
 import { isEmpty } from 'lodash'
-import { firstValueFrom } from 'rxjs'
+import { map } from 'rxjs'
 import { FileService } from '../../../file/file.service'
 import { Public } from '../../jwt/jwt.guard'
 import { Role, Roles } from '../../roles.guard'
@@ -18,17 +18,17 @@ export class ResourcesController {
 
 	@Get('count')
 	getCount() {
-		return this.resourcesClient.send('get_count', {})
+		return this.resourcesClient.send('count', {})
 	}
 
 	@Get('categories')
 	getCategories() {
-		return this.resourcesClient.send('get_categories', {})
+		return this.resourcesClient.send('categories', {})
 	}
 
 	@Get('authors/:id/publications')
 	getAuthorPublications(@Param('id') id: string) {
-		return this.resourcesClient.send('get_author_publications', { id })
+		return this.resourcesClient.send('author_publications', { id })
 	}
 
 	@Post(':resource')
@@ -70,25 +70,23 @@ export class ResourcesController {
 			throw new BadRequestException('Request body is missing')
 		}
 
-		const updateObservable = this.resourcesClient.send('update', {
-			resource,
-			id,
-			payload: {
-				...body,
-				...file && {
-					file: {
-						fileId: file.id,
-						name: file.originalname,
+		return this.resourcesClient
+			.send('update', {
+				resource,
+				id,
+				payload: {
+					...body,
+					...file && {
+						file: {
+							fileId: file.id,
+							name: file.originalname,
+						},
 					},
 				},
-			},
-		})
-
-		const fileId = await firstValueFrom(updateObservable)
-
-		if (fileId) {
-			await this.fileService.delete(resource, fileId)
-		}
+			})
+			.pipe(map(async () => {
+				await this.fileService.delete(resource, '')
+			}))
 	}
 
 	@Get(':resource')
@@ -97,13 +95,14 @@ export class ResourcesController {
 		@Param('resource') resource: string,
 		@Res({ passthrough: true }) res: Response,
 	) {
-		const data = { resource, query }
-		const findObservable = this.resourcesClient.send('find', data)
-		const { range, records } = await firstValueFrom(findObservable)
-		if (range) {
-			res.header('Content-Range', range)
-		}
-		return records
+		return this.resourcesClient
+			.send('find', { resource, query })
+			.pipe(map(({ range, records }) => {
+				if (range) {
+					res.header('Content-Range', range)
+				}
+				return records
+			}))
 	}
 
 	@Get(':resource/:id')
@@ -111,8 +110,7 @@ export class ResourcesController {
 		@Param('resource') resource: string,
 		@Param('id') id: string,
 	) {
-		const data = { resource, id }
-		return this.resourcesClient.send('find_one', data)
+		return this.resourcesClient.send('find_one', { resource, id })
 	}
 
 	@Delete(':resource')
@@ -121,25 +119,24 @@ export class ResourcesController {
 		@Param('resource') resource: string,
 		@Query('ids') ids: string[],
 	) {
-		const data = { resource, ids }
-		const removeObservable = this.resourcesClient.send('remove', data)
-		const fileIds = await firstValueFrom(removeObservable)
-		await this.fileService.deleteMany(resource, fileIds.filter((e: any) => e))
+		return this.resourcesClient
+			.send('remove', { resource, ids })
+			.pipe(map(async () => {
+				await this.fileService.delete(resource, '')
+			}))
 	}
 
 	@Delete(':resource/:id')
 	@Roles(Role.Admin)
-	async removeOne(
+	removeOne(
 		@Param('resource') resource: string,
 		@Param('id') id: string,
 	) {
-		const data = { resource, id }
-		const removeOneObservable = this.resourcesClient.send('remove_one', data)
-		const fileId = await firstValueFrom(removeOneObservable)
-
-		if (fileId) {
-			await this.fileService.delete(resource, fileId)
-		}
+		return this.resourcesClient
+			.send('remove_one', { resource, id })
+			.pipe(map(async () => {
+				await this.fileService.delete(resource, '')
+			}))
 	}
 
 	@Public()
