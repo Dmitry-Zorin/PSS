@@ -12,7 +12,8 @@ import { Role, Roles } from '../../roles.guard'
 export class ResourcesController {
 	constructor(
 		@Inject('RESOURCES_SERVICE')
-		private readonly resourcesClient: ClientProxy,
+		private readonly resourcesClient: ClientProxy
+		,
 		private readonly fileService: FileService,
 	) {}
 
@@ -35,8 +36,8 @@ export class ResourcesController {
 	@Roles(Role.Admin)
 	@UseInterceptors(FileInterceptor('file'))
 	async create(
-		@Body() body: any,
 		@Param('resource') resource: string,
+		@Body() body: Record<string, unknown>,
 		@UploadedFile() file: Express.Multer.File,
 	) {
 		if (isEmpty(body)) {
@@ -61,9 +62,9 @@ export class ResourcesController {
 	@Roles(Role.Admin)
 	@UseInterceptors(FileInterceptor('file'))
 	async update(
-		@Body() body: any,
 		@Param('resource') resource: string,
 		@Param('id') id: string,
+		@Body() body: Record<string, unknown>,
 		@UploadedFile() file: Express.Multer.File,
 	) {
 		if (isEmpty(body)) {
@@ -91,8 +92,8 @@ export class ResourcesController {
 
 	@Get(':resource')
 	async find(
-		@Query() query: any,
 		@Param('resource') resource: string,
+		@Query() query: Record<string, unknown>,
 		@Res({ passthrough: true }) res: Response,
 	) {
 		return this.resourcesClient

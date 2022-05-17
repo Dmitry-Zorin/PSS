@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import Joi from 'joi'
-import { AuthModule } from './auth/auth.module'
+import { AuthModule } from './microservices/auth/auth.module'
 import { GatewayModule } from './gateway/gateway.module'
-import { ResourcesModule } from './resources/resources.module'
+import { ResourcesModule } from './microservices/resources/resources.module'
 
 @Module({
 	imports: [

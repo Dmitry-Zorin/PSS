@@ -1,9 +1,10 @@
 import { Body, Controller, Delete, Get, HttpCode, Inject, Post, Put } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
-import { User } from '../../decorators'
 import { Public } from '../../jwt/jwt.guard'
+import { User } from './user.decorator'
 
-export interface UserInfo {
+interface UserType {
+	id: string
 	username: string
 	role: string
 }
@@ -17,15 +18,21 @@ export class AuthController {
 
 	@Public()
 	@Post('register')
-	register(@Body() body: unknown) {
-		return this.authClient.send('register', body)
+	register(
+		@Body('username') username: string,
+		@Body('password') password: string,
+	) {
+		return this.authClient.send('register', { username, password })
 	}
 
 	@Public()
 	@Post('login')
 	@HttpCode(200)
-	login(@Body() body: unknown) {
-		return this.authClient.send('login', body)
+	login(
+		@Body('username') username: string,
+		@Body('password') password: string,
+	) {
+		return this.authClient.send('login', { username, password })
 	}
 
 	@Post()
@@ -34,25 +41,25 @@ export class AuthController {
 
 	@Put('settings')
 	async updateSettings(
-		@User() { username }: UserInfo,
-		@Body() body: unknown,
+		@User() { id }: UserType,
+		@Body() body: Record<string, unknown>,
 	) {
-		const data = { username, payload: body }
-		return this.authClient.send('update_settings', data)
+		const data = { id, payload: body }
+		return this.authClient.send('settings', data)
 	}
 
 	@Get('permissions')
-	getPermissions(@User() user: UserInfo) {
+	getPermissions(@User() user: UserType) {
 		return { role: user.role }
 	}
 
 	@Get('identity')
-	findIdentity(@User() { username }: UserInfo) {
-		return this.authClient.send('find_identity', username)
+	findIdentity(@User() { id }: UserType) {
+		return this.authClient.send('identity', { id })
 	}
 
 	@Delete('unregister')
-	unregister(@User() user: UserInfo) {
-		return this.authClient.send('unregister', user.username)
+	unregister(@User() { id }: UserType) {
+		return this.authClient.send('unregister', { id })
 	}
 }

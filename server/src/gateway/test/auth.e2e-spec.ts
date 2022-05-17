@@ -3,7 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config'
 import { Transport } from '@nestjs/microservices'
 import { Test } from '@nestjs/testing'
 import supertest from 'supertest'
-import { AuthModule } from '../../auth/auth.module'
+import { AuthModule } from '../../microservices/auth/auth.module'
 import { GatewayModule } from '../gateway.module'
 
 const AUTH_URL = '/api/auth'
