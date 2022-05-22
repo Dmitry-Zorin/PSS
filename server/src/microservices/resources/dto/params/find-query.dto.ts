@@ -1,6 +1,18 @@
 import { IntersectionType, PartialType } from '@nestjs/mapped-types'
 import { Type } from 'class-transformer'
-import { IsIn, IsInt, IsNotEmpty, IsNotEmptyObject, IsObject, IsOptional, IsString, Max, Min, Validate, ValidateNested } from 'class-validator'
+import {
+	IsIn,
+	IsInt,
+	IsNotEmpty,
+	IsNotEmptyObject,
+	IsObject,
+	IsOptional,
+	IsString,
+	Max,
+	Min,
+	Validate,
+	ValidateNested,
+} from 'class-validator'
 import { FilterValues } from '../filter-values'
 import { IdsParamDto } from './index'
 

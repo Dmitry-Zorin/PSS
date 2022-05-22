@@ -1,16 +1,19 @@
-import { CanActivate, ExecutionContext, Injectable, SetMetadata } from '@nestjs/common'
+import {
+	CanActivate,
+	ExecutionContext,
+	Injectable,
+	SetMetadata,
+} from '@nestjs/common'
 import { Reflector } from '@nestjs/core'
 
 export enum Role {
 	User = 'user',
-	Admin = 'admin'
+	Admin = 'admin',
 }
 
 const ROLE_KEY = 'role'
 
-export const Roles = (role: Role) => (
-	SetMetadata(ROLE_KEY, role)
-)
+export const Roles = (role: Role) => SetMetadata(ROLE_KEY, role)
 
 @Injectable()
 export class RolesGuard implements CanActivate {

@@ -3,7 +3,7 @@ import { Settings } from './settings.entity'
 
 enum Role {
 	User = 'user',
-	Admin = 'admin'
+	Admin = 'admin',
 }
 
 @Entity()
@@ -20,6 +20,6 @@ export class User {
 	@Column({ type: 'enum', enum: Role, default: Role.User })
 	role: Role
 
-	@OneToOne(() => Settings, e => e.user)
+	@OneToOne(() => Settings, (e) => e.user)
 	settings: Settings
 }

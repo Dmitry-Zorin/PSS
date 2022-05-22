@@ -1,8 +1,14 @@
-import { Controller, UseFilters, UsePipes, ValidationPipe } from '@nestjs/common'
+import {
+	Controller,
+	UseFilters,
+	UsePipes,
+	ValidationPipe,
+} from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { MessagePattern, Payload } from '@nestjs/microservices'
 import { AuthService } from './auth.service'
-import { IdParamDto, PasswordParamDto, SettingsDto, UsernameParamDto } from './dto'
+import { CredentialsDto, SettingsDto } from './dto'
+import { IdParamDto } from './dto/params'
 import { HttpExceptionFilter } from './http-exception.filter'
 
 @Controller()
@@ -15,22 +21,17 @@ export class AuthController {
 	) {}
 
 	@MessagePattern('register')
-	async register(
-		@Payload() { username }: UsernameParamDto,
-		@Payload() { password }: PasswordParamDto,
-	) {
+	async register({ username, password }: CredentialsDto) {
 		const user = await this.authService.createUser(username, password)
 		return { token: this.jwtService.sign(user) }
 	}
 
 	@MessagePattern('login')
-	async login(
-		@Payload() { username }: UsernameParamDto,
-		@Payload() { password }: PasswordParamDto,
-	) {
-		const user = await this.authService.findUser({ username }, {
-			passwordToVerify: password,
-		})
+	async login({ username, password }: CredentialsDto) {
+		const user = await this.authService.findUser(
+			{ username },
+			{ passwordToVerify: password },
+		)
 		return { token: this.jwtService.sign(user) }
 	}
 

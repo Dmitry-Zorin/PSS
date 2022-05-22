@@ -4,7 +4,7 @@ import { Transport } from '@nestjs/microservices'
 import { Test } from '@nestjs/testing'
 import supertest from 'supertest'
 import { AuthModule } from '../../microservices/auth/auth.module'
-import { GatewayModule } from '../gateway.module'
+import { ApiGatewayModule } from '../api-gateway.module'
 
 const AUTH_URL = '/api/auth'
 
@@ -20,7 +20,7 @@ describe('AuthController', () => {
 
 	beforeAll(async () => {
 		const module = await Test.createTestingModule({
-			imports: [ConfigModule, GatewayModule, AuthModule],
+			imports: [ConfigModule, ApiGatewayModule, AuthModule],
 		}).compile()
 
 		app = module.createNestApplication()
@@ -62,10 +62,7 @@ describe('AuthController', () => {
 	})
 
 	test('should fail to register the same user', async () => {
-		await request
-			.post(`${AUTH_URL}/register`)
-			.send(TEST_USER)
-			.expect(409)
+		await request.post(`${AUTH_URL}/register`).send(TEST_USER).expect(409)
 	})
 
 	test('should login the existing user', async () => {

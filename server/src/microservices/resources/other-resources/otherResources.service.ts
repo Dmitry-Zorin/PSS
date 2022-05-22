@@ -4,7 +4,8 @@ import { EntityManager } from 'typeorm'
 import { CONNECTION_NAME } from '../constants'
 import { Author, Character } from '../entities'
 
-export type AvailableEntities = typeof OtherResourcesService['availableEntities']
+export type AvailableEntities =
+	typeof OtherResourcesService['availableEntities']
 
 @Injectable()
 export class OtherResourcesService {
@@ -19,7 +20,9 @@ export class OtherResourcesService {
 	) {}
 
 	static getEntityClass(resource: string) {
-		return OtherResourcesService.availableEntities[resource as keyof AvailableEntities]
+		return OtherResourcesService.availableEntities[
+			resource as keyof AvailableEntities
+		]
 	}
 
 	async create(resource: string, payload: Record<string, any>) {
@@ -42,7 +45,11 @@ export class OtherResourcesService {
 			throw new NotFoundException()
 		}
 
-		await this.entityManager.update(entityClass, this.entityManager.getId(entity), payload)
+		await this.entityManager.update(
+			entityClass,
+			this.entityManager.getId(entity),
+			payload,
+		)
 
 		return null
 	}

@@ -13,7 +13,7 @@ export enum Theme {
 
 @Entity()
 export class Settings {
-	@OneToOne(() => User, e => e.settings)
+	@OneToOne(() => User, (e) => e.settings)
 	@JoinColumn()
 	user: User
 

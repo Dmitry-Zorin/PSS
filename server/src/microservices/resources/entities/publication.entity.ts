@@ -1,10 +1,19 @@
-import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToOne, PrimaryColumn, RelationId } from 'typeorm'
+import {
+	Column,
+	Entity,
+	JoinColumn,
+	JoinTable,
+	ManyToMany,
+	OneToOne,
+	PrimaryColumn,
+	RelationId,
+} from 'typeorm'
 import { Author } from './author.entity'
 import { ResourceItem } from './resource-item.entity'
 
 @Entity()
 export class Publication {
-	@OneToOne(() => ResourceItem, e => e.publication)
+	@OneToOne(() => ResourceItem, (e) => e.publication)
 	@JoinColumn()
 	resourceItem: ResourceItem
 

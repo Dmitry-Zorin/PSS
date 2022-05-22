@@ -2,27 +2,37 @@ import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { APP_FILTER, APP_GUARD, APP_PIPE, RouterModule } from '@nestjs/core'
 import Joi from 'joi'
+import { AuthModule } from './controllers/auth/auth.module'
 import { AllExceptionsFilter } from './exception.filter'
 import { JwtGuard } from './jwt/jwt.guard'
 import { JwtModule } from './jwt/jwt.module'
 import { ParseQueryPipe } from './parse-query.pipe'
 import { RolesGuard } from './roles.guard'
-import getRouteModules from './routes/get-route-modules'
-import routes from './routes/routes'
 
 @Module({
 	imports: [
-		JwtModule,
 		ConfigModule.forRoot({
 			validationSchema: Joi.object({
+				UI_SERVER: Joi.string().default(false),
+				API_GATEWAY_PORT: Joi.number().default(3000),
 				SECRET: Joi.string().required(),
 				RMQ_URL: Joi.string().required(),
 				AUTH_QUEUE: Joi.string().required(),
-				RESOURCES_QUEUE: Joi.string().required(),
 			}).unknown(),
 		}),
-		RouterModule.register(routes),
-		...getRouteModules(routes),
+		JwtModule,
+		RouterModule.register([
+			{
+				path: 'api',
+				children: [
+					{
+						path: 'auth',
+						module: AuthModule,
+					},
+				],
+			},
+		]),
+		AuthModule,
 	],
 	providers: [
 		{
@@ -43,4 +53,4 @@ import routes from './routes/routes'
 		},
 	],
 })
-export class GatewayModule {}
+export class ApiGatewayAuthModule {}

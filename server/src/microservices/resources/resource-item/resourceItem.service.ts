@@ -1,7 +1,11 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common'
-import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm'
+import {
+	BadRequestException,
+	Injectable,
+	NotFoundException,
+} from '@nestjs/common'
+import { InjectEntityManager } from '@nestjs/typeorm'
 import { difference, isEmpty } from 'lodash'
-import { EntityManager, Repository } from 'typeorm'
+import { EntityManager } from 'typeorm'
 import { CONNECTION_NAME } from '../constants'
 import { FindListParamsDto } from '../dto/params/find-query.dto'
 import { Publication, Resource, ResourceItem } from '../entities'
@@ -10,13 +14,7 @@ import { Publication, Resource, ResourceItem } from '../entities'
 export class ResourceItemService {
 	constructor(
 		@InjectEntityManager(CONNECTION_NAME)
-		private readonly entityManager: EntityManager
-		,
-		@InjectRepository(ResourceItem, CONNECTION_NAME)
-		private readonly resourceItems: Repository<ResourceItem>
-		,
-		@InjectRepository(Publication, CONNECTION_NAME)
-		private readonly publications: Repository<Publication>,
+		private readonly entityManager: EntityManager,
 	) {}
 
 	async create(resource: string, payload: any) {
@@ -36,7 +34,9 @@ export class ResourceItemService {
 
 			if (resourceInfo?.category) {
 				if (!publication) {
-					throw new BadRequestException('Parameter publication.authorIds is required')
+					throw new BadRequestException(
+						'Parameter publication.authorIds is required',
+					)
 				}
 
 				publication.resourceItemId = id
@@ -49,8 +49,7 @@ export class ResourceItemService {
 						.relation(Publication, 'authors')
 						.of(id)
 						.add(publication.authorIds)
-				}
-				catch (e: any) {
+				} catch (e: any) {
 					console.log(e)
 					throw new BadRequestException('Publication has invalid format')
 				}
@@ -66,8 +65,7 @@ export class ResourceItemService {
 		await this.entityManager.transaction(async (manager) => {
 			try {
 				await manager.update(ResourceItem, id, resourceItemUpdate)
-			}
-			catch (e: any) {
+			} catch (e: any) {
 				console.log(e)
 				throw new BadRequestException('Resource item has invalid format')
 			}
@@ -79,7 +77,7 @@ export class ResourceItemService {
 					.of(id)
 
 				const prevAuthors = await relationQueryBuilder.loadMany()
-				const prevAuthorIds = prevAuthors.map(e => e.id)
+				const prevAuthorIds = prevAuthors.map((e) => e.id)
 
 				await relationQueryBuilder.addAndRemove(
 					difference(publication.authorIds, prevAuthorIds),
@@ -96,8 +94,7 @@ export class ResourceItemService {
 			if (!isEmpty(publication)) {
 				try {
 					await manager.update(Publication, id, publication)
-				}
-				catch (e: any) {
+				} catch (e: any) {
 					console.log(e)
 					throw new BadRequestException('Publication has invalid format')
 				}

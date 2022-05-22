@@ -1,4 +1,12 @@
-import { Column, CreateDateColumn, Entity, Index, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import {
+	Column,
+	CreateDateColumn,
+	Entity,
+	Index,
+	OneToOne,
+	PrimaryGeneratedColumn,
+	UpdateDateColumn,
+} from 'typeorm'
 import { Publication } from './publication.entity'
 
 @Entity()
@@ -22,6 +30,6 @@ export class ResourceItem {
 	@Column({ nullable: true })
 	description?: string
 
-	@OneToOne(() => Publication, e => e.resourceItem)
+	@OneToOne(() => Publication, (e) => e.resourceItem)
 	publication: Publication
 }

@@ -5,7 +5,7 @@ import { Test } from '@nestjs/testing'
 import supertest from 'supertest'
 import { AuthModule } from '../../microservices/auth/auth.module'
 import { ResourcesModule } from '../../microservices/resources/resources.module'
-import { GatewayModule } from '../gateway.module'
+import { ApiGatewayModule } from '../api-gateway.module'
 
 const AUTH_URL = '/api/auth'
 const RESOURCE_URL = '/api/resources/articles'
@@ -27,7 +27,7 @@ describe('ResourcesController', () => {
 
 	beforeAll(async () => {
 		const module = await Test.createTestingModule({
-			imports: [ConfigModule, GatewayModule, AuthModule, ResourcesModule],
+			imports: [ConfigModule, ApiGatewayModule, AuthModule, ResourcesModule],
 		}).compile()
 
 		app = module.createNestApplication()
@@ -131,9 +131,11 @@ describe('ResourcesController', () => {
 			.auth(token, { type: 'bearer' })
 			.expect(200)
 
-		expect(body).toEqual(expect.objectContaining({
-			...TEST_RESOURCE,
-			...resourceUpdate,
-		}))
+		expect(body).toEqual(
+			expect.objectContaining({
+				...TEST_RESOURCE,
+				...resourceUpdate,
+			}),
+		)
 	})
 })

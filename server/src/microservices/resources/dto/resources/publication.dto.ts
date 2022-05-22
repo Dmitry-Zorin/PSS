@@ -1,5 +1,16 @@
 import { Type } from 'class-transformer'
-import { IsArray, IsInt, IsNotEmpty, IsOptional, IsString, IsUUID, Length, Max, MaxLength, Min } from 'class-validator'
+import {
+	IsArray,
+	IsInt,
+	IsNotEmpty,
+	IsOptional,
+	IsString,
+	IsUUID,
+	Length,
+	Max,
+	MaxLength,
+	Min,
+} from 'class-validator'
 
 export class PublicationDto {
 	@IsOptional()

@@ -1,7 +1,18 @@
-import { Controller, UseFilters, UsePipes, ValidationPipe } from '@nestjs/common'
+import {
+	Controller,
+	UseFilters,
+	UsePipes,
+	ValidationPipe,
+} from '@nestjs/common'
 import { MessagePattern, Payload } from '@nestjs/microservices'
 import { HttpExceptionFilter } from '../auth/http-exception.filter'
-import { FindQueryDto, IdParamDto, IdsParamDto, PayloadDto, ResourceParamDto } from './dto/params'
+import {
+	FindQueryDto,
+	IdParamDto,
+	IdsParamDto,
+	PayloadDto,
+	ResourceParamDto,
+} from './dto/params'
 import { PayloadValidationPipe } from './payload-validation.pipe'
 import { ResourcesService } from './resources.service'
 import { omitNullDeep } from './utilities'
@@ -55,9 +66,11 @@ export class ResourcesController {
 		if (query.ids) {
 			return await this.resourcesService.findByIds(resource, query.ids)
 		}
-		const { records, total } = await this.resourcesService.find(resource, query, {
-			count: true,
-		})
+		const { records, total } = await this.resourcesService.find(
+			resource,
+			query,
+			{ count: true },
+		)
 		const { skip = 0, take = total } = query
 		return {
 			records,

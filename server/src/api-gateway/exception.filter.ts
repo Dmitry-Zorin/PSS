@@ -3,9 +3,9 @@ import { BaseExceptionFilter } from '@nestjs/core'
 import { Response } from 'express'
 
 interface RpcException {
-	message: string,
+	message: string
 	error: {
-		status: number,
+		status: number
 		response: object
 	}
 }

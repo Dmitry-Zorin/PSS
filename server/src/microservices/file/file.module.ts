@@ -1,32 +1,34 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
-import { ClientsModule, Transport } from '@nestjs/microservices'
+import { MongooseModule } from '@nestjs/mongoose'
 import { MulterModule } from '@nestjs/platform-express'
 import { Request } from 'express'
+import Joi from 'joi'
 import { GridFsStorage } from 'multer-gridfs-storage'
-import { FileModule } from '../../../file/file.module'
-import { ResourcesController } from './resources.controller'
+import { FileController } from './file.controller'
+import { FileService } from './file.service'
 
 @Module({
 	imports: [
-		FileModule,
-		ClientsModule.registerAsync([{
-			name: 'RESOURCES_SERVICE',
+		ConfigModule.forRoot({
+			validationSchema: Joi.object({
+				API_SERVER: Joi.string().default(false),
+				FILE_MICROSERVICE_PORT: Joi.number().default(4000),
+				MONGO_URL: Joi.string().required(),
+			}).unknown(),
+		}),
+		MongooseModule.forRootAsync({
 			imports: [ConfigModule],
 			useFactory: (configService: ConfigService) => ({
-				transport: Transport.RMQ,
-				options: {
-					urls: [configService.get('RMQ_URL') as string],
-					queue: configService.get('RESOURCES_QUEUE'),
-				},
+				uri: configService.get('MONGO_URL'),
 			}),
 			inject: [ConfigService],
-		}]),
+		}),
 		MulterModule.registerAsync({
 			imports: [ConfigModule],
 			useFactory: (configService: ConfigService) => ({
 				storage: new GridFsStorage({
-					url: `${configService.get('MONGO_URI')}/${configService.get('MONGO_DB_NAME')}-files`,
+					url: configService.get('MONGO_URL')!,
 					file: (req: Request, file: Express.Multer.File) => ({
 						bucketName: req.params.resource,
 						filename: file.originalname,
@@ -36,6 +38,7 @@ import { ResourcesController } from './resources.controller'
 			inject: [ConfigService],
 		}),
 	],
-	controllers: [ResourcesController],
+	providers: [FileService],
+	controllers: [FileController],
 })
-export class ResourcesModule {}
+export class FileModule {}

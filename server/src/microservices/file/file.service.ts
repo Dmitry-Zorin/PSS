@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common'
+import {
+	BadRequestException,
+	Injectable,
+	NotFoundException,
+} from '@nestjs/common'
 import { InjectConnection } from '@nestjs/mongoose'
 import { Connection, mongo } from 'mongoose'
 
@@ -36,9 +40,11 @@ export class FileService {
 	}
 
 	async deleteMany(resource: string, fileIds: string[]) {
-		await Promise.all(fileIds.map(async (id) => {
-			await this.delete(resource, id)
-		}))
+		await Promise.all(
+			fileIds.map(async (id) => {
+				await this.delete(resource, id)
+			}),
+		)
 	}
 
 	private getGridFSBucket(resource: string) {

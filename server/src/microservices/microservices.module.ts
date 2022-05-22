@@ -1,24 +1,20 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import Joi from 'joi'
-import { AuthModule } from './microservices/auth/auth.module'
-import { GatewayModule } from './gateway/gateway.module'
-import { ResourcesModule } from './microservices/resources/resources.module'
+import { FileModule } from './file/file.module'
 
 @Module({
 	imports: [
 		ConfigModule.forRoot({
 			validationSchema: Joi.object({
-				PORT: Joi.number().default(3000),
 				UI_SERVER: Joi.string().default(false),
+				MICROSERVICES_PORT: Joi.number().default(4000),
 				RMQ_URL: Joi.string().required(),
 				AUTH_QUEUE: Joi.string().required(),
 				RESOURCES_QUEUE: Joi.string().required(),
 			}).unknown(),
 		}),
-		GatewayModule,
-		AuthModule,
-		ResourcesModule,
+		FileModule,
 	],
 })
-export class AppModule {}
+export class MicroservicesModule {}

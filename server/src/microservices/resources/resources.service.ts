@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common'
+import {
+	BadRequestException,
+	Injectable,
+	NotFoundException,
+} from '@nestjs/common'
 import { InjectEntityManager } from '@nestjs/typeorm'
 import { EntityManager, FindManyOptions, In } from 'typeorm'
 import { CONNECTION_NAME } from './constants'
@@ -24,8 +28,7 @@ export interface CountResult {
 export class ResourcesService {
 	constructor(
 		@InjectEntityManager(CONNECTION_NAME)
-		private readonly entityManager: EntityManager
-		,
+		private readonly entityManager: EntityManager,
 		private readonly resourceItemService: ResourceItemService,
 		private readonly otherResourcesService: OtherResourcesService,
 	) {}
@@ -79,7 +82,9 @@ export class ResourcesService {
 			},
 		})
 		if (!publications.length) {
-			throw new NotFoundException('Author with the provided ID does not have any publications')
+			throw new NotFoundException(
+				'Author with the provided ID does not have any publications',
+			)
 		}
 		return publications
 	}
@@ -92,26 +97,39 @@ export class ResourcesService {
 		return this.getResourceService(resource).update(resource, id, payload)
 	}
 
-	find(resource: string, searchParams: FindListParamsDto, options: FindOptions & { count: true }): Promise<FindResult & CountResult>
-	find(resource: string, searchParams: FindListParamsDto, options?: FindOptions): Promise<FindResult>
-	async find(resource: string, searchParams: FindListParamsDto, options = {} as FindOptions): Promise<any> {
+	find(
+		resource: string,
+		searchParams: FindListParamsDto,
+		options: FindOptions & { count: true },
+	): Promise<FindResult & CountResult>
+	find(
+		resource: string,
+		searchParams: FindListParamsDto,
+		options?: FindOptions,
+	): Promise<FindResult>
+	async find(
+		resource: string,
+		searchParams: FindListParamsDto,
+		options = {} as FindOptions,
+	): Promise<any> {
 		const { filter, sort, skip, take } = searchParams
 		const findOptions: FindManyOptions = { skip, take }
 
 		if (resource === 'timeline') {
 			findOptions.order = { createdAt: 'desc' }
-		}
-		else {
+		} else {
 			findOptions.where = filter
 			if (sort) {
-
 				findOptions.order = {
 					[sort.field]: sort.order,
 				}
 			}
 
 			const resourceService = this.getResourceService(resource)
-			const additionalOptions = resourceService.getFindOptions(resource, searchParams)
+			const additionalOptions = resourceService.getFindOptions(
+				resource,
+				searchParams,
+			)
 			Object.assign(findOptions, additionalOptions)
 		}
 
@@ -119,7 +137,10 @@ export class ResourcesService {
 
 		try {
 			if (options.count) {
-				const [records, total] = await this.entityManager.findAndCount(entityClass, findOptions)
+				const [records, total] = await this.entityManager.findAndCount(
+					entityClass,
+					findOptions,
+				)
 				return {
 					records: omitNullDeep(records),
 					total,
@@ -129,8 +150,7 @@ export class ResourcesService {
 			return {
 				records: omitNullDeep(records),
 			}
-		}
-		catch (e: any) {
+		} catch (e: any) {
 			throw new BadRequestException(e.message)
 		}
 	}

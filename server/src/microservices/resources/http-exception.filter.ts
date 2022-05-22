@@ -5,11 +5,11 @@ import { throwError } from 'rxjs'
 @Catch(HttpException)
 export class HttpExceptionFilter implements RpcExceptionFilter<HttpException> {
 	catch(exception: HttpException) {
-		return throwError(() => (
-			new RpcException({
+		return throwError(() => {
+			return new RpcException({
 				status: exception.getStatus(),
 				response: exception.getResponse(),
 			})
-		))
+		})
 	}
 }

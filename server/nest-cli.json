@@ -1,4 +1,18 @@
 {
 	"collection": "@nestjs/schematics",
-	"sourceRoot": "src"
+	"projects": {
+	"sourceRoot": "src",
+		"api-gateway": {
+			"sourceRoot": "api-gateway"
+		},
+		"file": {
+			"sourceRoot": "microservices/file"
+		},
+		"auth": {
+			"sourceRoot": "microservices/auth"
+		},
+		"resources": {
+			"sourceRoot": "microservices/resources"
+		}
+	}
 }

@@ -13,8 +13,6 @@ import { ResourcesService } from './resources.service'
 	imports: [
 		ConfigModule.forRoot({
 			validationSchema: Joi.object({
-				MONGO_URI: Joi.string().required(),
-				MONGO_DB_NAME: Joi.string().required(),
 				POSTGRES_URL: Joi.string().required(),
 				RMQ_URL: Joi.string().required(),
 			}).unknown(),

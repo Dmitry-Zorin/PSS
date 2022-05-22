@@ -1,5 +1,11 @@
 import { Type } from 'class-transformer'
-import { IsNotEmptyObject, IsOptional, IsString, Length, ValidateNested } from 'class-validator'
+import {
+	IsNotEmptyObject,
+	IsOptional,
+	IsString,
+	Length,
+	ValidateNested,
+} from 'class-validator'
 import { PublicationDto } from './publication.dto'
 
 export class ResourceItemDto {

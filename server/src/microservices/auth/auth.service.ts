@@ -1,4 +1,9 @@
-import { ConflictException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common'
+import {
+	ConflictException,
+	Injectable,
+	NotFoundException,
+	UnauthorizedException,
+} from '@nestjs/common'
 import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm'
 import { compare, hash } from 'bcrypt'
 import { omit } from 'lodash'
@@ -16,11 +21,11 @@ interface FindOptions {
 export class AuthService {
 	constructor(
 		@InjectEntityManager(CONNECTION_NAME)
-		private readonly entityManager: EntityManager
-		,
+		private readonly entityManager: EntityManager,
+
 		@InjectRepository(User, CONNECTION_NAME)
-		private readonly userRepository: Repository<User>
-		,
+		private readonly userRepository: Repository<User>,
+
 		@InjectRepository(Settings, CONNECTION_NAME)
 		private readonly settingsRepository: Repository<Settings>,
 	) {}
@@ -34,8 +39,7 @@ export class AuthService {
 
 			try {
 				await manager.insert(User, user)
-			}
-			catch (e: any) {
+			} catch (e: any) {
 				console.log(e)
 				throw new ConflictException('User already exists')
 			}
