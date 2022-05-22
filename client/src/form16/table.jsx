@@ -1,18 +1,10 @@
-import {
-	AlignmentType,
-	Paragraph,
-	Table,
-	TableCell,
-	TableRow,
-	VerticalAlign,
-	WidthType,
-} from 'docx'
+import { AlignmentType, Paragraph, Table, TableCell, TableRow, VerticalAlign, WidthType } from 'docx'
 import range from 'just-range'
 import { getTableRows } from './tableRows'
 
-export const getTable = (data, author) => {
+export const getTable = (data) => {
 	const index = { value: 1 }
-	
+
 	return (
 		new Table({
 			width: {
@@ -102,16 +94,14 @@ export const getTable = (data, author) => {
 						})
 					)),
 				}),
-				...getTableRows(data[0], author, index, 'a) научные работы'),
+				...getTableRows(data[0], index, 'a) научные работы'),
 				...getTableRows(
 					data[1],
-					author,
 					index,
 					'б) авторские свидетельства, дипломы, патенты, лицензии, информационные карты, алгоритмы, проекты',
 				),
 				...getTableRows(
 					data[2],
-					author,
 					index,
 					'в) учебно-методические работы',
 				),

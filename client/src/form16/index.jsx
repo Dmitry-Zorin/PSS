@@ -2,7 +2,7 @@ import { AlignmentType, Document, HeadingLevel, Packer, Paragraph, TextRun } fro
 import { saveAs } from 'file-saver'
 import { getTable } from './table'
 
-export const createForm16 = async (data, name, author, title) => {
+export const createForm16 = async (data, name, title) => {
 	const doc = new Document({
 		sections: [
 			{
@@ -67,7 +67,7 @@ export const createForm16 = async (data, name, author, title) => {
 						})
 					),
 					new Paragraph({}),
-					getTable(data, author),
+					getTable(data),
 					new Paragraph({}),
 					...title.split(', ').map(e => (
 						new Paragraph({
@@ -85,7 +85,7 @@ export const createForm16 = async (data, name, author, title) => {
 						heading: HeadingLevel.HEADING_2,
 						children: [
 							new TextRun({
-								text: `${name.split(' ')[1][0].toUpperCase()}. ${author[0].toUpperCase()}${author.split(
+								text: `${name.split(' ')[1][0].toUpperCase()}. ${name[0].toUpperCase()}${name.split(
 									' ')[0].slice(1)}`,
 								color: '000000',
 							}),
@@ -104,6 +104,6 @@ export const createForm16 = async (data, name, author, title) => {
 			},
 		],
 	})
-	
+
 	saveAs(await Packer.toBlob(doc), 'Список научных трудов.docx')
 }

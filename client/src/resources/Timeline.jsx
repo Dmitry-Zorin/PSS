@@ -9,13 +9,8 @@ import { ListBase, Title, useListContext, useLocaleState, useTranslate } from 'r
 import { Link } from 'react-router-dom'
 import ResourceCounter from './ResourceCounter'
 
-const sort = {
-	field: 'createdAt',
-	order: 'desc',
-}
-
 const Timeline = () => (
-	<ListBase {...{ sort }}>
+	<ListBase>
 		<ResourceCounter/>
 		<Inside/>
 	</ListBase>
@@ -55,9 +50,9 @@ const Inside = () => {
 const CardView = ({ event }) => {
 	const translate = useTranslate()
 	const [locale] = useLocaleState()
-	const resource = pluralize(event.resourceName)
+	const resource = pluralize(event.resource)
 
-	const resourceName = translate(`resources.${resource}.name`, { smart_count: 1 })
+	const resourceItem = translate(`resources.${resource}.name`, { smart_count: 1 })
 	const resourceMessage = translate(`resources.${resource}.created`, { _: 'created' })
 
 	return (
@@ -74,7 +69,7 @@ const CardView = ({ event }) => {
 						mb={3}
 					>
 						<Typography>
-							<strong>{resourceName}</strong> {resourceMessage}
+							<strong>{resourceItem}</strong> {resourceMessage}
 						</Typography>
 						<Typography>
 							{new Date(event.createdAt).toLocaleString(locale)}

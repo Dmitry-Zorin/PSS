@@ -1,6 +1,6 @@
 import { AlignmentType, Paragraph, TableCell, TableRow } from 'docx'
 
-export const getTableRow = (author, e, index) => (
+export const getTableRow = (e, index) => (
 	new TableRow({
 		tableHeader: true,
 		children: [
@@ -14,7 +14,7 @@ export const getTableRow = (author, e, index) => (
 			}),
 			new TableCell({
 				children: [
-					new Paragraph(`${e.headline}${e.type ? ` (${e.type})` : ' '}`),
+					new Paragraph(`${e.title}${e.type ? ` (${e.type})` : ' '}`),
 				],
 			}),
 			new TableCell({
@@ -28,10 +28,10 @@ export const getTableRow = (author, e, index) => (
 			new TableCell({
 				children: [
 					new Paragraph(
-						e.exitData || (
+						e.outputData || (
 							e.publicationPlace && e.publicationPlace !== '-'
-								? `${e.publicationPlace}, ${e.creationDate}`
-								: e.creationDate.toString()
+								? `${e.publicationPlace}, ${e?.year}`
+								: e.year?.toString() || ''
 						),
 					),
 				],
@@ -45,10 +45,9 @@ export const getTableRow = (author, e, index) => (
 				],
 			}),
 			new TableCell({
-				children: e.authors
-					.map(a => a.author)
-					.filter(a => !a.match(new RegExp(`^${author}$`, 'i')))
-					.map(a => new Paragraph(a)),
+				children: e.coauthors?.map(a => (
+					new Paragraph(a)
+				)) || [],
 			}),
 		],
 	})
