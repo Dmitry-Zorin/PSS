@@ -75,11 +75,9 @@ export class ResourcesService {
 		}, {})
 	}
 
-	async getAuthorPublications(id: string) {
+	async getPublications(filter: Record<string, any>) {
 		const publications = await this.entityManager.find(Publication, {
-			where: {
-				authors: { id },
-			},
+			where: filter,
 		})
 		if (!publications.length) {
 			throw new NotFoundException(
@@ -119,6 +117,7 @@ export class ResourcesService {
 			findOptions.order = { createdAt: 'desc' }
 		} else {
 			findOptions.where = filter
+
 			if (sort) {
 				findOptions.order = {
 					[sort.field]: sort.order,

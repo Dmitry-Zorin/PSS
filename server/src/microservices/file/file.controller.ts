@@ -2,17 +2,12 @@ import {
 	Controller,
 	Delete,
 	Get,
-	Headers,
 	Param,
 	Post,
 	Put,
-	Res,
 	StreamableFile,
-	UploadedFile,
-	UseInterceptors,
 } from '@nestjs/common'
-import { FileInterceptor } from '@nestjs/platform-express'
-import { Response } from 'express'
+import { getType } from 'mime/lite'
 import { FileService } from './file.service'
 
 @Controller('files')
@@ -20,30 +15,27 @@ export class FileController {
 	constructor(private readonly fileService: FileService) {}
 
 	@Post(':id')
-	@UseInterceptors(FileInterceptor('file'))
-	async addFile() // @Headers('origin') origin: string,
-	// @Param('id') id: string,
-	// @UploadedFile() file: Express.Multer.File,
-	{
+	// @UseInterceptors(FileInterceptor('file'))
+	async addFile() {
+		// @UploadedFile() file: Express.Multer.File, // @Param('id') id: string, // @Headers('origin') origin: string,
 		// console.log(origin, id, file)
 		// return
 	}
 
 	@Put(':id')
-	@UseInterceptors(FileInterceptor('file'))
-	async replaceFile() // @Param('id') id: string,
-	// @UploadedFile() file: Express.Multer.File,
-	{}
+	// @UseInterceptors(FileInterceptor('file'))
+	async replaceFile() {} // @UploadedFile() file: Express.Multer.File, // @Param('id') id: string,
 
 	@Get('files/:resource/:fileId')
 	async getFile(
 		@Param('resource') resource: string,
 		@Param('fileId') fileId: string,
-		@Res({ passthrough: true }) res: Response,
 	) {
 		const { file, filename } = await this.fileService.download(resource, fileId)
-		res.attachment(filename)
-		return new StreamableFile(file)
+		return new StreamableFile(file, {
+			type: getType(filename)!,
+			disposition: `attachment; filename=${filename}`,
+		})
 	}
 
 	@Delete(':id')

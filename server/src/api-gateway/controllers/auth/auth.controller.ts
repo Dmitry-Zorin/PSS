@@ -9,11 +9,11 @@ import {
 	Put,
 } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
-import { AUTH_SERVICE } from 'src/api-gateway/constants'
+import { AUTH_SERVICE } from '../../constants'
 import { Public } from '../../jwt/jwt.guard'
 import { User } from './user.decorator'
 
-interface UserType {
+interface RequestUser {
 	id: string
 	username: string
 	role: string
@@ -45,13 +45,9 @@ export class AuthController {
 		return this.client.send('login', { username, password })
 	}
 
-	@Post()
-	@HttpCode(204)
-	checkAuth() {}
-
 	@Put('settings')
 	async updateSettings(
-		@User() { id }: UserType,
+		@User() { id }: RequestUser,
 		@Body() body: Record<string, unknown>,
 	) {
 		const data = { id, payload: body }
@@ -59,17 +55,17 @@ export class AuthController {
 	}
 
 	@Get('permissions')
-	getPermissions(@User() user: UserType) {
+	getPermissions(@User() user: RequestUser) {
 		return { role: user.role }
 	}
 
 	@Get('identity')
-	findIdentity(@User() { id }: UserType) {
+	findIdentity(@User() { id }: RequestUser) {
 		return this.client.send('identity', { id })
 	}
 
 	@Delete('unregister')
-	unregister(@User() { id }: UserType) {
+	unregister(@User() { id }: RequestUser) {
 		return this.client.send('unregister', { id })
 	}
 }

@@ -13,7 +13,9 @@ export enum Role {
 
 const ROLE_KEY = 'role'
 
-export const Roles = (role: Role) => SetMetadata(ROLE_KEY, role)
+export const Roles = (role: Role) => {
+	return SetMetadata(ROLE_KEY, role)
+}
 
 @Injectable()
 export class RolesGuard implements CanActivate {

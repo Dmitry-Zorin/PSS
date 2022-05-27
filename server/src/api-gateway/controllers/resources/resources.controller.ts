@@ -10,16 +10,13 @@ import {
 	Put,
 	Query,
 	Res,
-	UploadedFile,
-	UseInterceptors,
 } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
-import { FileInterceptor } from '@nestjs/platform-express'
-import { Response } from 'express'
+import { FastifyReply } from 'fastify'
 import FormData from 'form-data'
 import { isEmpty } from 'lodash'
 import { firstValueFrom } from 'rxjs'
-import { RESOURCES_SERVICE } from 'src/api-gateway/constants'
+import { RESOURCES_SERVICE } from '../../constants'
 import { Role, Roles } from '../../roles.guard'
 
 @Controller()
@@ -39,18 +36,18 @@ export class ResourcesController {
 		return this.client.send('categories', {})
 	}
 
-	@Get('authors/:id/publications')
-	getAuthorPublications(@Param('id') id: string) {
-		return this.client.send('author_publications', { id })
+	@Get('publications')
+	getAuthorPublications(@Query() query: Record<string, unknown>) {
+		return this.client.send('publications', { query })
 	}
 
 	@Post(':resource')
 	@Roles(Role.Admin)
-	@UseInterceptors(FileInterceptor('file'))
+	// @UseInterceptors(FileInterceptor('file'))
 	async create(
 		@Param('resource') resource: string,
 		@Body() body: Record<string, unknown>,
-		@UploadedFile() file: Express.Multer.File,
+		// @UploadedFile() file: Express.Multer.File,
 	) {
 		if (isEmpty(body)) {
 			throw new BadRequestException('Request body is missing')
@@ -61,7 +58,7 @@ export class ResourcesController {
 		)
 
 		const data = new FormData()
-		data.append('file', file.buffer, file.originalname)
+		// data.append('file', file.buffer, file.originalname)
 
 		// await firstValueFrom(
 		// 	this.httpService.post(`${MICROSERVICES_URL}/files/resources/${id}`, data),
@@ -72,12 +69,12 @@ export class ResourcesController {
 
 	@Put(':resource/:id')
 	@Roles(Role.Admin)
-	@UseInterceptors(FileInterceptor('file'))
+	// @UseInterceptors(FileInterceptor('file'))
 	async update(
 		@Param('resource') resource: string,
 		@Param('id') id: string,
 		@Body() body: Record<string, unknown>,
-		@UploadedFile() file: Express.Multer.File,
+		// @UploadedFile() file: Express.Multer.File,
 	) {
 		if (isEmpty(body)) {
 			throw new BadRequestException('Request body is missing')
@@ -88,7 +85,7 @@ export class ResourcesController {
 		)
 
 		const data = new FormData()
-		data.append('file', file.buffer, file.originalname)
+		// data.append('file', file.buffer, file.originalname)
 
 		return result
 	}
@@ -97,7 +94,7 @@ export class ResourcesController {
 	async find(
 		@Param('resource') resource: string,
 		@Query() query: Record<string, unknown>,
-		@Res({ passthrough: true }) res: Response,
+		@Res({ passthrough: true }) res: FastifyReply,
 	) {
 		const { range, records } = await firstValueFrom(
 			this.client.send('find', { resource, query }),

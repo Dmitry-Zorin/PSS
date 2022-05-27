@@ -4,7 +4,9 @@ import { AuthGuard } from '@nestjs/passport'
 
 const IS_PUBLIC_KEY = 'isPublic'
 
-export const Public = () => SetMetadata(IS_PUBLIC_KEY, true)
+export const Public = () => {
+	return SetMetadata(IS_PUBLIC_KEY, true)
+}
 
 @Injectable()
 export class JwtGuard extends AuthGuard('jwt') {

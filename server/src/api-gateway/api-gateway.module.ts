@@ -16,11 +16,9 @@ import routes from './routes'
 		ConfigModule.forRoot({
 			validationSchema: Joi.object({
 				UI_SERVER: Joi.string().default(false),
-				API_GATEWAY_PORT: Joi.number().default(3000),
+				PORT: Joi.number().default(3000),
+				TCP_PORT: Joi.number().default(3001),
 				SECRET: Joi.string().required(),
-				RMQ_URL: Joi.string().required(),
-				AUTH_QUEUE: Joi.string().required(),
-				RESOURCES_QUEUE: Joi.string().required(),
 			}).unknown(),
 		}),
 		JwtModule,

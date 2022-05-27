@@ -13,8 +13,7 @@ import { ResourcesService } from './resources.service'
 	imports: [
 		ConfigModule.forRoot({
 			validationSchema: Joi.object({
-				POSTGRES_URL: Joi.string().required(),
-				RMQ_URL: Joi.string().required(),
+				RESOURCES_POSTGRES_URL: Joi.string().required(),
 			}).unknown(),
 		}),
 		TypeOrmModule.forRootAsync({
@@ -22,9 +21,9 @@ import { ResourcesService } from './resources.service'
 			name: CONNECTION_NAME,
 			useFactory: (configService: ConfigService) => ({
 				type: 'postgres',
-				url: configService.get('POSTGRES_URL'),
+				url: configService.get('RESOURCES_POSTGRES_URL'),
 				entities: Object.values(entities),
-				synchronize: true,
+				// synchronize: true,
 				logging: true,
 			}),
 			inject: [ConfigService],

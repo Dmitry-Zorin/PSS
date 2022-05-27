@@ -2,6 +2,7 @@
 	"name": "storage-system",
 	"version": "3.0.0",
 	"scripts": {
-		"start": "npm start --prefix client & npm run start:dev --prefix server"
+		"start": "npm --prefix client start & npm --prefix server run start:dev",
+		"vercel-build": "npm --prefix server run vercel-build"
 	}
 }

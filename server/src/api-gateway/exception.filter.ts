@@ -1,6 +1,6 @@
 import { ArgumentsHost, Catch } from '@nestjs/common'
 import { BaseExceptionFilter } from '@nestjs/core'
-import { Response } from 'express'
+import { FastifyReply } from 'fastify'
 
 interface RpcException {
 	message: string
@@ -21,8 +21,8 @@ export class AllExceptionsFilter extends BaseExceptionFilter {
 			return super.catch(exception, host)
 		}
 		const http = host.switchToHttp()
-		const res = http.getResponse<Response>()
+		const res = http.getResponse<FastifyReply>()
 		const { status, response } = exception.error
-		return res.status(status).json(response)
+		return res.code(status).send(response)
 	}
 }

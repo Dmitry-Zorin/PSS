@@ -13,6 +13,7 @@ import {
 	PayloadDto,
 	ResourceParamDto,
 } from './dto/params'
+import { PublicationsQueryDto } from './dto/params/publications-query.dto'
 import { PayloadValidationPipe } from './payload-validation.pipe'
 import { ResourcesService } from './resources.service'
 import { omitNullDeep } from './utilities'
@@ -33,9 +34,15 @@ export class ResourcesController {
 		return this.resourcesService.getCategories()
 	}
 
-	@MessagePattern('author_publications')
-	async getAuthorPublications({ id }: IdParamDto) {
-		const publications = await this.resourcesService.getAuthorPublications(id)
+	@MessagePattern('publications')
+	async getAuthorPublications(
+		@Payload('query') { authorId }: PublicationsQueryDto,
+	) {
+		const publications = await this.resourcesService.getPublications({
+			authors: {
+				id: authorId,
+			},
+		})
 		return omitNullDeep(publications)
 	}
 

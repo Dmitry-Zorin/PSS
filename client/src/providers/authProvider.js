@@ -1,16 +1,14 @@
 import { fetchApi } from '../requests'
 
-const fetchAuth = (url, options) => (
-	fetchApi(`auth/${url}`, options)
-)
+const fetchAuth = (url, options) => fetchApi(`auth/${url}`, options)
 
-export const getUser = () => (
-	JSON.parse(localStorage.getItem('user'))
-)
+export const getUser = () => {
+	return JSON.parse(localStorage.getItem('user'))
+}
 
-export const setUser = (user) => (
-	localStorage.setItem('user', JSON.stringify(user))
-)
+export const setUser = (user) => {
+	return localStorage.setItem('user', JSON.stringify(user))
+}
 
 const authProvider = {
 	login: async ({ username, password }) => {
@@ -36,10 +34,8 @@ const authProvider = {
 	},
 
 	checkAuth: async () => {
-		const { error } = await fetchAuth('', {
-			method: 'post',
-		})
-		return error ? Promise.reject() : Promise.resolve()
+		const token = localStorage.getItem('token')
+		return token ? Promise.resolve() : Promise.reject()
 	},
 
 	getPermissions: async () => {
@@ -56,9 +52,8 @@ const authProvider = {
 	},
 
 	checkError: ({ status }) => {
-		return [401, 403].includes(status)
-			? Promise.reject()
-			: Promise.resolve()
+		const isAuthError = [401, 403].includes(status)
+		return isAuthError ? Promise.reject() : Promise.resolve()
 	},
 }
 

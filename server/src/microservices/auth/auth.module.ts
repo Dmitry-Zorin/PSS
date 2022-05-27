@@ -14,7 +14,7 @@ import { Settings, User } from './entities'
 		ConfigModule.forRoot({
 			validationSchema: Joi.object({
 				SECRET: Joi.string().required(),
-				POSTGRES_URL: Joi.string().required(),
+				AUTH_POSTGRES_URL: Joi.string().required(),
 			}).unknown(),
 		}),
 		TypeOrmModule.forRootAsync({
@@ -22,9 +22,10 @@ import { Settings, User } from './entities'
 			name: CONNECTION_NAME,
 			useFactory: (configService: ConfigService) => ({
 				type: 'postgres',
-				url: configService.get('POSTGRES_URL'),
+				url: configService.get('AUTH_POSTGRES_URL'),
 				entities: Object.values(entities),
-				synchronize: true,
+				// synchronize: true,
+				logging: true,
 			}),
 			inject: [ConfigService],
 		}),
