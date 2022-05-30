@@ -1,13 +1,14 @@
+import fastifyCors from '@fastify/cors'
 import fastifyHelmet from '@fastify/helmet'
 import { ConfigService } from '@nestjs/config'
 import getApp from './get-app'
 
 async function bootstrap() {
 	const app = await getApp()
-	const configService = app.get(ConfigService)
+	const configService = app.get<ConfigService>(ConfigService)
 
-	app.enableCors({
-		origin: configService.get('UI_SERVER'),
+	await app.register(fastifyCors, {
+		origin: 'localhost',
 		exposedHeaders: 'content-range',
 		credentials: true,
 	})

@@ -9,6 +9,11 @@ import { CONNECTION_NAME } from './constants'
 import * as entities from './entities'
 import { Settings, User } from './entities'
 
+export const baseTypeOrmOptions = {
+	type: 'postgres' as const,
+	entities: Object.values(entities),
+}
+
 @Module({
 	imports: [
 		ConfigModule.forRoot({
@@ -20,13 +25,15 @@ import { Settings, User } from './entities'
 		TypeOrmModule.forRootAsync({
 			imports: [ConfigModule],
 			name: CONNECTION_NAME,
-			useFactory: (configService: ConfigService) => ({
-				type: 'postgres',
-				url: configService.get('AUTH_POSTGRES_URL'),
-				entities: Object.values(entities),
-				// synchronize: true,
-				logging: true,
-			}),
+			useFactory: (configService: ConfigService) => {
+				const isDevEnv = configService.get('NODE_ENV') !== 'production'
+				return {
+					...baseTypeOrmOptions,
+					url: configService.get('AUTH_POSTGRES_URL'),
+					syncronize: isDevEnv,
+					logging: isDevEnv,
+				}
+			},
 			inject: [ConfigService],
 		}),
 		JwtModule.registerAsync({

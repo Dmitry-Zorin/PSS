@@ -9,6 +9,11 @@ import { ResourceItemModule } from './resource-item/resourceItem.module'
 import { ResourcesController } from './resources.controller'
 import { ResourcesService } from './resources.service'
 
+export const baseTypeOrmOptions = {
+	type: 'postgres' as const,
+	entities: Object.values(entities),
+}
+
 @Module({
 	imports: [
 		ConfigModule.forRoot({
@@ -19,13 +24,15 @@ import { ResourcesService } from './resources.service'
 		TypeOrmModule.forRootAsync({
 			imports: [ConfigModule],
 			name: CONNECTION_NAME,
-			useFactory: (configService: ConfigService) => ({
-				type: 'postgres',
-				url: configService.get('RESOURCES_POSTGRES_URL'),
-				entities: Object.values(entities),
-				// synchronize: true,
-				logging: true,
-			}),
+			useFactory: (configService: ConfigService) => {
+				const isDevEnv = configService.get('NODE_ENV') !== 'production'
+				return {
+					...baseTypeOrmOptions,
+					url: configService.get('RESOURCES_POSTGRES_URL'),
+					syncronize: isDevEnv,
+					logging: isDevEnv,
+				}
+			},
 			inject: [ConfigService],
 		}),
 		ResourceItemModule,

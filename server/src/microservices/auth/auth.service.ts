@@ -56,7 +56,6 @@ export class AuthService {
 
 	async updateSettings(id: string, settings: SettingsDto) {
 		await this.settingsRepository.update(id, settings)
-		return null
 	}
 
 	async findUser(filter: Record<string, any>, options = {} as FindOptions) {

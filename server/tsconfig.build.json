@@ -3,7 +3,7 @@
 	"exclude": [
 		"node_modules",
 		"dist",
-		"api",
+		"**/migrations",
 		"**/test",
 		"**/mock",
 		"**/*spec.ts"

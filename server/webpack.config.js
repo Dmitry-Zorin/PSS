@@ -1,9 +1,11 @@
+const PREFIXES_TO_EXCLUDE = ['.', 'ajv/lib/compile/']
+
 module.exports = (options, webpack) => ({
 	...options,
-	// mode: 'production',
-	// optimization: {
-	// 	nodeEnv: 'production',
-	// },
+	mode: 'production',
+	optimization: {
+		nodeEnv: 'production',
+	},
 	entry: './src/vercel.ts',
 	output: {
 		filename: 'index.js',
@@ -17,18 +19,14 @@ module.exports = (options, webpack) => ({
 		...options.plugins,
 		new webpack.IgnorePlugin({
 			checkResource(resource) {
-				if (
-					resource.startsWith('.') ||
-					resource.startsWith('ajv/lib/compile/')
-				) {
-					return false
+				if (!PREFIXES_TO_EXCLUDE.some((e) => resource.startsWith(e))) {
+					try {
+						require.resolve(resource)
+					} catch {
+						return true
+					}
 				}
-				try {
-					require.resolve(resource)
-					return false
-				} catch (err) {
-					return true
-				}
+				return false
 			},
 		}),
 	],

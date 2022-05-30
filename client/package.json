@@ -1,6 +1,5 @@
 {
 	"name": "@storage-system/client",
-	"version": "3.0.0",
 	"scripts": {
 		"start": "vite",
 		"build": "vite build"

@@ -4,7 +4,7 @@ import getApp from './get-app'
 
 let instance: FastifyInstance
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+export default async function (req: VercelRequest, res: VercelResponse) {
 	if (!instance) {
 		const app = await getApp()
 		await app.init()
