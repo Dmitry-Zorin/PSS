@@ -19,7 +19,7 @@
 		"migration:revert:resources": "npm run typeorm migration:revert -- -d src/microservices/resources/data-source",
 		"migration:generate:auth": "npm run typeorm migration:generate src/microservices/auth/migrations/auth -- -d src/microservices/auth/data-source --pretty",
 		"migration:generate:resources": "npm run typeorm migration:generate src/microservices/resources/migrations/resources -- -d src/microservices/resources/data-source --pretty",
-    "vercel-build": "run-p webpack migrations"
+		"vercel-build": "run-p webpack migrations"
 	},
 	"dependencies": {
 		"@fastify/cors": "^7.0.0",
@@ -80,6 +80,7 @@
 		"eslint": "^8.15.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-prettier": "^4.0.0",
+		"ignore-loader": "^0.1.2",
 		"jest": "27.5.1",
 		"jest-extended": "^2.0.0",
 		"node-fetch": "^3.2.3",
