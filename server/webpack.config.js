@@ -6,7 +6,6 @@ module.exports = (options, webpack) => ({
 	optimization: {
 		nodeEnv: 'production',
 	},
-	devtool: 'source-map',
 	entry: './src/vercel.ts',
 	output: {
 		filename: 'index.js',
@@ -31,14 +30,4 @@ module.exports = (options, webpack) => ({
 			},
 		}),
 	],
-	module: {
-		...options.module,
-		rules: [
-			...options.module?.rules,
-			{
-				test: /\.node$/,
-				loader: 'node-loader',
-			},
-		],
-	},
 })

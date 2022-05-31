@@ -9,7 +9,7 @@ import {
 } from 'typeorm'
 import { Publication } from './publication.entity'
 
-@Entity()
+@Entity('resource_item')
 export class ResourceItem {
 	@PrimaryGeneratedColumn('uuid')
 	id: string

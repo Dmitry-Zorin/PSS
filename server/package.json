@@ -19,7 +19,8 @@
 		"migration:revert:resources": "npm run typeorm migration:revert -- -d src/microservices/resources/data-source",
 		"migration:generate:auth": "npm run typeorm migration:generate src/microservices/auth/migrations/auth -- -d src/microservices/auth/data-source --pretty",
 		"migration:generate:resources": "npm run typeorm migration:generate src/microservices/resources/migrations/resources -- -d src/microservices/resources/data-source --pretty",
-		"vercel-build": "run-p webpack migrations"
+		"api-folder": "mkdir ../api && echo \"module.exports = require('../server/dist/index').vercel\" > ../api/index.js",
+		"vercel-build": "run-s api-folder webpack migrations"
 	},
 	"dependencies": {
 		"@fastify/cors": "^7.0.0",

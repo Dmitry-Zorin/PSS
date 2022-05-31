@@ -11,7 +11,7 @@ export enum Theme {
 	Dark = 'dark',
 }
 
-@Entity()
+@Entity('settings')
 export class Settings {
 	@OneToOne(() => User, (e) => e.settings)
 	@JoinColumn()

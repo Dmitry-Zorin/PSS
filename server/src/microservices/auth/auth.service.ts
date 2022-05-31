@@ -17,7 +17,7 @@ interface FindOptions {
 	passwordToVerify?: string
 }
 
-const SALT_ROUNDS = 1
+const SALT_ROUNDS = 10
 
 @Injectable()
 export class AuthService {

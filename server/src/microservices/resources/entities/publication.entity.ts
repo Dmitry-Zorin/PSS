@@ -11,7 +11,7 @@ import {
 import { Author } from './author.entity'
 import { ResourceItem } from './resource-item.entity'
 
-@Entity()
+@Entity('publication')
 export class Publication {
 	@OneToOne(() => ResourceItem, (e) => e.publication)
 	@JoinColumn()
