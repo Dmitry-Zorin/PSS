@@ -6,11 +6,10 @@ let instance: FastifyInstance
 
 export default async function (req: VercelRequest, res: VercelResponse) {
 	if (!instance) {
-    const app = await getApp()
-    await app.listen(3000)
-		// await app.init()
-		// instance = app.getHttpAdapter().getInstance()
-		// await instance.ready()
+		const app = await getApp()
+		await app.init()
+		instance = app.getHttpAdapter().getInstance()
+		await instance.ready()
 	}
-	// instance.server.emit('request', req, res)
+	instance.server.emit('request', req, res)
 }
