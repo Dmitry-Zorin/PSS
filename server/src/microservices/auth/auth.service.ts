@@ -5,7 +5,7 @@ import {
 	UnauthorizedException,
 } from '@nestjs/common'
 import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm'
-import { hash, verify } from 'argon2'
+import { compare, genSalt, hash } from 'bcryptjs'
 import { omit } from 'lodash'
 import { EntityManager, Repository } from 'typeorm'
 import { CONNECTION_NAME } from './constants'
@@ -16,6 +16,8 @@ interface FindOptions {
 	withSettings?: boolean
 	passwordToVerify?: string
 }
+
+const SALT_ROUNDS = 1
 
 @Injectable()
 export class AuthService {
@@ -34,7 +36,7 @@ export class AuthService {
 		return this.entityManager.transaction(async (manager) => {
 			const user = manager.create(User, {
 				username,
-				password: await hash(password),
+				password: await hash(password, await genSalt(SALT_ROUNDS)),
 			})
 
 			try {
@@ -56,6 +58,7 @@ export class AuthService {
 
 	async updateSettings(id: string, settings: SettingsDto) {
 		await this.settingsRepository.update(id, settings)
+		return null
 	}
 
 	async findUser(filter: Record<string, any>, options = {} as FindOptions) {
@@ -73,7 +76,7 @@ export class AuthService {
 		}
 
 		if (passwordToVerify) {
-			const isCorrectPassword = await verify(user.password, passwordToVerify)
+			const isCorrectPassword = await compare(passwordToVerify, user.password)
 			if (!isCorrectPassword) {
 				throw new UnauthorizedException('Incorrect password')
 			}
