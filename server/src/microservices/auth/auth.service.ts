@@ -5,10 +5,10 @@ import {
 	UnauthorizedException,
 } from '@nestjs/common'
 import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm'
-import { compare, hash } from 'bcrypt'
+import { hash, verify } from 'argon2'
 import { omit } from 'lodash'
 import { EntityManager, Repository } from 'typeorm'
-import { CONNECTION_NAME, SALT_ROUNDS } from './constants'
+import { CONNECTION_NAME } from './constants'
 import { SettingsDto } from './dto'
 import { Settings, User } from './entities'
 
@@ -34,7 +34,7 @@ export class AuthService {
 		return this.entityManager.transaction(async (manager) => {
 			const user = manager.create(User, {
 				username,
-				password: await hash(password, SALT_ROUNDS),
+				password: await hash(password),
 			})
 
 			try {
@@ -73,7 +73,7 @@ export class AuthService {
 		}
 
 		if (passwordToVerify) {
-			const isCorrectPassword = await compare(passwordToVerify, user.password)
+			const isCorrectPassword = await verify(user.password, passwordToVerify)
 			if (!isCorrectPassword) {
 				throw new UnauthorizedException('Incorrect password')
 			}
