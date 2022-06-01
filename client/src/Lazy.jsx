@@ -1,12 +1,10 @@
 import React, { lazy, Suspense } from 'react'
-import Loading from './Loading'
 
-const Lazy = ({ component, spinner, delay, ...props }) => {
+const Lazy = ({ component, fallback, ...props }) => {
 	const Component = lazy(component)
-	const fallback = <Loading spinner={spinner} delay={delay}/>
 	return (
 		<Suspense fallback={fallback}>
-			<Component {...props}/>
+			<Component {...props} />
 		</Suspense>
 	)
 }

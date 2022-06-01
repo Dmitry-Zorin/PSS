@@ -8,13 +8,13 @@ import Info from './components/Info'
 export const PlatoonShow = (props) => (
 	<PeopleShow
 		info={{
-			icon: <SupervisedUserCircleIcon/>,
+			icon: <SupervisedUserCircleIcon />,
 			resource: 'platoons',
 			title: 'Взвода',
 			label: 'Взвод',
 			whose: 'взвода',
 		}}
-		tabs={[<Info/>, <Grade/>, <Report/>]}
+		tabs={[<Info />, <Grade />, <Report />]}
 		{...props}
 	/>
 )

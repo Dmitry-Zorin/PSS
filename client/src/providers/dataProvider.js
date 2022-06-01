@@ -1,32 +1,36 @@
 import reduce from 'just-reduce-object'
 import { apiUrl, createUrlWithQueryParams, fetchApi } from '../requests'
 
-const fetchResources = (url, options) => (
-	fetchApi(`resources/${url}`, options)
-)
+const fetchResources = (url, options) => fetchApi(`resources/${url}`, options)
 
-const processInputData = (data) => (
-	reduce(data, (result, key, value) => {
-		if (value === 'coauthors') {
-			value = value.map(e => ({ name: e }))
-		}
-		result[key] = value
-		return result
-	}, {})
-)
-
-const processOutputData = (data, options = { skipEmpty: true }) => (
-	reduce(data, (result, key, value) => {
-		if (options.skipEmpty && !value) {
+const processInputData = (data) =>
+	reduce(
+		data,
+		(result, key, value) => {
+			if (value === 'coauthors') {
+				value = value.map((e) => ({ name: e }))
+			}
+			result[key] = value
 			return result
-		}
-		if (value === 'coauthors') {
-			value = value.map(e => e.name)
-		}
-		result[key] = value
-		return result
-	}, {})
-)
+		},
+		{},
+	)
+
+const processOutputData = (data, options = { skipEmpty: true }) =>
+	reduce(
+		data,
+		(result, key, value) => {
+			if (options.skipEmpty && !value) {
+				return result
+			}
+			if (value === 'coauthors') {
+				value = value.map((e) => e.name)
+			}
+			result[key] = value
+			return result
+		},
+		{},
+	)
 
 const dataProvider = {
 	create: async (resource, { data }) => {

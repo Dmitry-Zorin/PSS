@@ -3,57 +3,57 @@ import TimelineIcon from '@mui/icons-material/Timeline'
 import entries from 'just-entries'
 import React from 'react'
 import { Admin, Resource } from 'react-admin'
+import DashBoard from './DashBoard'
 import MyLayout from './layout/MyLayout'
-import Lazy from './Lazy'
 import authProvider from './providers/authProvider'
 import dataProvider from './providers/dataProvider'
 import i18nProvider from './providers/i18nProvider'
 import * as adminResources from './resources/admin'
 import publications from './resources/publications'
+import PublicationCreate from './resources/publications/PublicationCreate'
+import PublicationEdit from './resources/publications/PublicationEdit'
+import PublicationList from './resources/publications/PublicationList'
+import PublicationShow from './resources/publications/PublicationShow'
 import PublicationsList from './resources/PublicationsList'
 import Timeline from './resources/Timeline'
-
-const getLazyComponent = (component) => (
-	(props) => <Lazy component={component} {...props}/>
-)
+import { themes } from './theme/theme'
 
 const App = () => (
 	<Admin
-		title='metadata.title'
+		title="metadata.title"
+		theme={themes.common}
 		layout={MyLayout}
-		i18nProvider={i18nProvider}
-		dataProvider={dataProvider}
+		dashboard={DashBoard}
 		authProvider={authProvider}
-		dashboard={getLazyComponent(() => import('./DashBoard'))}
+		dataProvider={dataProvider}
+		i18nProvider={i18nProvider}
 	>
+		<Resource name="timeline" icon={TimelineIcon} list={Timeline} />
 		<Resource
-			name='timeline'
-			icon={TimelineIcon}
-			list={Timeline}
-		/>
-		<Resource
-			name='publicationsList'
+			name="publicationsList"
 			icon={FeaturedPlayListIcon}
 			list={PublicationsList}
 		/>
-		{permissions => (
-			entries({ ...publications, ...adminResources }).map(([name, props]) => {
-				const { list, show, create, edit, ...otherProps } = props
-				return (
-					<Resource
-						key={name}
-						name={name}
-						list={getLazyComponent(list || (() => import('./resources/publications/PublicationList')))}
-						show={getLazyComponent(show || (() => import('./resources/publications/PublicationShow')))}
-						{...permissions && {
-							create: getLazyComponent(create || (() => import('./resources/publications/PublicationCreate'))),
-							edit: getLazyComponent(edit || (() => import('./resources/publications/PublicationEdit'))),
-						}}
-						{...otherProps}
-					/>
-				)
-			})
-		)}
+		{(permissions) => {
+			return entries({ ...publications, ...adminResources }).map(
+				([name, props]) => {
+					const { list, show, create, edit, ...otherProps } = props
+					return (
+						<Resource
+							key={name}
+							name={name}
+							list={list || PublicationList}
+							show={show || PublicationShow}
+							{...(permissions && {
+								create: create || PublicationCreate,
+								edit: edit || PublicationEdit,
+							})}
+							{...otherProps}
+						/>
+					)
+				},
+			)
+		}}
 	</Admin>
 )
 

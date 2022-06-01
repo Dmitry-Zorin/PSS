@@ -17,10 +17,10 @@ const ButtonForm16 = () => {
 	}
 
 	return (
-		<Box display='flex' justifyContent='center' mt='30px'>
+		<Box display="flex" justifyContent="center" mt="30px">
 			<Button
-				color='primary'
-				variant='contained'
+				color="primary"
+				variant="contained"
 				onClick={generateForm}
 				style={{ height: 45 }}
 			>

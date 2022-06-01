@@ -4,22 +4,16 @@ import Collapse from '@mui/material/Collapse'
 import React from 'react'
 import { MenuItemLink, useSidebarState, useTranslate } from 'react-admin'
 
-const SubMenu = ({
-	handleToggle,
-	isOpen,
-	name,
-	icon,
-	children,
-}) => {
+const SubMenu = ({ handleToggle, isOpen, name, icon, children }) => {
 	const translate = useTranslate()
 	const [isSidebarOpen] = useSidebarState()
 
 	return (
 		<>
 			<MenuItemLink
-				to='#'
+				to="#"
 				primaryText={translate(name)}
-				leftIcon={isOpen && !isSidebarOpen ? <ExpandMore/> : icon}
+				leftIcon={isOpen && !isSidebarOpen ? <ExpandMore /> : icon}
 				onClick={handleToggle}
 				sx={{
 					boxShadow: 'none',
@@ -28,21 +22,21 @@ const SubMenu = ({
 			/>
 			<Collapse
 				in={isOpen}
-				timeout='auto'
+				timeout="auto"
 				unmountOnExit
 				sx={{
-					...isOpen && {
+					...(isOpen && {
 						mb: 1,
-					},
+					}),
 				}}
 			>
 				<Box
 					sx={{
-						...isSidebarOpen && {
+						...(isSidebarOpen && {
 							a: {
 								pl: '28px',
 							},
-						},
+						}),
 					}}
 				>
 					{children}

@@ -13,32 +13,32 @@ const Grade = ({ data, info }) => {
 
 	return (
 		<CardContent>
-			<Box textAlign='center' mt='15px' mb='30px'>
-				<Typography variant='h6' style={{ fontWeight: 'bold' }}>
+			<Box textAlign="center" mt="15px" mb="30px">
+				<Typography variant="h6" style={{ fontWeight: 'bold' }}>
 					Оценка {whose}
 				</Typography>
-				<Box display='flex' width='100%' mt='60px'>
+				<Box display="flex" width="100%" mt="60px">
 					<CircleNumber
 						num={data.totalScore}
 						max={20 * numOfPeople}
-						text='Общее количество баллов'
+						text="Общее количество баллов"
 					/>
 					<CircleNumber
 						num={data.avgScore}
 						max={20 * numOfPeople}
-						text='Среднеe количество баллов понедельно'
+						text="Среднеe количество баллов понедельно"
 					/>
 					<CircleNumber
 						num={data.score}
 						max={20 * numOfPeople}
-						text='Количество баллов за прошедшую неделю'
+						text="Количество баллов за прошедшую неделю"
 					/>
 				</Box>
 				<Typography sx={styles.subtitle}>
 					Шкала соответствия баллов за неделю
 				</Typography>
-				<PointsTable/>
-				<GradeChart {...{ data }}/>
+				<PointsTable />
+				<GradeChart {...{ data }} />
 			</Box>
 		</CardContent>
 	)

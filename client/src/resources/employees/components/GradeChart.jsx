@@ -4,8 +4,9 @@ import { Line } from 'react-chartjs-2'
 
 export const GradeChart = ({ data }) => {
 	const theme = useTheme()
-	const labels = data.scores.map(e => `${dateToString(e.startDate)}-${dateToString(
-		e.dueDate)}`)
+	const labels = data.scores.map(
+		(e) => `${dateToString(e.startDate)}-${dateToString(e.dueDate)}`,
+	)
 
 	return (
 		<Line
@@ -14,7 +15,7 @@ export const GradeChart = ({ data }) => {
 				labels,
 				datasets: [
 					{
-						data: data.scores.map(e => e.score),
+						data: data.scores.map((e) => e.score),
 						label: 'Количество баллов',
 						fill: false,
 						borderColor: theme.palette.secondary.main,

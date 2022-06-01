@@ -5,14 +5,20 @@ import CardActionArea from '@mui/material/CardActionArea'
 import Pagination from '@mui/material/Pagination'
 import pluralize from 'pluralize'
 import React from 'react'
-import { ListBase, Title, useListContext, useLocaleState, useTranslate } from 'react-admin'
+import {
+	ListBase,
+	Title,
+	useListContext,
+	useLocaleState,
+	useTranslate,
+} from 'react-admin'
 import { Link } from 'react-router-dom'
 import ResourceCounter from './ResourceCounter'
 
 const Timeline = () => (
 	<ListBase>
-		<ResourceCounter/>
-		<Inside/>
+		<ResourceCounter />
+		<Inside />
 	</ListBase>
 )
 
@@ -20,14 +26,10 @@ const Inside = () => {
 	const { data, page, perPage, total, setPage } = useListContext()
 	return (
 		<>
-			<Title title='resources.timeline.name'/>
-			<Box
-				alignSelf='center'
-				width='100%'
-				maxWidth={900}
-			>
-				{data?.map(e => (
-					<CardView key={e.id} event={e}/>
+			<Title title="resources.timeline.name" />
+			<Box alignSelf="center" width="100%" maxWidth={900}>
+				{data?.map((e) => (
+					<CardView key={e.id} event={e} />
 				))}
 			</Box>
 			{total > perPage && (
@@ -52,20 +54,21 @@ const CardView = ({ event }) => {
 	const [locale] = useLocaleState()
 	const resource = pluralize(event.resource)
 
-	const resourceItem = translate(`resources.${resource}.name`, { smart_count: 1 })
-	const resourceMessage = translate(`resources.${resource}.created`, { _: 'created' })
+	const resourceItem = translate(`resources.${resource}.name`, {
+		smart_count: 1,
+	})
+	const resourceMessage = translate(`resources.${resource}.created`, {
+		_: 'created',
+	})
 
 	return (
 		<Card sx={{ mt: 3 }}>
-			<CardActionArea
-				component={Link}
-				to={`/${resource}/${event.id}/show`}
-			>
+			<CardActionArea component={Link} to={`/${resource}/${event.id}/show`}>
 				<CardContent>
 					<Box
-						display='flex'
-						justifyContent='space-between'
-						flexWrap='wrap'
+						display="flex"
+						justifyContent="space-between"
+						flexWrap="wrap"
 						mb={3}
 					>
 						<Typography>
@@ -75,9 +78,7 @@ const CardView = ({ event }) => {
 							{new Date(event.createdAt).toLocaleString(locale)}
 						</Typography>
 					</Box>
-					<Typography>
-						{event.title}
-					</Typography>
+					<Typography>{event.title}</Typography>
 				</CardContent>
 			</CardActionArea>
 		</Card>

@@ -23,14 +23,14 @@ const MenuItem = ({ resource }) => {
 					{translate(`resources.${name}.name`, { smart_count: 2 })}
 					{resourcesCount?.[name] !== undefined && (
 						<Chip
-							size='small'
+							size="small"
 							label={resourcesCount[name]}
 							sx={{ ml: '10px', cursor: 'pointer' }}
 						/>
 					)}
 				</>
 			}
-			leftIcon={Icon ? <Icon/> : undefined}
+			leftIcon={Icon ? <Icon /> : undefined}
 		/>
 	)
 }

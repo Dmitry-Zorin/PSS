@@ -4,7 +4,7 @@ import MyCreate from '../../MyCreate'
 
 const CharacterCreate = () => (
 	<MyCreate>
-		<LargeTextInput source='name' required/>
+		<LargeTextInput source="name" required />
 	</MyCreate>
 )
 

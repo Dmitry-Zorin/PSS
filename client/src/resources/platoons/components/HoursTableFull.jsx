@@ -1,4 +1,10 @@
-import { Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material'
+import {
+	Table,
+	TableBody,
+	TableCell,
+	TableContainer,
+	TableRow,
+} from '@mui/material'
 import React from 'react'
 import styles from '../../employees/Styles'
 
@@ -7,9 +13,7 @@ const HoursTableFull = ({ people }) => (
 		<Table sx={styles.table}>
 			<TableBody>
 				<TableRow>
-					<TableCell sx={styles.widthOneQuarter}>
-						Оператор
-					</TableCell>
+					<TableCell sx={styles.widthOneQuarter}>Оператор</TableCell>
 					<TableCell sx={styles.widthOneQuarter}>
 						Повседневная деятельность
 					</TableCell>
@@ -20,7 +24,7 @@ const HoursTableFull = ({ people }) => (
 						Всего рабочего времени
 					</TableCell>
 				</TableRow>
-				{people.map(p => (
+				{people.map((p) => (
 					<TableRow key={p}>
 						<TableCell>{p.name}</TableCell>
 						<TableCell>{p.nonScienceHours} ч.</TableCell>

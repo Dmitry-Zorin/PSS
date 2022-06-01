@@ -1,5 +1,10 @@
 import React from 'react'
-import { Show, SimpleShowLayout, usePermissions, useResourceContext } from 'react-admin'
+import {
+	Show,
+	SimpleShowLayout,
+	usePermissions,
+	useResourceContext,
+} from 'react-admin'
 import { ShowActions } from './components/old'
 
 const MyShow = ({ children }) => {
@@ -9,9 +14,9 @@ const MyShow = ({ children }) => {
 	return (
 		<Show
 			title={`resources.${resource}.titles.show`}
-			actions={<ShowActions {...{ permissions }}/>}
+			actions={<ShowActions {...{ permissions }} />}
 		>
-			<SimpleShowLayout children={children}/>
+			<SimpleShowLayout>{children}</SimpleShowLayout>
 		</Show>
 	)
 }

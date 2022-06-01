@@ -5,13 +5,12 @@ import React, { useEffect, useState } from 'react'
 import { FilterList, FilterListItem } from 'react-admin'
 import dataProvider from '../../providers/dataProvider'
 
-const getSubdivisions = () => (
+const getSubdivisions = () =>
 	dataProvider.getList('subdivisions', {
 		filter: {},
 		sort: { field: 'firstCreationDate', order: 'ASC' },
 		pagination: { page: 1, perPage: 999 },
 	})
-)
 
 export const Aside = () => {
 	const theme = useTheme()
@@ -20,7 +19,7 @@ export const Aside = () => {
 	useEffect(() => {
 		if (!subdivisions) {
 			setSubdivisions([])
-			getSubdivisions().then(res => {
+			getSubdivisions().then((res) => {
 				setSubdivisions(res.data)
 			})
 		}
@@ -44,16 +43,17 @@ export const Aside = () => {
 			<Card>
 				<CardContent>
 					<FilterList
-						label='ra.resources.subdivisions.name'
-						icon={<AccountTreeIcon/>}
+						label="ra.resources.subdivisions.name"
+						icon={<AccountTreeIcon />}
 					>
-						{subdivisions && subdivisions.map(s => (
-							<FilterListItem
-								key={s.id}
-								label={s.name}
-								value={{ subdivisions: s.id }}
-							/>
-						))}
+						{subdivisions &&
+							subdivisions.map((s) => (
+								<FilterListItem
+									key={s.id}
+									label={s.name}
+									value={{ subdivisions: s.id }}
+								/>
+							))}
 					</FilterList>
 				</CardContent>
 			</Card>

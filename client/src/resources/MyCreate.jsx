@@ -7,10 +7,10 @@ const MyCreate = ({ children, ...props }) => {
 	return (
 		<Create
 			title={`resources.${resource}.titles.create`}
-			redirect='list'
+			redirect="list"
 			{...props}
 		>
-			<SimpleForm children={children}/>
+			<SimpleForm>{children}</SimpleForm>
 		</Create>
 	)
 }

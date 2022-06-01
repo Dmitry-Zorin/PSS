@@ -1,7 +1,28 @@
 import React from 'react'
-import { ArrayInput, FileField, FileInput, maxValue, minValue, NumberInput, ReferenceArrayInput, ReferenceInput, required, SelectArrayInput, SelectInput, SimpleFormIterator, TextInput, useResourceContext, useTranslate } from 'react-admin'
+import {
+	ArrayInput,
+	FileField,
+	FileInput,
+	maxValue,
+	minValue,
+	NumberInput,
+	ReferenceArrayInput,
+	ReferenceInput,
+	required,
+	SelectArrayInput,
+	SelectInput,
+	SimpleFormIterator,
+	TextInput,
+	useResourceContext,
+	useTranslate,
+} from 'react-admin'
 
-export const LargeTextInput = ({ source, label, className, required: _required, ...props }) => (
+export const LargeTextInput = ({
+	source,
+	label,
+	required: _required,
+	...props
+}) => (
 	<TextInput
 		source={source}
 		label={label || `fields.${source}`}
@@ -15,12 +36,14 @@ export const LargeTextInput = ({ source, label, className, required: _required, 
 export const TypeInput = () => {
 	const resource = useResourceContext()
 	const translate = useTranslate()
-	const defaultValue = translate(`resources.${resource}.name`, { smart_count: 1 })
+	const defaultValue = translate(`resources.${resource}.name`, {
+		smart_count: 1,
+	})
 
 	return (
 		<TextInput
-			source='type'
-			label='fields.type'
+			source="type"
+			label="fields.type"
 			validate={required()}
 			defaultValue={defaultValue}
 		/>
@@ -33,8 +56,8 @@ export const YearInput = () => {
 
 	return (
 		<NumberInput
-			source='year'
-			label='fields.year'
+			source="year"
+			label="fields.year"
 			min={min}
 			max={max}
 			defaultValue={max}
@@ -45,41 +68,41 @@ export const YearInput = () => {
 
 export const AuthorsInput = () => (
 	<ReferenceArrayInput
-		source='authorIds'
-		reference='authors'
+		source="authorIds"
+		reference="authors"
 		// validate={required()}
 	>
 		<SelectArrayInput
-			label='fields.author'
-			optionText={(record) => (
+			label="fields.author"
+			optionText={(record) =>
 				`${record.lastName} ${record.firstName} ${record.middleName || ''}`
-			)}
+			}
 		/>
 	</ReferenceArrayInput>
 )
 
 export const CoauthorsInput = () => (
-	<ArrayInput source='coauthors' label='fields.coauthors'>
+	<ArrayInput source="coauthors" label="fields.coauthors">
 		<SimpleFormIterator>
-			<TextInput source='name' label='fields.coauthor'/>
+			<TextInput source="name" label="fields.coauthor" />
 		</SimpleFormIterator>
 	</ArrayInput>
 )
 
 export const CharacterInput = () => (
-	<ReferenceInput source='characterId' reference='characters'>
-		<SelectInput optionText='name'/>
+	<ReferenceInput source="characterId" reference="characters">
+		<SelectInput optionText="name" />
 	</ReferenceInput>
 )
 
 export const AddFileInput = () => (
-	<FileInput source='file' label='fields.file'>
-		<FileField title='filename'/>
+	<FileInput source="file" label="fields.file">
+		<FileField title="filename" />
 	</FileInput>
 )
 
 export const ReplaceFileInput = () => (
-	<FileInput source='file' label='fields.file'>
-		<FileField source='url' title='name'/>
+	<FileInput source="file" label="fields.file">
+		<FileField source="url" title="name" />
 	</FileInput>
 )

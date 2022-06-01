@@ -6,14 +6,9 @@ import { ScrollTopButton } from './ScrollTopButton'
 import MySidebar from './Sidebar'
 
 const MyLayout = ({ children, ...props }) => (
-	<Layout
-		{...props}
-		appBar={MyAppBar}
-		sidebar={MySidebar}
-		menu={MyMenu}
-	>
+	<Layout {...props} appBar={MyAppBar} sidebar={MySidebar} menu={MyMenu}>
 		{children}
-		<ScrollTopButton/>
+		<ScrollTopButton />
 	</Layout>
 )
 

@@ -23,8 +23,8 @@ const Report = ({ data, info }) => {
 
 	return (
 		<CardContent>
-			<Box textAlign='center' mt='15px' mb='30px'>
-				<Typography variant='h6' style={{ fontWeight: 'bold' }}>
+			<Box textAlign="center" mt="15px" mb="30px">
+				<Typography variant="h6" style={{ fontWeight: 'bold' }}>
 					Отчет {whose} за неделю
 				</Typography>
 				<Typography sx={styles.textSecondary}>
@@ -33,42 +33,33 @@ const Report = ({ data, info }) => {
 
 				{data.startDate && (
 					<Box
-						display='flex'
-						flexWrap='wrap'
-						justifyContent='space-evenly'
-						mt='45px'
+						display="flex"
+						flexWrap="wrap"
+						justifyContent="space-evenly"
+						mt="45px"
 					>
-						{data.issueNumber > 0 && (
-							<TasksChart {...{ data }}/>
-						)}
-						<HoursChart {...{ data, numOfPeople }}/>
+						{data.issueNumber > 0 && <TasksChart {...{ data }} />}
+						<HoursChart {...{ data, numOfPeople }} />
 					</Box>
 				)}
 
-				<Typography className={classes.subtitle}>
+				<Typography className={styles.subtitle}>
 					<b>Выполнение задач</b>
 				</Typography>
-				<TasksTable {...{ data }}/>
-				<ProgressBar
-					value={data.issuesCompleted}
-					max={data.issueNumber}
-				/>
-				{data.people?.length > 0 && (
-					<TasksTableFull people={data.people}/>
-				)}
+				<TasksTable {...{ data }} />
+				<ProgressBar value={data.issuesCompleted} max={data.issueNumber} />
+				{data.people?.length > 0 && <TasksTableFull people={data.people} />}
 
-				<br/>
-				<Typography className={classes.subtitle}>
+				<br />
+				<Typography className={styles.subtitle}>
 					<b>Трудозатраты</b>
 				</Typography>
-				<HoursTable {...{ data, numOfPeople }}/>
+				<HoursTable {...{ data, numOfPeople }} />
 				<ProgressBar
 					value={30 * numOfPeople - data.nonScienceHours}
 					max={30 * numOfPeople}
 				/>
-				{data.people?.length > 0 && (
-					<HoursTableFull people={data.people}/>
-				)}
+				{data.people?.length > 0 && <HoursTableFull people={data.people} />}
 			</Box>
 		</CardContent>
 	)

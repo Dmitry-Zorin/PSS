@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { Create, ReferenceInput, required, SelectInput, SimpleForm, useChoicesContext, useDataProvider } from 'react-admin'
+import {
+	Create,
+	ReferenceInput,
+	required,
+	SelectInput,
+	SimpleForm,
+	useChoicesContext,
+	useDataProvider,
+} from 'react-admin'
 import { createForm16 } from '../form16'
 
 const PublicationsList = () => {
@@ -12,20 +20,26 @@ const PublicationsList = () => {
 			ids: author.publicationIds,
 		})
 		console.log(data)
-		const authorName = `${author.lastName} ${author.firstName} ${author.middleName || ''}`
+		const authorName = `${author.lastName} ${author.firstName} ${
+			author.middleName || ''
+		}`
 		const dataPiece = { old: [], new: data }
-		await createForm16([dataPiece, dataPiece, dataPiece], authorName, 'adf, asdf')
+		await createForm16(
+			[dataPiece, dataPiece, dataPiece],
+			authorName,
+			'adf, asdf',
+		)
 	}
 
 	return (
-		<Create title='resources.publicationsList.name'>
+		<Create title="resources.publicationsList.name">
 			<SimpleForm onSubmit={generateList}>
 				<ReferenceInput
-					source='authorId'
-					reference='authors'
+					source="authorId"
+					reference="authors"
 					validate={required()}
 				>
-					<AuthorInput setSelectedChoice={setAuthor}/>
+					<AuthorInput setSelectedChoice={setAuthor} />
 				</ReferenceInput>
 			</SimpleForm>
 		</Create>
@@ -44,10 +58,10 @@ const AuthorInput = ({ setSelectedChoice }) => {
 
 	return (
 		<SelectInput
-			label='fields.author'
-			optionText={(record) => (
+			label="fields.author"
+			optionText={(record) =>
 				`${record.lastName} ${record.firstName} ${record?.middleName || ''}`
-			)}
+			}
 		/>
 	)
 }

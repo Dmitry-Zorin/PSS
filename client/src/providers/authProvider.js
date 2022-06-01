@@ -1,14 +1,7 @@
 import { fetchApi } from '../requests'
+import { getUser, setUser } from '../user'
 
 const fetchAuth = (url, options) => fetchApi(`auth/${url}`, options)
-
-export const getUser = () => {
-	return JSON.parse(localStorage.getItem('user'))
-}
-
-export const setUser = (user) => {
-	return localStorage.setItem('user', JSON.stringify(user))
-}
 
 const authProvider = {
 	login: async ({ username, password }) => {

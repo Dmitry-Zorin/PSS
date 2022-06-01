@@ -3,8 +3,8 @@ import Button from '@mui/material/Button'
 import React, { useEffect } from 'react'
 import { useLocaleState, useTranslate } from 'react-admin'
 import { Helmet } from 'react-helmet'
-import { getUser } from '../../providers/authProvider'
 import { saveSettings } from '../../requests'
+import { getUser } from '../../user'
 
 const LocaleSwitcher = () => {
 	const [locale, setLocale] = useLocaleState()
@@ -23,13 +23,11 @@ const LocaleSwitcher = () => {
 	return (
 		<>
 			<Helmet>
-				<html lang={locale}/>
-				<title lang={locale}>
-					{translate('metadata.title')}
-				</title>
+				<html lang={locale} />
+				<title lang={locale}>{translate('metadata.title')}</title>
 			</Helmet>
 			<Button onClick={switchLocale}>
-				<LanguageIcon sx={{ mr: 0.5 }}/>
+				<LanguageIcon sx={{ mr: 0.5 }} />
 				{translate('metadata.lang')}
 			</Button>
 		</>

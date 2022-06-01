@@ -9,7 +9,7 @@ import ThemeSwitcher from './ThemeSwitcher'
 
 const MyAppBar = (props) => (
 	<AppBar
-		color='primary'
+		color="primary"
 		enableColorOnDark={true}
 		sx={{
 			'& button, a': {
@@ -25,9 +25,9 @@ const MyAppBar = (props) => (
 		{...props}
 	>
 		<Typography
-			id='react-admin-title'
-			variant='h6'
-			color='inherit'
+			id="react-admin-title"
+			variant="h6"
+			color="inherit"
 			sx={{
 				flex: 1,
 				textOverflow: 'ellipsis',
@@ -35,10 +35,10 @@ const MyAppBar = (props) => (
 				overflow: 'hidden',
 			}}
 		/>
-		<LocaleSwitcher/>
-		<ThemeSwitcher/>
-		<IconButton component={Link} to='/'>
-			<HomeIcon/>
+		<LocaleSwitcher />
+		<ThemeSwitcher />
+		<IconButton component={Link} to="/">
+			<HomeIcon />
 		</IconButton>
 	</AppBar>
 )

@@ -3,11 +3,7 @@ import React from 'react'
 import { useRecordContext } from 'react-admin'
 import { DoughnutChart } from './DoughnutChart'
 
-const colors = [
-	'#00aeff',
-	'#ffe600',
-	'#ff8c00',
-]
+const colors = ['#00aeff', '#ffe600', '#ff8c00']
 
 export const HoursChart = ({ data }) => {
 	const { numOfPeople = 1 } = useRecordContext()
@@ -18,7 +14,7 @@ export const HoursChart = ({ data }) => {
 	activities.get('science').value = 30 * numOfPeople - data.nonScienceHours
 
 	const hours = Object.entries(data.hours)
-		.filter(e => e[0] !== activities.get('science').label)
+		.filter((e) => e[0] !== activities.get('science').label)
 		.sort((a, b) => b[1] - a[1])
 
 	hours.forEach(([trackerName, value], i) => {

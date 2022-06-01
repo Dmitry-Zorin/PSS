@@ -5,9 +5,9 @@ import { CreateUpdateInputs } from './PublicationCreate'
 
 const PublicationEdit = ({ children }) => (
 	<MyEdit>
-		<CreateUpdateInputs/>
+		<CreateUpdateInputs />
 		{children}
-		<ReplaceFileInput/>
+		<ReplaceFileInput />
 	</MyEdit>
 )
 

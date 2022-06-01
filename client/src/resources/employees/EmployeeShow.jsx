@@ -10,29 +10,30 @@ import Report from './components/Report'
 export const EmployeeShow = (props) => (
 	<PeopleShow
 		info={{
-			icon: <AccountCircleIcon/>,
+			icon: <AccountCircleIcon />,
 			resource: 'employees',
 			title: 'Сотрудник',
 			label: 'Оператор',
 			whose: 'оператора',
 		}}
-		tabs={[<Tab1/>, <Grade/>, <Report/>]}
+		tabs={[<Tab1 />, <Grade />, <Report />]}
 		{...props}
 	/>
 )
 
 const Tab1 = () => (
 	<Info>
-		<Divider style={{ margin: '30px 0 60px 0' }}/>
+		<Divider style={{ margin: '30px 0 60px 0' }} />
 		<Typography
-			variant='h6' style={{
-			textAlign: 'center',
-			marginTop: 30,
-			fontWeight: 'bold',
-		}}
+			variant="h6"
+			style={{
+				textAlign: 'center',
+				marginTop: 30,
+				fontWeight: 'bold',
+			}}
 		>
 			Форма №16
 		</Typography>
-		<ButtonForm16/>
+		<ButtonForm16 />
 	</Info>
 )

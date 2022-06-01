@@ -25,13 +25,13 @@ export const ScrollTopButton = () => {
 				sx={{
 					zIndex: 9000,
 					position: 'fixed',
-					bottom: theme => theme.spacing(3),
-					right: theme => theme.spacing(4),
+					bottom: (theme) => theme.spacing(3),
+					right: (theme) => theme.spacing(4),
 				}}
 				onClick={handleClick}
 			>
-				<Fab color='primary'>
-					<KeyboardArrowUpIcon/>
+				<Fab color="primary">
+					<KeyboardArrowUpIcon />
 				</Fab>
 			</Box>
 		</Zoom>

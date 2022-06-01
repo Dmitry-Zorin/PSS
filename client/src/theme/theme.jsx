@@ -3,11 +3,14 @@ import extend from 'just-extend'
 import muiTheme from './muiTheme'
 import raTheme from './raTheme'
 
-const createMyTheme = (theme) => (
-	extend(true, theme, raTheme, muiTheme)
-)
+const commonTheme = extend(true, raTheme, muiTheme)
+
+const createMyTheme = (theme) => {
+	return extend(true, theme, commonTheme)
+}
 
 export const themes = {
+	common: commonTheme,
 	light: createMyTheme({
 		palette: {
 			mode: 'light',

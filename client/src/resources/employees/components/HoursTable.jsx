@@ -1,4 +1,10 @@
-import { Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material'
+import {
+	Table,
+	TableBody,
+	TableCell,
+	TableContainer,
+	TableRow,
+} from '@mui/material'
 import React from 'react'
 import { useRecordContext } from 'react-admin'
 import styles from '../Styles'

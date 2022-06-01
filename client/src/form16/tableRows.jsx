@@ -3,7 +3,7 @@ import { getTableRow } from './tableRow'
 
 export const getTableRows = (data, index, text) => {
 	const getRows = (key) => {
-		const rows = data[key].map(e => getTableRow(e, index))
+		const rows = data[key].map((e) => getTableRow(e, index))
 
 		if (rows.length) {
 			if (key === 'new') {
@@ -29,8 +29,5 @@ export const getTableRows = (data, index, text) => {
 		return rows
 	}
 
-	return [
-		...getRows('old'),
-		...getRows('new'),
-	]
+	return [...getRows('old'), ...getRows('new')]
 }

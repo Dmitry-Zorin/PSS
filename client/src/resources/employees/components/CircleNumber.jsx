@@ -3,21 +3,23 @@ import Box from '@mui/material/Box'
 import React from 'react'
 
 const CircleNumber = ({ num, text, max }) => (
-	<Box width='33%'>
+	<Box width="33%">
 		<Paper
-			elevation={4} style={{
-			width: 90,
-			height: 90,
-			borderRadius: 100,
-			border: `13px solid #${
-				['DDD', 'BFFF00', '6AFF00']
-					[num / max < 0.5 ? 0 : num / max < 0.75 ? 1 : 2]
-			}`,
-			margin: 'auto',
-			display: 'flex',
-			alignItems: 'center',
-			justifyContent: 'center',
-		}}
+			elevation={4}
+			style={{
+				width: 90,
+				height: 90,
+				borderRadius: 100,
+				border: `13px solid #${
+					['DDD', 'BFFF00', '6AFF00'][
+						num / max < 0.5 ? 0 : num / max < 0.75 ? 1 : 2
+					]
+				}`,
+				margin: 'auto',
+				display: 'flex',
+				alignItems: 'center',
+				justifyContent: 'center',
+			}}
 		>
 			<div>
 				<Typography
@@ -31,9 +33,7 @@ const CircleNumber = ({ num, text, max }) => (
 				</Typography>
 			</div>
 		</Paper>
-		<Typography style={{ marginTop: 30 }}>
-			{text}
-		</Typography>
+		<Typography style={{ marginTop: 30 }}>{text}</Typography>
 	</Box>
 )
 

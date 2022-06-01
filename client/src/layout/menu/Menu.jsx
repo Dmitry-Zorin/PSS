@@ -5,7 +5,12 @@ import Filter3Icon from '@mui/icons-material/Filter3'
 import FilterNoneIcon from '@mui/icons-material/FilterNone'
 import { Divider } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import { Menu, usePermissions, useResourceDefinitions, useStore } from 'react-admin'
+import {
+	Menu,
+	usePermissions,
+	useResourceDefinitions,
+	useStore,
+} from 'react-admin'
 import { fetchApi } from '../../requests'
 import MenuItem from './MenuItem'
 import SubMenu from './SubMenu'
@@ -25,15 +30,9 @@ const category1Resources = [
 	'dissertations',
 ]
 
-const category2Resources = [
-	'patents',
-	'reports',
-	'programs',
-]
+const category2Resources = ['patents', 'reports', 'programs']
 
-const category3Resources = [
-	'textbooks',
-]
+const category3Resources = ['textbooks']
 
 const restResources = [
 	'researches',
@@ -45,10 +44,7 @@ const restResources = [
 	'verifications',
 ]
 
-const otherResources = [
-	'authors',
-	'characters',
-]
+const otherResources = ['authors', 'characters']
 
 const MyMenu = (props) => {
 	const [showCategory1, setShowCategory1] = useState(true)
@@ -71,79 +67,73 @@ const MyMenu = (props) => {
 	return (
 		<Menu {...props}>
 			{resources
-				.filter(r => menuResources.includes(r.name))
-				.map(resource => (
-					<MenuItem key={resource.name} {...{ resource }}/>
-				))
-			}
-			<Divider/>
+				.filter((r) => menuResources.includes(r.name))
+				.map((resource) => (
+					<MenuItem key={resource.name} {...{ resource }} />
+				))}
+			<Divider />
 			<SubMenu
-				handleToggle={() => setShowCategory1(e => !e)}
+				handleToggle={() => setShowCategory1((e) => !e)}
 				isOpen={showCategory1}
-				name='layout.menu.category1'
-				icon={<Filter1Icon/>}
+				name="layout.menu.category1"
+				icon={<Filter1Icon />}
 			>
 				{resources
-					.filter(r => category1Resources.includes(r.name))
-					.map(resource => (
-						<MenuItem key={resource.name} {...{ resource }}/>
-					))
-				}
+					.filter((r) => category1Resources.includes(r.name))
+					.map((resource) => (
+						<MenuItem key={resource.name} {...{ resource }} />
+					))}
 			</SubMenu>
 			<SubMenu
-				handleToggle={() => setShowCategory2(e => !e)}
+				handleToggle={() => setShowCategory2((e) => !e)}
 				isOpen={showCategory2}
-				name='layout.menu.category2'
-				icon={<Filter2Icon/>}
+				name="layout.menu.category2"
+				icon={<Filter2Icon />}
 			>
 				{resources
-					.filter(r => category2Resources.includes(r.name))
-					.map(resource => (
-						<MenuItem key={resource.name} {...{ resource }}/>
-					))
-				}
+					.filter((r) => category2Resources.includes(r.name))
+					.map((resource) => (
+						<MenuItem key={resource.name} {...{ resource }} />
+					))}
 			</SubMenu>
 			<SubMenu
-				handleToggle={() => setShowCategory3(e => !e)}
+				handleToggle={() => setShowCategory3((e) => !e)}
 				isOpen={showCategory3}
-				name='layout.menu.category3'
-				icon={<Filter3Icon/>}
+				name="layout.menu.category3"
+				icon={<Filter3Icon />}
 			>
 				{resources
-					.filter(r => category3Resources.includes(r.name))
-					.map(resource => (
-						<MenuItem key={resource.name} {...{ resource }}/>
-					))
-				}
+					.filter((r) => category3Resources.includes(r.name))
+					.map((resource) => (
+						<MenuItem key={resource.name} {...{ resource }} />
+					))}
 			</SubMenu>
 			<SubMenu
-				handleToggle={() => setShowRest(e => !e)}
+				handleToggle={() => setShowRest((e) => !e)}
 				isOpen={showRest}
-				name='layout.menu.others'
-				icon={<FilterNoneIcon/>}
+				name="layout.menu.others"
+				icon={<FilterNoneIcon />}
 			>
 				{resources
-					.filter(r => restResources.includes(r.name))
-					.map(resource => (
-						<MenuItem key={resource.name} {...{ resource }}/>
-					))
-				}
+					.filter((r) => restResources.includes(r.name))
+					.map((resource) => (
+						<MenuItem key={resource.name} {...{ resource }} />
+					))}
 			</SubMenu>
 			{permissions && (
 				<>
-					<Divider sx={{ mt: 1, mb: 1 }}/>
+					<Divider sx={{ mt: 1, mb: 1 }} />
 					<SubMenu
-						handleToggle={() => setShowOther(e => !e)}
+						handleToggle={() => setShowOther((e) => !e)}
 						isOpen={showOther}
-						name='layout.menu.admin'
-						icon={<AdminPanelSettingsIcon/>}
+						name="layout.menu.admin"
+						icon={<AdminPanelSettingsIcon />}
 					>
 						{resources
-							.filter(r => otherResources.includes(r.name))
-							.map(resource => (
-								<MenuItem key={resource.name} {...{ resource }}/>
-							))
-						}
+							.filter((r) => otherResources.includes(r.name))
+							.map((resource) => (
+								<MenuItem key={resource.name} {...{ resource }} />
+							))}
 					</SubMenu>
 				</>
 			)}

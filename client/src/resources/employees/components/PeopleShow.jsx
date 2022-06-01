@@ -24,26 +24,29 @@ export const PeopleShow = ({ info, tabs, ...props }) => {
 	})
 
 	useEffect(() => {
-		fetchApi(`${info.resource}/${props.id}/redmine`)
-			.then(({ json }) => setData(json))
+		fetchApi(`${info.resource}/${props.id}/redmine`).then(({ json }) =>
+			setData(json),
+		)
 	}, [])
 
 	const { enableActions = true, permissions } = props
 
 	return (
 		<Show
-			title={enableActions ? <Title/> : <TitleShort/>}
-			actions={!enableActions ? undefined : <ShowActions {...{ permissions }}/>}
+			title={enableActions ? <Title /> : <TitleShort />}
+			actions={
+				!enableActions ? undefined : <ShowActions {...{ permissions }} />
+			}
 			{...props}
 		>
 			<TabbedShowLayout>
 				<Tab label={info.label} icon={info.icon}>
 					{tabs[0]}
 				</Tab>
-				<Tab label='Оценка' path='grade' icon={<StarsIcon/>}>
+				<Tab label="Оценка" path="grade" icon={<StarsIcon />}>
 					{cloneElement(tabs[1], { data, info })}
 				</Tab>
-				<Tab label='Отчет' path='report' icon={<AssessmentIcon/>}>
+				<Tab label="Отчет" path="report" icon={<AssessmentIcon />}>
 					{cloneElement(tabs[2], { data, info })}
 				</Tab>
 			</TabbedShowLayout>

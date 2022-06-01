@@ -11,41 +11,43 @@ const ProgressBar = ({ value = 0, max = 0 }) => {
 
 	const ratio = max ? value / max : 0.5
 	const numOfSteps = max ? getNumOfSteps(max) : 1
-	const values = range(numOfSteps).map(e => e * max / (numOfSteps - 1))
+	const values = range(numOfSteps).map((e) => (e * max) / (numOfSteps - 1))
 
 	return (
 		<Paper
-			elevation={2} style={{
-			position: 'relative',
-			height: 50,
-			background: 'linear-gradient(to right, #FF4040, #EAFF00 65%, #6AFF00)',
-			borderRadius: 100,
-			marginTop: 45,
-			display: 'flex',
-			alignItems: 'center',
-		}}
+			elevation={2}
+			style={{
+				position: 'relative',
+				height: 50,
+				background: 'linear-gradient(to right, #FF4040, #EAFF00 65%, #6AFF00)',
+				borderRadius: 100,
+				marginTop: 45,
+				display: 'flex',
+				alignItems: 'center',
+			}}
 		>
-			<Box display='flex' justifyContent='space-between' width='100%' m='25px'>
-				{values.map(value => (
-					<Box key={value} width='30px'>
-						<Typography style={{ fontSize: 18 }}>{value % 1
-							? ''
-							: value}</Typography>
+			<Box display="flex" justifyContent="space-between" width="100%" m="25px">
+				{values.map((value) => (
+					<Box key={value} width="30px">
+						<Typography style={{ fontSize: 18 }}>
+							{value % 1 ? '' : value}
+						</Typography>
 					</Box>
 				))}
 			</Box>
 			<Paper
-				elevation={4} style={{
-				position: 'absolute',
-				left: `calc(${ratio * 100}% - ${ratio * circleSize}px)`,
-				borderRadius: '100%',
-				width: circleSize,
-				height: circleSize,
-				border: '1px solid #ddd',
-				display: 'flex',
-				alignItems: 'center',
-				justifyContent: 'center',
-			}}
+				elevation={4}
+				style={{
+					position: 'absolute',
+					left: `calc(${ratio * 100}% - ${ratio * circleSize}px)`,
+					borderRadius: '100%',
+					width: circleSize,
+					height: circleSize,
+					border: '1px solid #ddd',
+					display: 'flex',
+					alignItems: 'center',
+					justifyContent: 'center',
+				}}
 			>
 				<Typography style={{ fontSize: 26 }}>{value}</Typography>
 			</Paper>
@@ -58,7 +60,7 @@ const getNumOfSteps = (max) => {
 	for (let num = 2; num <= maxNumOfSteps; num++) {
 		let numOfInts = 0
 		for (let i = 0; i < num; i++) {
-			numOfInts += (i * max / (num - 1)) % 1 === 0
+			numOfInts += ((i * max) / (num - 1)) % 1 === 0
 		}
 		if (numOfInts > steps.numOfInts) {
 			steps.numOfInts = numOfInts

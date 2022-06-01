@@ -1,11 +1,7 @@
 import React from 'react'
 
 export const HeadlineField = ({ source, record = {} }) => {
-	return (
-		<div>
-			{record[source]}
-		</div>
-	)
+	return <div>{record[source]}</div>
 }
 
 export const DescriptionField = ({ source, maxchars = 300, record = {} }) => {
@@ -13,9 +9,5 @@ export const DescriptionField = ({ source, maxchars = 300, record = {} }) => {
 	if (description && description.length > maxchars) {
 		description = `${description.slice(0, maxchars)}…`
 	}
-	return (
-		<div>
-			{description}
-		</div>
-	)
+	return <div>{description}</div>
 }

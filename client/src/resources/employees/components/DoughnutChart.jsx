@@ -3,15 +3,15 @@ import React from 'react'
 import { Doughnut } from 'react-chartjs-2'
 
 export const DoughnutChart = ({ data, text }) => (
-	<Box display='flex' justifyContent='center'>
+	<Box display="flex" justifyContent="center">
 		<Box width={400}>
 			<Doughnut
 				data={{
-					labels: data.map(e => e.label),
+					labels: data.map((e) => e.label),
 					datasets: [
 						{
-							data: data.map(e => e.value),
-							backgroundColor: data.map(e => e.color),
+							data: data.map((e) => e.value),
+							backgroundColor: data.map((e) => e.color),
 							borderWidth: 0,
 						},
 					],
