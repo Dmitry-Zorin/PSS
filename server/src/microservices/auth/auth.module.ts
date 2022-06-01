@@ -30,6 +30,7 @@ export const baseTypeOrmOptions = {
 				return {
 					...baseTypeOrmOptions,
 					url: configService.get('AUTH_POSTGRES_URL'),
+					keepConnectionAlive: isDevEnv,
 					syncronize: isDevEnv,
 					logging: isDevEnv,
 				}

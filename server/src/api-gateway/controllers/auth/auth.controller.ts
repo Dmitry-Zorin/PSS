@@ -9,8 +9,8 @@ import {
 	Put,
 } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
-import { AUTH_SERVICE } from '../../constants'
-import { Public } from '../../jwt/jwt.guard'
+import { AUTH_SERVICE } from 'api-gateway/constants'
+import { Public } from 'api-gateway/jwt/jwt.guard'
 import { User } from './user.decorator'
 
 interface RequestUser {

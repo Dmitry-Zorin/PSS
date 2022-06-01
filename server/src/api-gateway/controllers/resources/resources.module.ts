@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { ClientsModule, Transport } from '@nestjs/microservices'
-import { RESOURCES_SERVICE } from '../../constants'
+import { RESOURCES_SERVICE } from 'api-gateway/constants'
 import { ResourcesController } from './resources.controller'
 
 @Module({

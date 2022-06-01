@@ -12,12 +12,12 @@ import {
 	Res,
 } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
+import { RESOURCES_SERVICE } from 'api-gateway/constants'
+import { Roles, Role } from 'api-gateway/roles.guard'
 import { FastifyReply } from 'fastify'
 import FormData from 'form-data'
 import { isEmpty } from 'lodash'
 import { firstValueFrom } from 'rxjs'
-import { RESOURCES_SERVICE } from '../../constants'
-import { Role, Roles } from '../../roles.guard'
 
 @Controller()
 export class ResourcesController {

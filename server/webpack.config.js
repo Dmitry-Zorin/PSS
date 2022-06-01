@@ -1,33 +1,21 @@
-const PREFIXES_TO_EXCLUDE = ['.', 'ajv/lib/compile/']
+const nodeExternals = require('webpack-node-externals')
+const { RunScriptWebpackPlugin } = require('run-script-webpack-plugin')
 
-module.exports = (options, webpack) => ({
-	...options,
-	mode: 'production',
-	optimization: {
-		nodeEnv: 'production',
-	},
-	entry: './src/vercel.ts',
-	output: {
-		filename: 'index.js',
-		library: {
-			name: 'vercel',
-			type: 'commonjs2',
-		},
-	},
-	externals: [],
-	plugins: [
-		...options.plugins,
-		new webpack.IgnorePlugin({
-			checkResource(resource) {
-				if (!PREFIXES_TO_EXCLUDE.some((e) => resource.startsWith(e))) {
-					try {
-						require.resolve(resource)
-					} catch {
-						return true
-					}
-				}
-				return false
-			},
-		}),
-	],
-})
+module.exports = function (options, webpack) {
+	return {
+		...options,
+		entry: ['webpack/hot/poll?100', options.entry],
+		externals: [
+			nodeExternals({
+				allowlist: ['webpack/hot/poll?100'],
+			}),
+		],
+		plugins: [
+			...options.plugins,
+			new webpack.HotModuleReplacementPlugin(),
+			new RunScriptWebpackPlugin({
+				name: options.output.filename,
+			}),
+		],
+	}
+}

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { ClientsModule, Transport } from '@nestjs/microservices'
-import { AUTH_SERVICE } from '../../constants'
+import { AUTH_SERVICE } from 'api-gateway/constants'
 import { AuthController } from './auth.controller'
 
 @Module({

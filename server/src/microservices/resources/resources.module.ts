@@ -29,6 +29,7 @@ export const baseTypeOrmOptions = {
 				return {
 					...baseTypeOrmOptions,
 					url: configService.get('RESOURCES_POSTGRES_URL'),
+					keepConnectionAlive: isDevEnv,
 					syncronize: isDevEnv,
 					logging: isDevEnv,
 				}
