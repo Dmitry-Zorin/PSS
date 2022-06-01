@@ -1,9 +1,7 @@
 import { Box, CircularProgress } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
-const defaultSpinner = <CircularProgress />
-
-const Loading = ({ spinner = defaultSpinner }) => {
+const Loading = ({ spinner = <CircularProgress /> }) => {
 	const [loading, setLoading] = useState(null)
 
 	useEffect(() => {

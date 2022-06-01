@@ -1,7 +1,6 @@
 import HomeIcon from '@mui/icons-material/Home'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
-import React from 'react'
 import { AppBar } from 'react-admin'
 import { Link } from 'react-router-dom'
 import LocaleSwitcher from './LocaleSwitcher'

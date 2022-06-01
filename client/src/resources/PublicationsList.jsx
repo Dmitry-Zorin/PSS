@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
 	Create,
 	ReferenceInput,
@@ -59,9 +59,11 @@ const AuthorInput = ({ setSelectedChoice }) => {
 	return (
 		<SelectInput
 			label="fields.author"
-			optionText={(record) =>
-				`${record.lastName} ${record.firstName} ${record?.middleName || ''}`
-			}
+			optionText={(record) => {
+				return `${record.lastName} ${record.firstName} ${
+					record?.middleName || ''
+				}`
+			}}
 		/>
 	)
 }

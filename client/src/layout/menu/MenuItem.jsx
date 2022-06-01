@@ -1,5 +1,4 @@
 import { Chip } from '@mui/material'
-import React from 'react'
 import { MenuItemLink, useStore, useTranslate } from 'react-admin'
 
 const MenuItem = ({ resource }) => {

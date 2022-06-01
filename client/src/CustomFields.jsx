@@ -1,5 +1,3 @@
-import React from 'react'
-
 export const HeadlineField = ({ source, record = {} }) => {
 	return <div>{record[source]}</div>
 }

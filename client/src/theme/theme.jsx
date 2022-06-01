@@ -5,7 +5,7 @@ import raTheme from './raTheme'
 
 const commonTheme = extend(true, raTheme, muiTheme)
 
-const createMyTheme = (theme) => {
+function createMyTheme(theme) {
 	return extend(true, theme, commonTheme)
 }
 

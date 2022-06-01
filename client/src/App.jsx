@@ -1,7 +1,6 @@
 import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList'
 import TimelineIcon from '@mui/icons-material/Timeline'
 import entries from 'just-entries'
-import React from 'react'
 import { Admin, Resource } from 'react-admin'
 import DashBoard from './DashBoard'
 import MyLayout from './layout/MyLayout'

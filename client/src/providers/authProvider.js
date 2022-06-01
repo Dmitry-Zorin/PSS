@@ -1,7 +1,9 @@
 import { fetchApi } from '../requests'
 import { getUser, setUser } from '../user'
 
-const fetchAuth = (url, options) => fetchApi(`auth/${url}`, options)
+function fetchAuth(url, options) {
+	return fetchApi(`auth/${url}`, options)
+}
 
 const authProvider = {
 	login: async ({ username, password }) => {

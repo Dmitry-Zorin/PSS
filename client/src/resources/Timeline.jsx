@@ -4,7 +4,6 @@ import Card from '@mui/material/Card'
 import CardActionArea from '@mui/material/CardActionArea'
 import Pagination from '@mui/material/Pagination'
 import pluralize from 'pluralize'
-import React from 'react'
 import {
 	ListBase,
 	Title,

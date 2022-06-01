@@ -1,4 +1,3 @@
-import React from 'react'
 import { Edit, SimpleForm, useResourceContext } from 'react-admin'
 
 const MyEdit = ({ children, ...props }) => {

@@ -1,5 +1,5 @@
 import IconButton from '@mui/material/IconButton'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTheme } from 'react-admin'
 import { DarkModeSwitch } from 'react-toggle-dark-mode/dist'
 import { getUser } from '../../user'

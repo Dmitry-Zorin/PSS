@@ -1,4 +1,3 @@
-import React from 'react'
 import {
 	ArrayInput,
 	FileField,
@@ -74,9 +73,11 @@ export const AuthorsInput = () => (
 	>
 		<SelectArrayInput
 			label="fields.author"
-			optionText={(record) =>
-				`${record.lastName} ${record.firstName} ${record.middleName || ''}`
-			}
+			optionText={(record) => {
+				return `${record.lastName} ${record.firstName} ${
+					record.middleName || ''
+				}`
+			}}
 		/>
 	</ReferenceArrayInput>
 )

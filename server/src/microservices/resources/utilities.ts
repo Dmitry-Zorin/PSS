@@ -1,6 +1,6 @@
 import { isEmpty, isObject, mapValues } from 'lodash'
 
-export const omitNullDeep = (e: any): any => {
+export function omitNullDeep(e: any): any {
 	if (e === null) {
 		return undefined
 	}

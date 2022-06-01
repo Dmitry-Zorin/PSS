@@ -5,48 +5,44 @@ import { getUser, setUser } from './user'
 
 export const apiUrl = `${import.meta.env.VITE_SERVER || ''}/api`
 
-const getUserInfo = () => ({
-	authenticated: true,
-	token: `Bearer ${localStorage.getItem('token')}`,
-})
-
-const createFormData = (body) =>
-	reduce(
-		body,
+function createFormData(payload) {
+	return reduce(
+		payload,
 		(result, key, value) => {
 			result.append(key, value.rawFile || value)
 			return result
 		},
 		new FormData(),
 	)
-
-const getBody = (body) => {
-	if (body?.file) {
-		return createFormData(body)
-	}
-	return JSON.stringify(body)
 }
 
-export const httpClient = (url, { body, ...options } = {}) =>
-	fetchUtils.fetchJson(url, {
+export function httpClient(url, { body, ...options } = {}) {
+	return fetchUtils.fetchJson(url, {
 		...options,
-		user: getUserInfo(),
-		body: getBody(body),
+		user: {
+			authenticated: true,
+			token: `Bearer ${localStorage.getItem('token')}`,
+		},
+		body: body?.file ? createFormData(body) : JSON.stringify(body),
 	})
+}
 
-export const fetchApi = (url, options) =>
-	httpClient(`${apiUrl}/${url}`, options)
+export function fetchApi(url, options) {
+	return httpClient(`${apiUrl}/${url}`, options)
+}
 
-export const createUrlWithQueryParams = (url, query) => {
-	const serializedQuery = mapValues(query, (e) =>
-		typeof e === 'object' ? JSON.stringify(e) : e,
-	)
+export function createUrlWithQueryParams(url, query) {
+	const serializedQuery = mapValues(query, (e) => {
+		return typeof e === 'object' ? JSON.stringify(e) : e
+	})
 	const queryParams = new URLSearchParams(serializedQuery)
 	return `${url}?${queryParams}`
 }
 
-export const saveSettings = async (settings) => {
+export async function saveSettings(settings) {
 	setUser({ ...getUser(), ...settings })
-	const options = { method: 'put', body: settings }
-	await fetchApi('auth/settings', options)
+	await fetchApi('auth/settings', {
+		method: 'put',
+		body: settings,
+	})
 }

@@ -13,13 +13,6 @@ export const createForm16 = async (data, name, title) => {
 	const doc = new Document({
 		sections: [
 			{
-				properties: {},
-				margins: {
-					top: 0,
-					right: 500,
-					bottom: 0,
-					left: 500,
-				},
 				children: [
 					new Paragraph({
 						alignment: AlignmentType.RIGHT,

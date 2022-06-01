@@ -4,7 +4,7 @@ import Filter2Icon from '@mui/icons-material/Filter2'
 import Filter3Icon from '@mui/icons-material/Filter3'
 import FilterNoneIcon from '@mui/icons-material/FilterNone'
 import { Divider } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
 	Menu,
 	usePermissions,

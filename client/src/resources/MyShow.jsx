@@ -1,11 +1,10 @@
-import React from 'react'
 import {
 	Show,
 	SimpleShowLayout,
 	usePermissions,
 	useResourceContext,
 } from 'react-admin'
-import { ShowActions } from './components/old'
+import { ShowActions } from './components/actions'
 
 const MyShow = ({ children }) => {
 	const resource = useResourceContext()

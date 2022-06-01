@@ -1,8 +1,8 @@
 import { AlignmentType, Paragraph, TableCell, TableRow } from 'docx'
 import { getTableRow } from './tableRow'
 
-export const getTableRows = (data, index, text) => {
-	const getRows = (key) => {
+export function getTableRows(data, index, text) {
+	function getRows(key) {
 		const rows = data[key].map((e) => getTableRow(e, index))
 
 		if (rows.length) {

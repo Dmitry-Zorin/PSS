@@ -1,4 +1,3 @@
-import React from 'react'
 import { Create, SimpleForm, useResourceContext } from 'react-admin'
 
 const MyCreate = ({ children, ...props }) => {

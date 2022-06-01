@@ -4,19 +4,21 @@
 		"browser": true,
 		"es2022": true
 	},
+	"parserOptions": {
+		"sourceType": "module",
+		"ecmaVersion": "latest"
+	},
+	"settings": {
+		"react": {
+			"version": "17"
+		}
+	},
 	"extends": [
 		"eslint:recommended",
 		"plugin:react/recommended",
+		"plugin:react/jsx-runtime",
 		"plugin:prettier/recommended"
 	],
-	"parserOptions": {
-		"sourceType": "module",
-		"ecmaVersion": "latest",
-		"ecmaFeatures": {
-			"jsx": true
-		}
-	},
-	"plugins": ["react"],
 	"rules": {
 		"react/prop-types": "off",
 		"react/jsx-key": "off",

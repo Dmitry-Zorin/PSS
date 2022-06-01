@@ -1,4 +1,3 @@
-import React from 'react'
 import { LargeTextInput } from '../../components/inputs'
 import MyEdit from '../../MyEdit'
 

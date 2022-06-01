@@ -1,4 +1,3 @@
-import React from 'react'
 import { ChipField, NumberInput, TextField, TextInput } from 'react-admin'
 import { ChipArrayField } from '../components/fields'
 import MyList from '../MyList'

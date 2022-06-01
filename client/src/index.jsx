@@ -1,4 +1,4 @@
-import React, { StrictMode } from 'react'
+import { StrictMode } from 'react'
 import ReactDOM from 'react-dom'
 import { Helmet } from 'react-helmet'
 import './index.css'
@@ -9,7 +9,7 @@ import { getUser } from './user'
 
 const theme = themes[getUser()?.theme || 'light']
 
-const loadingScreen = (
+const LoadingScreen = () => (
 	<div style={{ display: 'flex', height: '100vh' }}>
 		<div style={{ margin: 'auto' }}>
 			<Loader color={theme.palette.primary.main} />
@@ -30,7 +30,7 @@ ReactDOM.render(
 		</Helmet>
 		<Lazy
 			component={() => import('./App')}
-			fallback={loadingScreen}
+			fallback={<LoadingScreen />}
 			theme={theme}
 		/>
 	</StrictMode>,

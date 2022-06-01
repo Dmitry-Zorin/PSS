@@ -1,4 +1,3 @@
-import React from 'react'
 import { TextField, TextInput } from 'react-admin'
 import MyList from '../../MyList'
 

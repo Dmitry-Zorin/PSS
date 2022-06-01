@@ -1,4 +1,3 @@
-import React from 'react'
 import { ChipField, TextField } from 'react-admin'
 import {
 	CharacterField,

@@ -1,7 +1,7 @@
 import { AlignmentType, Paragraph, TableCell, TableRow } from 'docx'
 
-export const getTableRow = (e, index) =>
-	new TableRow({
+export function getTableRow(e, index) {
+	return new TableRow({
 		tableHeader: true,
 		children: [
 			new TableCell({
@@ -46,3 +46,4 @@ export const getTableRow = (e, index) =>
 			}),
 		],
 	})
+}

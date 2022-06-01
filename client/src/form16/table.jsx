@@ -10,7 +10,7 @@ import {
 import range from 'just-range'
 import { getTableRows } from './tableRows'
 
-export const getTable = (data) => {
+export function getTable(data) {
 	const index = { value: 1 }
 
 	return new Table({

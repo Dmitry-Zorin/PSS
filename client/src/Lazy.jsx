@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react'
+import { lazy, Suspense } from 'react'
 
 const Lazy = ({ component, fallback, ...props }) => {
 	const Component = lazy(component)

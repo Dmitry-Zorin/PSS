@@ -1,5 +1,3 @@
-import React from 'react'
-
 const Loader = ({ color }) => (
 	<svg
 		version="1.1"

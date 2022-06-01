@@ -1,4 +1,3 @@
-import React from 'react'
 import {
 	Datagrid,
 	List,
@@ -6,7 +5,7 @@ import {
 	useRecordContext,
 	useResourceContext,
 } from 'react-admin'
-import { ListActions } from './components/old'
+import { ListActions } from './components/actions'
 import ResourceCounter from './ResourceCounter'
 
 const DatagridExpand = () => {

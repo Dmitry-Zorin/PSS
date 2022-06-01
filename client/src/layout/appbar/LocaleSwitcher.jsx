@@ -1,6 +1,6 @@
 import LanguageIcon from '@mui/icons-material/Language'
 import Button from '@mui/material/Button'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useLocaleState, useTranslate } from 'react-admin'
 import { Helmet } from 'react-helmet'
 import { saveSettings } from '../../requests'

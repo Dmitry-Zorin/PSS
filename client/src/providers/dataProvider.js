@@ -1,10 +1,12 @@
 import reduce from 'just-reduce-object'
 import { apiUrl, createUrlWithQueryParams, fetchApi } from '../requests'
 
-const fetchResources = (url, options) => fetchApi(`resources/${url}`, options)
+function fetchResources(url, options) {
+	return fetchApi(`resources/${url}`, options)
+}
 
-const processInputData = (data) =>
-	reduce(
+function processInputData(data) {
+	return reduce(
 		data,
 		(result, key, value) => {
 			if (value === 'coauthors') {
@@ -15,9 +17,10 @@ const processInputData = (data) =>
 		},
 		{},
 	)
+}
 
-const processOutputData = (data, options = { skipEmpty: true }) =>
-	reduce(
+function processOutputData(data, options = { skipEmpty: true }) {
+	return reduce(
 		data,
 		(result, key, value) => {
 			if (options.skipEmpty && !value) {
@@ -31,6 +34,7 @@ const processOutputData = (data, options = { skipEmpty: true }) =>
 		},
 		{},
 	)
+}
 
 const dataProvider = {
 	create: async (resource, { data }) => {
@@ -39,8 +43,21 @@ const dataProvider = {
 			body: processOutputData(data),
 		})
 		return {
-			data: { ...data, id: json.id },
+			data: {
+				...data,
+				id: json.id,
+			},
 		}
+	},
+
+	update: async (resource, { id, data }) => {
+		await fetchResources(`${resource}/${id}`, {
+			method: 'put',
+			body: processOutputData(data, {
+				skipEmpty: false,
+			}),
+		})
+		return { data: { id } }
 	},
 
 	getList: async (resource, { filter, sort, pagination }) => {
@@ -73,16 +90,6 @@ const dataProvider = {
 		const url = createUrlWithQueryParams(resource, { ids })
 		const { json } = await fetchResources(url)
 		return { data: json.map(processInputData) }
-	},
-
-	update: async (resource, { id, data }) => {
-		await fetchResources(`${resource}/${id}`, {
-			method: 'put',
-			body: processOutputData(data, {
-				skipEmpty: false,
-			}),
-		})
-		return { data: { id } }
 	},
 
 	delete: async (resource, { id }) => {

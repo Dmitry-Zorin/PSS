@@ -1,4 +1,3 @@
-import React from 'react'
 import { Sidebar } from 'react-admin'
 
 const MySidebar = (props) => (

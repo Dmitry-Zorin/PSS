@@ -1,7 +1,6 @@
 import ExpandMore from '@mui/icons-material/ExpandMore'
 import Box from '@mui/material/Box'
 import Collapse from '@mui/material/Collapse'
-import React from 'react'
 import { MenuItemLink, useSidebarState, useTranslate } from 'react-admin'
 
 const SubMenu = ({ handleToggle, isOpen, name, icon, children }) => {
