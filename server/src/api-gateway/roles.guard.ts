@@ -11,10 +11,14 @@ export enum Role {
 	Admin = 'admin',
 }
 
-const ROLE_KEY = 'role'
+const ROLES_KEY = 'roles'
 
-export const Roles = (role: Role) => {
-	return SetMetadata(ROLE_KEY, role)
+export const Roles = (...roles: Role[]) => {
+	return SetMetadata(ROLES_KEY, roles)
+}
+
+export const Admin = () => {
+	return SetMetadata(ROLES_KEY, Role.Admin)
 }
 
 @Injectable()
@@ -22,14 +26,14 @@ export class RolesGuard implements CanActivate {
 	constructor(private reflector: Reflector) {}
 
 	canActivate(context: ExecutionContext) {
-		const requiredRole = this.reflector.getAllAndOverride<Role>(ROLE_KEY, [
+		const requiredRoles = this.reflector.getAllAndOverride<Role[]>(ROLES_KEY, [
 			context.getHandler(),
 			context.getClass(),
 		])
-		if (!requiredRole) {
+		if (!requiredRoles) {
 			return true
 		}
 		const { user } = context.switchToHttp().getRequest()
-		return user.role === requiredRole
+		return requiredRoles.includes(user.role)
 	}
 }

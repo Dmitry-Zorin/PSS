@@ -13,7 +13,7 @@ import {
 } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { RESOURCES_SERVICE } from 'api-gateway/constants'
-import { Roles, Role } from 'api-gateway/roles.guard'
+import { Admin } from 'api-gateway/roles.guard'
 import { FastifyReply } from 'fastify'
 import FormData from 'form-data'
 import { isEmpty } from 'lodash'
@@ -41,8 +41,8 @@ export class ResourcesController {
 		return this.client.send('publications', { query })
 	}
 
+	@Admin()
 	@Post(':resource')
-	@Roles(Role.Admin)
 	// @UseInterceptors(FileInterceptor('file'))
 	async create(
 		@Param('resource') resource: string,
@@ -67,8 +67,8 @@ export class ResourcesController {
 		return result
 	}
 
+	@Admin()
 	@Put(':resource/:id')
-	@Roles(Role.Admin)
 	// @UseInterceptors(FileInterceptor('file'))
 	async update(
 		@Param('resource') resource: string,
@@ -110,8 +110,8 @@ export class ResourcesController {
 		return this.client.send('find_one', { resource, id })
 	}
 
+	@Admin()
 	@Delete(':resource')
-	@Roles(Role.Admin)
 	async remove(
 		@Param('resource') resource: string,
 		@Query('ids') ids: string[],
@@ -119,8 +119,8 @@ export class ResourcesController {
 		return this.client.send('remove', { resource, ids })
 	}
 
+	@Admin()
 	@Delete(':resource/:id')
-	@Roles(Role.Admin)
 	removeOne(@Param('resource') resource: string, @Param('id') id: string) {
 		return this.client.send('remove_one', { resource, id })
 	}

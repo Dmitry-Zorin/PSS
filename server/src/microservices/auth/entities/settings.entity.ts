@@ -1,15 +1,6 @@
 import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm'
+import { Locale, Theme } from '../enums'
 import { User } from './user.entity'
-
-export enum Locale {
-	En = 'en',
-	Ru = 'ru',
-}
-
-export enum Theme {
-	Light = 'light',
-	Dark = 'dark',
-}
 
 @Entity('settings')
 export class Settings {

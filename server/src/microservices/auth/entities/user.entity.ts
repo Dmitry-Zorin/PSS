@@ -1,10 +1,6 @@
 import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { Role } from '../enums'
 import { Settings } from './settings.entity'
-
-enum Role {
-	User = 'user',
-	Admin = 'admin',
-}
 
 @Entity('user')
 export class User {

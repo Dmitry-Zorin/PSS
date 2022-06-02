@@ -14,7 +14,7 @@ import {
 	ValidateNested,
 } from 'class-validator'
 import { FilterValues } from '../filter-values'
-import { IdsParamDto } from './index'
+import { IdsParamDto } from './ids-param.dto'
 
 const VALID_SORT_VALUES = ['ASC', 'DESC', 'asc', 'desc'] as const
 

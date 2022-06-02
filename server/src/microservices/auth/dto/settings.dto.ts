@@ -1,5 +1,5 @@
 import { IsEnum, IsOptional } from 'class-validator'
-import { Locale, Theme } from '../entities/settings.entity'
+import { Locale, Theme } from '../enums'
 
 export class SettingsDto {
 	@IsOptional()

@@ -1,2 +1,2 @@
-export { CredentialsDto } from './credentials.dto'
-export { SettingsDto } from './settings.dto'
+export * from './credentials.dto'
+export * from './settings.dto'
