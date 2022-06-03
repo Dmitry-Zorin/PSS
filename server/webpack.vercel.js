@@ -21,9 +21,13 @@ module.exports = (options, webpack) => ({
 			checkResource(resource) {
 				if (!PREFIXES_TO_EXCLUDE.some((e) => resource.startsWith(e))) {
 					try {
-						require.resolve(resource)
+						require.resolve(`./src/${resource}.ts`)
 					} catch {
-						return true
+						try {
+							require.resolve(resource)
+						} catch {
+							return true
+						}
 					}
 				}
 				return false
