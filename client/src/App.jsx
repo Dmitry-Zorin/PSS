@@ -1,58 +1,58 @@
-import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList'
-import TimelineIcon from '@mui/icons-material/Timeline'
-import entries from 'just-entries'
+import { entries } from 'lodash'
+import resources from 'pages/resources'
 import { Admin, Resource } from 'react-admin'
-import DashBoard from './DashBoard'
-import MyLayout from './layout/MyLayout'
-import authProvider from './providers/authProvider'
-import dataProvider from './providers/dataProvider'
-import i18nProvider from './providers/i18nProvider'
-import * as adminResources from './resources/admin'
-import publications from './resources/publications'
-import PublicationCreate from './resources/publications/PublicationCreate'
-import PublicationEdit from './resources/publications/PublicationEdit'
-import PublicationList from './resources/publications/PublicationList'
-import PublicationShow from './resources/publications/PublicationShow'
-import PublicationsList from './resources/PublicationsList'
-import Timeline from './resources/Timeline'
-import { themes } from './theme/theme'
+import { QueryClient } from 'react-query'
+import authProvider from './auth-provider'
+import { Layout } from './components'
+import dataProvider from './data-provider'
+import i18nProvider from './i18n/i18n-provider'
+import { Dashboard } from './pages/Dashboard'
+import themes from './themes'
+
+const queryClient = new QueryClient({
+	defaultOptions: {
+		queries: {
+			staleTime: 5 * 60 * 1000,
+		},
+	},
+})
+
+function getResources(resources, permissions = false) {
+	return entries(resources).map(([name, props]) => {
+		const { list, show, create, edit, ...otherProps } = props
+		return (
+			<Resource
+				name={name}
+				list={list}
+				show={show}
+				{...(permissions && {
+					create: create,
+					edit: edit,
+				})}
+				{...otherProps}
+			/>
+		)
+	})
+}
+
+const getResourcesList = (permissions) => [
+	...getResources(resources.main),
+	...getResources(resources.publications, permissions),
+	...(permissions && getResources(resources.admin, true)),
+]
 
 const App = () => (
 	<Admin
 		title="metadata.title"
 		theme={themes.common}
-		layout={MyLayout}
-		dashboard={DashBoard}
+		layout={Layout}
+		dashboard={Dashboard}
+		queryClient={queryClient}
 		authProvider={authProvider}
 		dataProvider={dataProvider}
 		i18nProvider={i18nProvider}
 	>
-		<Resource name="timeline" icon={TimelineIcon} list={Timeline} />
-		<Resource
-			name="publicationsList"
-			icon={FeaturedPlayListIcon}
-			list={PublicationsList}
-		/>
-		{(permissions) => {
-			return entries({ ...publications, ...adminResources }).map(
-				([name, props]) => {
-					const { list, show, create, edit, ...otherProps } = props
-					return (
-						<Resource
-							key={name}
-							name={name}
-							list={list || PublicationList}
-							show={show || PublicationShow}
-							{...(permissions && {
-								create: create || PublicationCreate,
-								edit: edit || PublicationEdit,
-							})}
-							{...otherProps}
-						/>
-					)
-				},
-			)
-		}}
+		{getResourcesList}
 	</Admin>
 )
 
