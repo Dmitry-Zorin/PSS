@@ -40,8 +40,8 @@ export class AuthController {
 		@Payload() { id }: IdParamDto,
 		@Payload('payload') settings: SettingsDto,
 	) {
-    await this.authService.updateSettings(id, settings)
-    return {}
+		await this.authService.updateSettings(id, settings)
+		return {}
 	}
 
 	@MessagePattern('identity')

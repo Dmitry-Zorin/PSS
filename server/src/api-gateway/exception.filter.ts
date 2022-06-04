@@ -6,7 +6,7 @@ interface RpcException {
 	message: string
 	error: {
 		status: number
-		response: object
+		response: Record<string, any>
 	}
 }
 
@@ -20,9 +20,16 @@ export class AllExceptionsFilter extends BaseExceptionFilter {
 		if (!AllExceptionsFilter.isRpcException(exception)) {
 			return super.catch(exception, host)
 		}
+
 		const http = host.switchToHttp()
 		const res = http.getResponse<FastifyReply>()
+
 		const { status, response } = exception.error
+
+		if (Array.isArray(response.message)) {
+			response.message = response.message.join('; ')
+		}
+
 		return res.code(status).send(response)
 	}
 }

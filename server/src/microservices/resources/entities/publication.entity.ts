@@ -6,7 +6,7 @@ import {
 	ManyToMany,
 	OneToOne,
 	PrimaryColumn,
-	RelationId,
+	RelationId
 } from 'typeorm'
 import { Author } from './author.entity'
 import { ResourceItem } from './resource-item.entity'

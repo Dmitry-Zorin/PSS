@@ -2,7 +2,7 @@ import {
 	CanActivate,
 	ExecutionContext,
 	Injectable,
-	SetMetadata,
+	SetMetadata
 } from '@nestjs/common'
 import { Reflector } from '@nestjs/core'
 

@@ -6,7 +6,7 @@ import {
 	HttpCode,
 	Inject,
 	Post,
-	Put,
+	Put
 } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { AUTH_SERVICE } from 'api-gateway/constants'

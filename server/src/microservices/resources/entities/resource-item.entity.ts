@@ -5,7 +5,7 @@ import {
 	Index,
 	OneToOne,
 	PrimaryGeneratedColumn,
-	UpdateDateColumn,
+	UpdateDateColumn
 } from 'typeorm'
 import { Publication } from './publication.entity'
 
