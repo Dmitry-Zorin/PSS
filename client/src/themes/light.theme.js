@@ -1,22 +1,56 @@
-import { blueGrey, indigo } from '@mui/material/colors'
+import { grey, indigo } from '@mui/material/colors'
+import { merge } from 'lodash'
+import { baseTheme } from './base.theme'
+import { muiTheme } from './mui.theme'
 
-const lightTheme = {
+// https://coolors.co/3c3e75-fcfcf7-fffffa-ca3c25
+const primary = indigo[500]
+const secondary = primary
+const bgPrimary = grey[50]
+const bgSecondary = grey[100]
+
+export const lightTheme = merge({}, baseTheme, {
 	palette: {
 		mode: 'light',
 		primary: {
-			light: indigo[400],
-			main: indigo[500],
-			dark: indigo[600],
+			light: primary,
+			main: primary,
+			dark: primary,
 		},
 		background: {
-			default: blueGrey[50],
+			default: bgPrimary,
+			paper: bgPrimary,
+		},
+		text: {
+			// secondary: '#5C5F58',
+		},
+		action: {
+			// active: '#B73225',
 		},
 	},
 	components: {
+		MuiInputBase: {
+			styleOverrides: {
+				root: {
+					background: bgSecondary,
+				},
+			},
+		},
+		RaLabeled: {
+			styleOverrides: {
+				root: {
+					'.RaLabeled-label': {
+						color: secondary,
+					},
+				},
+			},
+		},
 		RaSidebar: {
 			styleOverrides: {
 				root: {
-					backgroundColor: 'white',
+					'.RaSidebar-fixed': {
+						background: bgSecondary,
+					},
 				},
 			},
 		},
@@ -24,19 +58,17 @@ const lightTheme = {
 			styleOverrides: {
 				root: {
 					'&:hover': {
-						background: 'rgba(0, 0, 0, 0.0375)',
+						background: 'rgba(0, 0, 0, 0.04)',
 					},
 					'&.RaMenuItemLink-active': {
-						borderColor: 'rgba(0, 0, 0, 0.04)',
-						background: 'rgba(0, 0, 0, 0.075)',
-						'&, & *': {
-							color: indigo[500],
+						background: 'rgba(0, 0, 0, 0.04)',
+						borderColor: muiTheme.palette.divider,
+						'&, > *': {
+							color: primary,
 						},
 					},
 				},
 			},
 		},
 	},
-}
-
-export default lightTheme
+})

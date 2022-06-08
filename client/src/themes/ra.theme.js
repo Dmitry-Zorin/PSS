@@ -1,43 +1,37 @@
-import { appbarHeight, borderRadius } from './mui.theme'
+import { APP_BAR_HEIGHT, BORDER_RADIUS, muiTheme } from './mui.theme'
 
-const menuItemMargin = 4
+const MAX_WIDTH = 700
+const SIDEBAR_WIDTH = 270
+const SIDEBAR_CLOSED_WIDTH = APP_BAR_HEIGHT
+const MENU_ITEM_MARGIN = 4
+const BORDER_SIZE = 1
+const ICON_SIZE = 24
 
-const raViewStyle = {
-	styleOverrides: {
-		root: {
-			width: '100%',
-			maxWidth: '1250px !important',
-			margin: '0 auto',
-		},
+export const raTheme = {
+	sidebar: {
+		width: SIDEBAR_WIDTH,
+		closedWidth: SIDEBAR_CLOSED_WIDTH,
 	},
-}
-
-const raLayoutStyle = {
-	styleOverrides: {
-		root: {
-			padding: '15px 40px',
-		},
-	},
-}
-
-const raTheme = {
 	components: {
-		RaShow: raViewStyle,
-		RaCreate: raViewStyle,
-		RaEdit: raViewStyle,
-		RaSimpleShowLayout: raLayoutStyle,
 		RaLayout: {
 			styleOverrides: {
 				root: {
-					'.RaLayout-appFrame': {
-						marginTop: appbarHeight,
-					},
-					'.ra-field': {
-						margin: '15px 0',
-						p: {
-							fontSize: '0.9rem',
-							fontWeight: 300,
+					'.layout-container, .RaCreate-main, .RaEdit-main, .RaShow-main': {
+						margin: 'auto',
+						maxWidth: MAX_WIDTH,
+						[`@media (min-width:${MAX_WIDTH + 3 * SIDEBAR_WIDTH + 40}px)`]: {
+							marginLeft: SIDEBAR_WIDTH,
 						},
+					},
+				},
+			},
+		},
+		RaLabeled: {
+			styleOverrides: {
+				root: {
+					'.RaLabeled-label': {
+						fontSize: '0.95rem',
+						fontWeight: 450,
 					},
 				},
 			},
@@ -60,26 +54,27 @@ const raTheme = {
 		RaSidebar: {
 			styleOverrides: {
 				root: {
-					height: 'unset',
-					'.RaSidebar-fixed': {
-						position: 'unset',
-						minHeight: `calc(100vh - ${appbarHeight}px)`,
-					},
+					borderRight: `1px solid ${muiTheme.palette.divider}`,
 				},
 			},
 		},
 		RaMenuItemLink: {
 			styleOverrides: {
 				root: {
-					borderRadius: borderRadius,
-					margin: menuItemMargin,
-					height: appbarHeight - 2 * menuItemMargin,
-					padding: 11,
-					border: '1px solid transparent',
+					fontWeight: 400,
+					borderRadius: BORDER_RADIUS,
+					margin: MENU_ITEM_MARGIN,
+					height: APP_BAR_HEIGHT - 2 * MENU_ITEM_MARGIN,
+					padding: `${
+						(APP_BAR_HEIGHT - ICON_SIZE) / 2 - MENU_ITEM_MARGIN - BORDER_SIZE
+					}px ${
+						(SIDEBAR_CLOSED_WIDTH - ICON_SIZE) / 2 -
+						MENU_ITEM_MARGIN -
+						BORDER_SIZE
+					}px`,
+					border: `${BORDER_SIZE}px solid transparent`,
 				},
 			},
 		},
 	},
 }
-
-export default raTheme

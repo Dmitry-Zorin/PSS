@@ -20,8 +20,7 @@ export class PublicationDto {
 
 	@IsOptional()
 	@IsUUID()
-	@Type(() => Number)
-	characterId?: number
+	characterId?: string
 
 	@IsOptional()
 	@IsInt()

@@ -7,6 +7,7 @@ import {
 import { JwtService } from '@nestjs/jwt'
 import { MessagePattern, Payload } from '@nestjs/microservices'
 import { AuthService } from './auth.service'
+import { DEFAULT_SUCCESS_RESPONSE } from './constants'
 import { CredentialsDto, SettingsDto } from './dto'
 import { IdParamDto } from './dto/params'
 import { HttpExceptionFilter } from './http-exception.filter'
@@ -41,7 +42,7 @@ export class AuthController {
 		@Payload('payload') settings: SettingsDto,
 	) {
 		await this.authService.updateSettings(id, settings)
-		return {}
+		return DEFAULT_SUCCESS_RESPONSE
 	}
 
 	@MessagePattern('identity')
@@ -50,7 +51,8 @@ export class AuthController {
 	}
 
 	@MessagePattern('unregister')
-	unregister({ id }: IdParamDto) {
-		return this.authService.removeUser(id)
+	async unregister({ id }: IdParamDto) {
+		await this.authService.removeUser(id)
+		return DEFAULT_SUCCESS_RESPONSE
 	}
 }

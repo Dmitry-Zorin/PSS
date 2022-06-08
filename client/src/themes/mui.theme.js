@@ -1,90 +1,69 @@
-export const appbarHeight = 56
-export const borderRadius = 8
+import { range } from 'lodash'
 
-const muiTheme = {
+export const APP_BAR_HEIGHT = 50
+export const BORDER_RADIUS = 8
+
+const BACKUP_FONTS =
+	'-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif'
+
+export const muiTheme = {
+	typography: {
+		fontFamily: `"Nunito", ${BACKUP_FONTS}`,
+	},
+	palette: {
+		divider: 'rgba(0, 0, 0, 0.08)',
+	},
 	shape: {
-		borderRadius: borderRadius,
+		borderRadius: BORDER_RADIUS,
 	},
-	sidebar: {
-		width: 250,
-		closedWidth: 56,
-	},
+	shadows: range(25).map(() => 'none'),
 	components: {
-		MuiPaper: {
+		MuiButtonBase: {
+			defaultProps: {
+				disableRipple: true,
+			},
+		},
+		MuiButton: {
 			styleOverrides: {
 				root: {
-					boxShadow: 'none',
+					fontWeight: 550,
 				},
 			},
 		},
 		MuiTypography: {
 			styleOverrides: {
-				root: {
-					fontWeight: 300,
-				},
 				body2: {
-					fontSize: '1rem',
+					fontSize: '1.1rem',
+					fontWeight: 350,
 				},
 			},
 		},
 		MuiToolbar: {
 			styleOverrides: {
 				dense: {
-					height: appbarHeight,
-				},
-			},
-		},
-		MuiMenuItem: {
-			styleOverrides: {
-				root: {
-					fontWeight: 300,
-					minHeight: 45,
-					'&:hover': {
-						background: 'rgba(0, 0, 0, 0.05)',
-					},
-				},
-			},
-		},
-		MuiCardContent: {
-			styleOverrides: {
-				root: {
-					padding: 45,
-				},
-			},
-		},
-		MuiTab: {
-			styleOverrides: {
-				root: {
-					flexGrow: 1,
-					maxWidth: 'unset',
-				},
-			},
-		},
-		MuiTableRow: {
-			styleOverrides: {
-				root: {
-					'&:last-of-type td': {
-						borderBottom: 0,
-					},
-				},
-			},
-		},
-		MuiTableCell: {
-			styleOverrides: {
-				sizeSmall: {
-					padding: 12,
+					height: APP_BAR_HEIGHT,
 				},
 			},
 		},
 		MuiChip: {
 			styleOverrides: {
 				labelMedium: {
-					fontSize: '0.95rem',
-					fontWeight: 300,
+					fontSize: '1rem',
+					fontWeight: 350,
 				},
+			},
+		},
+		MuiTableRow: {
+			styleOverrides: {
+				root: {
+					height: 46,
+				},
+			},
+		},
+		MuiTableCell: {
+			styleOverrides: {
+				root: {},
 			},
 		},
 	},
 }
-
-export default muiTheme

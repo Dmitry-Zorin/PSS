@@ -3,29 +3,15 @@ import {
 	ChipField,
 	FileField,
 	Labeled,
-	ReferenceField,
 	SingleFieldList,
 } from 'react-admin'
 
-export const ChipArrayField = (props) => (
+export const ChipArrayField = ({ fieldSource = 'value', ...props }) => (
 	<ArrayField {...props}>
 		<SingleFieldList linkType={false}>
-			<ChipField source="value" clickable={false} />
+			<ChipField source={fieldSource} clickable={false} />
 		</SingleFieldList>
 	</ArrayField>
-)
-
-export const CharacterField = () => (
-	<Labeled>
-		<ReferenceField
-			source="characterId"
-			label="fields.character"
-			reference="characters"
-			emptyText="-"
-		>
-			<ChipField source="name" />
-		</ReferenceField>
-	</Labeled>
 )
 
 export const DownloadFileField = () => (

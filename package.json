@@ -8,6 +8,8 @@
 		"start": "run-p start:*",
 		"start:server": "npm start --workspace=server",
 		"start:client": "npm start --workspace=client",
+		"debug": "run-p start:client debug:server",
+		"debug:server": "npm run debug --workspace=server",
 		"vercel-build": "npm run vercel-build --workspace=server"
 	},
 	"devDependencies": {

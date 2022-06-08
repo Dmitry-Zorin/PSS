@@ -1,11 +1,11 @@
 import { Home } from '@mui/icons-material'
-import { IconButton, Typography } from '@mui/material'
+import { Box, IconButton, Typography } from '@mui/material'
 import { AppBar as RaAppBar } from 'react-admin'
 import { Link } from 'react-router-dom'
 import { LocaleSwitcher, ThemeSwitcher } from './components'
 
 export const AppBar = (props) => (
-	<RaAppBar color="primary" enableColorOnDark={true} {...props}>
+	<RaAppBar color="primary" enableColorOnDark={true} container={Box} {...props}>
 		<Typography
 			id="react-admin-title"
 			variant="h6"

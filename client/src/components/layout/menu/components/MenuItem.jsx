@@ -1,12 +1,18 @@
 import { Chip } from '@mui/material'
 import { createElement, useContext } from 'react'
-import { MenuItemLink, useResourceDefinitions, useTranslate } from 'react-admin'
+import {
+	MenuItemLink,
+	useResourceDefinitions,
+	useSidebarState,
+	useTranslate,
+} from 'react-admin'
 import { CountContext } from '../../../CountContext'
 
 export const MenuItem = ({ name }) => {
 	const translate = useTranslate()
-	const { getResourceCount } = useContext(CountContext)
 	const resources = useResourceDefinitions()
+	const [isSidebarOpen] = useSidebarState()
+	const { getResourceCount } = useContext(CountContext)
 
 	const count = getResourceCount(name)
 	const { icon } = resources[name] || {}
@@ -17,7 +23,7 @@ export const MenuItem = ({ name }) => {
 			primaryText={
 				<>
 					{translate(`resources.${name}.name`, { smart_count: 2 })}
-					{count && (
+					{isSidebarOpen && count && (
 						<Chip
 							size="small"
 							label={count}

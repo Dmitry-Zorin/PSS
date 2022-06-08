@@ -2,7 +2,7 @@ import {
 	Controller,
 	UseFilters,
 	UsePipes,
-	ValidationPipe
+	ValidationPipe,
 } from '@nestjs/common'
 import { MessagePattern, Payload } from '@nestjs/microservices'
 import { HttpExceptionFilter } from '../auth/http-exception.filter'
@@ -11,7 +11,7 @@ import {
 	IdParamDto,
 	IdsParamDto,
 	PayloadDto,
-	ResourceParamDto
+	ResourceParamDto,
 } from './dto/params'
 import { PublicationsQueryDto } from './dto/params/publications-query.dto'
 import { PayloadValidationPipe } from './payload-validation.pipe'

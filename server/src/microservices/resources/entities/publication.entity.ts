@@ -6,7 +6,7 @@ import {
 	ManyToMany,
 	OneToOne,
 	PrimaryColumn,
-	RelationId
+	RelationId,
 } from 'typeorm'
 import { Author } from './author.entity'
 import { ResourceItem } from './resource-item.entity'
@@ -27,7 +27,7 @@ export class Publication {
 	type?: string
 
 	@Column({ nullable: true })
-	characterId?: number
+	characterId?: string
 
 	@Column({ nullable: true })
 	publicationPlace?: string

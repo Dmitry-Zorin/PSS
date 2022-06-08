@@ -2,10 +2,10 @@ import { entries } from 'lodash'
 import resources from 'pages/resources'
 import { Admin, Resource } from 'react-admin'
 import { QueryClient } from 'react-query'
-import authProvider from './auth-provider'
+import authProvider from './auth.provider'
 import { Layout } from './components'
-import dataProvider from './data-provider'
-import i18nProvider from './i18n/i18n-provider'
+import dataProvider from './data.provider'
+import i18nProvider from './i18n/i18n.provider'
 import { Dashboard } from './pages/Dashboard'
 import themes from './themes'
 
@@ -44,7 +44,7 @@ const getResourcesList = (permissions) => [
 const App = () => (
 	<Admin
 		title="metadata.title"
-		theme={themes.common}
+		theme={themes.base}
 		layout={Layout}
 		dashboard={Dashboard}
 		queryClient={queryClient}

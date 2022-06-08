@@ -4,8 +4,8 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import Joi from 'joi'
 import { CONNECTION_NAME } from './constants'
 import * as entities from './entities'
-import { OtherResourcesModule } from './other-resources/otherResources.module'
-import { ResourceItemModule } from './resource-item/resourceItem.module'
+import { OtherResourcesModule } from './other-resources/other-resources.module'
+import { ResourceItemModule } from './resource-item/resource-item.module'
 import { ResourcesController } from './resources.controller'
 import { ResourcesService } from './resources.service'
 
@@ -25,13 +25,13 @@ export const baseTypeOrmOptions = {
 			imports: [ConfigModule],
 			name: CONNECTION_NAME,
 			useFactory: (configService: ConfigService) => {
-				const isDevEnv = configService.get('NODE_ENV') !== 'production'
+				const isProd = configService.get('NODE_ENV') === 'production'
 				return {
 					...baseTypeOrmOptions,
 					url: configService.get('RESOURCES_POSTGRES_URL'),
-					keepConnectionAlive: isDevEnv,
-					syncronize: isDevEnv,
-					logging: isDevEnv,
+					keepConnectionAlive: !isProd,
+					logging: !isProd,
+					cache: isProd,
 				}
 			},
 			inject: [ConfigService],

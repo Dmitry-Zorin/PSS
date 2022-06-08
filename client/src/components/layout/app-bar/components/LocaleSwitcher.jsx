@@ -26,8 +26,7 @@ export const LocaleSwitcher = () => {
 				<html lang={locale} />
 				<title lang={locale}>{translate('metadata.title')}</title>
 			</Helmet>
-			<Button onClick={switchLocale}>
-				<Language sx={{ mr: 0.5 }} />
+			<Button startIcon={<Language />} onClick={switchLocale}>
 				{translate('metadata.lang')}
 			</Button>
 		</>

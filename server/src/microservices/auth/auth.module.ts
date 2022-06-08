@@ -26,13 +26,12 @@ export const baseTypeOrmOptions = {
 			imports: [ConfigModule],
 			name: CONNECTION_NAME,
 			useFactory: (configService: ConfigService) => {
-				const isDevEnv = configService.get('NODE_ENV') !== 'production'
+				const isProd = configService.get('NODE_ENV') === 'production'
 				return {
 					...baseTypeOrmOptions,
 					url: configService.get('AUTH_POSTGRES_URL'),
-					keepConnectionAlive: isDevEnv,
-					syncronize: isDevEnv,
-					logging: isDevEnv,
+					keepConnectionAlive: !isProd,
+					logging: !isProd,
 				}
 			},
 			inject: [ConfigService],

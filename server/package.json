@@ -2,7 +2,7 @@
 	"name": "@storage-system/server",
 	"scripts": {
 		"start": "nest build --webpack --watch",
-		"debug": "nest start --watch",
+		"debug": "nest start --debug --watch",
 		"prebuild": "rimraf dist",
 		"build": "nest build",
 		"lint": "eslint src --ext .ts --fix",

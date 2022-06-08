@@ -1,15 +1,21 @@
 import {
 	BadRequestException,
 	Injectable,
+	Logger,
 	NotFoundException,
 } from '@nestjs/common'
 import { InjectEntityManager } from '@nestjs/typeorm'
-import { EntityManager, FindManyOptions, In } from 'typeorm'
-import { CONNECTION_NAME } from './constants'
+import {
+	EntityManager,
+	EntityPropertyNotFoundError,
+	FindManyOptions,
+	In,
+} from 'typeorm'
+import { CONNECTION_NAME, DEFAULT_CACHE_TIME } from './constants'
 import { FindListParamsDto } from './dto/params/find-query.dto'
 import { Publication, Resource, ResourceItem } from './entities'
-import { OtherResourcesService } from './other-resources/otherResources.service'
-import { ResourceItemService } from './resource-item/resourceItem.service'
+import { OtherResourcesService } from './other-resources/other-resources.service'
+import { ResourceItemService } from './resource-item/resource-item.service'
 import { omitNullDeep } from './utilities'
 
 export interface FindOptions {
@@ -26,6 +32,8 @@ export interface CountResult {
 
 @Injectable()
 export class ResourcesService {
+	private readonly logger = new Logger('ResourcesService')
+
 	constructor(
 		@InjectEntityManager(CONNECTION_NAME)
 		private readonly entityManager: EntityManager,
@@ -53,6 +61,7 @@ export class ResourcesService {
 			.select('item.resource', 'resource')
 			.addSelect('count(*)', 'count')
 			.groupBy('item.resource')
+			.cache(DEFAULT_CACHE_TIME)
 			.getRawMany()
 
 		return resourceItems.reduce((res: Record<string, number>, e) => {
@@ -67,6 +76,7 @@ export class ResourcesService {
 			.select('resource.category', 'category')
 			.addSelect('array_agg(resource.name)', 'resources')
 			.groupBy('resource.category')
+			.cache(10 * DEFAULT_CACHE_TIME)
 			.getRawMany()
 
 		return categories.reduce((res: Record<string, string[]>, e) => {
@@ -111,7 +121,11 @@ export class ResourcesService {
 		options = {} as FindOptions,
 	): Promise<any> {
 		const { filter, sort, skip, take } = searchParams
-		const findOptions: FindManyOptions = { skip, take }
+		const findOptions: FindManyOptions = {
+			skip,
+			take,
+			cache: DEFAULT_CACHE_TIME,
+		}
 
 		if (resource === 'timeline') {
 			findOptions.order = { createdAt: 'desc' }
@@ -145,12 +159,18 @@ export class ResourcesService {
 					total,
 				}
 			}
+
 			const records = await this.entityManager.find(entityClass, findOptions)
 			return {
 				records: omitNullDeep(records),
 			}
 		} catch (e: any) {
-			throw new BadRequestException(e.message)
+			if (e instanceof EntityPropertyNotFoundError) {
+				const property = e.message.match(/^Property "(\w+)"/)![1]
+				throw new BadRequestException(`Invalid property ${property}`)
+			}
+			this.logger.error(e, e?.stack)
+			throw new NotFoundException()
 		}
 	}
 

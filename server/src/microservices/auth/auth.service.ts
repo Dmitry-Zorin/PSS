@@ -1,14 +1,16 @@
 import {
+	BadRequestException,
 	ConflictException,
 	Injectable,
+	Logger,
 	NotFoundException,
 	UnauthorizedException,
 } from '@nestjs/common'
 import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm'
 import { compare, genSalt, hash } from 'bcryptjs'
 import { omit } from 'lodash'
-import { EntityManager, Repository } from 'typeorm'
-import { CONNECTION_NAME } from './constants'
+import { EntityManager, QueryFailedError, Repository } from 'typeorm'
+import { CONNECTION_NAME, SALT_ROUNDS } from './constants'
 import { SettingsDto } from './dto'
 import { Settings, User } from './entities'
 
@@ -17,10 +19,10 @@ interface FindOptions {
 	passwordToVerify?: string
 }
 
-const SALT_ROUNDS = 10
-
 @Injectable()
 export class AuthService {
+	private readonly logger = new Logger('AuthService')
+
 	constructor(
 		@InjectEntityManager(CONNECTION_NAME)
 		private readonly entityManager: EntityManager,
@@ -42,8 +44,13 @@ export class AuthService {
 			try {
 				await manager.insert(User, user)
 			} catch (e: any) {
-				console.log(e)
-				throw new ConflictException('User already exists')
+				if (e instanceof QueryFailedError) {
+					if (e.message.startsWith('duplicate key')) {
+						throw new ConflictException('User already exists')
+					}
+				}
+				this.logger.error(e, e?.stack)
+				throw new BadRequestException('Failed to create user')
 			}
 
 			const settings = manager.create(Settings, { userId: user.id })
@@ -58,7 +65,6 @@ export class AuthService {
 
 	async updateSettings(id: string, settings: SettingsDto) {
 		await this.settingsRepository.update(id, settings)
-		return null
 	}
 
 	async findUser(filter: Record<string, any>, options = {} as FindOptions) {
@@ -90,6 +96,5 @@ export class AuthService {
 			await manager.delete(Settings, id)
 			await manager.delete(User, id)
 		})
-		return null
 	}
 }

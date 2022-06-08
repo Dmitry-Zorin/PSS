@@ -7,7 +7,7 @@ import { ResourcesModule } from './controllers/resources/resources.module'
 import { AllExceptionsFilter } from './exception.filter'
 import { JwtGuard } from './jwt/jwt.guard'
 import { JwtModule } from './jwt/jwt.module'
-import { ParseQueryPipe } from './parse-query.pipe'
+import { QueryParsePipe } from './query-parse.pipe'
 import { RolesGuard } from './roles.guard'
 import routes from './routes'
 
@@ -37,7 +37,7 @@ import routes from './routes'
 		},
 		{
 			provide: APP_PIPE,
-			useClass: ParseQueryPipe,
+			useClass: QueryParsePipe,
 		},
 		{
 			provide: APP_FILTER,

@@ -1,7 +1,7 @@
 import fastifyCors from '@fastify/cors'
 import fastifyHelmet from '@fastify/helmet'
 import { ConfigService } from '@nestjs/config'
-import getApp from './get-app'
+import getApp from './app'
 
 declare const module: any
 

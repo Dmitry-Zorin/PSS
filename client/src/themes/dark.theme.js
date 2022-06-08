@@ -1,23 +1,27 @@
 import { amber, blueGrey } from '@mui/material/colors'
+import { merge } from 'lodash'
+import { baseTheme } from './base.theme'
 
-const darkTheme = {
+export const darkTheme = merge({}, baseTheme, {
 	palette: {
 		mode: 'dark',
 		primary: {
-			light: amber[200],
-			main: amber[300],
-			dark: amber[400],
+			light: '#FFDF6C',
+			main: '#FFDF6C',
+			dark: '#FFDF6C',
 		},
 		background: {
 			default: blueGrey[800],
-			paper: blueGrey[900],
+			paper: '#494D5f',
 		},
 	},
 	components: {
 		RaSidebar: {
 			styleOverrides: {
 				root: {
-					backgroundColor: blueGrey[900],
+					'.RaSidebar-fixed': {
+						background: blueGrey[900],
+					},
 				},
 			},
 		},
@@ -31,13 +35,11 @@ const darkTheme = {
 						borderColor: 'rgba(255, 255, 255, 0.06)',
 						background: 'rgba(0, 0, 0, 0.1)',
 						'&, & *': {
-							color: amber[300],
+							color: '#FFDF6C',
 						},
 					},
 				},
 			},
 		},
 	},
-}
-
-export default darkTheme
+})
