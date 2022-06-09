@@ -25,8 +25,8 @@ export const ThemeSwitcher = () => {
 	return (
 		<IconButton onClick={changeTheme}>
 			<DarkModeSwitch
-				sunColor="white"
-				moonColor="black"
+				sunColor="black"
+				moonColor="white"
 				checked={isDarkMode}
 				onChange={() => {}}
 			/>

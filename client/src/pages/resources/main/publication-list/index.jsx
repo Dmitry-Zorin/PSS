@@ -1,7 +1,7 @@
-import { FeaturedPlayList } from '@mui/icons-material'
+import { FormatListBulleted } from '@mui/icons-material'
 import { PublicationList } from './PublicationList'
 
 export default {
-	icon: FeaturedPlayList,
+	icon: FormatListBulleted,
 	list: PublicationList,
 }

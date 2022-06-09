@@ -38,7 +38,7 @@ function getResources(resources, permissions = false) {
 const getResourcesList = (permissions) => [
 	...getResources(resources.main),
 	...getResources(resources.publications, permissions),
-	...(permissions && getResources(resources.admin, true)),
+	...(permissions ? getResources(resources.admin, true) : []),
 ]
 
 const App = () => (
@@ -46,6 +46,7 @@ const App = () => (
 		title="metadata.title"
 		theme={themes.base}
 		layout={Layout}
+		loginPage={false}
 		dashboard={Dashboard}
 		queryClient={queryClient}
 		authProvider={authProvider}

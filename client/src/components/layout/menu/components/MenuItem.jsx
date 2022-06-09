@@ -11,8 +11,8 @@ import { CountContext } from '../../../CountContext'
 export const MenuItem = ({ name }) => {
 	const translate = useTranslate()
 	const resources = useResourceDefinitions()
-	const [isSidebarOpen] = useSidebarState()
 	const { getResourceCount } = useContext(CountContext)
+	const [isSidebarOpen] = useSidebarState()
 
 	const count = getResourceCount(name)
 	const { icon } = resources[name] || {}
@@ -27,7 +27,7 @@ export const MenuItem = ({ name }) => {
 						<Chip
 							size="small"
 							label={count}
-							sx={{ ml: '10px', cursor: 'pointer' }}
+							sx={{ ml: 2, cursor: 'pointer' }}
 						/>
 					)}
 				</>

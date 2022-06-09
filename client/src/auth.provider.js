@@ -15,7 +15,6 @@ const authProvider = {
 		if (json?.token) {
 			localStorage.setItem('token', json.token)
 			const { json: user } = await fetchAuth('identity')
-			user.fullName = user.username
 			setUser(user)
 			return Promise.resolve()
 		}
@@ -38,12 +37,9 @@ const authProvider = {
 		if (user) {
 			return user.role === 'admin'
 		}
-		const { json } = await fetchAuth('permissions')
-		return json.role === 'admin'
-	},
-
-	getIdentity: async () => {
-		return getUser()
+		return false
+		// const { json } = await fetchAuth('permissions')
+		// return json.role === 'admin'
 	},
 
 	checkError: ({ status }) => {

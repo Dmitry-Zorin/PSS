@@ -19,10 +19,10 @@ export const ScrollTopButton = () => {
 		<Zoom in={trigger}>
 			<Box
 				sx={{
-					zIndex: 9000,
+					zIndex: 900,
 					position: 'fixed',
-					bottom: (theme) => theme.spacing(3),
-					right: (theme) => theme.spacing(4),
+					bottom: (t) => t.spacing(3),
+					right: (t) => t.spacing(3),
 				}}
 				onClick={handleClick}
 			>

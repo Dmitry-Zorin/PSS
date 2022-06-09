@@ -6,17 +6,23 @@ import { LocaleSwitcher, ThemeSwitcher } from './components'
 
 export const AppBar = (props) => (
 	<RaAppBar color="primary" enableColorOnDark={true} container={Box} {...props}>
-		<Typography
-			id="react-admin-title"
-			variant="h6"
-			color="inherit"
-			sx={{
-				flex: 1,
-				textOverflow: 'ellipsis',
-				whiteSpace: 'nowrap',
-				overflow: 'hidden',
-			}}
-		/>
+		<Box sx={{ flexGrow: 1 }}>
+			<Typography
+				component={Link}
+				to="/"
+				color="primary"
+				sx={{
+					fontStyle: 'italic',
+					fontSize: '1.5rem',
+					fontWeight: 700,
+					textDecoration: 'none',
+					p: 1,
+					pl: 0,
+				}}
+			>
+				PSS
+			</Typography>
+		</Box>
 		<LocaleSwitcher />
 		<ThemeSwitcher />
 		<IconButton component={Link} to="/">

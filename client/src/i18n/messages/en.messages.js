@@ -1,19 +1,16 @@
 import englishMessages from 'ra-language-english'
 
+englishMessages.ra.action.show = 'View'
+
 export const enMessages = {
 	...englishMessages,
 	metadata: {
 		lang: 'English',
-		title: 'Scientific works storage system',
+		title: 'Publication storage system',
 	},
-	layout: {
-		menu: {
-			categoryA: 'Category A',
-			categoryB: 'Category B',
-			categoryC: 'Category C',
-			others: 'Others',
-			admin: 'Administration',
-		},
+	menu: {
+		publications: 'Publications',
+		admin: 'Administration',
 	},
 	fields: {
 		title: 'Title',
@@ -39,7 +36,7 @@ export const enMessages = {
 			name: 'Timeline',
 		},
 		publicationList: {
-			name: 'List of publications',
+			name: 'Create publications list',
 		},
 		articles: {
 			name: 'Article |||| Articles',

@@ -1,12 +1,12 @@
 import {
 	Code,
 	Description,
-	InsertDriveFile,
-	LibraryBooks,
+	Equalizer,
+	FindInPage,
+	Grading,
 	MenuBook,
-	PlaylistAddCheck,
-	Subject,
-	VerticalSplit,
+	Newspaper,
+	Verified,
 } from '@mui/icons-material'
 import {
 	PublicationCreate,
@@ -23,32 +23,32 @@ const publicationViews = {
 }
 
 export const articles = {
-	icon: VerticalSplit,
+	icon: Newspaper,
 	...publicationViews,
 }
 
 export const abstracts = {
-	icon: InsertDriveFile,
-	...publicationViews,
-}
-
-export const dissertations = {
-	icon: LibraryBooks,
-	...publicationViews,
-}
-
-export const monographs = {
 	icon: Description,
 	...publicationViews,
 }
 
+export const dissertations = {
+	icon: Grading,
+	...publicationViews,
+}
+
+export const monographs = {
+	icon: FindInPage,
+	...publicationViews,
+}
+
 export const patents = {
-	icon: PlaylistAddCheck,
+	icon: Verified,
 	...publicationViews,
 }
 
 export const reports = {
-	icon: Subject,
+	icon: Equalizer,
 	...publicationViews,
 }
 

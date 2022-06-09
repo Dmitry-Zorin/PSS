@@ -4,16 +4,11 @@ export const ruMessages = {
 	...russianMessages,
 	metadata: {
 		lang: 'Русский',
-		title: 'Системa хранения научных трудов',
+		title: 'Системa хранения публикаций',
 	},
-	layout: {
-		menu: {
-			categoryA: 'Категория А',
-			categoryB: 'Категория Б',
-			categoryC: 'Категория В',
-			others: 'Другие',
-			admin: 'Администрирование',
-		},
+	menu: {
+		publications: 'Публикации',
+		admin: 'Администрирование',
 	},
 	fields: {
 		title: 'Название',
@@ -39,7 +34,7 @@ export const ruMessages = {
 			name: 'События',
 		},
 		publicationList: {
-			name: 'Список публикаций',
+			name: 'Cоздать список публикаций',
 		},
 		articles: {
 			name: 'Статья |||| Статьи',

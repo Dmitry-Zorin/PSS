@@ -1,27 +1,23 @@
-import { amber, blueGrey } from '@mui/material/colors'
-import { merge } from 'lodash'
-import { baseTheme } from './base.theme'
+import { common, lightGreen } from '@mui/material/colors'
+import { createTheme } from './theme-creator'
 
-export const darkTheme = merge({}, baseTheme, {
+const colors = {
+	primary: lightGreen[400],
+	secondary: lightGreen[400],
+	bgPrimary: '#272C34',
+	divider: 'rgba(255, 255, 255, 0.1)',
+	text: common.white,
+}
+
+export const darkTheme = createTheme(colors, {
 	palette: {
 		mode: 'dark',
-		primary: {
-			light: '#FFDF6C',
-			main: '#FFDF6C',
-			dark: '#FFDF6C',
-		},
-		background: {
-			default: blueGrey[800],
-			paper: '#494D5f',
-		},
 	},
 	components: {
-		RaSidebar: {
+		MuiPaper: {
 			styleOverrides: {
 				root: {
-					'.RaSidebar-fixed': {
-						background: blueGrey[900],
-					},
+					background: 'none',
 				},
 			},
 		},
@@ -29,14 +25,10 @@ export const darkTheme = merge({}, baseTheme, {
 			styleOverrides: {
 				root: {
 					'&:hover': {
-						background: 'rgba(0, 0, 0, 0.05)',
+						background: 'rgba(255, 255, 255, 0.04)',
 					},
 					'&.RaMenuItemLink-active': {
-						borderColor: 'rgba(255, 255, 255, 0.06)',
-						background: 'rgba(0, 0, 0, 0.1)',
-						'&, & *': {
-							color: '#FFDF6C',
-						},
+						background: 'rgba(255, 255, 255, 0.08)',
 					},
 				},
 			},

@@ -26,7 +26,12 @@ export const LocaleSwitcher = () => {
 				<html lang={locale} />
 				<title lang={locale}>{translate('metadata.title')}</title>
 			</Helmet>
-			<Button startIcon={<Language />} onClick={switchLocale}>
+			<Button
+				color="inherit"
+				startIcon={<Language />}
+				onClick={switchLocale}
+				sx={{ mr: 1 }}
+			>
 				{translate('metadata.lang')}
 			</Button>
 		</>

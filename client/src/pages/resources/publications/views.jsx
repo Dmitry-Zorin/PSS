@@ -1,4 +1,4 @@
-import { Divider, Stack } from '@mui/material'
+import { Stack } from '@mui/material'
 import { Box } from '@mui/system'
 import {
 	ChipField,
@@ -77,14 +77,20 @@ export const PublicationList = ({ children }) => (
 
 export const PublicationShow = ({ children }) => (
 	<ShowForm>
-		<Stack spacing={2} sx={{ px: 2, py: 1 }}>
-			<TextField source="title" sx={{ fontSize: '1.2rem', fontWeight: 450 }} />
+		<Stack spacing={3} sx={{ px: 2, py: 1 }}>
+			<TextField
+				source="title"
+				sx={{
+					fontSize: '1.5rem',
+					fontWeight: 600,
+				}}
+			/>
 			<TextField source="description" />
 		</Stack>
-		<Divider sx={{ m: 4 }} />
 		<Box
 			sx={{
 				display: 'grid',
+				mt: 3,
 				px: 2,
 				py: 1,
 				rowGap: 3,
@@ -129,7 +135,6 @@ export const PublicationShow = ({ children }) => (
 				/>
 			</Labeled>
 		</Box>
-		<Divider sx={{ m: 4 }} />
 		<SimpleShowLayout spacing={3}>
 			<TextField
 				source="publication.outputData"

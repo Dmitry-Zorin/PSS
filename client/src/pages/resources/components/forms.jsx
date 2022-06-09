@@ -11,16 +11,15 @@ import {
 } from 'react-admin'
 import { ListActions, ShowActions } from './actions'
 import { ResourceCounter } from './ResourceCounter'
-import { Title } from './Title'
 
 export const CreateForm = ({ children, ...props }) => (
-	<Create title={<Title action="create" />} redirect="show" {...props}>
+	<Create redirect="show" {...props}>
 		<SimpleForm>{children}</SimpleForm>
 	</Create>
 )
 
 export const EditForm = ({ children, ...props }) => (
-	<Edit title={<Title action="edit" />} {...props}>
+	<Edit {...props}>
 		<SimpleForm>{children}</SimpleForm>
 	</Edit>
 )
@@ -48,7 +47,6 @@ export const ListForm = ({
 
 	return (
 		<List
-			title={<Title action="list" />}
 			actions={<ListActions {...{ filters, permissions }} />}
 			filters={filters}
 			sort={{ field: 'createdAt', order: 'desc' }}
@@ -68,11 +66,7 @@ export const ShowForm = ({ children, ...props }) => {
 	const permissions = usePermissions()
 
 	return (
-		<Show
-			title={<Title action="show" />}
-			actions={<ShowActions {...{ permissions }} />}
-			{...props}
-		>
+		<Show actions={<ShowActions {...{ permissions }} />} {...props}>
 			{/* <SimpleShowLayout spacing={3}>{children}</SimpleShowLayout> */}
 			{children}
 		</Show>
