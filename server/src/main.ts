@@ -3,8 +3,6 @@ import fastifyHelmet from '@fastify/helmet'
 import { ConfigService } from '@nestjs/config'
 import getApp from './app'
 
-declare const module: any
-
 async function bootstrap() {
 	const app = await getApp()
 	const configService = app.get<ConfigService>(ConfigService)
@@ -17,11 +15,6 @@ async function bootstrap() {
 
 	await app.register(fastifyHelmet)
 	await app.listen(configService.get('PORT')!)
-
-	if (module.hot) {
-		module.hot.accept()
-		module.hot.dispose(() => app.close())
-	}
 }
 
 bootstrap()

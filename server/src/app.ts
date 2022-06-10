@@ -1,7 +1,7 @@
 import { NestApplicationOptions } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
-import { Transport } from '@nestjs/microservices'
+import { TcpOptions, Transport } from '@nestjs/microservices'
 import {
 	FastifyAdapter,
 	NestFastifyApplication,
@@ -16,7 +16,7 @@ export default async function getApp(options?: NestApplicationOptions) {
 	)
 	const configService = app.get<ConfigService>(ConfigService)
 
-	app.connectMicroservice({
+	app.connectMicroservice<TcpOptions>({
 		transport: Transport.TCP,
 		options: {
 			port: configService.get('TCP_PORT'),
