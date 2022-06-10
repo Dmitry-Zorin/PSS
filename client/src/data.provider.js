@@ -20,11 +20,8 @@ function processInputData(data) {
 	})
 }
 
-function processOutputData(data, options = { skipEmpty: true }) {
+function processOutputData(data) {
 	return transform(data, (result, value, key) => {
-		if (!value && options.skipEmpty) {
-			return
-		}
 		switch (key) {
 			case 'publication':
 				result[key] = processOutputData(value)
@@ -55,9 +52,7 @@ const dataProvider = {
 	update: async (resource, { id, data }) => {
 		await fetchResources(`${resource}/${id}`, {
 			method: 'put',
-			body: processOutputData(data, {
-				skipEmpty: false,
-			}),
+			body: processOutputData(data),
 		})
 		return { data: { id } }
 	},

@@ -13,7 +13,7 @@ import { IdParamDto } from './dto/params'
 import { HttpExceptionFilter } from './http-exception.filter'
 
 @Controller()
-@UsePipes(new ValidationPipe({ transform: true }))
+@UsePipes(ValidationPipe)
 @UseFilters(HttpExceptionFilter)
 export class AuthController {
 	constructor(

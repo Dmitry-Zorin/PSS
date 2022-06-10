@@ -1,7 +1,7 @@
-import { IsString, Length } from 'class-validator'
+import { IsString, MaxLength } from 'class-validator'
 
 export class ResourceParamDto {
 	@IsString()
-	@Length(1, 50)
+	@MaxLength(50)
 	resource: string
 }

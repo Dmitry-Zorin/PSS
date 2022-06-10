@@ -2,7 +2,6 @@ import { Type } from 'class-transformer'
 import {
 	IsArray,
 	IsInt,
-	IsNotEmpty,
 	IsOptional,
 	IsString,
 	IsUUID,
@@ -10,19 +9,22 @@ import {
 	Max,
 	MaxLength,
 	Min,
+	ValidateIf,
 } from 'class-validator'
 
 export class PublicationDto {
 	@IsOptional()
 	@IsString()
-	@Length(1, 100)
+	@MaxLength(100)
 	type?: string
 
 	@IsOptional()
+	@ValidateIf((_, value) => value !== '')
 	@IsUUID()
 	characterId?: string
 
 	@IsOptional()
+	@ValidateIf((_, value) => value !== null)
 	@IsInt()
 	@Min(1900)
 	@Max(2100)
@@ -31,10 +33,11 @@ export class PublicationDto {
 
 	@IsOptional()
 	@IsString()
-	@Length(1, 5000)
+	@MaxLength(5000)
 	outputData?: string
 
 	@IsOptional()
+	@ValidateIf((_, value) => value !== null)
 	@IsInt()
 	@Min(0)
 	@Max(5000)
@@ -42,12 +45,11 @@ export class PublicationDto {
 	volume: number
 
 	@IsArray()
-	@IsUUID(undefined, { each: true })
+	@IsUUID('all', { each: true })
 	authorIds: string[]
 
 	@IsOptional()
 	@IsString({ each: true })
-	@IsNotEmpty({ each: true })
-	@MaxLength(100, { each: true })
+	@Length(1, 100, { each: true })
 	coauthors?: string[]
 }

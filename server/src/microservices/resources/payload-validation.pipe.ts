@@ -12,14 +12,6 @@ interface TransformValue {
 
 @Injectable()
 export class PayloadValidationPipe extends ValidationPipe {
-	constructor() {
-		super({
-			whitelist: true,
-			forbidNonWhitelisted: true,
-			transform: true,
-		})
-	}
-
 	transform(value: TransformValue) {
 		const dtoName = `${capitalize(singular(value.resource))}Dto`
 		const dto = (resources as any)?.[dtoName] || resources.ResourceItemDto

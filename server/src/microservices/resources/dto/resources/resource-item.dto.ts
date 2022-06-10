@@ -3,19 +3,19 @@ import {
 	IsNotEmptyObject,
 	IsOptional,
 	IsString,
-	Length,
+	MaxLength,
 	ValidateNested,
 } from 'class-validator'
 import { PublicationDto } from './publication.dto'
 
 export class ResourceItemDto {
 	@IsString()
-	@Length(1, 200)
+	@MaxLength(200)
 	title: string
 
 	@IsOptional()
 	@IsString()
-	@Length(1, 5000)
+	@MaxLength(5000)
 	description?: string
 
 	@IsOptional()

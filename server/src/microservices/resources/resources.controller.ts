@@ -19,7 +19,7 @@ import { ResourcesService } from './resources.service'
 import { omitNullDeep } from './utilities'
 
 @Controller()
-@UsePipes(new ValidationPipe({ transform: true }))
+@UsePipes(ValidationPipe)
 @UseFilters(HttpExceptionFilter)
 export class ResourcesController {
 	constructor(private readonly resourcesService: ResourcesService) {}
