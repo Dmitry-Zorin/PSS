@@ -2,7 +2,7 @@ import { AdminPanelSettings, School } from '@mui/icons-material'
 import { Divider } from '@mui/material'
 import resources from 'pages/resources'
 import { Menu as RaMenu, usePermissions } from 'react-admin'
-import { CountProvider } from '../../CountContext'
+import { CountContextProvider } from '../../CountContext'
 import { MenuItem, SubMenu } from './components'
 
 function getMenuItems(resources) {
@@ -14,7 +14,7 @@ export const Menu = () => {
 
 	return (
 		<RaMenu>
-			<CountProvider>
+			<CountContextProvider>
 				{getMenuItems(resources.main)}
 				<SubMenu name="menu.publications" icon={<School />}>
 					{getMenuItems(resources.publications)}
@@ -27,7 +27,7 @@ export const Menu = () => {
 						</SubMenu>
 					</>
 				)}
-			</CountProvider>
+			</CountContextProvider>
 		</RaMenu>
 	)
 }

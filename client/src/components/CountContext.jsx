@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react'
+import { createContext, useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
 import { fetchApi } from 'requests'
 
@@ -7,24 +7,26 @@ export const CountContext = createContext({
 	setResourceCount: () => {},
 })
 
-export const CountProvider = ({ children }) => {
+export const CountContextProvider = ({ children }) => {
 	const [count, setCount] = useState({})
 
-	useQuery(['count'], async () => {
-		const { json } = await fetchApi('resources/count')
-		setCount(json)
-	})
+	const { data } = useQuery(['count'], async () => fetchApi('resources/count'))
 
-	function getResourceCount(resource) {
-		return count[resource]
-	}
-
-	function setResourceCount(resource, count) {
-		setCount((e) => ({ ...e, [resource]: count }))
-	}
+	useEffect(() => {
+		if (data) {
+			setCount(data.json)
+		}
+	}, [data])
 
 	return (
-		<CountContext.Provider value={{ getResourceCount, setResourceCount }}>
+		<CountContext.Provider
+			value={{
+				getResourceCount: (resource) => count[resource],
+				setResourceCount: (resource, count) => {
+					setCount((e) => ({ ...e, [resource]: count }))
+				},
+			}}
+		>
 			{children}
 		</CountContext.Provider>
 	)
