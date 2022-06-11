@@ -18,9 +18,9 @@ export function createTheme(colors, theme) {
 			RaAppBar: {
 				styleOverrides: {
 					root: {
-						background: colors.bgPrimary,
-						borderBottom: `1px solid ${colors.divider}`,
 						color: colors.text,
+						background: colors.bgPrimary,
+						borderColor: colors.divider,
 					},
 				},
 			},
@@ -36,7 +36,7 @@ export function createTheme(colors, theme) {
 			RaSidebar: {
 				styleOverrides: {
 					root: {
-						borderRight: `1px solid ${colors.divider}`,
+						borderColor: colors.divider,
 						'.RaSidebar-fixed': {
 							background: colors.bgPrimary,
 						},

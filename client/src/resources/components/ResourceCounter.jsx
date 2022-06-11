@@ -12,7 +12,7 @@ export const ResourceCounter = () => {
 		if (data && count !== data.length) {
 			setResourceCount(resource, data.length)
 		}
-	}, [data])
+	}, [count, data, resource, setResourceCount])
 
 	return null
 }

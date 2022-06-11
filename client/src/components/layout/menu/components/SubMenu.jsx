@@ -1,6 +1,7 @@
-import { ExpandMore } from '@mui/icons-material'
-import { Collapse } from '@mui/material'
-import { useEffect, useState } from 'react'
+import { ExpandLess } from '@mui/icons-material'
+import { Chip, Collapse } from '@mui/material'
+import { CountContext } from 'components/CountContext'
+import { useContext, useEffect, useState } from 'react'
 import { MenuItemLink, useSidebarState, useTranslate } from 'react-admin'
 
 const PADDING = 6
@@ -22,6 +23,7 @@ export const SubMenu = ({ name, icon, children }) => {
 		pl: isSidebarOpen ? PADDING : undefined,
 	})
 	const [showTransition, setShowTransition] = useState(false)
+	const { getTotalCount } = useContext(CountContext)
 
 	useEffect(() => {
 		setShowTransition(true)
@@ -37,14 +39,37 @@ export const SubMenu = ({ name, icon, children }) => {
 				}),
 			})
 		})
-	}, [isSidebarOpen])
+	}, [isSidebarOpen, showTransition])
+
+	const isPublications = name === 'menu.publications'
 
 	return (
 		<>
 			<MenuItemLink
 				to="#"
-				primaryText={translate(name)}
-				leftIcon={isOpen && !isSidebarOpen ? <ExpandMore /> : icon}
+				primaryText={
+					<>
+						{translate(name)}
+						{isSidebarOpen && (
+							<>
+								{isPublications && (
+									<Chip
+										size="small"
+										label={getTotalCount()}
+										sx={{ ml: 'auto', mr: 1, cursor: 'pointer' }}
+									/>
+								)}
+								<ExpandLess
+									sx={{
+										transition: 'transform 300ms ease',
+										...(!isOpen && { transform: 'rotate(180deg)' }),
+									}}
+								/>
+							</>
+						)}
+					</>
+				}
+				leftIcon={isOpen && !isSidebarOpen ? <ExpandLess /> : icon}
 				onClick={() => setIsOpen((e) => !e)}
 			/>
 			<Collapse in={isOpen} sx={{ a: menuItemStyle }}>

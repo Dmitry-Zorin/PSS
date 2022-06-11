@@ -1,5 +1,4 @@
-import { Stack } from '@mui/material'
-import { Box } from '@mui/system'
+import { Box, Stack } from '@mui/material'
 import {
 	ChipField,
 	Labeled,
@@ -58,7 +57,7 @@ export const PublicationEdit = ({ children }) => (
 	</EditForm>
 )
 
-export const PublicationList = ({ children }) => (
+export const PublicationList = () => (
 	<ListForm
 		filters={[
 			<TextInput source="title" label="fields.search" alwaysOn />,
@@ -69,8 +68,7 @@ export const PublicationList = ({ children }) => (
 		]}
 	>
 		<TextField source="title" label="fields.title" />
-		{children}
-		<AuthorsField />
+		<AuthorsField label="fields.authors" />
 		<ChipField source="publication.year" label="fields.year" emptyText="-" />
 	</ListForm>
 )

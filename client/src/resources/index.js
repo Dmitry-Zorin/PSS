@@ -1,5 +1,5 @@
 import { authors, characters } from './admin'
-import { publicationList, timeline } from './main'
+import { createPublicationList, timeline } from './main'
 import {
 	abstracts,
 	articles,
@@ -14,7 +14,7 @@ import {
 export default {
 	main: {
 		timeline,
-		publicationList,
+		createPublicationList,
 	},
 	publications: {
 		articles,

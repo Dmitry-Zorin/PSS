@@ -1,10 +1,5 @@
-import {
-	CreateForm,
-	EditForm,
-	ListForm,
-	ShowForm,
-} from 'pages/resources/components'
-import { LargeTextInput } from 'pages/resources/components/inputs'
+import { CreateForm, EditForm, ListForm, ShowForm } from 'resources/components'
+import { LargeTextInput } from 'resources/components/inputs'
 import { TextField, TextInput, useRecordContext } from 'react-admin'
 
 const DatagridExpand = () => {

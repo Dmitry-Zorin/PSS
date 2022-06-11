@@ -1,7 +1,9 @@
 import { entries } from 'lodash'
-import resources from 'pages/resources'
-import { Admin, Resource } from 'react-admin'
+import { About } from 'pages'
+import { Admin, CustomRoutes, Resource } from 'react-admin'
 import { QueryClient } from 'react-query'
+import { Route } from 'react-router'
+import resources from 'resources'
 import authProvider from './auth.provider'
 import { Layout } from './components'
 import dataProvider from './data.provider'
@@ -17,15 +19,15 @@ const queryClient = new QueryClient({
 	},
 })
 
-function getResources(resources, permissions = false) {
+function getResources(resources, prefix, isAdmin) {
 	return entries(resources).map(([name, props]) => {
 		const { list, show, create, edit, ...otherProps } = props
 		return (
 			<Resource
-				name={name}
+				name={prefix ? `${prefix}/${name}` : name}
 				list={list}
 				show={show}
-				{...(permissions && {
+				{...(isAdmin && {
 					create: create,
 					edit: edit,
 				})}
@@ -35,25 +37,25 @@ function getResources(resources, permissions = false) {
 	})
 }
 
-const getResourcesList = (permissions) => [
-	...getResources(resources.main),
-	...getResources(resources.publications, permissions),
-	...(permissions ? getResources(resources.admin, true) : []),
-]
-
 const App = () => (
 	<Admin
 		title="metadata.title"
 		theme={themes.base}
 		layout={Layout}
-		loginPage={false}
 		dashboard={Dashboard}
 		queryClient={queryClient}
 		authProvider={authProvider}
 		dataProvider={dataProvider}
 		i18nProvider={i18nProvider}
 	>
-		{getResourcesList}
+		{({ isGuest, isAdmin }) => [
+			<CustomRoutes>
+				{isGuest && <Route path="/about" element={<About />} />}
+			</CustomRoutes>,
+			...getResources(resources.main),
+			...getResources(resources.publications, 'publications', isAdmin),
+			...(isAdmin ? getResources(resources.admin, 'admin', true) : []),
+		]}
 	</Admin>
 )
 

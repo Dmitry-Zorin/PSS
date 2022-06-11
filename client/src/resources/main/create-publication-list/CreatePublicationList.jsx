@@ -1,3 +1,4 @@
+import { Title } from 'components/Title'
 import { useEffect, useState } from 'react'
 import {
 	Create,
@@ -18,7 +19,7 @@ const AuthorInput = ({ setSelectedChoice }) => {
 		if (choice) {
 			setSelectedChoice(choice)
 		}
-	}, [choice])
+	}, [choice, setSelectedChoice])
 
 	return (
 		<SelectInput
@@ -32,7 +33,7 @@ const AuthorInput = ({ setSelectedChoice }) => {
 	)
 }
 
-export const PublicationList = () => {
+export const CreatePublicationList = () => {
 	const dataProvider = useDataProvider()
 
 	const [author, setAuthor] = useState()
@@ -41,7 +42,6 @@ export const PublicationList = () => {
 		const { data } = await dataProvider.getMany('publications', {
 			ids: author.publicationIds,
 		})
-		console.log(data)
 		const authorName = `${author.lastName} ${author.firstName} ${
 			author.middleName || ''
 		}`
@@ -55,15 +55,18 @@ export const PublicationList = () => {
 
 	return (
 		<Create title="resources.publicationList.name">
-			<SimpleForm onSubmit={generateList}>
-				<ReferenceInput
-					source="authorId"
-					reference="authors"
-					validate={required()}
-				>
-					<AuthorInput setSelectedChoice={setAuthor} />
-				</ReferenceInput>
-			</SimpleForm>
+			<>
+				<Title />
+				<SimpleForm onSubmit={generateList}>
+					<ReferenceInput
+						source="authorId"
+						reference="authors"
+						validate={required()}
+					>
+						<AuthorInput setSelectedChoice={setAuthor} />
+					</ReferenceInput>
+				</SimpleForm>
+			</>
 		</Create>
 	)
 }

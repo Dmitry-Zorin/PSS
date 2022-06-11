@@ -17,9 +17,10 @@ import {
 export const TypeInput = () => {
 	const resource = useResourceContext()
 	const translate = useTranslate()
-	const defaultValue = translate(`resources.${resource}.name`, {
-		smart_count: 1,
-	})
+	const defaultValue = translate(
+		`resources.${resource.split('/').pop()}.name`,
+		{ smart_count: 1 },
+	)
 
 	return (
 		<TextInput

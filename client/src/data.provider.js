@@ -50,7 +50,7 @@ const dataProvider = {
 	},
 
 	update: async (resource, { id, data }) => {
-		await fetchResources(`${resource}/${id}`, {
+		await fetchResources(`${resource.split('/').pop()}/${id}`, {
 			method: 'put',
 			body: processOutputData(data),
 		})
@@ -60,7 +60,7 @@ const dataProvider = {
 	getList: async (resource, { filter, sort, pagination }) => {
 		const { page, perPage } = pagination
 
-		const url = createUrlWithQueryParams(resource, {
+		const url = createUrlWithQueryParams(resource.split('/').pop(), {
 			filter,
 			sort,
 			skip: (page - 1) * perPage,
@@ -76,21 +76,23 @@ const dataProvider = {
 	},
 
 	getOne: async (resource, { id }) => {
-		const { json } = await fetchResources(`${resource}/${id}`)
+		const { json } = await fetchResources(`${resource.split('/').pop()}/${id}`)
 		if (json.file) {
-			json.file.url = `${apiUrl}/resources/files/${resource}/${json.file.objectId}`
+			json.file.url = `${apiUrl}/resources/files/${resource.split('/').pop()}/${
+				json.file.objectId
+			}`
 		}
 		return { data: processInputData(json) }
 	},
 
 	getMany: async (resource, { ids }) => {
-		const url = createUrlWithQueryParams(resource, { ids })
+		const url = createUrlWithQueryParams(resource.split('/').pop(), { ids })
 		const { json } = await fetchResources(url)
 		return { data: json.map(processInputData) }
 	},
 
 	delete: async (resource, { id }) => {
-		await fetchResources(`${resource}/${id}`, {
+		await fetchResources(`${resource.split('/').pop()}/${id}`, {
 			method: 'delete',
 			headers: new Headers({
 				'content-type': 'text/plain',
@@ -100,7 +102,7 @@ const dataProvider = {
 	},
 
 	deleteMany: async (resource, { ids }) => {
-		const url = createUrlWithQueryParams(resource, { ids })
+		const url = createUrlWithQueryParams(resource.split('/').pop(), { ids })
 		const { json } = await fetchResources(url, {
 			method: 'delete',
 			headers: new Headers({

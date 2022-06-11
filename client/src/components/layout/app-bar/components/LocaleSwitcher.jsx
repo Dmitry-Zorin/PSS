@@ -11,8 +11,8 @@ export const LocaleSwitcher = () => {
 	const translate = useTranslate()
 
 	useEffect(() => {
-		setLocale(getUser().locale)
-	}, [])
+		setLocale(getUser().settings.locale || 'en')
+	}, [setLocale])
 
 	const switchLocale = async () => {
 		const newLocale = locale === 'en' ? 'ru' : 'en'
@@ -24,7 +24,7 @@ export const LocaleSwitcher = () => {
 		<>
 			<Helmet>
 				<html lang={locale} />
-				<title lang={locale}>{translate('metadata.title')}</title>
+				<title lang={locale} />
 			</Helmet>
 			<Button
 				color="inherit"

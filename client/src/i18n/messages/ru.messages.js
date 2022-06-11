@@ -6,6 +6,9 @@ export const ruMessages = {
 		lang: 'Русский',
 		title: 'Системa хранения публикаций',
 	},
+	pages: {
+		about: 'О системе',
+	},
 	menu: {
 		publications: 'Публикации',
 		admin: 'Администрирование',
@@ -33,7 +36,7 @@ export const ruMessages = {
 		timeline: {
 			name: 'События',
 		},
-		publicationList: {
+		'create-publication-list': {
 			name: 'Cоздать список публикаций',
 		},
 		articles: {

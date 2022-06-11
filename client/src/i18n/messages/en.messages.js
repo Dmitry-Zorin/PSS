@@ -6,7 +6,10 @@ export const enMessages = {
 	...englishMessages,
 	metadata: {
 		lang: 'English',
-		title: 'Publication storage system',
+		title: 'Publication Storage System',
+	},
+	pages: {
+		about: 'About',
 	},
 	menu: {
 		publications: 'Publications',
@@ -35,7 +38,7 @@ export const enMessages = {
 		timeline: {
 			name: 'Timeline',
 		},
-		publicationList: {
+		'create-publication-list': {
 			name: 'Create publications list',
 		},
 		articles: {

@@ -6,10 +6,10 @@ import {
 	Pagination,
 	Typography,
 } from '@mui/material'
+import { Title } from 'components/Title'
 import pluralize from 'pluralize'
 import {
 	ListBase,
-	Title,
 	useListContext,
 	useLocaleState,
 	useTranslate,
@@ -59,7 +59,6 @@ const TimelineUI = () => {
 
 	return (
 		<>
-			<Title title="resources.timeline.name" />
 			{total ? (
 				<Box alignSelf="center" width="100%" maxWidth={900}>
 					{data.map((e) => (
@@ -85,6 +84,7 @@ const TimelineUI = () => {
 
 export const Timeline = () => (
 	<ListBase>
+		<Title />
 		<TimelineUI />
 	</ListBase>
 )

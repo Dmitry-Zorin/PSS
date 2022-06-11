@@ -1,25 +1,15 @@
-import {
-	Card,
-	Divider,
-	experimental_sx,
-	styled,
-	Typography,
-} from '@mui/material'
+import { Card, Divider, Typography } from '@mui/material'
 import { useTranslate } from 'react-admin'
 
 const Subtitle = ({ children }) => (
-	<DashboardDivider>
+	<Divider sx={{ mt: 5, mb: 2, mx: 3 }}>
 		<Typography color="primary" variant="h5" sx={{ mt: 0, fontWeight: 600 }}>
 			{children}
 		</Typography>
-	</DashboardDivider>
+	</Divider>
 )
 
-const DashboardDivider = styled(Divider)(
-	experimental_sx({ mt: 5, mb: 2, mx: 3 }),
-)
-
-export const Dashboard = () => {
+export const About = () => {
 	const translate = useTranslate()
 
 	return (

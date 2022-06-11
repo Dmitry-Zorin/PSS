@@ -7,7 +7,7 @@ export const Loading = ({ spinner = <CircularProgress /> }) => {
 	useEffect(() => {
 		const timeout = setTimeout(() => setLoading(spinner), 200)
 		return () => clearTimeout(timeout)
-	}, [])
+	}, [spinner])
 
 	return (
 		<Box display="flex" height="100vh">

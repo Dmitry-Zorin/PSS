@@ -1,14 +1,19 @@
+import { createTheme } from '@mui/material'
 import { range } from 'lodash'
 
-const APP_BAR_HEIGHT = 50
+const APP_BAR_HEIGHT = 54
 const BORDER_RADIUS = 8
 const MAX_WIDTH = 700
 const SIDEBAR_WIDTH = 300
 const SIDEBAR_CLOSED_WIDTH = APP_BAR_HEIGHT
-const MENU_ITEM_MARGIN = 4
+const MENU_ITEM_MARGIN = 5
 const BORDER_SIZE = 1
 const ICON_SIZE = 24
 const SPACING = 8
+
+const primaryHeight = APP_BAR_HEIGHT - 2 * MENU_ITEM_MARGIN
+
+export const defaultTheme = createTheme()
 
 export const baseTheme = {
 	typography: {
@@ -23,6 +28,13 @@ export const baseTheme = {
 		closedWidth: SIDEBAR_CLOSED_WIDTH,
 	},
 	components: {
+		MuiPaper: {
+			styleOverrides: {
+				root: {
+					background: 'none',
+				},
+			},
+		},
 		MuiButtonBase: {
 			defaultProps: {
 				disableRipple: true,
@@ -51,28 +63,25 @@ export const baseTheme = {
 			},
 		},
 		MuiChip: {
-			defaultProps: {
-				variant: 'outlined',
-			},
 			styleOverrides: {
-				labelMedium: {
-					fontSize: '1rem',
-					fontWeight: 350,
+				sizeSmall: {
+					transform: 'scale(0.93)',
+					fontSize: '0.85rem',
 				},
 			},
 		},
 		MuiTableRow: {
 			styleOverrides: {
 				root: {
-					height: 46,
+					height: APP_BAR_HEIGHT - MENU_ITEM_MARGIN + BORDER_SIZE,
 				},
 			},
 		},
 		MuiIconButton: {
 			styleOverrides: {
 				root: {
-					height: 40,
-					width: 40,
+					height: primaryHeight,
+					width: primaryHeight,
 					margin: 2,
 					borderRadius: ICON_SIZE,
 				},
@@ -100,7 +109,13 @@ export const baseTheme = {
 			styleOverrides: {
 				root: {
 					'.RaLayout-appFrame': {
-						marginTop: APP_BAR_HEIGHT + BORDER_SIZE,
+						[defaultTheme.breakpoints.up('sm')]: {
+							marginTop: APP_BAR_HEIGHT + BORDER_SIZE,
+						},
+						[defaultTheme.breakpoints.down('sm')]: {
+							marginTop: 0,
+							marginBottom: APP_BAR_HEIGHT + BORDER_SIZE,
+						},
 					},
 					'.layout-container, .RaCreate-main, .RaEdit-main, .RaShow-main': {
 						margin: 'auto',
@@ -118,6 +133,7 @@ export const baseTheme = {
 			styleOverrides: {
 				root: {
 					height: 'auto',
+					borderRight: `1px solid`,
 				},
 			},
 		},
@@ -134,6 +150,8 @@ export const baseTheme = {
 		RaAppBar: {
 			styleOverrides: {
 				root: {
+					borderTop: '1px solid',
+					borderBottom: '1px solid',
 					svg: {
 						fontSize: ICON_SIZE,
 					},
@@ -146,7 +164,7 @@ export const baseTheme = {
 					fontWeight: 400,
 					borderRadius: BORDER_RADIUS,
 					margin: MENU_ITEM_MARGIN,
-					height: APP_BAR_HEIGHT - 2 * MENU_ITEM_MARGIN,
+					height: primaryHeight,
 					padding: `${
 						(APP_BAR_HEIGHT - ICON_SIZE) / 2 - MENU_ITEM_MARGIN - BORDER_SIZE
 					}px ${

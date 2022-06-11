@@ -39,9 +39,20 @@ export function createUrlWithQueryParams(url, query) {
 }
 
 export async function saveSettings(settings) {
-	setUser({ ...getUser(), ...settings })
-	await fetchApi('auth/settings', {
-		method: 'put',
-		body: settings,
+	const user = getUser()
+
+	setUser({
+		...user,
+		settings: {
+			...user.settings,
+			...settings,
+		},
 	})
+
+	if (user.role !== 'guest') {
+		await fetchApi('auth/settings', {
+			method: 'put',
+			body: settings,
+		})
+	}
 }

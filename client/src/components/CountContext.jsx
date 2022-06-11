@@ -1,8 +1,10 @@
+import { sum } from 'lodash'
 import { createContext, useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
 import { fetchApi } from 'requests'
 
 export const CountContext = createContext({
+	getTotalCount: () => null,
 	getResourceCount: () => null,
 	setResourceCount: () => {},
 })
@@ -21,6 +23,7 @@ export const CountContextProvider = ({ children }) => {
 	return (
 		<CountContext.Provider
 			value={{
+				getTotalCount: () => sum(Object.values(count)),
 				getResourceCount: (resource) => count[resource],
 				setResourceCount: (resource, count) => {
 					setCount((e) => ({ ...e, [resource]: count }))

@@ -1,5 +1,5 @@
 import { fetchApi } from './requests'
-import { getUser, setUser } from './user'
+import { getUser, Roles, setUser } from './user'
 
 function fetchAuth(url, options) {
 	return fetchApi(`auth/${url}`, options)
@@ -16,35 +16,39 @@ const authProvider = {
 			localStorage.setItem('token', json.token)
 			const { json: user } = await fetchAuth('identity')
 			setUser(user)
-			return Promise.resolve()
+			return
 		}
 
-		return Promise.reject()
+		throw null
 	},
 
-	logout: () => {
+	logout: async () => {
 		localStorage.clear()
-		return Promise.resolve()
 	},
 
 	checkAuth: async () => {
-		const token = localStorage.getItem('token')
-		return token ? Promise.resolve() : Promise.reject()
+		const { isGuest } = await authProvider.getPermissions()
+		if (!isGuest && !localStorage.getItem('token')) {
+			throw null
+		}
 	},
 
 	getPermissions: async () => {
-		const user = getUser()
-		if (user) {
-			return user.role === 'admin'
+		const { role } = getUser()
+		return {
+			role,
+			isGuest: role === Roles.guest,
+			isUser: role === Roles.user,
+			isAdmin: role === Roles.admin,
 		}
-		return false
-		// const { json } = await fetchAuth('permissions')
-		// return json.role === 'admin'
 	},
 
-	checkError: ({ status }) => {
+	checkError: async ({ status }) => {
 		const isAuthError = [401, 403].includes(status)
-		return isAuthError ? Promise.reject() : Promise.resolve()
+		const { isGuest } = await authProvider.getPermissions()
+		if (isAuthError && !isGuest) {
+			throw null
+		}
 	},
 }
 

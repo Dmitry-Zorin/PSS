@@ -12,24 +12,20 @@ function handleClick() {
 	}
 }
 
-export const ScrollTopButton = () => {
-	const trigger = useScrollTrigger()
-
-	return (
-		<Zoom in={trigger}>
-			<Box
-				sx={{
-					zIndex: 900,
-					position: 'fixed',
-					bottom: (t) => t.spacing(3),
-					right: (t) => t.spacing(3),
-				}}
-				onClick={handleClick}
-			>
-				<Fab color="primary">
-					<KeyboardArrowUp />
-				</Fab>
-			</Box>
-		</Zoom>
-	)
-}
+export const ScrollTopButton = () => (
+	<Zoom in={useScrollTrigger()}>
+		<Box
+			sx={{
+				zIndex: 900,
+				position: 'fixed',
+				bottom: (t) => t.spacing(3),
+				right: (t) => t.spacing(3),
+			}}
+			onClick={handleClick}
+		>
+			<Fab color="primary">
+				<KeyboardArrowUp />
+			</Fab>
+		</Box>
+	</Zoom>
+)

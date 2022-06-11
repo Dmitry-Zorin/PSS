@@ -26,7 +26,20 @@ export const AuthorsField = () => (
 		reference="authors"
 	>
 		<SingleFieldList linkType="show">
+			{/* <> */}
+			{/* <FunctionField
+				label="fields.authors"
+				render={(record) => (
+					<Chip
+						clickable={true}
+						label={`${record.lastName} ${record.firstName} ${
+							record.middleName || ''
+						}`}
+					/>
+				)}
+			/> */}
 			<AuthorChipField />
+			{/* </> */}
 		</SingleFieldList>
 	</ReferenceArrayField>
 )
