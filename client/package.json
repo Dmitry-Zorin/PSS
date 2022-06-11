@@ -1,7 +1,7 @@
 {
-	"name": "@storage-system/client",
+	"name": "@pss/client",
 	"scripts": {
-		"start": "vite",
+		"start": "vite --host",
 		"build": "vite build",
 		"lint": "eslint src --ext .js,.jsx --fix"
 	},

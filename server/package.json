@@ -1,5 +1,5 @@
 {
-	"name": "@storage-system/server",
+	"name": "@pss/server",
 	"scripts": {
 		"start": "nest start --watch",
 		"debug": "nest start --debug --watch",

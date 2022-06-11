@@ -11,7 +11,7 @@
 				},
 				{
 					"key": "Permissions-Policy",
-					"value": "geolocation=(self), microphone=()"
+					"value": "geolocation=(), microphone=(), camera=()"
 				},
 				{
 					"key": "X-Content-Type-Options",
@@ -23,7 +23,7 @@
 				},
 				{
 					"key": "Content-Security-Policy",
-					"value": "default-src 'self'"
+					"value": "default-src 'self' react-admin-telemetry.marmelab.com;"
 				}
 			]
 		}
