@@ -13,6 +13,7 @@ import {
 } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { RESOURCES_SERVICE } from 'api-gateway/constants'
+import { Public } from 'api-gateway/jwt/jwt.guard'
 import { Admin } from 'api-gateway/roles.guard'
 import { FastifyReply } from 'fastify'
 import FormData from 'form-data'
@@ -26,16 +27,19 @@ export class ResourcesController {
 		private readonly client: ClientProxy, // private readonly httpService: HttpService,
 	) {}
 
+	@Public()
 	@Get('count')
 	getCount() {
 		return this.client.send('count', {})
 	}
 
+	@Public()
 	@Get('categories')
 	getCategories() {
 		return this.client.send('categories', {})
 	}
 
+	@Public()
 	@Get('publications')
 	getAuthorPublications(@Query() query: Record<string, unknown>) {
 		return this.client.send('publications', { query })
@@ -90,6 +94,7 @@ export class ResourcesController {
 		return result
 	}
 
+	@Public()
 	@Get(':resource')
 	async find(
 		@Param('resource') resource: string,
@@ -105,6 +110,7 @@ export class ResourcesController {
 		return records
 	}
 
+	@Public()
 	@Get(':resource/:id')
 	findOne(@Param('resource') resource: string, @Param('id') id: string) {
 		return this.client.send('find_one', { resource, id })
