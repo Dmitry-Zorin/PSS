@@ -2,6 +2,6 @@ import TimelineIcon from '@mui/icons-material/Timeline'
 import { Timeline } from './Timeline'
 
 export default {
-	icon: TimelineIcon,
+	icon: <TimelineIcon />,
 	list: Timeline,
 }

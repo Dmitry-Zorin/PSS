@@ -5,6 +5,11 @@ import { Helmet } from 'react-helmet'
 import './index.css'
 import themes from './themes'
 import { getUser, guest, setUser } from './user'
+import '@fontsource/nunito-sans/400.css'
+import '@fontsource/nunito-sans/600.css'
+import '@fontsource/nunito-sans/700.css'
+import '@fontsource/nunito-sans/800.css'
+import '@fontsource/nunito-sans/900.css'
 
 let user = getUser()
 

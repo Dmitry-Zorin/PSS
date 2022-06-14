@@ -1,4 +1,4 @@
-import { Typography, useMediaQuery } from '@mui/material'
+import { styled, Typography, useMediaQuery } from '@mui/material'
 import { Title } from 'components/Title'
 import { truncate } from 'lodash'
 import {
@@ -15,13 +15,23 @@ import { CreateActions, EditActions, ListActions, ShowActions } from './actions'
 import { ResourceCounter } from './ResourceCounter'
 
 export const CreateForm = ({ children, ...props }) => (
-	<Create actions={<CreateActions />} redirect="show" {...props}>
+	<Create
+		actions={<CreateActions />}
+		redirect="show"
+		sx={{ '& .RaCreate-main': (theme) => theme.mixins.mainArea }}
+		{...props}
+	>
 		<SimpleForm>{children}</SimpleForm>
 	</Create>
 )
 
 export const EditForm = ({ children, ...props }) => (
-	<Edit actions={<EditActions />} redirect="show" {...props}>
+	<Edit
+		actions={<EditActions />}
+		redirect="show"
+		sx={{ '& .RaEdit-main': (theme) => theme.mixins.mainArea }}
+		{...props}
+	>
 		<SimpleForm>{children}</SimpleForm>
 	</Edit>
 )
@@ -45,15 +55,20 @@ export const ListForm = ({
 	datagridProps = defaultDatagridProps,
 	...props
 }) => {
-	const isSmall = useMediaQuery((t) => t.breakpoints.down('md'))
+	const isSmall = useMediaQuery((theme) => theme.breakpoints.down('md'))
 
 	return (
 		<List
 			actions={<ListActions filters={filters} />}
 			filters={filters}
 			sort={{ field: 'createdAt', order: 'desc' }}
-			perPage={10}
+			perPage={25}
 			empty={false}
+			sx={{
+				'& .RaChipField-chip': {
+					margin: 0,
+				},
+			}}
 			{...props}
 		>
 			<>
@@ -83,7 +98,19 @@ export const ListForm = ({
 }
 
 export const ShowForm = ({ children, ...props }) => (
-	<Show actions={<ShowActions />} {...props}>
+	<Show
+		actions={<ShowActions />}
+		sx={(theme) => ({
+			'& .RaShow-main': {
+				...theme.mixins.mainArea,
+			},
+			'& .RaLabeled-label': {
+				color: theme.palette.primary.main,
+				fontSize: '0.95rem !important',
+			},
+		})}
+		{...props}
+	>
 		{/* <SimpleShowLayout spacing={3}>{children}</SimpleShowLayout> */}
 		{children}
 	</Show>

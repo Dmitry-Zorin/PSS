@@ -1,18 +1,10 @@
-@font-face {
-	font-family: 'Open Sans';
-	src: local('Open Sans'), url('assets/fonts/OpenSans.ttf') format('truetype'),
-		url('assets/fonts/OpenSans-Italic.ttf') format('truetype');
-	font-weight: 300 800;
-}
-
-@font-face {
-	font-family: 'Baloo 2';
-	src: local('Baloo 2'), url('assets/fonts/Baloo2.ttf') format('truetype');
-	font-weight: 400 800;
+html {
+	font-size: 16px;
+	font-family: 'Nunito Sans', sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 body {
 	margin: 0;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
 }

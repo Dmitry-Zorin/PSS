@@ -6,6 +6,8 @@ import {
 	SimpleShowLayout,
 	TextField,
 	TextInput,
+	ReferenceArrayField,
+	SingleFieldList,
 } from 'react-admin'
 import {
 	AddFileInput,
@@ -60,7 +62,12 @@ export const PublicationEdit = ({ children }) => (
 export const PublicationList = () => (
 	<ListForm
 		filters={[
-			<TextInput source="title" label="fields.search" alwaysOn />,
+			<TextInput
+				source="title"
+				label="fields.search"
+				sx={{ ml: 2 }}
+				alwaysOn
+			/>,
 			<TextInput source="description" label="fields.description" />,
 			<NumberInput source="publication.year" label="fields.year" />,
 			<TextInput source="publication.authors.author" label="fields.author" />,
@@ -76,19 +83,13 @@ export const PublicationList = () => (
 export const PublicationShow = ({ children }) => (
 	<ShowForm>
 		<Stack spacing={3} sx={{ px: 2, py: 1 }}>
-			<TextField
-				source="title"
-				sx={{
-					fontSize: '1.5rem',
-					fontWeight: 600,
-				}}
-			/>
-			<TextField source="description" />
+			<TextField source="title" variant="h4" sx={{ mb: 3 }} />
+			<TextField source="description" variant="body1" />
 		</Stack>
 		<Box
 			sx={{
 				display: 'grid',
-				mt: 3,
+				mt: 5,
 				px: 2,
 				py: 1,
 				rowGap: 3,

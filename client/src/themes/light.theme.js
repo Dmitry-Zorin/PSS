@@ -1,30 +1,26 @@
-import { common, grey, indigo } from '@mui/material/colors'
-import { createTheme } from './theme-creator'
+import { common, indigo } from '@mui/material/colors'
+import { merge } from 'lodash'
+import { baseTheme } from './base.theme'
+import { alpha } from '@mui/material'
 
-const colors = {
-	primary: indigo[500],
-	secondary: indigo[500],
-	bgPrimary: grey[50],
-	divider: 'rgba(0, 0, 0, 0.09)',
-	text: common.black,
-}
+const BACKGROUND = common.white
 
-export const lightTheme = createTheme(colors, {
+export const lightTheme = merge({}, baseTheme, {
+	mode: 'light',
 	palette: {
-		mode: 'light',
+		primary: {
+			light: indigo[400],
+			main: indigo[500],
+			dark: indigo[600],
+		},
+		background: {
+			default: BACKGROUND,
+			paper: BACKGROUND,
+		},
 	},
-	components: {
-		RaMenuItemLink: {
-			styleOverrides: {
-				root: {
-					'&:hover': {
-						background: 'rgba(0, 0, 0, 0.03)',
-					},
-					'&.RaMenuItemLink-active': {
-						background: 'rgba(0, 0, 0, 0.05)',
-					},
-				},
-			},
+	mixins: {
+		appBar: {
+			background: alpha(BACKGROUND, 0.55),
 		},
 	},
 })

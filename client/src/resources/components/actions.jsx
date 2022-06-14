@@ -4,7 +4,6 @@ import {
 	EditButton,
 	FilterButton,
 	ListButton,
-	ShowButton,
 	TopToolbar,
 	usePermissions,
 } from 'react-admin'
@@ -18,7 +17,6 @@ export const CreateActions = () => (
 export const EditActions = () => (
 	<TopToolbar>
 		<ListButton />
-		<ShowButton />
 	</TopToolbar>
 )
 
@@ -35,7 +33,6 @@ export const ShowActions = () => (
 		{usePermissions().permissions?.isAdmin && (
 			<>
 				<EditButton />
-				<CloneButton />
 				<CreateButton />
 			</>
 		)}

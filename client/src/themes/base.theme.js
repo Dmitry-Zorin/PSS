@@ -1,27 +1,33 @@
-import { createTheme } from '@mui/material'
 import { range } from 'lodash'
 
-const APP_BAR_HEIGHT = 54
-const BORDER_RADIUS = 8
+export const APP_BAR_HEIGHT = 54
+export const BORDER_RADIUS = 8
+export const SIDEBAR_WIDTH = 300
+export const SIDEBAR_CLOSED_WIDTH = 54
+export const ICON_SIZE = 24
+export const SPACING = 8
+
 const MAX_WIDTH = 700
-const SIDEBAR_WIDTH = 300
-const SIDEBAR_CLOSED_WIDTH = APP_BAR_HEIGHT
-const MENU_ITEM_MARGIN = 5
-const BORDER_SIZE = 1
-const ICON_SIZE = 24
-const SPACING = 8
-
-const primaryHeight = APP_BAR_HEIGHT - 2 * MENU_ITEM_MARGIN
-
-export const defaultTheme = createTheme()
+const PADDING_X = 4
 
 export const baseTheme = {
 	typography: {
-		fontFamily: '"Open Sans", sans-serif',
+		fontFamily: 'Nunito Sans, sans-serif',
+		h4: {
+			fontSize: '2rem',
+			fontWeight: 900,
+		},
+		h5: {
+			fontWeight: 700,
+		},
+		h6: {
+			fontWeight: 700,
+		},
 	},
 	shape: {
 		borderRadius: BORDER_RADIUS,
 	},
+	spacing: SPACING,
 	shadows: range(25).map(() => 'none'),
 	sidebar: {
 		width: SIDEBAR_WIDTH,
@@ -43,45 +49,22 @@ export const baseTheme = {
 		MuiButton: {
 			styleOverrides: {
 				root: {
-					fontWeight: 550,
-				},
-			},
-		},
-		MuiTypography: {
-			styleOverrides: {
-				body2: {
-					fontSize: '1.1rem',
-					fontWeight: 350,
-				},
-			},
-		},
-		MuiToolbar: {
-			styleOverrides: {
-				dense: {
-					height: APP_BAR_HEIGHT,
-				},
-			},
-		},
-		MuiChip: {
-			styleOverrides: {
-				sizeSmall: {
-					transform: 'scale(0.93)',
-					fontSize: '0.85rem',
+					fontWeight: 600,
 				},
 			},
 		},
 		MuiTableRow: {
 			styleOverrides: {
 				root: {
-					height: APP_BAR_HEIGHT - MENU_ITEM_MARGIN + BORDER_SIZE,
+					height: 44,
 				},
 			},
 		},
 		MuiIconButton: {
 			styleOverrides: {
 				root: {
-					height: primaryHeight,
-					width: primaryHeight,
+					height: 40,
+					width: 40,
 					margin: 2,
 					borderRadius: ICON_SIZE,
 				},
@@ -95,86 +78,18 @@ export const baseTheme = {
 				},
 			},
 		},
-		RaCreateButton: {
-			styleOverrides: {
-				root: {
-					'&.RaCreateButton-floating': {
-						bottom: 3 * SPACING,
-						right: 3 * SPACING,
-					},
-				},
-			},
+	},
+	mixins: {
+		appBar: {
+			height: APP_BAR_HEIGHT,
 		},
-		RaLayout: {
-			styleOverrides: {
-				root: {
-					'.RaLayout-appFrame': {
-						[defaultTheme.breakpoints.up('sm')]: {
-							marginTop: APP_BAR_HEIGHT + BORDER_SIZE,
-						},
-						[defaultTheme.breakpoints.down('sm')]: {
-							marginTop: 0,
-							marginBottom: APP_BAR_HEIGHT + BORDER_SIZE,
-						},
-					},
-					'.layout-container, .RaCreate-main, .RaEdit-main, .RaShow-main': {
-						margin: 'auto',
-						maxWidth: MAX_WIDTH,
-						[`@media (min-width:${
-							MAX_WIDTH + 3 * SIDEBAR_WIDTH + 5 * SPACING
-						}px)`]: {
-							marginLeft: SIDEBAR_WIDTH,
-						},
-					},
-				},
-			},
-		},
-		RaSidebar: {
-			styleOverrides: {
-				root: {
-					height: 'auto',
-					borderRight: `1px solid`,
-				},
-			},
-		},
-		RaLabeled: {
-			styleOverrides: {
-				root: {
-					'.RaLabeled-label': {
-						fontSize: '0.95rem',
-						fontWeight: 450,
-					},
-				},
-			},
-		},
-		RaAppBar: {
-			styleOverrides: {
-				root: {
-					borderTop: '1px solid',
-					borderBottom: '1px solid',
-					svg: {
-						fontSize: ICON_SIZE,
-					},
-				},
-			},
-		},
-		RaMenuItemLink: {
-			styleOverrides: {
-				root: {
-					fontWeight: 400,
-					borderRadius: BORDER_RADIUS,
-					margin: MENU_ITEM_MARGIN,
-					height: primaryHeight,
-					padding: `${
-						(APP_BAR_HEIGHT - ICON_SIZE) / 2 - MENU_ITEM_MARGIN - BORDER_SIZE
-					}px ${
-						(SIDEBAR_CLOSED_WIDTH - ICON_SIZE) / 2 -
-						MENU_ITEM_MARGIN -
-						BORDER_SIZE
-					}px`,
-					border: `${BORDER_SIZE}px solid transparent`,
-				},
-			},
+		mainArea: {
+			maxWidth: MAX_WIDTH,
+			padding: `0 ${PADDING_X}`,
+			marginLeft: 'auto',
+			marginRight: `max(0px, calc(50vw - ${MAX_WIDTH / 2}px - ${
+				(PADDING_X + 2) * SPACING
+			}px))`,
 		},
 	},
 }

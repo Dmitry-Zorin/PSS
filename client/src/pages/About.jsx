@@ -3,7 +3,7 @@ import { useTranslate } from 'react-admin'
 
 const Subtitle = ({ children }) => (
 	<Divider sx={{ mt: 5, mb: 2, mx: 3 }}>
-		<Typography color="primary" variant="h5" sx={{ mt: 0, fontWeight: 600 }}>
+		<Typography color="primary" variant="h6" sx={{ mt: 0 }}>
 			{children}
 		</Typography>
 	</Divider>
@@ -13,16 +13,8 @@ export const About = () => {
 	const translate = useTranslate()
 
 	return (
-		<Card className="layout-container" sx={{ height: '100%' }}>
-			<Typography
-				sx={{
-					textAlign: 'center',
-					fontSize: '2.3em',
-					fontWeight: 700,
-					mt: 4,
-					mb: 3,
-				}}
-			>
+		<Card sx={(theme) => theme.mixins.mainArea}>
+			<Typography variant="h4" align="center" sx={{ my: 5 }}>
 				{translate('metadata.title')}
 			</Typography>
 			<Typography>

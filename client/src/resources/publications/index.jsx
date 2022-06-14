@@ -23,41 +23,41 @@ const publicationViews = {
 }
 
 export const articles = {
-	icon: Newspaper,
+	icon: <Newspaper />,
 	...publicationViews,
 }
 
 export const abstracts = {
-	icon: Description,
+	icon: <Description />,
 	...publicationViews,
 }
 
 export const dissertations = {
-	icon: Grading,
+	icon: <Grading />,
 	...publicationViews,
 }
 
 export const monographs = {
-	icon: FindInPage,
+	icon: <FindInPage />,
 	...publicationViews,
 }
 
 export const patents = {
-	icon: Verified,
+	icon: <Verified />,
 	...publicationViews,
 }
 
 export const reports = {
-	icon: Equalizer,
+	icon: <Equalizer />,
 	...publicationViews,
 }
 
 export const programs = {
-	icon: Code,
+	icon: <Code />,
 	...publicationViews,
 }
 
 export const textbooks = {
-	icon: MenuBook,
+	icon: <MenuBook />,
 	...publicationViews,
 }

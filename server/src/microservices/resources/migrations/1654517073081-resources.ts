@@ -1,10 +1,10 @@
-import { MigrationInterface, QueryRunner } from "typeorm";
+import { MigrationInterface, QueryRunner } from 'typeorm'
 
 export class resources1654517073081 implements MigrationInterface {
-    name = 'resources1654517073081'
+	name = 'resources1654517073081'
 
-    public async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`
+	public async up(queryRunner: QueryRunner): Promise<void> {
+		await queryRunner.query(`
             CREATE TABLE "query-result-cache" (
                 "id" SERIAL NOT NULL,
                 "identifier" character varying,
@@ -14,13 +14,12 @@ export class resources1654517073081 implements MigrationInterface {
                 "result" text NOT NULL,
                 CONSTRAINT "PK_6a98f758d8bfd010e7e10ffd3d3" PRIMARY KEY ("id")
             )
-        `);
-    }
+        `)
+	}
 
-    public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`
+	public async down(queryRunner: QueryRunner): Promise<void> {
+		await queryRunner.query(`
             DROP TABLE "query-result-cache"
-        `);
-    }
-
+        `)
+	}
 }

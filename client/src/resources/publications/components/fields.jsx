@@ -1,6 +1,7 @@
 import { Chip } from '@mui/material'
 import {
 	ChipField,
+	FunctionField,
 	ReferenceArrayField,
 	ReferenceField,
 	SingleFieldList,
@@ -26,20 +27,20 @@ export const AuthorsField = () => (
 		reference="authors"
 	>
 		<SingleFieldList linkType="show">
-			{/* <> */}
-			{/* <FunctionField
+			<FunctionField
 				label="fields.authors"
 				render={(record) => (
 					<Chip
-						clickable={true}
+						// className="RaChipField-chip"
+						// clickable={true}
 						label={`${record.lastName} ${record.firstName} ${
 							record.middleName || ''
 						}`}
+						// sx={{ m: 0.5 }}
 					/>
 				)}
-			/> */}
-			<AuthorChipField />
-			{/* </> */}
+			/>
+			{/* <AuthorChipField /> */}
 		</SingleFieldList>
 	</ReferenceArrayField>
 )

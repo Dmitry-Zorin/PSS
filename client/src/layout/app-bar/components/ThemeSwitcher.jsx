@@ -1,5 +1,5 @@
 import { IconButton } from '@mui/material'
-import { orange, yellow } from '@mui/material/colors'
+import { red, yellow } from '@mui/material/colors'
 import { useEffect, useState } from 'react'
 import { useTheme } from 'react-admin'
 import { Helmet } from 'react-helmet'
@@ -38,7 +38,7 @@ export const ThemeSwitcher = () => {
 			)}
 			<IconButton onClick={changeTheme}>
 				<DarkModeSwitch
-					sunColor={orange[900]}
+					sunColor={red[500]}
 					moonColor={yellow[600]}
 					checked={isDarkMode}
 					onChange={() => {}}

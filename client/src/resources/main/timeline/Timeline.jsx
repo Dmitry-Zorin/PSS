@@ -54,31 +54,24 @@ const CardView = ({ event }) => {
 }
 
 const TimelineUI = () => {
-	const { data, page, perPage, total, setPage } = useListContext()
+	let { data, page, perPage, total, setPage } = useListContext()
 	const translate = useTranslate()
 
 	return (
-		<>
+		<Box className="layout-main" sx={{ mt: 3 }}>
 			{total ? (
-				<Box alignSelf="center" width="100%" maxWidth={900}>
-					{data.map((e) => (
-						<CardView key={e.id} event={e} />
-					))}
-				</Box>
+				data.map((e) => <CardView key={e.id} event={e} />)
 			) : (
-				<Typography sx={{ m: 'auto', mt: 3 }}>
-					{translate('ra.navigation.no_results')}
-				</Typography>
+				<Typography>{translate('ra.navigation.no_results')}</Typography>
 			)}
 			{total > perPage && (
 				<Pagination
-					sx={{ m: 'auto', mt: 3 }}
 					page={page}
 					count={Math.ceil(total / perPage)}
 					onChange={(_, value) => setPage(value)}
 				/>
 			)}
-		</>
+		</Box>
 	)
 }
 

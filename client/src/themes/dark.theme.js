@@ -1,37 +1,26 @@
-import { common, lightGreen } from '@mui/material/colors'
-import { createTheme } from './theme-creator'
+import { lightGreen } from '@mui/material/colors'
+import { merge } from 'lodash'
+import { baseTheme } from './base.theme'
+import { alpha } from '@mui/material'
 
-const colors = {
-	primary: lightGreen[400],
-	secondary: lightGreen[400],
-	bgPrimary: '#272C34',
-	divider: 'rgba(255, 255, 255, 0.1)',
-	text: common.white,
-}
+const BACKGROUND = '#272C34' // '#333842'
 
-export const darkTheme = createTheme(colors, {
+export const darkTheme = merge({}, baseTheme, {
 	palette: {
 		mode: 'dark',
-	},
-	components: {
-		MuiPaper: {
-			styleOverrides: {
-				root: {
-					background: 'none',
-				},
-			},
+		primary: {
+			light: lightGreen[300],
+			main: lightGreen[400],
+			dark: lightGreen[500],
 		},
-		RaMenuItemLink: {
-			styleOverrides: {
-				root: {
-					'&:hover': {
-						background: 'rgba(255, 255, 255, 0.04)',
-					},
-					'&.RaMenuItemLink-active': {
-						background: 'rgba(255, 255, 255, 0.08)',
-					},
-				},
-			},
+		background: {
+			default: BACKGROUND,
+			paper: BACKGROUND,
+		},
+	},
+	mixins: {
+		appBar: {
+			background: alpha(BACKGROUND, 0.85),
 		},
 	},
 })
