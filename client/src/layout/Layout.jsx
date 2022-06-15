@@ -1,9 +1,6 @@
 import { useMediaQuery } from '@mui/material'
+import { AppBar, Menu, ScrollTopButton, Sidebar } from 'layout'
 import { Layout as RaLayout } from 'react-admin'
-import { AppBar } from './app-bar/AppBar'
-import { Menu } from './menu/Menu'
-import { ScrollTopButton } from './ScrollTopButton'
-import { Sidebar } from './Sidebar'
 
 export const Layout = ({ children }) => (
 	<RaLayout

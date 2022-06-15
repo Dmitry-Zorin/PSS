@@ -1,5 +1,5 @@
-import { fetchApi } from './requests'
-import { getUser, Roles, setUser } from './user'
+import { fetchApi } from 'requests'
+import { getUser, Roles, setUser } from 'user'
 
 function fetchAuth(url, options) {
 	return fetchApi(`auth/${url}`, options)

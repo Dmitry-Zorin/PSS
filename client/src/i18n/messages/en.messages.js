@@ -5,7 +5,6 @@ englishMessages.ra.action.show = 'View'
 export const enMessages = {
 	...englishMessages,
 	metadata: {
-		lang: 'English',
 		title: 'Publication Storage System',
 	},
 	pages: {

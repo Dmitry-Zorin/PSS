@@ -6,8 +6,7 @@ export const MenuItemLink = styled(RaMenuItemLink)(({ theme }) => {
 	return experimental_sx({
 		height: 42,
 		borderRadius: `0 ${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0`,
-		m: 0.5,
-		ml: 0,
+		my: 0.5,
 		'&.RaMenuItemLink-active': {
 			'&, > *': {
 				color: theme.palette.primary.main,

@@ -1,7 +1,7 @@
 import { NestApplicationOptions } from '@nestjs/common'
 import { VercelRequest, VercelResponse } from '@vercel/node'
+import getApp from 'app'
 import { FastifyInstance } from 'fastify'
-import getApp from './app'
 
 let instance: FastifyInstance
 

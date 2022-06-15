@@ -1,5 +1,4 @@
 import {
-	CloneButton,
 	CreateButton,
 	EditButton,
 	FilterButton,

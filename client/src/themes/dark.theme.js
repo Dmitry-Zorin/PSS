@@ -3,7 +3,7 @@ import { merge } from 'lodash'
 import { baseTheme } from './base.theme'
 import { alpha } from '@mui/material'
 
-const BACKGROUND = '#272C34' // '#333842'
+const BACKGROUND = '#272C34'
 
 export const darkTheme = merge({}, baseTheme, {
 	palette: {

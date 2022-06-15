@@ -1,15 +1,11 @@
+import '@fontsource/montserrat/variable.css'
 import { Lazy, LoadingScreen } from 'components'
+import 'index.css'
 import { StrictMode } from 'react'
 import ReactDOM from 'react-dom'
 import { Helmet } from 'react-helmet'
-import './index.css'
-import themes from './themes'
-import { getUser, guest, setUser } from './user'
-import '@fontsource/nunito-sans/400.css'
-import '@fontsource/nunito-sans/600.css'
-import '@fontsource/nunito-sans/700.css'
-import '@fontsource/nunito-sans/800.css'
-import '@fontsource/nunito-sans/900.css'
+import themes from 'themes'
+import { getUser, guest, setUser } from 'user'
 
 let user = getUser()
 
@@ -24,7 +20,7 @@ ReactDOM.render(
 		<Helmet>
 			<meta name="theme-color" content={palette.background.default} />
 			<style type="text/css">
-				{`body { background: ${palette.background.default}}`}
+				{`body { background-color: ${palette.background.default}}`}
 			</style>
 		</Helmet>
 		<Lazy

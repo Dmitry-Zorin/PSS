@@ -47,17 +47,15 @@ export const SubMenu = ({ name, icon, children }) => {
 				}
 				leftIcon={
 					<ExpandMore
-						sx={{
-							transition: 'transform 300ms ease',
-							...(!isOpen && {
-								transform: 'rotate(-90deg)',
-							}),
-						}}
+						sx={[
+							// { transition: 'transform 300ms ease' },
+							!isOpen && { transform: 'rotate(-90deg)' },
+						]}
 					/>
 				}
 				onClick={() => setIsOpen((e) => !e)}
 			/>
-			<Collapse in={isOpen} sx={{ a: menuItemStyle }}>
+			<Collapse in={isOpen} sx={{ a: menuItemStyle, transition: 'none' }}>
 				{children}
 			</Collapse>
 		</>

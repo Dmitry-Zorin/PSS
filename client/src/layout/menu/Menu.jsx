@@ -1,10 +1,9 @@
 import { AdminPanelSettings, Info, School } from '@mui/icons-material'
+import { CountContextProvider } from 'components'
 import { kebabCase } from 'lodash'
-import { Menu as RaMenu, usePermissions } from 'react-admin'
+import { Menu as RaMenu, MenuItemLink, usePermissions } from 'react-admin'
 import resources from 'resources'
-import { CountContextProvider } from '../../components/CountContext'
-import { MenuItem, SubMenu } from './components'
-import { MenuItemLink } from './components/MenuItemLink'
+import { MenuItem, SubMenu } from '.'
 
 function getMenuItems(resources) {
 	return Object.keys(resources).map((e) => (

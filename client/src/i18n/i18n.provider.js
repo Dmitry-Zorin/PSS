@@ -3,7 +3,7 @@ import { resolveBrowserLocale } from 'react-admin'
 import messages from './messages'
 
 const i18Provider = polyglotI18nProvider(
-	(locale) => (locale === 'ru' ? messages.ru : messages.en),
+	(locale) => messages[locale],
 	resolveBrowserLocale(),
 )
 

@@ -5,7 +5,7 @@ export const Delay = ({ children, ms }) => {
 
 	useEffect(() => {
 		const timeout = setTimeout(() => setShowComponent(true), ms)
-		return clearTimeout(timeout)
+		return () => clearTimeout(timeout)
 	}, [ms, setShowComponent])
 
 	if (!showComponent) {

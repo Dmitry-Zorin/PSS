@@ -2,7 +2,7 @@ import { Card, Divider, Typography } from '@mui/material'
 import { useTranslate } from 'react-admin'
 
 const Subtitle = ({ children }) => (
-	<Divider sx={{ mt: 5, mb: 2, mx: 3 }}>
+	<Divider sx={{ mt: 6, mb: 2, mx: 4 }}>
 		<Typography color="primary" variant="h6" sx={{ mt: 0 }}>
 			{children}
 		</Typography>
@@ -14,7 +14,7 @@ export const About = () => {
 
 	return (
 		<Card sx={(theme) => theme.mixins.mainArea}>
-			<Typography variant="h4" align="center" sx={{ my: 5 }}>
+			<Typography variant="h4" align="center" sx={{ mt: 4, mb: 5 }}>
 				{translate('metadata.title')}
 			</Typography>
 			<Typography>

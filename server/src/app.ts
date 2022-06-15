@@ -6,7 +6,7 @@ import {
 	FastifyAdapter,
 	NestFastifyApplication,
 } from '@nestjs/platform-fastify'
-import { AppModule } from './app.module'
+import { AppModule } from 'app.module'
 
 export default async function getApp(options?: NestApplicationOptions) {
 	const app = await NestFactory.create<NestFastifyApplication>(

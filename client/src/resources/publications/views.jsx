@@ -6,8 +6,6 @@ import {
 	SimpleShowLayout,
 	TextField,
 	TextInput,
-	ReferenceArrayField,
-	SingleFieldList,
 } from 'react-admin'
 import {
 	AddFileInput,

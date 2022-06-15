@@ -1,15 +1,14 @@
+import authProvider from 'auth.provider'
+import dataProvider from 'data.provider'
+import i18nProvider from 'i18n/i18n.provider'
 import { Layout } from 'layout/Layout'
 import { entries } from 'lodash'
-import { About } from 'pages'
+import { About, Dashboard } from 'pages'
 import { Admin, CustomRoutes, Resource } from 'react-admin'
 import { QueryClient } from 'react-query'
 import { Route } from 'react-router'
 import resources from 'resources'
-import authProvider from './auth.provider'
-import dataProvider from './data.provider'
-import i18nProvider from './i18n/i18n.provider'
-import { Dashboard } from './pages/Dashboard'
-import themes from './themes'
+import { Theme } from 'themes'
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -39,7 +38,7 @@ function getResources(resources, isAdmin) {
 
 const App = () => (
 	<Admin
-		theme={themes.base}
+		theme={Theme.Base}
 		layout={Layout}
 		dashboard={Dashboard}
 		queryClient={queryClient}

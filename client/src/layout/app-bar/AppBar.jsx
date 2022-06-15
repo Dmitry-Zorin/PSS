@@ -1,15 +1,8 @@
 import { Home, InfoOutlined } from '@mui/icons-material'
-import {
-	Box,
-	IconButton,
-	Typography,
-	useMediaQuery,
-	useScrollTrigger,
-} from '@mui/material'
-import shadows from '@mui/material/styles/shadows'
+import { Box, IconButton, Typography, useScrollTrigger } from '@mui/material'
 import { AppBar as RaAppBar } from 'react-admin'
 import { Link } from 'react-router-dom'
-import { LocaleSwitcher, ThemeSwitcher } from './components'
+import { LocaleMenu, ThemeSwitcher } from '.'
 
 const Container = ({ children }) => {
 	const isScrolled = useScrollTrigger({
@@ -19,17 +12,24 @@ const Container = ({ children }) => {
 
 	return (
 		<Box
-			sx={(theme) => ({
-				height: theme.mixins.appBar.height,
+			sx={({ mixins, palette }) => ({
+				height: mixins.appBar.height,
+				'& .RaAppBar-appBar': {
+					height: mixins.appBar.height,
+					bgcolor: isScrolled
+						? mixins.appBar.background
+						: palette.background.default,
+					backdropFilter: 'blur(5px)',
+					boxShadow: isScrolled ? mixins.shadows[3] : 'none',
+					transition: 'none',
+					pl: 1,
+				},
 				'& .RaAppBar-toolbar': {
-					color: 'text',
-					background: theme.mixins.appBar.background,
-					backdropFilter: 'blur(10px)',
-					boxShadow: isScrolled ? shadows[1] : 'none',
-					transition: 'box-shadow 150ms ease',
+					height: 1,
+					color: 'text.primary',
 				},
 				'& .RaAppBar-menuButton': {
-					margin: 0,
+					m: '0 !important',
 				},
 			})}
 		>
@@ -38,39 +38,30 @@ const Container = ({ children }) => {
 	)
 }
 
-export const AppBar = () => {
-	const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'))
-
-	return (
-		<RaAppBar color="inherit" container={Container}>
-			<Box sx={{ flexGrow: 1 }}>
-				<Typography
-					component={Link}
-					to="/"
-					color="primary"
-					variant="h5"
-					fontStyle="italic"
-					fontWeight={800}
-					sx={{
-						textDecoration: 'none',
-						pl: 2,
-					}}
-				>
-					PSS
-				</Typography>
-			</Box>
-			{!isSmall && (
-				<>
-					<LocaleSwitcher />
-					<ThemeSwitcher />
-					<IconButton component={Link} to="/">
-						<Home />
-					</IconButton>
-					<IconButton component={Link} to="/about">
-						<InfoOutlined />
-					</IconButton>
-				</>
-			)}
-		</RaAppBar>
-	)
-}
+export const AppBar = () => (
+	<RaAppBar color="inherit" container={Container}>
+		<Box sx={{ flexGrow: 1 }}>
+			<Typography
+				component={Link}
+				to="/"
+				color="primary"
+				variant="h5"
+				fontStyle="italic"
+				sx={{
+					textDecoration: 'none',
+					p: 1,
+				}}
+			>
+				PSS
+			</Typography>
+		</Box>
+		<ThemeSwitcher />
+		<LocaleMenu />
+		<IconButton color="inherit" component={Link} to="/">
+			<Home />
+		</IconButton>
+		<IconButton color="inherit" component={Link} to="/about">
+			<InfoOutlined />
+		</IconButton>
+	</RaAppBar>
+)

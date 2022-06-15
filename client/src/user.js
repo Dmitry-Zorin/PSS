@@ -1,3 +1,6 @@
+import { Locale } from 'i18n/messages'
+import { Theme } from 'themes'
+
 export const Roles = {
 	guest: 'guest',
 	user: 'user',
@@ -7,8 +10,8 @@ export const Roles = {
 export const guest = {
 	role: Roles.guest,
 	settings: {
-		locale: 'en',
-		theme: 'dark',
+		locale: Locale.En,
+		theme: Theme.Dark,
 	},
 }
 

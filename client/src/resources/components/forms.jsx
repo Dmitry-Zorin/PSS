@@ -1,4 +1,4 @@
-import { styled, Typography, useMediaQuery } from '@mui/material'
+import { Typography, useMediaQuery } from '@mui/material'
 import { Title } from 'components/Title'
 import { truncate } from 'lodash'
 import {

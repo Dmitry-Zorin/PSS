@@ -1,6 +1,6 @@
 import { mapValues, reduce } from 'lodash'
 import { fetchUtils } from 'react-admin'
-import { getUser, setUser } from './user'
+import { getUser, setUser } from 'user'
 
 export const apiUrl = `${import.meta.env.VITE_SERVER || ''}/api`
 

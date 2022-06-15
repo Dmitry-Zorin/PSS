@@ -1,5 +1,5 @@
 import { transform } from 'lodash'
-import { apiUrl, createUrlWithQueryParams, fetchApi } from './requests'
+import { apiUrl, createUrlWithQueryParams, fetchApi } from 'requests'
 
 function fetchResources(url, options) {
 	return fetchApi(`resources/${url}`, options)

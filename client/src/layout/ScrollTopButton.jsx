@@ -5,12 +5,8 @@ export const ScrollTopButton = () => (
 	<Zoom in={useScrollTrigger({ disableHysteresis: true })}>
 		<Fab
 			color="primary"
-			onClick={() => {
-				document.getElementById('root').scrollIntoView({
-					behavior: 'smooth',
-					block: 'start',
-				})
-			}}
+			size="medium"
+			onClick={() => window.scroll({ top: 0 })}
 			sx={(theme) => ({
 				zIndex: 900,
 				position: 'fixed',

@@ -1,7 +1,7 @@
+import { alpha } from '@mui/material'
 import { common, indigo } from '@mui/material/colors'
 import { merge } from 'lodash'
 import { baseTheme } from './base.theme'
-import { alpha } from '@mui/material'
 
 const BACKGROUND = common.white
 
@@ -20,7 +20,7 @@ export const lightTheme = merge({}, baseTheme, {
 	},
 	mixins: {
 		appBar: {
-			background: alpha(BACKGROUND, 0.55),
+			background: alpha(BACKGROUND, 0.6),
 		},
 	},
 })

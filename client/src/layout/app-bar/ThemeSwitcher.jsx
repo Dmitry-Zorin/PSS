@@ -5,22 +5,22 @@ import { useTheme } from 'react-admin'
 import { Helmet } from 'react-helmet'
 import { DarkModeSwitch } from 'react-toggle-dark-mode/dist'
 import { saveSettings } from 'requests'
-import themes from 'themes'
+import themes, { Theme } from 'themes'
 import { getUser } from 'user'
 
 export const ThemeSwitcher = () => {
 	const [theme, setTheme] = useTheme()
 	const [isDarkMode, setDarkMode] = useState(
-		getUser().settings.theme === 'dark',
+		getUser().settings.theme === Theme.Dark,
 	)
 
 	useEffect(() => {
-		const mode = isDarkMode ? 'dark' : 'light'
+		const mode = isDarkMode ? Theme.Dark : Theme.Light
 		setTheme(themes[mode])
 	}, [isDarkMode, setTheme])
 
 	const changeTheme = async () => {
-		const newMode = isDarkMode ? 'light' : 'dark'
+		const newMode = isDarkMode ? Theme.Light : Theme.Dark
 		setTheme(themes[newMode])
 		setDarkMode(!isDarkMode)
 		await saveSettings({ theme: newMode })
@@ -32,13 +32,13 @@ export const ThemeSwitcher = () => {
 				<Helmet>
 					<meta name="theme-color" content={theme.palette.background.default} />
 					<style type="text/css">
-						{`body { background: ${theme.palette.background.default}}`}
+						{`body { background-color: ${theme.palette.background.default}}`}
 					</style>
 				</Helmet>
 			)}
 			<IconButton onClick={changeTheme}>
 				<DarkModeSwitch
-					sunColor={red[500]}
+					sunColor={red[900]}
 					moonColor={yellow[600]}
 					checked={isDarkMode}
 					onChange={() => {}}

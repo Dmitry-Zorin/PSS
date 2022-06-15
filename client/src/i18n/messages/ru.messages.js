@@ -3,7 +3,6 @@ import russianMessages from 'ra-language-russian'
 export const ruMessages = {
 	...russianMessages,
 	metadata: {
-		lang: 'Русский',
 		title: 'Системa хранения публикаций',
 	},
 	pages: {

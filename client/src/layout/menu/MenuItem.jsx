@@ -7,9 +7,8 @@ import {
 	useTranslate,
 } from 'react-admin'
 import resources from 'resources'
-import { CountContext } from '../../../components/CountContext'
-import { MenuChip } from './MenuChip'
-import { MenuItemLink } from './MenuItemLink'
+import { CountContext } from 'components'
+import { MenuChip, MenuItemLink } from '.'
 
 const { publications } = resources
 
@@ -47,7 +46,7 @@ export const MenuItem = ({ name }) => {
 						showZero
 						sx={{
 							'& .MuiBadge-badge': {
-								background: grey[300],
+								bgcolor: grey[300],
 								right: 2,
 								top: 2,
 								border: (t) => `2px solid ${t.palette.background.paper}`,

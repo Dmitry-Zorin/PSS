@@ -1,8 +1,6 @@
-import { Sidebar as RaSidebar, useSidebarState } from 'react-admin'
+import { Sidebar as RaSidebar } from 'react-admin'
 
 export const Sidebar = ({ children }) => {
-	const [isSidebarOpen] = useSidebarState()
-
 	return (
 		<RaSidebar
 			sx={{
