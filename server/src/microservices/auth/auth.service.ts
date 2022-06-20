@@ -67,7 +67,7 @@ export class AuthService {
 		await this.settingsRepository.update(id, settings)
 	}
 
-	async findUser(filter: Record<string, any>, options = {} as FindOptions) {
+	async findUser(filter: Record<string, any>, options: FindOptions = {}) {
 		const { withSettings = true, passwordToVerify } = options
 
 		const [user] = await this.userRepository.find({

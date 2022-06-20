@@ -12,7 +12,7 @@ export class OtherResourcesService {
 	static readonly availableEntities = {
 		authors: Author,
 		characters: Character,
-	} as const
+	}
 
 	constructor(
 		@InjectEntityManager(CONNECTION_NAME)

@@ -1,14 +1,12 @@
 {
 	"compilerOptions": {
-		"module": "CommonJS",
 		"target": "ESNext",
+		"module": "CommonJS",
 		"baseUrl": "src",
-		"outDir": "dist",
+		"noEmit": true,
 		"strict": true,
-		"sourceMap": true,
 		"incremental": true,
 		"skipLibCheck": true,
-		"removeComments": true,
 		"esModuleInterop": true,
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,

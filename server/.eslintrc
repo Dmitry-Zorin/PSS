@@ -4,6 +4,9 @@
 		"node": true
 	},
 	"parser": "@typescript-eslint/parser",
+	"parserOptions": {
+		"project": "**/tsconfig.json"
+	},
 	"plugins": ["@typescript-eslint", "nestjs"],
 	"extends": [
 		"eslint:recommended",
