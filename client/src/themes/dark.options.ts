@@ -1,25 +1,19 @@
-import { lightGreen } from '@mui/material/colors'
 import { ThemePaletteOptions } from 'themes'
 
-const BACKGROUND = '#242936'
-const SIDEBAR_BACKGROUND = '#1f2430'
+const BACKGROUND = '#22272C'
 
 const darkOptions: ThemePaletteOptions = {
 	mode: 'dark',
 	primary: {
-		light: lightGreen[300],
-		// main: lightGreen.A100,
-		// main: amber.A100,
-		main: '#ffcc66',
-		dark: lightGreen[500],
+		main: '#B6F279',
 	},
 	text: {
-		primary: '#cccac2',
+		primary: '#FFFFFF',
 	},
 	background: {
 		default: BACKGROUND,
 		paper: BACKGROUND,
-		sidebar: SIDEBAR_BACKGROUND,
+		sidebar: BACKGROUND,
 	},
 }
 

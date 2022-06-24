@@ -2,7 +2,8 @@
 .idea
 .vscode
 .env
-.tsbuildinfo
+
+*.tsbuildinfo
 
 node_modules
 dist

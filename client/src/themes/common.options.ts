@@ -61,6 +61,7 @@ const commonOptions: RaThemeOptions = {
 			styleOverrides: {
 				root: {
 					minWidth: 24,
+					transition: 'none',
 				},
 			},
 		},

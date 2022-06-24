@@ -1,23 +1,20 @@
 import { indigo } from '@mui/material/colors'
 import { ThemePaletteOptions } from 'themes'
 
-const BACKGROUND = '#F2F4F9'
-const SIDEBAR_BACKGROUND = '#ebedf5f5'
+const BACKGROUND = '#FFFFFF'
 
 const lightOptions: ThemePaletteOptions = {
 	mode: 'light',
 	primary: {
-		light: indigo[400],
-		main: indigo[500],
-		dark: indigo[600],
+		main: indigo[600],
 	},
 	text: {
-		primary: '#202c44',
+		primary: '#22272C',
 	},
 	background: {
 		default: BACKGROUND,
 		paper: BACKGROUND,
-		sidebar: SIDEBAR_BACKGROUND,
+		sidebar: BACKGROUND,
 	},
 }
 

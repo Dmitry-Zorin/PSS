@@ -11,9 +11,7 @@ const ThemeSwitcher = () => {
 	const [theme, setTheme] = useTheme()
 
 	useEffect(() => {
-		if (!theme) {
-			setTheme(themes.dark)
-		}
+		setTheme(themes[theme?.palette?.mode || 'dark'])
 	}, [theme, setTheme])
 
 	if (!theme) {

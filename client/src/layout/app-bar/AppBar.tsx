@@ -1,5 +1,6 @@
 import { Home, InfoOutlined } from '@mui/icons-material'
 import { AppBar as MuiAppBar, Box, IconButton, Toolbar } from '@mui/material'
+import { LoadingIndicator, UserMenu } from 'react-admin'
 import { Link } from 'react-router-dom'
 import { LocaleMenu, ThemeSwitcher } from '.'
 
@@ -22,6 +23,8 @@ const AppBar = () => (
 			<IconButton color="inherit" component={Link} to="/about">
 				<InfoOutlined />
 			</IconButton>
+			<LoadingIndicator />
+			<UserMenu />
 		</Toolbar>
 	</MuiAppBar>
 )
