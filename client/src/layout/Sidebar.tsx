@@ -3,24 +3,16 @@ import { Sidebar as RaSidebar, SidebarProps } from 'react-admin'
 
 const Sidebar = (props: { children: ReactNode }) => (
 	<RaSidebar
-		size={54}
-		closedSize={300}
+		{...(props as SidebarProps)}
 		sx={{
 			height: 'auto',
-			// '& .MuiPaper-root': {
-			// 	transition: ({ transitions }) => {
-			// 		return transitions.create('width', {
-			// 			easing: transitions.easing[isSidebarOpen ? 'easeOut' : 'easeIn'],
-			// 			// duration: '1000ms',
-			// 			duration:
-			// 				transitions.duration[
-			// 					isSidebarOpen ? 'enteringScreen' : 'leavingScreen'
-			// 				],
-			// 		})
-			// 	},
-			// },
+			bgcolor: (t) => t.palette.background.sidebar,
+			borderRight: 1,
+			borderColor: 'divider',
+			'.RaSidebar-fixed': {
+				height: '100vh',
+			},
 		}}
-		{...(props as SidebarProps)}
 	/>
 )
 

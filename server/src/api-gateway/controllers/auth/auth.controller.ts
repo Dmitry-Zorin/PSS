@@ -11,7 +11,7 @@ import {
 import { ClientProxy } from '@nestjs/microservices'
 import { AUTH_SERVICE } from 'api-gateway/constants'
 import { Public } from 'api-gateway/jwt/jwt.guard'
-import { User } from './user.decorator'
+import User from './user.decorator'
 
 interface RequestUser {
 	id: string

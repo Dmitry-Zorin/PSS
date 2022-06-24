@@ -1,6 +1,5 @@
-export { default as BackgroundSetter } from './BackgroundSetter'
 export { default as Delay } from './Delay'
 export { default as Lazy } from './Lazy'
 export { default as Loader } from './Loader'
-export { default as LoadingScreen } from './LoadingScreen'
+export { default as MainArea } from './MainArea'
 export { default as Title } from './Title'

@@ -4,18 +4,17 @@ import i18nProvider from 'i18n/i18n.provider'
 import { Layout } from 'layout'
 import { entries } from 'lodash'
 import { About, Dashboard } from 'pages'
-import { Admin, CustomRoutes, Resource, ResourceProps } from 'react-admin'
+import {
+	Admin,
+	CustomRoutes,
+	localStorageStore,
+	Resource,
+	ResourceProps,
+} from 'react-admin'
 import { QueryClient } from 'react-query'
 import { Route } from 'react-router'
 import resources from 'resources'
-
-const queryClient = new QueryClient({
-	defaultOptions: {
-		queries: {
-			staleTime: 5 * 60 * 1000,
-		},
-	},
-})
+import themes from 'themes'
 
 function getResources(
 	resources: Record<string, Omit<ResourceProps, 'name'>>,
@@ -36,10 +35,21 @@ function getResources(
 	})
 }
 
+const queryClient = new QueryClient({
+	defaultOptions: {
+		queries: {
+			staleTime: 5 * 60 * 1000,
+		},
+	},
+})
+
+export const store = localStorageStore()
+
 const App = () => (
 	<Admin
+		store={store}
+		theme={themes.dark}
 		layout={Layout}
-		dashboard={Dashboard}
 		queryClient={queryClient}
 		authProvider={authProvider}
 		dataProvider={dataProvider}
@@ -47,6 +57,7 @@ const App = () => (
 	>
 		{({ isAdmin }: Permissions) => [
 			<CustomRoutes>
+				<Route path="/" element={<Dashboard />} />
 				<Route path="/about" element={<About />} />
 			</CustomRoutes>,
 			...getResources(resources.main),

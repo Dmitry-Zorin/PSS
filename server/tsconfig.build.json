@@ -3,13 +3,6 @@
 	"compilerOptions": {
 		"outDir": "dist"
 	},
-	"include": [
-		"src"
-	],
-	"exclude": [
-		"**/migrations",
-		"**/test",
-		"**/mock",
-		"**/*spec.ts"
-	]
+	"include": ["src"],
+	"exclude": ["**/migrations", "**/test", "**/mock", "**/*spec.ts"]
 }

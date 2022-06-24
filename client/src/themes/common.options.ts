@@ -1,12 +1,18 @@
-import { ThemeOptions } from '@mui/material'
 import { Shadows } from '@mui/material/styles/shadows'
 import { range } from 'lodash'
-import constants from './constants'
+import { RaThemeOptions } from 'react-admin'
 import mixins from './mixins'
 
-const common: ThemeOptions = {
-	...constants,
+const commonOptions: RaThemeOptions = {
 	mixins,
+	shadows: range(25).map(() => 'none') as Shadows,
+	shape: {
+		borderRadius: 8,
+	},
+	sidebar: {
+		width: 300,
+		closedWidth: 54,
+	},
 	typography: {
 		fontFamily: 'MontserratVariable, sans-serif',
 		h4: {
@@ -19,14 +25,10 @@ const common: ThemeOptions = {
 			fontWeight: 700,
 		},
 		body1: {
-			lineHeight: 1.6,
+			fontWeight: 450,
+			// lineHeight: 1.6,
 		},
 	},
-	shape: {
-		borderRadius: 8,
-	},
-	spacing: 8,
-	shadows: range(25).map(() => 'none') as Shadows,
 	components: {
 		MuiButtonBase: {
 			defaultProps: {
@@ -65,4 +67,4 @@ const common: ThemeOptions = {
 	},
 }
 
-export default common
+export default commonOptions

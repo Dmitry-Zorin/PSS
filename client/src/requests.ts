@@ -1,6 +1,7 @@
+import { getAuthToken } from 'auth.provider'
 import { isString, mapValues, reduce } from 'lodash'
 import { fetchUtils, Options } from 'react-admin'
-import { getToken, getUser, Role, Settings, setUser } from 'user'
+import { Settings } from 'user'
 
 export const apiUrl = `${import.meta.env.VITE_SERVER || ''}/api`
 
@@ -23,7 +24,7 @@ export function httpClient(
 	url: string,
 	{ body, ...options }: HttpClientOptions = {},
 ) {
-	const token = getToken()
+	const token = getAuthToken()
 	return fetchUtils.fetchJson(url, {
 		...options,
 		...(token && {
@@ -52,15 +53,7 @@ export function createUrlWithQueryParams(
 }
 
 export async function saveSettings(settings: Partial<Settings>) {
-	const user = getUser()
-	setUser({
-		...user,
-		settings: {
-			...user.settings,
-			...settings,
-		},
-	})
-	if (user.role !== Role.Guest) {
+	if (getAuthToken()) {
 		await fetchApi('auth/settings', {
 			method: 'put',
 			body: settings,

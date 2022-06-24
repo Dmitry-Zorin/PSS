@@ -1,4 +1,5 @@
-import { Card, Divider, Typography } from '@mui/material'
+import { Divider, Typography } from '@mui/material'
+import MainArea from 'components/MainArea'
 import { ReactNode } from 'react'
 import { useTranslate } from 'react-admin'
 
@@ -14,7 +15,7 @@ const About = () => {
 	const translate = useTranslate()
 
 	return (
-		<Card sx={(theme) => theme.mixins.mainArea}>
+		<MainArea>
 			<Typography variant="h4" align="center" sx={{ mt: 4, mb: 5 }}>
 				{translate('metadata.title')}
 			</Typography>
@@ -47,7 +48,7 @@ const About = () => {
 				check for common screen sizes. The hook returns a boolean indicating if
 				the current screen matches the media query or not.
 			</Typography>
-		</Card>
+		</MainArea>
 	)
 }
 

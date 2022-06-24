@@ -72,7 +72,7 @@ const CreatePublicationList = () => {
 	}
 
 	return (
-		<Create title="resources.publicationList.name">
+		<Create disableAuthentication title="resources.publicationList.name">
 			<>
 				<Title />
 				<SimpleForm onSubmit={savePublicationList}>

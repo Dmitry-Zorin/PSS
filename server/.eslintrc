@@ -4,14 +4,10 @@
 		"node": true
 	},
 	"parser": "@typescript-eslint/parser",
-	"parserOptions": {
-		"project": "**/tsconfig.json"
-	},
 	"plugins": ["@typescript-eslint", "nestjs"],
 	"extends": [
 		"eslint:recommended",
 		"plugin:@typescript-eslint/recommended",
-		"plugin:nestjs/recommended",
 		"plugin:prettier/recommended"
 	],
 	"rules": {

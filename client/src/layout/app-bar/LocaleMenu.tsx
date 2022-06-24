@@ -32,8 +32,8 @@ const LocaleMenu = () => {
 				open={isMenuOpen}
 				onClose={() => setIsMenuOpen(false)}
 			>
-				<MenuItem onClick={() => changeLocale(Locale.En)}>English</MenuItem>
-				<MenuItem onClick={() => changeLocale(Locale.Ru)}>Русский</MenuItem>
+				<MenuItem onClick={() => changeLocale('en')}>English</MenuItem>
+				<MenuItem onClick={() => changeLocale('ru')}>Русский</MenuItem>
 			</Menu>
 		</>
 	)

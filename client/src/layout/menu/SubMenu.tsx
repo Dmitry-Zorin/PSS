@@ -44,7 +44,7 @@ const SubMenu = ({ name, icon, children }: SubMenuProps) => {
 				primaryText={
 					<>
 						{icon}
-						<Box sx={{ ml: 2 }}>
+						<Box ml={2}>
 							{translate(name)}
 							{isPublications && <MenuChip label={getTotalCount()} />}
 						</Box>
@@ -53,14 +53,14 @@ const SubMenu = ({ name, icon, children }: SubMenuProps) => {
 				leftIcon={
 					<ExpandMore
 						sx={[
-							// { transition: 'transform 300ms ease' },
+							{ transition: 'transform 300ms ease' },
 							!isOpen && { transform: 'rotate(-90deg)' },
 						]}
 					/>
 				}
 				onClick={() => setIsOpen((e) => !e)}
 			/>
-			<Collapse in={isOpen} sx={{ a: menuItemStyle, transition: 'none' }}>
+			<Collapse in={isOpen} sx={{ a: menuItemStyle }}>
 				{children}
 			</Collapse>
 		</>

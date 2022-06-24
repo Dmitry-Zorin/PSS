@@ -1,24 +1,22 @@
-import { Theme, useMediaQuery } from '@mui/material'
-import { Layout as RaLayout, LayoutProps } from 'react-admin'
+import { Box } from '@mui/material'
 import { AppBar, Menu, ScrollTopButton, Sidebar } from 'layout'
+import { Layout as RaLayout, LayoutProps } from 'react-admin'
 
-const Layout = ({ children, ...props }: LayoutProps) => (
-	<RaLayout
-		appBar={AppBar}
-		sidebar={Sidebar}
-		menu={Menu}
-		style={{
-			// '& .RaLayout-appFrame': {
-			marginTop: 0,
-			// },
+const Layout = ({ children }: LayoutProps) => (
+	<Box
+		sx={{
+			'& .RaLayout-appFrame': {
+				color: (t) => t.palette.text.primary,
+				mt: '0 !important',
+			},
 		}}
-		{...props}
 	>
-		{children}
-		{useMediaQuery((theme: Theme) => theme.breakpoints.up('md')) && (
+		<RaLayout appBar={() => null} sidebar={Sidebar} menu={Menu}>
+			<AppBar />
+			{children}
 			<ScrollTopButton />
-		)}
-	</RaLayout>
+		</RaLayout>
+	</Box>
 )
 
 export default Layout

@@ -5,9 +5,7 @@
 		"moduleResolution": "node",
 		"baseUrl": "src",
 		"jsx": "react-jsx",
-		"types": [
-			"vite/client"
-		],
+		"types": ["type-fest"],
 		"noEmit": true,
 		"strict": true,
 		"incremental": true,
@@ -16,7 +14,5 @@
 		"allowSyntheticDefaultImports": true,
 		"strictPropertyInitialization": false
 	},
-	"include": [
-		"src"
-	]
+	"include": ["src"]
 }

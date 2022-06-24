@@ -1,10 +1,11 @@
+import { TranslationMessages } from 'react-admin'
 import { Locale } from 'user'
 import englishMessages from './english.messages'
 import russianMessages from './russian.messages'
 
-const messages = {
-	[Locale.En]: englishMessages,
-	[Locale.Ru]: russianMessages,
+const messages: Record<Locale, TranslationMessages> = {
+	en: englishMessages,
+	ru: russianMessages,
 }
 
 export default messages

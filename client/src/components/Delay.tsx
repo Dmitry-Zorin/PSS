@@ -2,10 +2,10 @@ import { ReactNode, useEffect, useState } from 'react'
 
 interface DelayProps {
 	children: ReactNode
-	ms: number
+	ms?: number
 }
 
-const Delay = ({ children, ms }: DelayProps) => {
+const Delay = ({ children, ms = 0 }: DelayProps) => {
 	const [showComponent, setShowComponent] = useState(false)
 
 	useEffect(() => {

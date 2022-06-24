@@ -1,13 +1,9 @@
 html {
-	font-family: Montserrat;
+	font-family: MontserratVariable;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
 
 body {
 	margin: 0;
-}
-
-* {
-	transition: none !important;
 }

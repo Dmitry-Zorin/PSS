@@ -1,20 +1,15 @@
+import '@fontsource/montserrat/variable-italic.css'
 import '@fontsource/montserrat/variable.css'
-import { BackgroundSetter, Lazy, LoadingScreen } from 'components'
 import 'index.css'
 import { StrictMode } from 'react'
-import ReactDOM from 'react-dom'
-import themes from 'themes'
-import { getUser } from 'user'
+import { createRoot } from 'react-dom/client'
+import App from './App'
 
-const { palette } = themes[getUser().settings.theme]
+const container = document.getElementById('root')
+const root = createRoot(container!)
 
-ReactDOM.render(
+root.render(
 	<StrictMode>
-		<BackgroundSetter color={palette.background.default} />
-		<Lazy
-			component={() => import('./App')}
-			fallback={<LoadingScreen color={palette.primary.main} />}
-		/>
+		<App />
 	</StrictMode>,
-	document.getElementById('root'),
 )

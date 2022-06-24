@@ -1,33 +1,43 @@
 import { IconButton } from '@mui/material'
 import { red, yellow } from '@mui/material/colors'
-import { BackgroundSetter } from 'components'
-import { useStore, useTheme } from 'react-admin'
-import { DarkModeSwitch } from 'react-toggle-dark-mode/dist'
+import { useEffect } from 'react'
+import { useTheme } from 'react-admin'
+import { Helmet } from 'react-helmet'
 import { saveSettings } from 'requests'
 import themes, { ThemeOptionsExtended } from 'themes'
-import { ThemeMode } from 'user'
-
-const { Light, Dark } = ThemeMode
+import { DarkModeSwitch } from './Toggle'
 
 const ThemeSwitcher = () => {
 	const [theme, setTheme] = useTheme()
-	const [mode, setMode] = useStore<ThemeMode>('theme.mode')
 
-	const isDark = mode === Dark
+	useEffect(() => {
+		if (!theme) {
+			setTheme(themes.dark)
+		}
+	}, [theme, setTheme])
+
+	if (!theme) {
+		return null
+	}
+
+	const palette = (theme as ThemeOptionsExtended).palette
+	const background = palette.background.default
+	const mode = palette.mode
+	const isDark = mode === 'dark'
 
 	return (
 		<>
-			<BackgroundSetter
-				color={(theme as ThemeOptionsExtended).palette.background.default}
-			/>
-			<IconButton onClick={() => setMode(isDark ? Light : Dark)}>
+			<Helmet>
+				<meta name="theme-color" content={background} />
+				<style type="text/css">{`body {	background-color: ${background} }`}</style>
+			</Helmet>
+			<IconButton onClick={() => setTheme(themes[isDark ? 'light' : 'dark'])}>
 				<DarkModeSwitch
 					sunColor={red[900]}
 					moonColor={yellow[600]}
 					checked={isDark}
 					onChange={() => {
-						setTheme(themes[mode])
-						saveSettings({ theme: mode }).catch(null)
+						return saveSettings({ theme: mode }).catch(null)
 					}}
 				/>
 			</IconButton>

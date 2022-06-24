@@ -4,7 +4,6 @@ import {
 	ChipField,
 	Labeled,
 	NumberInput,
-	SearchInput,
 	SimpleForm,
 	SimpleShowLayout,
 	TextField,
@@ -65,7 +64,7 @@ export const PublicationEdit = ({ children }: { children: ReactNode }) => (
 export const PublicationList = () => (
 	<List
 		filters={[
-			<SearchInput
+			<TextInput
 				source="title"
 				label="fields.search"
 				sx={{ ml: 2 }}
@@ -92,15 +91,13 @@ export const PublicationShow = ({ children }: { children: ReactNode }) => (
 			<TextField source="description" variant="body1" />
 		</Stack>
 		<Box
-			sx={{
-				display: 'grid',
-				mt: 5,
-				px: 2,
-				py: 1,
-				rowGap: 3,
-				columnGap: 1,
-				gridTemplateColumns: 'repeat(2, 1fr)',
-			}}
+			display="grid"
+			rowGap={3}
+			columnGap={1}
+			gridTemplateColumns="repeat(2, 1fr)"
+			mt={5}
+			px={2}
+			py={1}
 		>
 			<Labeled>
 				<TextField

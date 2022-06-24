@@ -23,7 +23,7 @@ const MenuItem = ({ name }: { name: string }) => {
 		return null
 	}
 
-	const { icon } = resource
+	const { icon: Icon } = resource
 
 	const isPublication = name in publications
 	const count = getResourceCount(name) || 0
@@ -49,17 +49,18 @@ const MenuItem = ({ name }: { name: string }) => {
 								bgcolor: grey[300],
 								right: 2,
 								top: 2,
-								border: (t) => `2px solid ${t.palette.background.paper}`,
+								border: 2,
+								borderColor: (t) => t.palette.background.paper,
 								px: 0.5,
 								transform: 'scale(0.95) translate(50%, -50%)',
 								transitionDelay: '300ms',
 							},
 						}}
 					>
-						{icon}
+						<Icon />
 					</Badge>
 				) : (
-					icon
+					<Icon />
 				)
 			}
 		/>

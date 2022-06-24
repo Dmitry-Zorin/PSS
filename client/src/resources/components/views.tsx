@@ -1,5 +1,5 @@
-import { Box } from '@mui/material'
 import { Title } from 'components'
+import MainArea from 'components/MainArea'
 import { ComponentProps } from 'react'
 import {
 	Create as RaCreate,
@@ -12,16 +12,19 @@ import {
 import { CreateActions, EditActions, ListActions, ShowActions } from './actions'
 import ResourceCounter from './ResourceCounter'
 
-export const Create = (props: ComponentProps<typeof RaCreate>) => (
-	<Box sx={{ '& .RaCreate-main': ({ mixins }) => mixins.mainArea }}>
-		<RaCreate actions={<CreateActions />} redirect="show" {...props} />
-	</Box>
+export const Create = ({
+	children,
+	...props
+}: ComponentProps<typeof RaCreate>) => (
+	<RaCreate actions={<CreateActions />} redirect="show" {...props}>
+		<MainArea>{children}</MainArea>
+	</RaCreate>
 )
 
-export const Edit = (props: ComponentProps<typeof RaEdit>) => (
-	<Box sx={{ '& .RaEdit-main': ({ mixins }) => mixins.mainArea }}>
-		<RaEdit actions={<EditActions />} redirect="show" {...props} />
-	</Box>
+export const Edit = ({ children, ...props }: ComponentProps<typeof RaEdit>) => (
+	<RaEdit actions={<EditActions />} redirect="show" {...props}>
+		<MainArea>{children}</MainArea>
+	</RaEdit>
 )
 
 export const List = ({ children, ...props }: ListProps) => (
@@ -46,18 +49,17 @@ export const List = ({ children, ...props }: ListProps) => (
 	</RaList>
 )
 
-export const Show = (props: ShowProps) => (
-	<Box
-		sx={(theme) => ({
-			'& .RaShow-main': {
-				...theme.mixins.mainArea,
-			},
-			'& .RaLabeled-label': {
-				color: theme.palette.primary.main,
-				fontSize: '0.95rem !important',
-			},
-		})}
-	>
-		<RaShow disableAuthentication actions={<ShowActions />} {...props} />
-	</Box>
+export const Show = ({ children, ...props }: ShowProps) => (
+	<RaShow disableAuthentication actions={<ShowActions />} {...props}>
+		<MainArea
+			sx={(theme) => ({
+				'& .RaLabeled-label': {
+					color: theme.palette.primary.main,
+					fontSize: '0.95rem !important',
+				},
+			})}
+		>
+			{children}
+		</MainArea>
+	</RaShow>
 )

@@ -1,8 +1,14 @@
 import { AdminPanelSettings, Info, School } from '@mui/icons-material'
+import { Box, Typography } from '@mui/material'
 import { Permissions } from 'auth.provider'
 import { CountContextProvider } from 'contexts'
 import { kebabCase } from 'lodash'
-import { Menu as RaMenu, MenuProps, usePermissions } from 'react-admin'
+import {
+	Menu as RaMenu,
+	SidebarToggleButton,
+	usePermissions,
+} from 'react-admin'
+import { Link } from 'react-router-dom'
 import resources from 'resources'
 import { MenuItem, MenuItemLink, SubMenu } from '.'
 
@@ -12,25 +18,24 @@ function getMenuItems(resources: Record<string, unknown>) {
 	))
 }
 
-const Menu = (props: MenuProps) => {
+const Menu = () => {
 	const { permissions } = usePermissions<Permissions>()
-	// const [isSidebarOpen] = useSidebarState()
 
 	return (
-		<RaMenu
-			// sx={{
-			// 	transition: ({ transitions }) => {
-			// 		return transitions.create('width', {
-			// 			easing: transitions.easing[isSidebarOpen ? 'easeOut' : 'easeIn'],
-			// 			duration: '1000ms',
-			// 			// transitions.duration[
-			// 			// 	isSidebarOpen ? 'enteringScreen' : 'leavingScreen'
-			// 			// ],
-			// 		})
-			// 	},
-			// }}
-			{...props}
-		>
+		<RaMenu>
+			<Box display="flex" alignItems="center" ml="7px" mb={1}>
+				<SidebarToggleButton />
+				<Typography
+					component={Link}
+					to="/"
+					color="primary"
+					variant="h5"
+					fontStyle="italic"
+					sx={{ textDecoration: 'none', p: 1 }}
+				>
+					PSS
+				</Typography>
+			</Box>
 			<MenuItemLink to="/about" primaryText="pages.about" leftIcon={<Info />} />
 			{getMenuItems(resources.main)}
 			<CountContextProvider>
