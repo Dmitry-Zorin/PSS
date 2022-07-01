@@ -44,7 +44,7 @@ const englishMessages: TranslationMessages = {
 			name: 'Timeline',
 		},
 		'create-publication-list': {
-			name: 'Create publications list',
+			name: 'Create publication list',
 		},
 		articles: {
 			name: 'Article |||| Articles',

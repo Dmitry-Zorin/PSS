@@ -1,69 +1,67 @@
-import { Badge } from '@mui/material'
-import { grey } from '@mui/material/colors'
-import { CountContext } from 'contexts'
-import { useContext } from 'react'
 import {
-	useResourceDefinitions,
-	useSidebarState,
-	useTranslate,
-} from 'react-admin'
-import resources from 'resources'
-import { MenuChip, MenuItemLink } from '.'
+	alpha,
+	ListItem,
+	ListItemButton,
+	ListItemButtonProps,
+	ListItemIcon,
+	ListItemText,
+	Tooltip,
+} from '@mui/material'
+import { ReactNode } from 'react'
+import { useSidebarState, useTranslate } from 'react-admin'
+import { Link, useMatch } from 'react-router-dom'
 
-const { publications } = resources
+export interface MenuItemProps extends ListItemButtonProps {
+	children?: ReactNode
+	to?: string
+	icon: ReactNode
+	text: string
+	tooltip?: string
+}
 
-const MenuItem = ({ name }: { name: string }) => {
+const MenuItem = ({
+	children,
+	to = '#',
+	icon,
+	text,
+	sx,
+	...props
+}: MenuItemProps) => {
 	const translate = useTranslate()
-	const { getResourceCount } = useContext(CountContext)
-	const resourceName = name
-	const resource = useResourceDefinitions()[resourceName]
 	const [isSidebarOpen] = useSidebarState()
+	const isActive = useMatch(`${to}/*`)
 
-	if (!resource) {
-		return null
-	}
-
-	const { icon: Icon } = resource
-
-	const isPublication = name in publications
-	const count = getResourceCount(name) || 0
+	text = translate(text, { smart_count: 2 })
 
 	return (
-		<MenuItemLink
-			to={`/${resourceName}`}
-			primaryText={
-				<>
-					{translate(`resources.${name}.name`, { smart_count: 2 })}
-					{isPublication && <MenuChip label={count} />}
-				</>
-			}
-			leftIcon={
-				isPublication && !isSidebarOpen ? (
-					<Badge
-						// color="secondary"
-						badgeContent={count}
-						max={1000}
-						showZero
-						sx={{
-							'& .MuiBadge-badge': {
-								bgcolor: grey[300],
-								right: 2,
-								top: 2,
-								border: 2,
-								borderColor: (t) => t.palette.background.paper,
-								px: 0.5,
-								transform: 'scale(0.95) translate(50%, -50%)',
-								transitionDelay: '300ms',
+		<Tooltip placement="right" title={isSidebarOpen ? '' : text}>
+			<ListItem component={Link} to={to} disablePadding>
+				<ListItemButton
+					sx={({ palette }) => ({
+						height: 46,
+						color: 'text.secondary',
+						transition: 'none',
+						':hover': {
+							bgcolor: alpha(palette.text.secondary, 0.05),
+						},
+						...(isActive && {
+							color: 'primary.main',
+							'&, :hover': {
+								bgcolor: alpha(palette.primary.main, 0.075),
 							},
-						}}
-					>
-						<Icon />
-					</Badge>
-				) : (
-					<Icon />
-				)
-			}
-		/>
+						}),
+						...sx,
+					})}
+					{...props}
+				>
+					<ListItemIcon sx={{ color: 'inherit', minWidth: 40 }}>
+						{icon}
+					</ListItemIcon>
+					<ListItemText primary={text} sx={{ flexShrink: 0 }} />
+					{children}
+				</ListItemButton>
+			</ListItem>
+		</Tooltip>
 	)
 }
 

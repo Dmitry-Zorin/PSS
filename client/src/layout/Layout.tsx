@@ -1,21 +1,29 @@
-import { Box } from '@mui/material'
-import { AppBar, Menu, ScrollTopButton, Sidebar } from 'layout'
-import { Layout as RaLayout, LayoutProps } from 'react-admin'
+import { alpha, Box } from '@mui/material'
+import { Scrollable } from 'components'
+import { AppBar, Menu, ScrollableWithButton, SideAppBar, Sidebar } from 'layout'
+import { ReactNode } from 'react'
 
-const Layout = ({ children }: LayoutProps) => (
+const Layout = ({ children }: { children: ReactNode }) => (
 	<Box
+		display="flex"
+		width="100vw"
+		height="100vh"
+		overflow="hidden"
 		sx={{
-			'& .RaLayout-appFrame': {
-				color: (t) => t.palette.text.primary,
-				mt: '0 !important',
+			'::selection': {
+				bgcolor: (t) => alpha(t.palette.primary.main, 0.5),
 			},
 		}}
 	>
-		<RaLayout appBar={() => null} sidebar={Sidebar} menu={Menu}>
+		<Sidebar>
+			<SideAppBar />
+			<Menu />
+		</Sidebar>
+		<Scrollable component="main" position="relative" flexGrow={1}>
 			<AppBar />
 			{children}
-			<ScrollTopButton />
-		</RaLayout>
+			<ScrollableWithButton />
+		</Scrollable>
 	</Box>
 )
 

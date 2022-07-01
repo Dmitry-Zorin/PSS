@@ -1,70 +1,44 @@
-import { ExpandMore } from '@mui/icons-material'
-import { Box, Collapse } from '@mui/material'
-import { CountContext } from 'contexts/CountContext'
-import { ReactNode, useContext, useEffect, useState } from 'react'
-import { useSidebarState, useTranslate } from 'react-admin'
-import { MenuChip, MenuItemLink } from '.'
-
-const PADDING = 7
+import { ExpandLess, ExpandMore } from '@mui/icons-material'
+import { List } from '@mui/material'
+import { MenuItem } from 'layout'
+import { Children, cloneElement, ReactElement, useState } from 'react'
+import { animated, config, useSpring } from 'react-spring'
 
 interface SubMenuProps {
 	name: string
-	icon: ReactNode
-	children: ReactNode
+	icon: ReactElement
+	children: ReactElement[]
 }
 
+const AnimatedList = animated(List)
+
 const SubMenu = ({ name, icon, children }: SubMenuProps) => {
-	const translate = useTranslate()
-	const [isSidebarOpen] = useSidebarState()
 	const [isOpen, setIsOpen] = useState(true)
-	const [menuItemStyle, setMenuItemStyle] = useState({
-		pl: isSidebarOpen ? PADDING : undefined,
+	const style2 = useSpring({
+		height: isOpen ? 46 * children.length : 0,
+		overflow: 'hidden',
+		config: {
+			...config.gentle,
+			mass: 0.5,
+		},
 	})
-	const [showTransition, setShowTransition] = useState(false)
-	const { getTotalCount } = useContext(CountContext)
-
-	useEffect(() => {
-		setShowTransition(true)
-		setTimeout(() => {
-			setMenuItemStyle({
-				pl: isSidebarOpen ? PADDING : undefined,
-				...(showTransition && {
-					transition: 'padding 195ms cubic-bezier(0.4, 0, 0.6, 1)',
-				}),
-			})
-		})
-	}, [isSidebarOpen, showTransition])
-
-	const isPublications = name === 'menu.publications'
 
 	return (
 		<>
-			<MenuItemLink
-				to="#"
-				primaryText={
-					<>
-						{icon}
-						<Box ml={2}>
-							{translate(name)}
-							{isPublications && <MenuChip label={getTotalCount()} />}
-						</Box>
-					</>
-				}
-				leftIcon={
-					<ExpandMore
-						sx={[
-							{ transition: 'transform 300ms ease' },
-							!isOpen && { transform: 'rotate(-90deg)' },
-						]}
-					/>
-				}
-				onClick={() => setIsOpen((e) => !e)}
-			/>
-			<Collapse in={isOpen} sx={{ a: menuItemStyle }}>
-				{children}
-			</Collapse>
+			<MenuItem icon={icon} text={name} onClick={() => setIsOpen((e) => !e)}>
+				{isOpen ? <ExpandLess /> : <ExpandMore />}
+			</MenuItem>
+			<AnimatedList component="div" style={style2} disablePadding>
+				{Children.map(children, (child) =>
+					cloneElement(child, { sx: { pl: 'calc(9.7px + 15.75%)' } }),
+				)}
+			</AnimatedList>
 		</>
 	)
 }
+
+// x + y * 2.99 = 56
+// x + y * 0.4 = 16
+// y = 40 / 2.54
 
 export default SubMenu

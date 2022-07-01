@@ -1,5 +1,4 @@
 import { IconButton } from '@mui/material'
-import { red, yellow } from '@mui/material/colors'
 import { useEffect } from 'react'
 import { useTheme } from 'react-admin'
 import { Helmet } from 'react-helmet'
@@ -20,6 +19,7 @@ const ThemeSwitcher = () => {
 
 	const palette = (theme as ThemeOptionsExtended).palette
 	const background = palette.background.default
+	const color = palette.primary.main
 	const mode = palette.mode
 	const isDark = mode === 'dark'
 
@@ -31,8 +31,8 @@ const ThemeSwitcher = () => {
 			</Helmet>
 			<IconButton onClick={() => setTheme(themes[isDark ? 'light' : 'dark'])}>
 				<DarkModeSwitch
-					sunColor={red[900]}
-					moonColor={yellow[600]}
+					sunColor={color}
+					moonColor={color}
 					checked={isDark}
 					onChange={() => {
 						return saveSettings({ theme: mode }).catch(null)

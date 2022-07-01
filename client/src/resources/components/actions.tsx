@@ -1,10 +1,11 @@
+import { Box } from '@mui/material'
+import { Admin } from 'components'
 import {
 	CreateButton,
 	EditButton,
 	FilterButton,
 	ListButton,
 	TopToolbar,
-	usePermissions,
 } from 'react-admin'
 
 export const CreateActions = () => (
@@ -22,18 +23,18 @@ export const EditActions = () => (
 export const ListActions = () => (
 	<TopToolbar>
 		<FilterButton />
-		{usePermissions().permissions?.isAdmin && <CreateButton />}
+		<Admin>
+			<CreateButton />
+		</Admin>
 	</TopToolbar>
 )
 
 export const ShowActions = () => (
 	<TopToolbar>
 		<ListButton />
-		{usePermissions().permissions?.isAdmin && (
-			<>
-				<EditButton />
-				<CreateButton />
-			</>
-		)}
+		<Box flex={1}></Box>
+		<Admin>
+			<EditButton />
+		</Admin>
 	</TopToolbar>
 )

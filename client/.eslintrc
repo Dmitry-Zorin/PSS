@@ -12,7 +12,7 @@
 	"plugins": ["@typescript-eslint"],
 	"settings": {
 		"react": {
-			"version": "17"
+			"version": "18"
 		}
 	},
 	"extends": [

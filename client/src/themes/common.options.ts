@@ -7,26 +7,19 @@ const commonOptions: RaThemeOptions = {
 	mixins,
 	shadows: range(25).map(() => 'none') as Shadows,
 	shape: {
-		borderRadius: 8,
-	},
-	sidebar: {
-		width: 300,
-		closedWidth: 54,
+		borderRadius: 4,
 	},
 	typography: {
 		fontFamily: 'MontserratVariable, sans-serif',
+		fontWeightRegular: 500,
 		h4: {
 			fontWeight: 900,
 		},
 		h5: {
-			fontWeight: 700,
+			fontWeight: 800,
 		},
 		h6: {
 			fontWeight: 700,
-		},
-		body1: {
-			fontWeight: 450,
-			// lineHeight: 1.6,
 		},
 	},
 	components: {
@@ -35,33 +28,79 @@ const commonOptions: RaThemeOptions = {
 				disableRipple: true,
 			},
 		},
-		MuiPaper: {
+		MuiTableHead: {
 			styleOverrides: {
 				root: {
-					background: 'none',
+					height: 64,
 				},
 			},
 		},
 		MuiTableRow: {
 			styleOverrides: {
 				root: {
-					height: 44,
+					height: 50,
+				},
+			},
+		},
+		MuiTableCell: {
+			styleOverrides: {
+				head: ({ theme }) => ({
+					borderColor: theme.palette.divider,
+				}),
+				body: {
+					borderColor: 'transparent',
 				},
 			},
 		},
 		MuiIconButton: {
 			styleOverrides: {
 				root: {
-					height: 42,
-					width: 42,
+					padding: 8,
 				},
 			},
 		},
 		MuiChip: {
 			styleOverrides: {
-				root: {
+				root: ({ theme }) => ({
 					minWidth: 24,
 					transition: 'none',
+					color: theme.palette.text.contrast,
+					// backgroundColor: theme.palette.divider,
+					fontWeight: theme.typography.fontWeightRegular,
+				}),
+			},
+		},
+		MuiButton: {
+			styleOverrides: {
+				root: {
+					fontWeight: 600,
+					transition: 'none',
+				},
+			},
+		},
+		MuiMenu: {
+			styleOverrides: {
+				list: ({ theme }) => ({
+					color: theme.palette.text.contrast,
+					// backgroundColor: theme.palette.divider,
+				}),
+			},
+		},
+		MuiTooltip: {
+			styleOverrides: {
+				tooltip: ({ theme }) => ({
+					fontSize: '0.75rem',
+					color: theme.palette.text.contrast,
+					// backgroundColor: theme.palette.divider,
+				}),
+			},
+		},
+		MuiToolbar: {
+			styleOverrides: {
+				root: {
+					'&.RaToolbar-desktopToolbar': {
+						backgroundColor: 'transparent',
+					},
 				},
 			},
 		},

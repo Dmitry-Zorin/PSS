@@ -1,20 +1,25 @@
 import { ThemePaletteOptions } from 'themes'
 
-const BACKGROUND = '#22272C'
+// https://coolors.co/8e96e6-262833-555660-b3b3b9-e2e1e6-fbfaff
+
+const BACKGROUND = '#262A33'
 
 const darkOptions: ThemePaletteOptions = {
 	mode: 'dark',
 	primary: {
-		main: '#B6F279',
+		main: '#8E96E6',
 	},
 	text: {
-		primary: '#FFFFFF',
+		primary: '#E2E1E6',
+		secondary: '#B3B3B9',
+		contrast: '#FBFAFF',
 	},
 	background: {
 		default: BACKGROUND,
 		paper: BACKGROUND,
 		sidebar: BACKGROUND,
 	},
+	divider: '#555660',
 }
 
 export default darkOptions

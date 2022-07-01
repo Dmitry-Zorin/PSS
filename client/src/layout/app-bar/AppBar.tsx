@@ -1,19 +1,20 @@
-import { Home, InfoOutlined } from '@mui/icons-material'
-import { AppBar as MuiAppBar, Box, IconButton, Toolbar } from '@mui/material'
-import { LoadingIndicator, UserMenu } from 'react-admin'
+import { Home, Info } from '@mui/icons-material'
+import { Box, IconButton, Toolbar } from '@mui/material'
+import { LocaleMenu, Logo, ThemeSwitcher } from 'layout'
+import { LoadingIndicator, UserMenu, useSidebarState } from 'react-admin'
 import { Link } from 'react-router-dom'
-import { LocaleMenu, ThemeSwitcher } from '.'
 
-const AppBar = () => (
-	<MuiAppBar
-		color="inherit"
-		position="static"
-		sx={{
-			borderBottom: 1,
-			borderColor: 'divider',
-		}}
-	>
-		<Toolbar>
+const AppBar = () => {
+	// const [isSidebarOpen] = useSidebarState()
+	return (
+		<Toolbar
+			sx={{
+				// bgcolor: 'background.default',
+				borderBottom: 1,
+				borderColor: 'divider',
+			}}
+		>
+			{/* {!isSidebarOpen && <Logo />} */}
 			<Box flexGrow={1}></Box>
 			<ThemeSwitcher />
 			<LocaleMenu />
@@ -21,12 +22,12 @@ const AppBar = () => (
 				<Home />
 			</IconButton>
 			<IconButton color="inherit" component={Link} to="/about">
-				<InfoOutlined />
+				<Info />
 			</IconButton>
 			<LoadingIndicator />
 			<UserMenu />
 		</Toolbar>
-	</MuiAppBar>
-)
+	)
+}
 
 export default AppBar

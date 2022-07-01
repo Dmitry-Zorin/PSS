@@ -1,6 +1,6 @@
-import { Theme, Typography, useMediaQuery } from '@mui/material'
+import { Theme, useMediaQuery } from '@mui/material'
 import { truncate } from 'lodash'
-import { Datagrid, DatagridProps, SimpleList, WithRecord } from 'react-admin'
+import { Datagrid, DatagridProps, SimpleList } from 'react-admin'
 
 const ListUI = (props: DatagridProps) => {
 	const isSmall = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
@@ -15,20 +15,7 @@ const ListUI = (props: DatagridProps) => {
 			tertiaryText={(record) => record.publication.year}
 		/>
 	) : (
-		<Datagrid
-			rowClick="show"
-			isRowExpandable={(record) => record.description}
-			expand={
-				<WithRecord
-					render={(record) => (
-						<Typography sx={{ px: 2, py: 1 }}>{record.description}</Typography>
-					)}
-				/>
-			}
-			expandSingle
-			optimized
-			{...props}
-		/>
+		<Datagrid rowClick="show" optimized {...props} />
 	)
 }
 

@@ -1,54 +1,37 @@
 import { AdminPanelSettings, Info, School } from '@mui/icons-material'
-import { Box, Typography } from '@mui/material'
+import { List } from '@mui/material'
 import { Permissions } from 'auth.provider'
 import { CountContextProvider } from 'contexts'
+import { MenuItem, ResourceMenuItem, SubMenu } from 'layout'
 import { kebabCase } from 'lodash'
-import {
-	Menu as RaMenu,
-	SidebarToggleButton,
-	usePermissions,
-} from 'react-admin'
-import { Link } from 'react-router-dom'
+import { useCallback } from 'react'
+import { usePermissions } from 'react-admin'
 import resources from 'resources'
-import { MenuItem, MenuItemLink, SubMenu } from '.'
-
-function getMenuItems(resources: Record<string, unknown>) {
-	return Object.keys(resources).map((e) => (
-		<MenuItem key={e} name={kebabCase(e)} />
-	))
-}
 
 const Menu = () => {
 	const { permissions } = usePermissions<Permissions>()
 
+	const getMenuItems = useCallback((resources: Record<string, unknown>) => {
+		return Object.keys(resources).map((e) => (
+			<ResourceMenuItem key={e} name={kebabCase(e)} />
+		))
+	}, [])
+
 	return (
-		<RaMenu>
-			<Box display="flex" alignItems="center" ml="7px" mb={1}>
-				<SidebarToggleButton />
-				<Typography
-					component={Link}
-					to="/"
-					color="primary"
-					variant="h5"
-					fontStyle="italic"
-					sx={{ textDecoration: 'none', p: 1 }}
-				>
-					PSS
-				</Typography>
-			</Box>
-			<MenuItemLink to="/about" primaryText="pages.about" leftIcon={<Info />} />
+		<List component="nav" disablePadding sx={{ pb: 8 }}>
+			<MenuItem to="/about" icon={<Info />} text="pages.about" />
 			{getMenuItems(resources.main)}
 			<CountContextProvider>
-				<SubMenu name="menu.publications" icon={<School />}>
+				<SubMenu icon={<School />} name="menu.publications">
 					{getMenuItems(resources.publications)}
 				</SubMenu>
 			</CountContextProvider>
 			{permissions?.isAdmin && (
-				<SubMenu name="menu.admin" icon={<AdminPanelSettings />}>
+				<SubMenu icon={<AdminPanelSettings />} name="menu.admin">
 					{getMenuItems(resources.admin)}
 				</SubMenu>
 			)}
-		</RaMenu>
+		</List>
 	)
 }
 

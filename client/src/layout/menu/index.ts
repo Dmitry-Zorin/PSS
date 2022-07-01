@@ -1,5 +1,5 @@
 export { default as Menu } from './Menu'
 export { default as MenuChip } from './MenuChip'
 export { default as MenuItem } from './MenuItem'
-export { default as MenuItemLink } from './MenuItemLink'
+export { default as ResourceMenuItem } from './ResourceMenuItem'
 export { default as SubMenu } from './SubMenu'

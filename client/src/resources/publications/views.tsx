@@ -41,7 +41,7 @@ export const CreateUpdateInputs = () => (
 	</>
 )
 
-export const PublicationCreate = ({ children }: { children: ReactNode }) => (
+export const PublicationCreate = ({ children }: { children?: ReactNode }) => (
 	<Create>
 		<SimpleForm>
 			<CreateUpdateInputs />
@@ -51,7 +51,7 @@ export const PublicationCreate = ({ children }: { children: ReactNode }) => (
 	</Create>
 )
 
-export const PublicationEdit = ({ children }: { children: ReactNode }) => (
+export const PublicationEdit = ({ children }: { children?: ReactNode }) => (
 	<Edit>
 		<SimpleForm>
 			<CreateUpdateInputs />
@@ -84,11 +84,11 @@ export const PublicationList = () => (
 	</List>
 )
 
-export const PublicationShow = ({ children }: { children: ReactNode }) => (
+export const PublicationShow = ({ children }: { children?: ReactNode }) => (
 	<Show>
 		<Stack spacing={3} sx={{ px: 2, py: 1 }}>
-			<TextField source="title" variant="h4" sx={{ mb: 3 }} />
-			<TextField source="description" variant="body1" />
+			<TextField variant="h4" source="title" />
+			<TextField variant="body1" source="description" />
 		</Stack>
 		<Box
 			display="grid"

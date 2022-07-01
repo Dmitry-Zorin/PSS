@@ -1,11 +1,11 @@
 import { Divider, Typography } from '@mui/material'
-import MainArea from 'components/MainArea'
+import { MainArea } from 'components'
 import { ReactNode } from 'react'
 import { useTranslate } from 'react-admin'
 
 const Subtitle = ({ children }: { children: ReactNode }) => (
 	<Divider sx={{ mt: 6, mb: 2, mx: 4 }}>
-		<Typography color="primary" variant="h6" sx={{ mt: 0 }}>
+		<Typography variant="h6" sx={{ mt: 0 }}>
 			{children}
 		</Typography>
 	</Divider>
@@ -16,7 +16,7 @@ const About = () => {
 
 	return (
 		<MainArea>
-			<Typography variant="h4" align="center" sx={{ mt: 4, mb: 5 }}>
+			<Typography variant="h4" align="center" sx={{ mt: 4, mb: 4 }}>
 				{translate('metadata.title')}
 			</Typography>
 			<Typography>

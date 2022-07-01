@@ -1,13 +1,12 @@
-import { Title } from 'components'
-import MainArea from 'components/MainArea'
+import { MainArea, Title } from 'components'
 import { ComponentProps } from 'react'
 import {
-	Create as RaCreate,
-	Edit as RaEdit,
-	List as RaList,
-	ListProps,
-	Show as RaShow,
-	ShowProps,
+	CreateBase,
+	EditBase,
+	ListBase,
+	ListToolbar,
+	ListToolbarProps,
+	ShowBase,
 } from 'react-admin'
 import { CreateActions, EditActions, ListActions, ShowActions } from './actions'
 import ResourceCounter from './ResourceCounter'
@@ -15,51 +14,60 @@ import ResourceCounter from './ResourceCounter'
 export const Create = ({
 	children,
 	...props
-}: ComponentProps<typeof RaCreate>) => (
-	<RaCreate actions={<CreateActions />} redirect="show" {...props}>
+}: ComponentProps<typeof CreateBase>) => (
+	<CreateBase redirect="show" {...props}>
+		<CreateActions />
 		<MainArea>{children}</MainArea>
-	</RaCreate>
+	</CreateBase>
 )
 
-export const Edit = ({ children, ...props }: ComponentProps<typeof RaEdit>) => (
-	<RaEdit actions={<EditActions />} redirect="show" {...props}>
+export const Edit = ({
+	children,
+	...props
+}: ComponentProps<typeof EditBase>) => (
+	<EditBase redirect="show" {...props}>
+		<EditActions />
 		<MainArea>{children}</MainArea>
-	</RaEdit>
+	</EditBase>
 )
 
-export const List = ({ children, ...props }: ListProps) => (
-	<RaList
-		disableAuthentication
-		actions={<ListActions />}
+export const List = ({
+	children,
+	filters,
+	actions = <ListActions />,
+	...props
+}: ComponentProps<typeof ListBase> & ListToolbarProps) => (
+	<ListBase
 		sort={{ field: 'createdAt', order: 'desc' }}
 		perPage={25}
-		empty={false}
-		sx={{
-			'& .RaChipField-chip': {
-				margin: 0,
-			},
-		}}
+		disableAuthentication
 		{...props}
 	>
 		<>
 			<Title />
 			<ResourceCounter />
+			<ListToolbar filters={filters} actions={actions} />
 			{children}
 		</>
-	</RaList>
+	</ListBase>
 )
 
-export const Show = ({ children, ...props }: ShowProps) => (
-	<RaShow disableAuthentication actions={<ShowActions />} {...props}>
-		<MainArea
-			sx={(theme) => ({
-				'& .RaLabeled-label': {
-					color: theme.palette.primary.main,
-					fontSize: '0.95rem !important',
-				},
-			})}
-		>
-			{children}
-		</MainArea>
-	</RaShow>
+export const Show = ({
+	children,
+	...props
+}: ComponentProps<typeof ShowBase>) => (
+	<ShowBase disableAuthentication {...props}>
+		<>
+			<ShowActions />
+			<MainArea
+				sx={{
+					'.RaLabeled-label': {
+						fontSize: '0.95rem !important',
+					},
+				}}
+			>
+				{children}
+			</MainArea>
+		</>
+	</ShowBase>
 )

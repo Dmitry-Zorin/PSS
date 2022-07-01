@@ -23,11 +23,7 @@ export const AuthorsField = (props: FieldProps) => (
 			<FunctionField
 				label="fields.authors"
 				render={(author: Author) => (
-					<Chip
-						clickable={true}
-						label={getAuthorName(author)}
-						sx={{ m: 0.5 }}
-					/>
+					<Chip label={getAuthorName(author)} sx={{ m: 0.5 }} clickable />
 				)}
 			/>
 		</SingleFieldList>

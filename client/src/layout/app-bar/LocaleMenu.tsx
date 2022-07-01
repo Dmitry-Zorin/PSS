@@ -1,19 +1,21 @@
 import { Language } from '@mui/icons-material'
-import { Box, IconButton, Menu, MenuItem } from '@mui/material'
-import { useRef, useState } from 'react'
+import { IconButton, Menu, MenuItem } from '@mui/material'
+import { MouseEvent, useState } from 'react'
 import { useLocaleState } from 'react-admin'
 import { Helmet } from 'react-helmet'
 import { saveSettings } from 'requests'
 import { Locale } from 'user'
 
 const LocaleMenu = () => {
-	const menuRef = useRef()
+	const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
 	const [locale, setLocale] = useLocaleState()
-	const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-	function changeLocale(locale: Locale) {
-		setLocale(locale)
-		saveSettings({ locale }).catch(null)
+	function changeLocale(newLocale: Locale) {
+		if (locale === newLocale) {
+			return
+		}
+		setLocale(newLocale)
+		saveSettings({ locale: newLocale }).catch(null)
 	}
 
 	return (
@@ -22,18 +24,25 @@ const LocaleMenu = () => {
 				<html lang={locale} />
 				<title lang={locale} />
 			</Helmet>
-			<Box ref={menuRef}>
-				<IconButton onClick={() => setIsMenuOpen(true)}>
-					<Language />
-				</IconButton>
-			</Box>
-			<Menu
-				anchorEl={menuRef.current}
-				open={isMenuOpen}
-				onClose={() => setIsMenuOpen(false)}
+			<IconButton
+				color="inherit"
+				onClick={(event: MouseEvent<HTMLButtonElement>) => {
+					setAnchorEl(event.currentTarget)
+				}}
 			>
-				<MenuItem onClick={() => changeLocale('en')}>English</MenuItem>
-				<MenuItem onClick={() => changeLocale('ru')}>Русский</MenuItem>
+				<Language />
+			</IconButton>
+			<Menu
+				anchorEl={anchorEl}
+				open={!!anchorEl}
+				onClose={() => setAnchorEl(null)}
+			>
+				<MenuItem selected={locale === 'en'} onClick={() => changeLocale('en')}>
+					English
+				</MenuItem>
+				<MenuItem selected={locale === 'ru'} onClick={() => changeLocale('ru')}>
+					Русский
+				</MenuItem>
 			</Menu>
 		</>
 	)

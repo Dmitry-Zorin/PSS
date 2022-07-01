@@ -4,8 +4,8 @@ const MenuChip = (props: ChipProps) => (
 	<Chip
 		size="small"
 		sx={{
-			ml: 2,
 			cursor: 'pointer',
+			borderRadius: 2,
 		}}
 		{...props}
 	/>

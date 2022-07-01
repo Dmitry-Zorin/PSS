@@ -1,5 +1,6 @@
 export { default as Layout } from './Layout'
-export { default as ScrollTopButton } from './ScrollTopButton'
-export { default as Sidebar } from './Sidebar'
+export * from './Logo'
+export { default as ScrollableWithButton } from './ScrollableWithButton'
 export * from './app-bar'
 export * from './menu'
+export * from './sidebar'

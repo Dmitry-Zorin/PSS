@@ -7,10 +7,10 @@ interface MainAreaProps extends BoxProps {
 
 const MainArea = ({ children, rightMenu, ...props }: MainAreaProps) => (
 	<Box display="flex" px={2} pb={12} {...props}>
-		<Box maxWidth={700} mx="auto">
+		<Box width={1} maxWidth={700} mx="auto">
 			{children}
 		</Box>
-		<Box display={{ xs: 'none', xl: 'block' }} width={300}>
+		<Box component="aside" width={300} display={{ xs: 'none', xl: 'block' }}>
 			{rightMenu}
 		</Box>
 	</Box>
