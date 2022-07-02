@@ -1,30 +1,32 @@
-import { alpha, Box } from '@mui/material'
-import { Scrollable } from 'components'
-import { AppBar, Menu, ScrollableWithButton, SideAppBar, Sidebar } from 'layout'
+import { alpha, Box, Toolbar } from '@mui/material'
+import { Dial, Menu, ScrollTopButton, Sidebar } from 'layout'
 import { ReactNode } from 'react'
+import { animated } from 'react-spring'
+
+export const AnimatedBox = animated(Box)
 
 const Layout = ({ children }: { children: ReactNode }) => (
-	<Box
-		display="flex"
-		width="100vw"
-		height="100vh"
-		overflow="hidden"
-		sx={{
-			'::selection': {
-				bgcolor: (t) => alpha(t.palette.primary.main, 0.5),
-			},
-		}}
-	>
-		<Sidebar>
-			<SideAppBar />
-			<Menu />
-		</Sidebar>
-		<Scrollable component="main" position="relative" flexGrow={1}>
-			<AppBar />
-			{children}
-			<ScrollableWithButton />
-		</Scrollable>
-	</Box>
+	<>
+		<Dial />
+		<Box
+			display="flex"
+			sx={{
+				color: 'text.primary',
+				'::selection': {
+					bgcolor: (t) => alpha(t.palette.primary.main, 0.5),
+				},
+			}}
+		>
+			<Sidebar>
+				<Menu />
+			</Sidebar>
+			<Box component="main" flexGrow={1} pl={2} pr={3}>
+				<Toolbar />
+				{children}
+			</Box>
+		</Box>
+		<ScrollTopButton />
+	</>
 )
 
 export default Layout

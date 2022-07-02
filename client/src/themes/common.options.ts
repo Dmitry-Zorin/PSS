@@ -7,7 +7,7 @@ const commonOptions: RaThemeOptions = {
 	mixins,
 	shadows: range(25).map(() => 'none') as Shadows,
 	shape: {
-		borderRadius: 4,
+		borderRadius: 8,
 	},
 	typography: {
 		fontFamily: 'MontserratVariable, sans-serif',
@@ -20,6 +20,10 @@ const commonOptions: RaThemeOptions = {
 		},
 		h6: {
 			fontWeight: 700,
+		},
+		body1: {
+			fontSize: 17,
+			lineHeight: 1.7,
 		},
 	},
 	components: {

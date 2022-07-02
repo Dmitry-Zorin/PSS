@@ -14,7 +14,7 @@ const Scrollable = forwardRef(
 			ref={ref}
 			overflow="overlay"
 			sx={({ palette }) => ({
-				color: '#0000',
+				// color: '#0000',
 				transition: 'color .5s ease',
 				'> *': {
 					color: 'text.primary',

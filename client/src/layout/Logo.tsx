@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material'
 import { Link } from 'react-router-dom'
 
-export const Logo = () => (
+const Logo = () => (
 	<Typography
 		component={Link}
 		to="/"
@@ -15,3 +15,5 @@ export const Logo = () => (
 		PSS
 	</Typography>
 )
+
+export default Logo

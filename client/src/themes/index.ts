@@ -38,6 +38,7 @@ declare module '@mui/material/styles' {
 	interface Theme extends ThemeOptionsExtended {}
 	interface TypeBackground {
 		sidebar: string
+		header: string
 	}
 	interface TypeText {
 		contrast: string

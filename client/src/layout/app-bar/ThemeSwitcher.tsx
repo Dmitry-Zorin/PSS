@@ -19,7 +19,7 @@ const ThemeSwitcher = () => {
 
 	const palette = (theme as ThemeOptionsExtended).palette
 	const background = palette.background.default
-	const color = palette.primary.main
+	const color = palette.text.primary
 	const mode = palette.mode
 	const isDark = mode === 'dark'
 

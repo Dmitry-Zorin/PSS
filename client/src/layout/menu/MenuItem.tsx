@@ -5,7 +5,9 @@ import {
 	ListItemButtonProps,
 	ListItemIcon,
 	ListItemText,
+	Theme,
 	Tooltip,
+	useMediaQuery,
 } from '@mui/material'
 import { ReactNode } from 'react'
 import { useSidebarState, useTranslate } from 'react-admin'
@@ -28,8 +30,9 @@ const MenuItem = ({
 	...props
 }: MenuItemProps) => {
 	const translate = useTranslate()
-	const [isSidebarOpen] = useSidebarState()
+	const [isSidebarOpen, setSidebarOpen] = useSidebarState()
 	const isActive = useMatch(`${to}/*`)
+	const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down('sm'))
 
 	text = translate(text, { smart_count: 2 })
 
@@ -38,20 +41,27 @@ const MenuItem = ({
 			<ListItem component={Link} to={to} disablePadding>
 				<ListItemButton
 					sx={({ palette }) => ({
-						height: 46,
+						height: 40,
 						color: 'text.secondary',
 						transition: 'none',
+						borderRadius: 1,
 						':hover': {
-							bgcolor: alpha(palette.text.secondary, 0.05),
+							color: 'text.primary',
+							bgcolor: alpha(palette.text.secondary, 0.0),
 						},
 						...(isActive && {
-							color: 'primary.main',
 							'&, :hover': {
-								bgcolor: alpha(palette.primary.main, 0.075),
+								color: 'primary.main',
+								bgcolor: alpha(palette.primary.main, 0.0),
 							},
 						}),
 						...sx,
 					})}
+					onClick={() => {
+						if (isSmall) {
+							setSidebarOpen(false)
+						}
+					}}
 					{...props}
 				>
 					<ListItemIcon sx={{ color: 'inherit', minWidth: 40 }}>

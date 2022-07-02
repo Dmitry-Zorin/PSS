@@ -1,14 +1,16 @@
-import { Box, Drawer, Theme, useMediaQuery } from '@mui/material'
-import { Scrollable } from 'components'
+import { Box, Theme, useMediaQuery } from '@mui/material'
+import { Drawer, Scrollable } from 'components'
 import { ReactNode } from 'react'
-import { useSidebarState } from 'react-admin'
+import { SidebarToggleButton, useSidebarState } from 'react-admin'
 import { animated, config, useSpring } from 'react-spring'
+import { SidebarHeader } from './SidebarHeader'
 
 const AnimatedBox = animated(Box)
 
 const Sidebar = ({ children }: { children: ReactNode }) => {
 	const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down('sm'))
 	const [isSidebarOpen, setSidebarOpen] = useSidebarState()
+
 	const style = useSpring({
 		width: isSidebarOpen ? 315 : 56,
 		config: {
@@ -18,29 +20,36 @@ const Sidebar = ({ children }: { children: ReactNode }) => {
 	})
 
 	const content = (
-		<Scrollable scrollbarWidth={4} height={1}>
-			{children}
-		</Scrollable>
+		<>
+			<SidebarHeader />
+			<Scrollable
+				scrollbarWidth={4}
+				height="calc(100vh - 64px)"
+				sx={{ overflowX: 'hidden' }}
+			>
+				{children}
+			</Scrollable>
+		</>
 	)
 
 	return isSmall ? (
-		<Drawer
-			open={isSidebarOpen}
-			onClose={() => setSidebarOpen(false)}
-			sx={{
-				'.MuiDrawer-paper': {
-					overflow: 'hidden',
-					bgcolor: 'background.sidebar',
-				},
-			}}
-		>
-			{content}
-		</Drawer>
+		<>
+			<SidebarToggleButton />
+			<Drawer
+				open={isSidebarOpen}
+				onClose={() => setSidebarOpen(false)}
+				sx={{ bgcolor: 'background.sidebar' }}
+			>
+				{content}
+			</Drawer>
+		</>
 	) : (
 		<AnimatedBox
+			position="sticky"
+			height="100vh"
+			top={0}
 			flexShrink={0}
-			borderRight={1}
-			borderColor="divider"
+			bgcolor="background.sidebar"
 			style={style}
 		>
 			{content}

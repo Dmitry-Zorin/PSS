@@ -18,7 +18,7 @@ const Menu = () => {
 	}, [])
 
 	return (
-		<List component="nav" disablePadding sx={{ pb: 8 }}>
+		<List component="nav" disablePadding>
 			<MenuItem to="/about" icon={<Info />} text="pages.about" />
 			{getMenuItems(resources.main)}
 			<CountContextProvider>

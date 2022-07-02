@@ -31,7 +31,7 @@ const ResourceMenuItem = ({ name, ...props }: ResourceMenuItemProps) => {
 			text={`resources.${name}.name`}
 			{...props}
 		>
-			{isPublication && <MenuChip label={count} />}
+			{/* {isPublication && <MenuChip label={count} />} */}
 		</MenuItem>
 	)
 }
