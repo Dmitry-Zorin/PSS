@@ -1,58 +1,55 @@
-import { Home, Info, Settings } from '@mui/icons-material'
-import { Box, IconButton, useScrollTrigger } from '@mui/material'
+import { Settings } from '@mui/icons-material'
+import {
+	Box,
+	ClickAwayListener,
+	IconButton,
+	useScrollTrigger,
+} from '@mui/material'
+import { AnimatedBox, gentleConfig } from 'components'
 import { LocaleMenu, ThemeSwitcher } from 'layout'
 import { useEffect, useState } from 'react'
-import { LoadingIndicator, UserMenu } from 'react-admin'
-import { Link } from 'react-router-dom'
-import { config, useSpring } from 'react-spring'
-import { AnimatedBox } from './Layout'
+import { useSpring } from 'react-spring'
 
 const Dial = () => {
-	const trigger = useScrollTrigger({ disableHysteresis: true, threshold: 40 })
 	const [open, setOpen] = useState(false)
+	const trigger = useScrollTrigger({
+		disableHysteresis: true,
+		threshold: 0,
+	})
 
 	useEffect(() => {
-		setOpen(!trigger)
+		setOpen(false)
 	}, [trigger])
 
 	return (
-		<AnimatedBox
-			position="fixed"
-			top={7}
-			right={24}
-			overflow="hidden"
-			color="text.primary"
-			// bgcolor="background.header"
-			display="flex"
-			justifyContent="flex-end"
-			borderRadius={50}
-			height={40}
-			zIndex={1}
-			p={0}
-			style={useSpring({
-				width: open ? 40 * 7 : 40,
-				config: {
-					...config.gentle,
-					mass: 0.5,
-				},
-			})}
-		>
-			<Box display="flex" m="auto">
-				<ThemeSwitcher />
-				<LocaleMenu />
-				<IconButton color="inherit" component={Link} to="/about">
-					<Info />
-				</IconButton>
-				<IconButton color="inherit" component={Link} to="/">
-					<Home />
-				</IconButton>
-				<LoadingIndicator sx={{ '.RaLoadingIndicator-loader': { m: 1.5 } }} />
-				<UserMenu />
-				<IconButton color="inherit" onClick={() => setOpen(!open)}>
-					<Settings />
-				</IconButton>
-			</Box>
-		</AnimatedBox>
+		<ClickAwayListener onClickAway={() => setOpen(false)}>
+			<AnimatedBox
+				position="fixed"
+				top={24}
+				right={24}
+				overflow="hidden"
+				color="text.primary"
+				bgcolor="background.header"
+				// borderRadius={2}
+				width={40}
+				zIndex="fab"
+				style={useSpring({
+					height: open ? bounds.height : 40,
+					padding: open ? 6 : 0,
+					margin: open ? -6 : 0,
+					borderRadius: open ? 19 : 16,
+					config: gentleConfig,
+				})}
+			>
+				<Box>
+					<IconButton color="inherit" onClick={() => setOpen(!open)}>
+						<Settings />
+					</IconButton>
+					<ThemeSwitcher />
+					<LocaleMenu />
+				</Box>
+			</AnimatedBox>
+		</ClickAwayListener>
 	)
 }
 

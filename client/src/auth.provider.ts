@@ -3,6 +3,7 @@ import { AuthProvider, UserIdentity } from 'react-admin'
 import { fetchApi, HttpClientOptions } from 'requests'
 
 export interface Permissions {
+	role: string
 	isGuest: boolean
 	isUser: boolean
 	isAdmin: boolean
@@ -56,6 +57,7 @@ const authProvider: Required<AuthProvider> = {
 		const identity = await authProvider.getIdentity()
 		const role = identity.role
 		return {
+			role,
 			isGuest: role === 'guest',
 			isUser: role === 'user',
 			isAdmin: role === 'admin',

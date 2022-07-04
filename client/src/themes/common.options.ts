@@ -12,6 +12,15 @@ const commonOptions: RaThemeOptions = {
 	typography: {
 		fontFamily: 'MontserratVariable, sans-serif',
 		fontWeightRegular: 500,
+		h1: {
+			fontWeight: 900,
+		},
+		h2: {
+			fontWeight: 900,
+		},
+		h3: {
+			fontWeight: 900,
+		},
 		h4: {
 			fontWeight: 900,
 		},
@@ -22,7 +31,7 @@ const commonOptions: RaThemeOptions = {
 			fontWeight: 700,
 		},
 		body1: {
-			fontSize: 17,
+			fontSize: '1.025rem',
 			lineHeight: 1.7,
 		},
 	},
@@ -60,6 +69,7 @@ const commonOptions: RaThemeOptions = {
 			styleOverrides: {
 				root: {
 					padding: 8,
+					borderRadius: 16,
 				},
 			},
 		},

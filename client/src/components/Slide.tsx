@@ -1,5 +1,6 @@
+import { gentleConfig } from 'components'
 import { forwardRef, ReactElement } from 'react'
-import { animated, config, useSpring } from 'react-spring'
+import { animated, useSpring } from 'react-spring'
 
 interface SlideProps {
 	children: ReactElement
@@ -15,10 +16,7 @@ const Slide = forwardRef<HTMLDivElement, SlideProps>(
 			style={useSpring({
 				x: slideIn ? '0%' : '-100%',
 				from: { x: '-100%' },
-				config: {
-					...config.gentle,
-					mass: 0.5,
-				},
+				config: gentleConfig,
 				onStart: () => {
 					if (slideIn) {
 						onEnter?.()

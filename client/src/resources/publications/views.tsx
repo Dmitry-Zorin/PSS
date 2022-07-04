@@ -1,4 +1,4 @@
-import { Box, Stack } from '@mui/material'
+import { Box } from '@mui/material'
 import { ReactNode } from 'react'
 import {
 	ChipField,
@@ -86,10 +86,7 @@ export const PublicationList = () => (
 
 export const PublicationShow = ({ children }: { children?: ReactNode }) => (
 	<Show>
-		<Stack spacing={3} sx={{ px: 2, py: 1 }}>
-			<TextField variant="h4" source="title" />
-			<TextField variant="body1" source="description" />
-		</Stack>
+		<TextField variant="body1" source="description" />
 		<Box
 			display="grid"
 			rowGap={3}

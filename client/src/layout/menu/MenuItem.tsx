@@ -32,46 +32,50 @@ const MenuItem = ({
 	const translate = useTranslate()
 	const [isSidebarOpen, setSidebarOpen] = useSidebarState()
 	const isActive = useMatch(`${to}/*`)
-	const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down('sm'))
+	const isSmall = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'))
 
 	text = translate(text, { smart_count: 2 })
 
 	return (
-		<Tooltip placement="right" title={isSidebarOpen ? '' : text}>
-			<ListItem component={Link} to={to} disablePadding>
-				<ListItemButton
-					sx={({ palette }) => ({
-						height: 40,
-						color: 'text.secondary',
-						transition: 'none',
-						borderRadius: 1,
-						':hover': {
-							color: 'text.primary',
-							bgcolor: alpha(palette.text.secondary, 0.0),
-						},
-						...(isActive && {
-							'&, :hover': {
-								color: 'primary.main',
-								bgcolor: alpha(palette.primary.main, 0.0),
+		<li>
+			<ListItem component={Link} to={to} sx={{ px: 1, py: 0.25 }}>
+				<Tooltip placement="right" title={isSidebarOpen ? '' : text}>
+					<ListItemButton
+						sx={[
+							{
+								height: 42,
+								color: 'text.secondary',
+								borderRadius: 1,
+								':hover': {
+									bgcolor: 'transparent',
+									color: 'text.primary',
+									// bgcolor: (t) => alpha(t.palette.background.header, 1),
+								},
+								...(isActive && {
+									'&, :hover': {
+										color: 'primary.main',
+										bgcolor: (t) => alpha(t.palette.primary.main, 0.05),
+									},
+								}),
 							},
-						}),
-						...sx,
-					})}
-					onClick={() => {
-						if (isSmall) {
-							setSidebarOpen(false)
-						}
-					}}
-					{...props}
-				>
-					<ListItemIcon sx={{ color: 'inherit', minWidth: 40 }}>
-						{icon}
-					</ListItemIcon>
-					<ListItemText primary={text} sx={{ flexShrink: 0 }} />
-					{children}
-				</ListItemButton>
+							...(Array.isArray(sx) ? sx : [sx]),
+						]}
+						onClick={() => {
+							if (isSmall) {
+								setSidebarOpen(false)
+							}
+						}}
+						{...props}
+					>
+						<ListItemIcon sx={{ color: 'inherit', minWidth: 40 }}>
+							{icon}
+						</ListItemIcon>
+						<ListItemText primary={text} sx={{ flexShrink: 0 }} />
+						{children}
+					</ListItemButton>
+				</Tooltip>
 			</ListItem>
-		</Tooltip>
+		</li>
 	)
 }
 

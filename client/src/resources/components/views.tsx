@@ -7,6 +7,7 @@ import {
 	ListToolbar,
 	ListToolbarProps,
 	ShowBase,
+	TextField,
 } from 'react-admin'
 import { CreateActions, EditActions, ListActions, ShowActions } from './actions'
 import ResourceCounter from './ResourceCounter'
@@ -60,6 +61,21 @@ export const Show = ({
 		<>
 			<ShowActions />
 			<MainArea
+				title={
+					<TextField
+						component="h1"
+						variant="h3"
+						source="title"
+						sx={{
+							fontSize: {
+								xs: '2.2rem',
+								sm: '2.4rem',
+								md: '2.6rem',
+								lg: '2.8rem',
+							},
+						}}
+					/>
+				}
 				sx={{
 					'.RaLabeled-label': {
 						fontSize: '0.95rem !important',

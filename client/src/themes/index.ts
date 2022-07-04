@@ -14,7 +14,7 @@ export interface ThemePaletteOptions extends PaletteOptions {
 	mode: PaletteMode
 	primary: SimplePaletteColorOptions
 	background: TypeBackground
-	text: Omit<TypeText, 'disabled'>
+	text: TypeText
 }
 
 export type ThemeOptionsExtended = typeof commonOptions & {
@@ -41,6 +41,6 @@ declare module '@mui/material/styles' {
 		header: string
 	}
 	interface TypeText {
-		contrast: string
+		medium: string
 	}
 }

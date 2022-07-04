@@ -5,11 +5,13 @@ const Drawer = ({ children, open, sx, ...props }: ModalProps) => (
 	<Modal open={open} closeAfterTransition {...props}>
 		<Slide in={open}>
 			<Box
-				sx={{
-					position: 'absolute',
-					height: '100vh',
-					...sx,
-				}}
+				sx={[
+					{
+						position: 'absolute',
+						height: '100vh',
+					},
+					...(Array.isArray(sx) ? sx : [sx]),
+				]}
 			>
 				{children}
 			</Box>

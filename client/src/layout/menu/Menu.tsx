@@ -4,21 +4,20 @@ import { Permissions } from 'auth.provider'
 import { CountContextProvider } from 'contexts'
 import { MenuItem, ResourceMenuItem, SubMenu } from 'layout'
 import { kebabCase } from 'lodash'
-import { useCallback } from 'react'
 import { usePermissions } from 'react-admin'
 import resources from 'resources'
 
 const Menu = () => {
 	const { permissions } = usePermissions<Permissions>()
 
-	const getMenuItems = useCallback((resources: Record<string, unknown>) => {
+	const getMenuItems = (resources: Record<string, unknown>) => {
 		return Object.keys(resources).map((e) => (
 			<ResourceMenuItem key={e} name={kebabCase(e)} />
 		))
-	}, [])
+	}
 
 	return (
-		<List component="nav" disablePadding>
+		<List disablePadding>
 			<MenuItem to="/about" icon={<Info />} text="pages.about" />
 			{getMenuItems(resources.main)}
 			<CountContextProvider>
