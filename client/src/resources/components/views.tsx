@@ -1,13 +1,18 @@
+import { ListProps } from '@mui/material'
 import { MainArea, Title } from 'components'
-import { ComponentProps } from 'react'
+import { ReactNode } from 'react'
 import {
 	CreateBase,
+	CreateProps,
 	EditBase,
+	EditProps,
 	ListBase,
 	ListToolbar,
 	ListToolbarProps,
 	ShowBase,
+	ShowProps,
 	TextField,
+	useRecordContext,
 } from 'react-admin'
 import { CreateActions, EditActions, ListActions, ShowActions } from './actions'
 import ResourceCounter from './ResourceCounter'
@@ -15,7 +20,7 @@ import ResourceCounter from './ResourceCounter'
 export const Create = ({
 	children,
 	...props
-}: ComponentProps<typeof CreateBase>) => (
+}: CreateProps & { children: ReactNode }) => (
 	<CreateBase redirect="show" {...props}>
 		<CreateActions />
 		<MainArea>{children}</MainArea>
@@ -25,7 +30,7 @@ export const Create = ({
 export const Edit = ({
 	children,
 	...props
-}: ComponentProps<typeof EditBase>) => (
+}: EditProps & { children: ReactNode }) => (
 	<EditBase redirect="show" {...props}>
 		<EditActions />
 		<MainArea>{children}</MainArea>
@@ -37,7 +42,10 @@ export const List = ({
 	filters,
 	actions = <ListActions />,
 	...props
-}: ComponentProps<typeof ListBase> & ListToolbarProps) => (
+}: ListProps & { children: ReactNode } & Omit<
+		ListToolbarProps,
+		'children'
+	>) => (
 	<ListBase
 		sort={{ field: 'createdAt', order: 'desc' }}
 		perPage={25}
@@ -53,23 +61,32 @@ export const List = ({
 	</ListBase>
 )
 
+const ShowContaner = ({ children }: { children: ReactNode }) => {
+	if (!useRecordContext()) {
+		return null
+	}
+	return (
+		<MainArea
+			title={<TextField source="title" component="h1" variant="h2" />}
+			sx={{
+				'.RaLabeled-label': {
+					fontSize: '0.95rem !important',
+				},
+			}}
+		>
+			{children}
+		</MainArea>
+	)
+}
+
 export const Show = ({
 	children,
 	...props
-}: ComponentProps<typeof ShowBase>) => (
+}: ShowProps & { children: ReactNode }) => (
 	<ShowBase disableAuthentication {...props}>
 		<>
 			<ShowActions />
-			<MainArea
-				title={<TextField source="title" component="h1" variant="h2" />}
-				sx={{
-					'.RaLabeled-label': {
-						fontSize: '0.95rem !important',
-					},
-				}}
-			>
-				{children}
-			</MainArea>
+			<ShowContaner>{children}</ShowContaner>
 		</>
 	</ShowBase>
 )

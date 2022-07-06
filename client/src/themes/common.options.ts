@@ -25,7 +25,6 @@ const commonOptions: RaThemeOptions = {
 							fontFamily: 'Alumni Sans',
 							lineHeight: 1,
 							fontWeight: 600,
-							fontVariationSettings: 'WGHT 600',
 							background: '-webkit-linear-gradient(45deg, #facefb, #f9cdc3)',
 							WebkitBackgroundClip: 'text',
 							WebkitTextFillColor: 'transparent',
