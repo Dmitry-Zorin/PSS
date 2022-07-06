@@ -1,18 +1,16 @@
 import { Box, Divider, Theme, Toolbar, useMediaQuery } from '@mui/material'
 import { AnimatedBox, Drawer, gentleConfig, Slide } from 'components'
 import { ReactNode } from 'react'
-import { UserMenu, useSidebarState } from 'react-admin'
-import { config, useSpring } from 'react-spring'
+import { useSidebarState } from 'react-admin'
+import { config, Spring } from 'react-spring'
 import { SidebarHeader } from './SidebarHeader'
+
+const SIDEBAR_WIDTH = 300
+const SIDEBAR_CLOSED_WIDTH = 56
 
 const Sidebar = ({ children }: { children: ReactNode }) => {
 	const isSmall = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'))
 	const [isSidebarOpen, setSidebarOpen] = useSidebarState()
-
-	const style = useSpring({
-		width: isSidebarOpen ? 315 : 56,
-		config: gentleConfig,
-	})
 
 	const content = (
 		<Box
@@ -30,12 +28,8 @@ const Sidebar = ({ children }: { children: ReactNode }) => {
 		>
 			<SidebarHeader />
 			{children}
-			<Divider sx={{ m: 2, mb: 0 }} />
-			<Toolbar>
-				<Box>
-					<UserMenu />
-				</Box>
-			</Toolbar>
+			<Divider sx={{ mx: 2, my: 1 }} />
+			<Toolbar />
 		</Box>
 	)
 
@@ -48,18 +42,25 @@ const Sidebar = ({ children }: { children: ReactNode }) => {
 			{content}
 		</Drawer>
 	) : (
-		<AnimatedBox
-			component="nav"
-			flexShrink={0}
-			position="sticky"
-			top={0}
-			height="100vh"
-			style={style}
+		<Spring
+			to={{ width: isSidebarOpen ? SIDEBAR_WIDTH : SIDEBAR_CLOSED_WIDTH }}
+			config={gentleConfig}
 		>
-			<Slide in={true} from="left" config={config.slow}>
-				<AnimatedBox>{content}</AnimatedBox>
-			</Slide>
-		</AnimatedBox>
+			{(style) => (
+				<AnimatedBox
+					component="nav"
+					position="sticky"
+					top={0}
+					height="100vh"
+					flexShrink={0}
+					style={style}
+				>
+					<Slide in={true} from="left" config={config.slow}>
+						<AnimatedBox>{content}</AnimatedBox>
+					</Slide>
+				</AnimatedBox>
+			)}
+		</Spring>
 	)
 }
 

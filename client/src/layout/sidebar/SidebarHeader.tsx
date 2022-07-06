@@ -8,8 +8,8 @@ export const SidebarHeader = () => (
 			variant="dense"
 			disableGutters
 			sx={{
-				pl: 2,
-				pr: 1,
+				px: 1,
+				py: 0,
 				bgcolor: 'background.header',
 				color: 'text.medium',
 				borderBottom: 1,
@@ -20,9 +20,9 @@ export const SidebarHeader = () => (
 			<Box flexGrow={1}>
 				<Logo />
 			</Box>
-			<ThemeSwitcher />
-			<LocaleMenu />
 			<UserMenu />
+			<LocaleMenu />
+			<ThemeSwitcher />
 		</Toolbar>
 	</AppBar>
 )

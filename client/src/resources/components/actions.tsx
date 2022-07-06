@@ -1,40 +1,33 @@
-import { Box } from '@mui/material'
+import { Toolbar } from '@mui/material'
 import { Admin } from 'components'
-import {
-	CreateButton,
-	EditButton,
-	FilterButton,
-	ListButton,
-	TopToolbar,
-} from 'react-admin'
+import { CreateButton, EditButton, FilterButton, ListButton } from 'react-admin'
 
 export const CreateActions = () => (
-	<TopToolbar>
-		<ListButton />
-	</TopToolbar>
+	<Toolbar>
+		<ListButton sx={{ mr: 'auto' }} />
+	</Toolbar>
 )
 
 export const EditActions = () => (
-	<TopToolbar>
-		<ListButton />
-	</TopToolbar>
+	<Toolbar>
+		<ListButton sx={{ mr: 'auto' }} />
+	</Toolbar>
 )
 
 export const ListActions = () => (
-	<TopToolbar>
+	<Toolbar>
 		<FilterButton />
 		<Admin>
 			<CreateButton />
 		</Admin>
-	</TopToolbar>
+	</Toolbar>
 )
 
 export const ShowActions = () => (
-	<TopToolbar>
-		<ListButton />
-		<Box flex={1}></Box>
+	<Toolbar>
+		<ListButton sx={{ mr: 'auto' }} />
 		<Admin>
 			<EditButton />
 		</Admin>
-	</TopToolbar>
+	</Toolbar>
 )

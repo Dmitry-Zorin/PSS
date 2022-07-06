@@ -12,30 +12,23 @@ import { ReactNode } from 'react'
 import { useSidebarState, useTranslate } from 'react-admin'
 import { animated, useSpring } from 'react-spring'
 
-const AnimatedExpandMore = animated(ExpandMore)
+const AnimatedAccordionIcon = animated(ExpandMore)
 
 interface SubMenuItemProps extends ListItemButtonProps {
 	children?: ReactNode
-	icon: ReactNode
 	text: string
 	tooltip?: string
 	open: boolean
 }
 
-const SubMenuItem = ({
-	children,
-	icon,
-	text,
-	open,
-	...props
-}: SubMenuItemProps) => {
+const SubMenuItem = ({ children, text, open, ...props }: SubMenuItemProps) => {
 	const translate = useTranslate()
 	const [isSidebarOpen] = useSidebarState()
 
-	text = translate(text, { smart_count: 2 })
+	text = translate(text, { smart_count: 2 }).toUpperCase()
 
 	return (
-		<ListItem sx={{ px: 1, py: 0 }}>
+		<ListItem disablePadding>
 			<Tooltip placement="right" title={isSidebarOpen ? '' : text}>
 				<ListItemButton
 					sx={[
@@ -51,14 +44,17 @@ const SubMenuItem = ({
 					]}
 					{...props}
 				>
-					<ListItemIcon
-						sx={{ color: 'inherit', minWidth: 40, transform: 'scale(0.8)' }}
-					>
-						{icon}
+					<ListItemIcon sx={{ color: 'inherit', minWidth: 40 }}>
+						<AnimatedAccordionIcon
+							style={useSpring({
+								rotate: open ? 0 : -90,
+								config: gentleConfig,
+							})}
+							sx={{ mr: -0.5 }}
+						/>
 					</ListItemIcon>
 					<ListItemText
-						primary={text.toUpperCase()}
-						sx={{ flexShrink: 0 }}
+						primary={text}
 						primaryTypographyProps={{
 							sx: {
 								fontSize: '0.8rem',
@@ -66,13 +62,6 @@ const SubMenuItem = ({
 						}}
 					/>
 					{children}
-					<AnimatedExpandMore
-						style={useSpring({
-							rotate: open ? 0 : -90,
-							config: gentleConfig,
-						})}
-						sx={{ mr: -0.5 }}
-					/>
 				</ListItemButton>
 			</Tooltip>
 		</ListItem>

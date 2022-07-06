@@ -1,4 +1,5 @@
-import { alpha, Box, CssBaseline } from '@mui/material'
+import { Box, CssBaseline } from '@mui/material'
+import Color from 'color'
 import { Menu, ScrollTopButton, Sidebar } from 'layout'
 import { ReactNode } from 'react'
 
@@ -9,8 +10,8 @@ const Layout = ({ children }: { children?: ReactNode }) => (
 			display="flex"
 			sx={{
 				color: 'text.primary',
-				'::selection': {
-					bgcolor: (t) => alpha(t.palette.primary.main, 0.5),
+				'*::selection': {
+					bgcolor: (t) => Color(t.palette.primary.main).alpha(0.75).string(),
 				},
 			}}
 		>

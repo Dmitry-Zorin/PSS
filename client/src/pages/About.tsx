@@ -5,7 +5,7 @@ import { useTranslate } from 'react-admin'
 
 const Subtitle = ({ children }: { children: ReactNode }) => (
 	<Divider sx={{ mt: 6, mb: 2, mx: 4 }}>
-		<Typography variant="h5" sx={{ mt: 0 }}>
+		<Typography component="h2" variant="h4">
 			{children}
 		</Typography>
 	</Divider>
@@ -16,9 +16,6 @@ const About = () => {
 
 	return (
 		<MainArea title={translate('metadata.title')}>
-			{/* <Typography variant="h4" align="center" sx={{ mt: 4, mb: 4 }}>
-				{translate('metadata.title')}
-			</Typography> */}
 			<Typography>
 				To provide an optimized experience on mobile, tablet, and desktop
 				devices, you often need to display different components depending on the

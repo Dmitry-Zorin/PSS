@@ -1,7 +1,9 @@
 import { Box } from '@mui/material'
+import { truncate } from 'lodash'
 import { ReactNode } from 'react'
 import {
 	ChipField,
+	FunctionField,
 	Labeled,
 	NumberInput,
 	SimpleForm,
@@ -78,6 +80,12 @@ export const PublicationList = () => (
 	>
 		<ListUI>
 			<TextField source="title" label="fields.title" />
+			<FunctionField
+				render={(record) => {
+					return truncate(record.description, { length: 100 })
+				}}
+				label="fields.description"
+			/>
 			<AuthorsField label="fields.authors" />
 			<ChipField source="publication.year" label="fields.year" emptyText="-" />
 		</ListUI>

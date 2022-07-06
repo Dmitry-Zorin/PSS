@@ -1,42 +1,39 @@
 import { Divider, List } from '@mui/material'
+import { Collapse, gentleConfig } from 'components'
 import { SubMenuItem } from 'layout'
-import { Children, cloneElement, ReactElement, useState } from 'react'
-import { Collapse } from 'components'
+import { ReactElement, useState } from 'react'
+import { useSidebarState } from 'react-admin'
+import { animated, useSpring } from 'react-spring'
 
 interface SubMenuProps {
 	name: string
-	icon: ReactElement
 	children: ReactElement[]
 }
 
-const SubMenu = ({ name, icon, children }: SubMenuProps) => {
+const SubMenu = ({ name, children }: SubMenuProps) => {
 	const [isOpen, setIsOpen] = useState(true)
+	const [isSidebarOpen] = useSidebarState()
+
 	return (
 		<>
-			<Divider sx={{ m: 2 }} />
+			<Divider sx={{ mx: 2, my: 1 }} />
 			<SubMenuItem
-				icon={icon}
 				text={name}
 				open={isOpen}
 				onClick={() => setIsOpen((e) => !e)}
 			/>
-			<Collapse in={isOpen}>
-				<List disablePadding>
-					{Children.map(children, (child) =>
-						cloneElement(child, {
-							sx: {
-								pl: 'calc(9.7px + 15.75%)',
-							},
-						}),
-					)}
-				</List>
-			</Collapse>
+			<animated.div
+				style={useSpring({
+					paddingLeft: isSidebarOpen ? 40 : 0,
+					config: gentleConfig,
+				})}
+			>
+				<Collapse in={isOpen}>
+					<List disablePadding>{children}</List>
+				</Collapse>
+			</animated.div>
 		</>
 	)
 }
-
-// x + y * 2.99 = 56
-// x + y * 0.4 = 16
-// y = 40 / 2.54
 
 export default SubMenu

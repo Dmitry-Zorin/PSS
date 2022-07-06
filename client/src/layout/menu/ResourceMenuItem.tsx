@@ -1,5 +1,6 @@
+import { Chip } from '@mui/material'
 import { CountContext } from 'contexts'
-import { MenuChip, MenuItem } from 'layout'
+import { MenuItem } from 'layout'
 import { useContext } from 'react'
 import { useResourceDefinitions } from 'react-admin'
 import resources from 'resources'
@@ -29,9 +30,10 @@ const ResourceMenuItem = ({ name, ...props }: ResourceMenuItemProps) => {
 			{...props}
 		>
 			{name in publications && (
-				<MenuChip
+				<Chip
+					size="small"
 					label={getResourceCount(name) || 0}
-					sx={{ display: 'none' }}
+					sx={{ transform: 'scale(0.9)' }}
 				/>
 			)}
 		</MenuItem>

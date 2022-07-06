@@ -36,7 +36,7 @@ const MenuItem = ({
 
 	return (
 		<li>
-			<ListItem component={Link} to={to} sx={{ px: 1, py: 0.25 }}>
+			<ListItem component={Link} to={to} sx={{ px: 0, py: 0.25 }}>
 				<Tooltip title={isSidebarOpen ? '' : text} placement="right">
 					<ListItemButton
 						sx={[
@@ -55,11 +55,7 @@ const MenuItem = ({
 							},
 							...(Array.isArray(sx) ? sx : [sx]),
 						]}
-						onClick={() => {
-							if (isSmall) {
-								setSidebarOpen(false)
-							}
-						}}
+						onClick={() => isSmall && setSidebarOpen(false)}
 						{...props}
 					>
 						<ListItemIcon sx={{ color: 'inherit', minWidth: 40 }}>
@@ -67,7 +63,7 @@ const MenuItem = ({
 						</ListItemIcon>
 						<ListItemText
 							primary={text}
-							sx={{ flexShrink: 0 }}
+							sx={{ flexShrink: 0, mr: 2 }}
 							primaryTypographyProps={{ variant: 'body2' }}
 						/>
 						{children}

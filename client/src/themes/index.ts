@@ -8,7 +8,6 @@ import {
 import { ThemeMode } from 'user'
 import commonOptions from './common.options'
 import darkOptions from './dark.options'
-import { ThemePaletteOptions } from './index'
 import lightOptions from './light.options'
 
 export interface ThemePaletteOptions extends PaletteOptions {
@@ -43,8 +42,5 @@ declare module '@mui/material/styles' {
 	interface TypeBackground {
 		sidebar: string
 		header: string
-	}
-	interface TypeText {
-		medium: string
 	}
 }

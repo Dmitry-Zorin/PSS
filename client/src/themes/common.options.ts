@@ -10,49 +10,51 @@ const commonOptions: RaThemeOptions = {
 		borderRadius: 4,
 	},
 	typography: {
-		fontFamily: 'Nunito Sans',
-		fontSize: 17,
-		h1: {
-			fontFamily: 'Alumni Sans',
-			lineHeight: 1,
-			fontWeight: 600,
-		},
-		h2: {
-			fontFamily: 'Alumni Sans',
-			fontWeight: 600,
-			lineHeight: 1,
-		},
-		h3: {
-			fontFamily: 'Alumni Sans',
-			lineHeight: 1,
-			fontWeight: 600,
-		},
-		h4: {
-			fontFamily: 'Alumni Sans',
-			lineHeight: 1,
-			fontWeight: 600,
-		},
-		h5: {
-			fontFamily: 'Alumni Sans',
-			lineHeight: 1,
-			fontWeight: 600,
-		},
-		h6: {
-			fontFamily: 'Alumni Sans',
-			lineHeight: 1,
-			fontWeight: 600,
+		fontFamily: 'Mulish',
+		fontSize: 16,
+		body1: {
+			fontSize: '1.2rem',
 		},
 	},
 	components: {
+		MuiTypography: {
+			styleOverrides: {
+				root: ({ ownerState }) => {
+					if (ownerState.variant?.startsWith('h')) {
+						return {
+							fontFamily: 'Alumni Sans',
+							lineHeight: 1,
+							fontWeight: 600,
+							fontVariationSettings: 'WGHT 600',
+							background: '-webkit-linear-gradient(45deg, #facefb, #f9cdc3)',
+							WebkitBackgroundClip: 'text',
+							WebkitTextFillColor: 'transparent',
+						}
+					}
+				},
+			},
+		},
 		MuiButtonBase: {
 			defaultProps: {
 				disableRipple: true,
+			},
+			styleOverrides: {
+				root: {
+					// fontSize: '1rem',
+				},
+			},
+		},
+		MuiInputBase: {
+			styleOverrides: {
+				root: {
+					// fontSize: '1rem',
+				},
 			},
 		},
 		MuiSvgIcon: {
 			styleOverrides: {
 				root: {
-					fontSize: '1.4rem',
+					fontSize: 24,
 				},
 			},
 		},
@@ -72,6 +74,12 @@ const commonOptions: RaThemeOptions = {
 		},
 		MuiTableCell: {
 			styleOverrides: {
+				root: {
+					padding: '8px 16px',
+					'&.RaDatagrid-headerCell': {
+						backgroundColor: 'transparent',
+					},
+				},
 				head: ({ theme }) => ({
 					borderColor: theme.palette.divider,
 				}),
@@ -91,7 +99,7 @@ const commonOptions: RaThemeOptions = {
 		MuiChip: {
 			styleOverrides: {
 				root: ({ theme }) => ({
-					minWidth: 24,
+					// minWidth: 24,
 					transition: 'none',
 					// color: theme.palette.text.contrast,
 					// backgroundColor: theme.palette.divider,

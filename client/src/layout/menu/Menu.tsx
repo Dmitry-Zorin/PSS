@@ -1,12 +1,11 @@
-import { AdminPanelSettings, Info, School } from '@mui/icons-material'
-import { List, Slide } from '@mui/material'
+import { Info } from '@mui/icons-material'
+import { List } from '@mui/material'
 import { Permissions } from 'auth.provider'
 import { CountContextProvider } from 'contexts'
 import { MenuItem, ResourceMenuItem, SubMenu } from 'layout'
 import { kebabCase } from 'lodash'
 import { usePermissions } from 'react-admin'
 import resources from 'resources'
-Slide
 
 const Menu = () => {
 	const { permissions } = usePermissions<Permissions>()
@@ -22,14 +21,12 @@ const Menu = () => {
 			<MenuItem to="/about" icon={<Info />} text="pages.about" />
 			{getMenuItems(resources.main)}
 			<CountContextProvider>
-				<SubMenu icon={<School />} name="menu.publications">
+				<SubMenu name="menu.publications">
 					{getMenuItems(resources.publications)}
 				</SubMenu>
 			</CountContextProvider>
 			{permissions?.isAdmin && (
-				<SubMenu icon={<AdminPanelSettings />} name="menu.admin">
-					{getMenuItems(resources.admin)}
-				</SubMenu>
+				<SubMenu name="menu.admin">{getMenuItems(resources.admin)}</SubMenu>
 			)}
 		</List>
 	)
