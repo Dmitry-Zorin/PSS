@@ -1,44 +1,60 @@
 import { KeyboardArrowUp } from '@mui/icons-material'
 import { Fab, Tooltip, useScrollTrigger } from '@mui/material'
-import { gentleConfig, stiffConfig } from 'components'
-import { animated, useSpring } from 'react-spring'
-
-const AnimatedFab = animated(Fab)
+import { AnimatedBox, Slide, stiffConfig } from 'components'
+import { useState } from 'react'
+import { useSpring } from 'react-spring'
 
 const ScrollTopButton = () => {
 	const [, scroll] = useSpring(() => ({ y: 0 }))
-	const trigger = useScrollTrigger({ disableHysteresis: true })
+	const [showTooltip, setShowTooltip] = useState(false)
+
+	const trigger = useScrollTrigger({
+		disableHysteresis: true,
+		threshold: Math.max(
+			0,
+			document.documentElement.scrollHeight -
+				document.documentElement.clientHeight -
+				1,
+		),
+	})
+
+	const button = (
+		<Fab
+			color="secondary"
+			size="small"
+			onClick={() => {
+				setShowTooltip(false)
+				scroll.start({
+					y: 0,
+					from: { y: window.scrollY },
+					config: stiffConfig,
+					onChange: (_, controller) => {
+						window.scroll(0, controller.get().y)
+					},
+				})
+			}}
+		>
+			<KeyboardArrowUp />
+		</Fab>
+	)
 
 	return (
-		<Tooltip title="Scroll to top">
-			<AnimatedFab
-				size="small"
-				sx={{
-					color: 'text.primary',
-					bgcolor: 'background.header',
-					position: 'fixed',
-					right: 24,
-				}}
-				style={{
-					...useSpring({
-						bottom: trigger ? 24 : -52,
-						config: gentleConfig,
-					}),
-				}}
-				onClick={() => {
-					scroll.start({
-						y: 0,
-						from: { y: window.scrollY },
-						config: stiffConfig,
-						onChange: (_, controller) => {
-							window.scroll(0, controller.get().y)
-						},
-					})
-				}}
-			>
-				<KeyboardArrowUp />
-			</AnimatedFab>
-		</Tooltip>
+		<Slide
+			in={trigger}
+			from="bottom"
+			onStart={() => setShowTooltip(false)}
+			onRest={() => setShowTooltip(true)}
+		>
+			<AnimatedBox position="fixed" right={24} bottom={24}>
+				{showTooltip ? (
+					<Tooltip title="Scroll to top" disableInteractive>
+						{button}
+					</Tooltip>
+				) : (
+					button
+				)}
+			</AnimatedBox>
+		</Slide>
 	)
 }
 

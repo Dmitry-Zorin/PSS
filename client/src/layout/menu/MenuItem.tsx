@@ -1,5 +1,4 @@
 import {
-	alpha,
 	ListItem,
 	ListItemButton,
 	ListItemButtonProps,
@@ -15,15 +14,14 @@ import { Link, useMatch } from 'react-router-dom'
 
 export interface MenuItemProps extends ListItemButtonProps {
 	children?: ReactNode
-	to?: string
+	to: string
 	icon: ReactNode
 	text: string
-	tooltip?: string
 }
 
 const MenuItem = ({
 	children,
-	to = '#',
+	to,
 	icon,
 	text,
 	sx,
@@ -39,22 +37,19 @@ const MenuItem = ({
 	return (
 		<li>
 			<ListItem component={Link} to={to} sx={{ px: 1, py: 0.25 }}>
-				<Tooltip placement="right" title={isSidebarOpen ? '' : text}>
+				<Tooltip title={isSidebarOpen ? '' : text} placement="right">
 					<ListItemButton
 						sx={[
 							{
 								height: 42,
 								color: 'text.secondary',
-								borderRadius: 1,
 								':hover': {
-									bgcolor: 'transparent',
 									color: 'text.primary',
-									// bgcolor: (t) => alpha(t.palette.background.header, 1),
+									bgcolor: 'transparent',
 								},
 								...(isActive && {
 									'&, :hover': {
 										color: 'primary.main',
-										bgcolor: (t) => alpha(t.palette.primary.main, 0.05),
 									},
 								}),
 							},
@@ -70,7 +65,11 @@ const MenuItem = ({
 						<ListItemIcon sx={{ color: 'inherit', minWidth: 40 }}>
 							{icon}
 						</ListItemIcon>
-						<ListItemText primary={text} sx={{ flexShrink: 0 }} />
+						<ListItemText
+							primary={text}
+							sx={{ flexShrink: 0 }}
+							primaryTypographyProps={{ variant: 'body2' }}
+						/>
 						{children}
 					</ListItemButton>
 				</Tooltip>

@@ -1,10 +1,10 @@
-import { Box, Modal, ModalProps } from '@mui/material'
-import { Slide } from 'components'
+import { Modal, ModalProps } from '@mui/material'
+import { AnimatedBox, Slide } from 'components'
 
 const Drawer = ({ children, open, sx, ...props }: ModalProps) => (
-	<Modal open={open} closeAfterTransition {...props}>
-		<Slide in={open}>
-			<Box
+	<Modal open={open} closeAfterTransition keepMounted {...props}>
+		<Slide in={open} from="left">
+			<AnimatedBox
 				sx={[
 					{
 						position: 'absolute',
@@ -14,7 +14,7 @@ const Drawer = ({ children, open, sx, ...props }: ModalProps) => (
 				]}
 			>
 				{children}
-			</Box>
+			</AnimatedBox>
 		</Slide>
 	</Modal>
 )

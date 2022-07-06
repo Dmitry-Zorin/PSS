@@ -61,21 +61,7 @@ export const Show = ({
 		<>
 			<ShowActions />
 			<MainArea
-				title={
-					<TextField
-						component="h1"
-						variant="h3"
-						source="title"
-						sx={{
-							fontSize: {
-								xs: '2.2rem',
-								sm: '2.4rem',
-								md: '2.6rem',
-								lg: '2.8rem',
-							},
-						}}
-					/>
-				}
+				title={<TextField source="title" component="h1" variant="h2" />}
 				sx={{
 					'.RaLabeled-label': {
 						fontSize: '0.95rem !important',

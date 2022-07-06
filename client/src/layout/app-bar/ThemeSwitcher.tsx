@@ -1,10 +1,10 @@
 import { IconButton } from '@mui/material'
+import { DarkModeSwitch } from 'layout'
 import { useEffect } from 'react'
 import { useTheme } from 'react-admin'
 import { Helmet } from 'react-helmet'
 import { saveSettings } from 'requests'
 import themes, { ThemeOptionsExtended } from 'themes'
-import { DarkModeSwitch } from './Toggle'
 
 const ThemeSwitcher = () => {
 	const [theme, setTheme] = useTheme()
@@ -23,21 +23,20 @@ const ThemeSwitcher = () => {
 	const mode = palette.mode
 	const isDark = mode === 'dark'
 
+	document.body.style.backgroundColor = background
+
 	return (
 		<>
 			<Helmet>
 				<meta name="theme-color" content={background} />
-				<style type="text/css">{`body {	background-color: ${background} }`}</style>
 			</Helmet>
-			<IconButton onClick={() => setTheme(themes[isDark ? 'light' : 'dark'])}>
-				<DarkModeSwitch
-					sunColor={color}
-					moonColor={color}
-					checked={isDark}
-					onChange={() => {
-						return saveSettings({ theme: mode }).catch(null)
-					}}
-				/>
+			<IconButton
+				onClick={() => {
+					setTheme(themes[isDark ? 'light' : 'dark'])
+					saveSettings({ theme: mode }).catch(null)
+				}}
+			>
+				<DarkModeSwitch checked={isDark} sunColor={color} moonColor={color} />
 			</IconButton>
 		</>
 	)

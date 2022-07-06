@@ -1,46 +1,34 @@
+import Color from 'color'
 import { ThemePaletteOptions } from 'themes'
 
-// https://coolors.co/4d6fd6-32384-424b66-6f768b-c8cbd5-f5f6fa
-
-// const BACKGROUND = '#f5f6fa'
-
-// const lightOptions: ThemePaletteOptions = {
-// 	mode: 'light',
-// 	primary: {
-// 		main: '#4d6fd6',
-// 	},
-// 	text: {
-// 		primary: '#424b66',
-// 		secondary: '#6F768B',
-// 		contrast: '#32384D',
-// 	},
-// 	background: {
-// 		default: BACKGROUND,
-// 		paper: BACKGROUND,
-// 		sidebar: BACKGROUND,
-// 	},
-// 	divider: '#C8CBD500',
-// }
-
-const BACKGROUND = '#ffffff'
+const PRIMARY = Color('#FFD4FF')
+const TEXT_PRIMARY = Color('#000000')
+const BG_DEFAULT = Color('#F7F1E4')
+const GRAY = Color('#868991')
 
 const lightOptions: ThemePaletteOptions = {
 	mode: 'light',
 	primary: {
-		main: '#4433ff',
+		main: PRIMARY.string(),
+	},
+	secondary: {
+		main: GRAY.string(),
 	},
 	text: {
-		primary: '#0E141B',
-		secondary: '#6F768B',
-		contrast: '#32384D',
+		primary: TEXT_PRIMARY.string(),
+		medium: TEXT_PRIMARY.alpha(0.8).string(),
+		secondary: TEXT_PRIMARY.alpha(0.6).string(),
+		disabled: TEXT_PRIMARY.alpha(0.4).string(),
 	},
 	background: {
-		default: BACKGROUND,
-		paper: '#f5f6f9',
-		sidebar: '#f5f6f9',
-		header: '#dfebf6',
+		default: BG_DEFAULT.string(),
+		paper: BG_DEFAULT.lighten(0.25).string(),
+		sidebar: BG_DEFAULT.mix(PRIMARY, 0.03).string(),
+		header: BG_DEFAULT.mix(PRIMARY, 0.015).string(),
+		// header: BG_DEFAULT.string(),
 	},
-	divider: '#C8CBD5',
+	divider: TEXT_PRIMARY.alpha(0.1).string(),
+	border: TEXT_PRIMARY.alpha(0.05).string(),
 }
 
 export default lightOptions

@@ -1,11 +1,12 @@
 import { AdminPanelSettings, Info, School } from '@mui/icons-material'
-import { List } from '@mui/material'
+import { List, Slide } from '@mui/material'
 import { Permissions } from 'auth.provider'
 import { CountContextProvider } from 'contexts'
 import { MenuItem, ResourceMenuItem, SubMenu } from 'layout'
 import { kebabCase } from 'lodash'
 import { usePermissions } from 'react-admin'
 import resources from 'resources'
+Slide
 
 const Menu = () => {
 	const { permissions } = usePermissions<Permissions>()

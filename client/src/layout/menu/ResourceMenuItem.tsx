@@ -21,9 +21,6 @@ const ResourceMenuItem = ({ name, ...props }: ResourceMenuItemProps) => {
 
 	const { icon: Icon } = resource
 
-	const isPublication = name in publications
-	const count = getResourceCount(name) || 0
-
 	return (
 		<MenuItem
 			to={`/${name}`}
@@ -31,7 +28,12 @@ const ResourceMenuItem = ({ name, ...props }: ResourceMenuItemProps) => {
 			text={`resources.${name}.name`}
 			{...props}
 		>
-			{/* {isPublication && <MenuChip label={count} />} */}
+			{name in publications && (
+				<MenuChip
+					label={getResourceCount(name) || 0}
+					sx={{ display: 'none' }}
+				/>
+			)}
 		</MenuItem>
 	)
 }

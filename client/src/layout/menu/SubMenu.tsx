@@ -11,7 +11,6 @@ interface SubMenuProps {
 
 const SubMenu = ({ name, icon, children }: SubMenuProps) => {
 	const [isOpen, setIsOpen] = useState(true)
-
 	return (
 		<>
 			<Divider sx={{ m: 2 }} />

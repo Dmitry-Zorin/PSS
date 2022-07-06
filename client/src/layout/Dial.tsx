@@ -34,7 +34,7 @@ const Dial = () => {
 				width={40}
 				zIndex="fab"
 				style={useSpring({
-					height: open ? bounds.height : 40,
+					// height: open ? bounds.height : 40,
 					padding: open ? 6 : 0,
 					margin: open ? -6 : 0,
 					borderRadius: open ? 19 : 16,

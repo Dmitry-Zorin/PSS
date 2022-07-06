@@ -7,38 +7,53 @@ const commonOptions: RaThemeOptions = {
 	mixins,
 	shadows: range(25).map(() => 'none') as Shadows,
 	shape: {
-		borderRadius: 8,
+		borderRadius: 4,
 	},
 	typography: {
-		fontFamily: 'MontserratVariable, sans-serif',
-		fontWeightRegular: 500,
+		fontFamily: 'Nunito Sans',
+		fontSize: 17,
 		h1: {
-			fontWeight: 900,
+			fontFamily: 'Alumni Sans',
+			lineHeight: 1,
+			fontWeight: 600,
 		},
 		h2: {
-			fontWeight: 900,
+			fontFamily: 'Alumni Sans',
+			fontWeight: 600,
+			lineHeight: 1,
 		},
 		h3: {
-			fontWeight: 900,
+			fontFamily: 'Alumni Sans',
+			lineHeight: 1,
+			fontWeight: 600,
 		},
 		h4: {
-			fontWeight: 900,
+			fontFamily: 'Alumni Sans',
+			lineHeight: 1,
+			fontWeight: 600,
 		},
 		h5: {
-			fontWeight: 800,
+			fontFamily: 'Alumni Sans',
+			lineHeight: 1,
+			fontWeight: 600,
 		},
 		h6: {
-			fontWeight: 700,
-		},
-		body1: {
-			fontSize: '1.025rem',
-			lineHeight: 1.7,
+			fontFamily: 'Alumni Sans',
+			lineHeight: 1,
+			fontWeight: 600,
 		},
 	},
 	components: {
 		MuiButtonBase: {
 			defaultProps: {
 				disableRipple: true,
+			},
+		},
+		MuiSvgIcon: {
+			styleOverrides: {
+				root: {
+					fontSize: '1.4rem',
+				},
 			},
 		},
 		MuiTableHead: {
@@ -69,7 +84,7 @@ const commonOptions: RaThemeOptions = {
 			styleOverrides: {
 				root: {
 					padding: 8,
-					borderRadius: 16,
+					// borderRadius: 16,
 				},
 			},
 		},
@@ -78,9 +93,8 @@ const commonOptions: RaThemeOptions = {
 				root: ({ theme }) => ({
 					minWidth: 24,
 					transition: 'none',
-					color: theme.palette.text.contrast,
+					// color: theme.palette.text.contrast,
 					// backgroundColor: theme.palette.divider,
-					fontWeight: theme.typography.fontWeightRegular,
 				}),
 			},
 		},
@@ -95,7 +109,7 @@ const commonOptions: RaThemeOptions = {
 		MuiMenu: {
 			styleOverrides: {
 				list: ({ theme }) => ({
-					color: theme.palette.text.contrast,
+					// color: theme.palette.text.contrast,
 					// backgroundColor: theme.palette.divider,
 				}),
 			},
@@ -104,7 +118,7 @@ const commonOptions: RaThemeOptions = {
 			styleOverrides: {
 				tooltip: ({ theme }) => ({
 					fontSize: '0.75rem',
-					color: theme.palette.text.contrast,
+					// color: theme.palette.text.contrast,
 					// backgroundColor: theme.palette.divider,
 				}),
 			},
