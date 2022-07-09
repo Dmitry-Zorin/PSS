@@ -15,9 +15,10 @@ type Side = 'left' | 'right' | 'top' | 'bottom'
 
 interface SlideProps extends HTMLAttributes<HTMLDivElement> {
 	children: ReactElement
-	in: boolean
+	in?: boolean
 	from: Side
 	config?: SpringConfig
+	delay?: number
 	onStart?: () => void
 	onRest?: () => void
 	onEnter?: () => void
@@ -28,9 +29,10 @@ const Slide = forwardRef<HTMLDivElement, SlideProps>(
 	(
 		{
 			children,
-			in: slideIn,
+			in: slideIn = true,
 			from,
 			config,
+			delay,
 			onStart,
 			onRest,
 			onEnter,
@@ -54,12 +56,18 @@ const Slide = forwardRef<HTMLDivElement, SlideProps>(
 			const rect = el.getBoundingClientRect()
 
 			if (horizontal) {
-				const offset = rect[from] - +(from === 'right') * rect.left
+				const offset =
+					from === 'left'
+						? rect.left
+						: document.documentElement.clientWidth - rect.right
 				setDistance((-1) ** +(from === 'left') * (rect.width + offset))
 			}
 
 			if (vertical) {
-				const offset = rect[from] - +(from === 'bottom') * rect.top
+				const offset =
+					from === 'top'
+						? rect.top
+						: document.documentElement.clientHeight - rect.bottom
 				setDistance((-1) ** +(from === 'top') * (rect.height + offset))
 			}
 		}, [childrenRef, from, horizontal, vertical])
@@ -73,27 +81,34 @@ const Slide = forwardRef<HTMLDivElement, SlideProps>(
 					;(ref as MutableRefObject<HTMLDivElement>).current = node
 				}
 			},
-			style: useSpring({
-				visibility,
-				[param]: slideIn ? 0 : distance,
-				from: {
-					[param]: distance,
-				},
-				config: config || gentleConfig,
-				onStart: () => {
-					setVisibility('visible')
-					onStart?.()
-					if (slideIn) {
-						onEnter?.()
-					}
-				},
-				onRest: () => {
-					onRest?.()
-					if (!slideIn) {
-						onExited?.()
-					}
-				},
-			}),
+			style: {
+				...useSpring({
+					visibility,
+					immediate: true,
+				}),
+				...useSpring({
+					[param]: slideIn ? 0 : distance,
+					from: {
+						[param]: distance,
+					},
+					config: config || gentleConfig,
+					delay,
+					onStart: () => {
+						setVisibility('visible')
+						onStart?.()
+						if (slideIn) {
+							onEnter?.()
+						}
+					},
+					onRest: () => {
+						onRest?.()
+						if (!slideIn) {
+							onExited?.()
+						}
+					},
+				}),
+				...children.props.style,
+			},
 			...props,
 		})
 	},

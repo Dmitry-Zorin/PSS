@@ -3,6 +3,12 @@ import { range } from 'lodash'
 import { RaThemeOptions } from 'react-admin'
 import mixins from './mixins'
 
+const hStyles = {
+	fontFamily: 'Alumni Sans',
+	lineHeight: 1,
+	fontWeight: 700,
+}
+
 const commonOptions: RaThemeOptions = {
 	mixins,
 	shadows: range(25).map(() => 'none') as Shadows,
@@ -11,26 +17,49 @@ const commonOptions: RaThemeOptions = {
 	},
 	typography: {
 		fontFamily: 'Mulish',
-		fontSize: 16,
-		body1: {
-			fontSize: '1.2rem',
+		fontSize: 15,
+		h1: hStyles,
+		h2: hStyles,
+		h3: hStyles,
+		h4: hStyles,
+		h5: hStyles,
+		h6: hStyles,
+		body2: {
+			fontSize: '1rem',
 		},
 	},
 	components: {
+		MuiCard: {
+			styleOverrides: {
+				root: ({ theme }) => ({
+					border: '1px solid',
+					borderColor: theme.palette.border,
+				}),
+			},
+		},
+		MuiCardContent: {
+			styleOverrides: {
+				root: {
+					// padding: '8px 16px',
+				},
+			},
+		},
 		MuiTypography: {
 			styleOverrides: {
-				root: ({ ownerState }) => {
-					if (ownerState.variant?.startsWith('h')) {
-						return {
-							fontFamily: 'Alumni Sans',
-							lineHeight: 1,
-							fontWeight: 600,
-							background: '-webkit-linear-gradient(45deg, #facefb, #f9cdc3)',
-							WebkitBackgroundClip: 'text',
-							WebkitTextFillColor: 'transparent',
-						}
-					}
-				},
+				root: ({ ownerState, theme }) => ({
+					...(ownerState.variant === 'body1' &&
+						{
+							// fontSize: '1.2rem',
+						}),
+					...(ownerState.variant?.startsWith('h') && {
+						color: theme.palette.text.secondary,
+					}),
+					...(ownerState.component === 'h1' && {
+						background: `-webkit-linear-gradient(60deg, ${theme.palette.gradient.start}, ${theme.palette.gradient.end})`,
+						WebkitBackgroundClip: 'text',
+						WebkitTextFillColor: 'transparent',
+					}),
+				}),
 			},
 		},
 		MuiButtonBase: {
@@ -76,7 +105,7 @@ const commonOptions: RaThemeOptions = {
 				root: {
 					padding: '8px 16px',
 					'&.RaDatagrid-headerCell': {
-						backgroundColor: 'transparent',
+						background: 'transparent',
 					},
 				},
 				head: ({ theme }) => ({
@@ -91,17 +120,16 @@ const commonOptions: RaThemeOptions = {
 			styleOverrides: {
 				root: {
 					padding: 8,
-					// borderRadius: 16,
+				},
+				sizeSmall: {
+					padding: 6,
 				},
 			},
 		},
 		MuiChip: {
 			styleOverrides: {
 				root: ({ theme }) => ({
-					// minWidth: 24,
-					transition: 'none',
-					// color: theme.palette.text.contrast,
-					// backgroundColor: theme.palette.divider,
+					// transition: 'none',
 				}),
 			},
 		},
@@ -109,24 +137,19 @@ const commonOptions: RaThemeOptions = {
 			styleOverrides: {
 				root: {
 					fontWeight: 600,
-					transition: 'none',
+					// transition: 'none',
 				},
 			},
 		},
 		MuiMenu: {
 			styleOverrides: {
-				list: ({ theme }) => ({
-					// color: theme.palette.text.contrast,
-					// backgroundColor: theme.palette.divider,
-				}),
+				list: ({ theme }) => ({}),
 			},
 		},
 		MuiTooltip: {
 			styleOverrides: {
 				tooltip: ({ theme }) => ({
 					fontSize: '0.75rem',
-					// color: theme.palette.text.contrast,
-					// backgroundColor: theme.palette.divider,
 				}),
 			},
 		},
@@ -134,7 +157,7 @@ const commonOptions: RaThemeOptions = {
 			styleOverrides: {
 				root: {
 					'&.RaToolbar-desktopToolbar': {
-						backgroundColor: 'transparent',
+						background: 'transparent',
 					},
 				},
 			},

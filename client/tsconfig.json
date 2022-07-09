@@ -5,7 +5,7 @@
 		"moduleResolution": "node",
 		"baseUrl": "src",
 		"jsx": "react-jsx",
-		"types": ["type-fest"],
+		"types": ["vite/client"],
 		"noEmit": true,
 		"strict": true,
 		"incremental": true,

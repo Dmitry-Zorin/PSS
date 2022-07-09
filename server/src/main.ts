@@ -7,13 +7,13 @@ async function bootstrap() {
 	const app = await getApp()
 	const configService = app.get<ConfigService>(ConfigService)
 
-	await app.register(fastifyCors, {
+	await app.register(fastifyCors as any, {
 		origin: /^http:\/\/localhost/,
 		exposedHeaders: 'content-range',
 		credentials: true,
 	})
 
-	await app.register(fastifyHelmet)
+	await app.register(fastifyHelmet as any)
 	await app.listen(configService.get('PORT')!)
 }
 

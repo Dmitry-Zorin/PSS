@@ -9,6 +9,7 @@ import {
 	ListBase,
 	ListToolbar,
 	ListToolbarProps,
+	Pagination,
 	ShowBase,
 	ShowProps,
 	TextField,
@@ -48,7 +49,6 @@ export const List = ({
 	>) => (
 	<ListBase
 		sort={{ field: 'createdAt', order: 'desc' }}
-		perPage={25}
 		disableAuthentication
 		{...props}
 	>
@@ -57,6 +57,7 @@ export const List = ({
 			<ResourceCounter />
 			<ListToolbar filters={filters} actions={actions} />
 			{children}
+			<Pagination />
 		</>
 	</ListBase>
 )
@@ -67,12 +68,14 @@ const ShowContaner = ({ children }: { children: ReactNode }) => {
 	}
 	return (
 		<MainArea
-			title={<TextField source="title" component="h1" variant="h2" />}
-			sx={{
-				'.RaLabeled-label': {
-					fontSize: '0.95rem !important',
-				},
-			}}
+			title={
+				<TextField
+					source="title"
+					component="h1"
+					variant="h2"
+					justifySelf="left"
+				/>
+			}
 		>
 			{children}
 		</MainArea>

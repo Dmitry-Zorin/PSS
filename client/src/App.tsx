@@ -1,7 +1,7 @@
 import authProvider, { Permissions } from 'auth.provider'
+import { Layout } from 'layout'
 import dataProvider from 'data.provider'
 import i18nProvider from 'i18n/i18n.provider'
-import { Layout } from 'layout'
 import { entries } from 'lodash'
 import { About, Dashboard } from 'pages'
 import {

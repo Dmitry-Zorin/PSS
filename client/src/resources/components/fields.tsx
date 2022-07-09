@@ -1,26 +1,31 @@
+import { Download } from '@mui/icons-material'
+import { Button } from '@mui/material'
 import {
 	ArrayField,
-	ChipField,
-	FileField,
-	Labeled,
 	SingleFieldList,
+	TextField,
+	useRecordContext,
 } from 'react-admin'
 
 export const ChipArrayField = ({ fieldSource = 'value', ...props }) => (
 	<ArrayField {...props}>
 		<SingleFieldList linkType={false}>
-			<ChipField source={fieldSource} clickable={false} />
+			<TextField source={fieldSource} />
 		</SingleFieldList>
 	</ArrayField>
 )
 
-export const DownloadFileField = () => (
-	<Labeled>
-		<FileField
-			source="file.url"
-			label="fields.file"
-			title="file.name"
-			emptyText="-"
-		/>
-	</Labeled>
-)
+export const DownloadFileField = () => {
+	const record = useRecordContext()
+
+	return record.file ? (
+		<Button
+			variant="contained"
+			startIcon={<Download />}
+			href={record.file.url}
+			target="_blank"
+		>
+			Download
+		</Button>
+	) : null
+}

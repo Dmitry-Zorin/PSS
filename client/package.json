@@ -10,10 +10,12 @@
 	"dependencies": {
 		"@emotion/react": "^11.9.3",
 		"@emotion/styled": "^11.9.3",
+		"@fastify/cors": "^7.0.0",
 		"@mui/icons-material": "^5.8.4",
 		"@mui/material": "^5.8.6",
 		"color": "^4.2.3",
 		"docx": "^7.3.0",
+		"fastify": "^3.29.0",
 		"file-saver": "^2.0.5",
 		"lodash": "^4.17.21",
 		"pluralize": "^8.0.0",
@@ -47,7 +49,6 @@
 		"eslint-plugin-react": "^7.30.1",
 		"eslint-plugin-react-hooks": "^4.6.0",
 		"prettier": "^2.7.1",
-		"type-fest": "^2.15.1",
 		"vite": "^2.9.13",
 		"vite-tsconfig-paths": "^3.5.0"
 	}

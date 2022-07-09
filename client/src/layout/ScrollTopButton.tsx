@@ -20,8 +20,9 @@ const ScrollTopButton = () => {
 
 	const button = (
 		<Fab
-			color="secondary"
+			color="neutral"
 			size="small"
+			sx={{ color: 'background.default' }}
 			onClick={() => {
 				setShowTooltip(false)
 				scroll.start({

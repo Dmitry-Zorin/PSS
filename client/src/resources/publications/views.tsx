@@ -1,15 +1,13 @@
-import { Box } from '@mui/material'
+import { Box, Card, Grid, Toolbar, Typography } from '@mui/material'
 import { truncate } from 'lodash'
-import { ReactNode } from 'react'
+import { ReactElement, ReactNode } from 'react'
 import {
-	ChipField,
 	FunctionField,
-	Labeled,
 	NumberInput,
 	SimpleForm,
-	SimpleShowLayout,
 	TextField,
 	TextInput,
+	useTranslate,
 } from 'react-admin'
 import { Create, Edit, List, Show } from 'resources/components/views'
 import {
@@ -19,15 +17,15 @@ import {
 	LargeTextInput,
 	ReplaceFileInput,
 } from '../components'
-import { AuthorsField, CharacterField } from './components/fields'
+import { AuthorsField, CharacterField } from './fields'
 import {
 	AuthorsInput,
 	CharacterInput,
 	CoauthorsInput,
 	TypeInput,
 	YearInput,
-} from './components/inputs'
-import ListUI from './components/ListUI'
+} from './inputs'
+import ListUI from './ListUI'
 
 export const CreateUpdateInputs = () => (
 	<>
@@ -87,68 +85,109 @@ export const PublicationList = () => (
 				label="fields.description"
 			/>
 			<AuthorsField label="fields.authors" />
-			<ChipField source="publication.year" label="fields.year" emptyText="-" />
+			<TextField source="publication.year" label="fields.year" emptyText="-" />
 		</ListUI>
 	</List>
 )
 
+const LabeledCard = ({
+	children,
+	label,
+}: {
+	children: ReactElement
+	label?: string
+}) => {
+	const translate = useTranslate()
+
+	return (
+		<Card sx={{ p: 2 }}>
+			<Typography variant="body2" color="text.secondary" align="center" mb={1}>
+				{translate(label || children.props.label)}
+			</Typography>
+			<Box
+				textAlign="center"
+				sx={{
+					'*': {
+						fontSize: '1.2rem !important',
+					},
+				}}
+			>
+				{children}
+			</Box>
+		</Card>
+	)
+}
+
 export const PublicationShow = ({ children }: { children?: ReactNode }) => (
 	<Show>
-		<TextField variant="body1" source="description" />
-		<Box
-			display="grid"
-			rowGap={3}
-			columnGap={1}
-			gridTemplateColumns="repeat(2, 1fr)"
-			mt={5}
-			px={2}
-			py={1}
-		>
-			<Labeled>
-				<TextField
-					source="publication.type"
-					label="fields.type"
-					emptyText="-"
-				/>
-			</Labeled>
-			<Labeled label="fields.character">
-				<CharacterField />
-			</Labeled>
-			<div>
-				<Labeled>
-					<ChipField
+		<TextField source="description" fontSize="1.1rem" />
+		<Grid container spacing={3} justifyContent="space-between" mt={6}>
+			<Grid item xs={6} md={3}>
+				<LabeledCard>
+					<TextField
+						source="publication.type"
+						label="fields.type"
+						emptyText="-"
+					/>
+				</LabeledCard>
+			</Grid>
+			<Grid item xs={6} md={3}>
+				<LabeledCard label="fields.character">
+					<CharacterField />
+				</LabeledCard>
+			</Grid>
+			<Grid item xs={6} md={3}>
+				<LabeledCard>
+					<TextField
 						source="publication.year"
 						label="fields.year"
 						emptyText="-"
 					/>
-				</Labeled>
-			</div>
-			<Labeled>
-				<ChipField
-					source="publication.volume"
-					label="fields.volume"
-					emptyText="-"
-				/>
-			</Labeled>
-			<Labeled label="fields.authors">
-				<AuthorsField />
-			</Labeled>
-			<Labeled>
-				<ChipArrayField
-					source="publication.coauthors"
-					fieldSource="name"
-					label="fields.coauthors"
-				/>
-			</Labeled>
-		</Box>
-		<SimpleShowLayout spacing={3}>
-			<TextField
-				source="publication.outputData"
-				label="fields.outputData"
-				emptyText="-"
-			/>
-			{children}
+				</LabeledCard>
+			</Grid>
+			<Grid item xs={6} md={3}>
+				<LabeledCard>
+					<TextField
+						source="publication.volume"
+						label="fields.volume"
+						emptyText="-"
+					/>
+				</LabeledCard>
+			</Grid>
+			<Grid item xs={12} md={6}>
+				<LabeledCard label="fields.authors">
+					<AuthorsField />
+				</LabeledCard>
+			</Grid>
+			<Grid item xs={12} md={6}>
+				<LabeledCard>
+					<ChipArrayField
+						source="publication.coauthors"
+						fieldSource="name"
+						label="fields.coauthors"
+					/>
+				</LabeledCard>
+			</Grid>
+		</Grid>
+		<FunctionField
+			render={(record: any) => {
+				return (
+					record.publication.outputData && (
+						<Grid item xs={12}>
+							<LabeledCard>
+								<TextField
+									source="publication.outputData"
+									label="fields.outputData"
+								/>
+							</LabeledCard>
+						</Grid>
+					)
+				)
+			}}
+		/>
+		{children}
+		<Toolbar disableGutters>
 			<DownloadFileField />
-		</SimpleShowLayout>
+		</Toolbar>
 	</Show>
 )

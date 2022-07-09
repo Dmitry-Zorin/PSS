@@ -3,14 +3,14 @@ import { animated, useSpring } from 'react-spring'
 
 const lightProperties = {
 	circle: {
-		r: 5,
+		r: 4,
 	},
 	mask: {
 		cx: '100%',
 		cy: '0%',
 	},
 	svg: {
-		rotate: 45,
+		rotate: -120,
 	},
 	lines: {
 		opacity: 1,
@@ -26,7 +26,7 @@ const darkProperties = {
 		cy: '23%',
 	},
 	svg: {
-		rotate: 45,
+		rotate: 60,
 	},
 	lines: {
 		opacity: 0,

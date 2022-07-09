@@ -1,5 +1,5 @@
 import { Language } from '@mui/icons-material'
-import { IconButton, Menu, MenuItem } from '@mui/material'
+import { IconButton, Menu, MenuItem, Zoom } from '@mui/material'
 import { MouseEvent, useState } from 'react'
 import { useLocaleState } from 'react-admin'
 import { Helmet } from 'react-helmet'
@@ -25,6 +25,7 @@ const LocaleMenu = () => {
 				<title lang={locale} />
 			</Helmet>
 			<IconButton
+				size="small"
 				color="inherit"
 				onClick={(event: MouseEvent<HTMLButtonElement>) => {
 					setAnchorEl(event.currentTarget)
@@ -36,6 +37,7 @@ const LocaleMenu = () => {
 				anchorEl={anchorEl}
 				open={!!anchorEl}
 				onClose={() => setAnchorEl(null)}
+				TransitionComponent={Zoom}
 			>
 				<MenuItem selected={locale === 'en'} onClick={() => changeLocale('en')}>
 					English

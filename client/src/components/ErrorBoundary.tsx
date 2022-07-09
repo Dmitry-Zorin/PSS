@@ -1,15 +1,15 @@
 import { ErrorInfo, useState } from 'react'
 import { Error } from 'react-admin'
-import { ErrorBoundary } from 'react-error-boundary'
+import { ErrorBoundary as ReactErrorBoundary } from 'react-error-boundary'
 
-const ErrorBoundary2 = ({}) => {
+const ErrorBoundary = () => {
 	const [errorInfo, setErrorInfo] = useState<ErrorInfo>(null)
 
 	const handleError = (error: Error, info: ErrorInfo) => {
 		setErrorInfo(info)
 	}
 	return (
-		<ErrorBoundary
+		<ReactErrorBoundary
 			onError={handleError}
 			fallbackRender={({ error, resetErrorBoundary }) => (
 				<Error
@@ -22,6 +22,8 @@ const ErrorBoundary2 = ({}) => {
 			)}
 		>
 			{children}
-		</ErrorBoundary>
+		</ReactErrorBoundary>
 	)
 }
+
+export default ErrorBoundary

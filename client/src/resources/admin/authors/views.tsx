@@ -1,4 +1,13 @@
-import { SimpleForm, TextField, TextInput } from 'react-admin'
+import { Box, Card, Typography } from '@mui/material'
+import { ReactElement } from 'react'
+import {
+	SimpleForm,
+	SimpleShowLayout,
+	TextField,
+	TextInput,
+	useRecordContext,
+	useTranslate,
+} from 'react-admin'
 import { Create, Edit, LargeTextInput, List, Show } from 'resources/components'
 import ListUI from './ListUI'
 
@@ -41,11 +50,52 @@ export const AuthorList = () => (
 	</List>
 )
 
+const NameField = () => {
+	const { firstName, middleName, lastName } = useRecordContext()
+
+	return (
+		<Typography variant="h5" align="center" mb={3}>
+			{middleName
+				? `${lastName} ${firstName} ${middleName}`
+				: `${firstName} ${lastName}`}
+		</Typography>
+	)
+}
+
+const LabeledCard = ({
+	children,
+	label,
+}: {
+	children: ReactElement
+	label?: string
+}) => {
+	const translate = useTranslate()
+
+	return (
+		<Card sx={{ p: 2 }}>
+			<Typography variant="body2" color="text.secondary" align="center" mb={1}>
+				{translate(label || children.props.label)}
+			</Typography>
+			<Box
+				sx={{
+					'*': {
+						fontSize: '1.2rem !important',
+					},
+				}}
+			>
+				{children}
+			</Box>
+		</Card>
+	)
+}
+
 export const AuthorShow = () => (
 	<Show>
-		<TextField source="lastName" label="fields.lastName" emptyText="-" />
-		<TextField source="firstName" label="fields.firstName" emptyText="-" />
-		<TextField source="middleName" label="fields.middleName" emptyText="-" />
-		<TextField source="info" label="fields.info" emptyText="-" />
+		<SimpleShowLayout>
+			<NameField />
+			<LabeledCard>
+				<TextField source="info" label="fields.info" emptyText="-" />
+			</LabeledCard>
+		</SimpleShowLayout>
 	</Show>
 )

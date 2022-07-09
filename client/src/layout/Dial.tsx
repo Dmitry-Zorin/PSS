@@ -1,55 +1,85 @@
 import { Settings } from '@mui/icons-material'
-import {
-	Box,
-	ClickAwayListener,
-	IconButton,
-	useScrollTrigger,
-} from '@mui/material'
-import { AnimatedBox, gentleConfig } from 'components'
-import { LocaleMenu, ThemeSwitcher } from 'layout'
-import { useEffect, useState } from 'react'
-import { useSpring } from 'react-spring'
+import { IconButton } from '@mui/material'
+import { AnimatedBox, gentleConfig, Slide } from 'components'
+import { ReactNode, useRef, useState } from 'react'
+import { animated, useSpring } from 'react-spring'
 
-const Dial = () => {
+const PADDING = 2
+
+const AnimatedSettingsIcon = animated(Settings)
+
+const Dial = ({ children }: { children: ReactNode }) => {
+	const ref = useRef<HTMLDivElement>(null)
+	const childRef = useRef<HTMLButtonElement>(null)
 	const [open, setOpen] = useState(false)
-	const trigger = useScrollTrigger({
-		disableHysteresis: true,
-		threshold: 0,
-	})
-
-	useEffect(() => {
-		setOpen(false)
-	}, [trigger])
+	const [timeout, saveTimeout] = useState<NodeJS.Timeout>()
 
 	return (
-		<ClickAwayListener onClickAway={() => setOpen(false)}>
+		<Slide
+			from="top"
+			config={{
+				tension: 125,
+				friction: 10,
+			}}
+			delay={500}
+		>
 			<AnimatedBox
-				position="fixed"
-				top={24}
-				right={24}
+				position="absolute"
+				display="flex"
+				justifyContent="flex-end"
+				borderRadius={100}
 				overflow="hidden"
-				color="text.primary"
-				bgcolor="background.header"
-				// borderRadius={2}
-				width={40}
-				zIndex="fab"
+				// bgcolor="background.header"
+				border={1}
+				borderColor="border"
 				style={useSpring({
-					// height: open ? bounds.height : 40,
-					padding: open ? 6 : 0,
-					margin: open ? -6 : 0,
-					borderRadius: open ? 19 : 16,
-					config: gentleConfig,
+					...(ref.current &&
+						childRef.current && {
+							width: open
+								? ref.current.offsetWidth + 2 + 2 * PADDING
+								: childRef.current.offsetWidth + 2 + 2 * PADDING,
+							height: ref.current.offsetHeight + 2 + 2 * PADDING,
+							padding: PADDING,
+							config: gentleConfig,
+						}),
 				})}
+				onMouseEnter={() => {
+					clearTimeout(timeout)
+					setOpen(true)
+				}}
+				onMouseLeave={() => {
+					saveTimeout(setTimeout(() => setOpen(false), 200))
+				}}
 			>
-				<Box>
-					<IconButton color="inherit" onClick={() => setOpen(!open)}>
-						<Settings />
+				<AnimatedBox
+					ref={ref}
+					display="flex"
+					flexDirection="row-reverse"
+					m="auto"
+				>
+					<IconButton
+						ref={childRef}
+						color="inherit"
+						size="small"
+						sx={{
+							'&, :hover': {
+								color: open ? 'text.disabled' : undefined,
+								bgcolor: 'transparent',
+								cursor: 'default',
+							},
+						}}
+					>
+						<AnimatedSettingsIcon
+							style={useSpring({
+								rotate: 30 * +open,
+								config: gentleConfig,
+							})}
+						/>
 					</IconButton>
-					<ThemeSwitcher />
-					<LocaleMenu />
-				</Box>
+					{children}
+				</AnimatedBox>
 			</AnimatedBox>
-		</ClickAwayListener>
+		</Slide>
 	)
 }
 

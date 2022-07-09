@@ -1,11 +1,10 @@
-import { Chip } from '@mui/material'
 import {
-	ChipField,
 	FieldProps,
 	FunctionField,
 	ReferenceArrayField,
 	ReferenceField,
 	SingleFieldList,
+	TextField,
 } from 'react-admin'
 import {
 	Author,
@@ -19,12 +18,10 @@ export const AuthorsField = (props: FieldProps) => (
 		reference="authors"
 		{...props}
 	>
-		<SingleFieldList linkType="show">
+		<SingleFieldList linkType="show" sx={{ justifyContent: 'center' }}>
 			<FunctionField
 				label="fields.authors"
-				render={(author: Author) => (
-					<Chip label={getAuthorName(author)} sx={{ m: 0.5 }} clickable />
-				)}
+				render={(author: Author) => getAuthorName(author)}
 			/>
 		</SingleFieldList>
 	</ReferenceArrayField>
@@ -38,6 +35,6 @@ export const CharacterField = () => (
 		link="list"
 		emptyText="-"
 	>
-		<ChipField source="name" />
+		<TextField source="name" />
 	</ReferenceField>
 )

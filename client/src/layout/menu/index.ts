@@ -1,5 +1,0 @@
-export { default as Menu } from './Menu'
-export { default as MenuItem } from './MenuItem'
-export { default as ResourceMenuItem } from './ResourceMenuItem'
-export { default as SubMenu } from './SubMenu'
-export { default as SubMenuItem } from './SubMenuItem'

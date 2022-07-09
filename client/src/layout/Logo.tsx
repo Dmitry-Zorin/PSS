@@ -5,10 +5,10 @@ const Logo = () => (
 	<Typography
 		component={Link}
 		to="/"
-		color="primary"
-		variant="h5"
+		variant="h6"
+		fontFamily="Mulish"
 		fontWeight={700}
-		fontStyle="italic"
+		color="primary.main"
 		p={1}
 		sx={{ textDecoration: 'none' }}
 	>
