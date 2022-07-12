@@ -1,2 +1,2 @@
-export { default as createPublicationList } from './create-publication-list'
+export { default as authors } from './authors'
 export { default as timeline } from './timeline'

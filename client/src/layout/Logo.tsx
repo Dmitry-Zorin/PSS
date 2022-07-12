@@ -6,8 +6,8 @@ const Logo = () => (
 		component={Link}
 		to="/"
 		variant="h6"
-		fontFamily="Mulish"
-		fontWeight={700}
+		fontFamily="unset"
+		fontWeight={600}
 		color="primary.main"
 		p={1}
 		sx={{ textDecoration: 'none' }}

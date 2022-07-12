@@ -1,5 +1,4 @@
-import { Box, Card, Grid, Toolbar, Typography } from '@mui/material'
-import { truncate } from 'lodash'
+import { Box, Grid, Toolbar, Typography } from '@mui/material'
 import { ReactElement, ReactNode } from 'react'
 import {
 	FunctionField,
@@ -43,7 +42,7 @@ export const CreateUpdateInputs = () => (
 
 export const PublicationCreate = ({ children }: { children?: ReactNode }) => (
 	<Create>
-		<SimpleForm>
+		<SimpleForm px={1}>
 			<CreateUpdateInputs />
 			{children}
 			<AddFileInput />
@@ -53,7 +52,7 @@ export const PublicationCreate = ({ children }: { children?: ReactNode }) => (
 
 export const PublicationEdit = ({ children }: { children?: ReactNode }) => (
 	<Edit>
-		<SimpleForm>
+		<SimpleForm px={1}>
 			<CreateUpdateInputs />
 			{children}
 			<ReplaceFileInput />
@@ -78,12 +77,6 @@ export const PublicationList = () => (
 	>
 		<ListUI>
 			<TextField source="title" label="fields.title" />
-			<FunctionField
-				render={(record) => {
-					return truncate(record.description, { length: 100 })
-				}}
-				label="fields.description"
-			/>
 			<AuthorsField label="fields.authors" />
 			<TextField source="publication.year" label="fields.year" emptyText="-" />
 		</ListUI>
@@ -100,29 +93,29 @@ const LabeledCard = ({
 	const translate = useTranslate()
 
 	return (
-		<Card sx={{ p: 2 }}>
-			<Typography variant="body2" color="text.secondary" align="center" mb={1}>
+		<>
+			<Typography variant="body2" color="text.secondary" mb={1}>
 				{translate(label || children.props.label)}
 			</Typography>
 			<Box
-				textAlign="center"
 				sx={{
 					'*': {
-						fontSize: '1.2rem !important',
+						fontSize: '1.1rem !important',
+						fontWeight: '500 !important',
 					},
 				}}
 			>
 				{children}
 			</Box>
-		</Card>
+		</>
 	)
 }
 
 export const PublicationShow = ({ children }: { children?: ReactNode }) => (
 	<Show>
-		<TextField source="description" fontSize="1.1rem" />
-		<Grid container spacing={3} justifyContent="space-between" mt={6}>
-			<Grid item xs={6} md={3}>
+		<TextField source="description" variant="body1" />
+		<Grid container spacing={6} mt={3}>
+			<Grid item xs={12} sm={6}>
 				<LabeledCard>
 					<TextField
 						source="publication.type"
@@ -131,12 +124,7 @@ export const PublicationShow = ({ children }: { children?: ReactNode }) => (
 					/>
 				</LabeledCard>
 			</Grid>
-			<Grid item xs={6} md={3}>
-				<LabeledCard label="fields.character">
-					<CharacterField />
-				</LabeledCard>
-			</Grid>
-			<Grid item xs={6} md={3}>
+			<Grid item xs={12} sm={6}>
 				<LabeledCard>
 					<TextField
 						source="publication.year"
@@ -145,7 +133,12 @@ export const PublicationShow = ({ children }: { children?: ReactNode }) => (
 					/>
 				</LabeledCard>
 			</Grid>
-			<Grid item xs={6} md={3}>
+			<Grid item xs={12} sm={6}>
+				<LabeledCard label="fields.character">
+					<CharacterField />
+				</LabeledCard>
+			</Grid>
+			<Grid item xs={12} sm={6}>
 				<LabeledCard>
 					<TextField
 						source="publication.volume"
@@ -154,12 +147,12 @@ export const PublicationShow = ({ children }: { children?: ReactNode }) => (
 					/>
 				</LabeledCard>
 			</Grid>
-			<Grid item xs={12} md={6}>
+			<Grid item xs={12} sm={6}>
 				<LabeledCard label="fields.authors">
 					<AuthorsField />
 				</LabeledCard>
 			</Grid>
-			<Grid item xs={12} md={6}>
+			<Grid item xs={12} sm={6}>
 				<LabeledCard>
 					<ChipArrayField
 						source="publication.coauthors"

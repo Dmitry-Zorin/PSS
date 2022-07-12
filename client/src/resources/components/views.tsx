@@ -21,7 +21,7 @@ import ResourceCounter from './ResourceCounter'
 export const Create = ({
 	children,
 	...props
-}: CreateProps & { children: ReactNode }) => (
+}: { children: ReactNode } & CreateProps) => (
 	<CreateBase redirect="show" {...props}>
 		<CreateActions />
 		<MainArea>{children}</MainArea>
@@ -31,7 +31,7 @@ export const Create = ({
 export const Edit = ({
 	children,
 	...props
-}: EditProps & { children: ReactNode }) => (
+}: { children: ReactNode } & EditProps) => (
 	<EditBase redirect="show" {...props}>
 		<EditActions />
 		<MainArea>{children}</MainArea>
@@ -43,10 +43,8 @@ export const List = ({
 	filters,
 	actions = <ListActions />,
 	...props
-}: ListProps & { children: ReactNode } & Omit<
-		ListToolbarProps,
-		'children'
-	>) => (
+}: { children: ReactNode } & ListProps &
+	Pick<ListToolbarProps, 'filters' | 'actions'>) => (
 	<ListBase
 		sort={{ field: 'createdAt', order: 'desc' }}
 		disableAuthentication
@@ -67,16 +65,7 @@ const ShowContaner = ({ children }: { children: ReactNode }) => {
 		return null
 	}
 	return (
-		<MainArea
-			title={
-				<TextField
-					source="title"
-					component="h1"
-					variant="h2"
-					justifySelf="left"
-				/>
-			}
-		>
+		<MainArea title={<TextField source="title" component="h1" variant="h3" />}>
 			{children}
 		</MainArea>
 	)
@@ -85,7 +74,7 @@ const ShowContaner = ({ children }: { children: ReactNode }) => {
 export const Show = ({
 	children,
 	...props
-}: ShowProps & { children: ReactNode }) => (
+}: { children: ReactNode } & ShowProps) => (
 	<ShowBase disableAuthentication {...props}>
 		<>
 			<ShowActions />

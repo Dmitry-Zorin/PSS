@@ -9,14 +9,7 @@
 			rel="preload"
 			as="font"
 			type="font/woff2"
-			href="./src/assets/fonts/Alumni_Sans/AlumniSans-VariableFont_wght.woff2"
-			crossorigin
-		/>
-		<link
-			rel="preload"
-			as="font"
-			type="font/woff2"
-			href="./src/assets/fonts/Mulish/Mulish-VariableFont_wght.woff2"
+			href="./src/assets/fonts/Golos-Text/Golos-Text.woff2"
 			crossorigin
 		/>
 		<style>
@@ -33,6 +26,13 @@
 	</head>
 	<body>
 		<div id="root"></div>
+		<!-- <script>
+			const storedTheme = localStorage.getItem('RaStore.theme')
+			if (storedTheme) {
+				document.body.style.background =
+					JSON.parse(storedTheme).palette.background.default
+			}
+		</script> -->
 		<script src="./src/main.tsx" type="module"></script>
 	</body>
 </html>

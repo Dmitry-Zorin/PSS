@@ -1,46 +1,40 @@
 import { Settings } from '@mui/icons-material'
 import { IconButton } from '@mui/material'
-import { AnimatedBox, gentleConfig, Slide } from 'components'
+import { AnimatedBox, gentleConfig } from 'components'
 import { ReactNode, useRef, useState } from 'react'
-import { animated, useSpring } from 'react-spring'
-
-const PADDING = 2
+import { animated, config, useSpring } from 'react-spring'
 
 const AnimatedSettingsIcon = animated(Settings)
 
-const Dial = ({ children }: { children: ReactNode }) => {
+const SettingsDial = ({ children }: { children: ReactNode }) => {
 	const ref = useRef<HTMLDivElement>(null)
 	const childRef = useRef<HTMLButtonElement>(null)
 	const [open, setOpen] = useState(false)
 	const [timeout, saveTimeout] = useState<NodeJS.Timeout>()
 
 	return (
-		<Slide
-			from="top"
-			config={{
-				tension: 125,
-				friction: 10,
-			}}
-			delay={500}
+		<animated.div
+			style={useSpring({
+				rotate: 0,
+				from: {
+					rotate: -360,
+				},
+				config: config.molasses,
+				delay: 600,
+			})}
 		>
 			<AnimatedBox
-				position="absolute"
 				display="flex"
 				justifyContent="flex-end"
 				borderRadius={100}
 				overflow="hidden"
-				// bgcolor="background.header"
-				border={1}
-				borderColor="border"
 				style={useSpring({
+					config: gentleConfig,
 					...(ref.current &&
 						childRef.current && {
 							width: open
-								? ref.current.offsetWidth + 2 + 2 * PADDING
-								: childRef.current.offsetWidth + 2 + 2 * PADDING,
-							height: ref.current.offsetHeight + 2 + 2 * PADDING,
-							padding: PADDING,
-							config: gentleConfig,
+								? ref.current.offsetWidth
+								: childRef.current.offsetWidth,
 						}),
 				})}
 				onMouseEnter={() => {
@@ -56,11 +50,11 @@ const Dial = ({ children }: { children: ReactNode }) => {
 					display="flex"
 					flexDirection="row-reverse"
 					m="auto"
+					visibility={ref.current ? 'visible' : 'hidden'}
 				>
 					<IconButton
 						ref={childRef}
 						color="inherit"
-						size="small"
 						sx={{
 							'&, :hover': {
 								color: open ? 'text.disabled' : undefined,
@@ -79,8 +73,8 @@ const Dial = ({ children }: { children: ReactNode }) => {
 					{children}
 				</AnimatedBox>
 			</AnimatedBox>
-		</Slide>
+		</animated.div>
 	)
 }
 
-export default Dial
+export default SettingsDial

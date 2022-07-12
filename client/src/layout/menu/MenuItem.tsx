@@ -36,12 +36,12 @@ const MenuItem = ({
 
 	return (
 		<li>
-			<ListItem component={Link} to={to} sx={{ px: 0, py: 0.25 }}>
+			<ListItem component={Link} to={to} disablePadding>
 				<Tooltip title={isSidebarOpen ? '' : text} placement="right">
 					<ListItemButton
 						sx={[
 							{
-								height: 42,
+								height: 44,
 								color: 'text.secondary',
 								':hover': {
 									color: 'text.primary',
@@ -50,6 +50,7 @@ const MenuItem = ({
 								...(isActive && {
 									'&, :hover': {
 										color: 'primary.main',
+										textDecoration: 'none',
 									},
 								}),
 							},
@@ -58,13 +59,23 @@ const MenuItem = ({
 						onClick={() => isSmall && setSidebarOpen(false)}
 						{...props}
 					>
-						<ListItemIcon sx={{ color: 'inherit', minWidth: 40 }}>
+						<ListItemIcon
+							sx={{
+								color: 'inherit',
+								minWidth: 44,
+							}}
+						>
 							{icon}
 						</ListItemIcon>
 						<ListItemText
 							primary={text}
-							sx={{ flexShrink: 0, mr: 2 }}
-							primaryTypographyProps={{ variant: 'body2' }}
+							sx={{
+								flexShrink: 0,
+								mr: 2,
+							}}
+							primaryTypographyProps={{
+								variant: 'body2',
+							}}
 						/>
 						{children}
 					</ListItemButton>

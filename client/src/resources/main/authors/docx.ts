@@ -12,7 +12,9 @@ import {
 	WidthType,
 } from 'docx'
 import { fetchApi } from 'requests'
-import { Author, getAuthorName, Publication } from './CreatePublicationList'
+import { Publication } from 'resources/publications/types'
+import { Author } from './types'
+import { getAuthorFullName } from './views'
 
 enum Category {
 	A = 'A',
@@ -54,7 +56,7 @@ export async function createDocx(author: Author) {
 		'resources/categories',
 	)
 
-	const authorName = getAuthorName(author)
+	const authorName = getAuthorFullName(author)
 
 	function createPublicationRow(publication: Publication) {
 		return new TableRow({

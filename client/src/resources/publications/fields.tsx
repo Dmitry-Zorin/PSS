@@ -6,10 +6,7 @@ import {
 	SingleFieldList,
 	TextField,
 } from 'react-admin'
-import {
-	Author,
-	getAuthorName,
-} from 'resources/main/create-publication-list/CreatePublicationList'
+import { getAuthorName } from 'resources/main/authors/views'
 
 export const AuthorsField = (props: FieldProps) => (
 	<ReferenceArrayField
@@ -18,10 +15,12 @@ export const AuthorsField = (props: FieldProps) => (
 		reference="authors"
 		{...props}
 	>
-		<SingleFieldList linkType="show" sx={{ justifyContent: 'center' }}>
+		<SingleFieldList linkType={false} sx={{ justifyContent: 'center' }}>
 			<FunctionField
 				label="fields.authors"
-				render={(author: Author) => getAuthorName(author)}
+				render={getAuthorName}
+				whiteSpace="nowrap"
+				width={1}
 			/>
 		</SingleFieldList>
 	</ReferenceArrayField>

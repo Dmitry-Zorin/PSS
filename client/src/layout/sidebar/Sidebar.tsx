@@ -1,38 +1,33 @@
-import { Box, Divider, Paper, Theme, useMediaQuery } from '@mui/material'
+import { Box, Theme, useMediaQuery } from '@mui/material'
 import { AnimatedBox, Drawer, gentleConfig, Slide } from 'components'
-import { SidebarFooter, SidebarHeader } from 'layout'
+import { SidebarFooter } from 'layout'
 import { ReactNode } from 'react'
 import { useSidebarState } from 'react-admin'
 import { config, Spring } from 'react-spring'
 
-const SIDEBAR_WIDTH = 300
-const SIDEBAR_CLOSED_WIDTH = 56
+const SIDEBAR_WIDTH = 290
+const SIDEBAR_CLOSED_WIDTH = 68
 
 const Sidebar = ({ children }: { children: ReactNode }) => {
 	const isSmall = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'))
 	const [isSidebarOpen, setSidebarOpen] = useSidebarState()
 
 	const content = (
-		<Paper>
-			<Box
-				height="100vh"
-				// bgcolor="background.sidebar"
-				borderRight={1}
-				borderColor="border"
-				sx={{
-					overflowX: 'hidden',
-					overflowY: 'auto',
-					'::-webkit-scrollbar': {
-						display: 'none',
-					},
-				}}
-			>
-				<SidebarHeader />
-				{children}
-				<Divider sx={{ mx: 2, my: 1 }} />
-				<SidebarFooter />
-			</Box>
-		</Paper>
+		<Box
+			height="100vh"
+			borderRight={1}
+			borderColor="border"
+			sx={{
+				overflowX: 'hidden',
+				overflowY: 'auto',
+				'::-webkit-scrollbar': {
+					display: 'none',
+				},
+			}}
+		>
+			{children}
+			<SidebarFooter />
+		</Box>
 	)
 
 	return isSmall ? (

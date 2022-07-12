@@ -7,11 +7,11 @@ interface MainAreaProps extends Omit<BoxProps, 'title'> {
 }
 
 const MainArea = ({ children, title, rightMenu, ...props }: MainAreaProps) => (
-	<Box maxWidth={1100} mx="auto" px={{ xs: 2, lg: 3, xl: 4 }} pb={8}>
+	<Box maxWidth={1100} mx="auto" pb={8}>
 		{title && (
-			<Box component="header" pb={6}>
+			<Box component="header" pb={4}>
 				{typeof title === 'string' ? (
-					<Typography component="h1" variant="h2">
+					<Typography component="h1" variant="h3">
 						{title}
 					</Typography>
 				) : (

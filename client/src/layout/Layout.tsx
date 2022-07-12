@@ -1,15 +1,15 @@
 import { Box, CssBaseline } from '@mui/material'
 import Color from 'color'
-import { Menu, ScrollTopButton, Sidebar } from 'layout'
+import { AppBar, Menu, ScrollTopButton, Sidebar } from 'layout'
 import { ReactNode } from 'react'
 
 const Layout = ({ children }: { children?: ReactNode }) => (
 	<>
 		<CssBaseline enableColorScheme />
+		<AppBar />
 		<Box
 			display="flex"
 			sx={{
-				color: 'text.primary',
 				'*::selection': {
 					bgcolor: (t) => Color(t.palette.primary.main).alpha(0.75).string(),
 				},
@@ -18,7 +18,7 @@ const Layout = ({ children }: { children?: ReactNode }) => (
 			<Sidebar>
 				<Menu />
 			</Sidebar>
-			<Box component="main" flexGrow={1} pl={2} pr={3}>
+			<Box component="main" flexGrow={1}>
 				{children}
 				<ScrollTopButton />
 			</Box>

@@ -28,12 +28,12 @@ const SubMenuItem = ({ children, text, open, ...props }: SubMenuItemProps) => {
 	text = translate(text, { smart_count: 2 }).toUpperCase()
 
 	return (
-		<ListItem disablePadding>
+		<ListItem disablePadding sx={{ pt: 1 }}>
 			<Tooltip placement="right" title={isSidebarOpen ? '' : text}>
 				<ListItemButton
 					sx={[
 						{
-							height: 40,
+							height: 42,
 							color: 'text.disabled',
 							borderRadius: 1,
 							':hover': {
@@ -44,21 +44,18 @@ const SubMenuItem = ({ children, text, open, ...props }: SubMenuItemProps) => {
 					]}
 					{...props}
 				>
-					<ListItemIcon sx={{ color: 'inherit', minWidth: 40 }}>
+					<ListItemIcon sx={{ color: 'inherit', minWidth: 44 }}>
 						<AnimatedAccordionIcon
 							style={useSpring({
 								rotate: open ? 0 : -90,
 								config: gentleConfig,
 							})}
-							sx={{ mr: -0.5 }}
 						/>
 					</ListItemIcon>
 					<ListItemText
 						primary={text}
 						primaryTypographyProps={{
-							sx: {
-								fontSize: '0.8rem',
-							},
+							variant: 'overline',
 						}}
 					/>
 					{children}

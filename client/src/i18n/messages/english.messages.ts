@@ -12,27 +12,35 @@ const englishMessages: TranslationMessages = {
 	},
 	metadata: {
 		title: 'Publication Storage System',
+		description:
+			'\
+		This is a demo project showing what a storage system for scientific publications may look like.\
+		Timeline. Here you can see all the recently added publications in their chronological order. \
+		Authors. Here you can find the information about the authors and also download a list of all the publications for a specific author in the .docx format. \
+			',
 	},
-	pages: {
-		about: 'About',
+	actions: {
+		download: 'Download',
 	},
 	menu: {
-		publications: 'Publications',
-		admin: 'Administration',
+		groups: {
+			publications: 'Publications',
+			admin: 'Administration',
+		},
 	},
 	fields: {
 		title: 'Title',
 		description: 'Description',
 		type: 'Type',
 		year: 'Written in (year)',
-		volume: 'Volume',
+		volume: 'Volume (pages)',
 		authors: 'Authors',
 		coauthors: 'Coauthors',
 		coauthor: 'Coauthor',
 		character: 'Character',
 		outputData: 'Output data',
 		file: 'File',
-		search: 'Search by title',
+		search: 'Search',
 		name: 'Name',
 		firstName: 'First Name',
 		lastName: 'Last name',
@@ -42,9 +50,6 @@ const englishMessages: TranslationMessages = {
 	resources: {
 		timeline: {
 			name: 'Timeline',
-		},
-		'create-publication-list': {
-			name: 'Create publication list',
 		},
 		articles: {
 			name: 'Article |||| Articles',
@@ -76,6 +81,14 @@ const englishMessages: TranslationMessages = {
 		characters: {
 			name: 'Character |||| Characters',
 		},
+	},
+	pages: {
+		about: {
+			name: 'About',
+		},
+	},
+	publicationList: {
+		name: 'Publication list',
 	},
 }
 

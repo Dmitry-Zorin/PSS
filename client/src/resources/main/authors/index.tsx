@@ -1,8 +1,8 @@
-import { AccountCircle } from '@mui/icons-material'
+import { PeopleAlt } from '@mui/icons-material'
 import { AuthorCreate, AuthorEdit, AuthorList, AuthorShow } from './views'
 
 export default {
-	icon: AccountCircle,
+	icon: PeopleAlt,
 	create: AuthorCreate,
 	edit: AuthorEdit,
 	list: AuthorList,

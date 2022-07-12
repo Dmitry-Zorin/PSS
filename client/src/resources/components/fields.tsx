@@ -5,6 +5,7 @@ import {
 	SingleFieldList,
 	TextField,
 	useRecordContext,
+	useTranslate,
 } from 'react-admin'
 
 export const ChipArrayField = ({ fieldSource = 'value', ...props }) => (
@@ -16,6 +17,7 @@ export const ChipArrayField = ({ fieldSource = 'value', ...props }) => (
 )
 
 export const DownloadFileField = () => {
+	const translate = useTranslate()
 	const record = useRecordContext()
 
 	return record.file ? (
@@ -25,7 +27,7 @@ export const DownloadFileField = () => {
 			href={record.file.url}
 			target="_blank"
 		>
-			Download
+			{translate('actions.download')}
 		</Button>
 	) : null
 }

@@ -16,7 +16,7 @@ const SubMenu = ({ name, children }: SubMenuProps) => {
 
 	return (
 		<>
-			<Divider sx={{ mx: 2, my: 1 }} />
+			{/* <Divider sx={{ mx: 2, my: 1 }} /> */}
 			<SubMenuItem
 				text={name}
 				open={isOpen}
@@ -24,7 +24,7 @@ const SubMenu = ({ name, children }: SubMenuProps) => {
 			/>
 			<animated.div
 				style={useSpring({
-					paddingLeft: isSidebarOpen ? 40 : 0,
+					paddingLeft: isSidebarOpen ? 44 : 0,
 					config: gentleConfig,
 				})}
 			>

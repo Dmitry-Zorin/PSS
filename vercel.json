@@ -23,7 +23,7 @@
 				},
 				{
 					"key": "Content-Security-Policy",
-					"value": "default-src 'self' react-admin-telemetry.marmelab.com"
+					"value": "default-src 'self' react-admin-telemetry.marmelab.com; style-src 'self' 'unsafe-inline'"
 				}
 			]
 		}

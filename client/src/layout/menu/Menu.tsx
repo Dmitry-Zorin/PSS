@@ -17,16 +17,18 @@ const Menu = () => {
 	}
 
 	return (
-		<List disablePadding>
-			<MenuItem to="/about" icon={<Info />} text="pages.about" />
+		<List disablePadding sx={{ pt: 1, pl: 1 }}>
+			<MenuItem to="/about" icon={<Info />} text="pages.about.name" />
 			{getMenuItems(resources.main)}
 			<CountContextProvider>
-				<SubMenu name="menu.publications">
+				<SubMenu name="menu.groups.publications">
 					{getMenuItems(resources.publications)}
 				</SubMenu>
 			</CountContextProvider>
 			{permissions?.isAdmin && (
-				<SubMenu name="menu.admin">{getMenuItems(resources.admin)}</SubMenu>
+				<SubMenu name="menu.groups.admin">
+					{getMenuItems(resources.admin)}
+				</SubMenu>
 			)}
 		</List>
 	)

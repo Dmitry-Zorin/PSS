@@ -1,17 +1,42 @@
-import { Toolbar } from '@mui/material'
+import { Box, Breadcrumbs, Toolbar, Typography } from '@mui/material'
 import { Admin } from 'components'
-import { CreateButton, EditButton, FilterButton, ListButton } from 'react-admin'
+import {
+	CreateButton,
+	EditButton,
+	FilterButton,
+	ListButton,
+	useRecordContext,
+	useTranslate,
+} from 'react-admin'
 
-export const CreateActions = () => (
-	<Toolbar>
-		<ListButton sx={{ mr: 'auto' }} />
-	</Toolbar>
-)
+const ActionBreadcrumbs = ({ action }: { action: 'create' | 'edit' }) => {
+	const translate = useTranslate()
+	const record = useRecordContext()
+
+	return (
+		<Toolbar>
+			<Breadcrumbs sx={{ flexGrow: 1 }}>
+				<Typography color="text.secondary">
+					{translate(`resources.${record?.resource}.name`, { smart_count: 1 })}
+				</Typography>
+				<Typography color="text.primary">
+					{translate(`ra.action.${action}`)}
+				</Typography>
+			</Breadcrumbs>
+		</Toolbar>
+	)
+}
+
+export const CreateActions = () => <ActionBreadcrumbs action="create" />
 
 export const EditActions = () => (
-	<Toolbar>
-		<ListButton sx={{ mr: 'auto' }} />
-	</Toolbar>
+	<>
+		<ActionBreadcrumbs action="edit" />
+		<Toolbar>
+			<ListButton />
+			<Box flexGrow={1} />
+		</Toolbar>
+	</>
 )
 
 export const ListActions = () => (
@@ -25,7 +50,8 @@ export const ListActions = () => (
 
 export const ShowActions = () => (
 	<Toolbar>
-		<ListButton sx={{ mr: 'auto' }} />
+		<ListButton />
+		<Box flexGrow={1} />
 		<Admin>
 			<EditButton />
 		</Admin>

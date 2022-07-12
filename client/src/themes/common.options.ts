@@ -1,11 +1,10 @@
 import { Shadows } from '@mui/material/styles/shadows'
+import 'assets/fonts/Golos-Text/variable.css'
 import { range } from 'lodash'
 import { RaThemeOptions } from 'react-admin'
 import mixins from './mixins'
 
-const hStyles = {
-	fontFamily: 'Alumni Sans',
-	lineHeight: 1,
+const hStyle = {
 	fontWeight: 700,
 }
 
@@ -13,70 +12,41 @@ const commonOptions: RaThemeOptions = {
 	mixins,
 	shadows: range(25).map(() => 'none') as Shadows,
 	shape: {
-		borderRadius: 4,
+		borderRadius: 10,
 	},
 	typography: {
-		fontFamily: 'Mulish',
-		fontSize: 15,
-		h1: hStyles,
-		h2: hStyles,
-		h3: hStyles,
-		h4: hStyles,
-		h5: hStyles,
-		h6: hStyles,
-		body2: {
-			fontSize: '1rem',
+		fontFamily: 'Golos Text, sans-serif',
+		fontSize: 16,
+		fontWeightRegular: 425,
+		h1: hStyle,
+		h2: hStyle,
+		h3: {
+			...hStyle,
+			fontSize: '3rem',
 		},
+		h4: hStyle,
+		h5: hStyle,
+		h6: hStyle,
 	},
 	components: {
-		MuiCard: {
+		MuiPaper: {
 			styleOverrides: {
 				root: ({ theme }) => ({
-					border: '1px solid',
-					borderColor: theme.palette.border,
+					background: 'none',
+					backgroundColor: theme.palette.background.paper,
 				}),
 			},
 		},
-		MuiCardContent: {
+		MuiCard: {
 			styleOverrides: {
-				root: {
-					// padding: '8px 16px',
-				},
-			},
-		},
-		MuiTypography: {
-			styleOverrides: {
-				root: ({ ownerState, theme }) => ({
-					...(ownerState.variant === 'body1' &&
-						{
-							// fontSize: '1.2rem',
-						}),
-					...(ownerState.variant?.startsWith('h') && {
-						color: theme.palette.text.secondary,
-					}),
-					...(ownerState.component === 'h1' && {
-						background: `-webkit-linear-gradient(60deg, ${theme.palette.gradient.start}, ${theme.palette.gradient.end})`,
-						WebkitBackgroundClip: 'text',
-						WebkitTextFillColor: 'transparent',
-					}),
+				root: ({ theme }) => ({
+					background: theme.palette.background.card,
 				}),
 			},
 		},
 		MuiButtonBase: {
 			defaultProps: {
 				disableRipple: true,
-			},
-			styleOverrides: {
-				root: {
-					// fontSize: '1rem',
-				},
-			},
-		},
-		MuiInputBase: {
-			styleOverrides: {
-				root: {
-					// fontSize: '1rem',
-				},
 			},
 		},
 		MuiSvgIcon: {
@@ -111,9 +81,9 @@ const commonOptions: RaThemeOptions = {
 				head: ({ theme }) => ({
 					borderColor: theme.palette.divider,
 				}),
-				body: {
-					borderColor: 'transparent',
-				},
+				body: ({ theme }) => ({
+					borderColor: theme.palette.divider,
+				}),
 			},
 		},
 		MuiIconButton: {
@@ -126,36 +96,17 @@ const commonOptions: RaThemeOptions = {
 				},
 			},
 		},
-		MuiChip: {
-			styleOverrides: {
-				root: ({ theme }) => ({
-					// transition: 'none',
-				}),
-			},
-		},
-		MuiButton: {
-			styleOverrides: {
-				root: {
-					fontWeight: 600,
-					// transition: 'none',
-				},
-			},
-		},
-		MuiMenu: {
-			styleOverrides: {
-				list: ({ theme }) => ({}),
-			},
-		},
 		MuiTooltip: {
 			styleOverrides: {
-				tooltip: ({ theme }) => ({
+				tooltip: {
 					fontSize: '0.75rem',
-				}),
+				},
 			},
 		},
 		MuiToolbar: {
 			styleOverrides: {
 				root: {
+					padding: '0px 16px',
 					'&.RaToolbar-desktopToolbar': {
 						background: 'transparent',
 					},

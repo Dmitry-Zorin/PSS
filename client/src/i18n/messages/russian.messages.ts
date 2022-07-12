@@ -5,27 +5,35 @@ const russianMessages: TranslationMessages = {
 	...defaultRussianMessages,
 	metadata: {
 		title: 'Системa хранения публикаций',
+		description:
+			'\
+		Данный проект является демонстрацией того, как может выглядесть система для хранения научных публикаций.\
+		События. В этом разделе можно увидеть все недавно добавленные публикации в их хронологическом порядке. \
+		Авторы. Здесь можно найти информацию об авторах, а также скачать список всех публикаций конкретного автора в .docx формате. \
+			',
 	},
-	pages: {
-		about: 'О системе',
+	actions: {
+		download: 'Скачать',
 	},
 	menu: {
-		publications: 'Публикации',
-		admin: 'Администрирование',
+		groups: {
+			publications: 'Публикации',
+			admin: 'Администрирование',
+		},
 	},
 	fields: {
 		title: 'Название',
 		description: 'Описание',
 		type: 'Тип работы',
 		year: 'Год создания',
-		volume: 'Объем',
+		volume: 'Объем (страницы)',
 		authors: 'Авторы',
 		coauthors: 'Соавторы',
 		coauthor: 'Соавтор',
 		character: 'Характер работы',
 		outputData: 'Выходные данные',
 		file: 'Файл',
-		search: 'Поиск по названию',
+		search: 'Поиск',
 		name: 'Название',
 		firstName: 'Имя',
 		lastName: 'Фамилия',
@@ -35,9 +43,6 @@ const russianMessages: TranslationMessages = {
 	resources: {
 		timeline: {
 			name: 'События',
-		},
-		'create-publication-list': {
-			name: 'Cоздать список публикаций',
 		},
 		articles: {
 			name: 'Статья |||| Статьи',
@@ -69,6 +74,14 @@ const russianMessages: TranslationMessages = {
 		characters: {
 			name: 'Характер работы |||| Характеры работы',
 		},
+	},
+	pages: {
+		about: {
+			name: 'О системе',
+		},
+	},
+	publicationList: {
+		name: 'Список публикаций',
 	},
 }
 

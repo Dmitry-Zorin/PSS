@@ -1,15 +1,16 @@
-import { Box, Card, Typography } from '@mui/material'
+import { Box, Card, Divider, Stack, Typography } from '@mui/material'
 import { ReactElement } from 'react'
 import {
 	SimpleForm,
-	SimpleShowLayout,
 	TextField,
 	TextInput,
 	useRecordContext,
 	useTranslate,
 } from 'react-admin'
 import { Create, Edit, LargeTextInput, List, Show } from 'resources/components'
+import DownloadPublicationListButton from './DownloadPublicationListButton'
 import ListUI from './ListUI'
+import { Author } from './types'
 
 export const AuthorCreate = () => (
 	<Create>
@@ -50,14 +51,29 @@ export const AuthorList = () => (
 	</List>
 )
 
+export function getAuthorName(author: Author) {
+	return `${author.firstName} ${author.lastName}`
+}
+
+export function getAuthorFullName(author: Author) {
+	const { firstName, middleName, lastName } = author
+	const isEnglishName = /\w/.test(firstName)
+	const fullEnglishName = `${firstName} ${middleName} ${lastName}`
+	const fullRussianName = `${lastName} ${firstName} ${middleName}`
+
+	return middleName
+		? isEnglishName
+			? fullEnglishName
+			: fullRussianName
+		: getAuthorName(author)
+}
+
 const NameField = () => {
-	const { firstName, middleName, lastName } = useRecordContext()
+	const author = useRecordContext<Author>()
 
 	return (
-		<Typography variant="h5" align="center" mb={3}>
-			{middleName
-				? `${lastName} ${firstName} ${middleName}`
-				: `${firstName} ${lastName}`}
+		<Typography variant="h4" align="center">
+			{getAuthorFullName(author)}
 		</Typography>
 	)
 }
@@ -72,30 +88,36 @@ const LabeledCard = ({
 	const translate = useTranslate()
 
 	return (
-		<Card sx={{ p: 2 }}>
-			<Typography variant="body2" color="text.secondary" align="center" mb={1}>
+		<div>
+			<Typography variant="body2" color="text.secondary" mb={1}>
 				{translate(label || children.props.label)}
 			</Typography>
 			<Box
 				sx={{
 					'*': {
-						fontSize: '1.2rem !important',
+						fontSize: '1.1rem !important',
 					},
 				}}
 			>
 				{children}
 			</Box>
-		</Card>
+		</div>
 	)
 }
 
 export const AuthorShow = () => (
 	<Show>
-		<SimpleShowLayout>
-			<NameField />
-			<LabeledCard>
-				<TextField source="info" label="fields.info" emptyText="-" />
-			</LabeledCard>
-		</SimpleShowLayout>
+		<Card sx={{ px: 3, py: 5 }}>
+			<Stack spacing={5}>
+				<NameField />
+				<Divider />
+				<LabeledCard>
+					<TextField source="info" label="fields.info" emptyText="-" />
+				</LabeledCard>
+				<Box display="flex" justifyContent="center" pt={5}>
+					<DownloadPublicationListButton />
+				</Box>
+			</Stack>
+		</Card>
 	</Show>
 )

@@ -39,17 +39,12 @@ declare module '@mui/material/styles' {
 	interface Theme extends ThemeOptionsExtended {}
 	interface PaletteOptions {
 		neutral: SimplePaletteColorOptions
-		gradient: {
-			start: string
-			end: string
-		}
 		border: string
 	}
 	interface Palette extends PaletteOptions {
 		neutral: PaletteColor
 	}
 	interface TypeBackground {
-		sidebar: string
-		header: string
+		card: string
 	}
 }

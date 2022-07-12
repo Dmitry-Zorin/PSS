@@ -1,13 +1,14 @@
 import { Visibility } from '@mui/icons-material'
 import {
 	Avatar,
-	Box,
 	Button,
 	Card,
 	CardActionArea,
 	CardContent,
 	CardHeader,
 	Fade,
+	List,
+	ListItem,
 	Pagination,
 	Typography,
 } from '@mui/material'
@@ -31,7 +32,7 @@ interface ResourceItem {
 	description: string
 }
 
-const ListCard = ({ record }: { record: ResourceItem }) => {
+const ListItemCard = ({ record }: { record: ResourceItem }) => {
 	const translate = useTranslate()
 	const [locale] = useLocaleState()
 	const resource = record.resource
@@ -39,7 +40,7 @@ const ListCard = ({ record }: { record: ResourceItem }) => {
 	const [showViewButton, setShowViewButton] = useState(false)
 
 	return (
-		<Card sx={{ mt: 3 }}>
+		<Card sx={{ width: 1 }}>
 			<CardActionArea
 				component={Link}
 				to={`/${resource}/${record.id}/show`}
@@ -48,7 +49,13 @@ const ListCard = ({ record }: { record: ResourceItem }) => {
 			>
 				<CardHeader
 					avatar={
-						<Avatar sx={{ bgcolor: 'primary.main' }}>
+						<Avatar
+							variant="rounded"
+							sx={{
+								// color: 'common.white',
+								bgcolor: 'primary.main',
+							}}
+						>
 							{createElement(resources[resource].icon)}
 						</Avatar>
 					}
@@ -59,14 +66,14 @@ const ListCard = ({ record }: { record: ResourceItem }) => {
 						year: 'numeric',
 					})}
 					action={
-						<Fade in={showViewButton}>
+						<Fade in={showViewButton} timeout={300}>
 							<Button startIcon={<Visibility />} disabled>
 								{translate('ra.action.show')}
 							</Button>
 						</Fade>
 					}
 				/>
-				<CardContent>
+				<CardContent sx={{ pt: 0 }}>
 					<Typography>{record.title}</Typography>
 				</CardContent>
 			</CardActionArea>
@@ -79,12 +86,25 @@ const TimelineList = () => {
 	const translate = useTranslate()
 
 	return (
-		<Box sx={{ pt: 3 }}>
+		<>
 			{total ? (
 				<>
-					{data.map((e) => (
-						<ListCard key={e.id} record={e} />
-					))}
+					<List disablePadding sx={{ pt: 2 }}>
+						{data.map((e) => (
+							<ListItem
+								key={e.id}
+								disablePadding
+								sx={{
+									py: {
+										sm: 1,
+										md: 1.5,
+									},
+								}}
+							>
+								<ListItemCard record={e} />
+							</ListItem>
+						))}
+					</List>
 					{total > perPage && (
 						<Pagination
 							variant="outlined"
@@ -92,7 +112,7 @@ const TimelineList = () => {
 							page={page}
 							count={Math.ceil(total / perPage)}
 							sx={{
-								mt: 6,
+								mt: 4,
 								ul: {
 									justifyContent: 'center',
 								},
@@ -104,7 +124,7 @@ const TimelineList = () => {
 			) : (
 				<Typography>{translate('ra.navigation.no_results')}</Typography>
 			)}
-		</Box>
+		</>
 	)
 }
 
