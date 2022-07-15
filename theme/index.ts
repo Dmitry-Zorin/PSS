@@ -9,23 +9,20 @@ const themeOverride: ThemeOverride = {
 	config: {
 		initialColorMode: 'system',
 		useSystemColorMode: false,
+		disableTransitionOnChange: true,
 	},
 	fonts: {
 		body: 'Golos Text, sans-serif',
 		heading: 'Golos Text, sans-serif',
-	},
-	fontWeights: {
-		normal: 425,
 	},
 	styles: {
 		global: (props) => ({
 			body: {
 				fontFamily: 'body',
 				fontSize: 'lg',
-				letterSpacing: 'tight',
-				wordSpacing: '0.075em',
+				wordSpacing: '0.05em',
 				fontWeight: 'normal',
-				color: mode('gray.700', 'white')(props),
+				color: mode('black', 'white')(props),
 				bg: mode('white', 'gray.800')(props),
 				border: mode('whiteAlpha.200', 'blackAlpha.200')(props),
 			},
@@ -43,7 +40,9 @@ const themeOverride: ThemeOverride = {
 			// },
 		},
 	},
-	components: {},
+	components: {
+		Heading: {},
+	},
 }
 
 export default extendTheme(

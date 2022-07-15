@@ -4,7 +4,6 @@ import { ColorModeSwitch, CoolButtonLink } from 'components'
 import type { NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import Head from 'next/head'
 
 export async function getStaticProps({ locale }: { locale: string }) {
 	return {
@@ -24,7 +23,7 @@ const Home: NextPage = () => {
 				as="h1"
 				fontSize={{
 					base: '5xl',
-					lg: '6xl',
+					md: '6xl',
 					xl: '7xl',
 				}}
 				lineHeight="base"
@@ -48,7 +47,7 @@ const Home: NextPage = () => {
 				</CoolButtonLink>
 			</div>
 			<div>
-				<Text fontSize="md" color="text.secondary" maxW="sm" m="auto">
+				<Text color="text.secondary" maxW="md" m="auto">
 					{t('description', { ns: 'common' })}
 				</Text>
 			</div>
@@ -64,18 +63,11 @@ const Home: NextPage = () => {
 	)
 
 	return (
-		<>
-			<Head>
-				<title>{t('name', { ns: 'common' })}</title>
-				<meta name="description" content={t('description', { ns: 'common' })} />
-				<link rel="icon" href="/favicon.ico" />
-			</Head>
-			<Stack minH="100vh" spacing={6} textAlign="center">
-				{header}
-				{content}
-				{footer}
-			</Stack>
-		</>
+		<Stack minH="100vh" spacing={6} textAlign="center">
+			{header}
+			{content}
+			{footer}
+		</Stack>
 	)
 }
 
