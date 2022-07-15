@@ -25,17 +25,25 @@ export default function About() {
 		<>
 			<MainArea title={t('title')}>
 				<Typography variant="body1">{t('description')}</Typography>
-				{/* {(
+				{(
 					t('paragraphs', { returnObjects: true }) as {
 						title: string
 						text: string
 					}[]
 				).map(({ title, text }) => (
 					<Fragment key={title}>
-						<Typography variant="subtitle1">{title}</Typography>
+						<Typography
+							component="h2"
+							variant="h3"
+							color="text.secondary"
+							pt={5}
+							pb={1}
+						>
+							{title}
+						</Typography>
 						<Typography>{text}</Typography>
 					</Fragment>
-				))} */}
+				))}
 			</MainArea>
 		</>
 	)

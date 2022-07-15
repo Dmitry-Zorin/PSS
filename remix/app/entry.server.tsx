@@ -7,7 +7,7 @@ import { createInstance } from 'i18next'
 import Backend from 'i18next-fs-backend'
 import { resolve } from 'node:path'
 import { renderToString } from 'react-dom/server'
-import { I18nextProvider, initReactI18next } from 'react-i18next'
+import { initReactI18next } from 'react-i18next'
 import themes from '~/themes'
 import createEmotionCache from './createEmotionCache'
 import i18nextOptions from './i18next.options'
@@ -19,17 +19,13 @@ export default async function handleRequest(
 	headers: Headers,
 	context: EntryContext,
 ) {
-	const instance = createInstance()
-	const lng = await i18next.getLocale(request)
-	const ns = i18next.getRouteNamespaces(context)
-
-	await instance
+	await createInstance()
 		.use(initReactI18next)
 		.use(Backend)
 		.init({
 			...i18nextOptions,
-			lng,
-			ns,
+			lng: await i18next.getLocale(request),
+			ns: i18next.getRouteNamespaces(context),
 			backend: {
 				loadPath: resolve('public/locales/{{lng}}/{{ns}}.json'),
 			},

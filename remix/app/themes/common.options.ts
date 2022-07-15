@@ -15,15 +15,18 @@ const commonOptions: ThemeOptions = {
 		fontFamily: 'Golos Text, sans-serif',
 		fontSize: 16,
 		fontWeightRegular: 425,
-		h1: hStyle,
-		h2: hStyle,
-		h3: {
-			...hStyle,
+		h1: {
 			fontSize: '3rem',
+			fontWeight: 700,
 		},
-		h4: hStyle,
-		h5: hStyle,
-		h6: hStyle,
+		h2: {
+			fontSize: '2rem',
+			fontWeight: 650,
+		},
+		h3: {
+			fontSize: '1.5rem',
+			fontWeight: 650,
+		},
 		body1: {
 			letterSpacing: -0.3,
 			wordSpacing: 1,

@@ -29,9 +29,9 @@ import globalStyles from '~/styles/global.css'
 import themes from '~/themes'
 import { i18next } from './lib/i18n.server'
 
-export const handle = {
-	i18n: ['common', 'resources', 'about'],
-}
+// export const handle = {
+// 	i18n: 'common',
+// }
 
 export const meta: MetaFunction = ({ data }) => ({
 	title: data.title,
@@ -78,17 +78,13 @@ const Document = withEmotionCache(
 			useChangeLanguage(locale)
 		}
 
-		// Only executed on client
 		useEnhancedEffect(() => {
-			// re-link sheet container
 			emotionCache.sheet.container = document.head
-			// re-inject tags
 			const tags = emotionCache.sheet.tags
 			emotionCache.sheet.flush()
 			tags.forEach((tag) => {
 				;(emotionCache.sheet as any)._insertTag(tag)
 			})
-			// reset cache to reapply global styles
 			clientStyleData.reset()
 		}, [])
 
@@ -109,8 +105,6 @@ const Document = withEmotionCache(
 	},
 )
 
-// https://remix.run/api/conventions#default-export
-// https://remix.run/api/conventions#route-filenames
 export default function App() {
 	return (
 		<Document>
@@ -121,7 +115,6 @@ export default function App() {
 	)
 }
 
-// https://remix.run/docs/en/v1/api/conventions#errorboundary
 export function ErrorBoundary({
 	error,
 }: ComponentProps<ErrorBoundaryComponent>) {
@@ -139,7 +132,6 @@ export function ErrorBoundary({
 	)
 }
 
-// https://remix.run/docs/en/v1/api/conventions#catchboundary
 export function CatchBoundary() {
 	const caught = useCatch()
 
@@ -162,8 +154,7 @@ export function CatchBoundary() {
 			break
 
 		default:
-			// throw new Error(caught.data || caught.statusText)
-			message = <Typography>{caught.data || caught.statusText}</Typography>
+			throw new Error(caught.data || caught.statusText)
 	}
 
 	return (

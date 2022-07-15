@@ -16,7 +16,6 @@ const SubMenu = ({ name, children }: SubMenuProps) => {
 
 	return (
 		<>
-			{/* <Divider sx={{ mx: 2, my: 1 }} /> */}
 			<SubMenuItem
 				text={name}
 				open={isOpen}

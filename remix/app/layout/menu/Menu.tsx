@@ -1,26 +1,27 @@
-import { Info } from '@mui/icons-material'
+import { Info, Timeline } from '@mui/icons-material'
 import { List } from '@mui/material'
 // import type { Permissions } from '~/auth.provider'
-// import resources from '~/resources'
-import { MenuItem } from '~/layout'
+import { MenuItem, SubMenu } from '~/layout'
+import resources from '~/resources'
 
 const Menu = () => {
 	// const { permissions } = usePermissions<Permissions>()
 
-	// const getMenuItems = (resources: Record<string, unknown>) => {
-	// 	return Object.keys(resources).map((e) => (
-	// 		<ResourceMenuItem key={e} name={kebabCase(e)} />
-	// 	))
-	// }
+	const getMenuItems = (resources: Record<string, any>) => {
+		return Object.keys(resources).map((e) => (
+			<MenuItem to={`/${e}`} icon={resources[e].icon} text={e} />
+		))
+	}
 
 	return (
 		<List disablePadding sx={{ pt: 1, pl: 1 }}>
 			<MenuItem to="/about" icon={<Info />} text="about" />
-			{/* {getMenuItems(resources.main)}
+			<MenuItem to="/timeline" icon={<Timeline />} text="timeline" />
+			{getMenuItems(resources.main)}
 			<SubMenu name="menu.groups.publications">
 				{getMenuItems(resources.publications)}
 			</SubMenu>
-			{permissions?.isAdmin && (
+			{/* {permissions?.isAdmin && (
 				<SubMenu name="menu.groups.admin">
 					{getMenuItems(resources.admin)}
 				</SubMenu>

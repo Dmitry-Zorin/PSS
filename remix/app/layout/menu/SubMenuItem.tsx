@@ -9,7 +9,12 @@ import {
 } from '@mui/material'
 import { animated, useSpring } from '@react-spring/web'
 import type { ReactNode } from 'react'
+import { useTranslation } from 'react-i18next'
 import { gentleConfig } from '~/components'
+
+export const handle = {
+	i18n: 'publications',
+}
 
 const AnimatedAccordionIcon = animated(ExpandMore)
 
@@ -21,11 +26,11 @@ interface SubMenuItemProps extends ListItemButtonProps {
 }
 
 const SubMenuItem = ({ children, text, open, ...props }: SubMenuItemProps) => {
-	// const translate = useTranslate()
+	const { t } = useTranslation('resources')
 	// const [isSidebarOpen] = useSidebarState()
 	const isSidebarOpen = true
 
-	// text = translate(text, { smart_count: 2 }).toUpperCase()
+	text = t(`${text}.name`, { count: 2 }).toUpperCase()
 
 	return (
 		<ListItem disablePadding sx={{ pt: 1 }}>

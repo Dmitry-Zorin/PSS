@@ -5,8 +5,8 @@
 		"target": "ESNext",
 		"module": "ESNext",
 		"moduleResolution": "node",
-		"baseUrl": ".",
 		"jsx": "react-jsx",
+		"baseUrl": ".",
 		"paths": {
 			"~/*": ["app/*"]
 		},

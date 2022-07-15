@@ -1,0 +1,12 @@
+{
+	"title": "Publication Storage System",
+	"menu": {
+		"groups": {
+			"publications": "Publications",
+			"admin": "Administration"
+		}
+	},
+	"actions": {
+		"download": "Download"
+	}
+}

@@ -7,12 +7,12 @@ import {
 	Tooltip,
 	useMediaQuery,
 } from '@mui/material'
-import { Link } from '@remix-run/react'
+import { Link, useMatches } from '@remix-run/react'
 import type { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 
 export const handle = {
-	i18n: 'resources',
+	i18n: ['resources', 'pages'],
 }
 
 export interface MenuItemProps extends ListItemButtonProps {
@@ -30,14 +30,15 @@ const MenuItem = ({
 	sx,
 	...props
 }: MenuItemProps) => {
-	const { t } = useTranslation('resources')
+	const { t } = useTranslation(['resources', 'pages'])
 	// const [isSidebarOpen, setSidebarOpen] = useSidebarState()
 	const isSidebarOpen = true
-	// const isActive = useMatches(`${to}/*`)
-	const isActive = false
+	const isActive = to === useMatches()[1].pathname
 	const isSmall = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'))
 
-	text = t(`${text}.name`)
+	text = t(`resources:${text}.name`, {
+		defaultValue: t(`pages:${text}`),
+	})
 
 	return (
 		<li>
