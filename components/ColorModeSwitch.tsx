@@ -10,8 +10,7 @@ export default function ColorModeSwitch() {
 			variant="ghost"
 			icon={<ColorModeSwitchIcon showMoon={colorMode === 'light'} />}
 			onClick={toggleColorMode}
-			_hover={{}}
-			_active={{}}
+			bg="transparent !important"
 		/>
 	)
 }

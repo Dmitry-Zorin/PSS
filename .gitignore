@@ -11,10 +11,6 @@
 # production
 /build
 
-# misc
-.vscode
-.DS_Store
-
 # debug
 npm-debug.log*
 
@@ -26,3 +22,7 @@ npm-debug.log*
 
 # typescript
 *.tsbuildinfo
+
+# misc
+.vscode
+.DS_Store

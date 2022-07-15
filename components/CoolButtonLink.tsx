@@ -9,16 +9,16 @@ export default function CoolButtonLink({ to, ...props }: CoolButtonLinkProps) {
 	return (
 		<Link href={to}>
 			<Button
-				fontSize="lg"
-				fontWeight={500}
-				px={9}
-				py={7}
+				fontSize="xl"
+				fontWeight="normal"
 				color="white"
 				rounded="full"
 				bgGradient="linear(50deg, blue.500, purple.400)"
 				_hover={{
 					bgGradient: 'linear(50deg, blue.600, purple.500)',
 				}}
+				px={9}
+				py={7}
 				{...props}
 			/>
 		</Link>

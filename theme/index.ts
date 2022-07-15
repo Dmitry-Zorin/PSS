@@ -40,9 +40,7 @@ const themeOverride: ThemeOverride = {
 			// },
 		},
 	},
-	components: {
-		Heading: {},
-	},
+	components: {},
 }
 
 export default extendTheme(

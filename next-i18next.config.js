@@ -1,6 +1,8 @@
-module.exports = {
+const i18nextConfig = {
 	i18n: {
-		defaultLocale: 'en',
 		locales: ['en', 'ru'],
+		defaultLocale: 'en',
 	},
 }
+
+module.exports = i18nextConfig
