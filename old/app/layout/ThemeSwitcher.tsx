@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 import { useTheme } from 'react-admin'
 import { Helmet } from 'react-helmet'
 import { saveSettings } from '~/requests'
-import { DarkModeSwitch } from '~/layout'
+import { DarkModeSwitch } from 'layout'
 import type { ThemeOptionsExtended } from '~/themes'
 import themes from '~/themes'
 

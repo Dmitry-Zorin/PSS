@@ -1,61 +1,16 @@
 import { ArrowRightIcon } from '@chakra-ui/icons'
-import {
-	Box,
-	Button,
-	ButtonProps,
-	Heading,
-	HStack,
-	Stack,
-	Text,
-} from '@chakra-ui/react'
-import { motion } from 'framer-motion'
+import { Heading, HStack, Stack, Text } from '@chakra-ui/react'
+import { ColorModeSwitch, CoolButtonLink } from 'components'
 import type { NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
-import Link from 'next/link'
-import ColorModeSwitch from '~/components/ColorModeSwitch'
 
 export async function getStaticProps({ locale }: { locale: string }) {
 	return {
 		props: await serverSideTranslations(locale, ['index', 'common']),
 	}
 }
-
-interface CoolButtonLinkProps extends ButtonProps {
-	to: string
-}
-
-const CoolButtonLink = ({ to, ...props }: CoolButtonLinkProps) => (
-	<Link href={to}>
-		<Box
-			as={motion.div}
-			display="inline-block"
-			borderRadius="full"
-			whileHover={{
-				scale: 1.05,
-				transition: {
-					type: 'spring',
-					stiffness: 300,
-					damping: 30,
-				},
-			}}
-		>
-			<Button
-				fontSize="lg"
-				fontWeight={500}
-				px={9}
-				py={7}
-				color="white"
-				rounded="full"
-				bgGradient="linear(50deg, blue.500, purple.400)"
-				_hover={{}}
-				_active={{}}
-				{...props}
-			/>
-		</Box>
-	</Link>
-)
 
 const Home: NextPage = () => {
 	const { t } = useTranslation(['index', 'common'])

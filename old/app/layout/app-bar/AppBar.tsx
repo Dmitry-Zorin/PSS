@@ -6,7 +6,7 @@ import {
 	MenuButton,
 	SettingsDial,
 	ThemeSwitcher,
-} from '~/layout'
+} from 'layout'
 
 const AppBar = () => (
 	<MuiAppBar

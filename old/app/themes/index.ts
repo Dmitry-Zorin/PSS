@@ -6,7 +6,7 @@ import type {
 	TypeBackground,
 	TypeText,
 } from '@mui/material'
-import type { ThemeMode } from '~/user'
+import type { ThemeMode } from 'user'
 import commonOptions from './common.options'
 import darkOptions from './dark.options'
 import lightOptions from './light.options'

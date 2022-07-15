@@ -4,7 +4,7 @@ import type { Permissions } from '~/auth.provider'
 import { kebabCase } from 'lodash'
 import { usePermissions } from 'react-admin'
 import resources from '~/resources'
-import { MenuItem, ResourceMenuItem, SubMenu } from '~/layout'
+import { MenuItem, ResourceMenuItem, SubMenu } from 'layout'
 
 const Menu = () => {
 	const { permissions } = usePermissions<Permissions>()

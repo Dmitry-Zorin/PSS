@@ -4,7 +4,7 @@ import { config, Spring } from '@react-spring/web'
 import type { ReactNode } from 'react'
 import { useSidebarState } from 'react-admin'
 import { AnimatedBox, Drawer, gentleConfig, Slide } from '~/components'
-import { SidebarFooter } from '~/layout'
+import { SidebarFooter } from 'layout'
 
 const SIDEBAR_WIDTH = 290
 const SIDEBAR_CLOSED_WIDTH = 68

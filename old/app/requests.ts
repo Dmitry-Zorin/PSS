@@ -2,7 +2,7 @@ import { getAuthToken } from '~/auth.provider'
 import { isString, mapValues, reduce } from 'lodash'
 import type { Options } from 'react-admin'
 import { fetchUtils } from 'react-admin'
-import type { Settings } from '~/user'
+import type { Settings } from 'user'
 
 export const apiUrl = `${''}/api`
 

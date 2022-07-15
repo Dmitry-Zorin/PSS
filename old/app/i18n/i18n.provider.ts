@@ -1,6 +1,6 @@
 import polyglotI18nProvider from 'ra-i18n-polyglot'
 // import { resolveBrowserLocale } from 'react-admin'
-import type { Locale } from '~/user'
+import type { Locale } from 'user'
 import messages from './messages'
 
 const i18nProvider = polyglotI18nProvider(

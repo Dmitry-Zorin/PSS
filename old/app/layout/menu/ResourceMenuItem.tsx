@@ -1,5 +1,5 @@
 import { useResourceDefinitions } from 'react-admin'
-import { MenuItem } from '~/layout'
+import { MenuItem } from 'layout'
 import type { MenuItemProps } from './MenuItem'
 
 interface ResourceMenuItemProps extends Partial<MenuItemProps> {

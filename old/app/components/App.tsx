@@ -1,6 +1,6 @@
 import type { Permissions } from '~/auth.provider'
 import authProvider from '~/auth.provider'
-import { Layout } from '~/layout'
+import { Layout } from 'layout'
 import dataProvider from '~/data.provider'
 import i18nProvider from '~/i18n/i18n.provider'
 import { entries } from 'lodash'

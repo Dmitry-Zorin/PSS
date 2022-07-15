@@ -1,7 +1,7 @@
 import { Box, CssBaseline } from '@mui/material'
 import Color from 'color'
 import type { ReactNode } from 'react'
-import { AppBar, Menu, ScrollTopButton, Sidebar } from '~/layout'
+import { AppBar, Menu, ScrollTopButton, Sidebar } from 'layout'
 
 const Layout = ({ children }: { children?: ReactNode }) => (
 	<>

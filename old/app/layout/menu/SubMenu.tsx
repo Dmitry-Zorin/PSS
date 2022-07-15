@@ -4,7 +4,7 @@ import type { ReactElement } from 'react'
 import { useState } from 'react'
 import { useSidebarState } from 'react-admin'
 import { Collapse, gentleConfig } from '~/components'
-import { SubMenuItem } from '~/layout'
+import { SubMenuItem } from 'layout'
 
 interface SubMenuProps {
 	name: string

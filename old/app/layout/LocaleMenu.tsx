@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { useLocaleState } from 'react-admin'
 import { Helmet } from 'react-helmet'
 import { saveSettings } from '~/requests'
-import type { Locale } from '~/user'
+import type { Locale } from 'user'
 
 const LocaleMenu = () => {
 	const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
