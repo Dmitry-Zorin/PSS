@@ -1,6 +1,5 @@
 {
 	"$schema": "https://openapi.vercel.sh/vercel.json",
-	"rewrites": [{ "source": "/api/(.*)", "destination": "/api/index" }],
 	"headers": [
 		{
 			"source": "/(.*)",
@@ -23,7 +22,7 @@
 				},
 				{
 					"key": "Content-Security-Policy",
-					"value": "default-src 'self' react-admin-telemetry.marmelab.com"
+					"value": "default-src 'self'"
 				}
 			]
 		}
