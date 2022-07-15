@@ -1,10 +1,18 @@
-import { Link, Text } from '@chakra-ui/react'
+import { Link, Text, TextProps } from '@chakra-ui/react'
 import NextLink from 'next/link'
 
-const Logo = () => (
+const Logo = (props: TextProps) => (
 	<NextLink href="/" passHref>
 		<Link _hover={{ textDecoration: 'none' }}>
-			<Text as="span" fontSize="2xl" fontWeight={700} color="pink.500" px={2}>
+			<Text
+				as="span"
+				fontSize="2xl"
+				fontWeight="bold"
+				color="primary"
+				px={2}
+				py={1}
+				{...props}
+			>
 				PSS
 			</Text>
 		</Link>

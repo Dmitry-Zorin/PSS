@@ -1,5 +1,7 @@
 {
-	"title": "Publication Storage System",
+	"name": "Publication Storage System",
+	"description": "This is a demo project showing what a storage system for scientific publications may look like",
+	"author": "Dmitry Zorin",
 	"menu": {
 		"groups": {
 			"publications": "Publications",

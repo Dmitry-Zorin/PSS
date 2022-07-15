@@ -8,8 +8,10 @@ export default function ColorModeSwitch() {
 		<IconButton
 			aria-label="Toggle Color Mode"
 			variant="ghost"
-			onClick={toggleColorMode}
 			icon={<ColorModeSwitchIcon showMoon={colorMode === 'light'} />}
+			onClick={toggleColorMode}
+			_hover={{}}
+			_active={{}}
 		/>
 	)
 }
