@@ -1,4 +1,5 @@
-import { motion, SVGMotionProps, Transition } from 'framer-motion'
+import { motion, SVGMotionProps } from 'framer-motion'
+import { gentleSpringConfig } from 'utils'
 
 interface ColorModeSwitchIconProps extends SVGMotionProps<SVGElement> {
 	showMoon: boolean
@@ -8,10 +9,7 @@ export default function ColorModeSwitchIcon({
 	showMoon,
 	...props
 }: ColorModeSwitchIconProps) {
-	const transition: Transition = {
-		type: 'spring',
-		mass: 0.25,
-	}
+	const transition = gentleSpringConfig
 
 	return (
 		<motion.svg

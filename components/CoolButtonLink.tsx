@@ -10,7 +10,7 @@ export default function CoolButtonLink({ to, ...props }: CoolButtonLinkProps) {
 		<Link href={to}>
 			<Button
 				fontSize="xl"
-				fontWeight="normal"
+				fontWeight="medium"
 				color="white"
 				rounded="full"
 				bgGradient="linear(50deg, blue.500, purple.400)"

@@ -1,6 +1,7 @@
-import { Box } from '@chakra-ui/react'
-import { ActionsToolbar, MainArea } from 'layout'
-import type { ReactNode } from 'react'
+import { Box, useDimensions } from '@chakra-ui/react'
+import { SidebarContextProvider } from 'contexts'
+import { ActionsToolbar, MainArea, Menu, Sidebar } from 'layout'
+import { ReactNode, useRef } from 'react'
 import AppBar from './AppBar'
 
 interface LayoutProps {
@@ -9,22 +10,25 @@ interface LayoutProps {
 	title?: ReactNode
 }
 
-const Layout = ({ children, actions, title }: LayoutProps) => (
-	<>
-		<AppBar />
-		<Box display="flex">
-			{/* <Sidebar>
-				<Menu />
-			</Sidebar> */}
-			<Box as="main" flexGrow={1}>
-				{actions && <ActionsToolbar>{actions}</ActionsToolbar>}
-				<MainArea title={title}>
-					{children}
-					{/* <ScrollTopButton /> */}
-				</MainArea>
-			</Box>
-		</Box>
-	</>
-)
+export default function Layout({ children, actions, title }: LayoutProps) {
+	const appBarRef = useRef<HTMLDivElement>(null)
+	const dimensions = useDimensions(appBarRef)
 
-export default Layout
+	return (
+		<SidebarContextProvider>
+			<AppBar ref={appBarRef} />
+			<Box display="flex">
+				<Sidebar offset={dimensions?.borderBox.height}>
+					<Menu />
+				</Sidebar>
+				<Box as="main" flexGrow={1}>
+					{actions && <ActionsToolbar>{actions}</ActionsToolbar>}
+					<MainArea title={title}>
+						{children}
+						{/* <ScrollTopButton /> */}
+					</MainArea>
+				</Box>
+			</Box>
+		</SidebarContextProvider>
+	)
+}

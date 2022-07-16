@@ -1,4 +1,4 @@
-import { ArrowRightIcon } from '@chakra-ui/icons'
+import { ArrowForwardIcon } from '@chakra-ui/icons'
 import { Heading, HStack, Stack, Text } from '@chakra-ui/react'
 import { ColorModeSwitch, CoolButtonLink } from 'components'
 import type { NextPage } from 'next'
@@ -44,7 +44,7 @@ const Home: NextPage = () => {
 	const content = (
 		<Stack spacing={12} flexGrow={1} p={6}>
 			<div>
-				<CoolButtonLink to="/about" rightIcon={<ArrowRightIcon w={3} />}>
+				<CoolButtonLink to="/about" rightIcon={<ArrowForwardIcon />}>
 					{t('button')}
 				</CoolButtonLink>
 			</div>
