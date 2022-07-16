@@ -1,5 +1,5 @@
 import { Heading, Stack, Text } from '@chakra-ui/react'
-import { Title } from 'components'
+import { HeadTitle } from 'components'
 import { Layout } from 'layout'
 import { NextPage } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next'
 
 export async function getStaticProps({ locale }: { locale: string }) {
 	return {
-		props: await serverSideTranslations(locale, ['about', 'common']),
+		props: await serverSideTranslations(locale, ['about', 'common', 'menu']),
 	}
 }
 
@@ -16,9 +16,9 @@ const About: NextPage = () => {
 
 	return (
 		<>
-			<Title title={t('title')} />
+			<HeadTitle title={t('title')} />
 			<Layout title={t('title')}>
-				<Heading as="h2" size="xl" textAlign="center" color="secondary.300">
+				<Heading as="h2" size="xl" color="secondary.300">
 					{t('subtitle')}
 				</Heading>
 				{(
@@ -28,7 +28,7 @@ const About: NextPage = () => {
 					}[]
 				).map(({ title, text }) => (
 					<Stack spacing={2} key={title} pt={10}>
-						<Heading as="h4" size="md" fontWeight={500} color="primary.500">
+						<Heading as="h3" fontSize="2xl" fontWeight="semibold">
 							{title}
 						</Heading>
 						<Text>{text}</Text>

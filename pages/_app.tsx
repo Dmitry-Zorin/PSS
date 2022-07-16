@@ -1,4 +1,4 @@
-import { ChakraProvider, useColorMode, useTheme } from '@chakra-ui/react'
+import { ChakraProvider } from '@chakra-ui/react'
 import { appWithTranslation, useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import type { AppProps } from 'next/app'
@@ -12,28 +12,17 @@ export async function getStaticProps({ locale }: { locale: string }) {
 	}
 }
 
-function ThemeColorSetter() {
-	const { colorMode } = useColorMode()
-	const themeColor = useTheme().styles.global({ colorMode }).body.bg
-
-	return (
-		<Head>
-			<meta name="theme-color" content={themeColor} />
-		</Head>
-	)
-}
-
 export default appWithTranslation(({ Component, pageProps }: AppProps) => {
 	const { t } = useTranslation('common')
-
 	return (
-		<ChakraProvider theme={theme}>
+		<>
 			<Head>
 				<title>{t('name')}</title>
 				<meta name="description" content={t('description')} />
 			</Head>
-			<ThemeColorSetter />
-			<Component {...pageProps} />
-		</ChakraProvider>
+			<ChakraProvider theme={theme}>
+				<Component {...pageProps} />
+			</ChakraProvider>
+		</>
 	)
 })

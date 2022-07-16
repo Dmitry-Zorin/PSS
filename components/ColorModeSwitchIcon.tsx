@@ -25,6 +25,7 @@ export default function ColorModeSwitchIcon({
 				<motion.circle
 					r={10}
 					fill="black"
+					initial={false}
 					animate={{
 						cx: showMoon ? '80%' : '100%',
 						cy: showMoon ? '30%' : '0%',
@@ -37,6 +38,7 @@ export default function ColorModeSwitchIcon({
 				cx={12}
 				cy={12}
 				fill="currentColor"
+				initial={false}
 				animate={{
 					r: showMoon ? 10 : 4,
 					transition,
@@ -46,6 +48,7 @@ export default function ColorModeSwitchIcon({
 				stroke="currentColor"
 				strokeLinecap="round"
 				opacity={0.65}
+				initial={false}
 				animate={{
 					strokeWidth: showMoon ? 0 : 2,
 					scale: showMoon ? 0.75 : 1,

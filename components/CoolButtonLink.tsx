@@ -18,7 +18,6 @@ export default function CoolButtonLink({
 			<Button
 				fontSize="xl"
 				fontWeight="medium"
-				color="white"
 				rounded="full"
 				variant="solid"
 				px={9}

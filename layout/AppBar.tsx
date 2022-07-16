@@ -15,12 +15,12 @@ const AppBar = forwardRef<{}, 'div'>(({}, ref) => {
 			top={0}
 			bg="chakra-body-bg"
 			color="text-secondary"
-			borderBottom="1px"
-			borderColor="chakra-border-color"
+			// borderBottom="1px"
+			// borderColor="inherit"
 			align="center"
 			justify="space-between"
 			px={4}
-			py={2}
+			py={3}
 		>
 			<Flex>
 				<Tooltip label="Sidebar" bg="blackAlpha.600">

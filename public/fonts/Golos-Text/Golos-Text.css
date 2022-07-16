@@ -2,6 +2,7 @@
 	font-family: 'Golos Text';
 	font-style: normal;
 	font-weight: 400 900;
+	font-display: swap;
 	src: url('./Golos-Text.woff2') format('woff2'),
 		url('./Golos-Text.woff') format('woff');
 }

@@ -1,4 +1,4 @@
-import { Box, Container, Heading, Show } from '@chakra-ui/react'
+import { Box, Container, Heading } from '@chakra-ui/react'
 import type { ReactNode } from 'react'
 
 interface MainAreaProps {
@@ -13,15 +13,11 @@ export default function MainArea({
 	rightMenu,
 }: MainAreaProps) {
 	return (
-		<Container maxW={rightMenu ? '6xl' : '3xl'} mx="auto" pb={16}>
+		<Container maxW={{ base: '3xl', xl: '6xl' }} mx="auto" pb={16}>
 			{title && (
-				<Box as="header" pt={6} pb={8}>
+				<Box as="header" pt={6} pb={12}>
 					{typeof title === 'string' ? (
-						<Heading
-							as="h1"
-							size="3xl"
-							textAlign={title.split(' ').length < 4 ? 'center' : 'left'}
-						>
+						<Heading as="h1" size="3xl">
 							{title}
 						</Heading>
 					) : (
@@ -30,14 +26,12 @@ export default function MainArea({
 				</Box>
 			)}
 			<Box display="flex">
-				<Container as="article" maxW="3xl" mx="auto">
+				<Box as="article" w="full" maxW="3xl">
 					{children}
-				</Container>
-				<Show above="xl">
-					<Box as="aside" flexGrow={1}>
-						{rightMenu}
-					</Box>
-				</Show>
+				</Box>
+				<Box as="aside" minW={{ base: 0, xl: 'xs' }}>
+					{rightMenu}
+				</Box>
 			</Box>
 		</Container>
 	)
