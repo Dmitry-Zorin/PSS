@@ -26,18 +26,23 @@ const themeOverride: ThemeOverride = {
 				bg: mode('white', 'gray.800')(props),
 				border: mode('whiteAlpha.200', 'blackAlpha.200')(props),
 			},
+			'h1, h2, h3': {
+				color: mode('gray.600', 'gray.500')(props),
+			},
 		}),
 	},
 	semanticTokens: {
 		colors: {
-			// primary: {
-			// 	default: baseTheme.colors.pink,
-			// 	_dark: baseTheme.colors.orange,
-			// },
-			// secondary: baseTheme.colors.blue,
-			// text: {
-			// 	secondary: baseTheme.colors.gray[400],
-			// },
+			primary: { default: 'pink.500', _dark: 'pink.500' },
+			'primary-light': { default: 'pink.400', _dark: 'pink.400' },
+			'primary-dark': { default: 'pink.600', _dark: 'pink.600' },
+			secondary: { default: 'blue.500', _dark: 'blue.500' },
+			'secondary-light': { default: 'blue.400', _dark: 'blue.400' },
+			'secondary-dark': { default: 'blue.600', _dark: 'blue.600' },
+			tertiary: { default: 'purple.500', _dark: 'purple.500' },
+			'tertiary-light': { default: 'purple.400', _dark: 'purple.400' },
+			'tertiary-dark': { default: 'purple.600', _dark: 'purple.600' },
+			'text-secondary': { default: 'gray.600', _dark: 'gray.400' },
 		},
 	},
 	components: {},
@@ -45,5 +50,5 @@ const themeOverride: ThemeOverride = {
 
 export default extendTheme(
 	themeOverride,
-	withDefaultColorScheme({ colorScheme: 'primary' }),
+	withDefaultColorScheme({ colorScheme: '' }),
 )

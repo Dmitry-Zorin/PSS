@@ -13,24 +13,26 @@ export default function Sidebar({ children, offset = 0 }: SidebarProps) {
 	const [isSidebarOpen] = useSidebarState()
 
 	return (
-		<Box
-			as={motion.nav}
-			flexShrink={0}
-			position="sticky"
-			top={0}
-			borderRight="1px"
-			borderColor="chakra-border-color"
-			animate={{
-				width: isSidebarOpen ? 290 : 64,
-				transition: gentleSpringConfig,
-			}}
-		>
+		<Box position="relative">
 			<Box
-				height={`calc(100vh - ${offset}px)`}
-				overflowX="hidden"
-				overflowY="auto"
+				as={motion.nav}
+				flexShrink={0}
+				position="sticky"
+				top={offset}
+				borderRight="1px"
+				borderColor="chakra-border-color"
+				animate={{
+					width: isSidebarOpen ? 290 : 64,
+					transition: gentleSpringConfig,
+				}}
 			>
-				{children}
+				<Box
+					height={`calc(100vh - ${offset}px)`}
+					overflowX="hidden"
+					overflowY="auto"
+				>
+					{children}
+				</Box>
 			</Box>
 		</Box>
 	)

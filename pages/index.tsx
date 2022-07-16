@@ -34,7 +34,7 @@ const Home: NextPage = () => {
 			>
 				{t('welcome')}
 				<br />
-				<Text as="span" color="primary.500">
+				<Text as="span" color="primary">
 					{t(['name_to', 'name'], { ns: 'common' })}
 				</Text>
 			</Heading>
@@ -44,12 +44,16 @@ const Home: NextPage = () => {
 	const content = (
 		<Stack spacing={12} flexGrow={1} p={6}>
 			<div>
-				<CoolButtonLink to="/about" rightIcon={<ArrowForwardIcon />}>
+				<CoolButtonLink
+					to="/about"
+					colors={['secondary', 'tertiary']}
+					rightIcon={<ArrowForwardIcon />}
+				>
 					{t('button')}
 				</CoolButtonLink>
 			</div>
 			<div>
-				<Text color="text.secondary" maxW="md" m="auto">
+				<Text color="text-secondary" maxW="md" m="auto">
 					{t('description', { ns: 'common' })}
 				</Text>
 			</div>
