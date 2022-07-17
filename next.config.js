@@ -4,8 +4,6 @@ const csp = [
 	"default-src 'self' vitals.vercel-insights.com",
 	"style-src 'self' 'unsafe-inline'",
 	"script-src 'self' 'unsafe-eval' 'unsafe-inline'",
-	"object-src 'none'",
-	"require-trusted-types-for 'script'",
 ]
 
 /** @type {import('next').NextConfig} */
