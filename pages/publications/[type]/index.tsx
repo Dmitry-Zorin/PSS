@@ -70,7 +70,7 @@ const Publications: NextPage<{
 						</Thead>
 						<Tbody>
 							{error && <Heading>{error}</Heading>}
-							{publications.map(({ id, title, year }) => (
+							{publications?.map(({ id, title, year }) => (
 								<Link key={id} href={`./${type}/${id}`}>
 									<Tr
 										cursor="pointer"
