@@ -1,4 +1,5 @@
 import {
+	Heading,
 	Table,
 	TableContainer,
 	Tbody,
@@ -17,18 +18,28 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
-	const publications = await prisma.publication.findMany()
-	return {
-		props: {
-			publications,
-			...(await serverSideTranslations(locale!, ['common', 'menu'])),
-		},
+	try {
+		const publications = await prisma.publication.findMany()
+		return {
+			props: {
+				publications,
+				...(await serverSideTranslations(locale!, ['common', 'menu'])),
+			},
+		}
+	} catch (e) {
+		console.log(e)
+		return {
+			props: {
+				error: e,
+			},
+		}
 	}
 }
 
 const Publications: NextPage<{
 	publications: Publication[]
-}> = ({ publications }) => {
+	error: any
+}> = ({ publications, error }) => {
 	const router = useRouter()
 	const { type } = router.query as { type: string }
 	const { t } = useTranslation(['common', 'menu'])
@@ -50,6 +61,7 @@ const Publications: NextPage<{
 							</Tr>
 						</Thead>
 						<Tbody>
+							{error && <Heading>{error}</Heading>}
 							{publications.map(({ id, title, year }) => (
 								<Link key={id} href={`./${type}/${id}`}>
 									<Tr
