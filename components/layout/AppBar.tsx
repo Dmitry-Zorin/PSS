@@ -1,8 +1,7 @@
 import { HamburgerIcon } from '@chakra-ui/icons'
 import { Flex, forwardRef, HStack, IconButton } from '@chakra-ui/react'
-import { ColorModeSwitch, Logo } from 'components'
-import { useSidebarState } from 'contexts'
-import UserMenu from './UserMenu'
+import { ColorModeSwitch, Logo, useSidebarState } from 'components'
+import UserMenu from '../UserMenu'
 
 const AppBar = forwardRef<{}, 'div'>(({}, ref) => {
 	const [isSidebarOpen, setSidebarOpen] = useSidebarState()

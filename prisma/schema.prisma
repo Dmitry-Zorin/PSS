@@ -1,0 +1,62 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum Locale {
+  EN
+  RU
+}
+
+enum Theme {
+  LIGHT
+  DARK
+}
+
+model User {
+  id        String    @id @default(cuid())
+  username  String    @unique
+  password  String
+  role      Role      @default(USER)
+  settings  Settings?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Settings {
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @unique
+  locale Locale @default(EN)
+  theme  Theme  @default(LIGHT)
+}
+
+model Author {
+  id           String        @id @default(cuid())
+  lastName     String
+  firstName    String
+  middleName   String?
+  info         String?
+  publications Publication[]
+}
+
+model Publication {
+  id               Int      @id @default(autoincrement())
+  title            String
+  description      String?
+  type             String?
+  characterId      String?
+  publicationPlace String?
+  year             Int?
+  volume           Int?
+  authors          Author[]
+  coauthors        String[]
+}

@@ -1,27 +1,14 @@
-import { Box, HStack, Text, useDimensions } from '@chakra-ui/react'
-import { SidebarContextProvider } from 'contexts'
-import { ActionsToolbar, MainArea, Menu, Sidebar } from 'layout'
+import { Box, useDimensions } from '@chakra-ui/react'
+import {
+	ActionsToolbar,
+	MainArea,
+	Menu,
+	Sidebar,
+	SidebarContextProvider,
+} from 'components'
 import { ReactNode, useRef } from 'react'
+import resources from 'resources/resources'
 import AppBar from './AppBar'
-
-const resources = {
-	about: true,
-	timeline: true,
-	authors: true,
-	publications: {
-		articles: true,
-		abstracts: true,
-		dissertations: true,
-		monographs: true,
-		patents: true,
-		reports: true,
-		programs: true,
-		textbooks: true,
-	},
-	admin: {
-		characters: true,
-	},
-}
 
 interface LayoutProps {
 	children: ReactNode
@@ -37,7 +24,7 @@ export default function Layout({ children, actions, title }: LayoutProps) {
 		<SidebarContextProvider>
 			<AppBar ref={appBarRef} />
 			<Box display="flex">
-				<Sidebar offset={dimensions?.borderBox.height}>
+				<Sidebar offset={dimensions?.borderBox.height || 80}>
 					<Menu items={resources} />
 				</Sidebar>
 				<Box as="main" flexGrow={1}>

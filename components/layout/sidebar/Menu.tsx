@@ -1,6 +1,6 @@
 import { InfoIcon } from '@chakra-ui/icons'
 import { List } from '@chakra-ui/react'
-import { MenuItem, SubMenu } from 'layout'
+import { MenuItem, SubMenu } from 'components'
 import { useTranslation } from 'next-i18next'
 
 interface MenuItems {

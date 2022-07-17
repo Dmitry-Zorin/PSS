@@ -1,5 +1,5 @@
 import { HStack, Link, ListItem, Text, Tooltip } from '@chakra-ui/react'
-import { useSidebarState } from 'contexts'
+import { useSidebarState } from 'components'
 import { motion } from 'framer-motion'
 import NextLink from 'next/link'
 import { cloneElement, ReactElement } from 'react'

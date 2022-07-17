@@ -1,11 +1,14 @@
 import { Heading, Stack, Text } from '@chakra-ui/react'
-import { HeadTitle } from 'components'
-import { Layout } from 'layout'
-import { NextPage } from 'next'
+import { HeadTitle, Layout } from 'components'
+import { GetServerSideProps, NextPage } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'react-i18next'
 
-export async function getStaticProps({ locale }: { locale: string }) {
+export const getStaticProps: GetServerSideProps = async ({
+	locale,
+}: {
+	locale: string
+}) => {
 	return {
 		props: await serverSideTranslations(locale, ['about', 'common', 'menu']),
 	}

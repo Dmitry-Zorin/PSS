@@ -7,7 +7,7 @@ import {
 	Text,
 	Tooltip,
 } from '@chakra-ui/react'
-import { useSidebarState } from 'contexts'
+import { useSidebarState } from 'components'
 import { motion } from 'framer-motion'
 import { gentleSpringConfig } from 'utils'
 
