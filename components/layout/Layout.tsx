@@ -20,7 +20,7 @@ export const SIDEBAR_COLLAPSED_WIDTH = '4rem'
 interface LayoutProps {
 	children: ReactNode
 	actions?: ReactNode
-	title?: ReactNode
+	title?: string
 	fullSize?: boolean
 	rightMenu?: ReactNode
 }

@@ -5,7 +5,7 @@
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint",
-		"check-types": "tsc"
+		"check-ts": "tsc"
 	},
 	"dependencies": {
 		"@chakra-ui/icons": "^2.0.4",
