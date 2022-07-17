@@ -16,8 +16,16 @@ import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { stdout } from 'process'
 
-export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+	res,
+	locale,
+}) => {
+	res.setHeader(
+		'Cache-Control',
+		'public, s-maxage=10, stale-while-revalidate=59',
+	)
 	try {
 		const publications = await prisma.publication.findMany()
 		return {
@@ -27,7 +35,7 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
 			},
 		}
 	} catch (e) {
-		console.log(e)
+		stdout.write(e as any)
 		return {
 			props: {
 				error: e,
