@@ -1,12 +1,11 @@
 import { Box } from '@chakra-ui/react'
-import type { UseSpringProps } from '@react-spring/web'
 import { motion } from 'framer-motion'
 import type { ReactNode } from 'react'
 import { gentleSpringConfig } from 'utils'
 
 type Orientation = 'vertical' | 'horizontal'
 
-type CollapseProps = UseSpringProps & {
+type CollapseProps = {
 	children: ReactNode
 	in: boolean
 	orientation?: Orientation
