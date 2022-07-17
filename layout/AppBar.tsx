@@ -1,5 +1,5 @@
 import { HamburgerIcon } from '@chakra-ui/icons'
-import { Flex, forwardRef, IconButton, Tooltip } from '@chakra-ui/react'
+import { Flex, forwardRef, HStack, IconButton } from '@chakra-ui/react'
 import { ColorModeSwitch, Logo } from 'components'
 import { useSidebarState } from 'contexts'
 import UserMenu from './UserMenu'
@@ -11,7 +11,7 @@ const AppBar = forwardRef<{}, 'div'>(({}, ref) => {
 		<Flex
 			ref={ref}
 			as="header"
-			position="sticky"
+			pos="sticky"
 			top={0}
 			bg="chakra-body-bg"
 			color="text-secondary"
@@ -22,21 +22,19 @@ const AppBar = forwardRef<{}, 'div'>(({}, ref) => {
 			px={4}
 			py={3}
 		>
-			<Flex>
-				<Tooltip label="Sidebar" bg="blackAlpha.600">
-					<IconButton
-						aria-label="Toggle Sidebar"
-						variant="ghost"
-						icon={<HamburgerIcon w={5} h={5} />}
-						onClick={() => setSidebarOpen(!isSidebarOpen)}
-					/>
-				</Tooltip>
+			<HStack>
+				<IconButton
+					aria-label="Toggle Sidebar"
+					variant="unstyled"
+					icon={<HamburgerIcon boxSize={6} />}
+					onClick={() => setSidebarOpen(!isSidebarOpen)}
+				/>
 				<Logo />
-			</Flex>
-			<Flex>
+			</HStack>
+			<HStack>
 				<ColorModeSwitch />
 				<UserMenu />
-			</Flex>
+			</HStack>
 		</Flex>
 	)
 })

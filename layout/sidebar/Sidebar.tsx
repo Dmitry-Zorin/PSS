@@ -15,7 +15,7 @@ export default function Sidebar({ children, offset = 0 }: SidebarProps) {
 	return (
 		<Box
 			as={motion.nav}
-			position="sticky"
+			pos="sticky"
 			top={offset / 4}
 			h={`calc(100vh - ${offset}px)`}
 			overflowX="hidden"
@@ -23,6 +23,8 @@ export default function Sidebar({ children, offset = 0 }: SidebarProps) {
 			flexShrink={0}
 			// borderRight="1px"
 			// borderColor="inherit"
+			borderRight={isSidebarOpen ? 0 : '1px'}
+			borderColor="inherit"
 			initial={false}
 			animate={{
 				width: isSidebarOpen ? 300 : 68,

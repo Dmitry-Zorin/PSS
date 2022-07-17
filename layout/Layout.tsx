@@ -1,4 +1,4 @@
-import { Box, useDimensions } from '@chakra-ui/react'
+import { Box, HStack, Text, useDimensions } from '@chakra-ui/react'
 import { SidebarContextProvider } from 'contexts'
 import { ActionsToolbar, MainArea, Menu, Sidebar } from 'layout'
 import { ReactNode, useRef } from 'react'

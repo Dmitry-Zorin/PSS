@@ -43,7 +43,7 @@ export default function MenuItem({
 								transition: gentleSpringConfig,
 							}}
 						>
-							{cloneElement(icon, { w: 6 })}
+							{cloneElement(icon, { w: 6, color: 'green.200' })}
 							<Text fontSize="md">{text}</Text>
 						</HStack>
 					</Tooltip>

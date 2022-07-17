@@ -4,6 +4,7 @@ import {
 	withDefaultColorScheme,
 } from '@chakra-ui/react'
 import colors from './colors'
+import shadows from './shadows'
 
 const systemFonts =
 	'-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif'
@@ -36,10 +37,11 @@ const themeOverride: ThemeOverride = {
 	},
 	semanticTokens: {
 		colors,
+		shadows,
 	},
 }
 
 export default extendTheme(
 	themeOverride,
-	withDefaultColorScheme({ colorScheme: 'none' }),
+	withDefaultColorScheme({ colorScheme: 'blue' }),
 )

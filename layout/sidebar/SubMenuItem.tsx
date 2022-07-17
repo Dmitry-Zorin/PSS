@@ -41,7 +41,7 @@ export default function SubMenuItem({
 							transition: gentleSpringConfig,
 						}}
 					>
-						<ChevronDownIcon w={6} h={6} />
+						<ChevronDownIcon boxSize={6} />
 					</Box>
 					<Text color="pink.200" fontSize="sm" fontWeight="medium">
 						{text.toUpperCase()}

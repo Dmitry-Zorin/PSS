@@ -1,7 +1,8 @@
-import { motion, SVGMotionProps } from 'framer-motion'
+import { Icon, IconProps } from '@chakra-ui/react'
+import { motion } from 'framer-motion'
 import { gentleSpringConfig } from 'utils'
 
-interface ColorModeSwitchIconProps extends SVGMotionProps<SVGElement> {
+interface ColorModeSwitchIconProps extends IconProps {
 	showMoon: boolean
 }
 
@@ -12,7 +13,7 @@ export default function ColorModeSwitchIcon({
 	const transition = gentleSpringConfig
 
 	return (
-		<motion.svg
+		<Icon
 			xmlns="http://www.w3.org/2000/svg"
 			width={24}
 			height={24}
@@ -64,6 +65,6 @@ export default function ColorModeSwitchIcon({
 				<line x1={4.87} y1={19.13} x2={6.3} y2={17.7} />
 				<line x1={17.7} y1={6.3} x2={19.13} y2={4.87} />
 			</motion.g>
-		</motion.svg>
+		</Icon>
 	)
 }
