@@ -27,7 +27,7 @@ export default function Sidebar({ children, offset = 0 }: SidebarProps) {
 			borderColor="inherit"
 			initial={false}
 			animate={{
-				width: isSidebarOpen ? 300 : 68,
+				width: isSidebarOpen ? 300 : 64,
 				transition: gentleSpringConfig,
 			}}
 		>

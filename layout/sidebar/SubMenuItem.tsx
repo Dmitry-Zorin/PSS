@@ -31,7 +31,7 @@ export default function SubMenuItem({
 				fontWeight="normal"
 				hidden={isSidebarOpen}
 			>
-				<HStack px={7} py={2} spacing={4} color="text-secondary">
+				<HStack px={6} py={2} spacing={4} color="text-secondary">
 					<Box
 						as={motion.span}
 						minW={6}

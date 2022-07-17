@@ -32,14 +32,14 @@ export default function MenuItem({
 					>
 						<HStack
 							as={motion.div}
-							pr={7}
+							pr={6}
 							py={3}
 							spacing={4}
 							color="text-secondary"
 							_hover={{ color: 'inherit' }}
 							initial={false}
 							animate={{
-								paddingLeft: indent ? 68 : 28,
+								paddingLeft: indent ? 68 : 24,
 								transition: gentleSpringConfig,
 							}}
 						>
