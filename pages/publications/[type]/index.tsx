@@ -34,8 +34,8 @@ export const getServerSideProps: GetServerSideProps = async ({
 				...(await serverSideTranslations(locale!, ['common', 'menu'])),
 			},
 		}
-	} catch (e) {
-		stdout.write(e as any)
+	} catch (e: any) {
+		stdout.write(e.toString())
 		return {
 			props: {
 				error: e,
