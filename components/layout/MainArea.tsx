@@ -3,7 +3,7 @@ import type { ReactNode } from 'react'
 
 interface MainAreaProps {
 	children: ReactNode
-	title?: ReactNode
+	title?: string
 	rightMenu?: ReactNode
 }
 
@@ -12,21 +12,21 @@ export default function MainArea({
 	title,
 	rightMenu,
 }: MainAreaProps) {
+	const showWide = (title && title.split(' ').length > 3) || rightMenu
+
 	return (
-		<Container maxW={{ base: '3xl', xl: '6xl' }} mx="auto" pb={16}>
+		<Container maxW={showWide ? '6xl' : '3xl'} mx="auto" pb={16}>
 			{title && (
 				<Box as="header" pt={6} pb={12}>
-					{typeof title === 'string' ? (
+					{title && (
 						<Heading as="h1" size="3xl">
 							{title}
 						</Heading>
-					) : (
-						title
 					)}
 				</Box>
 			)}
 			<Box display="flex">
-				<Box as="article" w="full" maxW="3xl">
+				<Box as="article" w="full" maxW="3xl" mx="auto">
 					{children}
 				</Box>
 				<Box as="aside" minW={{ base: 0, xl: 'xs' }}>

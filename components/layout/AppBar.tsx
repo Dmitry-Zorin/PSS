@@ -1,20 +1,16 @@
 import { HamburgerIcon } from '@chakra-ui/icons'
-import { Flex, FlexProps, HStack, IconButton } from '@chakra-ui/react'
+import { HStack, IconButton, StackProps } from '@chakra-ui/react'
 import { ColorModeSwitch, Logo, useSidebarState } from 'components'
 import UserMenu from '../UserMenu'
 
-export default function AppBar(props: FlexProps) {
+export default function AppBar(props: StackProps) {
 	const [isSidebarOpen, setSidebarOpen] = useSidebarState()
 
 	return (
-		<Flex
+		<HStack
 			as="header"
-			pos="sticky"
-			top={0}
 			bg="chakra-body-bg"
 			color="text-secondary"
-			// borderBottom="1px"
-			// borderColor="inherit"
 			align="center"
 			justify="space-between"
 			px={4}
@@ -33,6 +29,6 @@ export default function AppBar(props: FlexProps) {
 				<ColorModeSwitch />
 				<UserMenu />
 			</HStack>
-		</Flex>
+		</HStack>
 	)
 }

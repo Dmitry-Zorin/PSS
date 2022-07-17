@@ -6,13 +6,9 @@ import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
 
-export const getStaticProps: GetServerSideProps = async ({
-	locale,
-}: {
-	locale: string
-}) => {
+export const getStaticProps: GetServerSideProps = async ({ locale }) => {
 	return {
-		props: await serverSideTranslations(locale, ['index', 'common']),
+		props: await serverSideTranslations(locale!, ['index', 'common']),
 	}
 }
 

@@ -1,1 +1,0 @@
-{"version":3,"file":"data-source.js","sourceRoot":"","sources":["../../../src/microservices/resources/data-source.ts"],"names":[],"mappings":";;AAAA,qCAAoC;AACpC,yDAAuD;AAEvD,kBAAe,IAAI,oBAAU,CAAC;IAC7B,GAAG,qCAAkB;IACrB,GAAG,EAAE,OAAO,CAAC,GAAG,CAAC,sBAAsB;IACvC,UAAU,EAAE,CAAC,0CAA0C,CAAC;IACxD,KAAK,EAAE,IAAI;CACX,CAAC,CAAA"}

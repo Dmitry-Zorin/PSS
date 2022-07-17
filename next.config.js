@@ -36,7 +36,7 @@ const nextConfig = {
 					},
 					{
 						key: 'Content-Security-Policy',
-						value: process.env.NODE_ENV === 'production' ? csp.join(';') : '*',
+						value: process.env.NODE_ENV === 'production' ? csp.join(';') : '',
 					},
 				],
 			},

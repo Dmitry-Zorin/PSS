@@ -31,7 +31,7 @@ export default function SubMenuItem({
 				fontWeight="normal"
 				hidden={isSidebarOpen}
 			>
-				<HStack px={6} py={2} spacing={4} color="text-secondary">
+				<HStack h={10} px={6} spacing={4} color="text-secondary">
 					<Box
 						as={motion.span}
 						minW={6}
@@ -43,7 +43,7 @@ export default function SubMenuItem({
 					>
 						<ChevronDownIcon boxSize={6} />
 					</Box>
-					<Text color="pink.200" fontSize="sm" fontWeight="medium">
+					<Text color="orange.200" fontSize="sm" fontWeight="medium">
 						{text.toUpperCase()}
 					</Text>
 				</HStack>

@@ -4,13 +4,9 @@ import { GetServerSideProps, NextPage } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'react-i18next'
 
-export const getStaticProps: GetServerSideProps = async ({
-	locale,
-}: {
-	locale: string
-}) => {
+export const getStaticProps: GetServerSideProps = async ({ locale }) => {
 	return {
-		props: await serverSideTranslations(locale, ['about', 'common', 'menu']),
+		props: await serverSideTranslations(locale!, ['about', 'common', 'menu']),
 	}
 }
 
