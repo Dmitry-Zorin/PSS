@@ -1,9 +1,7 @@
 import { InfoIcon } from '@chakra-ui/icons'
 import { useDisclosure } from '@chakra-ui/react'
-import { Collapse, useSidebarState } from 'components'
+import { Collapse, MenuItem, SubMenuItem, useSidebarState } from 'components'
 import { useTranslation } from 'next-i18next'
-import MenuItem from './MenuItem'
-import SubMenuItem from './SubMenuItem'
 
 export interface SubMenuProps {
 	text: string

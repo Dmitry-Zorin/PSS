@@ -6,18 +6,25 @@ import { gentleSpringConfig } from 'utils'
 
 interface SidebarProps {
 	children: ReactNode
-	offset?: number
+	width: string
+	minWidth: string
+	offset?: string
 }
 
-export default function Sidebar({ children, offset = 0 }: SidebarProps) {
+export default function Sidebar({
+	children,
+	width,
+	minWidth,
+	offset = '0',
+}: SidebarProps) {
 	const [isSidebarOpen] = useSidebarState()
 
 	return (
 		<Box
 			as={motion.nav}
 			pos="sticky"
-			top={offset / 4}
-			h={`calc(100vh - ${offset}px)`}
+			top={offset}
+			h={`calc(100vh - ${offset})`}
 			overflowX="hidden"
 			overflowY="auto"
 			flexShrink={0}
@@ -27,7 +34,7 @@ export default function Sidebar({ children, offset = 0 }: SidebarProps) {
 			borderColor="inherit"
 			initial={false}
 			animate={{
-				width: isSidebarOpen ? 300 : 64,
+				width: isSidebarOpen ? width : minWidth,
 				transition: gentleSpringConfig,
 			}}
 		>

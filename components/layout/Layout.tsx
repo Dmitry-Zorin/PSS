@@ -1,14 +1,18 @@
-import { Box, useDimensions } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react'
 import {
 	ActionsToolbar,
+	AppBar,
 	MainArea,
 	Menu,
 	Sidebar,
 	SidebarContextProvider,
 } from 'components'
-import { ReactNode, useRef } from 'react'
+import { ReactNode } from 'react'
 import resources from 'resources/resources'
-import AppBar from './AppBar'
+
+const APP_BAR_HEIGHT = '4rem'
+const SIDEBAR_WIDTH = '18rem'
+const SIDEBAR_COLLAPSED_WIDTH = '4rem'
 
 interface LayoutProps {
 	children: ReactNode
@@ -17,14 +21,15 @@ interface LayoutProps {
 }
 
 export default function Layout({ children, actions, title }: LayoutProps) {
-	const appBarRef = useRef<HTMLDivElement>(null)
-	const dimensions = useDimensions(appBarRef)
-
 	return (
 		<SidebarContextProvider>
-			<AppBar ref={appBarRef} />
+			<AppBar h={APP_BAR_HEIGHT} />
 			<Box display="flex">
-				<Sidebar offset={dimensions?.borderBox.height || 80}>
+				<Sidebar
+					offset={APP_BAR_HEIGHT}
+					width={SIDEBAR_WIDTH}
+					minWidth={SIDEBAR_COLLAPSED_WIDTH}
+				>
 					<Menu items={resources} />
 				</Sidebar>
 				<Box as="main" flexGrow={1}>
