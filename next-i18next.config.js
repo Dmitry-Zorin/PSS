@@ -3,7 +3,7 @@ const i18nextConfig = {
 		locales: ['en', 'ru'],
 		defaultLocale: 'en',
 		...(typeof window === undefined
-			? { localePath: path.resolve('./public/locales') }
+			? { localePath: path.resolve('./locales') }
 			: {}),
 	},
 }

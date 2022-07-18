@@ -1,7 +1,7 @@
 const colors = {
 	bg: {
 		_light: 'white',
-		_dark: 'gray.800',
+		_dark: '#14181f',
 	},
 	text: {
 		_light: 'gray.800',

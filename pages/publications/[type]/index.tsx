@@ -74,16 +74,6 @@ export const getServerSideProps: GetServerSideProps<
 	}
 }
 
-export const getServerSidePaths = async () => {
-	return {
-		paths: [
-			{ params: { type: 'type' }, locale: 'en' },
-			{ params: { type: 'type' }, locale: 'ru' },
-		],
-		fallback: true,
-	}
-}
-
 const Publications: NextPage<PublicationsPageProps> = ({
 	publications,
 	error,
