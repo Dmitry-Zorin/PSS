@@ -46,6 +46,7 @@ const Home: NextPage = () => {
 			<div>
 				<CoolButtonLink
 					to="/about"
+					color="bg"
 					colors={['secondary', 'tertiary']}
 					rightIcon={<ArrowForwardIcon />}
 				>

@@ -1,93 +1,138 @@
-import {
-	Heading,
-	Table,
-	TableContainer,
-	Tbody,
-	Td,
-	Th,
-	Thead,
-	Tr,
-} from '@chakra-ui/react'
+import { Text } from '@chakra-ui/react'
 import { Publication } from '@prisma/client'
-import { HeadTitle, Layout } from 'components'
+import { HeadTitle, Layout, ResourceTable, Search } from 'components'
 import prisma from 'lib/prisma'
+import { debounce } from 'lodash'
 import { GetServerSideProps, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { stdout } from 'process'
+import { ParsedUrlQuery } from 'querystring'
+import { useEffect, useMemo, useState } from 'react'
 
-export const getServerSideProps: GetServerSideProps = async ({
-	res,
-	locale,
-}) => {
+interface PublicationsPageProps {
+	publications?: Publication[]
+	error?: any
+}
+
+interface PublicationsPageQuery extends ParsedUrlQuery {
+	search: string
+}
+
+export const getServerSideProps: GetServerSideProps<
+	PublicationsPageProps,
+	PublicationsPageQuery
+> = async ({ res, query, locale }) => {
 	res.setHeader(
 		'Cache-Control',
 		'public, s-maxage=10, stale-while-revalidate=59',
 	)
 	try {
-		const publications = await prisma.publication.findMany()
+		const { search } = query
+
+		const publications = await prisma.publication.findMany({
+			take: 10,
+			...(typeof search === 'string' &&
+				(() => {
+					const searchQuery = search.trim().replace(/ /g, ':* & ') + ':*'
+					return {
+						where: {
+							OR: [
+								{ title: { search: searchQuery } },
+								{ description: { search: searchQuery } },
+							],
+						},
+						orderBy: {
+							_relevance: {
+								fields: ['title', 'description'],
+								search: searchQuery,
+								sort: 'desc',
+							},
+						},
+					}
+				})()),
+		})
 		return {
 			props: {
 				publications,
-				...(await serverSideTranslations(locale!, ['common', 'menu'])),
+				...(await serverSideTranslations(locale!, [
+					'common',
+					'menu',
+					'fields',
+				])),
 			},
 		}
 	} catch (e: any) {
 		stdout.write(e.toString())
 		return {
 			props: {
-				error: e,
+				error: e.toString(),
 			},
 		}
 	}
 }
 
-const Publications: NextPage<{
-	publications: Publication[]
-	error: any
-}> = ({ publications, error }) => {
+export const getServerSidePaths = async () => {
+	return {
+		paths: [
+			{ params: { type: 'type' }, locale: 'en' },
+			{ params: { type: 'type' }, locale: 'ru' },
+		],
+		fallback: true,
+	}
+}
+
+const Publications: NextPage<PublicationsPageProps> = ({
+	publications,
+	error,
+}) => {
 	const router = useRouter()
-	const { type } = router.query as { type: string }
-	const { t } = useTranslation(['common', 'menu'])
+	const { type, search } = router.query as Record<string, string>
+	const { t } = useTranslation(['common', 'menu', 'fields'])
+	const [searchQuery, setSearchQuery] = useState(search ?? '')
+
+	const debouncedSearch = useMemo(() => {
+		return debounce((search: string) => {
+			const [basepath, params] = router.asPath.split('?')
+			const query = new URLSearchParams(params)
+			if (search !== '') {
+				query.set('search', search)
+			} else {
+				query.delete('search')
+			}
+			router.replace(`${basepath}${query.has('search') ? `?${query}` : ''}`)
+		}, 300)
+	}, [router])
+
+	useEffect(() => {
+		return () => debouncedSearch.cancel()
+	}, [debouncedSearch])
 
 	return (
 		<>
 			<HeadTitle title={t(type, { ns: 'menu' })} />
-			<Layout fullSize>
-				<TableContainer>
-					<Table
-						variant="simple"
-						whiteSpace="normal"
-						fontSize={{ base: 'sm', xl: 'md' }}
-					>
-						<Thead>
-							<Tr>
-								<Th>Title</Th>
-								<Th isNumeric>Year</Th>
-							</Tr>
-						</Thead>
-						<Tbody>
-							{error && <Heading>{error}</Heading>}
-							{publications?.map(({ id, title, year }) => (
-								<Link key={id} href={`./${type}/${id}`}>
-									<Tr
-										cursor="pointer"
-										transitionProperty="background"
-										transitionDuration="fast"
-										transitionTimingFunction="ease-out"
-										_hover={{ bg: 'border' }}
-										_active={{ opacity: 0.85 }}
-									>
-										<Td>{title}</Td>
-										<Td isNumeric>{year}</Td>
-									</Tr>
-								</Link>
-							))}
-						</Tbody>
-					</Table>
-				</TableContainer>
+			<Layout
+				leftActions={
+					<Search
+						value={searchQuery}
+						onChange={(e) => {
+							setSearchQuery(e.target.value)
+							debouncedSearch(e.target.value)
+						}}
+					/>
+				}
+				fullSize
+			>
+				{error && <Text color="red">{error}</Text>}
+				{publications && (
+					<ResourceTable
+						data={publications}
+						fields={['title', 'year']}
+						RowLink={<Link href={`./${type}`} />}
+					/>
+				)}
 			</Layout>
 		</>
 	)

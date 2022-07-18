@@ -20,6 +20,8 @@ const themeOverride: ThemeOverride = {
 	styles: {
 		global: {
 			body: {
+				color: 'text',
+				bg: 'bg',
 				fontSize: 'lg',
 				wordSpacing: '0.05em',
 			},

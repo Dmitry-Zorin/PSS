@@ -15,7 +15,11 @@ export default function MainArea({
 	const showWide = (title && title.split(' ').length > 3) || rightMenu
 
 	return (
-		<Container maxW={showWide ? '6xl' : '3xl'} mx="auto" pb={16}>
+		<Container
+			maxW={{ base: showWide ? '6xl' : '3xl', xl: '6xl' }}
+			mx="auto"
+			pb={16}
+		>
 			{title && (
 				<Box as="header" pt={6} pb={12}>
 					{title && (

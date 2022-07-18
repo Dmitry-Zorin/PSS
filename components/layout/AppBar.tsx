@@ -9,10 +9,10 @@ export default function AppBar(props: StackProps) {
 	return (
 		<HStack
 			as="header"
-			bg="chakra-body-bg"
+			bg="bg"
 			color="text-secondary"
-			align="center"
 			justify="space-between"
+			align="center"
 			px={4}
 			{...props}
 		>
@@ -27,7 +27,9 @@ export default function AppBar(props: StackProps) {
 			</HStack>
 			<HStack>
 				<ColorModeSwitch />
-				<UserMenu />
+				<div>
+					<UserMenu />
+				</div>
 			</HStack>
 		</HStack>
 	)

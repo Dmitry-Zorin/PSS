@@ -19,7 +19,8 @@ export const SIDEBAR_COLLAPSED_WIDTH = '4rem'
 
 interface LayoutProps {
 	children: ReactNode
-	actions?: ReactNode
+	leftActions?: ReactNode
+	rightActions?: ReactNode
 	title?: string
 	fullSize?: boolean
 	rightMenu?: ReactNode
@@ -27,7 +28,8 @@ interface LayoutProps {
 
 function LayoutGrid({
 	children,
-	actions,
+	leftActions,
+	rightActions,
 	title,
 	fullSize = false,
 	rightMenu,
@@ -63,7 +65,12 @@ function LayoutGrid({
 				<Menu items={resources} />
 			</GridItem>
 			<GridItem as="main" area="main">
-				{actions && <ActionsToolbar>{actions}</ActionsToolbar>}
+				{(leftActions || rightActions) && (
+					<ActionsToolbar
+						leftActions={leftActions}
+						rightActions={rightActions}
+					/>
+				)}
 				{fullSize ? (
 					<>{children}</>
 				) : (
@@ -71,7 +78,6 @@ function LayoutGrid({
 						{children}
 					</MainArea>
 				)}
-				{/* <ScrollTopButton /> */}
 			</GridItem>
 		</Grid>
 	)

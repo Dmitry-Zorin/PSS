@@ -1,19 +1,19 @@
-import { Flex, useColorModeValue } from '@chakra-ui/react'
+import { Flex, HStack } from '@chakra-ui/react'
 import { ReactNode } from 'react'
 
 interface ActionsToolbarProps {
-	children: ReactNode
+	leftActions?: ReactNode
+	rightActions?: ReactNode
 }
 
-export default function ActionsToolbar({ children }: ActionsToolbarProps) {
+export default function ActionsToolbar({
+	leftActions,
+	rightActions,
+}: ActionsToolbarProps) {
 	return (
-		<Flex
-			color={useColorModeValue('gray.600', 'white')}
-			minH={15}
-			py={{ base: 2 }}
-			px={{ base: 4 }}
-		>
-			{children}
-		</Flex>
+		<HStack justify="space-between" py={6}>
+			<Flex flexGrow={1}>{leftActions}</Flex>
+			{rightActions && <div>{rightActions}</div>}
+		</HStack>
 	)
 }
