@@ -30,7 +30,7 @@ export default function MainArea({
 				</Box>
 			)}
 			<Box display="flex">
-				<Box as="article" w="full" maxW="3xl" mx="auto">
+				<Box as="article" w="full" mx="auto">
 					{children}
 				</Box>
 				<Box as="aside" minW={{ base: 0, xl: 'xs' }}>

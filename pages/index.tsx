@@ -20,24 +20,23 @@ const Home: NextPage = () => {
 			<HStack justify="flex-end" p={6}>
 				<ColorModeSwitch />
 			</HStack>
-			<Heading
-				as="h1"
-				fontSize={{
-					base: '5xl',
-					md: '6xl',
-					xl: '7xl',
-				}}
-				lineHeight={{ base: 'short', sm: 'base' }}
-				p={6}
+			<Stack
+				spacing={{ base: 3, md: 6 }}
+				px={6}
 				pt={{ base: 0, md: 6 }}
 				pb={{ base: 6, md: 12 }}
 			>
-				{t('welcome')}
-				<br />
-				<Text as="span" color="primary">
+				<Heading
+					as="h1"
+					color="text-secondary"
+					fontSize={{ base: '5xl', xl: '6xl' }}
+				>
+					{t('welcome')}
+				</Heading>
+				<Heading as="h1" color="primary" fontSize={{ base: '6xl', xl: '7xl' }}>
 					{t(['name_to', 'name'], { ns: 'common' })}
-				</Text>
-			</Heading>
+				</Heading>
+			</Stack>
 		</Stack>
 	)
 
@@ -46,8 +45,8 @@ const Home: NextPage = () => {
 			<div>
 				<CoolButtonLink
 					to="/about"
+					colorScheme="secondary"
 					color="bg"
-					colors={['secondary', 'tertiary']}
 					rightIcon={<ArrowForwardIcon />}
 				>
 					{t('button')}

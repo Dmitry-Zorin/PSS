@@ -9,7 +9,7 @@ export default function ColorModeSwitch() {
 			aria-label="Toggle Color Mode"
 			variant="unstyled"
 			icon={
-				<ColorModeSwitchIcon showMoon={colorMode === 'light'} boxSize={7} />
+				<ColorModeSwitchIcon showMoon={colorMode === 'light'} boxSize={6} />
 			}
 			onClick={toggleColorMode}
 		/>

@@ -20,7 +20,7 @@ export default function AppBar(props: StackProps) {
 				<IconButton
 					aria-label="Toggle Sidebar"
 					variant="unstyled"
-					icon={<HamburgerIcon boxSize={6} />}
+					icon={<HamburgerIcon boxSize={5} />}
 					onClick={() => setSidebarOpen(!isSidebarOpen)}
 				/>
 				<Logo />

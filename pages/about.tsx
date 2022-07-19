@@ -17,7 +17,7 @@ const About: NextPage = () => {
 		<>
 			<HeadTitle title={t('title')} />
 			<Layout title={t('title')}>
-				<Heading as="h2" size="xl" color="secondary.300">
+				<Heading as="h2" size="xl">
 					{t('subtitle')}
 				</Heading>
 				{(

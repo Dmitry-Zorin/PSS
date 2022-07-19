@@ -2,6 +2,7 @@ import { HStack, Link, ListItem, Text, Tooltip } from '@chakra-ui/react'
 import { useSidebarState } from 'components'
 import { motion } from 'framer-motion'
 import NextLink from 'next/link'
+import { useRouter } from 'next/router'
 import { cloneElement, ReactElement } from 'react'
 import { gentleSpringConfig } from 'utils'
 import { SIDEBAR_COLLAPSED_WIDTH } from '../Layout'
@@ -20,6 +21,8 @@ export default function MenuItem({
 	indent = false,
 }: MenuItemProps) {
 	const [isSidebarOpen] = useSidebarState()
+	const router = useRouter()
+	const isActive = new RegExp(`${to}($|\/)`).test(router.asPath)
 
 	return (
 		<ListItem>
@@ -36,9 +39,9 @@ export default function MenuItem({
 							h={10}
 							pr={6}
 							spacing={4}
-							color="text-secondary"
+							color={isActive ? 'primary' : 'text-secondary'}
 							_hover={{
-								color: 'inherit',
+								color: isActive ? 'primary' : 'inherit',
 							}}
 							initial={false}
 							animate={{
@@ -46,7 +49,7 @@ export default function MenuItem({
 								transition: gentleSpringConfig,
 							}}
 						>
-							{cloneElement(icon, { w: 6, color: 'green.300' })}
+							{cloneElement(icon, { w: 6 })}
 							<Text fontSize="0.95rem" fontWeight="medium">
 								{text}
 							</Text>

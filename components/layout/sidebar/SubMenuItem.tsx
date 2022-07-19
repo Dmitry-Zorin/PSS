@@ -43,7 +43,7 @@ export default function SubMenuItem({
 					>
 						<ChevronDownIcon boxSize={6} />
 					</Box>
-					<Text color="orange.200" fontSize="sm" fontWeight="medium">
+					<Text color="secondary" fontSize="sm" fontWeight="medium">
 						{text.toUpperCase()}
 					</Text>
 				</HStack>

@@ -43,7 +43,7 @@ const Publication: NextPage<{
 	function LabeledText({ children, label, ...props }: LabeledTextProps) {
 		return (
 			<Stack>
-				<Text fontSize="sm" color="gray.500">
+				<Text fontSize="sm" color="secondary">
 					{t(label)}
 				</Text>
 				<Text fontWeight="medium" color="text-secondary" {...props}>
