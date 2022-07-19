@@ -28,15 +28,15 @@ function createColorTokens(name: string, color: string) {
 const colorTokens: Record<string, SemanticValue<keyof Pseudos>> = {
 	bg: {
 		_light: 'white',
-		_dark: 'gray.900',
+		_dark: 'gray.800',
 	},
 	text: {
-		_light: 'gray.900',
+		_light: 'gray.800',
 		_dark: 'white',
 	},
 	'text-secondary': {
 		_light: 'gray.600',
-		_dark: 'gray.300',
+		_dark: 'gray.400',
 	},
 	border: {
 		_light: 'gray.200',

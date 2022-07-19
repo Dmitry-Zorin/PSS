@@ -34,11 +34,7 @@ export default function ResourceTable({
 
 	return (
 		<TableContainer>
-			<Table
-				variant="simple"
-				whiteSpace="normal"
-				fontSize={{ base: 'sm', xl: 'md' }}
-			>
+			<Table whiteSpace="normal" fontSize={{ base: 'sm', xl: 'md' }}>
 				<Thead>
 					<Tr>
 						{fields.map((field) => (
