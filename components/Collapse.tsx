@@ -25,6 +25,7 @@ const Collapse = ({
 			initial={false}
 			animate={{
 				[property]: collapseIn ? 'auto' : 0,
+				opacity: +collapseIn,
 				transition: gentleSpringConfig,
 			}}
 		>

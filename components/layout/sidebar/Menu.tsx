@@ -1,4 +1,3 @@
-import { InfoIcon } from '@chakra-ui/icons'
 import { List } from '@chakra-ui/react'
 import { MenuItem, SubMenu } from 'components'
 import { useTranslation } from 'next-i18next'
@@ -11,14 +10,14 @@ export default function Menu({ items }: MenuItems) {
 	const { t } = useTranslation('menu')
 
 	return (
-		<List pt={2}>
+		<List px={4} py={2}>
 			{Object.entries(items).map(([name, info]) => {
-				return typeof info === 'boolean' ? (
+				return info.icon ? (
 					<MenuItem
 						key={name}
 						to={`/${name}`}
 						text={t(name)}
-						icon={<InfoIcon />}
+						icon={info.icon}
 					/>
 				) : (
 					<SubMenu key={name} text={t(name)} items={info} />

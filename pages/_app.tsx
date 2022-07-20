@@ -5,10 +5,6 @@ import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import 'public/fonts/Golos-Text/Golos-Text.css'
 import theme from 'theme'
-// import {
-// 	ThemeEditorProvider,
-// 	HyperThemeEditor,
-// } from '@hypertheme-editor/chakra-ui'
 
 export async function getStaticProps({ locale }: { locale: string }) {
 	return {
@@ -26,9 +22,6 @@ export default appWithTranslation(({ Component, pageProps }: AppProps) => {
 			</Head>
 			<ChakraProvider theme={theme}>
 				<Component {...pageProps} />
-				{/* <ThemeEditorProvider>
-					<HyperThemeEditor pos="fixed" bottom={4} right={2} />
-				</ThemeEditorProvider> */}
 			</ChakraProvider>
 		</>
 	)

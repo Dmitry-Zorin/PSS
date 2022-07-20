@@ -4,8 +4,7 @@ datasource db {
 }
 
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["fullTextSearch"]
+  provider = "prisma-client-js"
 }
 
 enum Role {
@@ -24,13 +23,11 @@ enum Theme {
 }
 
 model User {
-  id        String    @id @default(cuid())
-  username  String    @unique
-  password  String
-  role      Role      @default(USER)
-  settings  Settings?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  id       String    @id @default(cuid())
+  username String    @unique
+  password String
+  role     Role      @default(USER)
+  settings Settings?
 }
 
 model Settings {
@@ -51,6 +48,8 @@ model Author {
 
 model Publication {
   id               Int      @id @default(autoincrement())
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
   title            String
   description      String?
   type             String?

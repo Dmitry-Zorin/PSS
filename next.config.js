@@ -1,4 +1,5 @@
 const { i18n } = require('./next-i18next.config')
+const { withSuperjson } = require('next-superjson')
 
 const csp = [
 	"default-src 'self' vitals.vercel-insights.com",
@@ -42,4 +43,4 @@ const nextConfig = {
 	},
 }
 
-module.exports = nextConfig
+module.exports = withSuperjson()(nextConfig)

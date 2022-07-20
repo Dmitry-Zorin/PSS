@@ -45,15 +45,16 @@ const Home: NextPage = () => {
 			<div>
 				<CoolButtonLink
 					to="/about"
-					colorScheme="secondary"
+					colorScheme="primary"
 					color="bg"
+					bg="text-secondary"
 					rightIcon={<ArrowForwardIcon />}
 				>
 					{t('button')}
 				</CoolButtonLink>
 			</div>
 			<div>
-				<Text color="text-secondary" maxW="md" m="auto">
+				<Text maxW="md" m="auto">
 					{t('description', { ns: 'common' })}
 				</Text>
 			</div>
@@ -62,7 +63,7 @@ const Home: NextPage = () => {
 
 	const footer = (
 		<HStack justify="center" mt="auto" p={6}>
-			<Text fontSize="sm" fontWeight="light" color="gray.500">
+			<Text color="text-secondary" fontSize="sm" fontWeight="light">
 				© 2022 {t('author', { ns: 'common' })}
 			</Text>
 		</HStack>

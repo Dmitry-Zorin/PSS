@@ -9,27 +9,26 @@ export default function AppBar(props: StackProps) {
 	return (
 		<HStack
 			as="header"
-			bg="bg"
+			bg="bg-secondary"
 			color="text-secondary"
 			justify="space-between"
 			align="center"
 			px={4}
 			{...props}
 		>
-			<HStack>
+			<HStack spacing={0}>
 				<IconButton
 					aria-label="Toggle Sidebar"
 					variant="unstyled"
-					icon={<HamburgerIcon boxSize={5} />}
+					borderRadius="full"
+					icon={<HamburgerIcon boxSize={6} />}
 					onClick={() => setSidebarOpen(!isSidebarOpen)}
 				/>
 				<Logo />
 			</HStack>
-			<HStack>
+			<HStack spacing={0}>
 				<ColorModeSwitch />
-				<div>
-					<UserMenu />
-				</div>
+				<UserMenu />
 			</HStack>
 		</HStack>
 	)

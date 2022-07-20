@@ -1,6 +1,8 @@
 import { extendTheme } from '@chakra-ui/react'
-import colorTokens from './color-tokens'
+import Color from 'color'
+import { mapValues } from 'lodash'
 import colors from './colors'
+import colorTokens from './colorTokens'
 
 const systemFonts =
 	'-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif'
@@ -31,15 +33,27 @@ export default extendTheme({
 			h2: {
 				color: 'secondary',
 			},
-			h3: {
-				color: 'text-secondary',
-			},
 		},
 	},
 	colors: {
-		...colors,
-		primary: colors.blue,
-		secondary: colors.cyan,
+		...mapValues(colors, (value, colorName) => {
+			return mapValues(value, (colorString) => {
+				let color = Color(colorString)
+				color = color.hue(Color(value[300]).hue())
+				if (colorName === 'gray') {
+					color = color.hue(230)
+				}
+				if (colorName === 'slate') {
+					color = color.hue(230)
+				}
+				if (colorName === 'teal') {
+					color = color.alpha(0.8)
+				}
+				return color.string()
+			})
+		}),
+		primary: colors.indigo,
+		secondary: colors.teal,
 	},
 	semanticTokens: {
 		colors: colorTokens,

@@ -10,7 +10,7 @@ export const getStaticProps: GetServerSideProps = async ({ locale }) => {
 	}
 }
 
-const About: NextPage = () => {
+const AboutPage: NextPage = () => {
 	const { t } = useTranslation('about')
 
 	return (
@@ -26,7 +26,7 @@ const About: NextPage = () => {
 						text: string
 					}[]
 				).map(({ title, text }) => (
-					<Stack spacing={2} key={title} pt={10}>
+					<Stack as="section" spacing={3} key={title} pt={10}>
 						<Heading as="h3" fontSize="2xl" fontWeight="semibold">
 							{title}
 						</Heading>
@@ -38,4 +38,4 @@ const About: NextPage = () => {
 	)
 }
 
-export default About
+export default AboutPage

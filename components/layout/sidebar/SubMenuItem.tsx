@@ -1,9 +1,11 @@
 import { ChevronDownIcon } from '@chakra-ui/icons'
 import {
 	Box,
+	Flex,
 	HStack,
 	ListItem,
 	ListItemProps,
+	Square,
 	Text,
 	Tooltip,
 } from '@chakra-ui/react'
@@ -24,30 +26,36 @@ export default function SubMenuItem({
 	const [isSidebarOpen] = useSidebarState()
 
 	return (
-		<ListItem cursor="pointer" userSelect="none" {...props}>
-			<Tooltip
-				label={text}
-				placement="right"
-				fontWeight="normal"
-				hidden={isSidebarOpen}
-			>
-				<HStack h={10} px={6} spacing={4} color="text-secondary">
-					<Box
+		<Tooltip
+			label={text}
+			placement="right"
+			fontWeight="normal"
+			hidden={isSidebarOpen}
+		>
+			<ListItem cursor="pointer" userSelect="none" {...props}>
+				<HStack as="button" w="full" h={10} spacing={2} color="text-secondary">
+					<Square size={10}>
+						<Flex
+							as={motion.div}
+							animate={{
+								rotate: open ? 0 : -90,
+								transition: gentleSpringConfig,
+							}}
+						>
+							<ChevronDownIcon boxSize={6} />
+						</Flex>
+					</Square>
+					<Text
 						as={motion.span}
-						minW={6}
-						initial={false}
-						animate={{
-							rotate: open ? 0 : -90,
-							transition: gentleSpringConfig,
-						}}
+						color="secondary"
+						fontSize="sm"
+						fontWeight="semibold"
+						animate={{ opacity: isSidebarOpen ? 1 : 0 }}
 					>
-						<ChevronDownIcon boxSize={6} />
-					</Box>
-					<Text color="secondary" fontSize="sm" fontWeight="medium">
 						{text.toUpperCase()}
 					</Text>
 				</HStack>
-			</Tooltip>
-		</ListItem>
+			</ListItem>
+		</Tooltip>
 	)
 }

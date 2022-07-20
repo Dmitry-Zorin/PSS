@@ -38,7 +38,11 @@ export default function ResourceTable({
 				<Thead>
 					<Tr>
 						{fields.map((field) => (
-							<Th key={field} isNumeric={typeof data[0][field] === 'number'}>
+							<Th
+								key={field}
+								isNumeric={typeof data[0][field] === 'number'}
+								borderColor="inherit"
+							>
 								{t(field)}
 							</Th>
 						))}
@@ -52,6 +56,7 @@ export default function ResourceTable({
 									<Td
 										key={`${item.id} ${field}`}
 										isNumeric={typeof item[field] === 'number'}
+										borderColor="inherit"
 									>
 										{item[field]}
 									</Td>

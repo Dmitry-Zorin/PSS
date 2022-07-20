@@ -33,7 +33,7 @@ interface LabeledTextProps extends TextProps {
 	label: string
 }
 
-const Publication: NextPage<{
+const PublicationPage: NextPage<{
 	publication: Publication
 }> = ({ publication: p }) => {
 	const router = useRouter()
@@ -76,4 +76,4 @@ const Publication: NextPage<{
 	)
 }
 
-export default Publication
+export default PublicationPage

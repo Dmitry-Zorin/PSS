@@ -1,4 +1,4 @@
-import { IconButton, useColorMode } from '@chakra-ui/react'
+import { IconButton, useColorMode, useColorModeValue } from '@chakra-ui/react'
 import { ColorModeSwitchIcon } from 'components'
 
 export default function ColorModeSwitch() {
@@ -8,6 +8,7 @@ export default function ColorModeSwitch() {
 		<IconButton
 			aria-label="Toggle Color Mode"
 			variant="unstyled"
+			borderRadius="full"
 			icon={
 				<ColorModeSwitchIcon showMoon={colorMode === 'light'} boxSize={6} />
 			}

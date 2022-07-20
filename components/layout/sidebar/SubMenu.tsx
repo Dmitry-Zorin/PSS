@@ -1,5 +1,5 @@
 import { InfoIcon } from '@chakra-ui/icons'
-import { useDisclosure } from '@chakra-ui/react'
+import { List, useDisclosure } from '@chakra-ui/react'
 import { Collapse, MenuItem, SubMenuItem, useSidebarState } from 'components'
 import { useTranslation } from 'next-i18next'
 
@@ -15,20 +15,21 @@ export default function SubMenu({ text, items }: SubMenuProps) {
 
 	return (
 		<>
-			{/* <Divider /> */}
 			<SubMenuItem text={t(text)} open={isOpen} onClick={onToggle} pt={2} />
 			<Collapse in={isOpen}>
-				{Object.entries(items).map(([name, info]) => {
-					return (
-						<MenuItem
-							key={name}
-							to={`/${text.toLowerCase()}/${name}`}
-							text={t(name)}
-							icon={info.icon || <InfoIcon />}
-							indent={isSidebarOpen}
-						/>
-					)
-				})}
+				<List>
+					{Object.entries(items).map(([name, info]) => {
+						return (
+							<MenuItem
+								key={name}
+								to={`/${text.toLowerCase()}/${name}`}
+								text={t(name)}
+								icon={info.icon || <InfoIcon />}
+								indent={isSidebarOpen}
+							/>
+						)
+					})}
+				</List>
 			</Collapse>
 		</>
 	)

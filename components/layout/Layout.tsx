@@ -56,15 +56,13 @@ function LayoutGrid({
 				pos="sticky"
 				top={APP_BAR_HEIGHT}
 				h={`calc(100vh - ${APP_BAR_HEIGHT})`}
-				borderRight={isSidebarOpen ? 0 : '1px'}
-				borderColor="inherit"
 				overflowX="hidden"
 				overflowY="auto"
 				flexShrink={0}
 			>
 				<Menu items={resources} />
 			</GridItem>
-			<GridItem as="main" area="main">
+			<GridItem as="main" area="main" px={4} py={2}>
 				{(leftActions || rightActions) && (
 					<ActionsToolbar
 						leftActions={leftActions}

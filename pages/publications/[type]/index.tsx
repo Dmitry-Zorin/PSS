@@ -36,20 +36,15 @@ export const getServerSideProps: GetServerSideProps<
 			take: 10,
 			...(typeof search === 'string' &&
 				(() => {
-					const searchQuery = search.trim().replace(/ /g, ':* & ') + ':*'
+					const wordsArray = search.trim().split(' ')
 					return {
 						where: {
-							OR: [
-								{ title: { search: searchQuery } },
-								{ description: { search: searchQuery } },
-							],
-						},
-						orderBy: {
-							_relevance: {
-								fields: ['title', 'description'],
-								search: searchQuery,
-								sort: 'desc',
-							},
+							AND: wordsArray.flatMap((word) => ({
+								OR: [
+									{ title: { contains: word, mode: 'insensitive' } },
+									{ description: { contains: word, mode: 'insensitive' } },
+								],
+							})),
 						},
 					}
 				})()),
@@ -74,7 +69,7 @@ export const getServerSideProps: GetServerSideProps<
 	}
 }
 
-const Publications: NextPage<PublicationsPageProps> = ({
+const PublicationsPage: NextPage<PublicationsPageProps> = ({
 	publications,
 	error,
 }) => {
@@ -128,4 +123,4 @@ const Publications: NextPage<PublicationsPageProps> = ({
 	)
 }
 
-export default Publications
+export default PublicationsPage
