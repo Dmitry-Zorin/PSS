@@ -9,6 +9,18 @@
 		}
 	},
 	"actions": {
+		"go_back": "Go Back",
+		"retry": "Try Again",
 		"download": "Download"
+	},
+	"errors": {
+		"404": {
+			"face": "¯\\_( ◉ _ ◉ )_/¯",
+			"name": "Page Not Found"
+		},
+		"500": {
+			"face": "¯\\_( ✖ ෴ ✖ )_/¯",
+			"name": "Internal Server Error"
+		}
 	}
 }

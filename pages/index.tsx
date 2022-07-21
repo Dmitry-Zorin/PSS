@@ -33,7 +33,7 @@ const Home: NextPage = () => {
 				>
 					{t('welcome')}
 				</Heading>
-				<Heading as="h1" color="primary" fontSize={{ base: '6xl', xl: '7xl' }}>
+				<Heading as="h1" fontSize={{ base: '6xl', xl: '7xl' }}>
 					{t(['name_to', 'name'], { ns: 'common' })}
 				</Heading>
 			</Stack>

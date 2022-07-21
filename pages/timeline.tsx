@@ -61,6 +61,8 @@ function ListItemCard({ record }: ListItemCardProps) {
 				spacing={2}
 				cursor="pointer"
 				borderRadius="lg"
+				border="1px"
+				borderColor="inherit"
 				px={6}
 				py={4}
 				bg="bg-50"
@@ -74,7 +76,7 @@ function ListItemCard({ record }: ListItemCardProps) {
 						icon={resources.publications.articles.icon}
 					/>
 					<Stack flexGrow={1} spacing={0}>
-						<Text fontSize="md">{t(record.type)}</Text>
+						<Text fontSize="md">{t(record.type || '')}</Text>
 						<Text fontSize="sm" color="text-secondary">
 							{new Date(record.createdAt).toLocaleString(i18n.language, {
 								day: 'numeric',

@@ -12,33 +12,35 @@ enum Role {
   ADMIN
 }
 
-enum Locale {
+enum Language {
   EN
   RU
 }
 
-enum Theme {
+enum ColorMode {
+  SYSTEM
   LIGHT
   DARK
 }
 
 model User {
-  id       String    @id @default(cuid())
-  username String    @unique
-  password String
-  role     Role      @default(USER)
-  settings Settings?
+  id          Int          @id @default(autoincrement())
+  joinedAt    DateTime     @default(now())
+  username    String       @unique
+  password    String
+  role        Role         @default(USER)
+  preferences Preferences?
 }
 
-model Settings {
-  user   User   @relation(fields: [userId], references: [id])
-  userId String @unique
-  locale Locale @default(EN)
-  theme  Theme  @default(DARK)
+model Preferences {
+  user      User      @relation(fields: [userId], references: [id])
+  userId    Int       @unique
+  language  Language  @default(EN)
+  colorMode ColorMode @default(DARK)
 }
 
 model Author {
-  id           String        @id @default(cuid())
+  id           Int           @id @default(autoincrement())
   lastName     String
   firstName    String
   middleName   String?
@@ -46,14 +48,20 @@ model Author {
   publications Publication[]
 }
 
+model Character {
+  id           Int           @id @default(autoincrement())
+  publications Publication[]
+}
+
 model Publication {
-  id               Int      @id @default(autoincrement())
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  id               Int        @id @default(autoincrement())
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
   title            String
   description      String?
-  type             String?
-  characterId      String?
+  type             String
+  character        Character? @relation(fields: [characterId], references: [id])
+  characterId      Int        @unique
   publicationPlace String?
   year             Int?
   volume           Int?

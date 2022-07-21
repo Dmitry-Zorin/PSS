@@ -14,7 +14,7 @@ import resources from 'resources/resources'
 import { gentleSpringConfig } from 'utils'
 
 const APP_BAR_HEIGHT = '4rem'
-const SIDEBAR_WIDTH = '18rem'
+const SIDEBAR_WIDTH = '16rem'
 export const SIDEBAR_COLLAPSED_WIDTH = '4rem'
 
 interface LayoutProps {

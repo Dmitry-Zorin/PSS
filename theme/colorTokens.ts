@@ -27,28 +27,28 @@ function createColorTokens(name: string, color: string) {
 
 const colorTokens: Record<string, SemanticValue<keyof Pseudos>> = {
 	bg: {
-		_light: 'gray.200',
-		_dark: '#141724',
+		_light: 'light.50',
+		_dark: 'dark.900',
 	},
 	'bg-secondary': {
-		_light: 'gray.200',
-		_dark: 'gray.800',
+		_light: 'light.100',
+		_dark: 'dark.600',
 	},
 	'bg-50': {
-		_light: 'gray.50',
-		_dark: 'whiteAlpha.50',
+		_light: '#fff',
+		_dark: 'dark.700',
 	},
 	'bg-100': {
-		_light: 'gray.100',
-		_dark: 'whiteAlpha.100',
+		_light: 'light.300',
+		_dark: 'dark.600',
 	},
 	'bg-200': {
-		_light: 'gray.200',
-		_dark: 'whiteAlpha.200',
+		_light: 'light.400',
+		_dark: 'dark.500',
 	},
 	text: {
-		_light: 'gray.700',
-		_dark: 'gray.300',
+		_light: 'dark.400',
+		_dark: 'light.400',
 	},
 	'text-secondary': {
 		_light: 'gray.500',
@@ -56,9 +56,9 @@ const colorTokens: Record<string, SemanticValue<keyof Pseudos>> = {
 	},
 	border: {
 		_light: 'gray.200',
-		_dark: 'whiteAlpha.200',
+		_dark: 'gray.500',
 	},
-	...createColorTokens('primary', 'indigo'),
+	...createColorTokens('primary', 'primary'),
 	...createColorTokens('secondary', 'gray'),
 }
 
