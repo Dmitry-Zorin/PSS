@@ -1,7 +1,7 @@
 import { HamburgerIcon } from '@chakra-ui/icons'
 import { HStack, IconButton, StackProps } from '@chakra-ui/react'
-import { ColorModeSwitch, Logo, useSidebarState } from 'components'
-import UserMenu from '../UserMenu'
+import { ColorModeSwitch, Logo, UserMenu } from 'components'
+import { useSidebarState } from 'hooks'
 
 export default function AppBar(props: StackProps) {
 	const [isSidebarOpen, setSidebarOpen] = useSidebarState()
@@ -9,6 +9,7 @@ export default function AppBar(props: StackProps) {
 	return (
 		<HStack
 			as="header"
+			zIndex="overlay"
 			bg="bg-secondary"
 			color="text-secondary"
 			justify="space-between"

@@ -1,11 +1,7 @@
 import { Colors } from '@chakra-ui/react'
 
-// primary: https://coolors.co/b3beff-99a8ff-8095ff-677ce4-475ed1-2e45b8
-// dark: https://coolors.co/141624-161827-181a2a-1a1d2d-1d2030-1f2233
-// light https://coolors.co/b4b7ca-c2c5d6-cfd2e2-dddfee-eceef9-f5f6ff
-// gray https://coolors.co/4d5066-595d73-656a81-73768c-808399-8d90a5-9a9db1
-
 const colors: Colors = {
+	// https://coolors.co/b3beff-99a8ff-8095ff-677ce4-475ed1-2e45b8
 	primary: {
 		200: '#b3beff',
 		300: '#99a8ff',
@@ -14,14 +10,15 @@ const colors: Colors = {
 		600: '#475ed1',
 		700: '#2e45b8',
 	},
+	// https://coolors.co/191d2e-1d2235-21263b-252a41-292f47
 	dark: {
-		400: '#1f2233',
-		500: '#1d2030',
-		600: '#1a1d2d',
-		700: '#181a2a',
-		800: '#161827',
-		900: '#141624',
+		400: '#292F47',
+		500: '#252A41',
+		600: '#21263B',
+		700: '#1D2235',
+		800: '#191D2E',
 	},
+	// https://coolors.co/b4b7ca-c2c5d6-cfd2e2-dddfee-eceef9-f5f6ff
 	light: {
 		50: '#fafbff',
 		100: '#F1F3F9',
@@ -31,6 +28,7 @@ const colors: Colors = {
 		500: '#c2c5d6',
 		600: '#b4b7ca',
 	},
+	// https://coolors.co/4d5066-595d73-656a81-73768c-808399-8d90a5-9a9db1
 	gray: {
 		200: '#9a9db1',
 		300: '#8d90a5',

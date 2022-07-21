@@ -17,7 +17,7 @@ export default function MainArea({
 	return (
 		<Box maxW={{ base: showWide ? '6xl' : '3xl', xl: '6xl' }} mx="auto" pb={16}>
 			{title && (
-				<Box as="header" pt={6} pb={12}>
+				<Box as="header" py={12}>
 					{title && (
 						<Heading as="h1" size="3xl">
 							{title}
@@ -26,7 +26,7 @@ export default function MainArea({
 				</Box>
 			)}
 			<Box display="flex">
-				<Box as="article" maxW="3xl">
+				<Box as="article" maxW="3xl" w="full">
 					{children}
 				</Box>
 				{rightMenu && (

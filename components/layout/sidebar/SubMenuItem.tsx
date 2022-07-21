@@ -1,6 +1,5 @@
 import { ChevronDownIcon } from '@chakra-ui/icons'
 import {
-	Box,
 	Flex,
 	HStack,
 	ListItem,
@@ -9,8 +8,9 @@ import {
 	Text,
 	Tooltip,
 } from '@chakra-ui/react'
-import { useSidebarState } from 'components'
 import { motion } from 'framer-motion'
+import { useSidebarState } from 'hooks'
+import { useTranslation } from 'next-i18next'
 import { gentleSpringConfig } from 'utils'
 
 export interface SubMenuItemProps extends ListItemProps {
@@ -23,11 +23,12 @@ export default function SubMenuItem({
 	open,
 	...props
 }: SubMenuItemProps) {
+	const { t } = useTranslation('common', { keyPrefix: 'menu.groups' })
 	const [isSidebarOpen] = useSidebarState()
 
 	return (
 		<Tooltip
-			label={text}
+			label={t(text)}
 			placement="right"
 			fontWeight="normal"
 			hidden={isSidebarOpen}
@@ -47,12 +48,10 @@ export default function SubMenuItem({
 					</Square>
 					<Text
 						as={motion.span}
-						color="secondary"
 						fontSize="sm"
-						fontWeight="semibold"
 						animate={{ opacity: isSidebarOpen ? 1 : 0 }}
 					>
-						{text.toUpperCase()}
+						{t(text).toUpperCase()}
 					</Text>
 				</HStack>
 			</ListItem>

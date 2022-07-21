@@ -1,44 +1,42 @@
 {
-	"resources": {
-		"articles": {
-			"name_one": "Статья",
-			"name_other": "Статьи"
-		},
-		"abstracts": {
-			"name_one": "Автореферат",
-			"name_other": "Авторефераты"
-		},
-		"monographs": {
-			"name_one": "Монография",
-			"name_other": "Монографии"
-		},
-		"dissertations": {
-			"name_one": "Диссертация",
-			"name_other": "Диссертации"
-		},
-		"patents": {
-			"name_one": "Патент",
-			"name_other": "Патенты"
-		},
-		"reports": {
-			"name_one": "Отчет",
-			"name_other": "Отчеты"
-		},
-		"programs": {
-			"name_one": "Программа",
-			"name_other": "Программы"
-		},
-		"textbooks": {
-			"name_one": "Учебник",
-			"name_other": "Учебники"
-		},
-		"authors": {
-			"name_one": "Автор",
-			"name_other": "Авторы"
-		},
-		"characters": {
-			"name_one": "Характер работы",
-			"name_other": "Характеры работы"
-		}
+	"articles": {
+		"name_one": "Статья",
+		"name_other": "Статьи"
+	},
+	"abstracts": {
+		"name_one": "Автореферат",
+		"name_other": "Авторефераты"
+	},
+	"monographs": {
+		"name_one": "Монография",
+		"name_other": "Монографии"
+	},
+	"dissertations": {
+		"name_one": "Диссертация",
+		"name_other": "Диссертации"
+	},
+	"patents": {
+		"name_one": "Патент",
+		"name_other": "Патенты"
+	},
+	"reports": {
+		"name_one": "Отчет",
+		"name_other": "Отчеты"
+	},
+	"programs": {
+		"name_one": "Программа",
+		"name_other": "Программы"
+	},
+	"textbooks": {
+		"name_one": "Учебник",
+		"name_other": "Учебники"
+	},
+	"authors": {
+		"name_one": "Автор",
+		"name_other": "Авторы"
+	},
+	"characters": {
+		"name_one": "Характер работы",
+		"name_other": "Характеры работы"
 	}
 }

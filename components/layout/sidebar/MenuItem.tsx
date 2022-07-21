@@ -1,31 +1,26 @@
-import { HStack, ListItem, Square, Text, Tooltip } from '@chakra-ui/react'
-import { useSidebarState } from 'components'
+import { Circle, HStack, ListItem, Text, Tooltip } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
+import { useSidebarState } from 'hooks'
+import { useTranslation } from 'next-i18next'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import { ReactElement } from 'react'
-import { gentleSpringConfig } from 'utils'
 
 export interface MenuItemProps {
 	to: string
 	icon: ReactElement
 	text: string
-	indent?: boolean
 }
 
-export default function MenuItem({
-	to,
-	icon,
-	text,
-	indent = false,
-}: MenuItemProps) {
+export default function MenuItem({ to, icon, text }: MenuItemProps) {
 	const [isSidebarOpen] = useSidebarState()
 	const router = useRouter()
 	const isActive = new RegExp(`${to}($|\/)`).test(router.asPath)
+	const { t } = useTranslation('common', { keyPrefix: 'menu.items' })
 
 	return (
 		<Tooltip
-			label={text}
+			label={t(text)}
 			placement="right"
 			fontWeight="normal"
 			hidden={isSidebarOpen}
@@ -33,28 +28,26 @@ export default function MenuItem({
 			<ListItem>
 				<NextLink href={to} passHref>
 					<HStack
-						as={motion.a}
+						as="a"
 						outlineOffset={-1}
 						h={10}
 						spacing={2}
-						color={isActive ? 'primary' : 'text-secondary'}
+						pr={4}
+						bg={isActive ? 'bg-100' : 'transparent'}
+						color={isActive ? 'text' : 'text-secondary'}
 						_hover={{
+							bg: 'bg-50',
 							color: isActive ? 'primary' : 'inherit',
 						}}
-						initial={false}
-						animate={{
-							paddingLeft: indent ? '2.5rem' : 0,
-							transition: gentleSpringConfig,
-						}}
+						borderRadius="full"
 					>
-						<Square size={10}>{icon}</Square>
+						<Circle size={10}>{icon}</Circle>
 						<Text
 							as={motion.span}
-							fontSize="0.95rem"
-							fontWeight="medium"
+							fontSize="md"
 							animate={{ opacity: isSidebarOpen ? 1 : 0 }}
 						>
-							{text}
+							{t(text)}
 						</Text>
 					</HStack>
 				</NextLink>

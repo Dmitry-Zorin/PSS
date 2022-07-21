@@ -1,13 +1,13 @@
 import { Avatar, HStack, List, ListItem, Stack, Text } from '@chakra-ui/react'
 import { Publication } from '@prisma/client'
 import { HeadTitle, Layout } from 'components'
+import resources from 'constants/resources'
 import prisma from 'lib/prisma'
 import { GetServerSideProps, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import NextLink from 'next/link'
 import { stdout } from 'process'
-import resources from 'resources/resources'
 import { parse, stringify } from 'superjson'
 
 interface TimelinePageProps {
@@ -33,11 +33,7 @@ export const getServerSideProps: GetServerSideProps<
 		return {
 			props: {
 				publications: parse(stringify(publications)),
-				...(await serverSideTranslations(locale!, [
-					'common',
-					'menu',
-					'fields',
-				])),
+				...(await serverSideTranslations(locale!, ['common', 'fields'])),
 			},
 		}
 	} catch (e: any) {
@@ -61,8 +57,6 @@ function ListItemCard({ record }: ListItemCardProps) {
 				spacing={2}
 				cursor="pointer"
 				borderRadius="lg"
-				border="1px"
-				borderColor="inherit"
 				px={6}
 				py={4}
 				bg="bg-50"
@@ -93,14 +87,14 @@ function ListItemCard({ record }: ListItemCardProps) {
 }
 
 const TimelinePage: NextPage<TimelinePageProps> = ({ publications }) => {
-	const { t } = useTranslation('menu')
+	const { t } = useTranslation('common')
 
 	return (
 		<>
 			<HeadTitle title={t('timeline')} />
 			<Layout>
 				{publications && (
-					<List spacing={6}>
+					<List spacing={6} pt={6}>
 						{publications?.map((e) => (
 							<ListItem key={e.id}>
 								<ListItemCard record={e} />

@@ -23,7 +23,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 	return {
 		props: {
 			publication,
-			...(await serverSideTranslations(locale!, ['common', 'menu', 'fields'])),
+			...(await serverSideTranslations(locale!, ['common', 'fields'])),
 		},
 	}
 }
@@ -38,7 +38,7 @@ const PublicationPage: NextPage<{
 }> = ({ publication: p }) => {
 	const router = useRouter()
 	const { type } = router.query as { type: string }
-	const { t } = useTranslation(['common', 'menu', 'fields'])
+	const { t } = useTranslation(['common', 'fields'])
 
 	function LabeledText({ children, label, ...props }: LabeledTextProps) {
 		return (
@@ -55,7 +55,7 @@ const PublicationPage: NextPage<{
 
 	return (
 		<>
-			<HeadTitle title={`${t(type, { ns: 'menu' })} #${p.id}`} />
+			<HeadTitle title={`${t(type)} #${p.id}`} />
 			<Layout title={p.title}>
 				<Stack spacing={12}>
 					<Text>{p.description}</Text>
@@ -63,7 +63,7 @@ const PublicationPage: NextPage<{
 						<LabeledText label="type">{p.type ?? '-'}</LabeledText>
 						<LabeledText label="year">{p.year ?? '-'}</LabeledText>
 						<LabeledText label="character">{p.characterId ?? '-'}</LabeledText>
-						<LabeledText label="volume">{p.volume ?? '-'}</LabeledText>
+						<LabeledText label="volume">{p.pages ?? '-'}</LabeledText>
 						{/* <LabeledText label="authors">{p.authors}</LabeledText> */}
 						{/* <LabeledText label="coauthors">{p.coauthors}</LabeledText> */}
 					</SimpleGrid>

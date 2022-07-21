@@ -28,7 +28,3 @@ export function SidebarContextProvider({ children }: { children: ReactNode }) {
 		</SidebarContext.Provider>
 	)
 }
-
-export function useSidebarState() {
-	return useContext(SidebarContext)
-}

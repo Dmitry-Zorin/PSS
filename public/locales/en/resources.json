@@ -1,44 +1,42 @@
 {
-	"resources": {
-		"articles": {
-			"name_one": "Article",
-			"name_other": "Articles"
-		},
-		"abstracts": {
-			"name_one": "Abstract",
-			"name_other": "Abstracts"
-		},
-		"monographs": {
-			"name_one": "Monograph",
-			"name_other": "Monographs"
-		},
-		"dissertations": {
-			"name_one": "Dissertation",
-			"name_other": "Dissertations"
-		},
-		"patents": {
-			"name_one": "Patent",
-			"name_other": "Patents"
-		},
-		"reports": {
-			"name_one": "Report",
-			"name_other": "Reports"
-		},
-		"programs": {
-			"name_one": "Program",
-			"name_other": "Programs"
-		},
-		"textbooks": {
-			"name_one": "Textbook",
-			"name_other": "Textbooks"
-		},
-		"authors": {
-			"name_one": "Author",
-			"name_other": "Authors"
-		},
-		"characters": {
-			"name_one": "Character",
-			"name_other": "Characters"
-		}
+	"articles": {
+		"name_one": "Article",
+		"name_other": "Articles"
+	},
+	"abstracts": {
+		"name_one": "Abstract",
+		"name_other": "Abstracts"
+	},
+	"monographs": {
+		"name_one": "Monograph",
+		"name_other": "Monographs"
+	},
+	"dissertations": {
+		"name_one": "Dissertation",
+		"name_other": "Dissertations"
+	},
+	"patents": {
+		"name_one": "Patent",
+		"name_other": "Patents"
+	},
+	"reports": {
+		"name_one": "Report",
+		"name_other": "Reports"
+	},
+	"programs": {
+		"name_one": "Program",
+		"name_other": "Programs"
+	},
+	"textbooks": {
+		"name_one": "Textbook",
+		"name_other": "Textbooks"
+	},
+	"authors": {
+		"name_one": "Author",
+		"name_other": "Authors"
+	},
+	"characters": {
+		"name_one": "Character",
+		"name_other": "Characters"
 	}
 }

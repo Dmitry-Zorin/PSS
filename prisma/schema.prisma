@@ -50,6 +50,7 @@ model Author {
 
 model Character {
   id           Int           @id @default(autoincrement())
+  name         String
   publications Publication[]
 }
 
@@ -57,14 +58,15 @@ model Publication {
   id               Int        @id @default(autoincrement())
   createdAt        DateTime   @default(now())
   updatedAt        DateTime   @updatedAt
+  category         String
   title            String
   description      String?
   type             String
   character        Character? @relation(fields: [characterId], references: [id])
-  characterId      Int        @unique
+  characterId      Int
   publicationPlace String?
   year             Int?
-  volume           Int?
+  pages            Float?
   authors          Author[]
   coauthors        String[]
   outputData       String?

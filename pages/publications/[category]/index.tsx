@@ -46,17 +46,16 @@ export const getServerSideProps: GetServerSideProps<
 								],
 							})),
 						},
+						orderBy: {
+							createdAt: 'desc',
+						},
 					}
 				})()),
 		})
 		return {
 			props: {
 				publications,
-				...(await serverSideTranslations(locale!, [
-					'common',
-					'menu',
-					'fields',
-				])),
+				...(await serverSideTranslations(locale!, ['common', 'fields'])),
 			},
 		}
 	} catch (e: any) {
@@ -74,8 +73,8 @@ const PublicationsPage: NextPage<PublicationsPageProps> = ({
 	error,
 }) => {
 	const router = useRouter()
-	const { type, search } = router.query as Record<string, string>
-	const { t } = useTranslation(['common', 'menu', 'fields'])
+	const { category, search } = router.query as Record<string, string>
+	const { t } = useTranslation(['common', 'fields'])
 	const [searchQuery, setSearchQuery] = useState(search ?? '')
 
 	const debouncedSearch = useMemo(() => {
@@ -97,7 +96,7 @@ const PublicationsPage: NextPage<PublicationsPageProps> = ({
 
 	return (
 		<>
-			<HeadTitle title={t(type, { ns: 'menu' })} />
+			<HeadTitle title={t(category)} />
 			<Layout
 				leftActions={
 					<Search
@@ -114,8 +113,8 @@ const PublicationsPage: NextPage<PublicationsPageProps> = ({
 				{publications && (
 					<ResourceTable
 						data={publications}
-						fields={['title', 'year']}
-						RowLink={<Link href={`./${type}`} />}
+						fields={['title', 'description', 'year']}
+						RowLink={<Link href={`/publications/${category}`} />}
 					/>
 				)}
 			</Layout>

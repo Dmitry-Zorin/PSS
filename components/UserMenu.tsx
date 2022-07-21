@@ -2,6 +2,7 @@ import {
 	Avatar,
 	Box,
 	HStack,
+	Icon,
 	Menu,
 	MenuButton,
 	MenuDivider,
@@ -9,6 +10,7 @@ import {
 	MenuList,
 	Text,
 } from '@chakra-ui/react'
+import { FaUser } from 'react-icons/fa'
 
 export default function UserMenu() {
 	return (
@@ -16,7 +18,11 @@ export default function UserMenu() {
 			<Menu>
 				<MenuButton p={2}>
 					<HStack spacing={2}>
-						<Avatar size="sm" bg="slate.500" />
+						<Avatar
+							size="sm"
+							icon={<Icon as={FaUser} size={40} />}
+							bg="slate.500"
+						/>
 						<div>
 							<Text fontSize="sm" color="text">
 								Guest

@@ -28,11 +28,11 @@ function createColorTokens(name: string, color: string) {
 const colorTokens: Record<string, SemanticValue<keyof Pseudos>> = {
 	bg: {
 		_light: 'light.50',
-		_dark: 'dark.900',
+		_dark: 'dark.800',
 	},
 	'bg-secondary': {
 		_light: 'light.100',
-		_dark: 'dark.600',
+		_dark: 'dark.700',
 	},
 	'bg-50': {
 		_light: '#fff',
@@ -52,11 +52,19 @@ const colorTokens: Record<string, SemanticValue<keyof Pseudos>> = {
 	},
 	'text-secondary': {
 		_light: 'gray.500',
-		_dark: 'gray.400',
+		_dark: 'gray.300',
 	},
 	border: {
 		_light: 'gray.200',
-		_dark: 'gray.500',
+		_dark: 'dark.500',
+	},
+	'alpha-50': {
+		_light: 'blackAlpha.50',
+		_dark: 'whiteAlpha.50',
+	},
+	'alpha-100': {
+		_light: 'blackAlpha.100',
+		_dark: 'whiteAlpha.100',
 	},
 	...createColorTokens('primary', 'primary'),
 	...createColorTokens('secondary', 'gray'),

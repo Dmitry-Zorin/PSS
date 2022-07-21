@@ -6,6 +6,21 @@
 		"groups": {
 			"publications": "Publications",
 			"admin": "Administration"
+		},
+		"items": {
+			"about": "About",
+			"timeline": "Timeline",
+			"authors": "Authors",
+			"publications": "Publications",
+			"articles": "Articles",
+			"abstracts": "Abstracts",
+			"monographs": "Monographs",
+			"dissertations": "Dissertations",
+			"patents": "Patents",
+			"reports": "Reports",
+			"programs": "Programs",
+			"textbooks": "Textbooks",
+			"characters": "Characters"
 		}
 	},
 	"actions": {

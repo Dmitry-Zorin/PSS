@@ -5,11 +5,15 @@ import {
 	Td,
 	Th,
 	Thead,
+	Tooltip,
 	Tr,
 } from '@chakra-ui/react'
 import { TableRow } from 'components'
+import { truncate } from 'lodash'
 import { useTranslation } from 'next-i18next'
 import { cloneElement, ReactElement } from 'react'
+
+const MAX_LENGTH = 200
 
 interface ResourceItem extends Record<string, any> {
 	id: string | number
@@ -52,15 +56,32 @@ export default function ResourceTable({
 					{data?.map((item) => {
 						const tableRow = (
 							<TableRow>
-								{fields.map((field) => (
-									<Td
-										key={`${item.id} ${field}`}
-										isNumeric={typeof item[field] === 'number'}
-										borderColor="inherit"
-									>
-										{item[field]}
-									</Td>
-								))}
+								{fields.map((field) => {
+									const text = item[field]
+									const td = (
+										<Td
+											key={`${item.id} ${field}`}
+											isNumeric={typeof text === 'number'}
+											borderColor="inherit"
+											w="auto"
+										>
+											{truncate(text, { length: MAX_LENGTH })}
+										</Td>
+									)
+									return text.length > MAX_LENGTH ? (
+										<Tooltip
+											label={text}
+											placement="bottom"
+											openDelay={600}
+											px={4}
+											py={3}
+										>
+											{td}
+										</Tooltip>
+									) : (
+										td
+									)
+								})}
 							</TableRow>
 						)
 						return RowLink

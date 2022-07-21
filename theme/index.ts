@@ -19,7 +19,7 @@ export default extendTheme({
 			body: {
 				color: 'text',
 				bg: 'bg',
-				fontSize: 'lg',
+				fontSize: '1.0625rem',
 				wordSpacing: '0.05em',
 			},
 			'*, *::before, &::after': {

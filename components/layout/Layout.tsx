@@ -6,16 +6,16 @@ import {
 	Menu,
 	Sidebar,
 	SidebarContextProvider,
-	useSidebarState,
 } from 'components'
 import { motion } from 'framer-motion'
+import { useSidebarState } from 'hooks'
 import { ReactNode } from 'react'
-import resources from 'resources/resources'
+import resources from 'constants/resources'
 import { gentleSpringConfig } from 'utils'
 
 const APP_BAR_HEIGHT = '4rem'
 const SIDEBAR_WIDTH = '16rem'
-export const SIDEBAR_COLLAPSED_WIDTH = '4rem'
+export const SIDEBAR_COLLAPSED_WIDTH = '4.5rem'
 
 interface LayoutProps {
 	children: ReactNode
