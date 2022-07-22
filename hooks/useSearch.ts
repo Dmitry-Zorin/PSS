@@ -35,5 +35,10 @@ export default function useSearch() {
 		debouncedSearch(value)
 	}
 
-	return { searchValue, search }
+	function clear() {
+		setSearchValue('')
+		debouncedSearch('')
+	}
+
+	return { searchValue, search, clear }
 }

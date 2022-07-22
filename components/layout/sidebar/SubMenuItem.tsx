@@ -34,10 +34,18 @@ export default function SubMenuItem({
 			hidden={isSidebarOpen}
 		>
 			<ListItem cursor="pointer" userSelect="none" {...props}>
-				<HStack as="button" w="full" h={10} spacing={2} color="text-secondary">
+				<HStack
+					as="button"
+					w="full"
+					h={10}
+					spacing={2}
+					color="text-secondary"
+					borderRadius="full"
+				>
 					<Square size={10}>
 						<Flex
 							as={motion.div}
+							initial={false}
 							animate={{
 								rotate: open ? 0 : -90,
 								transition: gentleSpringConfig,
@@ -49,6 +57,7 @@ export default function SubMenuItem({
 					<Text
 						as={motion.span}
 						fontSize="sm"
+						initial={false}
 						animate={{ opacity: isSidebarOpen ? 1 : 0 }}
 					>
 						{t(text).toUpperCase()}

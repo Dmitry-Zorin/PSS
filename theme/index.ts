@@ -1,6 +1,7 @@
 import { extendTheme } from '@chakra-ui/react'
 import colors from './colors'
 import colorTokens from './colorTokens'
+import components from './components'
 
 const systemFonts =
 	'-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif'
@@ -19,7 +20,8 @@ export default extendTheme({
 			body: {
 				color: 'text',
 				bg: 'bg',
-				fontSize: '1.0625rem',
+				fontSize: 'lg',
+				letterSpacing: 'tight',
 				wordSpacing: '0.05em',
 			},
 			'*, *::before, &::after': {
@@ -40,4 +42,5 @@ export default extendTheme({
 	semanticTokens: {
 		colors: colorTokens,
 	},
+	components,
 })

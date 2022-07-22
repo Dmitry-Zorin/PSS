@@ -1,20 +1,29 @@
-import { Grid, GridItem } from '@chakra-ui/react'
+import {
+	Grid,
+	GridItem,
+	Show,
+	Theme,
+	useBreakpointValue,
+	useDisclosure,
+	useTheme,
+} from '@chakra-ui/react'
 import {
 	ActionsToolbar,
 	AppBar,
 	MainArea,
 	Menu,
 	Sidebar,
-	SidebarContextProvider,
+	SidebarDrawer,
 } from 'components'
+import resources from 'constants/resources'
+import { SidebarContextProvider } from 'contexts/SidebarContext'
 import { motion } from 'framer-motion'
 import { useSidebarState } from 'hooks'
 import { ReactNode } from 'react'
-import resources from 'constants/resources'
 import { gentleSpringConfig } from 'utils'
 
 const APP_BAR_HEIGHT = '4rem'
-const SIDEBAR_WIDTH = '16rem'
+const SIDEBAR_WIDTH = '15rem'
 export const SIDEBAR_COLLAPSED_WIDTH = '4.5rem'
 
 interface LayoutProps {
@@ -34,13 +43,26 @@ function LayoutGrid({
 	fullSize = false,
 	rightMenu,
 }: LayoutProps) {
-	const [isSidebarOpen] = useSidebarState()
+	const [isSidebarOpen, setSidebarOpen] = useSidebarState()
+	const theme = useTheme<Theme>()
+	const {
+		isOpen: isSidebarDrawerOpen,
+		onOpen: onSidebarDrawerOpen,
+		onClose: onSidebarDrawerClose,
+	} = useDisclosure()
+
+	const menu = <Menu items={resources} />
 
 	return (
 		<Grid
 			as={motion.div}
 			templateAreas='"header header" "nav main"'
 			gridTemplateRows={`${APP_BAR_HEIGHT} 1fr`}
+			sx={{
+				[`@media(max-width: ${theme.breakpoints.md})`]: {
+					gridTemplateColumns: `0 1fr !important`,
+				},
+			}}
 			initial={false}
 			animate={{
 				gridTemplateColumns: `${
@@ -49,7 +71,22 @@ function LayoutGrid({
 				transition: gentleSpringConfig,
 			}}
 		>
-			<GridItem as={AppBar} area="header" pos="sticky" top={0} />
+			<GridItem
+				as={AppBar}
+				area="header"
+				pos="sticky"
+				top={0}
+				isSidebarOpen={
+					!!useBreakpointValue<boolean>({
+						base: isSidebarDrawerOpen,
+						md: isSidebarOpen,
+					})
+				}
+				onClick={useBreakpointValue<() => void>({
+					base: onSidebarDrawerOpen,
+					md: () => setSidebarOpen(!isSidebarOpen),
+				})}
+			/>
 			<GridItem
 				as={Sidebar}
 				area="nav"
@@ -60,9 +97,9 @@ function LayoutGrid({
 				overflowY="auto"
 				flexShrink={0}
 			>
-				<Menu items={resources} />
+				{menu}
 			</GridItem>
-			<GridItem as="main" area="main" px={4} py={2}>
+			<GridItem as="main" area="main" px={6} py={4}>
 				{(leftActions || rightActions) && (
 					<ActionsToolbar
 						leftActions={leftActions}
@@ -77,6 +114,14 @@ function LayoutGrid({
 					</MainArea>
 				)}
 			</GridItem>
+			<Show below="md">
+				<SidebarDrawer
+					isOpen={isSidebarDrawerOpen}
+					onClose={onSidebarDrawerClose}
+				>
+					{menu}
+				</SidebarDrawer>
+			</Show>
 		</Grid>
 	)
 }

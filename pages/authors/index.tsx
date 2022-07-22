@@ -25,7 +25,7 @@ export const getServerSideProps: GetServerSideProps<
 	)
 	const { search } = query
 
-	await new Promise((resolve) => setTimeout(resolve, 3000))
+	// await new Promise((resolve) => setTimeout(resolve, 3000))
 
 	const authors = await prisma.author.findMany({
 		take: 10,

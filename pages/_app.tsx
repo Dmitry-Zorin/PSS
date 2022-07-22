@@ -8,14 +8,14 @@ import 'public/fonts/Golos-Text/Golos-Text.css'
 import { useEffect } from 'react'
 import theme from 'theme'
 
-export const getStaticProps: GetStaticProps = async ({ locale }) => {
-	return {
-		props: await serverSideTranslations(locale!, ['about', 'common']),
-	}
-}
+// export const getStaticProps: GetStaticProps = async ({ locale }) => {
+// 	return {
+// 		props: await serverSideTranslations(locale!, ['about', 'common']),
+// 	}
+// }
 
 export default appWithTranslation(({ Component, pageProps }) => {
-	const { t } = useTranslation('common')
+	// const { t } = useTranslation('common')
 	const router = useRouter()
 
 	useEffect(() => {
@@ -24,10 +24,10 @@ export default appWithTranslation(({ Component, pageProps }) => {
 
 	return (
 		<>
-			<Head>
+			{/* <Head>
 				<title>{t('name')}</title>
 				<meta name="description" content={t('description')} />
-			</Head>
+			</Head> */}
 			<ChakraProvider theme={theme}>
 				<Component {...pageProps} />
 			</ChakraProvider>

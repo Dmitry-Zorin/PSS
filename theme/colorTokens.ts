@@ -35,7 +35,7 @@ const colorTokens: Record<string, SemanticValue<keyof Pseudos>> = {
 		_dark: 'dark.700',
 	},
 	'bg-50': {
-		_light: '#fff',
+		_light: 'light.100',
 		_dark: 'dark.700',
 	},
 	'bg-100': {
@@ -47,16 +47,16 @@ const colorTokens: Record<string, SemanticValue<keyof Pseudos>> = {
 		_dark: 'dark.500',
 	},
 	text: {
-		_light: 'dark.400',
-		_dark: 'light.400',
+		_light: 'dark.300',
+		_dark: 'light.200',
 	},
 	'text-secondary': {
 		_light: 'gray.500',
 		_dark: 'gray.300',
 	},
 	border: {
-		_light: 'gray.200',
-		_dark: 'dark.500',
+		_light: 'light.400',
+		_dark: 'dark.400',
 	},
 	'alpha-50': {
 		_light: 'blackAlpha.50',

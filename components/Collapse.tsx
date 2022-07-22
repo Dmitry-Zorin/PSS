@@ -1,20 +1,18 @@
-import { Box } from '@chakra-ui/react'
+import { Box, BoxProps } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
-import type { ReactNode } from 'react'
 import { gentleSpringConfig } from 'utils'
 
 type Orientation = 'vertical' | 'horizontal'
 
-type CollapseProps = {
-	children: ReactNode
+interface CollapseProps extends BoxProps {
 	in: boolean
 	orientation?: Orientation
 }
 
 const Collapse = ({
-	children,
 	in: collapseIn,
 	orientation = 'vertical',
+	...props
 }: CollapseProps) => {
 	const property = orientation === 'vertical' ? 'height' : 'width'
 
@@ -28,9 +26,8 @@ const Collapse = ({
 				opacity: +collapseIn,
 				transition: gentleSpringConfig,
 			}}
-		>
-			{children}
-		</Box>
+			{...props}
+		/>
 	)
 }
 
