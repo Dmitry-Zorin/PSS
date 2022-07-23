@@ -27,7 +27,7 @@ function createColorTokens(name: string, color: string) {
 
 const colorTokens: Record<string, SemanticValue<keyof Pseudos>> = {
 	bg: {
-		_light: 'white',
+		_light: 'hsl(225, 100%, 99%)',
 		_dark: 'dark.800',
 	},
 	'bg-layer-1': {
@@ -44,7 +44,7 @@ const colorTokens: Record<string, SemanticValue<keyof Pseudos>> = {
 	},
 	text: {
 		_light: 'dark.400',
-		_dark: 'light.200',
+		_dark: 'light.300',
 	},
 	'text-on-layer-1': {
 		_light: 'dark.500',

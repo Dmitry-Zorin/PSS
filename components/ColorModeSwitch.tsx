@@ -7,8 +7,6 @@ export default function ColorModeSwitch() {
 	return (
 		<IconButton
 			aria-label="Toggle Color Mode"
-			variant="unstyled"
-			borderRadius="full"
 			icon={
 				<ColorModeSwitchIcon showMoon={colorMode === 'light'} boxSize={6} />
 			}

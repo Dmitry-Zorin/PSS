@@ -23,8 +23,6 @@ export default function AppBar({ onClick, ...props }: AppBarProps) {
 			<HStack spacing={0}>
 				<IconButton
 					aria-label="Toggle Sidebar"
-					variant="unstyled"
-					borderRadius="full"
 					icon={<HamburgerIcon boxSize={6} />}
 					onClick={onClick}
 				/>

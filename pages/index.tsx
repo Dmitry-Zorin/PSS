@@ -32,10 +32,10 @@ const Home: NextPage = () => {
 					color="text-secondary"
 					fontSize={{ base: '5xl', xl: '6xl' }}
 				>
-					{t('welcome')}
+					{t('welcome_to')}
 				</Heading>
 				<Heading as="h1" fontSize={{ base: '6xl', xl: '7xl' }}>
-					{t(['name_to', 'name'], { ns: 'common' })}
+					{t('name', { ns: 'common', context: 'to' })}
 				</Heading>
 			</Stack>
 		</Stack>
@@ -51,7 +51,7 @@ const Home: NextPage = () => {
 					bg="text-secondary"
 					rightIcon={<FontAwesomeIcon icon={faArrowRight} size="sm" />}
 				>
-					{t('button')}
+					{t('get_started')}
 				</CoolButtonLink>
 			</div>
 			<div>

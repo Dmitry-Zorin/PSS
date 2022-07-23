@@ -18,11 +18,6 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 
 export default appWithTranslation(({ Component, pageProps }) => {
 	const { t } = useTranslation('common')
-	// const router = useRouter()
-
-	// useEffect(() => {
-	// 	router.replace(router.asPath, router.asPath, { locale: 'ru' })
-	// }, [router])
 
 	return (
 		<>

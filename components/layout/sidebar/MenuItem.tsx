@@ -1,12 +1,4 @@
-import {
-	Box,
-	Flex,
-	HStack,
-	Icon,
-	ListItem,
-	Text,
-	Tooltip,
-} from '@chakra-ui/react'
+import { Circle, HStack, ListItem, Text, Tooltip } from '@chakra-ui/react'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { motion } from 'framer-motion'
@@ -31,7 +23,7 @@ export default function MenuItem({
 }: MenuItemProps) {
 	const [isSidebarOpen] = useSidebarState()
 	const router = useRouter()
-	const isActive = new RegExp(`${to}($|\/)`).test(router.asPath)
+	const isActive = new RegExp(`^${to}($|\/)`).test(router.asPath)
 	const { t } = useTranslation('common', { keyPrefix: 'menu.items' })
 
 	return (
@@ -45,31 +37,28 @@ export default function MenuItem({
 				<NextLink href={to} passHref>
 					<HStack
 						as={motion.a}
-						outlineOffset={-1}
 						h={10}
 						spacing={2}
 						borderRadius="full"
-						border="1px"
-						borderColor={isActive ? 'border' : 'transparent'}
-						pr={4}
-						bg={isActive ? 'bg-layer-1' : 'transparent'}
 						color={isActive ? 'primary' : 'text-secondary'}
-						_hover={{
-							bg: 'bg-layer-1',
-							color: isActive ? 'primary' : 'text',
-						}}
+						outline="2px solid transparent"
+						_hover={{ color: isActive ? 'primary' : 'text' }}
+						_focusVisible={{ shadow: 'outline' }}
 						initial={false}
 						animate={{
 							paddingLeft: isSidebarOpen ? indent : 0,
 							transition: gentleSpringConfig,
 						}}
 					>
-						<Icon as={FontAwesomeIcon} icon={icon} p={2.5} />
+						<Circle size={10}>
+							<FontAwesomeIcon icon={icon} />
+						</Circle>
 						<Text
 							as={motion.span}
+							flexShrink={0}
 							fontSize="md"
 							initial={false}
-							animate={{ opacity: isSidebarOpen ? 1 : 0 }}
+							animate={{ opacity: +isSidebarOpen }}
 						>
 							{t(text)}
 						</Text>

@@ -1,9 +1,9 @@
 import {
-	Flex,
+	Center,
+	Circle,
 	HStack,
 	ListItem,
 	ListItemProps,
-	Square,
 	Text,
 	Tooltip,
 } from '@chakra-ui/react'
@@ -40,24 +40,27 @@ export default function SubMenuItem({
 					w="full"
 					h={10}
 					spacing={2}
-					color="text-secondary"
 					borderRadius="full"
+					color="text-secondary"
+					outline="2px solid transparent"
+					_hover={{ color: 'text' }}
+					_focusVisible={{ shadow: 'outline' }}
 				>
-					<Square size={10}>
-						<Flex
-							as={motion.div}
-							initial={false}
-							animate={{
-								rotate: open ? 0 : -90,
-								transition: gentleSpringConfig,
-							}}
-						>
-							<FontAwesomeIcon icon={faChevronDown} size="xs" />
-						</Flex>
-					</Square>
+					<Circle
+						as={motion.div}
+						size={10}
+						initial={false}
+						animate={{
+							rotate: open ? 0 : -90,
+							transition: gentleSpringConfig,
+						}}
+					>
+						<FontAwesomeIcon icon={faChevronDown} size="xs" />
+					</Circle>
 					<Text
 						as={motion.span}
 						fontSize="sm"
+						flexShrink={0}
 						initial={false}
 						animate={{ opacity: isSidebarOpen ? 1 : 0 }}
 					>

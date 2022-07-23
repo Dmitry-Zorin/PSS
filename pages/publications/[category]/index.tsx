@@ -46,9 +46,7 @@ export const getServerSideProps: GetServerSideProps<
 			where: {
 				AND: [{ category }, search ? (getSearch(search) as any) : {}],
 			},
-			orderBy: {
-				createdAt: 'desc',
-			},
+			orderBy: [{ year: 'desc' }, { createdAt: 'desc' }],
 			skip: 0,
 			take: 10,
 		})

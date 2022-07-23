@@ -10,10 +10,10 @@ import { Logo } from 'components'
 
 export default function SidebarDrawer({ children, ...props }: DrawerProps) {
 	return (
-		<Drawer placement="left" size="xs" {...props}>
+		<Drawer placement="left" {...props}>
 			<DrawerOverlay />
 			<DrawerContent>
-				<DrawerCloseButton />
+				<DrawerCloseButton size="lg" color="text-secondary" />
 				<DrawerHeader>
 					<Logo />
 				</DrawerHeader>

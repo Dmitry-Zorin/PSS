@@ -17,17 +17,15 @@ export default function Truncate({
 	const text = children.props?.children || children
 	const truncatedText = truncate(text, {
 		length: maxLength,
-		separator: ' ',
+		separator: /\W? /,
 	})
 
 	return text.length > maxLength ? (
 		<Tooltip
 			label={text}
 			placement="bottom"
-			openDelay={600}
-			px={4}
-			py={3}
-			maxW="3xl"
+			openDelay={1000}
+			maxW="xl"
 			{...props}
 		>
 			{children.props ? (

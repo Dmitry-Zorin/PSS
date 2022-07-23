@@ -2,8 +2,26 @@ import { ThemeComponents } from '@chakra-ui/react'
 
 const components: ThemeComponents = {
 	Button: {
+		defaultProps: {
+			variant: 'ghost',
+		},
 		baseStyle: {
 			borderRadius: 'full',
+			_focusVisible: {
+				shadow: 'outline',
+			},
+		},
+		variants: {
+			ghost: {
+				color: 'text-secondary',
+				_hover: {
+					color: 'text',
+					bg: 'bg-layer-2',
+				},
+				_active: {
+					bg: 'bg-layer-3',
+				},
+			},
 		},
 	},
 	Input: {
@@ -21,8 +39,12 @@ const components: ThemeComponents = {
 	},
 	Tooltip: {
 		baseStyle: {
-			bg: 'bg-layer-3',
-			color: 'black',
+			bg: 'dark.900',
+			color: 'text-secondary',
+			border: '1px',
+			borderColor: 'border',
+			borderRadius: 'md',
+			fontWeight: 'normal',
 		},
 	},
 	Menu: {
@@ -46,6 +68,26 @@ const components: ThemeComponents = {
 				_active: {
 					bg: 'bg-layer-3',
 				},
+			},
+		},
+	},
+	Drawer: {
+		baseStyle: {
+			dialog: {
+				bg: 'bg',
+			},
+		},
+	},
+	CloseButton: {
+		baseStyle: {
+			color: 'text-secondary',
+			borderRadius: 'full',
+			_hover: {
+				color: 'text',
+				bg: 'bg-layer-1',
+			},
+			_active: {
+				bg: 'bg-layer-2',
 			},
 		},
 	},
