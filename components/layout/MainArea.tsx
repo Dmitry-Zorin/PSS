@@ -16,7 +16,7 @@ export default function MainArea({ children, title }: MainAreaProps) {
 			pb={16}
 		>
 			{title && (
-				<Box as="header" py={12}>
+				<Box as="header" pt={8} pb={12}>
 					{title && (
 						<Heading as="h1" size={{ base: '2xl', lg: '3xl' }}>
 							{title}

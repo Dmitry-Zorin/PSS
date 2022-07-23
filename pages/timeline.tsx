@@ -1,4 +1,5 @@
 import { Avatar, Button, List, ListItem, Stack, Text } from '@chakra-ui/react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Publication } from '@prisma/client'
 import {
 	Card,
@@ -60,19 +61,25 @@ function ListItemCard({ record }: ListItemCardProps) {
 	return (
 		<Card>
 			<CardHeader>
-				{/* <Avatar
+				<Avatar
 					bg="bg-layer-1"
+					color="text-secondary"
 					icon={
-						resources.publications[
-							record.category as keyof typeof resources['publications']
-						].icon
+						<FontAwesomeIcon
+							icon={
+								resources.publications[
+									record.category as keyof typeof resources['publications']
+								].icon
+							}
+							size="lg"
+						/>
 					}
-				/> */}
+				/>
 				<Stack flexGrow={1} spacing={0}>
-					<Text fontSize="md">
+					<Text fontSize="md" color="text-secondary-on-layer-2">
 						{t(`${record.category}.name`, { count: 1 })}
 					</Text>
-					<Text fontSize="sm" color="text-secondary-on-layer-2">
+					<Text fontSize="sm" color="text-secondary">
 						{new Date(record.createdAt).toLocaleString(i18n.language, {
 							day: 'numeric',
 							month: 'long',
@@ -95,7 +102,7 @@ function ListItemCard({ record }: ListItemCardProps) {
 				<Text>{record.title}</Text>
 				{record.description && (
 					<Truncate>
-						<Text fontSize="md" color="text-secondary-on-layer-1">
+						<Text fontSize="md" color="text-secondary">
 							{record.description}
 						</Text>
 					</Truncate>

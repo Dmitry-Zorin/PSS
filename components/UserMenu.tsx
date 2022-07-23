@@ -5,7 +5,12 @@ import {
 	MenuItem,
 	MenuList,
 } from '@chakra-ui/react'
-import { faUser } from '@fortawesome/free-solid-svg-icons'
+import {
+	faCog,
+	faSignInAlt,
+	faSignOutAlt,
+	faUser,
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default function UserMenu() {
@@ -17,8 +22,13 @@ export default function UserMenu() {
 					icon={<FontAwesomeIcon icon={faUser} size="lg" />}
 				/>
 				<MenuList>
-					<MenuItem>Settings</MenuItem>
-					<MenuItem>Sign out</MenuItem>
+					<MenuItem icon={<FontAwesomeIcon icon={faCog} />}>Settings</MenuItem>
+					<MenuItem icon={<FontAwesomeIcon icon={faSignInAlt} />}>
+						Sign In
+					</MenuItem>
+					<MenuItem icon={<FontAwesomeIcon icon={faSignOutAlt} />}>
+						Sign out
+					</MenuItem>
 				</MenuList>
 			</Menu>
 		</div>
