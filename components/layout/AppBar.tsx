@@ -3,23 +3,18 @@ import { HStack, IconButton, StackProps } from '@chakra-ui/react'
 import { ColorModeSwitch, Logo, UserMenu } from 'components'
 
 interface AppBarProps extends StackProps {
-	isSidebarOpen: boolean
 	onClick: () => void
 }
 
-export default function AppBar({
-	isSidebarOpen,
-	onClick,
-	...props
-}: AppBarProps) {
-	// const [isSidebarOpen, setSidebarOpen] = useSidebarState()
-
+export default function AppBar({ onClick, ...props }: AppBarProps) {
 	return (
 		<HStack
 			as="header"
 			zIndex="overlay"
-			bg="bg-secondary"
-			color="text-secondary"
+			bg="bg-layer-1"
+			color="text-secondary-on-layer-1"
+			borderBottom="1px"
+			borderColor="border"
 			justify="space-between"
 			align="center"
 			px={4}

@@ -27,44 +27,48 @@ function createColorTokens(name: string, color: string) {
 
 const colorTokens: Record<string, SemanticValue<keyof Pseudos>> = {
 	bg: {
-		_light: 'light.50',
+		_light: 'white',
 		_dark: 'dark.800',
 	},
-	'bg-secondary': {
-		_light: 'light.100',
+	'bg-layer-1': {
+		_light: 'light.50',
 		_dark: 'dark.700',
 	},
-	'bg-50': {
+	'bg-layer-2': {
 		_light: 'light.100',
-		_dark: 'dark.700',
-	},
-	'bg-100': {
-		_light: 'light.300',
 		_dark: 'dark.600',
 	},
-	'bg-200': {
-		_light: 'light.400',
+	'bg-layer-3': {
+		_light: 'light.200',
 		_dark: 'dark.500',
 	},
 	text: {
-		_light: 'dark.300',
+		_light: 'dark.400',
 		_dark: 'light.200',
+	},
+	'text-on-layer-1': {
+		_light: 'dark.500',
+		_dark: 'light.100',
+	},
+	'text-on-layer-2': {
+		_light: 'dark.600',
+		_dark: 'light.50',
 	},
 	'text-secondary': {
 		_light: 'gray.500',
 		_dark: 'gray.300',
 	},
+	'text-secondary-on-layer-1': {
+		_light: 'gray.600',
+		_dark: 'gray.200',
+	},
+	'text-secondary-on-layer-2': {
+		_light: 'gray.700',
+		_dark: 'gray.100',
+	},
 	border: {
-		_light: 'light.400',
-		_dark: 'dark.400',
-	},
-	'alpha-50': {
-		_light: 'blackAlpha.50',
-		_dark: 'whiteAlpha.50',
-	},
-	'alpha-100': {
-		_light: 'blackAlpha.100',
-		_dark: 'whiteAlpha.100',
+		_light: '#e1e4ef',
+		_dark: '#2c3244',
 	},
 	...createColorTokens('primary', 'primary'),
 	...createColorTokens('secondary', 'gray'),

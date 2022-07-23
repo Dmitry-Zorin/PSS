@@ -7,8 +7,7 @@ const TableRow = forwardRef<TableRowProps, 'tr'>((props, ref) => (
 		transitionProperty="background"
 		transitionDuration="fast"
 		transitionTimingFunction="ease-out"
-		_hover={{ bg: 'bg-50' }}
-		_active={{ bg: 'bg-100' }}
+		_hover={{ bg: 'bg-layer-1' }}
 		{...props}
 	/>
 ))

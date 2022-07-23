@@ -11,7 +11,7 @@ export default function CardLink({
 			<Card
 				as="a"
 				// cursor="pointer"
-				_hover={{ bg: 'bg-100' }}
+				_hover={{ bg: 'bg-layer-2' }}
 				transitionProperty="background"
 				transitionDuration="fast"
 				transitionTimingFunction="ease-out"

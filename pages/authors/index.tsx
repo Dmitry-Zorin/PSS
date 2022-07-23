@@ -65,7 +65,7 @@ const AuthorsPage: NextPage<AuthorsPageProps> = ({ authors }) => {
 					<ResourceTable
 						data={authors}
 						fields={['lastName', 'firstName', 'middleName']}
-						RowLink={<Link href="/authors" />}
+						href="/authors"
 					/>
 				)}
 			</Layout>

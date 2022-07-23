@@ -1,33 +1,35 @@
 import { ChakraProvider } from '@chakra-ui/react'
+import { config } from '@fortawesome/fontawesome-svg-core'
+import '@fortawesome/fontawesome-svg-core/styles.css'
 import { GetStaticProps } from 'next'
 import { appWithTranslation, useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
-import { useRouter } from 'next/router'
 import 'public/fonts/Golos-Text/Golos-Text.css'
-import { useEffect } from 'react'
 import theme from 'theme'
 
-// export const getStaticProps: GetStaticProps = async ({ locale }) => {
-// 	return {
-// 		props: await serverSideTranslations(locale!, ['about', 'common']),
-// 	}
-// }
+config.autoAddCss = false
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+	return {
+		props: await serverSideTranslations(locale!, ['common']),
+	}
+}
 
 export default appWithTranslation(({ Component, pageProps }) => {
-	// const { t } = useTranslation('common')
-	const router = useRouter()
+	const { t } = useTranslation('common')
+	// const router = useRouter()
 
-	useEffect(() => {
-		// router.replace(router.asPath, router.asPath, { locale: 'ru' })
-	}, [router])
+	// useEffect(() => {
+	// 	router.replace(router.asPath, router.asPath, { locale: 'ru' })
+	// }, [router])
 
 	return (
 		<>
-			{/* <Head>
+			<Head>
 				<title>{t('name')}</title>
 				<meta name="description" content={t('description')} />
-			</Head> */}
+			</Head>
 			<ChakraProvider theme={theme}>
 				<Component {...pageProps} />
 			</ChakraProvider>

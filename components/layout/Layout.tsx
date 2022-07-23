@@ -23,7 +23,7 @@ import { ReactNode } from 'react'
 import { gentleSpringConfig } from 'utils'
 
 const APP_BAR_HEIGHT = '4rem'
-const SIDEBAR_WIDTH = '15rem'
+const SIDEBAR_WIDTH = '18rem'
 export const SIDEBAR_COLLAPSED_WIDTH = '4.5rem'
 
 interface LayoutProps {
@@ -76,12 +76,6 @@ function LayoutGrid({
 				area="header"
 				pos="sticky"
 				top={0}
-				isSidebarOpen={
-					!!useBreakpointValue<boolean>({
-						base: isSidebarDrawerOpen,
-						md: isSidebarOpen,
-					})
-				}
 				onClick={useBreakpointValue<() => void>({
 					base: onSidebarDrawerOpen,
 					md: () => setSidebarOpen(!isSidebarOpen),

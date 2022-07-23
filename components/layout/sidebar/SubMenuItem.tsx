@@ -1,4 +1,3 @@
-import { ChevronDownIcon } from '@chakra-ui/icons'
 import {
 	Flex,
 	HStack,
@@ -8,6 +7,8 @@ import {
 	Text,
 	Tooltip,
 } from '@chakra-ui/react'
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { motion } from 'framer-motion'
 import { useSidebarState } from 'hooks'
 import { useTranslation } from 'next-i18next'
@@ -51,7 +52,7 @@ export default function SubMenuItem({
 								transition: gentleSpringConfig,
 							}}
 						>
-							<ChevronDownIcon boxSize={6} />
+							<FontAwesomeIcon icon={faChevronDown} size="xs" />
 						</Flex>
 					</Square>
 					<Text

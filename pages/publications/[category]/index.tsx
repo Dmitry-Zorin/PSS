@@ -5,7 +5,6 @@ import prisma from 'lib/prisma'
 import { GetServerSideProps, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { stdout } from 'process'
 import { ParsedUrlQuery } from 'querystring'
@@ -86,7 +85,7 @@ const PublicationsPage: NextPage<PublicationsPageProps> = ({
 					<ResourceTable
 						data={publications}
 						fields={['title', 'description', 'year']}
-						RowLink={<Link href={`/publications/${category}`} />}
+						href={`/publications/${category}`}
 					/>
 				)}
 			</Layout>

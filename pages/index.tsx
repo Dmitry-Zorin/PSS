@@ -1,5 +1,6 @@
-import { ArrowForwardIcon } from '@chakra-ui/icons'
 import { Heading, HStack, Stack, Text } from '@chakra-ui/react'
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ColorModeSwitch, CoolButtonLink } from 'components'
 import { GetServerSideProps, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
@@ -48,7 +49,7 @@ const Home: NextPage = () => {
 					colorScheme="primary"
 					color="bg"
 					bg="text-secondary"
-					rightIcon={<ArrowForwardIcon />}
+					rightIcon={<FontAwesomeIcon icon={faArrowRight} size="sm" />}
 				>
 					{t('button')}
 				</CoolButtonLink>

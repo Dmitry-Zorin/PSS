@@ -1,57 +1,67 @@
 import {
-	FcAbout,
-	FcAnswers,
-	FcApproval,
-	FcCommandLine,
-	FcConferenceCall,
-	FcDocument,
-	FcGraduationCap,
-	FcNews,
-	FcRules,
-	FcSms,
-	FcSurvey,
-	FcTimeline,
-} from 'react-icons/fc'
+	faAddressCard,
+	faAward,
+	faBookOpen,
+	faCircle,
+	faCircleInfo,
+	faCode,
+	faFile,
+	faFileCircleCheck,
+	faFileCircleQuestion,
+	faFileCode,
+	faFileContract,
+	faFileInvoice,
+	faFileLines,
+	faFilePen,
+	faFileSignature,
+	faGraduationCap,
+	faList,
+	faNewspaper,
+	faPaste,
+	faSheetPlastic,
+	faSignature,
+	faTimeline,
+} from '@fortawesome/free-solid-svg-icons'
 
 const resources = {
 	about: {
-		icon: <FcAbout />,
+		icon: faCircleInfo,
 	},
 	timeline: {
-		icon: <FcTimeline />,
+		icon: faTimeline,
 	},
 	authors: {
-		icon: <FcConferenceCall />,
+		icon: faAddressCard,
 	},
 	publications: {
 		articles: {
-			icon: <FcNews />,
+			icon: faNewspaper,
 		},
 		abstracts: {
-			icon: <FcRules />,
+			icon: faSheetPlastic,
 		},
 		dissertations: {
-			icon: <FcGraduationCap />,
+			icon: faGraduationCap,
 		},
 		monographs: {
-			icon: <FcDocument />,
+			icon: faFileLines,
 		},
 		patents: {
-			icon: <FcApproval />,
+			icon: faAward,
 		},
 		reports: {
-			icon: <FcSurvey />,
+			icon: faFileInvoice,
 		},
 		programs: {
-			icon: <FcCommandLine />,
+			icon: faCode,
 		},
 		textbooks: {
-			icon: <FcAnswers />,
+			icon: faBookOpen,
 		},
 	},
 	admin: {
 		characters: {
-			icon: <FcSms />,
+			icon: faPaste,
 		},
 	},
 }

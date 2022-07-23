@@ -1,4 +1,5 @@
 import {
+	Link,
 	Table,
 	TableContainer,
 	Tbody,
@@ -9,7 +10,7 @@ import {
 } from '@chakra-ui/react'
 import { TableRow, Truncate } from 'components'
 import { useTranslation } from 'next-i18next'
-import { cloneElement, ReactElement } from 'react'
+import NextLink from 'next/link'
 
 interface ResourceItem extends Record<string, any> {
 	id: string | number
@@ -18,13 +19,13 @@ interface ResourceItem extends Record<string, any> {
 type ResourceTableProps = {
 	data: ResourceItem[]
 	fields: string[]
-	RowLink?: ReactElement
+	href: string
 }
 
 export default function ResourceTable({
 	data,
 	fields,
-	RowLink,
+	href,
 }: ResourceTableProps) {
 	const { t } = useTranslation('fields')
 
@@ -41,7 +42,7 @@ export default function ResourceTable({
 							<Th
 								key={field}
 								isNumeric={typeof data[0][field] === 'number'}
-								borderColor="inherit"
+								borderColor="border"
 							>
 								{t(field)}
 							</Th>
@@ -50,27 +51,26 @@ export default function ResourceTable({
 				</Thead>
 				<Tbody>
 					{data?.map((item) => {
-						const tableRow = (
-							<TableRow>
-								{fields.map((field) => (
+						return (
+							<TableRow key={item.id}>
+								{fields.map((field, i) => (
 									<Td
 										key={`${item.id} ${field}`}
 										isNumeric={typeof item[field] === 'number'}
-										borderColor="inherit"
+										borderColor="border"
 										w="auto"
 									>
-										<Truncate>{item[field]}</Truncate>
+										{i > 0 ? (
+											<Truncate>{item[field]}</Truncate>
+										) : (
+											<NextLink href={`${href}/${item.id}`} passHref>
+												<Link as={Truncate}>{item[field]}</Link>
+											</NextLink>
+										)}
 									</Td>
 								))}
 							</TableRow>
 						)
-						return RowLink
-							? cloneElement(RowLink, {
-									key: item.id,
-									href: `${RowLink.props.href}/${item.id}`,
-									children: tableRow,
-							  })
-							: tableRow
 					})}
 				</Tbody>
 			</Table>

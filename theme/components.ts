@@ -1,18 +1,9 @@
 import { ThemeComponents } from '@chakra-ui/react'
-import { mode, StyleFunctionProps } from '@chakra-ui/theme-tools'
 
 const components: ThemeComponents = {
 	Button: {
-		variants: {
-			ghost: (props: StyleFunctionProps) => ({
-				borderRadius: 'full',
-				borderY: '1px',
-				borderColor: 'transparent',
-				_hover: {
-					borderTopColor: mode('transparent', 'border')(props),
-					borderBottomColor: mode('border', 'transparent')(props),
-				},
-			}),
+		baseStyle: {
+			borderRadius: 'full',
 		},
 	},
 	Input: {
@@ -20,8 +11,40 @@ const components: ThemeComponents = {
 			filled: {
 				field: {
 					borderRadius: 'full',
-					bg: 'bg-100',
-					_hover: { bg: 'bg-200' },
+					bg: 'bg-layer-1',
+					_hover: {
+						bg: 'bg-layer-2',
+					},
+				},
+			},
+		},
+	},
+	Tooltip: {
+		baseStyle: {
+			bg: 'bg-layer-3',
+			color: 'black',
+		},
+	},
+	Menu: {
+		baseStyle: {
+			button: {
+				_focusVisible: {
+					shadow: 'outline',
+				},
+			},
+			list: {
+				bg: 'bg-layer-1',
+				color: 'text-secondary-on-layer-1',
+				borderRadius: 'lg',
+				p: 1,
+			},
+			item: {
+				borderRadius: 'md',
+				_focus: {
+					bg: 'bg-layer-2',
+				},
+				_active: {
+					bg: 'bg-layer-3',
 				},
 			},
 		},

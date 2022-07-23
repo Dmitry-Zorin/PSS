@@ -1,12 +1,4 @@
-import {
-	Avatar,
-	Button,
-	List,
-	ListItem,
-	Stack,
-	Text,
-	useColorModeValue,
-} from '@chakra-ui/react'
+import { Avatar, Button, List, ListItem, Stack, Text } from '@chakra-ui/react'
 import { Publication } from '@prisma/client'
 import {
 	Card,
@@ -68,22 +60,19 @@ function ListItemCard({ record }: ListItemCardProps) {
 	return (
 		<Card>
 			<CardHeader>
-				<Avatar
-					bg="bg-50"
-					borderY="1px"
-					borderTopColor={useColorModeValue('transparent', 'border')}
-					borderBottomColor={useColorModeValue('border', 'transparent')}
+				{/* <Avatar
+					bg="bg-layer-1"
 					icon={
 						resources.publications[
 							record.category as keyof typeof resources['publications']
 						].icon
 					}
-				/>
+				/> */}
 				<Stack flexGrow={1} spacing={0}>
 					<Text fontSize="md">
 						{t(`${record.category}.name`, { count: 1 })}
 					</Text>
-					<Text fontSize="sm" color="text-secondary">
+					<Text fontSize="sm" color="text-secondary-on-layer-2">
 						{new Date(record.createdAt).toLocaleString(i18n.language, {
 							day: 'numeric',
 							month: 'long',
@@ -95,8 +84,8 @@ function ListItemCard({ record }: ListItemCardProps) {
 					<Button
 						as="a"
 						variant="ghost"
-						colorScheme="dark"
 						color="text-secondary"
+						colorScheme="dark"
 					>
 						View
 					</Button>
@@ -106,7 +95,7 @@ function ListItemCard({ record }: ListItemCardProps) {
 				<Text>{record.title}</Text>
 				{record.description && (
 					<Truncate>
-						<Text fontSize="md" color="text-secondary">
+						<Text fontSize="md" color="text-secondary-on-layer-1">
 							{record.description}
 						</Text>
 					</Truncate>
