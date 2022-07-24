@@ -19,6 +19,7 @@ export default function UserMenu() {
 			<Menu>
 				<MenuButton
 					as={IconButton}
+					aria-label="User Menu"
 					icon={<FontAwesomeIcon icon={faUser} size="lg" />}
 				/>
 				<MenuList>

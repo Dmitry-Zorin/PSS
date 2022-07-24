@@ -1,30 +1,14 @@
 import { SimpleGrid, Stack, Text, TextProps } from '@chakra-ui/react'
-import { Publication } from '@prisma/client'
 import { HeadTitle, Layout } from 'components'
-import prisma from 'lib/prisma'
 import { GetServerSideProps, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router'
 import { ReactNode } from 'react'
 
-export const getServerSideProps: GetServerSideProps = async ({
-	query,
-	locale,
-}) => {
-	if (typeof query.id !== 'string') {
-		throw new Error('Whut?!')
-	}
-	const publication = await prisma.publication.findUniqueOrThrow({
-		where: {
-			id: +query.id,
-		},
-	})
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
 	return {
-		props: {
-			publication,
-			...(await serverSideTranslations(locale!, ['common', 'fields'])),
-		},
+		props: await serverSideTranslations(locale!, ['common', 'fields']),
 	}
 }
 
@@ -33,11 +17,12 @@ interface LabeledTextProps extends TextProps {
 	label: string
 }
 
-const PublicationPage: NextPage<{
-	publication: Publication
-}> = ({ publication: p }) => {
+const PublicationPage: NextPage = () => {
 	const router = useRouter()
-	const { type } = router.query as { type: string }
+	const { category, record } = router.query as {
+		category: string
+		record: string
+	}
 	const { t } = useTranslation(['common', 'fields'])
 
 	function LabeledText({ children, label, ...props }: LabeledTextProps) {
@@ -53,9 +38,11 @@ const PublicationPage: NextPage<{
 		)
 	}
 
+	const p = JSON.parse(record)
+
 	return (
 		<>
-			<HeadTitle title={`${t(type)} #${p.id}`} />
+			<HeadTitle title={`${t(category)} #${p.id}`} />
 			<Layout title={p.title}>
 				<Stack spacing={12}>
 					<Text>{p.description}</Text>
