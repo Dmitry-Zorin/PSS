@@ -1,6 +1,16 @@
 import { ThemeComponents } from '@chakra-ui/react'
 
 const components: ThemeComponents = {
+	Container: {
+		baseStyle: {
+			px: 6,
+		},
+	},
+	Stack: {
+		defaultProps: {
+			spacing: 0,
+		},
+	},
 	Button: {
 		defaultProps: {
 			variant: 'ghost',
@@ -15,8 +25,8 @@ const components: ThemeComponents = {
 			ghost: {
 				color: 'text-secondary',
 				_hover: {
-					color: 'text',
 					bg: 'bg-layer-2',
+					color: 'primary',
 				},
 				_active: {
 					bg: 'bg-layer-3',
@@ -29,6 +39,8 @@ const components: ThemeComponents = {
 			filled: {
 				field: {
 					borderRadius: 'full',
+					border: '1px',
+					borderColor: 'border',
 					bg: 'bg-layer-1',
 					_hover: {
 						bg: 'bg-layer-2',
@@ -39,8 +51,8 @@ const components: ThemeComponents = {
 	},
 	Tooltip: {
 		baseStyle: {
-			bg: 'dark.900',
-			color: 'text-secondary',
+			bg: 'bg',
+			color: 'text',
 			border: '1px',
 			borderColor: 'border',
 			borderRadius: 'md',
@@ -80,14 +92,14 @@ const components: ThemeComponents = {
 	},
 	CloseButton: {
 		baseStyle: {
-			color: 'text-secondary',
 			borderRadius: 'full',
+			color: 'text-secondary',
 			_hover: {
-				color: 'text',
-				bg: 'bg-layer-1',
+				bg: 'transparent',
+				color: 'primary',
 			},
 			_active: {
-				bg: 'bg-layer-2',
+				bg: 'transparent',
 			},
 		},
 	},

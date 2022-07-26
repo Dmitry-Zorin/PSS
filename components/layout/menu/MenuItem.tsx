@@ -1,4 +1,4 @@
-import { Circle, HStack, ListItem, Text, Tooltip } from '@chakra-ui/react'
+import { Circle, HStack, Icon, ListItem, Text, Tooltip } from '@chakra-ui/react'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { motion } from 'framer-motion'
@@ -51,7 +51,7 @@ export default function MenuItem({
 						}}
 					>
 						<Circle size={10}>
-							<FontAwesomeIcon icon={icon} />
+							<Icon as={FontAwesomeIcon} icon={icon} />
 						</Circle>
 						<Text
 							as={motion.span}

@@ -8,7 +8,7 @@ const systemFonts =
 
 export default extendTheme({
 	config: {
-		initialColorMode: 'dark',
+		initialColorMode: 'system',
 		disableTransitionOnChange: true,
 	},
 	fonts: {
@@ -31,7 +31,7 @@ export default extendTheme({
 				color: 'primary',
 			},
 			h2: {
-				color: 'secondary',
+				color: 'text-secondary',
 			},
 		},
 	},

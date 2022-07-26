@@ -1,89 +1,72 @@
-import { Text } from '@chakra-ui/react'
 import { Publication } from '@prisma/client'
+import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query'
 import { HeadTitle, Layout, ResourceTable, Search } from 'components'
-import prisma from 'lib/prisma'
+import { useDebounce } from 'hooks'
 import { GetServerSideProps, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router'
-import { stdout } from 'process'
-import { ParsedUrlQuery } from 'querystring'
+import { queryClientConfig } from 'pages/_app'
+import { useState } from 'react'
 
-interface PublicationsPageProps {
-	publications?: Publication[]
-	error?: any
-}
-
-interface PublicationsPageQuery extends ParsedUrlQuery {
-	search: string
-}
-
-function getSearch(search: string) {
-	const wordsArray = search.trim().split(' ')
-	return {
-		AND: wordsArray.flatMap((word) => ({
-			OR: [
-				{ title: { contains: word, mode: 'insensitive' } },
-				{ description: { contains: word, mode: 'insensitive' } },
-			],
-		})),
-	}
-}
-
-export const getServerSideProps: GetServerSideProps<
-	PublicationsPageProps,
-	PublicationsPageQuery,
-	{ locale: string }
-> = async ({ res, query, locale }) => {
-	res.setHeader(
-		'Cache-Control',
-		'public, s-maxage=10, stale-while-revalidate=59',
-	)
-	try {
-		const { category, search } = query as { category: string; search: string }
-
-		const publications = await prisma.publication.findMany({
-			where: {
-				AND: [{ category }, search ? (getSearch(search) as any) : {}],
-			},
-			orderBy: [{ year: 'desc' }, { createdAt: 'desc' }],
-			skip: 0,
-			take: 10,
-		})
-		return {
-			props: {
-				publications,
-				...(await serverSideTranslations(locale!, ['common', 'fields'])),
-			},
-		}
-	} catch (e: any) {
-		stdout.write(e.toString())
-		return {
-			props: {
-				error: e.toString(),
-			},
-		}
-	}
-}
-
-const PublicationsPage: NextPage<PublicationsPageProps> = ({
-	publications,
-	error,
+export const getServerSideProps: GetServerSideProps = async ({
+	params,
+	locale,
 }) => {
+	const translationProps = await serverSideTranslations(locale!, [
+		'common',
+		'fields',
+	])
+
+	const queryClient = new QueryClient(queryClientConfig)
+
+	if (params?.category) {
+		const query = { category: params.category as string, search: undefined }
+		await queryClient.prefetchQuery(['publications', query])
+	}
+
+	return {
+		props: {
+			dehydratedState: JSON.parse(JSON.stringify(dehydrate(queryClient))),
+			...translationProps,
+		},
+	}
+}
+
+const PublicationsPage: NextPage = () => {
+	const { t } = useTranslation(['common', 'fields'])
 	const router = useRouter()
 	const { category } = router.query as Record<string, string>
-	const { t } = useTranslation(['common', 'fields'])
+	const [query, setQuery] = useState<Record<string, string | undefined>>({
+		category,
+	})
+
+	const { data: publications } = useQuery<Publication[]>([
+		'publications',
+		query,
+	])
+
+	const search = useDebounce((search: string) => {
+		setQuery({ ...query, search: search || undefined })
+	}, 500)
+
+	function sort(field: string, value?: 'desc' | 'asc') {
+		setQuery({
+			...query,
+			sort: value ? JSON.stringify({ [field]: value }) : '{}',
+		})
+	}
 
 	return (
 		<>
 			<HeadTitle title={t(category)} />
-			<Layout leftActions={<Search />} fullSize>
-				{error && <Text color="red">{error}</Text>}
+			<Layout fullSize leftActions={<Search onChange={search} />}>
 				{publications && (
 					<ResourceTable
 						data={publications}
 						fields={['title', 'description', 'year']}
 						href={`/publications/${category}`}
+						sort={sort}
 					/>
 				)}
 			</Layout>

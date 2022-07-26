@@ -1,11 +1,11 @@
 import { Tooltip, TooltipProps } from '@chakra-ui/react'
-import { truncate } from 'lodash'
+import { isObject, truncate } from 'lodash'
 import { cloneElement, ReactElement } from 'react'
 
 const MAX_LENGTH = 400
 
 interface TruncateProps extends Omit<TooltipProps, 'children'> {
-	children: ReactElement
+	children: ReactElement | string
 	maxLength?: number
 }
 
@@ -14,7 +14,8 @@ export default function Truncate({
 	maxLength = MAX_LENGTH,
 	...props
 }: TruncateProps) {
-	const text = children.props?.children || children
+	const hasProps = isObject(children) && 'props' in children
+	const text = hasProps ? (children.props?.children as string) : children
 	const truncatedText = truncate(text, {
 		length: maxLength,
 		separator: /\W? /,
@@ -28,13 +29,15 @@ export default function Truncate({
 			maxW="xl"
 			{...props}
 		>
-			{children.props ? (
+			{hasProps ? (
 				cloneElement(children, { children: truncatedText })
 			) : (
 				<div tabIndex={0}>{truncatedText}</div>
 			)}
 		</Tooltip>
+	) : hasProps ? (
+		children
 	) : (
-		children || <>{text}</>
+		<>{text}</>
 	)
 }

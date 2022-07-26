@@ -10,11 +10,13 @@ export default function AppBar({ onClick, ...props }: AppBarProps) {
 	return (
 		<HStack
 			as="header"
+			pos="sticky"
+			top={0}
 			zIndex="overlay"
-			bg="bg-layer-1"
+			bg="bg"
 			color="text-secondary-on-layer-1"
-			borderBottom="1px"
-			borderColor="border"
+			// borderY="1px"
+			// borderColor="border"
 			justify="space-between"
 			align="center"
 			px={4}

@@ -6,12 +6,21 @@ import {
 	InputProps,
 	InputRightElement,
 } from '@chakra-ui/react'
-import { useSearch } from 'hooks'
 import { useTranslation } from 'next-i18next'
+import { useState } from 'react'
 
-export default function Search(props: InputProps) {
+interface SearchProps extends Omit<InputProps, 'onChange'> {
+	onChange: (search: string) => void
+}
+
+export default function Search({ onChange, ...props }: SearchProps) {
 	const { t } = useTranslation('fields')
-	const { searchValue, search, clear } = useSearch()
+	const [value, setValue] = useState('')
+
+	function update(search: string) {
+		setValue(search)
+		onChange(search)
+	}
 
 	return (
 		<InputGroup w={60}>
@@ -19,18 +28,18 @@ export default function Search(props: InputProps) {
 				<Search2Icon />
 			</InputLeftElement>
 			<Input
-				value={searchValue}
-				onChange={search}
+				value={value}
 				variant="filled"
 				placeholder={t('search')}
 				_placeholder={{ color: 'text-secondary' }}
+				onChange={(e) => update(e.target.value)}
 				{...props}
 			/>
-			{searchValue && (
+			{props.value && (
 				<InputRightElement
 					cursor="pointer"
 					color="text-secondary"
-					onClick={clear}
+					onClick={() => update('')}
 				>
 					<CloseIcon boxSize={3} />
 				</InputRightElement>

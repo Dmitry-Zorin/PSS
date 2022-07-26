@@ -3,7 +3,7 @@
 	"description": "Description",
 	"type": "Type",
 	"year": "Written in (year)",
-	"volume": "Volume (pages)",
+	"volume": "Volume (in pages)",
 	"authors": "Authors",
 	"coauthors": "Coauthors",
 	"coauthor": "Coauthor",

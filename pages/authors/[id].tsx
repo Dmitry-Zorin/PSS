@@ -1,34 +1,15 @@
 import { Stack, Text, TextProps } from '@chakra-ui/react'
-import { Author } from '@prisma/client'
 import { HeadTitle, Layout } from 'components'
-import prisma from 'lib/prisma'
 import { GetServerSideProps, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useRouter } from 'next/router'
 import { ReactNode } from 'react'
 import { getAuthorFullName } from 'scripts/authors'
 
-export const getServerSideProps: GetServerSideProps = async ({
-	query,
-	locale,
-}) => {
-	if (typeof query.id !== 'string') {
-		throw new Error('Whut?!')
-	}
-	const author = await prisma.author.findUniqueOrThrow({
-		where: {
-			id: +query.id,
-		},
-	})
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
 	return {
-		props: {
-			author,
-			...(await serverSideTranslations(locale!, [
-				'resources',
-				'common',
-				'fields',
-			])),
-		},
+		props: await serverSideTranslations(locale!, ['common', 'fields']),
 	}
 }
 
@@ -37,10 +18,14 @@ interface LabeledTextProps extends TextProps {
 	label: string
 }
 
-const AuthorPage: NextPage<{
-	author: Author
-}> = ({ author }) => {
-	const { t } = useTranslation(['resources', 'common', 'fields'])
+const AuthorPage: NextPage = () => {
+	const { t } = useTranslation(['common', 'fields'])
+	const router = useRouter()
+	const { record } = router.query as {
+		record: string
+	}
+
+	const author = JSON.parse(record)
 
 	function LabeledText({ children, label, ...props }: LabeledTextProps) {
 		return (

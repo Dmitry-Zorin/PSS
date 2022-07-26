@@ -1,6 +1,6 @@
 import { Box, BoxProps } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
-import { gentleSpringConfig } from 'utils'
+import { getSpringAnimation } from 'utils'
 
 type Orientation = 'vertical' | 'horizontal'
 
@@ -24,7 +24,7 @@ const Collapse = ({
 			animate={{
 				[property]: collapseIn ? 'auto' : 0,
 				opacity: +collapseIn,
-				transition: gentleSpringConfig,
+				transition: getSpringAnimation(collapseIn),
 			}}
 			{...props}
 		/>

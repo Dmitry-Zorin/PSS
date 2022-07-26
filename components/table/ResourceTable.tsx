@@ -1,5 +1,4 @@
 import {
-	Link,
 	Table,
 	TableContainer,
 	Tbody,
@@ -8,26 +7,59 @@ import {
 	Thead,
 	Tr,
 } from '@chakra-ui/react'
-import { TableRow, Truncate } from 'components'
+import {
+	ColumnDef,
+	flexRender,
+	getCoreRowModel,
+	RowData,
+	useReactTable,
+} from '@tanstack/react-table'
+import { TableRow } from 'components'
+import { useTruncate } from 'hooks'
+import { isNumber } from 'lodash'
 import { useTranslation } from 'next-i18next'
 import NextLink from 'next/link'
 
-interface ResourceItem extends Record<string, any> {
-	id: string | number
+declare module '@tanstack/table-core' {
+	interface ColumnMeta<TData extends RowData, TValue> {
+		isNumeric?: boolean
+	}
 }
 
+type Data = Record<string, any>
+
 type ResourceTableProps = {
-	data: ResourceItem[]
+	data: Data[]
 	fields: string[]
 	href: string
+	sort: (field: string, value?: 'desc' | 'asc') => void
 }
 
 export default function ResourceTable({
 	data,
 	fields,
 	href,
+	sort,
 }: ResourceTableProps) {
 	const { t } = useTranslation('fields')
+	const truncate = useTruncate()
+
+	const columns: ColumnDef<Data, string>[] = fields.map((field) => ({
+		accessorKey: field,
+		header: t<string>(field),
+		cell: (e) => truncate(e.getValue()),
+		meta: {
+			isNumeric: isNumber(data[0][field]),
+		},
+	}))
+
+	const { getHeaderGroups, getRowModel } = useReactTable({
+		columns,
+		data,
+		getCoreRowModel: getCoreRowModel(),
+		getRowId: (e) => e.id,
+		debugTable: true,
+	})
 
 	if (!data.length) {
 		return null
@@ -37,41 +69,41 @@ export default function ResourceTable({
 		<TableContainer>
 			<Table whiteSpace="normal" fontSize={{ base: 'sm', xl: 'md' }}>
 				<Thead>
-					<Tr>
-						{fields.map((field) => (
-							<Th
-								key={field}
-								isNumeric={typeof data[0][field] === 'number'}
-								borderColor="border"
-							>
-								{t(field)}
-							</Th>
-						))}
-					</Tr>
+					{getHeaderGroups().map((headerGroup) => (
+						<Tr key={headerGroup.id}>
+							{headerGroup.headers.map((header) => (
+								<Th
+									key={header.id}
+									isNumeric={header.column.columnDef.meta!.isNumeric}
+									borderColor="border"
+									cursor="pointer"
+								>
+									{flexRender(
+										header.column.columnDef.header,
+										header.getContext(),
+									)}
+								</Th>
+							))}
+						</Tr>
+					))}
 				</Thead>
 				<Tbody>
-					{data?.map((item) => {
-						return (
-							<TableRow key={item.id}>
-								{fields.map((field, i) => (
+					{getRowModel().rows.map((row) => (
+						<NextLink key={row.id} href={`${href}/${row.id}`}>
+							<TableRow>
+								{row.getVisibleCells().map((cell) => (
 									<Td
-										key={`${item.id} ${field}`}
-										isNumeric={typeof item[field] === 'number'}
+										key={cell.id}
+										isNumeric={cell.column.columnDef.meta!.isNumeric}
 										borderColor="border"
 										w="auto"
 									>
-										{i > 0 ? (
-											<Truncate>{item[field]}</Truncate>
-										) : (
-											<NextLink href={`${href}/${item.id}`} passHref>
-												<Link as={Truncate}>{item[field]}</Link>
-											</NextLink>
-										)}
+										{flexRender(cell.column.columnDef.cell, cell.getContext())}
 									</Td>
 								))}
 							</TableRow>
-						)
-					})}
+						</NextLink>
+					))}
 				</Tbody>
 			</Table>
 		</TableContainer>

@@ -1,14 +1,39 @@
 import { SimpleGrid, Stack, Text, TextProps } from '@chakra-ui/react'
+import { Publication } from '@prisma/client'
+import {
+	dehydrate,
+	QueryClient,
+	useQuery,
+	useQueryClient,
+} from '@tanstack/react-query'
 import { HeadTitle, Layout } from 'components'
 import { GetServerSideProps, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router'
+import { queryClientConfig } from 'pages/_app'
 import { ReactNode } from 'react'
 
-export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+	params,
+	locale,
+}) => {
+	const translationProps = await serverSideTranslations(locale!, [
+		'common',
+		'fields',
+	])
+
+	const queryClient = new QueryClient(queryClientConfig)
+
+	if (params?.id) {
+		await queryClient.prefetchQuery(['publications', { id: params.id }])
+	}
+
 	return {
-		props: await serverSideTranslations(locale!, ['common', 'fields']),
+		props: {
+			dehydratedState: JSON.parse(JSON.stringify(dehydrate(queryClient))),
+			...translationProps,
+		},
 	}
 }
 
@@ -17,45 +42,63 @@ interface LabeledTextProps extends TextProps {
 	label: string
 }
 
+function LabeledText({ children, label, ...props }: LabeledTextProps) {
+	const { t } = useTranslation('fields')
+	return (
+		<Stack>
+			<Text fontSize="sm" color="text-secondary">
+				{t(label)}
+			</Text>
+			<Text {...props}>{children}</Text>
+		</Stack>
+	)
+}
+
 const PublicationPage: NextPage = () => {
+	const { t } = useTranslation('common')
+	const queryClient = useQueryClient()
 	const router = useRouter()
-	const { category, record } = router.query as {
+
+	const { category, id } = router.query as {
 		category: string
-		record: string
-	}
-	const { t } = useTranslation(['common', 'fields'])
-
-	function LabeledText({ children, label, ...props }: LabeledTextProps) {
-		return (
-			<Stack>
-				<Text fontSize="sm" color="secondary">
-					{t(label)}
-				</Text>
-				<Text fontWeight="medium" color="text-secondary" {...props}>
-					{children}
-				</Text>
-			</Stack>
-		)
+		id: string
 	}
 
-	const p = JSON.parse(record)
+	const { data } = useQuery<Publication>(['publications', { id }], {
+		initialData: () => {
+			return queryClient
+				.getQueryData<Publication[]>(['publications'], { exact: false })
+				?.find((e) => e.id.toString() === id)
+		},
+		initialDataUpdatedAt: () => {
+			return queryClient.getQueryState(['publications'], {
+				exact: false,
+			})?.dataUpdatedAt
+		},
+	})
+
+	if (!data) {
+		return null
+	}
 
 	return (
 		<>
-			<HeadTitle title={`${t(category)} #${p.id}`} />
-			<Layout title={p.title}>
+			<HeadTitle title={`${t(category)} #${data.id}`} />
+			<Layout title={data.title}>
 				<Stack spacing={12}>
-					<Text>{p.description}</Text>
+					<Text>{data.description}</Text>
 					<SimpleGrid columns={{ base: 2, lg: 4 }} spacing={12}>
-						<LabeledText label="type">{p.type ?? '-'}</LabeledText>
-						<LabeledText label="year">{p.year ?? '-'}</LabeledText>
-						<LabeledText label="character">{p.characterId ?? '-'}</LabeledText>
-						<LabeledText label="volume">{p.pages ?? '-'}</LabeledText>
-						{/* <LabeledText label="authors">{p.authors}</LabeledText> */}
-						{/* <LabeledText label="coauthors">{p.coauthors}</LabeledText> */}
+						<LabeledText label="type">{data.type ?? '-'}</LabeledText>
+						<LabeledText label="year">{data.year ?? '-'}</LabeledText>
+						<LabeledText label="character">
+							{data.characterId ?? '-'}
+						</LabeledText>
+						<LabeledText label="volume">{data.pages ?? '-'}</LabeledText>
+						{/* <LabeledText label="authors">{data.authors}</LabeledText> */}
+						{/* <LabeledText label="coauthors">{data.coauthors}</LabeledText> */}
 					</SimpleGrid>
-					{p.outputData && (
-						<LabeledText label="outputData">{p.outputData}</LabeledText>
+					{data.outputData && (
+						<LabeledText label="outputData">{data.outputData}</LabeledText>
 					)}
 				</Stack>
 			</Layout>

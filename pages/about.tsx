@@ -17,7 +17,7 @@ const AboutPage: NextPage = () => {
 		<>
 			<HeadTitle title={t('title')} />
 			<Layout title={t('title')}>
-				<Heading as="h2" size="xl">
+				<Heading as="h2" size="lg">
 					{t('subtitle')}
 				</Heading>
 				{(
@@ -27,7 +27,7 @@ const AboutPage: NextPage = () => {
 					}[]
 				).map(({ title, text }) => (
 					<Stack as="section" spacing={3} key={title} pt={10}>
-						<Heading as="h3" fontSize="2xl" fontWeight="semibold">
+						<Heading as="h3" fontSize="xl" fontWeight="bold">
 							{title}
 						</Heading>
 						<Text>{text}</Text>

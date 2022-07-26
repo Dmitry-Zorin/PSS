@@ -1,61 +1,30 @@
 import { Author } from '@prisma/client'
+import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query'
 import { HeadTitle, Layout, ResourceTable, Search } from 'components'
-import prisma from 'lib/prisma'
 import { GetServerSideProps, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import Link from 'next/link'
-import { ParsedUrlQuery } from 'querystring'
 
-interface AuthorsPageProps {
-	authors?: Author[]
+async function getAuthors() {
+	const res = await fetch('/api/authors')
+	return res.json()
 }
 
-interface AuthorsPageQuery extends ParsedUrlQuery {
-	search: string
-}
-
-export const getServerSideProps: GetServerSideProps<
-	AuthorsPageProps,
-	AuthorsPageQuery
-> = async ({ res, query, locale }) => {
-	res.setHeader(
-		'Cache-Control',
-		'public, s-maxage=10, stale-while-revalidate=59',
-	)
-	const { search } = query
-
-	// await new Promise((resolve) => setTimeout(resolve, 3000))
-
-	const authors = await prisma.author.findMany({
-		take: 10,
-		...(typeof search === 'string' &&
-			(() => {
-				const wordsArray = search.trim().split(' ')
-				return {
-					where: {
-						AND: wordsArray.flatMap((word) => ({
-							OR: [
-								{ lastName: { contains: word, mode: 'insensitive' } },
-								{ firstName: { contains: word, mode: 'insensitive' } },
-								{ middleName: { contains: word, mode: 'insensitive' } },
-							],
-						})),
-					},
-				}
-			})()),
-	})
+export const getStaticProps: GetServerSideProps = async ({ locale }) => {
+	const queryClient = new QueryClient()
+	await queryClient.prefetchQuery(['authors'], getAuthors)
 
 	return {
 		props: {
-			authors,
 			...(await serverSideTranslations(locale!, ['common', 'fields'])),
+			dehydratedState: dehydrate(queryClient),
 		},
 	}
 }
 
-const AuthorsPage: NextPage<AuthorsPageProps> = ({ authors }) => {
+const AuthorsPage: NextPage = () => {
 	const { t } = useTranslation('common', { keyPrefix: 'menu.items' })
+	const { data: authors } = useQuery<Author[]>(['authors'], getAuthors)
 
 	return (
 		<>
