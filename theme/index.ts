@@ -27,11 +27,8 @@ export default extendTheme({
 			'*, *::before, &::after': {
 				borderColor: 'border',
 			},
-			h1: {
-				color: 'primary',
-			},
 			h2: {
-				color: 'text-secondary',
+				color: 'primary',
 			},
 		},
 	},

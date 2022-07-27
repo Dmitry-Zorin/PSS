@@ -38,6 +38,7 @@ const Home: NextPage = () => {
 							</Heading>
 							<Heading
 								as="h1"
+								color="primary"
 								fontSize={{ base: '5xl', sm: '6xl', md: '7xl' }}
 								lineHeight="none"
 							>

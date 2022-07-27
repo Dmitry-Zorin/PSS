@@ -1,79 +1,26 @@
-import {
-	Grid,
-	GridItem,
-	useBreakpointValue,
-	useDisclosure,
-} from '@chakra-ui/react'
-import { AppBar, Menu, Sidebar, SidebarDrawer } from 'components'
+import { Box, Flex, useDisclosure } from '@chakra-ui/react'
+import { AppBar, MainArea, Menu, Sidebar, SidebarDrawer } from 'components'
 import resources from 'constants/resources'
 import { SidebarContextProvider } from 'contexts/SidebarContext'
-import { motion } from 'framer-motion'
-import { useSidebarState } from 'hooks'
-import { getSpringAnimation } from 'utils'
-import MainContent, { MainContentProps } from './MainContent'
+import { MainAreaProps } from './MainArea'
 
-const APP_BAR_HEIGHT = '4rem'
-const SIDEBAR_WIDTH = '17rem'
-const SIDEBAR_COLLAPSED_WIDTH = '4.5rem'
-
-function LayoutGrid(props: MainContentProps) {
-	const [isSidebarOpen, setSidebarOpen] = useSidebarState()
-
-	const {
-		isOpen: isSidebarDrawerOpen,
-		onOpen: onSidebarDrawerOpen,
-		onClose: onSidebarDrawerClose,
-	} = useDisclosure()
+export default function Layout(props: MainAreaProps) {
+	const { isOpen: isSidebarDrawerOpen, onClose: onSidebarDrawerClose } =
+		useDisclosure()
 
 	const menu = <Menu items={resources} />
 
-	// useEffect(() => {
-	// 	first
-	// }, [])
-
 	return (
 		<>
-			<Grid
-				as={motion.div}
-				templateAreas={{
-					base: '"header" "main"',
-					md: '"header header" "nav main"',
-				}}
-				templateRows={`${APP_BAR_HEIGHT} 1fr`}
-				templateColumns={{
-					base: '1fr',
-					md: `${isSidebarOpen ? SIDEBAR_WIDTH : SIDEBAR_COLLAPSED_WIDTH} 1fr`,
-				}}
-				initial={false}
-				animate={{
-					// gridTemplateColumns: `${
-					// 	isSidebarOpen ? SIDEBAR_WIDTH : SIDEBAR_COLLAPSED_WIDTH
-					// } 1fr`,
-					transition: getSpringAnimation(isSidebarOpen),
-				}}
-			>
-				<GridItem
-					area="header"
-					as={AppBar}
-					onClick={useBreakpointValue({
-						base: onSidebarDrawerOpen,
-						md: () => setSidebarOpen(!isSidebarOpen),
-					})}
-				/>
-				<GridItem
-					area="nav"
-					as={Sidebar}
-					top={APP_BAR_HEIGHT}
-					h={`calc(100vh - ${APP_BAR_HEIGHT})`}
-					display={{
-						base: 'none',
-						md: 'block',
-					}}
-				>
-					{menu}
-				</GridItem>
-				<GridItem area="main" as={MainContent} {...props} />
-			</Grid>
+			<Flex>
+				<SidebarContextProvider>
+					<Sidebar>{menu}</Sidebar>
+				</SidebarContextProvider>
+				<Box flexGrow={1}>
+					<AppBar />
+					<MainArea {...props} />
+				</Box>
+			</Flex>
 			<SidebarDrawer
 				isOpen={isSidebarDrawerOpen}
 				onClose={onSidebarDrawerClose}
@@ -81,13 +28,5 @@ function LayoutGrid(props: MainContentProps) {
 				{menu}
 			</SidebarDrawer>
 		</>
-	)
-}
-
-export default function Layout(props: MainContentProps) {
-	return (
-		<SidebarContextProvider>
-			<LayoutGrid {...props} />
-		</SidebarContextProvider>
 	)
 }

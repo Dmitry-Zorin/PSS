@@ -41,14 +41,13 @@ const PublicationsPage: NextPage = () => {
 		category,
 	})
 
-	const { data: publications } = useQuery<Publication[]>([
-		'publications',
-		query,
-	])
+	const { data } = useQuery<Publication[]>(['publications', query])
 
 	const search = useDebounce((search: string) => {
-		setQuery({ ...query, search: search || undefined })
-	}, 500)
+		if ((search || undefined) !== query.search) {
+			setQuery({ ...query, search: search || undefined })
+		}
+	}, 1000)
 
 	function sort(field: string, value?: 'desc' | 'asc') {
 		setQuery({
@@ -61,14 +60,13 @@ const PublicationsPage: NextPage = () => {
 		<>
 			<HeadTitle title={t(category)} />
 			<Layout fullSize leftActions={<Search onChange={search} />}>
-				{publications && (
-					<ResourceTable
-						data={publications}
-						fields={['title', 'description', 'year']}
-						href={`/publications/${category}`}
-						sort={sort}
-					/>
-				)}
+				<ResourceTable
+					data={data}
+					fields={['title', 'description', 'year']}
+					href={`/publications/${category}`}
+					sort={sort}
+					search={query.search}
+				/>
 			</Layout>
 		</>
 	)

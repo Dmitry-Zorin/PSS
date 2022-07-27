@@ -23,7 +23,7 @@ const colorTokens: Record<string, SemanticValue<keyof Pseudos>> = {
 	},
 	heading: {},
 	text: {
-		_light: 'hsl(220 30% 25%)',
+		_light: 'hsl(220 30% 30%)',
 		_dark: 'hsl(220 30% 90%)',
 	},
 	'text-secondary': {
@@ -36,7 +36,7 @@ const colorTokens: Record<string, SemanticValue<keyof Pseudos>> = {
 	},
 	border: {
 		_light: '#e1e4ef',
-		_dark: '#21293b',
+		_dark: 'hsl(220, 25%, 20%)',
 	},
 }
 

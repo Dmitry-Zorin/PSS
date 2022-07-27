@@ -57,6 +57,7 @@ export default function MenuItem({
 							as={motion.span}
 							flexShrink={0}
 							fontSize="md"
+							pointerEvents="none"
 							initial={false}
 							animate={{ opacity: +isSidebarOpen }}
 						>

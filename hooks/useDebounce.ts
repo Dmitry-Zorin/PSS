@@ -3,7 +3,7 @@ import { useEffect, useMemo } from 'react'
 
 export default function useDebounce<T extends (...args: any) => any>(
 	fn: T,
-	timeout = 300,
+	timeout = 500,
 ) {
 	const debouncedFn = useMemo(() => debounce(fn, timeout), [fn, timeout])
 

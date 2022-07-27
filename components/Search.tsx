@@ -1,4 +1,4 @@
-import { CloseIcon, Search2Icon } from '@chakra-ui/icons'
+import { Search2Icon } from '@chakra-ui/icons'
 import {
 	Input,
 	InputGroup,
@@ -6,8 +6,10 @@ import {
 	InputProps,
 	InputRightElement,
 } from '@chakra-ui/react'
+import { faClose } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useTranslation } from 'next-i18next'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 interface SearchProps extends Omit<InputProps, 'onChange'> {
 	onChange: (search: string) => void
@@ -17,31 +19,31 @@ export default function Search({ onChange, ...props }: SearchProps) {
 	const { t } = useTranslation('fields')
 	const [value, setValue] = useState('')
 
-	function update(search: string) {
-		setValue(search)
-		onChange(search)
-	}
+	useEffect(() => {
+		onChange(value.trim())
+	}, [onChange, value])
 
 	return (
 		<InputGroup w={60}>
 			<InputLeftElement pointerEvents="none" color="text-secondary">
 				<Search2Icon />
+				{/* <FontAwesomeIcon icon={faSearch} size="sm" /> */}
 			</InputLeftElement>
 			<Input
 				value={value}
 				variant="filled"
 				placeholder={t('search')}
 				_placeholder={{ color: 'text-secondary' }}
-				onChange={(e) => update(e.target.value)}
+				onChange={(e) => setValue(e.target.value)}
 				{...props}
 			/>
-			{props.value && (
+			{value && (
 				<InputRightElement
 					cursor="pointer"
 					color="text-secondary"
-					onClick={() => update('')}
+					onClick={() => setValue('')}
 				>
-					<CloseIcon boxSize={3} />
+					<FontAwesomeIcon icon={faClose} />
 				</InputRightElement>
 			)}
 		</InputGroup>

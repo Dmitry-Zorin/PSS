@@ -3,7 +3,7 @@ import { ActionsToolbar } from 'components'
 import { useTranslation } from 'next-i18next'
 import { ReactNode } from 'react'
 
-export interface MainContentProps {
+export interface MainAreaProps {
 	error?: Error | null
 	children: ReactNode
 	title?: string
@@ -12,19 +12,19 @@ export interface MainContentProps {
 	fullSize?: boolean
 }
 
-export default function MainContent({
+export default function MainArea({
 	children,
 	error,
 	title,
 	leftActions,
 	rightActions,
 	fullSize = false,
-}: MainContentProps) {
+}: MainAreaProps) {
 	const { t } = useTranslation('common')
 	const heading = error ? t('error') : title
 
 	return (
-		<Box as="main" px={6} py={4}>
+		<Box as="main" px={4}>
 			{(leftActions || rightActions) && (
 				<ActionsToolbar leftActions={leftActions} rightActions={rightActions} />
 			)}

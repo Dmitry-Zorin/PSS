@@ -7,7 +7,7 @@ interface MenuItems extends ListProps {
 
 export default function Menu({ items, ...props }: MenuItems) {
 	return (
-		<List p={4} {...props}>
+		<List px={4} {...props}>
 			{Object.entries(items).map(([name, info]) => {
 				return info.icon ? (
 					<MenuItem key={name} to={`/${name}`} text={name} icon={info.icon} />

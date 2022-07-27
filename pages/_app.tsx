@@ -9,6 +9,7 @@ import {
 	QueryFunction,
 } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { useScrollRestoration } from 'hooks'
 import { GetStaticProps } from 'next'
 import { appWithTranslation, useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
@@ -56,6 +57,8 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 
 export default appWithTranslation(({ Component, pageProps }) => {
 	const { t } = useTranslation('common')
+	useScrollRestoration()
+
 	const [queryClient] = useState(() => {
 		return new QueryClient(queryClientConfig)
 	})
@@ -70,7 +73,7 @@ export default appWithTranslation(({ Component, pageProps }) => {
 				<QueryClientProvider client={queryClient}>
 					<Hydrate state={pageProps.dehydratedState}>
 						<Component {...pageProps} />
-						<ReactQueryDevtools initialIsOpen={false} />
+						{/* <ReactQueryDevtools initialIsOpen={false} /> */}
 					</Hydrate>
 				</QueryClientProvider>
 			</ChakraProvider>

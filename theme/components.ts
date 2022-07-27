@@ -45,6 +45,9 @@ const components: ThemeComponents = {
 					_hover: {
 						bg: 'bg-layer-2',
 					},
+					_focus: {
+						borderColor: 'primary',
+					},
 				},
 			},
 		},
