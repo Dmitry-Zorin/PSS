@@ -18,21 +18,25 @@ export default function MainArea({
 	title,
 	leftActions,
 	rightActions,
-	fullSize = false,
+	fullSize,
 }: MainAreaProps) {
 	const { t } = useTranslation('common')
 
 	const heading = error ? t('error') : title
 
 	return (
-		<Box pl={{ base: 6, xl: '8rem' }} pr={6}>
+		<Box pl={{ base: 6, '2xl': fullSize ? 6 : '8rem' }} pr={6}>
 			{(leftActions || rightActions) && (
-				<ActionsToolbar leftActions={leftActions} rightActions={rightActions} />
+				<ActionsToolbar
+					leftActions={leftActions}
+					rightActions={rightActions}
+					pl={{ '2xl': fullSize ? 0 : '8.5rem' }}
+				/>
 			)}
 			{fullSize ? (
 				children
 			) : (
-				<Box maxW={{ base: '3xl', xl: '4xl' }} mx="auto" pb={4}>
+				<Box as="article" maxW={{ base: '3xl', xl: '4xl' }} mx="auto" pb={4}>
 					{heading && (
 						<Box as="header" pb={8}>
 							<Heading

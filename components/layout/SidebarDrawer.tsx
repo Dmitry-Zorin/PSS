@@ -1,22 +1,27 @@
 import {
 	Drawer,
-	DrawerCloseButton,
 	DrawerContent,
-	DrawerHeader,
 	DrawerOverlay,
 	DrawerProps,
+	HStack,
+	IconButton,
 } from '@chakra-ui/react'
-import { Logo } from 'components'
+import { faClose } from '@fortawesome/free-solid-svg-icons'
+import { Icon, Logo } from 'components'
 
 export default function SidebarDrawer({ children, ...props }: DrawerProps) {
 	return (
-		<Drawer placement="left" {...props}>
+		<Drawer placement="left" size="xs" {...props}>
 			<DrawerOverlay />
-			<DrawerContent>
-				<DrawerCloseButton size="lg" color="text-secondary" />
-				<DrawerHeader>
+			<DrawerContent px={4}>
+				<HStack justify="space-between" pl={4} py={2}>
 					<Logo />
-				</DrawerHeader>
+					<IconButton
+						aria-label="Close"
+						icon={<Icon icon={faClose} boxSize={6} />}
+						onClick={props.onClose}
+					/>
+				</HStack>
 				{children}
 			</DrawerContent>
 		</Drawer>

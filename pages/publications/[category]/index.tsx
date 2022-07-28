@@ -68,7 +68,7 @@ const PublicationsPage: NextPage = () => {
 				fullSize
 				leftActions={<Search onChange={search} />}
 				rightActions={
-					<Link href={`/publications/${category}/create`}>
+					<Link href={`/publications/${category}/create`} passHref>
 						<Button as="a" leftIcon={<Icon icon={faAdd} />}>
 							Create
 						</Button>

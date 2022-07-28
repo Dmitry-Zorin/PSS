@@ -11,18 +11,18 @@ const colorTokens: Record<string, SemanticValue<keyof Pseudos>> = {
 	},
 	'bg-layer-1': {
 		_light: 'hsl(222 50% 97%)',
-		_dark: 'hsl(222 28% 15%)',
+		_dark: 'hsl(222 30% 15%)',
 	},
 	'bg-layer-2': {
 		_light: 'hsl(222 50% 96%)',
-		_dark: 'hsl(222 28% 16%)',
+		_dark: 'hsl(222 30% 16%)',
 	},
 	'bg-layer-3': {
 		_light: 'hsl(222 50% 94%)',
-		_dark: 'hsl(222 28% 17%)',
+		_dark: 'hsl(222 30% 17%)',
 	},
 	text: {
-		_light: 'hsl(222 28% 30%)',
+		_light: 'hsl(222 30% 30%)',
 		_dark: 'hsl(222 50% 90%)',
 	},
 	heading: {
@@ -40,6 +40,10 @@ const colorTokens: Record<string, SemanticValue<keyof Pseudos>> = {
 	border: {
 		_light: 'hsl(222 30% 90%)',
 		_dark: 'hsl(222, 25%, 20%)',
+	},
+	'border-primary': {
+		_light: 'hsl(222 35% 85%)',
+		_dark: 'hsl(222, 30%, 25%)',
 	},
 }
 

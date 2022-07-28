@@ -1,7 +1,7 @@
-import { Flex, HStack } from '@chakra-ui/react'
+import { Flex, HStack, StackProps } from '@chakra-ui/react'
 import { ReactNode } from 'react'
 
-interface ActionsToolbarProps {
+interface ActionsToolbarProps extends StackProps {
 	leftActions?: ReactNode
 	rightActions?: ReactNode
 }
@@ -9,9 +9,10 @@ interface ActionsToolbarProps {
 export default function ActionsToolbar({
 	leftActions,
 	rightActions,
+	...props
 }: ActionsToolbarProps) {
 	return (
-		<HStack justify="space-between" pt={2} pb={4}>
+		<HStack justify="space-between" pt={2} pb={4} {...props}>
 			<Flex flexGrow={1}>{leftActions}</Flex>
 			{rightActions && <div>{rightActions}</div>}
 		</HStack>

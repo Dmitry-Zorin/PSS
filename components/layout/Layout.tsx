@@ -4,11 +4,7 @@ import resources from 'constants/resources'
 import { MainAreaProps } from './MainArea'
 
 export default function Layout(props: MainAreaProps) {
-	const {
-		isOpen: isSidebarDrawerOpen,
-		onOpen: onSidebarDrawerOpen,
-		onClose: onSidebarDrawerClose,
-	} = useDisclosure()
+	const { isOpen, onOpen, onClose } = useDisclosure()
 
 	const menu = <Menu items={resources} />
 
@@ -24,14 +20,11 @@ export default function Layout(props: MainAreaProps) {
 					{menu}
 				</Sidebar>
 				<Box as="main" flexGrow={1} bg="bg" minH="100vh">
-					<AppBar />
+					<AppBar onSidebarDrawerOpen={onOpen} />
 					<MainArea {...props} />
 				</Box>
 			</Flex>
-			<SidebarDrawer
-				isOpen={isSidebarDrawerOpen}
-				onClose={onSidebarDrawerClose}
-			>
+			<SidebarDrawer isOpen={isOpen} onClose={onClose}>
 				{menu}
 			</SidebarDrawer>
 		</>

@@ -24,10 +24,15 @@ export default function ListItemCard({ record }: ListItemCardProps) {
 	const truncate = useTruncate()
 
 	return (
-		<LinkBox as={Card} onMouseEnter={onOpen} onMouseLeave={onClose}>
+		<LinkBox
+			as={Card}
+			onMouseEnter={onOpen}
+			onMouseLeave={onClose}
+			_hover={{ borderColor: 'border-primary' }}
+		>
 			<CardHeader>
 				<Avatar
-					bg="bg-layer-1"
+					bg="transparent"
 					color="primary"
 					icon={
 						<Icon
@@ -54,10 +59,10 @@ export default function ListItemCard({ record }: ListItemCardProps) {
 				</Stack>
 				<Icon
 					icon={faEye}
-					boxSize={6}
+					boxSize={5}
 					justifySelf="flex-end"
-					color="text-primary"
-					opacity={isOpen ? 0.75 : 0}
+					color={isOpen ? 'text-primary' : 'border-primary'}
+					opacity={isOpen ? 0.75 : 1}
 					pr={2}
 				/>
 			</CardHeader>
@@ -72,25 +77,10 @@ export default function ListItemCard({ record }: ListItemCardProps) {
 					}}
 					passHref
 				>
-					<LinkOverlay _hover={{ color: 'text-primary' }}>
-						{record.title}
-						{/* <Box
-							as="span"
-							justifySelf="flex-end"
-							pl={1.5}
-							fontWeight="medium"
-							color={isOpen ? 'text-primary' : 'transparent'}
-						>
-							&rarr;
-						</Box> */}
-					</LinkOverlay>
+					<LinkOverlay>{record.title}</LinkOverlay>
 				</Link>
 				{record.description && (
-					<Text
-						fontSize="md"
-						color="text-secondary"
-						opacity={isOpen ? 0.75 : 1}
-					>
+					<Text fontSize="md" color="text-secondary">
 						{truncate(record.description)}
 					</Text>
 				)}

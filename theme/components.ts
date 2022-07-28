@@ -16,7 +16,6 @@ const components: ThemeComponents = {
 			variant: 'ghost',
 		},
 		baseStyle: {
-			// borderRadius: 'lg',
 			_focusVisible: {
 				shadow: 'outline',
 			},
@@ -26,7 +25,7 @@ const components: ThemeComponents = {
 				color: 'text-secondary',
 				_hover: {
 					bg: 'transparent',
-					color: 'primary',
+					color: 'text-primary',
 				},
 				_active: {
 					bg: 'transparent',
@@ -38,7 +37,6 @@ const components: ThemeComponents = {
 		variants: {
 			filled: {
 				field: {
-					// borderRadius: 'full',
 					border: '1px',
 					borderColor: 'border',
 					bg: 'bg-layer-1',
@@ -46,7 +44,7 @@ const components: ThemeComponents = {
 						bg: 'bg-layer-2',
 					},
 					_focus: {
-						borderColor: 'primary',
+						borderColor: 'text-primary',
 					},
 				},
 			},
@@ -89,20 +87,14 @@ const components: ThemeComponents = {
 	Drawer: {
 		baseStyle: {
 			dialog: {
-				bg: 'bg',
+				bg: 'bg-layer-1',
 			},
 		},
-	},
-	CloseButton: {
-		baseStyle: {
-			borderRadius: 'full',
-			color: 'text-secondary',
-			_hover: {
-				bg: 'transparent',
-				color: 'primary',
-			},
-			_active: {
-				bg: 'transparent',
+		sizes: {
+			xs: {
+				dialog: {
+					maxW: '16rem',
+				},
 			},
 		},
 	},

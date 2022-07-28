@@ -41,13 +41,21 @@ export default function MenuItem({ to, icon, text }: MenuItemProps) {
 						px={4}
 						fontSize="md"
 						borderRadius="lg"
-						color={isActive ? 'primary' : 'text-secondary'}
+						color={isActive ? 'text-primary' : 'text-secondary'}
 						outline="2px solid transparent"
-						_hover={{ color: isActive ? 'primary' : 'text' }}
+						_hover={{ color: isActive ? 'text-primary' : 'text' }}
 						_focusVisible={{ shadow: 'outline' }}
 					>
 						<Icon icon={icon} boxSize={5} />
-						<Text display={{ base: 'none', lg: 'block' }}>{t(text)}</Text>
+						<Text
+							display={{
+								base: 'block',
+								md: 'none',
+								lg: 'block',
+							}}
+						>
+							{t(text)}
+						</Text>
 					</HStack>
 				</NextLink>
 			</ListItem>

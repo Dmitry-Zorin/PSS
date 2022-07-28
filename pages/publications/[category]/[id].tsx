@@ -1,4 +1,5 @@
-import { SimpleGrid, Stack, Text, TextProps } from '@chakra-ui/react'
+import { Button, SimpleGrid, Stack, Text, TextProps } from '@chakra-ui/react'
+import { faTableList } from '@fortawesome/free-solid-svg-icons'
 import { Publication } from '@prisma/client'
 import {
 	dehydrate,
@@ -6,10 +7,11 @@ import {
 	useQuery,
 	useQueryClient,
 } from '@tanstack/react-query'
-import { HeadTitle, Layout } from 'components'
+import { HeadTitle, Icon, Layout } from 'components'
 import { GetServerSideProps, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { queryClientConfig } from 'pages/_app'
 import { ReactNode } from 'react'
@@ -84,7 +86,16 @@ const PublicationPage: NextPage = () => {
 	return (
 		<>
 			<HeadTitle title={`${t(category)} #${data.id}`} />
-			<Layout title={data.title}>
+			<Layout
+				title={data.title}
+				leftActions={
+					<Link href={`/publications/${category}`} passHref>
+						<Button as="a" leftIcon={<Icon icon={faTableList} />}>
+							List
+						</Button>
+					</Link>
+				}
+			>
 				<Stack spacing={12} pt={2}>
 					<Text>{data.description}</Text>
 					<SimpleGrid columns={{ base: 2, lg: 4 }} spacing={12}>

@@ -8,7 +8,8 @@ export default function Logo(props: LinkProps) {
 			<Link
 				as={motion.a}
 				fontSize={{
-					base: 'xl',
+					base: '2xl',
+					md: 'xl',
 					lg: '2xl',
 				}}
 				fontWeight="bold"
