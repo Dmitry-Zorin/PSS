@@ -9,7 +9,7 @@ import {
 import { faClose } from '@fortawesome/free-solid-svg-icons'
 import { Icon, Logo } from 'components'
 
-export default function SidebarDrawer({ children, ...props }: DrawerProps) {
+export default function MenuDrawer({ children, ...props }: DrawerProps) {
 	return (
 		<Drawer placement="left" size="xs" {...props}>
 			<DrawerOverlay />

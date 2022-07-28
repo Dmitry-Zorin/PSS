@@ -28,7 +28,8 @@ export default function MenuItem({ to, icon, text }: MenuItemProps) {
 			placement="right"
 			fontWeight="normal"
 			hidden={useBreakpointValue({
-				base: false,
+				base: true,
+				md: false,
 				lg: true,
 			})}
 		>
