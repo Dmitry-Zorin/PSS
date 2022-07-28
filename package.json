@@ -8,7 +8,6 @@
 		"tsc": "tsc"
 	},
 	"dependencies": {
-		"@chakra-ui/icons": "^2.0.4",
 		"@chakra-ui/react": "^2.2.4",
 		"@emotion/react": "^11.9.3",
 		"@emotion/styled": "^11.9.3",
@@ -20,13 +19,13 @@
 		"@tanstack/react-query": "^4.0.10",
 		"@tanstack/react-query-devtools": "^4.0.10",
 		"@tanstack/react-table": "^8.3.3",
-		"formik": "^2.2.9",
 		"framer-motion": "^6.5.1",
 		"lodash": "^4.17.21",
 		"next": "12.2.3",
 		"next-i18next": "^11.3.0",
 		"react": "18.2.0",
-		"react-dom": "18.2.0"
+		"react-dom": "18.2.0",
+		"react-hook-form": "^7.33.1"
 	},
 	"devDependencies": {
 		"@types/lodash": "^4.14.182",

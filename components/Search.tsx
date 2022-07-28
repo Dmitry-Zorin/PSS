@@ -1,4 +1,3 @@
-import { Search2Icon } from '@chakra-ui/icons'
 import {
 	Input,
 	InputGroup,
@@ -6,8 +5,8 @@ import {
 	InputProps,
 	InputRightElement,
 } from '@chakra-ui/react'
-import { faClose } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faClose, faSearch } from '@fortawesome/free-solid-svg-icons'
+import { Icon } from 'components'
 import { useTranslation } from 'next-i18next'
 import { useEffect, useState } from 'react'
 
@@ -26,8 +25,7 @@ export default function Search({ onChange, ...props }: SearchProps) {
 	return (
 		<InputGroup w={60}>
 			<InputLeftElement pointerEvents="none" color="text-secondary">
-				<Search2Icon />
-				{/* <FontAwesomeIcon icon={faSearch} size="sm" /> */}
+				<Icon icon={faSearch} />
 			</InputLeftElement>
 			<Input
 				value={value}
@@ -42,8 +40,9 @@ export default function Search({ onChange, ...props }: SearchProps) {
 					cursor="pointer"
 					color="text-secondary"
 					onClick={() => setValue('')}
+					_hover={{ color: 'primary' }}
 				>
-					<FontAwesomeIcon icon={faClose} />
+					<Icon icon={faClose} />
 				</InputRightElement>
 			)}
 		</InputGroup>

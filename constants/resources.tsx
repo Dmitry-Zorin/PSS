@@ -2,36 +2,28 @@ import {
 	faAddressCard,
 	faAward,
 	faBookOpen,
-	faCircle,
 	faCircleInfo,
 	faCode,
-	faFile,
-	faFileCircleCheck,
-	faFileCircleQuestion,
-	faFileCode,
-	faFileContract,
 	faFileInvoice,
 	faFileLines,
-	faFilePen,
-	faFileSignature,
 	faGraduationCap,
-	faList,
 	faNewspaper,
 	faPaste,
 	faSheetPlastic,
-	faSignature,
 	faTimeline,
 } from '@fortawesome/free-solid-svg-icons'
 
 const resources = {
-	about: {
-		icon: faCircleInfo,
-	},
-	timeline: {
-		icon: faTimeline,
-	},
-	authors: {
-		icon: faAddressCard,
+	main: {
+		about: {
+			icon: faCircleInfo,
+		},
+		timeline: {
+			icon: faTimeline,
+		},
+		authors: {
+			icon: faAddressCard,
+		},
 	},
 	publications: {
 		articles: {

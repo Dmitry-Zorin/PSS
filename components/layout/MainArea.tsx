@@ -1,5 +1,6 @@
 import { Box, Heading } from '@chakra-ui/react'
 import { ActionsToolbar } from 'components'
+import { motion } from 'framer-motion'
 import { useTranslation } from 'next-i18next'
 import { ReactNode } from 'react'
 
@@ -21,24 +22,24 @@ export default function MainArea({
 	fullSize = false,
 }: MainAreaProps) {
 	const { t } = useTranslation('common')
+
 	const heading = error ? t('error') : title
 
 	return (
-		<Box as="main" px={4}>
+		<Box as={motion.main} px={4}>
 			{(leftActions || rightActions) && (
 				<ActionsToolbar leftActions={leftActions} rightActions={rightActions} />
 			)}
 			{fullSize ? (
 				children
 			) : (
-				<Box maxW="3xl" mx="auto" pb={16}>
+				<Box maxW={{ base: '3xl', xl: '4xl' }} mx="auto" pb={4}>
 					{heading && (
-						<Box as="header" pt={8} pb={12}>
+						<Box as="header" pb={8}>
 							<Heading
-								as="h3"
-								fontSize="3.25rem"
+								as="h1"
+								fontSize={{ base: '5xl', xl: '6xl' }}
 								lineHeight="none"
-								sx={{ wordSpacing: 'normal', letterSpacing: 'tight' }}
 							>
 								{heading}
 							</Heading>

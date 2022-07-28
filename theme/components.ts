@@ -16,7 +16,7 @@ const components: ThemeComponents = {
 			variant: 'ghost',
 		},
 		baseStyle: {
-			borderRadius: 'full',
+			// borderRadius: 'lg',
 			_focusVisible: {
 				shadow: 'outline',
 			},
@@ -25,11 +25,11 @@ const components: ThemeComponents = {
 			ghost: {
 				color: 'text-secondary',
 				_hover: {
-					bg: 'bg-layer-2',
+					bg: 'transparent',
 					color: 'primary',
 				},
 				_active: {
-					bg: 'bg-layer-3',
+					bg: 'transparent',
 				},
 			},
 		},
@@ -38,7 +38,7 @@ const components: ThemeComponents = {
 		variants: {
 			filled: {
 				field: {
-					borderRadius: 'full',
+					// borderRadius: 'full',
 					border: '1px',
 					borderColor: 'border',
 					bg: 'bg-layer-1',

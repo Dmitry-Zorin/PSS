@@ -1,24 +1,36 @@
 import { PrismaClient } from '@prisma/client'
 
-const prisma = new PrismaClient({
-	log:
-		process.env.NODE_ENV === 'production'
-			? ['error']
-			: [
-					'query',
-					'info',
-					'warn',
-					'error',
-					{
-						emit: 'event',
-						level: 'query',
-					},
-			  ],
-})
+declare global {
+	var prisma: PrismaClient | undefined
+}
 
-prisma.$on('query', async (e) => {
-	console.log(e.params)
-	console.log(`finished in ${e.duration}ms`)
-})
+function createPrismaClient() {
+	const client = new PrismaClient({
+		log:
+			process.env.NODE_ENV === 'production'
+				? ['error']
+				: [
+						'query',
+						'info',
+						'warn',
+						'error',
+						{
+							emit: 'event',
+							level: 'query',
+						},
+				  ],
+	})
 
-export default prisma
+	client.$on('query', async (e) => {
+		console.log(e.params)
+		console.log(`finished in ${e.duration}ms`)
+	})
+
+	if (process.env.NODE_ENV !== 'production') {
+		global.prisma = client
+	}
+
+	return client
+}
+
+export default global.prisma || createPrismaClient()

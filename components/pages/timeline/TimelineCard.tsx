@@ -1,7 +1,13 @@
-import { Avatar, LinkBox, LinkOverlay, Stack, Text } from '@chakra-ui/react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+	Avatar,
+	chakra,
+	LinkBox,
+	LinkOverlay,
+	Stack,
+	Text,
+} from '@chakra-ui/react'
 import { Publication } from '@prisma/client'
-import { Card, CardContent, CardHeader } from 'components'
+import { Card, CardContent, CardHeader, Icon } from 'components'
 import resources from 'constants/resources'
 import { useTruncate } from 'hooks'
 import { useTranslation } from 'next-i18next'
@@ -16,19 +22,19 @@ export default function ListItemCard({ record }: ListItemCardProps) {
 	const truncate = useTruncate()
 
 	return (
-		<LinkBox as={Card}>
+		<Card>
 			<CardHeader>
 				<Avatar
 					bg="bg-layer-1"
 					color="primary"
 					icon={
-						<FontAwesomeIcon
+						<Icon
 							icon={
 								resources.publications[
 									record.category as keyof typeof resources['publications']
 								].icon
 							}
-							size="lg"
+							boxSize={6}
 						/>
 					}
 				/>
@@ -45,7 +51,7 @@ export default function ListItemCard({ record }: ListItemCardProps) {
 					</Text>
 				</Stack>
 			</CardHeader>
-			<CardContent>
+			<LinkBox as={CardContent}>
 				<Link
 					href={{
 						pathname: `/publications/[category]/[id]`,
@@ -56,8 +62,11 @@ export default function ListItemCard({ record }: ListItemCardProps) {
 					}}
 					passHref
 				>
-					<LinkOverlay>
-						<Text>{record.title}</Text>
+					<LinkOverlay _hover={{ color: 'text-primary' }}>
+						{record.title}
+						<chakra.span pl={1.5} fontWeight="medium">
+							&rarr;
+						</chakra.span>
 					</LinkOverlay>
 				</Link>
 				{record.description && (
@@ -65,7 +74,7 @@ export default function ListItemCard({ record }: ListItemCardProps) {
 						{truncate(record.description)}
 					</Text>
 				)}
-			</CardContent>
-		</LinkBox>
+			</LinkBox>
+		</Card>
 	)
 }

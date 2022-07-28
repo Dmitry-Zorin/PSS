@@ -1,20 +1,23 @@
-import { List, ListProps } from '@chakra-ui/react'
-import { MenuItem, SubMenu } from 'components'
+import { Box, BoxProps } from '@chakra-ui/react'
+import { IconProp } from '@fortawesome/fontawesome-svg-core'
+import { MenuGroup } from 'components'
 
-interface MenuItems extends ListProps {
-	items: Record<string, any>
+interface MenuItems extends BoxProps {
+	items: Record<string, Record<string, { icon: IconProp }>>
 }
 
 export default function Menu({ items, ...props }: MenuItems) {
 	return (
-		<List px={4} {...props}>
+		<Box px={{ base: 2, lg: 4 }} {...props}>
 			{Object.entries(items).map(([name, info]) => {
-				return info.icon ? (
-					<MenuItem key={name} to={`/${name}`} text={name} icon={info.icon} />
-				) : (
-					<SubMenu key={name} text={name} items={info} />
+				return (
+					<MenuGroup
+						key={name}
+						heading={name === 'main' ? undefined : name}
+						items={info}
+					/>
 				)
 			})}
-		</List>
+		</Box>
 	)
 }

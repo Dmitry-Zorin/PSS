@@ -1,4 +1,4 @@
-import { IconButton, useColorMode, useColorModeValue } from '@chakra-ui/react'
+import { IconButton, useColorMode } from '@chakra-ui/react'
 import { ColorModeSwitchIcon } from 'components'
 
 export default function ColorModeSwitch() {

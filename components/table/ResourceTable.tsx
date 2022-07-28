@@ -1,7 +1,5 @@
 import {
 	Highlight,
-	LinkBox,
-	LinkOverlay,
 	Table,
 	TableContainer,
 	Tbody,
@@ -20,7 +18,7 @@ import {
 import { useTruncate } from 'hooks'
 import { isNumber } from 'lodash'
 import { useTranslation } from 'next-i18next'
-import NextLink from 'next/link'
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
 declare module '@tanstack/table-core' {
@@ -115,9 +113,8 @@ export default function ResourceTable({
 					</Thead>
 					<Tbody>
 						{getRowModel().rows.map((row) => (
-							<LinkBox
+							<Tr
 								key={row.id}
-								as={Tr}
 								cursor="pointer"
 								transitionProperty="background"
 								transitionDuration="fast"
@@ -125,24 +122,26 @@ export default function ResourceTable({
 								_hover={{ bg: 'bg-layer-1' }}
 								_active={{ bg: 'bg-layer-2' }}
 							>
-								{row.getVisibleCells().map((cell) => (
+								{row.getVisibleCells().map((cell, i) => (
 									<Td
 										key={cell.id}
 										isNumeric={cell.column.columnDef.meta!.isNumeric}
 										borderColor="border"
 										w="auto"
 									>
-										<NextLink href={`${href}/${row.id}`}>
-											<LinkOverlay>
+										{i ? (
+											flexRender(cell.column.columnDef.cell, cell.getContext())
+										) : (
+											<Link href={`${href}/${row.id}`}>
 												{flexRender(
 													cell.column.columnDef.cell,
 													cell.getContext(),
 												)}
-											</LinkOverlay>
-										</NextLink>
+											</Link>
+										)}
 									</Td>
 								))}
-							</LinkBox>
+							</Tr>
 						))}
 					</Tbody>
 				</Table>

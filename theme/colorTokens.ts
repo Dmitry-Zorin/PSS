@@ -7,27 +7,30 @@ const colorTokens: Record<string, SemanticValue<keyof Pseudos>> = {
 	},
 	bg: {
 		_light: 'white',
-		_dark: 'hsl(220 30% 14%)',
+		_dark: 'hsl(222 30% 14%)',
 	},
 	'bg-layer-1': {
-		_light: 'hsl(220 30% 98%)',
-		_dark: 'hsl(220 29% 15%)',
+		_light: 'hsl(222 50% 97%)',
+		_dark: 'hsl(222 30% 15%)',
 	},
 	'bg-layer-2': {
-		_light: 'hsl(220 30% 96%)',
-		_dark: 'hsl(220 28% 16%)',
+		_light: 'hsl(222 30% 96%)',
+		_dark: 'hsl(222 28% 16%)',
 	},
 	'bg-layer-3': {
-		_light: 'hsl(220 30% 94%)',
-		_dark: 'hsl(220 27% 17%)',
+		_light: 'hsl(222 30% 94%)',
+		_dark: 'hsl(222 27% 17%)',
 	},
-	heading: {},
 	text: {
-		_light: 'hsl(220 30% 30%)',
-		_dark: 'hsl(220 30% 90%)',
+		_light: 'hsl(222 25% 30%)',
+		_dark: 'hsl(222 30% 90%)',
+	},
+	heading: {
+		_light: 'hsl(222, 46%, 44%)',
+		_dark: 'hsl(222, 76%, 85%)',
 	},
 	'text-secondary': {
-		_light: 'gray.800',
+		_light: 'gray.700',
 		_dark: 'gray.200',
 	},
 	'text-primary': {
@@ -35,8 +38,8 @@ const colorTokens: Record<string, SemanticValue<keyof Pseudos>> = {
 		_dark: `primary.300`,
 	},
 	border: {
-		_light: '#e1e4ef',
-		_dark: 'hsl(220, 25%, 20%)',
+		_light: 'hsl(222 30% 90%)',
+		_dark: 'hsl(222, 25%, 20%)',
 	},
 }
 

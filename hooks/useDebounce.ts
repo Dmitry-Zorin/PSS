@@ -1,11 +1,12 @@
+import { useConst } from '@chakra-ui/react'
 import { debounce } from 'lodash'
-import { useEffect, useMemo } from 'react'
+import { useEffect } from 'react'
 
 export default function useDebounce<T extends (...args: any) => any>(
 	fn: T,
 	timeout = 500,
 ) {
-	const debouncedFn = useMemo(() => debounce(fn, timeout), [fn, timeout])
+	const debouncedFn = useConst(() => debounce(fn, timeout))
 
 	useEffect(() => {
 		return () => debouncedFn.cancel()

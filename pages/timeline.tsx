@@ -29,7 +29,7 @@ export const getStaticProps: GetServerSideProps = async ({ locale }) => {
 }
 
 const TimelinePage: NextPage = () => {
-	const { t } = useTranslation('common')
+	const { t } = useTranslation('common', { keyPrefix: 'menu.items' })
 
 	const { error, data } = useQuery<Publication[], Error>([
 		'publications',
@@ -41,8 +41,8 @@ const TimelinePage: NextPage = () => {
 	return (
 		<>
 			<HeadTitle title={t('timeline')} />
-			<Layout error={error}>
-				<List spacing={6} pt={4}>
+			<Layout title={t('timeline')} error={error}>
+				<List spacing={9}>
 					{data
 						? data.map((e) => (
 								<ListItem key={e.id}>

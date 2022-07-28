@@ -1,10 +1,13 @@
+import { Button } from '@chakra-ui/react'
+import { faAdd } from '@fortawesome/free-solid-svg-icons'
 import { Publication } from '@prisma/client'
 import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query'
-import { HeadTitle, Layout, ResourceTable, Search } from 'components'
+import { HeadTitle, Icon, Layout, ResourceTable, Search } from 'components'
 import { useDebounce } from 'hooks'
 import { GetServerSideProps, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { queryClientConfig } from 'pages/_app'
 import { useState } from 'react'
@@ -44,10 +47,12 @@ const PublicationsPage: NextPage = () => {
 	const { data } = useQuery<Publication[]>(['publications', query])
 
 	const search = useDebounce((search: string) => {
-		if ((search || undefined) !== query.search) {
-			setQuery({ ...query, search: search || undefined })
-		}
-	}, 1000)
+		setQuery((query) => {
+			return (search || undefined) !== query.search
+				? { ...query, search: search || undefined }
+				: query
+		})
+	})
 
 	function sort(field: string, value?: 'desc' | 'asc') {
 		setQuery({
@@ -59,7 +64,17 @@ const PublicationsPage: NextPage = () => {
 	return (
 		<>
 			<HeadTitle title={t(category)} />
-			<Layout fullSize leftActions={<Search onChange={search} />}>
+			<Layout
+				fullSize
+				leftActions={<Search onChange={search} />}
+				rightActions={
+					<Link href={`/publications/${category}/create`}>
+						<Button as="a" leftIcon={<Icon icon={faAdd} />}>
+							Create
+						</Button>
+					</Link>
+				}
+			>
 				<ResourceTable
 					data={data}
 					fields={['title', 'description', 'year']}

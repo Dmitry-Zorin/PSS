@@ -7,7 +7,10 @@ export default function Logo(props: LinkProps) {
 		<NextLink href="/" passHref>
 			<Link
 				as={motion.a}
-				fontSize="2xl"
+				fontSize={{
+					base: 'xl',
+					lg: '2xl',
+				}}
 				fontWeight="bold"
 				color="primary"
 				borderRadius="md"

@@ -85,7 +85,7 @@ const PublicationPage: NextPage = () => {
 		<>
 			<HeadTitle title={`${t(category)} #${data.id}`} />
 			<Layout title={data.title}>
-				<Stack spacing={12}>
+				<Stack spacing={12} pt={2}>
 					<Text>{data.description}</Text>
 					<SimpleGrid columns={{ base: 2, lg: 4 }} spacing={12}>
 						<LabeledText label="type">{data.type ?? '-'}</LabeledText>

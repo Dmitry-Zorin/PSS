@@ -48,7 +48,6 @@ export default function ColorModeSwitchIcon({
 			<motion.g
 				stroke="currentColor"
 				strokeLinecap="round"
-				opacity={0.65}
 				initial={false}
 				animate={{
 					strokeWidth: showMoon ? 0 : 2,

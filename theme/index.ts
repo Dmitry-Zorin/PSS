@@ -19,23 +19,26 @@ export default extendTheme({
 		global: {
 			body: {
 				color: 'text',
-				bg: 'bg',
-				fontSize: 'lg',
+				bg: 'bg-layer-1',
+				fontSize: {
+					base: 'lg',
+					xl: 'xl',
+				},
 				letterSpacing: 'tight',
 				wordSpacing: '0.05em',
 			},
 			'*, *::before, &::after': {
 				borderColor: 'border',
 			},
+			h1: {
+				color: 'heading',
+			},
 			h2: {
 				color: 'primary',
 			},
 		},
 	},
-	colors: {
-		...colors,
-		secondary: colors.gray,
-	},
+	colors,
 	semanticTokens: {
 		colors: colorTokens,
 	},

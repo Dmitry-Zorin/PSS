@@ -11,7 +11,7 @@ import {
 	faSignOutAlt,
 	faUser,
 } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Icon } from 'components'
 
 export default function UserMenu() {
 	return (
@@ -20,16 +20,12 @@ export default function UserMenu() {
 				<MenuButton
 					as={IconButton}
 					aria-label="User Menu"
-					icon={<FontAwesomeIcon icon={faUser} size="lg" />}
+					icon={<Icon icon={faUser} boxSize={5} />}
 				/>
 				<MenuList>
-					<MenuItem icon={<FontAwesomeIcon icon={faCog} />}>Settings</MenuItem>
-					<MenuItem icon={<FontAwesomeIcon icon={faSignInAlt} />}>
-						Sign In
-					</MenuItem>
-					<MenuItem icon={<FontAwesomeIcon icon={faSignOutAlt} />}>
-						Sign out
-					</MenuItem>
+					<MenuItem icon={<Icon icon={faCog} />}>Settings</MenuItem>
+					<MenuItem icon={<Icon icon={faSignInAlt} />}>Sign In</MenuItem>
+					<MenuItem icon={<Icon icon={faSignOutAlt} />}>Sign out</MenuItem>
 				</MenuList>
 			</Menu>
 		</div>
