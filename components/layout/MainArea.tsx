@@ -1,6 +1,5 @@
 import { Box, Heading } from '@chakra-ui/react'
 import { ActionsToolbar } from 'components'
-import { motion } from 'framer-motion'
 import { useTranslation } from 'next-i18next'
 import { ReactNode } from 'react'
 
@@ -26,7 +25,7 @@ export default function MainArea({
 	const heading = error ? t('error') : title
 
 	return (
-		<Box as={motion.main} px={4}>
+		<Box pl={{ base: 6, xl: '8rem' }} pr={6}>
 			{(leftActions || rightActions) && (
 				<ActionsToolbar leftActions={leftActions} rightActions={rightActions} />
 			)}
@@ -50,7 +49,7 @@ export default function MainArea({
 							{error.message}
 						</Heading>
 					) : (
-						children
+						<Box maxW="3xl">{children}</Box>
 					)}
 				</Box>
 			)}

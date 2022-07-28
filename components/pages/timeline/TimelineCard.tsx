@@ -1,11 +1,12 @@
 import {
 	Avatar,
-	chakra,
 	LinkBox,
 	LinkOverlay,
 	Stack,
 	Text,
+	useDisclosure,
 } from '@chakra-ui/react'
+import { faEye } from '@fortawesome/free-solid-svg-icons'
 import { Publication } from '@prisma/client'
 import { Card, CardContent, CardHeader, Icon } from 'components'
 import resources from 'constants/resources'
@@ -19,10 +20,11 @@ interface ListItemCardProps {
 
 export default function ListItemCard({ record }: ListItemCardProps) {
 	const { t, i18n } = useTranslation('resources')
+	const { isOpen, onOpen, onClose } = useDisclosure()
 	const truncate = useTruncate()
 
 	return (
-		<Card>
+		<LinkBox as={Card} onMouseEnter={onOpen} onMouseLeave={onClose}>
 			<CardHeader>
 				<Avatar
 					bg="bg-layer-1"
@@ -50,8 +52,16 @@ export default function ListItemCard({ record }: ListItemCardProps) {
 						})}
 					</Text>
 				</Stack>
+				<Icon
+					icon={faEye}
+					boxSize={6}
+					justifySelf="flex-end"
+					color="text-primary"
+					opacity={isOpen ? 0.75 : 0}
+					pr={2}
+				/>
 			</CardHeader>
-			<LinkBox as={CardContent}>
+			<CardContent>
 				<Link
 					href={{
 						pathname: `/publications/[category]/[id]`,
@@ -64,17 +74,27 @@ export default function ListItemCard({ record }: ListItemCardProps) {
 				>
 					<LinkOverlay _hover={{ color: 'text-primary' }}>
 						{record.title}
-						<chakra.span pl={1.5} fontWeight="medium">
+						{/* <Box
+							as="span"
+							justifySelf="flex-end"
+							pl={1.5}
+							fontWeight="medium"
+							color={isOpen ? 'text-primary' : 'transparent'}
+						>
 							&rarr;
-						</chakra.span>
+						</Box> */}
 					</LinkOverlay>
 				</Link>
 				{record.description && (
-					<Text fontSize="md" color="text-secondary">
+					<Text
+						fontSize="md"
+						color="text-secondary"
+						opacity={isOpen ? 0.75 : 1}
+					>
 						{truncate(record.description)}
 					</Text>
 				)}
-			</LinkBox>
-		</Card>
+			</CardContent>
+		</LinkBox>
 	)
 }

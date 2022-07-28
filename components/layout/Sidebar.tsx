@@ -1,19 +1,10 @@
 import { Box, BoxProps, Center } from '@chakra-ui/react'
 import { Logo } from 'components'
-import { motion } from 'framer-motion'
 
-interface SidebarProps extends BoxProps {
-	onDrawerOpen: () => void
-}
-
-export default function Sidebar({
-	children,
-	onDrawerOpen,
-	...props
-}: SidebarProps) {
+export default function Sidebar({ children, ...props }: BoxProps) {
 	return (
 		<Box
-			as={motion.nav}
+			as="nav"
 			top={0}
 			h="100vh"
 			overflowX="hidden"

@@ -16,7 +16,6 @@ export default function Layout(props: MainAreaProps) {
 		<>
 			<Flex>
 				<Sidebar
-					onDrawerOpen={onSidebarDrawerOpen}
 					pos={{
 						base: 'sticky',
 						'2xl': props.fullSize ? 'sticky' : 'fixed',
@@ -24,7 +23,7 @@ export default function Layout(props: MainAreaProps) {
 				>
 					{menu}
 				</Sidebar>
-				<Box flexGrow={1} bg="bg" minH="100vh">
+				<Box as="main" flexGrow={1} bg="bg" minH="100vh">
 					<AppBar />
 					<MainArea {...props} />
 				</Box>

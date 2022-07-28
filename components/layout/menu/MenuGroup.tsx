@@ -1,5 +1,5 @@
 import { Box, Divider, List } from '@chakra-ui/react'
-import { MenuGroupHeading, MenuItem } from 'components'
+import { MenuGroupHeader, MenuItem } from 'components'
 
 export interface MenuGroupProps {
 	heading?: string
@@ -13,7 +13,7 @@ export default function MenuGroup({ heading, items }: MenuGroupProps) {
 				<Divider />
 				{heading && (
 					<Box display={{ base: 'none', lg: 'block' }}>
-						<MenuGroupHeading text={heading} />
+						<MenuGroupHeader text={heading} />
 						<Divider />
 					</Box>
 				)}

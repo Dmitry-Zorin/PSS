@@ -20,10 +20,7 @@ export default extendTheme({
 			body: {
 				color: 'text',
 				bg: 'bg-layer-1',
-				fontSize: {
-					base: 'lg',
-					xl: 'xl',
-				},
+				fontSize: 'lg',
 				letterSpacing: 'tight',
 				wordSpacing: '0.05em',
 			},
