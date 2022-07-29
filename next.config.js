@@ -1,16 +1,5 @@
 const { i18n } = require('./next-i18next.config')
 
-const publications = [
-	'articles',
-	'abstracts',
-	'dissertations',
-	'monographs',
-	'patents',
-	'reports',
-	'programs',
-	'textbooks',
-]
-
 const csp = [
 	"default-src 'self' vitals.vercel-insights.com",
 	"style-src 'self' 'unsafe-inline'",
@@ -26,24 +15,24 @@ const nextConfig = {
 		NEXT_PUBLIC_VERCEL_URL: 'localhost:3000',
 	},
 	async rewrites() {
-		return publications.flatMap((e) => [
+		return [
 			{
 				source: `/publications/:category`,
 				destination: '/publications/list',
-			},
-			{
-				source: `/publications/:category/:id`,
-				destination: '/publications/show',
 			},
 			{
 				source: `/publications/:category/create`,
 				destination: '/publications/create',
 			},
 			{
+				source: `/publications/:category/:id`,
+				destination: '/publications/show',
+			},
+			{
 				source: `/publications/:category/edit/:id`,
 				destination: '/publications/edit',
 			},
-		])
+		]
 	},
 	async headers() {
 		return [

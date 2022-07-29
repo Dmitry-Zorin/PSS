@@ -27,7 +27,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 	}
 }
 
-const PublicationsPage: NextPage = () => {
+const PublicationsListPage: NextPage = () => {
 	const { t } = useTranslation('common', { keyPrefix: 'menu.items' })
 	const router = useRouter()
 	const { category } = router.query as Record<string, string>
@@ -81,4 +81,4 @@ const PublicationsPage: NextPage = () => {
 	)
 }
 
-export default PublicationsPage
+export default PublicationsListPage

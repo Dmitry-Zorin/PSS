@@ -3,32 +3,26 @@ import {
 	FormControl,
 	FormErrorMessage,
 	FormLabel,
-	Heading,
 	Input,
 	Stack,
 } from '@chakra-ui/react'
 import { Publication } from '@prisma/client'
 import { dehydrate, QueryClient } from '@tanstack/react-query'
 import { HeadTitle, Layout } from 'components'
-import { GetServerSideProps, NextPage } from 'next'
+import { GetStaticProps, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router'
-import { queryClientConfig } from 'pages/_app'
-import { useForm } from 'react-hook-form'
+import { useForm, UseFormRegister } from 'react-hook-form'
 import { FieldErrors } from 'react-hook-form/dist/types/errors'
-import { UseFormRegister } from '../../../node_modules/react-hook-form/dist/types/form.d.ts'
 
-export const getServerSideProps: GetServerSideProps = async ({
-	params,
-	locale,
-}) => {
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
 	const translationProps = await serverSideTranslations(locale!, [
 		'common',
 		'fields',
 	])
 
-	const queryClient = new QueryClient(queryClientConfig)
+	const queryClient = new QueryClient()
 
 	return {
 		props: {
@@ -62,7 +56,7 @@ function MyFormControl<T>({ field, errors, register }: MyFormControlProps<T>) {
 	)
 }
 
-const PublicationPage: NextPage = () => {
+const PublicationCreatePage: NextPage = () => {
 	const { t } = useTranslation('common')
 	const router = useRouter()
 
@@ -102,4 +96,4 @@ const PublicationPage: NextPage = () => {
 	)
 }
 
-export default PublicationPage
+export default PublicationCreatePage

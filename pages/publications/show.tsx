@@ -30,7 +30,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 	}
 }
 
-const PublicationPage: NextPage = () => {
+const PublicationShowPage: NextPage = () => {
 	const { t } = useTranslation('common')
 	const queryClient = useQueryClient()
 	const router = useRouter()
@@ -91,4 +91,4 @@ const PublicationPage: NextPage = () => {
 	)
 }
 
-export default PublicationPage
+export default PublicationShowPage
