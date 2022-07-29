@@ -1,17 +1,12 @@
 import { List, ListItem } from '@chakra-ui/react'
 import { Publication } from '@prisma/client'
 import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query'
-import {
-	HeadTitle,
-	Layout,
-	TimelineCard,
-	TimelineCardSkeleton,
-} from 'components'
-import { range } from 'lodash'
+import { HeadTitle, Layout } from 'components'
+import { queryClientConfig } from 'lib/common'
 import { GetServerSideProps, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { queryClientConfig } from './_app'
+import { TimelineCard, TimelineCardSkeleton } from 'views'
 
 export const getStaticProps: GetServerSideProps = async ({ locale }) => {
 	const queryClient = new QueryClient(queryClientConfig)
@@ -19,6 +14,8 @@ export const getStaticProps: GetServerSideProps = async ({ locale }) => {
 		'common',
 		'resources',
 	])
+
+	queryClient.prefetchQuery(['publications', { sort: { createdAt: 'desc' } }])
 
 	return {
 		props: {
@@ -31,10 +28,10 @@ export const getStaticProps: GetServerSideProps = async ({ locale }) => {
 const TimelinePage: NextPage = () => {
 	const { t } = useTranslation('common', { keyPrefix: 'menu.items' })
 
-	const { error, data } = useQuery<Publication[], Error>([
-		'publications',
-		{ sort: { createdAt: 'desc' } },
-	])
+	const { error, data } = useQuery<
+		{ publications: Publication[]; total: number },
+		Error
+	>(['publications', { sort: { createdAt: 'desc' } }])
 
 	const skeleton = <TimelineCardSkeleton />
 
@@ -44,12 +41,14 @@ const TimelinePage: NextPage = () => {
 			<Layout title={t('timeline')} error={error}>
 				<List spacing={9}>
 					{data
-						? data.map((e) => (
+						? data.publications.map((e) => (
 								<ListItem key={e.id}>
 									<TimelineCard record={e} />
 								</ListItem>
 						  ))
-						: range(10).map((i) => <ListItem key={i}>{skeleton}</ListItem>)}
+						: [...Array(10)].map((_, i) => (
+								<ListItem key={i}>{skeleton}</ListItem>
+						  ))}
 				</List>
 			</Layout>
 		</>

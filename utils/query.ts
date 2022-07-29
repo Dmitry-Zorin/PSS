@@ -1,4 +1,4 @@
-import { isNumber, isString, transform } from 'lodash'
+import { isFinite, isString, transform } from 'lodash'
 
 interface ParsedQuery {
 	strings: Record<string, string | undefined>
@@ -9,7 +9,7 @@ export function parseQuery(query: Record<string, any>) {
 	return transform(
 		query,
 		(result: ParsedQuery, value, key) => {
-			if (value && isNumber(+value)) {
+			if (value && isFinite(+value)) {
 				return (result.numbers[key] = +value)
 			}
 			if (isString(value)) {

@@ -16,7 +16,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router'
 import { queryClientConfig } from 'pages/_app'
 import { useForm } from 'react-hook-form'
-import { FieldErrors } from '../../../node_modules/react-hook-form/dist/types/errors'
+import { FieldErrors } from 'react-hook-form/dist/types/errors'
 import { UseFormRegister } from '../../../node_modules/react-hook-form/dist/types/form.d.ts'
 
 export const getServerSideProps: GetServerSideProps = async ({

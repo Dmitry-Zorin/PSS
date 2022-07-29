@@ -1,4 +1,4 @@
-import { Button, SimpleGrid, Stack, Text, TextProps } from '@chakra-ui/react'
+import { Button, SimpleGrid, Stack, Text } from '@chakra-ui/react'
 import { faTableList } from '@fortawesome/free-solid-svg-icons'
 import { Publication } from '@prisma/client'
 import {
@@ -7,29 +7,20 @@ import {
 	useQuery,
 	useQueryClient,
 } from '@tanstack/react-query'
-import { HeadTitle, Icon, Layout } from 'components'
-import { GetServerSideProps, NextPage } from 'next'
+import { HeadTitle, Icon, LabeledText, Layout } from 'components'
+import { GetStaticProps, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { queryClientConfig } from 'pages/_app'
-import { ReactNode } from 'react'
 
-export const getServerSideProps: GetServerSideProps = async ({
-	params,
-	locale,
-}) => {
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
 	const translationProps = await serverSideTranslations(locale!, [
 		'common',
 		'fields',
 	])
 
-	const queryClient = new QueryClient(queryClientConfig)
-
-	if (params?.id) {
-		await queryClient.prefetchQuery(['publications', { id: params.id }])
-	}
+	const queryClient = new QueryClient()
 
 	return {
 		props: {
@@ -37,23 +28,6 @@ export const getServerSideProps: GetServerSideProps = async ({
 			...translationProps,
 		},
 	}
-}
-
-interface LabeledTextProps extends TextProps {
-	children: ReactNode
-	label: string
-}
-
-function LabeledText({ children, label, ...props }: LabeledTextProps) {
-	const { t } = useTranslation('fields')
-	return (
-		<Stack>
-			<Text fontSize="sm" color="text-secondary">
-				{t(label)}
-			</Text>
-			<Text {...props}>{children}</Text>
-		</Stack>
-	)
 }
 
 const PublicationPage: NextPage = () => {

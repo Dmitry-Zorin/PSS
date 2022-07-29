@@ -10,15 +10,15 @@ const colorTokens: Record<string, SemanticValue<keyof Pseudos>> = {
 		_dark: 'hsl(222 30% 14%)',
 	},
 	'bg-layer-1': {
-		_light: 'hsl(222 50% 97%)',
+		_light: 'hsl(222 50% 98%)',
 		_dark: 'hsl(222 28% 16%)',
 	},
 	'bg-layer-2': {
-		_light: 'hsl(222 30% 92%)',
+		_light: 'hsl(222 40% 96%)',
 		_dark: 'hsl(222, 28%, 18%)',
 	},
 	'bg-layer-3': {
-		_light: 'hsl(222 30% 92%)',
+		_light: 'hsl(222 30% 94%)',
 		_dark: 'hsl(222, 28%, 20%)',
 	},
 	text: {

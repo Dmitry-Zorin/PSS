@@ -1,5 +1,6 @@
 import {
 	Highlight,
+	SkeletonText,
 	Table,
 	TableContainer,
 	Tbody,
@@ -49,15 +50,16 @@ export default function ResourceTable({
 	const [data, setData] = useState<Data[]>([])
 
 	useEffect(() => {
-		if (newData) {
-			setData(newData)
-		}
+		setData(newData || Array(10).fill({}))
 	}, [newData])
 
 	const columns: ColumnDef<Data, string>[] = fields.map((field) => ({
 		accessorKey: field,
 		header: t<string>(field),
 		cell: (e) => {
+			if (!newData) {
+				return <SkeletonText noOfLines={1} />
+			}
 			const text = truncate(e.getValue())
 			return search ? (
 				<Highlight
