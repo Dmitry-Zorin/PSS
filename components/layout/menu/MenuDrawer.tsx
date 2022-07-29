@@ -13,13 +13,14 @@ export default function MenuDrawer({ children, ...props }: DrawerProps) {
 	return (
 		<Drawer placement="left" size="xs" {...props}>
 			<DrawerOverlay />
-			<DrawerContent px={4}>
+			<DrawerContent px={2}>
 				<HStack justify="space-between" pl={4} py={2}>
 					<Logo />
 					<IconButton
 						aria-label="Close"
 						icon={<Icon icon={faClose} boxSize={6} />}
 						onClick={props.onClose}
+						color="text-tertiary"
 					/>
 				</HStack>
 				{children}

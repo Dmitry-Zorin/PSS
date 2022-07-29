@@ -39,12 +39,15 @@ export default function MenuItem({ to, icon, text }: MenuItemProps) {
 						as="a"
 						spacing={3}
 						h={10}
-						px={4}
+						px={{ base: 4, lg: 8 }}
 						fontSize="md"
 						borderRadius="lg"
 						color={isActive ? 'text-primary' : 'text-secondary'}
 						outline="2px solid transparent"
-						_hover={{ color: isActive ? 'text-primary' : 'text' }}
+						_hover={{
+							color: isActive ? 'text-primary' : 'text',
+							bg: 'bg-layer-3',
+						}}
 						_focusVisible={{ shadow: 'outline' }}
 					>
 						<Icon icon={icon} boxSize={5} />

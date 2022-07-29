@@ -6,7 +6,6 @@ import {
 	Text,
 	useDisclosure,
 } from '@chakra-ui/react'
-import { faEye } from '@fortawesome/free-solid-svg-icons'
 import { Publication } from '@prisma/client'
 import { Card, CardContent, CardHeader, Icon } from 'components'
 import resources from 'constants/resources'
@@ -28,9 +27,9 @@ export default function ListItemCard({ record }: ListItemCardProps) {
 			as={Card}
 			onMouseEnter={onOpen}
 			onMouseLeave={onClose}
-			_hover={{ borderColor: 'border-primary' }}
+			_hover={{ bg: 'bg-layer-1' }}
 		>
-			<CardHeader>
+			<CardHeader bg={isOpen ? 'bg-layer-2' : 'bg-layer-1'}>
 				<Avatar
 					bg="transparent"
 					color="primary"
@@ -57,14 +56,6 @@ export default function ListItemCard({ record }: ListItemCardProps) {
 						})}
 					</Text>
 				</Stack>
-				<Icon
-					icon={faEye}
-					boxSize={5}
-					justifySelf="flex-end"
-					color={isOpen ? 'text-primary' : 'border-primary'}
-					opacity={isOpen ? 0.75 : 1}
-					pr={2}
-				/>
 			</CardHeader>
 			<CardContent>
 				<Link

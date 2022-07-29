@@ -16,35 +16,49 @@ const components: ThemeComponents = {
 			variant: 'ghost',
 		},
 		baseStyle: {
+			borderRadius: 'lg',
 			_focusVisible: {
 				shadow: 'outline',
 			},
 		},
 		variants: {
 			ghost: {
-				color: 'text-secondary',
+				color: 'text-tertiary',
 				_hover: {
-					bg: 'transparent',
+					bg: 'bg-layer-2',
 					color: 'text-primary',
 				},
 				_active: {
-					bg: 'transparent',
+					bg: 'bg-layer-1',
 				},
 			},
 		},
 	},
 	Input: {
+		baseStyle: {
+			element: {
+				color: 'text-tertiary',
+				_focus: {
+					color: 'text',
+				},
+			},
+		},
 		variants: {
-			filled: {
+			outline: {
 				field: {
-					border: '1px',
-					borderColor: 'border',
-					bg: 'bg-layer-1',
+					borderRadius: 'lg',
+					_placeholder: {
+						borderColor: 'primary',
+						color: 'text-tertiary',
+					},
 					_hover: {
-						bg: 'bg-layer-2',
+						borderColor: 'primary',
 					},
 					_focus: {
-						borderColor: 'text-primary',
+						// borderColor: 'primary',
+						_placeholder: {
+							color: 'text-secondary',
+						},
 					},
 				},
 			},
@@ -52,7 +66,7 @@ const components: ThemeComponents = {
 	},
 	Tooltip: {
 		baseStyle: {
-			bg: 'bg',
+			bg: 'bg-layer-1',
 			color: 'text',
 			border: '1px',
 			borderColor: 'border',
@@ -69,17 +83,18 @@ const components: ThemeComponents = {
 			},
 			list: {
 				bg: 'bg-layer-1',
-				color: 'text-secondary-on-layer-1',
+				color: 'text-secondary',
 				borderRadius: 'lg',
 				p: 1,
 			},
 			item: {
 				borderRadius: 'md',
 				_focus: {
-					bg: 'bg-layer-2',
+					bg: 'bg-layer-3',
+					color: 'text',
 				},
 				_active: {
-					bg: 'bg-layer-3',
+					bg: 'bg-layer-2',
 				},
 			},
 		},

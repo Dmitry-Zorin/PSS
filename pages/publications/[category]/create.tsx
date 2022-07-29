@@ -3,8 +3,9 @@ import {
 	FormControl,
 	FormErrorMessage,
 	FormLabel,
-	Input,
 	Heading,
+	Input,
+	Stack,
 } from '@chakra-ui/react'
 import { Publication } from '@prisma/client'
 import { dehydrate, QueryClient } from '@tanstack/react-query'
@@ -83,21 +84,19 @@ const PublicationPage: NextPage = () => {
 		<>
 			<HeadTitle title={`Create ${t(category)}`} />
 			<Layout title="Create article">
-				<Heading as="h2" size="lg">
-					Create article
-				</Heading>
-				<form onSubmit={handleSubmit(onSubmit)}>
+				<Stack as="form" spacing={4} onSubmit={handleSubmit(onSubmit)}>
 					<MyFormControl field="title" {...formControlProps} />
 					<MyFormControl field="description" {...formControlProps} />
 					<Button
-						mt={4}
-						colorScheme="teal"
-						isLoading={isSubmitting}
 						type="submit"
+						variant="solid"
+						colorScheme="primary"
+						isLoading={isSubmitting}
+						mt={4}
 					>
 						Submit
 					</Button>
-				</form>
+				</Stack>
 			</Layout>
 		</>
 	)

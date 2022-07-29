@@ -24,21 +24,18 @@ export default function Search({ onChange, ...props }: SearchProps) {
 
 	return (
 		<InputGroup w={60}>
-			<InputLeftElement pointerEvents="none" color="text-secondary">
+			<InputLeftElement pointerEvents="none">
 				<Icon icon={faSearch} />
 			</InputLeftElement>
 			<Input
 				value={value}
-				variant="filled"
 				placeholder={t('search')}
-				_placeholder={{ color: 'text-secondary' }}
 				onChange={(e) => setValue(e.target.value)}
 				{...props}
 			/>
 			{value && (
 				<InputRightElement
 					cursor="pointer"
-					color="text-secondary"
 					onClick={() => setValue('')}
 					_hover={{ color: 'primary' }}
 				>

@@ -9,7 +9,7 @@ export interface MenuGroupProps {
 export default function MenuGroup({ heading, items }: MenuGroupProps) {
 	return (
 		<Box>
-			<Box pt={heading ? 2 : 0} pb={2}>
+			<Box px={{ base: 1, lg: 2 }} pt={heading ? 2 : 0} pb={2}>
 				<Divider />
 				{heading && (
 					<Box display={{ base: 'none', lg: 'block' }}>

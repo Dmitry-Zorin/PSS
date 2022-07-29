@@ -8,7 +8,13 @@ interface AppBarProps extends StackProps {
 
 export default function AppBar({ onMenuDrawerOpen, ...props }: AppBarProps) {
 	return (
-		<HStack justify="flex-end" p={4} {...props}>
+		<HStack
+			spacing={0}
+			justify="flex-end"
+			color="text-tertiary"
+			p={4}
+			{...props}
+		>
 			<Box display={{ base: 'block', md: 'none' }} flexGrow={1}>
 				<IconButton
 					aria-label="Toggle Menu"
