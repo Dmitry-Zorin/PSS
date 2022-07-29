@@ -11,6 +11,9 @@ const nextConfig = {
 	reactStrictMode: true,
 	swcMinify: true,
 	i18n,
+	env: {
+		NEXT_PUBLIC_VERCEL_URL: 'localhost:3000',
+	},
 	async headers() {
 		return [
 			{

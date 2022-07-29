@@ -1,31 +1,37 @@
-import { isString } from 'lodash'
-import prisma from 'lib/prisma'
+import { Author } from '@prisma/client'
+import { createApiHandler, prisma } from 'lib'
 import { NextApiRequest, NextApiResponse } from 'next'
+import { getSearchFilter, parseQuery } from 'utils'
 
-export default async function handler(
-	req: NextApiRequest,
-	res: NextApiResponse,
-) {
-	const { search } = req.query
+export default createApiHandler(
+	async (req: NextApiRequest, res: NextApiResponse) => {
+		const { strings, numbers } = parseQuery(req.query)
+		const { search, sort } = strings
+		const { id, skip, take = 25 } = numbers
 
-	const authors = await prisma.author.findMany({
-		take: 10,
-		...(isString(search) &&
-			(() => {
-				const wordsArray = search.trim().split(' ')
-				return {
-					where: {
-						AND: wordsArray.flatMap((word) => ({
-							OR: [
-								{ lastName: { contains: word, mode: 'insensitive' } },
-								{ firstName: { contains: word, mode: 'insensitive' } },
-								{ middleName: { contains: word, mode: 'insensitive' } },
-							],
-						})),
-					},
-				}
-			})()),
-	})
+		if (id) {
+			return res.json(
+				await prisma.author.findUniqueOrThrow({
+					where: { id },
+				}),
+			)
+		}
 
-	res.status(200).json(authors)
-}
+		res.json(
+			await prisma.author.findMany({
+				where: getSearchFilter<Author>(search, [
+					'lastName',
+					'firstName',
+					'middleName',
+				]),
+				orderBy: [
+					sort && JSON.parse(sort),
+					{ year: 'desc' },
+					{ createdAt: 'desc' },
+				],
+				skip,
+				take,
+			}),
+		)
+	},
+)

@@ -1,58 +1,38 @@
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime'
-import prisma from 'lib/prisma'
-import { isNumber, isString } from 'lodash'
+import { Publication } from '@prisma/client'
+import { createApiHandler, prisma } from 'lib'
 import { NextApiRequest, NextApiResponse } from 'next'
+import { getSearchFilter, parseQuery } from 'utils'
 
-function getSearch(search: string) {
-	const wordsArray = search.trim().split(' ')
-	return {
-		AND: wordsArray.flatMap((word) => ({
-			OR: [
-				{ title: { contains: word, mode: 'insensitive' } },
-				{ description: { contains: word, mode: 'insensitive' } },
-			],
-		})),
-	}
-}
+export default createApiHandler(
+	async (req: NextApiRequest, res: NextApiResponse) => {
+		const { strings, numbers } = parseQuery(req.query)
+		const { category, search, sort } = strings
+		const { id, skip, take = 25 } = numbers
 
-export default async function handler(
-	req: NextApiRequest,
-	res: NextApiResponse,
-) {
-	const { category, search, sort, id, skip = 0, take = 10 } = req.query
-
-	try {
-		if (isString(id) && isNumber(+id)) {
-			return res.status(200).json(
+		if (id) {
+			return res.json(
 				await prisma.publication.findUniqueOrThrow({
-					where: {
-						id: +id,
-					},
+					where: { id },
 				}),
 			)
 		}
 
-		res.status(200).json(
+		res.json(
 			await prisma.publication.findMany({
 				where: {
 					AND: [
-						{ category, id },
-						search ? (getSearch(search as string) as any) : {},
+						{ category },
+						getSearchFilter<Publication>(search, ['title', 'description']),
 					],
 				},
 				orderBy: [
-					sort && JSON.parse(sort as string),
+					sort && JSON.parse(sort),
 					{ year: 'desc' },
 					{ createdAt: 'desc' },
 				],
-				skip: 0,
-				take: 10,
+				skip,
+				take,
 			}),
 		)
-	} catch (e) {
-		if (e instanceof PrismaClientKnownRequestError) {
-			return res.status(404).send('Not Found')
-		}
-		res.status(500).send('Internal Server Error')
-	}
-}
+	},
+)

@@ -1,5 +1,0 @@
-export * from './author.dto'
-export * from './character.dto'
-export * from './publication.dto'
-export * from './resource-item.dto'
-export * from './resource.dto'

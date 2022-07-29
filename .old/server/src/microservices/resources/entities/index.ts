@@ -1,5 +1,0 @@
-export * from './author.entity'
-export * from './character.entity'
-export * from './publication.entity'
-export * from './resource-item.entity'
-export * from './resource.entity'
