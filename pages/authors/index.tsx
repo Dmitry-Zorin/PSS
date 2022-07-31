@@ -2,7 +2,7 @@ import { Button } from '@chakra-ui/react'
 import { faAdd } from '@fortawesome/free-solid-svg-icons'
 import { Author } from '@prisma/client'
 import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query'
-import { HeadTitle, Icon, Layout, ResourceTable } from 'components'
+import { Icon, Layout, ResourceTable } from 'components'
 import { GetServerSideProps, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
@@ -29,28 +29,26 @@ const AuthorsPage: NextPage = () => {
 	const { data } = useQuery<{ authors: Author[]; total: number }>(['authors'])
 
 	return (
-		<>
-			<HeadTitle title={t('authors')} />
-			<Layout
-				fullSize
-				// leftActions={<Search onChange={search} />}
-				rightActions={
-					<Link href={`/authors/create`} passHref>
-						<Button as="a" leftIcon={<Icon icon={faAdd} />}>
-							Create
-						</Button>
-					</Link>
-				}
-			>
-				<ResourceTable
-					data={data?.authors}
-					fields={['lastName', 'firstName', 'middleName']}
-					href="/authors"
-					sort={() => {}}
-					search={undefined}
-				/>
-			</Layout>
-		</>
+		<Layout
+			fullSize
+			headTitle={t('authors')}
+			// leftActions={<Search onChange={search} />}
+			rightActions={
+				<Link href={`/authors/create`} passHref>
+					<Button as="a" leftIcon={<Icon icon={faAdd} />}>
+						Create
+					</Button>
+				</Link>
+			}
+		>
+			<ResourceTable
+				data={data?.authors}
+				fields={['lastName', 'firstName', 'middleName']}
+				href="/authors"
+				sort={() => {}}
+				search={undefined}
+			/>
+		</Layout>
 	)
 }
 

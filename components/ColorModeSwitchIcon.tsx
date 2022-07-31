@@ -10,60 +10,23 @@ export default function ColorModeSwitchIcon({
 	showMoon,
 	...props
 }: ColorModeSwitchIconProps) {
-	const transition = gentleSpringConfig
-
 	return (
-		<Icon
-			xmlns="http://www.w3.org/2000/svg"
-			width={24}
-			height={24}
-			viewBox="0 0 24 24"
-			strokeWidth={0}
-			{...props}
-		>
-			<mask id="mask">
-				<rect x={0} y={0} width="100%" height="100%" fill="white" />
-				<motion.circle
-					r={10}
-					fill="black"
-					initial={false}
-					animate={{
-						cx: showMoon ? '80%' : '100%',
-						cy: showMoon ? '30%' : '0%',
-						transition,
-					}}
-				/>
-			</mask>
-			<motion.circle
-				mask="url(#mask)"
-				cx={12}
-				cy={12}
-				fill="currentColor"
-				initial={false}
+		<Icon as="svg" viewBox="0 0 512 512" boxSize={5} fill="current" {...props}>
+			<motion.path
+				key={showMoon ? 'moon' : 'sun'}
+				d={
+					showMoon
+						? 'M32 256c0-123.8 100.3-224 223.8-224c11.36 0 29.7 1.668 40.9 3.746c9.616 1.777 11.75 14.63 3.279 19.44C245 86.5 211.2 144.6 211.2 207.8c0 109.7 99.71 193 208.3 172.3c9.561-1.805 16.28 9.324 10.11 16.95C387.9 448.6 324.8 480 255.8 480C132.1 480 32 379.6 32 256z'
+						: 'M256 159.1c-53.02 0-95.1 42.98-95.1 95.1S202.1 351.1 256 351.1s95.1-42.98 95.1-95.1S309 159.1 256 159.1zM509.3 347L446.1 255.1l63.15-91.01c6.332-9.125 1.104-21.74-9.826-23.72l-109-19.7l-19.7-109c-1.975-10.93-14.59-16.16-23.72-9.824L256 65.89L164.1 2.736c-9.125-6.332-21.74-1.107-23.72 9.824L121.6 121.6L12.56 141.3C1.633 143.2-3.596 155.9 2.736 164.1L65.89 256l-63.15 91.01c-6.332 9.125-1.105 21.74 9.824 23.72l109 19.7l19.7 109c1.975 10.93 14.59 16.16 23.72 9.824L256 446.1l91.01 63.15c9.127 6.334 21.75 1.107 23.72-9.822l19.7-109l109-19.7C510.4 368.8 515.6 356.1 509.3 347zM256 383.1c-70.69 0-127.1-57.31-127.1-127.1c0-70.69 57.31-127.1 127.1-127.1s127.1 57.3 127.1 127.1C383.1 326.7 326.7 383.1 256 383.1z'
+				}
+				initial={{ scale: 0.9, opacity: 0.75, rotate: showMoon ? 60 : -30 }}
 				animate={{
-					r: showMoon ? 10 : 4,
-					transition,
+					scale: 1,
+					opacity: 1,
+					rotate: 0,
+					transition: gentleSpringConfig,
 				}}
 			/>
-			<motion.g
-				stroke="currentColor"
-				strokeLinecap="round"
-				initial={false}
-				animate={{
-					strokeWidth: showMoon ? 0 : 2,
-					scale: showMoon ? 0.75 : 1,
-					transition,
-				}}
-			>
-				<line x1={12} y1={2} x2={12} y2={4} />
-				<line x1={12} y1={20} x2={12} y2={22} />
-				<line x1={4.87} y1={4.87} x2={6.3} y2={6.3} />
-				<line x1={17.7} y1={17.7} x2={19.13} y2={19.13} />
-				<line x1={2} y1={12} x2={4} y2={12} />
-				<line x1={20} y1={12} x2={22} y2={12} />
-				<line x1={4.87} y1={19.13} x2={6.3} y2={17.7} />
-				<line x1={17.7} y1={6.3} x2={19.13} y2={4.87} />
-			</motion.g>
 		</Icon>
 	)
 }

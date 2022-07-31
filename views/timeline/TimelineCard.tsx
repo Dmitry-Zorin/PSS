@@ -25,9 +25,9 @@ export default function ListItemCard({ record }: ListItemCardProps) {
 	return (
 		<LinkBox
 			as={Card}
+			_hover={{ bg: 'bg-layer-1' }}
 			onMouseEnter={onOpen}
 			onMouseLeave={onClose}
-			_hover={{ bg: 'bg-layer-1' }}
 		>
 			<CardHeader bg={isOpen ? 'bg-layer-2' : 'bg-layer-1'}>
 				<Avatar

@@ -23,15 +23,16 @@ export default extendTheme({
 				fontSize: 'lg',
 				letterSpacing: 'tight',
 				wordSpacing: '0.05em',
+				scrollBehavior: 'smooth',
 			},
 			'*, *::before, &::after': {
 				borderColor: 'border',
 			},
 			h1: {
-				color: 'heading',
+				color: 'primary',
 			},
 			h2: {
-				color: 'primary',
+				color: 'secondary',
 			},
 		},
 	},

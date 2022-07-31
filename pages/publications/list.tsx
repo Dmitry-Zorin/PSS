@@ -1,8 +1,6 @@
-import { Button } from '@chakra-ui/react'
-import { faAdd } from '@fortawesome/free-solid-svg-icons'
 import { Publication } from '@prisma/client'
 import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query'
-import { HeadTitle, Icon, Layout, ResourceTable, Search } from 'components'
+import { CreateButton, Layout, ResourceTable, Search } from 'components'
 import { useDebounce } from 'hooks'
 import { GetStaticProps, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
@@ -28,7 +26,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 }
 
 const PublicationsListPage: NextPage = () => {
-	const { t } = useTranslation('common', { keyPrefix: 'menu.items' })
+	const { t } = useTranslation('common')
 	const router = useRouter()
 	const { category } = router.query as Record<string, string>
 	const [query, setQuery] = useState<Record<string, string | undefined>>({
@@ -56,28 +54,24 @@ const PublicationsListPage: NextPage = () => {
 	}
 
 	return (
-		<>
-			<HeadTitle title={t(category)} />
-			<Layout
-				fullSize
-				leftActions={<Search onChange={search} />}
-				rightActions={
-					<Link href={`/publications/${category}/create`} passHref>
-						<Button as="a" leftIcon={<Icon icon={faAdd} />}>
-							Create
-						</Button>
-					</Link>
-				}
-			>
-				<ResourceTable
-					data={data?.publications}
-					fields={['title', 'description', 'year']}
-					href={`/publications/${category}`}
-					sort={sort}
-					search={query.search}
-				/>
-			</Layout>
-		</>
+		<Layout
+			fullSize
+			headTitle={category && t(`menu.items.${category}`)}
+			leftActions={<Search onChange={search} />}
+			rightActions={
+				<Link href={`/publications/${category}/create`} passHref>
+					<CreateButton as="a" />
+				</Link>
+			}
+		>
+			<ResourceTable
+				data={data?.publications}
+				fields={['title', 'description', 'year']}
+				href={`/publications/${category}`}
+				sort={sort}
+				search={query.search}
+			/>
+		</Layout>
 	)
 }
 

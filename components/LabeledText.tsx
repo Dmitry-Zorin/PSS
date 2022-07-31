@@ -1,15 +1,14 @@
 import { Stack, Text, TextProps } from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
-import { ReactNode } from 'react'
 
 interface LabeledTextProps extends TextProps {
-	children: ReactNode
 	label: string
+	text?: string | number | null
 }
 
 export default function LabeledText({
-	children,
 	label,
+	text,
 	...props
 }: LabeledTextProps) {
 	const { t } = useTranslation('fields')
@@ -18,7 +17,7 @@ export default function LabeledText({
 			<Text fontSize="sm" color="text-secondary">
 				{t(label)}
 			</Text>
-			<Text {...props}>{children}</Text>
+			<Text {...props}>{text || '-'}</Text>
 		</Stack>
 	)
 }

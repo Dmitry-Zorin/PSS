@@ -27,11 +27,7 @@ export default createApiHandler(
 
 		const authors = await prisma.author.findMany({
 			where,
-			orderBy: [
-				sort && JSON.parse(sort),
-				{ year: 'desc' },
-				{ createdAt: 'desc' },
-			],
+			orderBy: [sort && JSON.parse(sort), { lastName: 'desc' }],
 			skip,
 			take,
 		})

@@ -16,7 +16,7 @@ const Home: NextPage = () => {
 	return (
 		<>
 			<HeadTitle title={t('name', { ns: 'common' })} />
-			<Stack minH="100vh">
+			<Stack minH="100vh" bg="bg">
 				<HStack justify="flex-end" p={{ base: 3, md: 6 }}>
 					<ColorModeSwitch />
 				</HStack>

@@ -1,4 +1,5 @@
-import { Button, ButtonProps } from '@chakra-ui/react'
+import { ButtonProps } from '@chakra-ui/react'
+import { Button } from 'components'
 import Link from 'next/link'
 
 export interface CoolButtonLinkProps extends ButtonProps {

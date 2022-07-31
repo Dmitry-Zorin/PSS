@@ -1,8 +1,9 @@
 import { List, ListItem } from '@chakra-ui/react'
 import { Publication } from '@prisma/client'
 import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query'
-import { HeadTitle, Layout } from 'components'
+import { Layout } from 'components'
 import { queryClientConfig } from 'lib/common'
+import { range } from 'lodash'
 import { GetServerSideProps, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
@@ -15,7 +16,10 @@ export const getStaticProps: GetServerSideProps = async ({ locale }) => {
 		'resources',
 	])
 
-	queryClient.prefetchQuery(['publications', { sort: { createdAt: 'desc' } }])
+	// await queryClient.prefetchQuery([
+	// 	'publications',
+	// 	{ sort: { createdAt: 'desc' } },
+	// ])
 
 	return {
 		props: {
@@ -36,22 +40,17 @@ const TimelinePage: NextPage = () => {
 	const skeleton = <TimelineCardSkeleton />
 
 	return (
-		<>
-			<HeadTitle title={t('timeline')} />
-			<Layout title={t('timeline')} error={error}>
-				<List spacing={9}>
-					{data
-						? data.publications.map((e) => (
-								<ListItem key={e.id}>
-									<TimelineCard record={e} />
-								</ListItem>
-						  ))
-						: [...Array(10)].map((_, i) => (
-								<ListItem key={i}>{skeleton}</ListItem>
-						  ))}
-				</List>
-			</Layout>
-		</>
+		<Layout title={t('timeline')} error={error}>
+			<List spacing={9}>
+				{data
+					? data.publications.map((e) => (
+							<ListItem key={e.id}>
+								<TimelineCard record={e} />
+							</ListItem>
+					  ))
+					: range(10).map((i) => <ListItem key={i}>{skeleton}</ListItem>)}
+			</List>
+		</Layout>
 	)
 }
 

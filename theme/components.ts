@@ -22,14 +22,26 @@ const components: ThemeComponents = {
 			},
 		},
 		variants: {
+			solid: {
+				color: 'bg',
+				bg: 'primary',
+				_hover: {
+					bg: 'primary',
+				},
+				_active: {
+					bg: 'primary-dark',
+					opacity: 0.9,
+				},
+			},
 			ghost: {
 				color: 'text-tertiary',
 				_hover: {
-					bg: 'bg-layer-2',
-					color: 'text-primary',
+					color: 'primary',
+					bg: 'primary-alpha',
 				},
 				_active: {
-					bg: 'bg-layer-1',
+					bg: 'primary-alpha',
+					opacity: 0.9,
 				},
 			},
 		},

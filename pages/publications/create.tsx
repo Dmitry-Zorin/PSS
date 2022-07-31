@@ -1,5 +1,4 @@
 import {
-	Button,
 	FormControl,
 	FormErrorMessage,
 	FormLabel,
@@ -8,7 +7,7 @@ import {
 } from '@chakra-ui/react'
 import { Publication } from '@prisma/client'
 import { dehydrate, QueryClient } from '@tanstack/react-query'
-import { HeadTitle, Layout } from 'components'
+import { ActionsToolbar, Layout, SaveButton } from 'components'
 import { GetStaticProps, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
@@ -19,6 +18,7 @@ import { FieldErrors } from 'react-hook-form/dist/types/errors'
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
 	const translationProps = await serverSideTranslations(locale!, [
 		'common',
+		'resources',
 		'fields',
 	])
 
@@ -57,7 +57,7 @@ function MyFormControl<T>({ field, errors, register }: MyFormControlProps<T>) {
 }
 
 const PublicationCreatePage: NextPage = () => {
-	const { t } = useTranslation('common')
+	const { t } = useTranslation(['common', 'resources'])
 	const router = useRouter()
 
 	const { category } = router.query as {
@@ -75,24 +75,17 @@ const PublicationCreatePage: NextPage = () => {
 	function onSubmit() {}
 
 	return (
-		<>
-			<HeadTitle title={`Create ${t(category)}`} />
-			<Layout title="Create article">
-				<Stack as="form" spacing={4} onSubmit={handleSubmit(onSubmit)}>
-					<MyFormControl field="title" {...formControlProps} />
-					<MyFormControl field="description" {...formControlProps} />
-					<Button
-						type="submit"
-						variant="solid"
-						colorScheme="primary"
-						isLoading={isSubmitting}
-						mt={4}
-					>
-						Submit
-					</Button>
-				</Stack>
-			</Layout>
-		</>
+		<Layout title={category && t(`${category}.create`, { ns: 'resources' })}>
+			<Stack as="form" spacing={4} onSubmit={handleSubmit(onSubmit)}>
+				<MyFormControl field="title" {...formControlProps} />
+				<MyFormControl field="description" {...formControlProps} />
+			</Stack>
+			<ActionsToolbar
+				leftActions={
+					<SaveButton type="submit" isLoading={isSubmitting} mt={4} />
+				}
+			/>
+		</Layout>
 	)
 }
 

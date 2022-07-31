@@ -4,10 +4,8 @@ import {
 	DrawerOverlay,
 	DrawerProps,
 	HStack,
-	IconButton,
 } from '@chakra-ui/react'
-import { faClose } from '@fortawesome/free-solid-svg-icons'
-import { Icon, Logo } from 'components'
+import { Logo } from 'components'
 
 export default function MenuDrawer({ children, ...props }: DrawerProps) {
 	return (
@@ -16,12 +14,6 @@ export default function MenuDrawer({ children, ...props }: DrawerProps) {
 			<DrawerContent px={2}>
 				<HStack justify="space-between" pl={4} py={2}>
 					<Logo />
-					<IconButton
-						aria-label="Close"
-						icon={<Icon icon={faClose} boxSize={6} />}
-						onClick={props.onClose}
-						color="text-tertiary"
-					/>
 				</HStack>
 				{children}
 			</DrawerContent>

@@ -1,7 +1,8 @@
 {
 	"articles": {
 		"name_one": "Статья",
-		"name_other": "Статьи"
+		"name_other": "Статьи",
+		"create": "Создать статью"
 	},
 	"abstracts": {
 		"name_one": "Автореферат",

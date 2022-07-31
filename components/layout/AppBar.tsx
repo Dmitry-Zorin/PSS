@@ -1,6 +1,6 @@
-import { Box, HStack, IconButton, StackProps } from '@chakra-ui/react'
+import { Box, HStack, StackProps } from '@chakra-ui/react'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
-import { ColorModeSwitch, Icon, UserMenu } from 'components'
+import { ColorModeSwitch, Icon, IconButton, UserMenu } from 'components'
 
 interface AppBarProps extends StackProps {
 	onMenuDrawerOpen: () => void
@@ -18,7 +18,7 @@ export default function AppBar({ onMenuDrawerOpen, ...props }: AppBarProps) {
 			<Box display={{ base: 'block', md: 'none' }} flexGrow={1}>
 				<IconButton
 					aria-label="Toggle Menu"
-					icon={<Icon icon={faBars} boxSize={6} transform="scaleY(0.85)" />}
+					icon={<Icon icon={faBars} boxSize={5} />}
 					onClick={onMenuDrawerOpen}
 				/>
 			</Box>

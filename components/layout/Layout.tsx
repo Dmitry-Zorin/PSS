@@ -1,15 +1,29 @@
 import { Box, Flex, useDisclosure } from '@chakra-ui/react'
-import { AppBar, MainArea, Menu, MenuDrawer, Sidebar } from 'components'
+import {
+	AppBar,
+	HeadTitle,
+	MainArea,
+	Menu,
+	MenuDrawer,
+	Sidebar,
+} from 'components'
 import resources from 'constants/resources'
 import { MainAreaProps } from './MainArea'
 
-export default function Layout(props: MainAreaProps) {
+interface LayoutProps extends MainAreaProps {
+	headTitle?: string
+}
+
+export default function Layout({ headTitle, ...props }: LayoutProps) {
 	const { isOpen, onOpen, onClose } = useDisclosure()
+
+	headTitle = headTitle || props.title
 
 	const menu = <Menu items={resources} />
 
 	return (
 		<>
+			{headTitle && <HeadTitle title={headTitle} />}
 			<Flex>
 				<Sidebar
 					pos={{

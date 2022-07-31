@@ -9,7 +9,7 @@ export const gentleSpringConfig: Transition = {
 
 export const stiffSpringConfig: Transition = {
 	type: 'spring',
-	stiffness: 144,
+	stiffness: 180,
 	damping: 14,
 	mass: 0.4,
 }

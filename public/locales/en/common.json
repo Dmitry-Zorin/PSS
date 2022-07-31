@@ -26,7 +26,10 @@
 	"actions": {
 		"go_back": "Go Back",
 		"retry": "Try Again",
-		"download": "Download"
+		"download": "Download",
+		"save": "Save",
+		"create": "Create",
+		"list": "List"
 	},
 	"errors": {
 		"404": {

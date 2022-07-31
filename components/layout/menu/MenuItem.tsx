@@ -19,7 +19,10 @@ export interface MenuItemProps {
 
 export default function MenuItem({ to, icon, text }: MenuItemProps) {
 	const router = useRouter()
-	const isActive = new RegExp(`^${to}($|\/)`).test(router.asPath)
+	const { category } = router.query
+	const isActive = new RegExp(
+		`${category ? `\/${router.query.category}` : `^${to}`} ($|\/)`,
+	).test(router.asPath)
 	const { t } = useTranslation('common', { keyPrefix: 'menu.items' })
 
 	return (
@@ -39,18 +42,18 @@ export default function MenuItem({ to, icon, text }: MenuItemProps) {
 						as="a"
 						spacing={3}
 						h={10}
-						px={{ base: 4, lg: 8 }}
+						px={{ base: 4, lg: 7, xl: 10 }}
 						fontSize="md"
 						borderRadius="lg"
 						color={isActive ? 'text-primary' : 'text-secondary'}
 						outline="2px solid transparent"
 						_hover={{
-							color: isActive ? 'text-primary' : 'text',
-							bg: 'bg-layer-3',
+							color: isActive ? 'text-primary' : 'text-primary',
+							bg: 'bg-layer-2',
 						}}
 						_focusVisible={{ shadow: 'outline' }}
 					>
-						<Icon icon={icon} boxSize={5} />
+						<Icon icon={icon} />
 						<Text
 							display={{
 								base: 'block',
