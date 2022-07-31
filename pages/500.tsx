@@ -13,7 +13,7 @@ export const getStaticProps: GetServerSideProps = async ({ locale }) => {
 const Error500Page: NextPage = () => {
 	const { t } = useTranslation('common')
 	return (
-		<div>
+		<>
 			<HeadTitle title="500" />
 			<HStack p={6}>
 				<Logo />
@@ -36,7 +36,7 @@ const Error500Page: NextPage = () => {
 					</Text>
 				</Stack>
 			</Center>
-		</div>
+		</>
 	)
 }
 

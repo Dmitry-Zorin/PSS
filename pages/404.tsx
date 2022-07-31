@@ -13,7 +13,7 @@ export const getStaticProps: GetServerSideProps = async ({ locale }) => {
 const Error404Page: NextPage = () => {
 	const { t } = useTranslation('common')
 	return (
-		<div>
+		<>
 			<HeadTitle title="404" />
 			<HStack p={6}>
 				<Logo />
@@ -46,7 +46,7 @@ const Error404Page: NextPage = () => {
 					</div>
 				</Stack>
 			</Center>
-		</div>
+		</>
 	)
 }
 

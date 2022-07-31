@@ -1,8 +1,8 @@
-import { Heading, Stack, Text } from '@chakra-ui/react'
 import { Layout } from 'components'
 import { GetServerSideProps, NextPage } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'react-i18next'
+import AboutView from 'views/AboutView'
 
 export const getStaticProps: GetServerSideProps = async ({ locale }) => {
 	return {
@@ -11,26 +11,11 @@ export const getStaticProps: GetServerSideProps = async ({ locale }) => {
 }
 
 const AboutPage: NextPage = () => {
-	const { t } = useTranslation('about')
+	const { t } = useTranslation('common', { keyPrefix: 'menu.items' })
 
 	return (
-		<Layout title={t('title')}>
-			<Heading as="h2" size="lg">
-				{t('subtitle')}
-			</Heading>
-			{(
-				t('paragraphs', { returnObjects: true }) as {
-					title: string
-					text: string
-				}[]
-			).map(({ title, text }) => (
-				<Stack as="section" spacing={3} key={title} pt={10}>
-					<Heading as="h3" fontSize="xl" fontWeight="bold">
-						{title}
-					</Heading>
-					<Text>{text}</Text>
-				</Stack>
-			))}
+		<Layout title={t('about')}>
+			<AboutView />
 		</Layout>
 	)
 }

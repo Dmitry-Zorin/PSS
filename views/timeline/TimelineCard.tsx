@@ -1,15 +1,8 @@
-import {
-	Avatar,
-	LinkBox,
-	LinkOverlay,
-	Stack,
-	Text,
-	useDisclosure,
-} from '@chakra-ui/react'
+import { Avatar, LinkBox, LinkOverlay, Stack, Text } from '@chakra-ui/react'
 import { Publication } from '@prisma/client'
 import { Card, CardContent, CardHeader, Icon } from 'components'
 import resources from 'constants/resources'
-import { useTruncate } from 'hooks'
+import { useHover, useTruncate } from 'hooks'
 import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 
@@ -19,17 +12,12 @@ interface ListItemCardProps {
 
 export default function ListItemCard({ record }: ListItemCardProps) {
 	const { t, i18n } = useTranslation('resources')
-	const { isOpen, onOpen, onClose } = useDisclosure()
+	const { isHovered, listeners } = useHover()
 	const truncate = useTruncate()
 
 	return (
-		<LinkBox
-			as={Card}
-			_hover={{ bg: 'bg-layer-1' }}
-			onMouseEnter={onOpen}
-			onMouseLeave={onClose}
-		>
-			<CardHeader bg={isOpen ? 'bg-layer-2' : 'bg-layer-1'}>
+		<LinkBox as={Card} _hover={{ bg: 'bg-layer-1' }} {...listeners}>
+			<CardHeader bg={isHovered ? 'bg-layer-2' : 'bg-layer-1'}>
 				<Avatar
 					bg="transparent"
 					color="primary"
@@ -58,16 +46,7 @@ export default function ListItemCard({ record }: ListItemCardProps) {
 				</Stack>
 			</CardHeader>
 			<CardContent>
-				<Link
-					href={{
-						pathname: `/publications/[category]/[id]`,
-						query: {
-							category: record.category,
-							id: record.id,
-						},
-					}}
-					passHref
-				>
+				<Link href={`/publications/${record.category}/${record.id}`} passHref>
 					<LinkOverlay>{record.title}</LinkOverlay>
 				</Link>
 				{record.description && (
