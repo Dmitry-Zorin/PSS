@@ -10,14 +10,6 @@ const colorTokens: Record<string, SemanticValue<keyof Pseudos>> = {
 		_light: `primary.500`,
 		_dark: `primary.200`,
 	},
-	'primary-dark': {
-		_light: `primary.600`,
-		_dark: `primary.300`,
-	},
-	'primary-darker': {
-		_light: `primary.700`,
-		_dark: `primary.400`,
-	},
 	'primary-alpha': {
 		_light: addAlpha(colors.primary[500]!, 0.1),
 		_dark: addAlpha(colors.primary[200]!, 0.1),
@@ -51,16 +43,12 @@ const colorTokens: Record<string, SemanticValue<keyof Pseudos>> = {
 		_dark: 'gray.400',
 	},
 	'text-primary': {
-		_light: `primary.600`,
+		_light: `primary.500`,
 		_dark: `primary.200`,
 	},
 	border: {
-		_light: 'hsl(220 30% 90%)',
-		_dark: 'hsl(220, 25%, 20%)',
-	},
-	'border-focus': {
-		_light: 'hsl(220 25% 80%)',
-		_dark: 'hsl(220, 20%, 40%)',
+		_light: 'border.100',
+		_dark: 'border.800',
 	},
 }
 

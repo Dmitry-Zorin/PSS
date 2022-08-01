@@ -27,10 +27,11 @@ const components: ThemeComponents = {
 				bg: 'primary',
 				_hover: {
 					bg: 'primary',
+					opacity: 0.9,
 				},
 				_active: {
-					bg: 'primary-dark',
-					opacity: 0.9,
+					bg: 'primary',
+					opacity: 0.8,
 				},
 			},
 			ghost: {
@@ -38,10 +39,11 @@ const components: ThemeComponents = {
 				_hover: {
 					color: 'primary',
 					bg: 'primary-alpha',
+					opacity: 0.9,
 				},
 				_active: {
 					bg: 'primary-alpha',
-					opacity: 0.9,
+					opacity: 0.8,
 				},
 			},
 		},

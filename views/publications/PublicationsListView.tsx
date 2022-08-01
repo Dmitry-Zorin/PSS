@@ -1,6 +1,5 @@
 import { ActionsToolbar, CreateButton, ResourceTable, Search } from 'components'
 import { useDebounce } from 'hooks'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Dispatch, SetStateAction } from 'react'
 import { GetPublicationsResponse, Query } from 'types'
@@ -39,9 +38,7 @@ export default function PublicationsListView({
 			<ActionsToolbar
 				leftActions={<Search onChange={search} />}
 				rightActions={
-					<Link href={`/publications/${category}/create`} passHref>
-						<CreateButton as="a" />
-					</Link>
+					<CreateButton href={`/publications/${category}/create`} />
 				}
 			/>
 			<ResourceTable

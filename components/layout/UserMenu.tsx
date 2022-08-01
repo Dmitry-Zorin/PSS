@@ -6,13 +6,15 @@ import {
 	faUser,
 } from '@fortawesome/free-solid-svg-icons'
 import { Icon, MenuButton } from 'components'
+import { useTranslation } from 'next-i18next'
 
 export default function UserMenu() {
+	const { t } = useTranslation('common', { keyPrefix: 'labels' })
 	return (
 		<div>
 			<Menu>
 				<MenuButton
-					aria-label="User Menu"
+					aria-label={t('user_menu')}
 					icon={<Icon icon={faUser} boxSize={5} />}
 				/>
 				<MenuList>

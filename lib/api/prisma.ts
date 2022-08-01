@@ -22,8 +22,7 @@ function createPrismaClient() {
 	})
 
 	client.$on('query', async (e) => {
-		console.log(e.params)
-		console.log(`finished in ${e.duration}ms`)
+		console.log(`finished in ${e.duration}ms (params: ${e.params})`)
 	})
 
 	if (process.env.NODE_ENV !== 'production') {
