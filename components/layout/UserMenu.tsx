@@ -5,7 +5,7 @@ import {
 	faSignOutAlt,
 	faUser,
 } from '@fortawesome/free-solid-svg-icons'
-import { Icon, MenuButton } from 'components'
+import { Icon, MenuIconButton } from 'components'
 import { useTranslation } from 'next-i18next'
 
 export default function UserMenu() {
@@ -13,7 +13,7 @@ export default function UserMenu() {
 	return (
 		<div>
 			<Menu>
-				<MenuButton
+				<MenuIconButton
 					aria-label={t('user_menu')}
 					icon={<Icon icon={faUser} boxSize={5} />}
 				/>

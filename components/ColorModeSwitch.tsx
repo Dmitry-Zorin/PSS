@@ -10,7 +10,7 @@ export default function ColorModeSwitch() {
 	return (
 		<IconButton
 			aria-label={t('color_mode_switch')}
-			icon={<Icon icon={colorMode === 'light' ? faSun : faMoon} boxSize={5} />}
+			icon={<Icon icon={colorMode === 'dark' ? faSun : faMoon} boxSize={5} />}
 			onClick={toggleColorMode}
 		/>
 	)

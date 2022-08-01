@@ -4,14 +4,13 @@ import {
 	Text,
 	Tooltip,
 	useBreakpointValue,
-	useDisclosure,
 } from '@chakra-ui/react'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { Icon } from 'components'
 import { useTranslation } from 'next-i18next'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 export interface MenuItemProps {
 	to: string
@@ -20,20 +19,20 @@ export interface MenuItemProps {
 }
 
 export default function MenuItem({ to, icon, text }: MenuItemProps) {
+	const { t } = useTranslation('common', { keyPrefix: 'menu.items' })
 	const router = useRouter()
-	const { isOpen: isActive, onOpen } = useDisclosure({
-		defaultIsOpen: to.startsWith('/publications')
+	const [isActive, setIsActive] = useState(
+		to.startsWith('/publications')
 			? false
 			: new RegExp(`^${to}($|\/)`).test(router.asPath),
-	})
-	const { t } = useTranslation('common', { keyPrefix: 'menu.items' })
+	)
 
 	useEffect(() => {
 		const { category } = router.query
-		if (category && new RegExp(`/${category}($|\/)`).test(to)) {
-			onOpen()
+		if (category) {
+			setIsActive(new RegExp(`/${category}($|\/)`).test(to))
 		}
-	}, [onOpen, router.query, to])
+	}, [router.query, to])
 
 	return (
 		<Tooltip
@@ -52,7 +51,7 @@ export default function MenuItem({ to, icon, text }: MenuItemProps) {
 						as="a"
 						spacing={3}
 						h={10}
-						px={{ base: 4, lg: 6, xl: 8 }}
+						px={{ base: 4, lg: 7, xl: 8 }}
 						fontSize="md"
 						borderRadius="lg"
 						color={isActive ? 'text-primary' : 'text-secondary'}
