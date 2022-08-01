@@ -5,5 +5,5 @@ import {
 } from '@fortawesome/react-fontawesome'
 
 export default function Icon(props: IconProps & FontAwesomeIconProps) {
-	return <ChakraIcon as={FontAwesomeIcon} boxSize="1.125rem" {...props} />
+	return <ChakraIcon as={FontAwesomeIcon} {...props} />
 }

@@ -11,12 +11,18 @@ export default function Button({
 	const { isTapped, listeners } = useTap()
 	return (
 		<ChakraButton {...listeners} {...props}>
-			<Tap isTapped={isTapped} scale={0.95}>
-				{leftIcon}
-				<Box as="span" pl={leftIcon ? 2 : 0} pr={rightIcon ? 2 : 0}>
-					{children}
-				</Box>
-				{rightIcon}
+			<Tap isTapped={isTapped}>
+				{leftIcon && (
+					<Box as="span" lineHeight={2} mr={2}>
+						{leftIcon}
+					</Box>
+				)}
+				{children}
+				{rightIcon && (
+					<Box as="span" ml={2}>
+						{rightIcon}
+					</Box>
+				)}
 			</Tap>
 		</ChakraButton>
 	)

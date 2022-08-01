@@ -1,6 +1,6 @@
-import { Button, ButtonProps } from '@chakra-ui/react'
+import { ButtonProps } from '@chakra-ui/react'
 import { faAdd } from '@fortawesome/free-solid-svg-icons'
-import { Icon } from 'components'
+import { Button, Icon } from 'components'
 import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 

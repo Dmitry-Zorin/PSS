@@ -63,7 +63,7 @@ export default function MenuItem({ to, icon, text }: MenuItemProps) {
 						}}
 						_focusVisible={{ shadow: 'outline' }}
 					>
-						<Icon icon={icon} />
+						<Icon icon={icon} boxSize="1.125rem" />
 						<Text
 							display={{
 								base: 'block',

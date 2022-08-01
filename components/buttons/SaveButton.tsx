@@ -1,6 +1,6 @@
-import { Button, ButtonProps } from '@chakra-ui/react'
+import { ButtonProps } from '@chakra-ui/react'
 import { faSave } from '@fortawesome/free-solid-svg-icons'
-import { Icon } from 'components'
+import { Button, Icon } from 'components'
 import { useTranslation } from 'next-i18next'
 
 export default function SaveButton(props: ButtonProps) {
