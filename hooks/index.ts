@@ -1,4 +1,5 @@
 export { default as useDebounce } from './useDebounce'
+export { default as useGetPublication } from './useGetPublication'
 export { default as useHover } from './useHover'
 export { default as useResourceTable } from './useResourceTable'
 export { default as useScrollRestoration } from './useScrollRestoration'

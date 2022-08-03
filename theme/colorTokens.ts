@@ -47,8 +47,8 @@ const colorTokens: Record<string, SemanticValue<keyof Pseudos>> = {
 		_dark: `primary.200`,
 	},
 	border: {
-		_light: 'border.100',
-		_dark: 'border.800',
+		_light: 'text.100',
+		_dark: 'text.800',
 	},
 }
 

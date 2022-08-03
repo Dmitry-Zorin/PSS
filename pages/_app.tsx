@@ -6,6 +6,7 @@ import {
 	QueryClient,
 	QueryClientProvider,
 } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { useScrollRestoration } from 'hooks'
 import { queryClientConfig } from 'lib/common'
 import { GetStaticProps } from 'next'
@@ -42,7 +43,7 @@ export default appWithTranslation(({ Component, pageProps }) => {
 				<QueryClientProvider client={queryClient}>
 					<Hydrate state={pageProps.dehydratedState}>
 						<Component {...pageProps} />
-						{/* <ReactQueryDevtools initialIsOpen={false} /> */}
+						<ReactQueryDevtools initialIsOpen={false} />
 					</Hydrate>
 				</QueryClientProvider>
 			</ChakraProvider>

@@ -1,5 +1,7 @@
 const { i18n } = require('./next-i18next.config')
 
+const isProduction = process.env.NODE_ENV === 'production'
+
 const csp = [
 	"default-src 'self' vitals.vercel-insights.com",
 	"style-src 'self' 'unsafe-inline'",
@@ -11,9 +13,7 @@ const nextConfig = {
 	reactStrictMode: true,
 	swcMinify: true,
 	i18n,
-	env: {
-		NEXT_PUBLIC_VERCEL_URL: 'localhost:3000',
-	},
+	env: isProduction ? undefined : { NEXT_PUBLIC_VERCEL_URL: 'localhost:3000' },
 	async rewrites() {
 		return [
 			{
@@ -57,7 +57,7 @@ const nextConfig = {
 					},
 					{
 						key: 'Content-Security-Policy',
-						value: process.env.NODE_ENV === 'production' ? csp.join(';') : '',
+						value: isProduction ? csp.join(';') : '',
 					},
 				],
 			},

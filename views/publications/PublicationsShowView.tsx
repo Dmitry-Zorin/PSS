@@ -9,11 +9,7 @@ interface PublicationsShowViewProps {
 export default function PublicationsShowView({
 	data,
 }: PublicationsShowViewProps) {
-	if (!data) {
-		return null
-	}
-
-	return (
+	return data ? (
 		<Stack spacing={12} pt={2}>
 			<Text>{data.description}</Text>
 			<SimpleGrid columns={{ base: 2, lg: 4 }} spacing={12}>
@@ -26,5 +22,5 @@ export default function PublicationsShowView({
 				<LabeledText label="outputData" text={data.outputData} />
 			)}
 		</Stack>
-	)
+	) : null
 }

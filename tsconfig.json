@@ -6,9 +6,6 @@
 		"moduleResolution": "node",
 		"jsx": "preserve",
 		"baseUrl": ".",
-		"paths": {
-			"~/*": ["src/*"]
-		},
 		"noEmit": true,
 		"strict": true,
 		"allowJs": true,
