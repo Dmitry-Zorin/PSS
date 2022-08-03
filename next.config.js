@@ -13,7 +13,6 @@ const nextConfig = {
 	reactStrictMode: true,
 	swcMinify: true,
 	i18n,
-	env: isProduction ? undefined : { NEXT_PUBLIC_VERCEL_URL: 'localhost:3000' },
 	async rewrites() {
 		return [
 			{

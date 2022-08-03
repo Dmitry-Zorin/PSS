@@ -1,7 +1,7 @@
 import { Publication } from '@prisma/client'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { queryClientConfig } from 'lib/common'
-import { transform } from 'lodash'
+import { maxBy, transform } from 'lodash'
 import { useEffect, useState } from 'react'
 import { GetPublicationsResponse } from 'types'
 
@@ -32,13 +32,11 @@ export default function useGetPublication(id?: string) {
 			},
 		)
 
-		if (!cachedRecords.length) {
+		const latestRecord = maxBy(cachedRecords, (value) => value.updatedAt)
+
+		if (!latestRecord) {
 			return setHasCheckedCache(true)
 		}
-
-		const latestRecord = cachedRecords
-			.sort((a, b) => a.updatedAt - b.updatedAt)
-			.pop()!
 
 		const isStale =
 			Date.now() - latestRecord.updatedAt >

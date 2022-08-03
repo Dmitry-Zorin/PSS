@@ -7,8 +7,6 @@ const defaultQueryFn: QueryFunction<
 > = async ({ queryKey }) => {
 	const res = await fetch(
 		createUrlWithQuery({
-			protocol: process.env.NODE_ENV === 'production' ? 'https' : 'http',
-			host: process.env.NEXT_PUBLIC_VERCEL_URL!,
 			path: 'api',
 			subpath: queryKey[0],
 			query: queryKey[1],
