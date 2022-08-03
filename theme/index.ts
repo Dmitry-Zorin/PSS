@@ -31,9 +31,6 @@ export default extendTheme({
 			h1: {
 				color: 'primary',
 			},
-			h2: {
-				color: 'secondary',
-			},
 		},
 	},
 	colors,

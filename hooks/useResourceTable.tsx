@@ -28,7 +28,7 @@ export default function useResourceTable<Data extends Record<string, any>>({
 	const [data, setData] = useState<Data[]>([])
 
 	useEffect(() => {
-		setData(newData || Array(5).fill({}))
+		setData(newData || Array(10).fill({}))
 	}, [newData])
 
 	const columns: ColumnDef<Data, string>[] = fields.map((field) => ({

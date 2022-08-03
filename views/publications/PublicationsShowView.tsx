@@ -18,8 +18,8 @@ export default function PublicationsShowView({
 				<LabeledText label="character" text={data.characterId} />
 				<LabeledText label="volume" text={data.pages} />
 			</SimpleGrid>
-			{data.outputData && (
-				<LabeledText label="outputData" text={data.outputData} />
+			{data.extraData && (
+				<LabeledText label="outputData" text={data.extraData} />
 			)}
 		</Stack>
 	) : null

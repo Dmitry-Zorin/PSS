@@ -1,7 +1,7 @@
 import { ColorHues } from '@chakra-ui/react'
 
 const colors: Record<string, Partial<ColorHues>> = {
-	text: {
+	border: {
 		100: 'hsl(234 20% 90%)',
 		800: 'hsl(222 25% 25%)',
 	},
