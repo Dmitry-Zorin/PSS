@@ -28,8 +28,9 @@
 		"retry": "Try Again",
 		"download": "Download",
 		"save": "Save",
-		"create": "Create",
-		"list": "List"
+		"create": "Add",
+		"list": "List",
+		"submit": "Submit"
 	},
 	"labels": {
 		"menu": "Open Menu",

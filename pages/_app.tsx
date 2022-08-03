@@ -43,7 +43,7 @@ export default appWithTranslation(({ Component, pageProps }) => {
 				<QueryClientProvider client={queryClient}>
 					<Hydrate state={pageProps.dehydratedState}>
 						<Component {...pageProps} />
-						<ReactQueryDevtools initialIsOpen={false} />
+						{/* <ReactQueryDevtools initialIsOpen={false} /> */}
 					</Hydrate>
 				</QueryClientProvider>
 			</ChakraProvider>

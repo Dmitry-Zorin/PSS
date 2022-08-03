@@ -2,7 +2,7 @@
 	"articles": {
 		"name_one": "Article",
 		"name_other": "Articles",
-		"create": "Create article"
+		"create": "Add article"
 	},
 	"abstracts": {
 		"name_one": "Abstract",

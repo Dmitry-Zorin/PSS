@@ -69,5 +69,5 @@ model Publication {
   pages            Float?
   authors          Author[]
   coauthors        String[]
-  outputData       String?
+  extraData        String?
 }

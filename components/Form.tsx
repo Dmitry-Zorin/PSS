@@ -1,19 +1,23 @@
 import { Stack } from '@chakra-ui/react'
-import { ActionsToolbar, SaveButton } from 'components'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { ActionsToolbar, SubmitButton } from 'components'
 import { Children, cloneElement, ReactElement } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 interface FormProps<T> {
 	children: ReactElement[]
 	onSubmit: SubmitHandler<T>
+	schema: any
 }
 
-export default function Form<T>({ children, onSubmit }: FormProps<T>) {
+export default function Form<T>({ children, onSubmit, schema }: FormProps<T>) {
 	const {
 		handleSubmit,
 		register,
 		formState: { errors, isSubmitting },
-	} = useForm<T>()
+	} = useForm<T>({
+		resolver: zodResolver(schema),
+	})
 
 	return (
 		<>
@@ -22,7 +26,7 @@ export default function Form<T>({ children, onSubmit }: FormProps<T>) {
 					return cloneElement(e, { errors, register })
 				})}
 				<ActionsToolbar
-					leftActions={<SaveButton type="submit" isLoading={isSubmitting} />}
+					leftActions={<SubmitButton isLoading={isSubmitting} />}
 				/>
 			</Stack>
 		</>

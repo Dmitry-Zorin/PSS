@@ -2,7 +2,7 @@
 	"articles": {
 		"name_one": "Статья",
 		"name_other": "Статьи",
-		"create": "Создать статью"
+		"create": "Добавить статью"
 	},
 	"abstracts": {
 		"name_one": "Автореферат",
