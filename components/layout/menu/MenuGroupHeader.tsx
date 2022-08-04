@@ -13,11 +13,7 @@ export default function MenuGroupHeader({
 
 	return (
 		<Center h={12} pointerEvents="none" {...props}>
-			<Text
-				fontSize={{ base: 'xs', xl: 's' }}
-				fontWeight="medium"
-				color="text-secondary"
-			>
+			<Text fontSize={{ base: 'sm-', xl: 'sm' }} color="text-secondary">
 				{t(text).toUpperCase()}
 			</Text>
 		</Center>

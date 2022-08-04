@@ -1,4 +1,4 @@
-import { Box, Heading, HStack } from '@chakra-ui/react'
+import { Box, Heading } from '@chakra-ui/react'
 import { ActionsToolbar } from 'components'
 import { useTranslation } from 'next-i18next'
 import { ReactNode } from 'react'
@@ -25,20 +25,20 @@ export default function MainArea({
 	const heading = error ? t('error') : title
 
 	return (
-		<Box px={6}>
+		<Box pl={6} pr={{ base: 6, xl: '7.5rem' }} pb={6}>
 			{(leftActions || rightActions) && (
-				<ActionsToolbar
-					leftActions={leftActions}
-					rightActions={rightActions}
-					pl={{ '2xl': fullSize ? 0 : '8.5rem' }}
-				/>
+				<ActionsToolbar leftActions={leftActions} rightActions={rightActions} />
 			)}
 			{fullSize ? (
 				children
 			) : (
-				<HStack pb={4} pr={{ base: 0, '2xl': '16rem' }}>
-					<Box flexGrow={1} />
-					<Box as="article" w="full" maxW={{ base: '3xl', xl: '4xl' }}>
+				<Box maxW={{ base: '3xl', lg: '4xl' }} mx={{ xl: 'auto' }}>
+					<Box
+						as="article"
+						maxW={{ base: '3xl', xl: '4xl' }}
+						w="full"
+						mx="auto"
+					>
 						{heading && (
 							<Box as="header" pb={8}>
 								<Heading
@@ -58,8 +58,7 @@ export default function MainArea({
 							<Box maxW="3xl">{children}</Box>
 						)}
 					</Box>
-					<Box flexGrow={{ base: 2, '2xl': 1 }} />
-				</HStack>
+				</Box>
 			)}
 		</Box>
 	)

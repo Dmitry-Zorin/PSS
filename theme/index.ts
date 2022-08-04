@@ -17,7 +17,8 @@ export default extendTheme({
 	},
 	fontSizes: {
 		'2xs': '0.75rem',
-		s: '0.9375rem',
+		'sm-': '0.8125rem',
+		'md-': '0.9375rem',
 	},
 	letterSpacings: {
 		tighter: '-0.04rem',
