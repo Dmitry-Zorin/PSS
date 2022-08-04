@@ -15,14 +15,18 @@ export default extendTheme({
 		body: `Golos Text, ${systemFonts}`,
 		heading: `Golos Text, ${systemFonts}`,
 	},
+	fontSizes: {
+		'2xs': '0.75rem',
+		xs: '0.875rem',
+		sm: '0.9375rem',
+	},
 	styles: {
 		global: {
 			body: {
 				color: 'text',
 				bg: 'bg-layer-1',
 				fontSize: 'lg',
-				letterSpacing: 'tight',
-				wordSpacing: '0.05em',
+				letterSpacing: '-0.02rem',
 				scrollBehavior: 'smooth',
 			},
 			'*, *::before, &::after': {

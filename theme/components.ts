@@ -48,6 +48,34 @@ const components: ThemeComponents = {
 			},
 		},
 	},
+	Textarea: {
+		baseStyle: {
+			element: {
+				color: 'text-tertiary',
+				_focus: {
+					color: 'text',
+				},
+			},
+		},
+		variants: {
+			outline: {
+				borderRadius: 'lg',
+				_placeholder: {
+					borderColor: 'primary',
+					color: 'text-tertiary',
+				},
+				_hover: {
+					borderColor: 'primary',
+				},
+				_focus: {
+					// borderColor: 'primary',
+					_placeholder: {
+						color: 'text-secondary',
+					},
+				},
+			},
+		},
+	},
 	Input: {
 		baseStyle: {
 			element: {
@@ -76,6 +104,14 @@ const components: ThemeComponents = {
 					},
 				},
 			},
+		},
+	},
+	FormLabel: {
+		baseStyle: {
+			// color: 'text-secondary',
+			fontWeight: 'normal',
+			mb: 1,
+			// mx: 1,
 		},
 	},
 	Tooltip: {
@@ -125,6 +161,11 @@ const components: ThemeComponents = {
 					maxW: '16rem',
 				},
 			},
+		},
+	},
+	Divider: {
+		baseStyle: {
+			opacity: 0.75,
 		},
 	},
 }

@@ -1,10 +1,13 @@
 import { Publication } from '@prisma/client'
-import { createApiHandler, prisma } from 'lib/api'
-import { NextApiRequest, NextApiResponse } from 'next'
+import { createHandler, prisma } from 'lib/api'
+import { NextApiResponse } from 'next'
+import { GetPublicationsResponse } from 'types'
 import { getSearchFilter, parseQuery } from 'utils'
 
-export default createApiHandler(
-	async (req: NextApiRequest, res: NextApiResponse) => {
+const handler = createHandler()
+
+handler.get(
+	async (req, res: NextApiResponse<Publication | GetPublicationsResponse>) => {
 		const { strings, numbers } = parseQuery(req.query)
 		const { category, search, sort } = strings
 		const { id, skip, take = 25 } = numbers
@@ -40,3 +43,5 @@ export default createApiHandler(
 		res.json({ publications, total })
 	},
 )
+
+export default handler

@@ -25,14 +25,7 @@ export default function Layout({ headTitle, ...props }: LayoutProps) {
 		<>
 			{headTitle && <HeadTitle title={headTitle} />}
 			<Flex>
-				<Sidebar
-					pos={{
-						base: 'sticky',
-						'2xl': props.fullSize ? 'sticky' : 'fixed',
-					}}
-				>
-					{menu}
-				</Sidebar>
+				<Sidebar>{menu}</Sidebar>
 				<Box as="main" flexGrow={1} bg="bg" minH="100vh">
 					<AppBar onMenuDrawerOpen={onOpen} />
 					<MainArea {...props} />

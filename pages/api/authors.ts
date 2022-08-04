@@ -1,37 +1,40 @@
 import { Author } from '@prisma/client'
-import { createApiHandler, prisma } from 'lib/api'
-import { NextApiRequest, NextApiResponse } from 'next'
+import { createHandler, prisma } from 'lib/api'
+import { NextApiResponse } from 'next'
+import { GetAuthorsResponse } from 'types'
 import { getSearchFilter, parseQuery } from 'utils'
 
-export default createApiHandler(
-	async (req: NextApiRequest, res: NextApiResponse) => {
-		const { strings, numbers } = parseQuery(req.query)
-		const { search, sort } = strings
-		const { id, skip, take = 25 } = numbers
+const handler = createHandler()
 
-		if (id) {
-			return res.json(
-				await prisma.author.findUniqueOrThrow({
-					where: { id },
-				}),
-			)
-		}
+handler.get(async (req, res: NextApiResponse<Author | GetAuthorsResponse>) => {
+	const { strings, numbers } = parseQuery(req.query)
+	const { search, sort } = strings
+	const { id, skip, take = 25 } = numbers
 
-		const where = getSearchFilter<Author>(search, [
-			'lastName',
-			'firstName',
-			'middleName',
-		])
+	if (id) {
+		return res.json(
+			await prisma.author.findUniqueOrThrow({
+				where: { id },
+			}),
+		)
+	}
 
-		const total = await prisma.author.count({ where })
+	const where = getSearchFilter<Author>(search, [
+		'lastName',
+		'firstName',
+		'middleName',
+	])
 
-		const authors = await prisma.author.findMany({
-			where,
-			orderBy: [sort && JSON.parse(sort), { lastName: 'desc' }],
-			skip,
-			take,
-		})
+	const total = await prisma.author.count({ where })
 
-		res.json({ authors, total })
-	},
-)
+	const authors = await prisma.author.findMany({
+		where,
+		orderBy: [sort && JSON.parse(sort), { lastName: 'desc' }],
+		skip,
+		take,
+	})
+
+	res.json({ authors, total })
+})
+
+export default handler

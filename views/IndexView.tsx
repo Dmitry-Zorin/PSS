@@ -53,7 +53,7 @@ export default function IndexView() {
 				<Box flexGrow={2} />
 			</Stack>
 			<HStack justify="center" mt="auto" p={6}>
-				<Text color="text-secondary" fontSize="sm" fontWeight="light">
+				<Text color="text-secondary" fontSize="xs" fontWeight="light">
 					© 2022 {t('author')}
 				</Text>
 			</HStack>

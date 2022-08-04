@@ -8,7 +8,7 @@ interface MenuItems extends BoxProps {
 
 export default function Menu({ items, ...props }: MenuItems) {
 	return (
-		<Box px={{ base: 2, xl: 5 }} w={{ lg: '15rem', xl: '17rem' }} {...props}>
+		<Box px={{ base: 2, xl: 5 }} w={{ lg: '13rem', xl: '16rem' }} {...props}>
 			{Object.entries(items).map(([name, info]) => {
 				return (
 					<MenuGroup

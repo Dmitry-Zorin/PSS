@@ -1,4 +1,4 @@
-import { Box, Heading } from '@chakra-ui/react'
+import { Box, Heading, HStack } from '@chakra-ui/react'
 import { ActionsToolbar } from 'components'
 import { useTranslation } from 'next-i18next'
 import { ReactNode } from 'react'
@@ -25,7 +25,7 @@ export default function MainArea({
 	const heading = error ? t('error') : title
 
 	return (
-		<Box pl={{ base: 6, '2xl': fullSize ? 6 : '8rem' }} pr={6}>
+		<Box px={6}>
 			{(leftActions || rightActions) && (
 				<ActionsToolbar
 					leftActions={leftActions}
@@ -36,26 +36,30 @@ export default function MainArea({
 			{fullSize ? (
 				children
 			) : (
-				<Box as="article" maxW={{ base: '3xl', xl: '4xl' }} mx="auto" pb={4}>
-					{heading && (
-						<Box as="header" pb={8}>
-							<Heading
-								as="h1"
-								fontSize={{ base: '5xl', xl: '6xl' }}
-								lineHeight="none"
-							>
-								{heading}
+				<HStack pb={4} pr={{ base: 0, '2xl': '16rem' }}>
+					<Box flexGrow={1} />
+					<Box as="article" w="full" maxW={{ base: '3xl', xl: '4xl' }}>
+						{heading && (
+							<Box as="header" pb={8}>
+								<Heading
+									as="h1"
+									fontSize={{ base: '5xl', xl: '6xl' }}
+									lineHeight="none"
+								>
+									{heading}
+								</Heading>
+							</Box>
+						)}
+						{error ? (
+							<Heading as="h2" size="lg" color="red.500">
+								{error.message}
 							</Heading>
-						</Box>
-					)}
-					{error ? (
-						<Heading as="h2" size="lg" color="red.500">
-							{error.message}
-						</Heading>
-					) : (
-						<Box maxW="3xl">{children}</Box>
-					)}
-				</Box>
+						) : (
+							<Box maxW="3xl">{children}</Box>
+						)}
+					</Box>
+					<Box flexGrow={{ base: 2, '2xl': 1 }} />
+				</HStack>
 			)}
 		</Box>
 	)

@@ -5,6 +5,7 @@ export default function Sidebar({ children, ...props }: BoxProps) {
 	return (
 		<Box
 			as="nav"
+			pos="sticky"
 			top={0}
 			h="100vh"
 			overflowX="hidden"
@@ -14,6 +15,11 @@ export default function Sidebar({ children, ...props }: BoxProps) {
 			display={{
 				base: 'none',
 				md: 'block',
+			}}
+			sx={{
+				'::-webkit-scrollbar': {
+					display: 'none',
+				},
 			}}
 			{...props}
 		>
