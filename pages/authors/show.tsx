@@ -1,11 +1,12 @@
-import { Publication } from '@prisma/client'
+import { Author } from '@prisma/client'
 import { Layout, ListButton } from 'components'
 import { useGetOne } from 'hooks'
 import { GetStaticProps, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router'
-import PublicationsShow from 'views/publications/PublicationsShow'
+import { getAuthorFullName } from 'scripts/authors'
+import AuthorsShow from 'views/authors/AuthorsShow'
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
 	const translationProps = await serverSideTranslations(locale!, [
@@ -18,27 +19,26 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 	}
 }
 
-const PublicationsShowPage: NextPage = () => {
+const AuthorsShowPage: NextPage = () => {
 	const { t } = useTranslation('resources')
 	const router = useRouter()
 
-	const { category, id } = router.query as {
-		category: string
+	const { id } = router.query as {
 		id: string
 	}
 
-	const { error, data } = useGetOne<Publication>('publications', id)
+	const { error, data } = useGetOne<Author>('authors', id)
 
 	return (
 		<Layout
 			error={error}
-			headTitle={id && `${t(`${category}.name`, { count: 1 })} #${id}`}
-			title={data?.title}
-			rightActions={<ListButton href={`/publications/${category}`} />}
+			headTitle={id && `${t(`authors.name`, { count: 1 })} #${id}`}
+			title={data && getAuthorFullName(data)}
+			rightActions={<ListButton href={'/authors'} />}
 		>
-			<PublicationsShow data={data} />
+			<AuthorsShow data={data} />
 		</Layout>
 	)
 }
 
-export default PublicationsShowPage
+export default AuthorsShowPage

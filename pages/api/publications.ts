@@ -1,13 +1,16 @@
 import { Publication } from '@prisma/client'
 import { createHandler, prisma } from 'lib/api'
 import { NextApiResponse } from 'next'
-import { GetPublicationsResponse } from 'types'
 import { getSearchFilter, parseQuery } from 'utils'
+import { GetListResponse } from 'types'
 
 const handler = createHandler()
 
 handler.get(
-	async (req, res: NextApiResponse<Publication | GetPublicationsResponse>) => {
+	async (
+		req,
+		res: NextApiResponse<Publication | GetListResponse<Publication>>,
+	) => {
 		const { strings, numbers } = parseQuery(req.query)
 		const { category, search, sort } = strings
 		const { id, skip, take = 25 } = numbers
@@ -29,7 +32,7 @@ handler.get(
 
 		const total = await prisma.publication.count({ where })
 
-		const publications = await prisma.publication.findMany({
+		const records = await prisma.publication.findMany({
 			where,
 			orderBy: [
 				sort && JSON.parse(sort),
@@ -40,7 +43,7 @@ handler.get(
 			take,
 		})
 
-		res.json({ publications, total })
+		res.json({ records, total })
 	},
 )
 

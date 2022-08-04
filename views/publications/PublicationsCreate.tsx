@@ -4,7 +4,7 @@ import { Form, FormControl } from 'components'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 
-export default function PublicationsCreateView() {
+export default function PublicationsCreate() {
 	const { t } = useTranslation('resources')
 	const router = useRouter()
 	const { category } = router.query as { category: string }

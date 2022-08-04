@@ -1,53 +1,35 @@
-import { Button } from '@chakra-ui/react'
-import { faAdd } from '@fortawesome/free-solid-svg-icons'
 import { Author } from '@prisma/client'
-import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query'
-import { Icon, Layout, ResourceTable } from 'components'
-import { GetServerSideProps, NextPage } from 'next'
+import { useQuery } from '@tanstack/react-query'
+import { Layout } from 'components'
+import { GetStaticProps, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import Link from 'next/link'
+import { useState } from 'react'
+import { GetListResponse, Query } from 'types'
+import AuthorsList from 'views/authors/AuthorsList'
 
-export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
 	const translationProps = await serverSideTranslations(locale!, [
 		'common',
 		'fields',
 	])
-
-	const queryClient = new QueryClient()
-
 	return {
-		props: {
-			dehydratedState: JSON.parse(JSON.stringify(dehydrate(queryClient))),
-			...translationProps,
-		},
+		props: translationProps,
 	}
 }
 
 const AuthorsPage: NextPage = () => {
 	const { t } = useTranslation('common', { keyPrefix: 'menu.items' })
-	const { data } = useQuery<{ authors: Author[]; total: number }>(['authors'])
+	const [query, setQuery] = useState<Query>({})
+
+	const { error, data } = useQuery<GetListResponse<Author>, Error>([
+		'authors',
+		query,
+	])
 
 	return (
-		<Layout
-			fullSize
-			headTitle={t('authors')}
-			// leftActions={<Search onChange={search} />}
-			rightActions={
-				<Link href={`/authors/create`} passHref>
-					<Button as="a" leftIcon={<Icon icon={faAdd} />}>
-						Create
-					</Button>
-				</Link>
-			}
-		>
-			<ResourceTable
-				data={data?.authors}
-				fields={['lastName', 'firstName', 'middleName']}
-				href="/authors"
-				sort={() => {}}
-				search={undefined}
-			/>
+		<Layout fullSize error={error} headTitle={t('authors')}>
+			<AuthorsList data={data} query={query} setQuery={setQuery} />
 		</Layout>
 	)
 }

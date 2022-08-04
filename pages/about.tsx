@@ -2,7 +2,7 @@ import { Layout } from 'components'
 import { GetServerSideProps, NextPage } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'react-i18next'
-import AboutView from 'views/AboutView'
+import About from 'views/About'
 
 export const getStaticProps: GetServerSideProps = async ({ locale }) => {
 	return {
@@ -15,7 +15,7 @@ const AboutPage: NextPage = () => {
 
 	return (
 		<Layout title={t('about')}>
-			<AboutView />
+			<About />
 		</Layout>
 	)
 }

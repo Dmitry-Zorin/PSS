@@ -4,7 +4,7 @@ import { GetServerSideProps, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { GetPublicationsResponse } from 'types'
-import TimelineView from 'views/timeline/TimelineView'
+import TimelineView from 'views/timeline/Timeline'
 
 export const getStaticProps: GetServerSideProps = async ({ locale }) => {
 	const translationProps = await serverSideTranslations(locale!, [

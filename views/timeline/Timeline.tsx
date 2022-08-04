@@ -7,7 +7,7 @@ interface TimelineProps {
 	data?: GetPublicationsResponse
 }
 
-export default function TimelineView({ data }: TimelineProps) {
+export default function Timeline({ data }: TimelineProps) {
 	return (
 		<List spacing={9}>
 			{data

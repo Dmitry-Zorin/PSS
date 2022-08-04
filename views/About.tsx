@@ -1,7 +1,7 @@
 import { Heading, Stack, Text } from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
 
-export default function AboutView() {
+export default function About() {
 	const { t } = useTranslation('about')
 
 	return (

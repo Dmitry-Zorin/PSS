@@ -2,13 +2,11 @@ import { SimpleGrid, Stack, Text } from '@chakra-ui/react'
 import { Publication } from '@prisma/client'
 import { LabeledText } from 'components'
 
-interface PublicationsShowViewProps {
+interface PublicationsShowProps {
 	data?: Publication
 }
 
-export default function PublicationsShowView({
-	data,
-}: PublicationsShowViewProps) {
+export default function PublicationsShow({ data }: PublicationsShowProps) {
 	return data ? (
 		<Stack spacing={12} pt={2}>
 			<Text>{data.description}</Text>

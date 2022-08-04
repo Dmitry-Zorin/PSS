@@ -1,16 +1,19 @@
-import { Publication } from '@prisma/client'
+import { Author } from '@prisma/client'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { queryClientConfig } from 'lib/common'
 import { maxBy, transform } from 'lodash'
 import { useEffect, useState } from 'react'
-import { GetPublicationsResponse } from 'types'
+import { GetListResponse } from '../types'
 
-interface Record {
-	data: Publication
+interface Data<Record> {
+	record: Record
 	updatedAt: number
 }
 
-export default function useGetPublication(id?: string) {
+export default function useGetOne<Record extends { id: number }>(
+	resource: string,
+	id?: string,
+) {
 	const queryClient = useQueryClient()
 	const [hasCheckedCache, setHasCheckedCache] = useState(false)
 
@@ -20,12 +23,12 @@ export default function useGetPublication(id?: string) {
 		}
 
 		const cachedRecords = transform(
-			queryClient.getQueriesData<GetPublicationsResponse>(['publications']),
-			(result: Record[], [queryKey, queryValue]) => {
-				const publication = queryValue?.publications?.find((e) => e.id === +id)
-				if (publication) {
+			queryClient.getQueriesData<GetListResponse<Record>>([resource]),
+			(result: Data<Record>[], [queryKey, queryValue]) => {
+				const record = queryValue?.records?.find((e) => e.id === +id)
+				if (record) {
 					result.push({
-						data: publication,
+						record,
 						updatedAt: queryClient.getQueryState(queryKey)!.dataUpdatedAt,
 					})
 				}
@@ -43,13 +46,13 @@ export default function useGetPublication(id?: string) {
 			queryClientConfig.defaultOptions!.queries!.staleTime!
 
 		if (!isStale) {
-			queryClient.setQueryData(['publications', { id }], latestRecord.data)
+			queryClient.setQueryData([resource, { id }], latestRecord.record)
 		}
 
 		setHasCheckedCache(true)
-	}, [id, queryClient])
+	}, [id, queryClient, resource])
 
-	return useQuery<Publication, Error>(['publications', { id }], {
+	return useQuery<Record, Error>([resource, { id }], {
 		enabled: hasCheckedCache,
 	})
 }

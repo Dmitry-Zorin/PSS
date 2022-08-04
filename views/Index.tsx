@@ -2,7 +2,7 @@ import { Box, Container, Heading, HStack, Stack, Text } from '@chakra-ui/react'
 import { ColorModeSwitch, CoolButtonLink } from 'components'
 import { useTranslation } from 'next-i18next'
 
-export default function IndexView() {
+export default function Index() {
 	const { t } = useTranslation(['common', 'index'])
 
 	return (

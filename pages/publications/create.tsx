@@ -3,7 +3,7 @@ import { GetStaticProps, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router'
-import PublicationsCreateView from 'views/publications/PublicationsCreateView'
+import PublicationsCreate from 'views/publications/PublicationsCreate'
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
 	const translationProps = await serverSideTranslations(locale!, [
@@ -23,7 +23,7 @@ const PublicationsCreatePage: NextPage = () => {
 
 	return (
 		<Layout title={category && t(`${category}.create`)}>
-			<PublicationsCreateView />
+			<PublicationsCreate />
 		</Layout>
 	)
 }

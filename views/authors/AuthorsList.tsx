@@ -1,20 +1,21 @@
+import { Author } from '@prisma/client'
 import { ActionsToolbar, CreateButton, ResourceTable, Search } from 'components'
 import { useDebounce } from 'hooks'
 import { useRouter } from 'next/router'
 import { Dispatch, SetStateAction } from 'react'
-import { GetPublicationsResponse, Query } from 'types'
+import { GetListResponse, Query } from 'types'
 
-interface PublicationsListViewProps {
-	data?: GetPublicationsResponse
+interface PublicationsListProps {
+	data?: GetListResponse<Author>
 	query: Query
 	setQuery: Dispatch<SetStateAction<Query>>
 }
 
-export default function PublicationsListView({
+export default function PublicationsList({
 	data,
 	query,
 	setQuery,
-}: PublicationsListViewProps) {
+}: PublicationsListProps) {
 	const router = useRouter()
 	const { category } = router.query as Record<string, string>
 
@@ -42,9 +43,9 @@ export default function PublicationsListView({
 				}
 			/>
 			<ResourceTable
-				data={data?.publications}
-				fields={['title', 'description', 'year']}
-				href={`/publications/${category}`}
+				data={data?.records}
+				fields={['lastName', 'firstName', 'middleName']}
+				href="/authors"
 				sort={sort}
 				search={query.search}
 			/>
