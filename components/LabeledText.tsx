@@ -14,7 +14,7 @@ export default function LabeledText({
 	const { t } = useTranslation('fields')
 	return (
 		<Stack>
-			<Text fontSize="sm" color="text-secondary">
+			<Text fontSize="sm" fontWeight="medium" color="text-secondary">
 				{t(label)}
 			</Text>
 			<Text {...props}>{text || '-'}</Text>

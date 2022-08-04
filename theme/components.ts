@@ -108,10 +108,7 @@ const components: ThemeComponents = {
 	},
 	FormLabel: {
 		baseStyle: {
-			// color: 'text-secondary',
-			fontWeight: 'normal',
 			mb: 1,
-			// mx: 1,
 		},
 	},
 	Tooltip: {

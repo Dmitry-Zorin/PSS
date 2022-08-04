@@ -27,7 +27,7 @@ export default function ResourceTable<Data extends Record<string, any>>({
 
 	return (
 		<TableContainer>
-			<Table whiteSpace="normal" fontSize={{ base: 'sm', xl: 'md' }}>
+			<Table whiteSpace="normal" fontSize={{ base: 's', xl: 'md' }}>
 				<Thead>
 					{getHeaderGroups().map((headerGroup) => (
 						<Tr key={headerGroup.id}>

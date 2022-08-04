@@ -17,16 +17,23 @@ export default extendTheme({
 	},
 	fontSizes: {
 		'2xs': '0.75rem',
-		xs: '0.875rem',
-		sm: '0.9375rem',
+		s: '0.9375rem',
+	},
+	letterSpacings: {
+		tighter: '-0.04rem',
+		tight: '-0.03rem',
+		normal: '-0.02rem',
+		wide: '0rem',
+		wider: '0.02rem',
+		widest: '0.04rem',
 	},
 	styles: {
 		global: {
 			body: {
-				color: 'text',
 				bg: 'bg-layer-1',
+				color: 'text',
 				fontSize: 'lg',
-				letterSpacing: '-0.02rem',
+				letterSpacing: 'normal',
 				scrollBehavior: 'smooth',
 			},
 			'*, *::before, &::after': {

@@ -14,7 +14,7 @@ export default function MenuGroupHeader({
 	return (
 		<Center h={12} pointerEvents="none" {...props}>
 			<Text
-				fontSize={{ base: '2xs', xl: 'xs' }}
+				fontSize={{ base: 'xs', xl: 's' }}
 				fontWeight="medium"
 				color="text-secondary"
 			>

@@ -51,8 +51,7 @@ export default function MenuItem({ to, icon, text }: MenuItemProps) {
 						as="a"
 						spacing={3}
 						h={10}
-						px={{ base: 4, xl: 6 }}
-						fontSize="md"
+						px={6}
 						borderRadius="lg"
 						color={isActive ? 'text-primary' : 'text-secondary'}
 						outline="2px solid transparent"
@@ -66,7 +65,7 @@ export default function MenuItem({ to, icon, text }: MenuItemProps) {
 						<Text
 							fontSize={{
 								base: 'md',
-								lg: 'sm',
+								lg: 's',
 								xl: 'md',
 							}}
 							display={{
