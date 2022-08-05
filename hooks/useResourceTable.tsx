@@ -1,4 +1,4 @@
-import { Highlight, SkeletonText } from '@chakra-ui/react'
+import { Box, Highlight, SkeletonText } from '@chakra-ui/react'
 import {
 	ColumnDef,
 	getCoreRowModel,
@@ -6,13 +6,15 @@ import {
 	useReactTable,
 } from '@tanstack/react-table'
 import { useTruncate } from 'hooks'
-import { isNumber } from 'lodash'
+import { range } from 'lodash'
 import { useTranslation } from 'next-i18next'
 import { useEffect, useState } from 'react'
 
 export type useResourceTableProps<Data extends Record<string, any>> = {
 	data: Data[] | undefined
 	fields: (keyof Data & string)[]
+	numeric?: (keyof Data & string)[]
+	skeletonPattern?: Partial<Data>
 	sort: (field: string, value?: 'desc' | 'asc') => void
 	search?: string
 }
@@ -20,23 +22,33 @@ export type useResourceTableProps<Data extends Record<string, any>> = {
 export default function useResourceTable<Data extends Record<string, any>>({
 	data: newData,
 	fields,
+	numeric,
+	skeletonPattern,
 	sort,
 	search,
 }: useResourceTableProps<Data>) {
 	const { t } = useTranslation('fields')
 	const truncate = useTruncate()
-	const [data, setData] = useState<Data[]>([])
+	const [data, setData] = useState<Data[]>([
+		...range(9).map((i) => ({ id: (~i).toString() } as any)),
+		{ id: '0', ...skeletonPattern },
+	])
 
 	useEffect(() => {
-		setData(newData || Array(10).fill({}))
+		if (newData) {
+			setData(newData)
+		}
 	}, [newData])
 
 	const columns: ColumnDef<Data, string>[] = fields.map((field) => ({
 		accessorKey: field,
 		header: t<string>(field),
 		cell: (e) => {
-			if (!newData) {
-				return <SkeletonText noOfLines={5} />
+			if (+e.row.id < 0) {
+				return <SkeletonText noOfLines={numeric?.includes(field) ? 1 : 5} />
+			}
+			if (e.row.id === '0') {
+				return <Box opacity={0}>{e.getValue()}</Box>
 			}
 			const text = truncate(e.getValue())
 			return search ? (
@@ -56,7 +68,7 @@ export default function useResourceTable<Data extends Record<string, any>>({
 			)
 		},
 		meta: {
-			isNumeric: isNumber(data?.[0]?.[field]),
+			isNumeric: numeric?.includes(field),
 		},
 	}))
 

@@ -1,6 +1,7 @@
 import { HStack } from '@chakra-ui/react'
 import { Publication } from '@prisma/client'
 import { Form, FormControl } from 'components'
+import { publicationSchema } from 'constants/validation'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 
@@ -16,7 +17,7 @@ export default function PublicationsCreate() {
 	const currentYear = new Date().getFullYear()
 
 	return (
-		<Form onSubmit={onSubmit} schema={{}}>
+		<Form onSubmit={onSubmit} schema={publicationSchema}>
 			<FormControl
 				field="title"
 				registerOptions={{ required: 'required' }}
@@ -34,10 +35,6 @@ export default function PublicationsCreate() {
 					type="number"
 					placeholder={currentYear.toString()}
 					range={[currentYear, currentYear - 100]}
-					registerOptions={{
-						min: currentYear - 100,
-						max: currentYear,
-					}}
 					optional
 				/>
 

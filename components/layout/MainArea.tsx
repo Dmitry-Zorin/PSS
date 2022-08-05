@@ -25,7 +25,7 @@ export default function MainArea({
 	const heading = error ? t('error') : title
 
 	return (
-		<Box pl={6} pr={{ base: 6, xl: '7.5rem' }} pb={6}>
+		<Box pl={6} pr={{ base: 6, xl: fullSize ? 6 : '7.5rem' }} pb={6}>
 			{(leftActions || rightActions) && (
 				<ActionsToolbar leftActions={leftActions} rightActions={rightActions} />
 			)}

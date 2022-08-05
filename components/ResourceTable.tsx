@@ -57,14 +57,13 @@ export default function ResourceTable<Data extends Record<string, any>>({
 							transitionTimingFunction="ease-out"
 							_hover={{ bg: 'bg-layer-1' }}
 							_active={{ bg: 'bg-layer-2' }}
-							onClick={() => router.push(`${href}/${row.id}`)}
+							onClick={() => +row.id > 0 && router.push(`${href}/${row.id}`)}
 						>
 							{row.getVisibleCells().map((cell, i) => (
 								<Td
 									key={cell.id}
 									isNumeric={cell.column.columnDef.meta!.isNumeric}
 									borderColor="border"
-									w="auto"
 								>
 									{flexRender(cell.column.columnDef.cell, cell.getContext())}
 								</Td>

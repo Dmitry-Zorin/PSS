@@ -16,6 +16,10 @@ const nextConfig = {
 	async rewrites() {
 		return [
 			{
+				source: `/authors/:id`,
+				destination: '/authors/show',
+			},
+			{
 				source: `/publications/:category`,
 				destination: '/publications/list',
 			},

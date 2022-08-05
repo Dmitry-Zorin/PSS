@@ -34,7 +34,7 @@ const PublicationsShowPage: NextPage = () => {
 			error={error}
 			headTitle={id && `${t(`${category}.name`, { count: 1 })} #${id}`}
 			title={data?.title}
-			rightActions={<ListButton href={`/publications/${category}`} />}
+			leftActions={<ListButton href={`/publications/${category}`} />}
 		>
 			<PublicationsShow data={data} />
 		</Layout>

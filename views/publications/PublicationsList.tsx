@@ -45,6 +45,11 @@ export default function PublicationsList({
 			<ResourceTable
 				data={data?.records}
 				fields={['title', 'description', 'year']}
+				numeric={['year']}
+				skeletonPattern={{
+					title: '-'.repeat(100),
+					description: '-'.repeat(500),
+				}}
 				href={`/publications/${category}`}
 				sort={sort}
 				search={query.search}

@@ -34,7 +34,7 @@ const AuthorsShowPage: NextPage = () => {
 			error={error}
 			headTitle={id && `${t(`authors.name`, { count: 1 })} #${id}`}
 			title={data && getAuthorFullName(data)}
-			rightActions={<ListButton href={'/authors'} />}
+			leftActions={<ListButton href={'/authors'} />}
 		>
 			<AuthorsShow data={data} />
 		</Layout>

@@ -1,17 +1,18 @@
 import { List, ListItem } from '@chakra-ui/react'
+import { Publication } from '@prisma/client'
 import { range } from 'lodash'
-import { GetPublicationsResponse } from 'types'
+import { GetListResponse } from 'types'
 import { TimelineCard, TimelineCardSkeleton } from 'views/timeline'
 
 interface TimelineProps {
-	data?: GetPublicationsResponse
+	data?: GetListResponse<Publication>
 }
 
 export default function Timeline({ data }: TimelineProps) {
 	return (
 		<List spacing={9}>
 			{data
-				? data.publications.map((e) => (
+				? data.records.map((e) => (
 						<ListItem key={e.id}>
 							<TimelineCard record={e} />
 						</ListItem>
