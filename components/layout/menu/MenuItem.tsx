@@ -28,11 +28,8 @@ export default function MenuItem({ to, icon, text }: MenuItemProps) {
 	)
 
 	useEffect(() => {
-		const { category } = router.query
-		if (category) {
-			setIsActive(new RegExp(`/${category}($|\/)`).test(to))
-		}
-	}, [router.query, to])
+		setIsActive(new RegExp(`^${to}($|\/)`).test(router.asPath))
+	}, [router.asPath, to])
 
 	return (
 		<Tooltip

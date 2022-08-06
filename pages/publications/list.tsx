@@ -5,7 +5,7 @@ import { GetStaticProps, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { GetListResponse, Query } from 'types'
 import PublicationsList from 'views/publications/PublicationsList'
 
@@ -22,8 +22,19 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 const PublicationsListPage: NextPage = () => {
 	const { t } = useTranslation('common', { keyPrefix: 'menu.items' })
 	const router = useRouter()
-	const { category } = router.query as Query
+	const [category, setCategory] = useState(router.asPath.split('/').pop()!)
 	const [query, setQuery] = useState<Query>({ category })
+
+	useEffect(() => {
+		const newCategory = router.query.category as string
+		if (newCategory) {
+			setCategory(newCategory)
+			setQuery((query) => ({
+				...query,
+				category: newCategory,
+			}))
+		}
+	}, [router.query.category])
 
 	const { error, data } = useQuery<GetListResponse<Publication>, Error>([
 		'publications',
@@ -31,7 +42,11 @@ const PublicationsListPage: NextPage = () => {
 	])
 
 	return (
-		<Layout fullSize error={error} headTitle={category && t(category)}>
+		<Layout
+			fullSize
+			error={error}
+			headTitle={t(category, { defaultValue: null })}
+		>
 			<PublicationsList data={data} query={query} setQuery={setQuery} />
 		</Layout>
 	)

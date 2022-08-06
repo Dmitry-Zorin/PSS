@@ -11,34 +11,32 @@ import {
 } from '@chakra-ui/react'
 import { range as _range } from 'lodash'
 import { useTranslation } from 'next-i18next'
-import { Path, RegisterOptions, UseFormRegister } from 'react-hook-form'
+import { Path, UseFormRegister } from 'react-hook-form'
 import { FieldErrors } from 'react-hook-form/dist/types/errors'
 import ResizeTextarea from 'react-textarea-autosize'
 
-interface MyFormControlProps<T extends Record<string, any>> {
-	field: Path<T>
-	errors?: FieldErrors<T>
-	register?: UseFormRegister<T>
+interface MyFormControlProps {
+	field: Path<any>
+	errors?: FieldErrors<any>
+	register?: UseFormRegister<any>
 	optional?: boolean
-	registerOptions?: RegisterOptions<T>
 	multiline?: boolean
 	number?: boolean
 	list?: string[]
 	range?: [number, number]
 }
 
-export default function FormControl<T extends Record<string, any>>({
+export default function FormControl({
 	field,
 	errors,
 	register,
 	optional,
-	registerOptions,
 	multiline,
 	number,
 	list,
 	range,
 	...props
-}: MyFormControlProps<T> & InputProps & TextareaProps) {
+}: MyFormControlProps & InputProps & TextareaProps) {
 	const { t } = useTranslation('fields')
 
 	const datalistOptions = range ? _range(...range) : list
@@ -46,7 +44,7 @@ export default function FormControl<T extends Record<string, any>>({
 	const inputProps = {
 		type: number ? 'number' : 'text',
 		list: datalistOptions ? field : undefined,
-		...register?.(field, registerOptions),
+		...register?.(field),
 		...props,
 	}
 
@@ -67,7 +65,9 @@ export default function FormControl<T extends Record<string, any>>({
 			) : (
 				<Input {...inputProps} />
 			)}
-			<FormErrorMessage>{errors?.[field]?.message as string}</FormErrorMessage>
+			<FormErrorMessage mt={1.5}>
+				{errors?.[field]?.message as string | undefined}
+			</FormErrorMessage>
 			{datalistOptions && (
 				<datalist id={field}>
 					{datalistOptions.map((e) => (

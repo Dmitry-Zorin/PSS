@@ -108,7 +108,7 @@ const components: ThemeComponents = {
 	},
 	FormLabel: {
 		baseStyle: {
-			mb: 1,
+			mb: 1.5,
 		},
 	},
 	Tooltip: {

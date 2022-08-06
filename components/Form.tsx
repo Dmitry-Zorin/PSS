@@ -4,20 +4,18 @@ import { ActionsToolbar, SubmitButton } from 'components'
 import { Children, cloneElement, ReactElement } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-interface FormProps<T> {
+interface FormProps {
 	children: ReactElement[]
-	onSubmit: SubmitHandler<T>
+	onSubmit: SubmitHandler<any>
 	schema: any
 }
 
-export default function Form<T>({ children, onSubmit, schema }: FormProps<T>) {
+export default function Form({ children, onSubmit, schema }: FormProps) {
 	const {
 		handleSubmit,
 		register,
 		formState: { errors, isSubmitting },
-	} = useForm<T>({
-		resolver: zodResolver(schema),
-	})
+	} = useForm({ resolver: zodResolver(schema) })
 
 	return (
 		<>

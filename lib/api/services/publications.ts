@@ -1,6 +1,6 @@
 import { Publication } from '@prisma/client'
+import { publicationQuerySchema } from 'constants/validation'
 import { prisma } from 'lib/api'
-import { publicationQuerySchema } from 'pages/api/publications'
 import { getSearchFilter } from 'utils'
 import { z } from 'zod'
 
