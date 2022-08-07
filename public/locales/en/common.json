@@ -25,9 +25,10 @@
 		"retry": "Try Again",
 		"download": "Download",
 		"save": "Save",
-		"create": "Add",
+		"create": "Create",
 		"list": "List",
-		"submit": "Submit"
+		"submit": "Submit",
+		"delete": "Delete"
 	},
 	"labels": {
 		"menu": "Open Menu",

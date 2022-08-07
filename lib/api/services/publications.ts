@@ -1,18 +1,19 @@
 import { Publication } from '@prisma/client'
-import { publicationQuerySchema } from 'constants/validation'
+import {
+	CreatePublicationDto,
+	GetPublicationsFilters,
+	UpdatePublicationDto,
+} from 'constants/validation'
 import { prisma } from 'lib/api'
 import { getSearchFilter } from 'utils'
-import { z } from 'zod'
 
-export async function getPublication(id: number) {
+export async function findPublication(id: number) {
 	return prisma.publication.findUniqueOrThrow({
 		where: { id },
 	})
 }
 
-type GetPublicationsFilters = z.infer<typeof publicationQuerySchema>
-
-export async function getPublications(filters: GetPublicationsFilters) {
+export async function findPublications(filters: GetPublicationsFilters) {
 	const {
 		category,
 		search,
@@ -30,7 +31,7 @@ export async function getPublications(filters: GetPublicationsFilters) {
 	}
 
 	const orderBy: { [key in keyof Partial<Publication>]: 'asc' | 'desc' }[] = [
-		{ year: 'desc' },
+		{ writtenInYear: 'desc' },
 		{ createdAt: 'desc' },
 	]
 
@@ -47,4 +48,25 @@ export async function getPublications(filters: GetPublicationsFilters) {
 			take,
 		}),
 	}
+}
+
+export async function createPublication(publication: CreatePublicationDto) {
+	const { type, writtenInYear, volumeInPages } = publication
+	return prisma.publication.create({
+		data: {
+			...publication,
+			type: type || publication.category,
+			writtenInYear: writtenInYear || new Date().getFullYear(),
+			volumeInPages: volumeInPages || 1,
+		},
+	})
+}
+
+export async function updatePublication(publication: UpdatePublicationDto) {
+	const { id, ...data } = publication
+	return prisma.publication.update({ where: { id }, data })
+}
+
+export async function deletePublication(id: number) {
+	return prisma.publication.delete({ where: { id } })
 }

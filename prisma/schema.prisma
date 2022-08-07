@@ -63,10 +63,10 @@ model Publication {
   description      String?
   type             String
   character        Character? @relation(fields: [characterId], references: [id])
-  characterId      Int
+  characterId      Int?
   publicationPlace String?
-  year             Int?
-  pages            Float?
+  writtenInYear    Int?
+  volumeInPages    Int?       @default(1)
   authors          Author[]
   coauthors        String[]
   extraData        String?

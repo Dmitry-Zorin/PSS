@@ -1,11 +1,11 @@
 import { QueryClientConfig } from '@tanstack/react-query'
-import { mutate, query } from 'utils/requests'
+import { mutate, MutateOptions, query } from 'utils/requests'
 
 type QueryKey = [string, Record<string, unknown>]
 
 export interface MutationVariables {
 	path: string
-	options: RequestInit
+	options: MutateOptions
 }
 
 export const queryClientConfig: QueryClientConfig = {

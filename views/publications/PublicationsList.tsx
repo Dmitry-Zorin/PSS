@@ -44,8 +44,8 @@ export default function PublicationsList({
 			/>
 			<ResourceTable
 				data={data?.records}
-				fields={['title', 'description', 'year']}
-				numeric={['year']}
+				fields={['title', 'description', 'writtenInYear']}
+				numeric={['writtenInYear']}
 				skeletonPattern={{
 					title: '-'.repeat(100),
 					description: '-'.repeat(500),

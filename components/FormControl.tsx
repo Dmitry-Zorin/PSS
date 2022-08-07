@@ -68,13 +68,13 @@ export default function FormControl({
 			<FormErrorMessage mt={1.5}>
 				{errors?.[field]?.message as string | undefined}
 			</FormErrorMessage>
-			{datalistOptions && (
+			{/* {datalistOptions && (
 				<datalist id={field}>
 					{datalistOptions.map((e) => (
 						<option key={e} value={e} />
 					))}
 				</datalist>
-			)}
+			)} */}
 		</ChakraFormControl>
 	)
 }

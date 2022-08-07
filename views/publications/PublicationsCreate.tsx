@@ -1,4 +1,5 @@
-import { HStack } from '@chakra-ui/react'
+import { Stack } from '@chakra-ui/react'
+import { Publication } from '@prisma/client'
 import { useMutation } from '@tanstack/react-query'
 import { Form, FormControl, FormControlGroup } from 'components'
 import { publicationSchema } from 'constants/validation'
@@ -15,12 +16,15 @@ export default function PublicationsCreate() {
 
 	const mutation = useMutation<unknown, unknown, MutationVariables>({})
 
-	function onSubmit(data: string) {
+	function onSubmit(data: Publication) {
 		mutation.mutate({
 			path: 'publications',
 			options: {
 				method: 'post',
-				body: data,
+				body: {
+					...data,
+					category,
+				},
 			},
 		})
 	}
@@ -29,14 +33,19 @@ export default function PublicationsCreate() {
 		<Form onSubmit={onSubmit} schema={publicationSchema}>
 			<FormControl field="title" multiline />
 			<FormControl field="description" multiline optional />
-			<HStack as={FormControlGroup} spacing={4} align="flex-start">
+			<Stack
+				as={FormControlGroup}
+				direction={{ base: 'column', md: 'row' }}
+				spacing={4}
+				align="flex-start"
+			>
 				<FormControl
 					field="type"
 					placeholder={t(`${category}.name`, { count: 1 })}
 					optional
 				/>
 				<FormControl
-					field="year"
+					field="writtenInYear"
 					type="number"
 					placeholder={currentYear.toString()}
 					range={[currentYear, currentYear - 100]}
@@ -44,13 +53,13 @@ export default function PublicationsCreate() {
 				/>
 
 				<FormControl
-					field="volume"
+					field="volumeInPages"
 					type="number"
 					placeholder="1"
 					range={[1, 100]}
 					optional
 				/>
-			</HStack>
+			</Stack>
 			<FormControl field="extraData" multiline optional />
 		</Form>
 	)
