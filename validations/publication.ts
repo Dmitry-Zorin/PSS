@@ -3,6 +3,10 @@ import { z } from 'zod'
 
 const currentYear = new Date().getFullYear()
 
+export const publicationIdSchema = z.object({
+	id: preprocessToNumber(z.number().int()),
+})
+
 export const publicationSchema = z.object({
 	title: z.string().min(8).max(300),
 	description: z.string().min(4).max(2000).optional().or(z.literal('')),

@@ -1,4 +1,3 @@
-import { Author } from '@prisma/client'
 import { Layout, ListButton } from 'components'
 import { useGetOne } from 'hooks'
 import { GetStaticProps, NextPage } from 'next'
@@ -27,16 +26,16 @@ const AuthorsShowPage: NextPage = () => {
 		id: string
 	}
 
-	const { error, data } = useGetOne<Author>('authors', id)
+	const { error, data } = useGetOne('author', id)
 
 	return (
 		<Layout
 			error={error}
 			headTitle={id && `${t(`authors.name`, { count: 1 })} #${id}`}
-			title={data && getAuthorFullName(data)}
+			// title={data && getAuthorFullName(data)}
 			leftActions={<ListButton href={'/authors'} />}
 		>
-			<AuthorsShow data={data} />
+			{/* <AuthorsShow data={data} /> */}
 		</Layout>
 	)
 }

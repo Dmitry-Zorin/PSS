@@ -1,52 +1,50 @@
 import { ChakraProvider } from '@chakra-ui/react'
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
-import {
-	Hydrate,
-	QueryClient,
-	QueryClientProvider,
-} from '@tanstack/react-query'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { httpLink } from '@trpc/client/links/httpLink'
+import { loggerLink } from '@trpc/client/links/loggerLink'
+import { withTRPC } from '@trpc/next'
+import queryClientConfig from 'constants/queryClientConfig'
 import { useScrollRestoration } from 'hooks'
-import { queryClientConfig } from 'lib/common'
-import { GetStaticProps } from 'next'
-import { appWithTranslation, useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import Head from 'next/head'
+import { appWithTranslation } from 'next-i18next'
 import 'public/fonts/Golos-Text/Golos-Text.css'
-import { useState } from 'react'
+import { ReactQueryDevtools } from 'react-query/devtools'
+import { AppRouter } from 'server/routers/_app'
+import superjson from 'superjson'
 import theme from 'theme'
+import { getBaseUrl } from 'utils'
 
 config.autoAddCss = false
 
-export const getStaticProps: GetStaticProps = async ({ locale }) => {
-	return {
-		props: await serverSideTranslations(locale!, ['common']),
-	}
-}
+export default withTRPC<AppRouter>({
+	config() {
+		return {
+			links: [
+				loggerLink({
+					enabled: (opts) => {
+						return (
+							process.env.NODE_ENV === 'development' ||
+							(opts.direction === 'down' && opts.result instanceof Error)
+						)
+					},
+				}),
+				httpLink({
+					url: `${getBaseUrl()}/api/trpc`,
+				}),
+			],
+			transformer: superjson,
+			queryClientConfig,
+		}
+	},
+})(
+	appWithTranslation(({ Component, pageProps }) => {
+		useScrollRestoration()
 
-export default appWithTranslation(({ Component, pageProps }) => {
-	const { t } = useTranslation('common')
-	useScrollRestoration()
-
-	const [queryClient] = useState(() => {
-		return new QueryClient(queryClientConfig)
-	})
-
-	return (
-		<>
-			<Head>
-				<title>{t('name')}</title>
-				<meta name="description" content={t('description')} />
-			</Head>
+		return (
 			<ChakraProvider theme={theme}>
-				<QueryClientProvider client={queryClient}>
-					<Hydrate state={pageProps.dehydratedState}>
-						<Component {...pageProps} />
-						{/* <ReactQueryDevtools initialIsOpen={false} /> */}
-					</Hydrate>
-				</QueryClientProvider>
+				<Component {...pageProps} />
+				<ReactQueryDevtools />
 			</ChakraProvider>
-		</>
-	)
-})
+		)
+	}),
+)

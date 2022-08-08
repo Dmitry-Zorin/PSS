@@ -11,7 +11,7 @@ const colors: Record<string, Partial<ColorHues>> = {
 	},
 	bg: {
 		100: 'hsl(225 0% 100%)',
-		200: 'hsl(222 25% 97%)',
+		200: 'hsl(222 20% 97%)',
 		300: 'hsl(222 15% 94%)',
 		400: 'hsl(222 15% 91%)',
 		500: 'hsl(222 27% 24%)',

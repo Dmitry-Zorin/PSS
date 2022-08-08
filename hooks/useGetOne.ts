@@ -1,17 +1,16 @@
-import { Author } from '@prisma/client'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { queryClientConfig } from 'lib/common'
+import queryClientConfig from 'constants/queryClientConfig'
 import { maxBy, transform } from 'lodash'
 import { useEffect, useState } from 'react'
-import { GetListResponse } from '../types'
+import { useQueryClient } from 'react-query'
+import { inferQueryOutput, trpc } from 'utils/trpc'
 
 interface Data<Record> {
 	record: Record
 	updatedAt: number
 }
 
-export default function useGetOne<Record extends { id: number }>(
-	resource: string,
+export default function useGetOne(
+	resource: 'author' | 'publication',
 	id?: string,
 ) {
 	const queryClient = useQueryClient()
@@ -23,8 +22,13 @@ export default function useGetOne<Record extends { id: number }>(
 		}
 
 		const cachedRecords = transform(
-			queryClient.getQueriesData<GetListResponse<Record>>([resource]),
-			(result: Data<Record>[], [queryKey, queryValue]) => {
+			queryClient.getQueriesData<inferQueryOutput<`${typeof resource}.all`>>([
+				`${resource}.all`,
+			]),
+			(
+				result: Data<inferQueryOutput<`${typeof resource}.byId`>>[],
+				[queryKey, queryValue],
+			) => {
 				const record = queryValue?.records?.find((e) => e.id === +id)
 				if (record) {
 					result.push({
@@ -43,16 +47,20 @@ export default function useGetOne<Record extends { id: number }>(
 
 		const isStale =
 			Date.now() - latestRecord.updatedAt >
-			queryClientConfig.defaultOptions!.queries!.staleTime!
+			queryClientConfig.defaultOptions.queries.staleTime
 
 		if (!isStale) {
-			queryClient.setQueryData([resource, { id }], latestRecord.record)
+			queryClient.setQueryData(
+				[`${resource}.byId`, { id }],
+				latestRecord.record,
+				{ updatedAt: latestRecord.updatedAt },
+			)
 		}
 
 		setHasCheckedCache(true)
 	}, [id, queryClient, resource])
 
-	return useQuery<Record, Error>([resource, { id }], {
+	return trpc.useQuery([`${resource}.byId`, { id }], {
 		enabled: hasCheckedCache,
 	})
 }

@@ -1,11 +1,12 @@
 import { Stack } from '@chakra-ui/react'
-import { Publication } from '@prisma/client'
-import { useMutation } from '@tanstack/react-query'
 import { Form, FormControl, FormControlGroup } from 'components'
-import { publicationSchema } from 'constants/validation'
-import { MutationVariables } from 'lib/common/queryClientConfig'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
+import { trpc } from 'utils/trpc'
+import {
+	CreatePublicationDto,
+	publicationSchema,
+} from 'validations/publication'
 
 const currentYear = new Date().getFullYear()
 
@@ -14,18 +15,12 @@ export default function PublicationsCreate() {
 	const router = useRouter()
 	const { category } = router.query as { category: string }
 
-	const mutation = useMutation<unknown, unknown, MutationVariables>({})
+	const addPublication = trpc.useMutation(['publication.add'])
 
-	function onSubmit(data: Publication) {
-		mutation.mutate({
-			path: 'publications',
-			options: {
-				method: 'post',
-				body: {
-					...data,
-					category,
-				},
-			},
+	function onSubmit(data: CreatePublicationDto) {
+		addPublication.mutateAsync({
+			...data,
+			category,
 		})
 	}
 

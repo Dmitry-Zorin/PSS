@@ -1,10 +1,12 @@
 import { Box, Heading } from '@chakra-ui/react'
+import { TRPCClientErrorLike } from '@trpc/client'
 import { ActionsToolbar } from 'components'
 import { useTranslation } from 'next-i18next'
 import { ReactNode } from 'react'
+import { AppRouter } from 'server/routers/_app'
 
 export interface MainAreaProps {
-	error?: Error | null
+	error?: TRPCClientErrorLike<AppRouter> | null
 	children: ReactNode
 	title?: string
 	leftActions?: ReactNode

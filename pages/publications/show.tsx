@@ -1,13 +1,11 @@
-import { Publication } from '@prisma/client'
-import { useMutation } from '@tanstack/react-query'
 import { Layout, ListButton } from 'components'
 import DeleteButton from 'components/buttons/DeleteButton'
 import { useGetOne } from 'hooks'
-import { MutationVariables } from 'lib/common/queryClientConfig'
 import { GetStaticProps, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router'
+import { trpc } from 'utils/trpc'
 import PublicationsShow from 'views/publications/PublicationsShow'
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
@@ -30,8 +28,9 @@ const PublicationsShowPage: NextPage = () => {
 		id: string
 	}
 
-	const { error, data } = useGetOne<Publication>('publications', id)
-	const mutation = useMutation<unknown, unknown, MutationVariables>({})
+	const { error, data } = useGetOne('publication', id)
+
+	const mutation = trpc.useMutation(['publication.delete'])
 
 	return (
 		<Layout
@@ -42,13 +41,7 @@ const PublicationsShowPage: NextPage = () => {
 			rightActions={
 				<DeleteButton
 					onClick={() => {
-						return mutation.mutate({
-							path: 'publications',
-							options: {
-								method: 'delete',
-								body: { id },
-							},
-						})
+						return mutation.mutate({ id })
 					}}
 				/>
 			}

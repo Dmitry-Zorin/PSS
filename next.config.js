@@ -1,6 +1,7 @@
 const { i18n } = require('./next-i18next.config')
+require('./server/env')
 
-const isProduction = process.env.NODE_ENV === 'production'
+const isDev = process.env.NODE_ENV === 'development'
 
 const csp = [
 	"default-src 'self' vitals.vercel-insights.com",
@@ -60,7 +61,7 @@ const nextConfig = {
 					},
 					{
 						key: 'Content-Security-Policy',
-						value: isProduction ? csp.join(';') : '',
+						value: isDev ? '' : csp.join(';'),
 					},
 				],
 			},

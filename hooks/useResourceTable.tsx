@@ -29,10 +29,12 @@ export default function useResourceTable<Data extends Record<string, any>>({
 }: useResourceTableProps<Data>) {
 	const { t } = useTranslation('fields')
 	const truncate = useTruncate()
-	const [data, setData] = useState<Data[]>([
-		...range(9).map((i) => ({ id: (~i).toString() } as any)),
-		{ id: '0', ...skeletonPattern },
-	])
+	const [data, setData] = useState<Data[]>(
+		newData || [
+			...range(9).map((i) => ({ id: (~i).toString() } as any)),
+			{ id: '0', ...skeletonPattern },
+		],
+	)
 
 	useEffect(() => {
 		if (newData) {

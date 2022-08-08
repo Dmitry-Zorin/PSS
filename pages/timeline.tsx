@@ -1,12 +1,11 @@
-import { useQuery } from '@tanstack/react-query'
 import { Layout } from 'components'
-import { GetServerSideProps, NextPage } from 'next'
+import { GetStaticProps, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetPublicationsResponse } from 'types'
+import { trpc } from 'utils/trpc'
 import TimelineView from 'views/timeline/Timeline'
 
-export const getStaticProps: GetServerSideProps = async ({ locale }) => {
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
 	const translationProps = await serverSideTranslations(locale!, [
 		'common',
 		'resources',
@@ -19,9 +18,9 @@ export const getStaticProps: GetServerSideProps = async ({ locale }) => {
 const TimelinePage: NextPage = () => {
 	const { t } = useTranslation('common', { keyPrefix: 'menu.items' })
 
-	const { error, data } = useQuery<GetPublicationsResponse, Error>([
-		'publications',
-		{ sort: { createdAt: 'desc' } },
+	const { error, data } = trpc.useQuery([
+		'publication.all',
+		{ sortField: 'createdAt', sortOrder: 'desc' },
 	])
 
 	return (

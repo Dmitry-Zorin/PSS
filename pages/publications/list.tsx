@@ -1,12 +1,11 @@
-import { Publication } from '@prisma/client'
-import { useQuery } from '@tanstack/react-query'
 import { Layout } from 'components'
 import { GetStaticProps, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import { GetListResponse, Query } from 'types'
+import { Query } from 'types'
+import { trpc } from 'utils/trpc'
 import PublicationsList from 'views/publications/PublicationsList'
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
@@ -22,31 +21,24 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 const PublicationsListPage: NextPage = () => {
 	const { t } = useTranslation('common', { keyPrefix: 'menu.items' })
 	const router = useRouter()
-	const [category, setCategory] = useState(router.asPath.split('/').pop()!)
+
+	const { category } = router.query as { category: string }
+
 	const [query, setQuery] = useState<Query>({ category })
 
 	useEffect(() => {
-		const newCategory = router.query.category as string
-		if (newCategory) {
-			setCategory(newCategory)
-			setQuery((query) => ({
-				...query,
-				category: newCategory,
-			}))
-		}
-	}, [router.query.category])
+		setQuery((query) => ({
+			...query,
+			category,
+		}))
+	}, [category])
 
-	const { error, data } = useQuery<GetListResponse<Publication>, Error>([
-		'publications',
-		query,
-	])
+	const { error, data } = trpc.useQuery(['publication.all', query], {
+		enabled: !!query.category,
+	})
 
 	return (
-		<Layout
-			fullSize
-			error={error}
-			headTitle={t(category, { defaultValue: null })}
-		>
+		<Layout fullSize error={error} headTitle={category && t(category)}>
 			<PublicationsList data={data} query={query} setQuery={setQuery} />
 		</Layout>
 	)

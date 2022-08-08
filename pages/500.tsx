@@ -1,5 +1,5 @@
 import { Center, Divider, Heading, HStack, Stack, Text } from '@chakra-ui/react'
-import { HeadTitle, Logo } from 'components'
+import { Head, Logo } from 'components'
 import { GetServerSideProps, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
@@ -14,7 +14,7 @@ const Error500Page: NextPage = () => {
 	const { t } = useTranslation('common')
 	return (
 		<>
-			<HeadTitle title="500" />
+			<Head title="500" />
 			<HStack p={6}>
 				<Logo />
 			</HStack>

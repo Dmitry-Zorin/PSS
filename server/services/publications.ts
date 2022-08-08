@@ -1,16 +1,41 @@
-import { Publication } from '@prisma/client'
+import { Prisma, Publication } from '@prisma/client'
+import { TRPCError } from '@trpc/server'
 import {
 	CreatePublicationDto,
 	GetPublicationsFilters,
 	UpdatePublicationDto,
-} from 'constants/validation'
-import { prisma } from 'lib/api'
+} from 'validations/publication'
+import prisma from 'server/prisma'
 import { getSearchFilter } from 'utils'
 
+const defaultPublicationSelect = Prisma.validator<Prisma.PublicationSelect>()({
+	id: true,
+	createdAt: true,
+	updatedAt: true,
+	category: true,
+	title: true,
+	description: true,
+	type: true,
+	characterId: true,
+	publicationPlace: true,
+	writtenInYear: true,
+	volumeInPages: true,
+	coauthors: true,
+	extraData: true,
+})
+
 export async function findPublication(id: number) {
-	return prisma.publication.findUniqueOrThrow({
+	const record = prisma.publication.findUnique({
+		select: defaultPublicationSelect,
 		where: { id },
 	})
+	if (!record) {
+		throw new TRPCError({
+			code: 'NOT_FOUND',
+			message: `No publication with id '${id}'`,
+		})
+	}
+	return record
 }
 
 export async function findPublications(filters: GetPublicationsFilters) {
@@ -42,6 +67,7 @@ export async function findPublications(filters: GetPublicationsFilters) {
 	return {
 		total: await prisma.publication.count({ where }),
 		records: await prisma.publication.findMany({
+			select: defaultPublicationSelect,
 			where,
 			orderBy,
 			skip,
@@ -53,6 +79,7 @@ export async function findPublications(filters: GetPublicationsFilters) {
 export async function createPublication(publication: CreatePublicationDto) {
 	const { type, writtenInYear, volumeInPages } = publication
 	return prisma.publication.create({
+		select: defaultPublicationSelect,
 		data: {
 			...publication,
 			type: type || publication.category,
@@ -64,9 +91,16 @@ export async function createPublication(publication: CreatePublicationDto) {
 
 export async function updatePublication(publication: UpdatePublicationDto) {
 	const { id, ...data } = publication
-	return prisma.publication.update({ where: { id }, data })
+	return prisma.publication.update({
+		select: defaultPublicationSelect,
+		where: { id },
+		data,
+	})
 }
 
 export async function deletePublication(id: number) {
-	return prisma.publication.delete({ where: { id } })
+	return prisma.publication.delete({
+		select: defaultPublicationSelect,
+		where: { id },
+	})
 }

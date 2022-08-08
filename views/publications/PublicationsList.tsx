@@ -1,12 +1,12 @@
-import { Publication } from '@prisma/client'
 import { ActionsToolbar, CreateButton, ResourceTable, Search } from 'components'
 import { useDebounce } from 'hooks'
 import { useRouter } from 'next/router'
 import { Dispatch, SetStateAction } from 'react'
-import { GetListResponse, Query } from 'types'
+import { Query } from 'types'
+import { inferQueryOutput } from 'utils/trpc'
 
 interface PublicationsListProps {
-	data?: GetListResponse<Publication>
+	data?: inferQueryOutput<'publication.all'>
 	query: Query
 	setQuery: Dispatch<SetStateAction<Query>>
 }

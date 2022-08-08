@@ -3,7 +3,7 @@ import { Publication } from '@prisma/client'
 import { LabeledText } from 'components'
 
 interface PublicationsShowProps {
-	data?: Publication
+	data?: Publication | null | void
 }
 
 export default function PublicationsShow({ data }: PublicationsShowProps) {
