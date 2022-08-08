@@ -48,7 +48,7 @@ export default function MenuItem({ to, icon, text }: MenuItemProps) {
 						as="a"
 						spacing={3}
 						h={10}
-						px={{ base: 4, lg: 7 }}
+						px={{ base: 4, lg: 6 }}
 						borderRadius="lg"
 						color={isActive ? 'text-primary' : 'text-secondary'}
 						outline="2px solid transparent"

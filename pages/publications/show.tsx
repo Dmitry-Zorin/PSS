@@ -33,7 +33,7 @@ const PublicationsShowPage: NextPage = () => {
 
 	const mutation = trpc.useMutation(['publication.delete'], {
 		async onSuccess() {
-			trcpContext.invalidateQueries(['publication.all'])
+			trcpContext.invalidateQueries(['publication.list'])
 			router.replace(`/publications/${category}`)
 		},
 	})
@@ -42,7 +42,7 @@ const PublicationsShowPage: NextPage = () => {
 		<Layout
 			error={error}
 			headTitle={id && `${t(`${category}.name`, { count: 1 })} #${id}`}
-			title={data?.title}
+			// title={data?.title}
 			leftActions={<ListButton href={`/publications/${category}`} />}
 			rightActions={<DeleteButton onClick={() => mutation.mutate({ id })} />}
 		>

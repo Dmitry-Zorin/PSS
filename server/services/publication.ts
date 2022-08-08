@@ -1,12 +1,12 @@
 import { Prisma, Publication } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
-import {
-	CreatePublicationDto,
-	GetPublicationsFilters,
-	UpdatePublicationDto,
-} from 'validations/publication'
 import prisma from 'server/prisma'
 import { getSearchFilter } from 'utils'
+import {
+	CreatePublication,
+	GetPublicationFilters,
+	UpdatePublication,
+} from 'validations/publication'
 
 const defaultPublicationSelect = Prisma.validator<Prisma.PublicationSelect>()({
 	id: true,
@@ -25,20 +25,17 @@ const defaultPublicationSelect = Prisma.validator<Prisma.PublicationSelect>()({
 })
 
 export async function findPublication(id: number) {
-	const record = prisma.publication.findUnique({
+	const record = await prisma.publication.findUnique({
 		select: defaultPublicationSelect,
 		where: { id },
 	})
 	if (!record) {
-		throw new TRPCError({
-			code: 'NOT_FOUND',
-			message: `No publication with id '${id}'`,
-		})
+		throw new TRPCError({ code: 'NOT_FOUND' })
 	}
 	return record
 }
 
-export async function findPublications(filters: GetPublicationsFilters) {
+export async function findPublications(filters: GetPublicationFilters) {
 	const {
 		category,
 		search,
@@ -76,7 +73,7 @@ export async function findPublications(filters: GetPublicationsFilters) {
 	}
 }
 
-export async function createPublication(publication: CreatePublicationDto) {
+export async function createPublication(publication: CreatePublication) {
 	const { type, writtenInYear, volumeInPages } = publication
 	return prisma.publication.create({
 		select: defaultPublicationSelect,
@@ -89,7 +86,7 @@ export async function createPublication(publication: CreatePublicationDto) {
 	})
 }
 
-export async function updatePublication(publication: UpdatePublicationDto) {
+export async function updatePublication(publication: UpdatePublication) {
 	const { id, ...data } = publication
 	return prisma.publication.update({
 		select: defaultPublicationSelect,

@@ -30,17 +30,15 @@ export const createPublicationSchema = publicationSchema.extend({
 	category: z.string().min(4).max(20),
 })
 
-export type CreatePublicationDto = z.infer<typeof createPublicationSchema>
+export type CreatePublication = z.infer<typeof createPublicationSchema>
 
-export const updatePublicationSchema = publicationSchema.extend({
-	id: preprocessToNumber(z.number().int()),
-})
+export const updatePublicationSchema =
+	publicationSchema.merge(publicationIdSchema)
 
-export type UpdatePublicationDto = z.infer<typeof updatePublicationSchema>
+export type UpdatePublication = z.infer<typeof updatePublicationSchema>
 
-export const publicationQuerySchema = z
+export const publicationFiltersSchema = z
 	.object({
-		id: preprocessToNumber(z.number().int()),
 		category: z.string(),
 		search: z.string(),
 		sortField: z.string(),
@@ -50,4 +48,4 @@ export const publicationQuerySchema = z
 	})
 	.partial()
 
-export type GetPublicationsFilters = z.infer<typeof publicationQuerySchema>
+export type GetPublicationFilters = z.infer<typeof publicationFiltersSchema>

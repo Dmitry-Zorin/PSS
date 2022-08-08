@@ -6,7 +6,7 @@ import { Query } from 'types'
 import { inferQueryOutput } from 'utils/trpc'
 
 interface PublicationsListProps {
-	data?: inferQueryOutput<'publication.all'>
+	data?: inferQueryOutput<'publication.list'>
 	query: Query
 	setQuery: Dispatch<SetStateAction<Query>>
 }

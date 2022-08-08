@@ -1,25 +1,25 @@
 import { createRouter } from 'server/createRouter'
 
 const authorRouter = createRouter()
-	.query('all', {
+	.query('list', {
 		// input: publicationQuerySchema,
 		async resolve({ input }) {
 			// return findPublications(input)
 		},
 	})
-	.query('byId', {
+	.query('one', {
 		// input: publicationIdSchema,
 		async resolve({ input }) {
 			// return findPublication(input.id)
 		},
 	})
-	.mutation('add', {
+	.mutation('create', {
 		// input: createPublicationSchema,
 		async resolve({ input }) {
 			// return createPublication(input)
 		},
 	})
-	.mutation('edit', {
+	.mutation('update', {
 		// input: updatePublicationSchema,
 		async resolve({ input }) {
 			// return updatePublication(input)

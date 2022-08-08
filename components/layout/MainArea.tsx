@@ -1,4 +1,4 @@
-import { Box, Heading } from '@chakra-ui/react'
+import { Box, Heading, SkeletonText } from '@chakra-ui/react'
 import { TRPCClientErrorLike } from '@trpc/client'
 import { ActionsToolbar } from 'components'
 import { useTranslation } from 'next-i18next'
@@ -42,8 +42,8 @@ export default function MainArea({
 							w="full"
 							mx="auto"
 						>
-							{heading && (
-								<Box as="header" pb={8}>
+							<Box as="header" pb={8}>
+								{heading ? (
 									<Heading
 										as="h1"
 										fontSize={{ base: '5xl', xl: '6xl' }}
@@ -51,8 +51,16 @@ export default function MainArea({
 									>
 										{heading}
 									</Heading>
-								</Box>
-							)}
+								) : (
+									<SkeletonText
+										noOfLines={3}
+										spacing={7}
+										skeletonHeight={8}
+										pt={5}
+										pb={2}
+									/>
+								)}
+							</Box>
 							{error ? (
 								<Heading as="h2" size="lg" color="red.500">
 									{error.message}

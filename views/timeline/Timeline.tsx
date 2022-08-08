@@ -1,11 +1,10 @@
 import { List, ListItem } from '@chakra-ui/react'
-import { Publication } from '@prisma/client'
 import { range } from 'lodash'
 import { inferQueryOutput } from 'utils/trpc'
 import { TimelineCard, TimelineCardSkeleton } from 'views/timeline'
 
 interface TimelineProps {
-	data?: inferQueryOutput<'publication.all'>
+	data?: inferQueryOutput<'publication.list'>
 }
 
 export default function Timeline({ data }: TimelineProps) {

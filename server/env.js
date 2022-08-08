@@ -1,7 +1,7 @@
 const { z } = require('zod')
 
 const envSchema = z.object({
-	DATABASE_URL: z.string().url(),
+	DATABASE_URL2: z.string().url(),
 })
 
 const { success, error } = envSchema.safeParse(process.env)

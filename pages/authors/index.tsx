@@ -21,7 +21,7 @@ const AuthorsPage: NextPage = () => {
 	const { t } = useTranslation('common', { keyPrefix: 'menu.items' })
 	const [query, setQuery] = useState<Query>({})
 
-	const { error, data } = trpc.useQuery(['author.all'], query)
+	const { error, data } = trpc.useQuery(['author.list'], query)
 
 	return (
 		<Layout fullSize error={error} headTitle={t('authors')}>

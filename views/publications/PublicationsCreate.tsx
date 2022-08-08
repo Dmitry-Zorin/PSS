@@ -3,10 +3,7 @@ import { Form, FormControl, FormControlGroup } from 'components'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import { trpc } from 'utils/trpc'
-import {
-	CreatePublicationDto,
-	publicationSchema,
-} from 'validations/publication'
+import { CreatePublication, publicationSchema } from 'validations/publication'
 
 const currentYear = new Date().getFullYear()
 
@@ -17,7 +14,7 @@ export default function PublicationsCreate() {
 
 	const addPublication = trpc.useMutation(['publication.add'])
 
-	async function onSubmit(data: CreatePublicationDto) {
+	async function onSubmit(data: CreatePublication) {
 		const { id } = await addPublication.mutateAsync({
 			...data,
 			category,

@@ -19,7 +19,7 @@ const TimelinePage: NextPage = () => {
 	const { t } = useTranslation('common', { keyPrefix: 'menu.items' })
 
 	const { error, data } = trpc.useQuery([
-		'publication.all',
+		'publication.list',
 		{ sortField: 'createdAt', sortOrder: 'desc' },
 	])
 

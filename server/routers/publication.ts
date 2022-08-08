@@ -1,7 +1,7 @@
 import {
 	createPublicationSchema,
+	publicationFiltersSchema,
 	publicationIdSchema,
-	publicationQuerySchema,
 	updatePublicationSchema,
 } from 'validations/publication'
 import { createRouter } from 'server/createRouter'
@@ -11,28 +11,28 @@ import {
 	findPublication,
 	findPublications,
 	updatePublication,
-} from 'server/services/publications'
+} from 'server/services/publication'
 
 const publicationRouter = createRouter()
-	.query('all', {
-		input: publicationQuerySchema,
+	.query('list', {
+		input: publicationFiltersSchema,
 		async resolve({ input }) {
 			return findPublications(input)
 		},
 	})
-	.query('byId', {
+	.query('one', {
 		input: publicationIdSchema,
 		async resolve({ input }) {
 			return findPublication(input.id)
 		},
 	})
-	.mutation('add', {
+	.mutation('create', {
 		input: createPublicationSchema,
 		async resolve({ input }) {
 			return createPublication(input)
 		},
 	})
-	.mutation('edit', {
+	.mutation('update', {
 		input: updatePublicationSchema,
 		async resolve({ input }) {
 			return updatePublication(input)

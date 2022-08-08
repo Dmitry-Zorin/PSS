@@ -33,7 +33,7 @@ const PublicationsListPage: NextPage = () => {
 		}))
 	}, [category])
 
-	const { error, data } = trpc.useQuery(['publication.all', query], {
+	const { error, data } = trpc.useQuery(['publication.list', query], {
 		enabled: !!query.category,
 	})
 

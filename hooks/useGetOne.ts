@@ -17,16 +17,14 @@ export default function useGetOne(
 	const [hasCheckedCache, setHasCheckedCache] = useState(false)
 
 	useEffect(() => {
-		if (!id) {
-			return setHasCheckedCache(true)
-		}
+		if (!id) return
 
 		const cachedRecords = transform(
-			queryClient.getQueriesData<inferQueryOutput<`${typeof resource}.all`>>([
-				`${resource}.all`,
+			queryClient.getQueriesData<inferQueryOutput<`${typeof resource}.list`>>([
+				`${resource}.list`,
 			]),
 			(
-				result: Data<inferQueryOutput<`${typeof resource}.byId`>>[],
+				result: Data<inferQueryOutput<`${typeof resource}.one`>>[],
 				[queryKey, queryValue],
 			) => {
 				const record = queryValue?.records?.find((e) => e.id === +id)
@@ -51,7 +49,7 @@ export default function useGetOne(
 
 		if (!isStale) {
 			queryClient.setQueryData(
-				[`${resource}.byId`, { id }],
+				[`${resource}.one`, { id }],
 				latestRecord.record,
 				{ updatedAt: latestRecord.updatedAt },
 			)
@@ -60,7 +58,7 @@ export default function useGetOne(
 		setHasCheckedCache(true)
 	}, [id, queryClient, resource])
 
-	return trpc.useQuery([`${resource}.byId`, { id }], {
+	return trpc.useQuery([`${resource}.one`, { id }], {
 		enabled: hasCheckedCache,
 	})
 }
