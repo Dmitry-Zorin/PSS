@@ -1,6 +1,6 @@
-import { Stack } from '@chakra-ui/react'
+import { Center, Stack } from '@chakra-ui/react'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { ActionsToolbar, SubmitButton } from 'components'
+import { SubmitButton } from 'components'
 import { Children, cloneElement, ReactElement } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
@@ -23,9 +23,9 @@ export default function Form({ children, onSubmit, schema }: FormProps) {
 				{Children.map(children, (e) => {
 					return cloneElement(e, { errors, register })
 				})}
-				<ActionsToolbar
-					leftActions={<SubmitButton isLoading={isSubmitting} />}
-				/>
+				<Center pt={4}>
+					<SubmitButton isLoading={isSubmitting} />
+				</Center>
 			</Stack>
 		</>
 	)

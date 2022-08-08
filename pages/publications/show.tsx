@@ -22,6 +22,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 const PublicationsShowPage: NextPage = () => {
 	const { t } = useTranslation('resources')
 	const router = useRouter()
+	const trcpContext = trpc.useContext()
 
 	const { category, id } = router.query as {
 		category: string
@@ -30,7 +31,12 @@ const PublicationsShowPage: NextPage = () => {
 
 	const { error, data } = useGetOne('publication', id)
 
-	const mutation = trpc.useMutation(['publication.delete'])
+	const mutation = trpc.useMutation(['publication.delete'], {
+		async onSuccess() {
+			trcpContext.invalidateQueries(['publication.all'])
+			router.replace(`/publications/${category}`)
+		},
+	})
 
 	return (
 		<Layout
@@ -38,13 +44,7 @@ const PublicationsShowPage: NextPage = () => {
 			headTitle={id && `${t(`${category}.name`, { count: 1 })} #${id}`}
 			title={data?.title}
 			leftActions={<ListButton href={`/publications/${category}`} />}
-			rightActions={
-				<DeleteButton
-					onClick={() => {
-						return mutation.mutate({ id })
-					}}
-				/>
-			}
+			rightActions={<DeleteButton onClick={() => mutation.mutate({ id })} />}
 		>
 			<PublicationsShow data={data} />
 		</Layout>

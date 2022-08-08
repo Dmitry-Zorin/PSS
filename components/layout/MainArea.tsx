@@ -27,38 +27,40 @@ export default function MainArea({
 	const heading = error ? t('error') : title
 
 	return (
-		<Box pl={6} pr={{ base: 6, xl: fullSize ? 6 : '7.5rem' }} pb={6}>
+		<Box px={4} pb={6}>
 			{(leftActions || rightActions) && (
 				<ActionsToolbar leftActions={leftActions} rightActions={rightActions} />
 			)}
 			{fullSize ? (
 				children
 			) : (
-				<Box maxW={{ base: '3xl', lg: '4xl' }} mx={{ xl: 'auto' }}>
-					<Box
-						as="article"
-						maxW={{ base: '3xl', xl: '4xl' }}
-						w="full"
-						mx="auto"
-					>
-						{heading && (
-							<Box as="header" pb={8}>
-								<Heading
-									as="h1"
-									fontSize={{ base: '5xl', xl: '6xl' }}
-									lineHeight="none"
-								>
-									{heading}
+				<Box px={4} mr={{ xl: fullSize ? 0 : '7.5rem' }}>
+					<Box maxW={{ base: '3xl', lg: '4xl' }} mx={{ xl: 'auto' }}>
+						<Box
+							as="article"
+							maxW={{ base: '3xl', xl: '4xl' }}
+							w="full"
+							mx="auto"
+						>
+							{heading && (
+								<Box as="header" pb={8}>
+									<Heading
+										as="h1"
+										fontSize={{ base: '5xl', xl: '6xl' }}
+										lineHeight="none"
+									>
+										{heading}
+									</Heading>
+								</Box>
+							)}
+							{error ? (
+								<Heading as="h2" size="lg" color="red.500">
+									{error.message}
 								</Heading>
-							</Box>
-						)}
-						{error ? (
-							<Heading as="h2" size="lg" color="red.500">
-								{error.message}
-							</Heading>
-						) : (
-							<Box maxW="3xl">{children}</Box>
-						)}
+							) : (
+								<Box maxW="3xl">{children}</Box>
+							)}
+						</Box>
 					</Box>
 				</Box>
 			)}

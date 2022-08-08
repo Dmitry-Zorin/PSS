@@ -17,11 +17,12 @@ export default function PublicationsCreate() {
 
 	const addPublication = trpc.useMutation(['publication.add'])
 
-	function onSubmit(data: CreatePublicationDto) {
-		addPublication.mutateAsync({
+	async function onSubmit(data: CreatePublicationDto) {
+		const { id } = await addPublication.mutateAsync({
 			...data,
 			category,
 		})
+		router.push(`/publications/${category}/${id}`)
 	}
 
 	return (

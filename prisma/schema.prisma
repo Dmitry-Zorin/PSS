@@ -12,31 +12,12 @@ enum Role {
   ADMIN
 }
 
-enum Language {
-  EN
-  RU
-}
-
-enum ColorMode {
-  SYSTEM
-  LIGHT
-  DARK
-}
-
 model User {
-  id          Int          @id @default(autoincrement())
-  joinedAt    DateTime     @default(now())
-  username    String       @unique
-  password    String
-  role        Role         @default(USER)
-  preferences Preferences?
-}
-
-model Preferences {
-  user      User      @relation(fields: [userId], references: [id])
-  userId    Int       @unique
-  language  Language  @default(EN)
-  colorMode ColorMode @default(DARK)
+  id       Int      @id @default(autoincrement())
+  joinedAt DateTime @default(now())
+  username String   @unique
+  password String
+  role     Role     @default(USER)
 }
 
 model Author {
@@ -59,7 +40,7 @@ model Publication {
   createdAt        DateTime   @default(now())
   updatedAt        DateTime   @updatedAt
   category         String
-  title            String
+  title            String     @unique
   description      String?
   type             String
   character        Character? @relation(fields: [characterId], references: [id])

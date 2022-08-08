@@ -5,7 +5,9 @@
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint",
-		"tsc": "tsc"
+		"tsc": "tsc",
+		"migrate": "prisma generate && prisma db push",
+		"vercel-build": "prisma generate && next build"
 	},
 	"dependencies": {
 		"@chakra-ui/react": "^2.2.6",
