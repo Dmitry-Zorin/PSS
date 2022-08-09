@@ -7,12 +7,12 @@ import { withTRPC } from '@trpc/next'
 import queryClientConfig from 'constants/queryClientConfig'
 import { usePreconnect, useScrollRestoration } from 'hooks'
 import { appWithTranslation } from 'next-i18next'
-import 'public/fonts/Golos-Text/Golos-Text.css'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { AppRouter } from 'server/routers/_app'
 import superjson from 'superjson'
 import theme from 'theme'
 import { getBaseUrl } from 'utils'
+import '../../public/fonts/Golos-Text/Golos-Text.css'
 
 config.autoAddCss = false
 
