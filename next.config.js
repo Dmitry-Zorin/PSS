@@ -1,5 +1,5 @@
 const { i18n } = require('./next-i18next.config')
-require('./server/env')
+require('./src/server/env')
 
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -14,30 +14,6 @@ const nextConfig = {
 	reactStrictMode: true,
 	swcMinify: true,
 	i18n,
-	async rewrites() {
-		return [
-			{
-				source: `/authors/:id`,
-				destination: '/authors/show',
-			},
-			{
-				source: `/publications/:category`,
-				destination: '/publications/list',
-			},
-			{
-				source: `/publications/:category/create`,
-				destination: '/publications/create',
-			},
-			{
-				source: `/publications/:category/:id`,
-				destination: '/publications/show',
-			},
-			{
-				source: `/publications/:category/edit/:id`,
-				destination: '/publications/edit',
-			},
-		]
-	},
 	async headers() {
 		return [
 			{
