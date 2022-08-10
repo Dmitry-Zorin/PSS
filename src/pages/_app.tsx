@@ -5,7 +5,7 @@ import { httpLink } from '@trpc/client/links/httpLink'
 import { loggerLink } from '@trpc/client/links/loggerLink'
 import { withTRPC } from '@trpc/next'
 import queryClientConfig from 'constants/queryClientConfig'
-import { usePreconnect, useScrollRestoration } from 'hooks'
+import { useScrollRestoration } from 'hooks'
 import { appWithTranslation } from 'next-i18next'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { AppRouter } from 'server/routers/_app'
@@ -39,7 +39,6 @@ export default withTRPC<AppRouter>({
 })(
 	appWithTranslation(({ Component, pageProps }) => {
 		useScrollRestoration()
-		usePreconnect()
 
 		return (
 			<ChakraProvider theme={theme}>
