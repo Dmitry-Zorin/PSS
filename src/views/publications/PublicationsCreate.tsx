@@ -29,7 +29,7 @@ export default function PublicationsCreate() {
 			<Stack
 				as={FormControlGroup}
 				direction={{ base: 'column', md: 'row' }}
-				spacing={4}
+				spacing={6}
 				align="flex-start"
 			>
 				<FormControl

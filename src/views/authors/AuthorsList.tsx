@@ -1,4 +1,4 @@
-import { ActionsToolbar, CreateButton, ResourceTable, Search } from 'components'
+import { ActionsToolbar, CreateButton, Search } from 'components'
 import { useDebounce } from 'hooks'
 import { useRouter } from 'next/router'
 import { Dispatch, SetStateAction } from 'react'
@@ -41,14 +41,6 @@ export default function AuthorsList({
 				rightActions={
 					<CreateButton href={`/publications/${category}/create`} />
 				}
-			/>
-			<ResourceTable
-				// data={data.records}
-				data={[]}
-				fields={['lastName', 'firstName', 'middleName']}
-				href="/authors"
-				sort={sort}
-				search={query.search}
 			/>
 		</>
 	)

@@ -8,7 +8,7 @@ import {
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { Icon } from 'components'
 import { useTranslation } from 'next-i18next'
-import NextLink from 'next/link'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
@@ -43,7 +43,7 @@ export default function MenuItem({ to, icon, text }: MenuItemProps) {
 			})}
 		>
 			<ListItem>
-				<NextLink href={to} passHref>
+				<Link href={to} passHref>
 					<HStack
 						as="a"
 						spacing={3}
@@ -60,11 +60,7 @@ export default function MenuItem({ to, icon, text }: MenuItemProps) {
 					>
 						<Icon icon={icon} boxSize="1.125rem" />
 						<Text
-							fontSize={{
-								base: 'md',
-								lg: 'md-',
-								xl: 'md',
-							}}
+							fontSize="md"
 							display={{
 								base: 'block',
 								md: 'none',
@@ -74,7 +70,7 @@ export default function MenuItem({ to, icon, text }: MenuItemProps) {
 							{t(text)}
 						</Text>
 					</HStack>
-				</NextLink>
+				</Link>
 			</ListItem>
 		</Tooltip>
 	)

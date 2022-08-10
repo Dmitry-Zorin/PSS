@@ -6,11 +6,11 @@ import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 import { inferQueryOutput } from 'utils/trpc'
 
-interface ListItemCardProps {
+interface TimelineCardProps {
 	record: inferQueryOutput<'publication.list'>['records'][number]
 }
 
-export default function ListItemCard({ record }: ListItemCardProps) {
+export default function TimelineCard({ record }: TimelineCardProps) {
 	const { t, i18n } = useTranslation('resources')
 	const { isHovered, listeners } = useHover()
 	const truncate = useTruncate()

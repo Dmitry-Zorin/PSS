@@ -8,7 +8,7 @@ interface PublicationsShowProps {
 
 export default function PublicationsShow({ data }: PublicationsShowProps) {
 	return (
-		<Stack spacing={12} pt={2}>
+		<Stack spacing={12}>
 			<Text>{data.description}</Text>
 			<SimpleGrid columns={{ base: 2, lg: 4 }} spacing={12}>
 				<LabeledText label="type" text={data.type} />

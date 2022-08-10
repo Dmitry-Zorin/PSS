@@ -1,12 +1,14 @@
-import { ActionsToolbar, CreateButton, ResourceTable, Search } from 'components'
+import { List } from '@chakra-ui/react'
+import { ActionsToolbar, CreateButton, Search } from 'components'
 import { useDebounce } from 'hooks'
 import { useRouter } from 'next/router'
 import { Dispatch, SetStateAction } from 'react'
 import { Query } from 'types'
 import { inferQueryOutput } from 'utils/trpc'
+import PublicationsListItem from './PublicationsListItem'
 
 interface PublicationsListProps {
-	data: inferQueryOutput<'publication.list'>
+	data?: inferQueryOutput<'publication.list'>
 	query: Query
 	setQuery: Dispatch<SetStateAction<Query>>
 }
@@ -42,14 +44,12 @@ export default function PublicationsList({
 					<CreateButton href={`/publications/${category}/create`} />
 				}
 			/>
-			<ResourceTable
-				data={data.records}
-				fields={['title', 'description', 'writtenInYear']}
-				numeric={['writtenInYear']}
-				href={`/publications/${category}`}
-				sort={sort}
-				search={query.search}
-			/>
+			<List borderBottom="1px" borderColor="border" pt={4}>
+				{data &&
+					data.records.map((e) => (
+						<PublicationsListItem key={e.id} record={e} search={query.search} />
+					))}
+			</List>
 		</>
 	)
 }

@@ -2,16 +2,11 @@ import { createSSGHelpers } from '@trpc/react/ssg'
 import { Layout, ListButton } from 'components'
 import DeleteButton from 'components/buttons/DeleteButton'
 import { useRouterQuery } from 'hooks'
-import {
-	GetStaticPaths,
-	GetStaticPropsContext,
-	InferGetStaticPropsType,
-} from 'next'
+import { GetServerSidePropsContext } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router'
 import { createContext } from 'server/context'
-import prisma from 'server/prisma'
 import { appRouter } from 'server/routers/_app'
 import superjson from 'superjson'
 import { trpc } from 'utils/trpc'
@@ -19,61 +14,32 @@ import PublicationsShow from 'views/publications/PublicationsShow'
 
 const queryKey = 'publication.one'
 
-export async function getStaticProps({
+export async function getServerSideProps({
 	locale,
 	params,
-}: GetStaticPropsContext<{ id: string }>) {
+}: GetServerSidePropsContext<{ id: string }>) {
 	const translationProps = await serverSideTranslations(locale!, [
 		'common',
 		'resources',
 		'fields',
 	])
-	const id = params!.id
 	const ssg = await createSSGHelpers({
 		router: appRouter,
 		ctx: createContext(),
 		transformer: superjson,
 	})
-	let notFound = false
-	try {
-		await ssg.fetchQuery(queryKey, { id })
-	} catch (e) {
-		notFound = true
-		console.error('caught error:', e)
-	}
+	await ssg.fetchQuery(queryKey, { id: params!.id })
 	return {
 		props: {
 			...translationProps,
 			trpcState: ssg.dehydrate(),
-			id,
 		},
-		notFound,
 	}
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-	const records = await prisma.publication.findMany({
-		select: {
-			id: true,
-			category: true,
-		},
-	})
-	return {
-		paths: records.map(({ id, category }) => ({
-			params: {
-				id: id.toString(),
-				category,
-			},
-		})),
-		fallback: 'blocking',
-	}
-}
-
-export default function PublicationsShowPage({
-	id,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function PublicationsShowPage() {
 	const { t } = useTranslation('resources')
-	const { category } = useRouterQuery()
+	const { id, category } = useRouterQuery()
 	const router = useRouter()
 	const trcpContext = trpc.useContext()
 

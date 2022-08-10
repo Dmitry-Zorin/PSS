@@ -44,9 +44,7 @@ const PublicationsListPage: NextPage = () => {
 
 	return (
 		<Layout fullSize error={error} headTitle={category && t(category)}>
-			{data && (
-				<PublicationsList data={data} query={query} setQuery={setQuery} />
-			)}
+			<PublicationsList data={data} query={query} setQuery={setQuery} />
 		</Layout>
 	)
 }

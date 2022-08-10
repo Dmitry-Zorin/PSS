@@ -34,19 +34,19 @@ export default function MainArea({
 			{fullSize ? (
 				children
 			) : (
-				<Box px={4} mr={{ xl: fullSize ? 0 : 32 }}>
-					<Box maxW={{ base: '3xl', lg: '4xl' }} mx={{ xl: 'auto' }}>
+				<Box px={4} mr={{ '2xl': fullSize ? 0 : 32 }}>
+					<Box maxW={{ base: '3xl', lg: '4xl' }} mx="auto">
 						<Box
 							as="article"
-							maxW={{ base: '3xl', xl: '4xl' }}
+							maxW={{ base: '3xl', '2xl': '4xl' }}
 							w="full"
 							mx="auto"
 						>
 							{heading && (
-								<Box as="header" pb={8}>
+								<Box as="header" pb={10}>
 									<Heading
 										as="h1"
-										fontSize={{ base: '5xl', xl: '6xl' }}
+										fontSize={{ base: '5xl', '2xl': '6xl' }}
 										lineHeight="none"
 									>
 										{heading}
