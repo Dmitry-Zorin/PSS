@@ -32,6 +32,11 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
 			...translationProps,
 			trpcState: ssg.dehydrate(),
 		},
+		headers: {
+			'cache-control': `s-maxage=1, stale-while-revalidate=${
+				30 * 24 * 60 * 60
+			}`,
+		},
 	}
 }
 
