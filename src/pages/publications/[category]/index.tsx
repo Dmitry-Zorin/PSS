@@ -8,18 +8,20 @@ import { Query } from 'types'
 import { trpc } from 'utils/trpc'
 import PublicationsList from 'views/publications/PublicationsList'
 
-export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+	locale,
+	res,
+}) => {
 	const translationProps = await serverSideTranslations(locale!, [
 		'common',
 		'fields',
 	])
+	res.setHeader(
+		'Cache-Control',
+		`s-maxage=1, stale-while-revalidate=${30 * 24 * 60 * 60}`,
+	)
 	return {
 		props: translationProps,
-		headers: {
-			'cache-control': `s-maxage=1, stale-while-revalidate=${
-				30 * 24 * 60 * 60
-			}`,
-		},
 	}
 }
 

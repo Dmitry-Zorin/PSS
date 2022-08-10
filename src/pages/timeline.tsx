@@ -16,7 +16,10 @@ const queryParams = {
 	sortOrder: 'desc',
 } as const
 
-export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+	locale,
+	res,
+}) => {
 	const translationProps = await serverSideTranslations(locale!, [
 		'common',
 		'resources',
@@ -27,15 +30,14 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
 		transformer: superjson,
 	})
 	await ssg.fetchQuery(queryKey, queryParams)
+	res.setHeader(
+		'Cache-Control',
+		`s-maxage=1, stale-while-revalidate=${30 * 24 * 60 * 60}`,
+	)
 	return {
 		props: {
 			...translationProps,
 			trpcState: ssg.dehydrate(),
-		},
-		headers: {
-			'cache-control': `s-maxage=1, stale-while-revalidate=${
-				30 * 24 * 60 * 60
-			}`,
 		},
 	}
 }
