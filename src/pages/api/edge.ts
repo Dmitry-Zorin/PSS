@@ -1,16 +1,11 @@
-import { NextApiRequest, NextApiResponse } from 'next'
+import { NextRequest, NextResponse } from 'next/server'
 
 export const config = {
 	runtime: 'experimental-edge',
 }
 
-export default function handler(
-	request: NextApiRequest,
-	response: NextApiResponse,
-) {
-	response.status(200).json({
-		body: request.body,
-		query: request.query,
-		cookies: request.cookies,
+export default function handler(req: NextRequest) {
+	return NextResponse.json({
+		name: `Hello, from ${req.url} I'm now an Edge Function!`,
 	})
 }
