@@ -1,5 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
+export const config = {
+	runtime: 'experimental-edge',
+}
+
 export default function handler(
 	request: NextApiRequest,
 	response: NextApiResponse,
