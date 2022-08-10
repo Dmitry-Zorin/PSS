@@ -1,4 +1,3 @@
-// import { toNumber } from 'lodash'
 import { z } from 'zod'
 
 export function transformEmptyStringToUndefined() {
@@ -6,5 +5,8 @@ export function transformEmptyStringToUndefined() {
 }
 
 export function preprocessToNumber(schema: z.ZodTypeAny) {
-	return z.preprocess((e) => +(e as string) || false, schema)
+	return z.preprocess(
+		(e) => (typeof e === 'string' ? +e || false : false),
+		schema,
+	)
 }
