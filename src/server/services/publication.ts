@@ -73,6 +73,8 @@ export async function findPublications(filters: GetPublicationFilters) {
 	}
 }
 
+type List = ReturnType<typeof findPublications>
+
 export async function createPublication(publication: CreatePublication) {
 	const { type, writtenInYear, volumeInPages } = publication
 	return prisma.publication.create({

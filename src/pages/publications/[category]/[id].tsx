@@ -1,3 +1,4 @@
+import { useToast } from '@chakra-ui/react'
 import { createSSGHelpers } from '@trpc/react/ssg'
 import { Layout, ListButton } from 'components'
 import DeleteButton from 'components/buttons/DeleteButton'
@@ -41,14 +42,20 @@ export default function PublicationsShowPage() {
 	const { t } = useTranslation('resources')
 	const { id, category } = useRouterQuery()
 	const router = useRouter()
+	const toast = useToast()
 	const trcpContext = trpc.useContext()
 
 	const { error, data } = trpc.useQuery([queryKey, { id }])
 
 	const mutation = trpc.useMutation(['publication.delete'], {
 		async onSuccess() {
-			trcpContext.invalidateQueries(['publication.list'])
-			router.replace(`/publications/${category}`)
+			toast({
+				title: `${t(`${category}.name`, { count: 1 })} удалена`,
+				position: 'top',
+				status: 'success',
+				duration: 2000,
+			})
+			await trcpContext.invalidateQueries(['publication.list'])
 		},
 	})
 
@@ -58,7 +65,15 @@ export default function PublicationsShowPage() {
 			headTitle={id && `${t(`${category}.name`, { count: 1 })} #${id}`}
 			title={data?.title}
 			leftActions={<ListButton href={`/publications/${category}`} />}
-			rightActions={<DeleteButton onClick={() => mutation.mutate({ id })} />}
+			rightActions={
+				<DeleteButton
+					onClick={async () => {
+						mutation.mutate({ id })
+						await router.replace(`/publications/${category}`)
+					}}
+					isLoading={mutation.isLoading}
+				/>
+			}
 		>
 			{!!data && <PublicationsShow data={data} />}
 		</Layout>

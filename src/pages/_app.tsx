@@ -43,7 +43,7 @@ export default withTRPC<AppRouter>({
 		return (
 			<ChakraProvider theme={theme}>
 				<Component {...pageProps} />
-				{/* <ReactQueryDevtools /> */}
+				<ReactQueryDevtools />
 			</ChakraProvider>
 		)
 	}),

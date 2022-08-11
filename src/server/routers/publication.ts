@@ -34,22 +34,15 @@ const publicationRouter = createRouter()
 	})
 	.mutation('update', {
 		input: updatePublicationSchema,
-		async resolve({ input, ctx }) {
+		async resolve({ input }) {
 			const record = await updatePublication(input)
-			await ctx?.revalidate?.(`/publications/${record.category}/${record.id}`)
 			return record
 		},
 	})
 	.mutation('delete', {
 		input: publicationIdSchema,
-		async resolve({ input, ctx }) {
+		async resolve({ input }) {
 			const record = await deletePublication(input.id)
-			try {
-				await ctx?.revalidate?.(`/publications/${record.category}/${record.id}`)
-			} catch (e) {
-				console.log('failed!')
-			}
-			console.log(`/publications/${record.category}/${record.id}`)
 			return record
 		},
 	})

@@ -55,9 +55,11 @@ const TimelinePage: NextPage<
 > = ({ error, data }) => {
 	const { t } = useTranslation('common', { keyPrefix: 'menu.items' })
 
+	// const { error, data } = trpc.useQuery(['publication.list', queryParams])
+
 	return (
 		<Layout title={t('timeline')} error={error as any}>
-			{data && <TimelineView data={data as any} />}
+			{data && <TimelineView data={data} />}
 		</Layout>
 	)
 }

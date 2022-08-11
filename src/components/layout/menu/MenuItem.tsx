@@ -10,7 +10,6 @@ import { Icon } from 'components'
 import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
 
 export interface MenuItemProps {
 	to: string
@@ -21,15 +20,7 @@ export interface MenuItemProps {
 export default function MenuItem({ to, icon, text }: MenuItemProps) {
 	const { t } = useTranslation('common', { keyPrefix: 'menu.items' })
 	const router = useRouter()
-	const [isActive, setIsActive] = useState(
-		to.startsWith('/publications')
-			? false
-			: new RegExp(`^${to}($|\/)`).test(router.asPath),
-	)
-
-	useEffect(() => {
-		setIsActive(new RegExp(`^${to}($|\/)`).test(router.asPath))
-	}, [router.asPath, to])
+	const isActive = new RegExp(`^${to}($|\/)`).test(router.asPath)
 
 	return (
 		<Tooltip
