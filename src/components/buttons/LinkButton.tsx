@@ -1,7 +1,7 @@
 import { ButtonProps } from '@chakra-ui/react'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { Button, Icon } from 'components'
-import { useTranslation } from 'next-i18next'
+import useTranslation from 'next-translate/useTranslation'
 import Link from 'next/link'
 
 export interface LinkButtonProps extends ButtonProps {
@@ -16,7 +16,7 @@ export default function CreateButton({
 	action,
 	...props
 }: LinkButtonProps) {
-	const { t } = useTranslation('common', { keyPrefix: 'actions' })
+	const { t } = useTranslation('common')
 
 	const button = (
 		<Button
@@ -24,7 +24,7 @@ export default function CreateButton({
 			leftIcon={<Icon icon={icon} />}
 			{...props}
 		>
-			{t(action)}
+			{t(`actions.${action}`)}
 		</Button>
 	)
 

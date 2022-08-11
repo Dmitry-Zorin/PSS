@@ -7,7 +7,7 @@ import {
 } from '@chakra-ui/react'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { Icon } from 'components'
-import { useTranslation } from 'next-i18next'
+import useTranslation from 'next-translate/useTranslation'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
@@ -18,13 +18,13 @@ export interface MenuItemProps {
 }
 
 export default function MenuItem({ to, icon, text }: MenuItemProps) {
-	const { t } = useTranslation('common', { keyPrefix: 'menu.items' })
+	const { t } = useTranslation('common')
 	const router = useRouter()
 	const isActive = new RegExp(`^${to}($|\/)`).test(router.asPath)
 
 	return (
 		<Tooltip
-			label={t(text)}
+			label={t(`menu.items.${text}`)}
 			placement="right"
 			fontWeight="normal"
 			hidden={useBreakpointValue({
@@ -58,7 +58,7 @@ export default function MenuItem({ to, icon, text }: MenuItemProps) {
 								lg: 'block',
 							}}
 						>
-							{t(text)}
+							{t(`menu.items.${text}`)}
 						</Text>
 					</HStack>
 				</Link>

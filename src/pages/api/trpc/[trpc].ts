@@ -13,4 +13,16 @@ export default trpcNext.createNextApiHandler({
 	batching: {
 		enabled: false,
 	},
+	responseMeta({ ctx, type, errors }) {
+		if (ctx?.res && type === 'query' && errors.length === 0) {
+			return {
+				headers: {
+					'Cache-Control': `s-maxage=1, stale-while-revalidate=${
+						30 * 24 * 60 * 60
+					}`,
+				},
+			}
+		}
+		return {}
+	},
 })

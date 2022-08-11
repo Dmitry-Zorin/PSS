@@ -1,0 +1,9 @@
+{
+	"locales": ["en", "ru"],
+	"defaultLocale": "ru",
+	"pages": {
+		"*": ["common", "resources", "fields", "about"],
+		"/": ["index"],
+		"/about": ["about"]
+	}
+}

@@ -1,5 +1,5 @@
 import { Center, StackProps, Text } from '@chakra-ui/react'
-import { useTranslation } from 'next-i18next'
+import useTranslation from 'next-translate/useTranslation'
 
 export interface MenuGroupHeaderProps extends StackProps {
 	text: string
@@ -9,12 +9,12 @@ export default function MenuGroupHeader({
 	text,
 	...props
 }: MenuGroupHeaderProps) {
-	const { t } = useTranslation('common', { keyPrefix: 'menu.items' })
+	const { t } = useTranslation('common')
 
 	return (
 		<Center h={12} pointerEvents="none" {...props}>
 			<Text fontSize={{ base: 'sm-', xl: 'sm' }} color="text-secondary">
-				{t(text).toUpperCase()}
+				{t(`menu.items.${text}`).toUpperCase()}
 			</Text>
 		</Center>
 	)

@@ -4,21 +4,11 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'react-i18next'
 import About from 'views/About'
 
-export const getStaticProps: GetStaticProps = async ({ locale }) => {
-	const translationProps = await serverSideTranslations(locale!, [
-		'about',
-		'common',
-	])
-	return {
-		props: translationProps,
-	}
-}
-
 const AboutPage: NextPage = () => {
-	const { t } = useTranslation('common', { keyPrefix: 'menu.items' })
+	const { t } = useTranslation('common')
 
 	return (
-		<Layout title={t('about')}>
+		<Layout title={t('menu.items.about')}>
 			<About />
 		</Layout>
 	)

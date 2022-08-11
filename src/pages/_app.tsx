@@ -6,12 +6,11 @@ import { loggerLink } from '@trpc/client/links/loggerLink'
 import { withTRPC } from '@trpc/next'
 import queryClientConfig from 'constants/queryClientConfig'
 import { useScrollRestoration } from 'hooks'
-import { appWithTranslation } from 'next-i18next'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { AppRouter } from 'server/routers/_app'
 import superjson from 'superjson'
 import theme from 'theme'
-import { getBaseUrl } from 'utils'
+import { getBaseUrl, SSRContext } from 'utils'
 import '../../public/fonts/Golos-Text/Golos-Text.css'
 
 config.autoAddCss = false
@@ -36,15 +35,37 @@ export default withTRPC<AppRouter>({
 			queryClientConfig,
 		}
 	},
-})(
-	appWithTranslation(({ Component, pageProps }) => {
-		useScrollRestoration()
+	ssr: true,
+	responseMeta(opts) {
+		const ctx = opts.ctx as SSRContext
+		if (ctx.status) {
+			return {
+				status: ctx.status,
+			}
+		}
 
-		return (
-			<ChakraProvider theme={theme}>
-				<Component {...pageProps} />
-				<ReactQueryDevtools />
-			</ChakraProvider>
-		)
-	}),
-)
+		const error = opts.clientErrors[0]
+		if (error) {
+			return {
+				status: error.data?.httpStatus ?? 500,
+			}
+		}
+
+		return {
+			headers: {
+				'Cache-Control': `s-maxage=1, stale-while-revalidate=${
+					30 * 24 * 60 * 60
+				}`,
+			},
+		}
+	},
+})(({ Component, pageProps }) => {
+	useScrollRestoration()
+
+	return (
+		<ChakraProvider theme={theme}>
+			<Component {...pageProps} />
+			<ReactQueryDevtools />
+		</ChakraProvider>
+	)
+})

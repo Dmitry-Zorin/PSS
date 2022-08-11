@@ -7,7 +7,7 @@ import {
 } from '@chakra-ui/react'
 import { faClose, faSearch } from '@fortawesome/free-solid-svg-icons'
 import { Icon } from 'components'
-import { useTranslation } from 'next-i18next'
+import useTranslation from 'next-translate/useTranslation'
 import { useEffect, useState } from 'react'
 
 interface SearchProps extends Omit<InputProps, 'onChange'> {

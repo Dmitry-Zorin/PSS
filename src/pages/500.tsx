@@ -1,14 +1,7 @@
 import { Center, Divider, Heading, HStack, Stack, Text } from '@chakra-ui/react'
 import { Head, Logo } from 'components'
-import { GetServerSideProps, NextPage } from 'next'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-
-export const getStaticProps: GetServerSideProps = async ({ locale }) => {
-	return {
-		props: await serverSideTranslations(locale!, ['common']),
-	}
-}
+import { NextPage } from 'next'
+import useTranslation from 'next-translate/useTranslation'
 
 const Error500Page: NextPage = () => {
 	const { t } = useTranslation('common')

@@ -10,7 +10,7 @@ import {
 	TextareaProps,
 } from '@chakra-ui/react'
 import { range as _range } from 'lodash'
-import { useTranslation } from 'next-i18next'
+import useTranslation from 'next-translate/useTranslation'
 import { Path, UseFormRegister } from 'react-hook-form'
 import { FieldErrors } from 'react-hook-form/dist/types/errors'
 import ResizeTextarea from 'react-textarea-autosize'

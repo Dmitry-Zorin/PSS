@@ -1,5 +1,5 @@
-const { i18n } = require('./next-i18next.config')
 require('./src/server/env')
+const nextTranslate = require('next-translate')
 
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -13,7 +13,6 @@ const csp = [
 const nextConfig = {
 	reactStrictMode: true,
 	swcMinify: true,
-	i18n,
 	async headers() {
 		return [
 			{
@@ -55,4 +54,4 @@ const nextConfig = {
 	},
 }
 
-module.exports = nextConfig
+module.exports = nextTranslate(nextConfig)

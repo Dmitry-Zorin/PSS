@@ -1,9 +1,9 @@
 import { Box, Container, Heading, HStack, Stack, Text } from '@chakra-ui/react'
 import { ColorModeSwitch, CoolButtonLink } from 'components'
-import { useTranslation } from 'next-i18next'
+import useTranslation from 'next-translate/useTranslation'
 
 export default function Index() {
-	const { t } = useTranslation(['common', 'index'])
+	const { t } = useTranslation('common')
 
 	return (
 		<Stack minH="100vh" bg="bg">
@@ -24,7 +24,7 @@ export default function Index() {
 							color="text-secondary"
 							fontSize={{ base: '3xl', sm: '4xl', md: '5xl' }}
 						>
-							{t('welcome_to', { ns: 'index' })}
+							{t('index:welcome_to')}
 						</Heading>
 						<Heading
 							as="h1"
@@ -32,7 +32,7 @@ export default function Index() {
 							fontSize={{ base: '5xl', sm: '6xl', md: '7xl' }}
 							lineHeight="none"
 						>
-							{t('name', { context: 'to' })}
+							{t('name_to', null, { fallback: 'name' })}
 						</Heading>
 					</Stack>
 					<Container maxW="xl" py={6}>
@@ -46,7 +46,7 @@ export default function Index() {
 							bg="text-secondary"
 							rightIcon={<>&rarr;</>}
 						>
-							{t('get_started', { ns: 'index' })}
+							{t('get_started', null, { ns: 'index' })}
 						</CoolButtonLink>
 					</Box>
 				</Stack>

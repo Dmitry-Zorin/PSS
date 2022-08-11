@@ -1,5 +1,5 @@
 import { Stack, Text, TextProps } from '@chakra-ui/react'
-import { useTranslation } from 'next-i18next'
+import useTranslation from 'next-translate/useTranslation'
 
 interface LabeledTextProps extends TextProps {
 	label: string

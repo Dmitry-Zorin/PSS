@@ -1,7 +1,7 @@
 import { Box, Heading } from '@chakra-ui/react'
 import { TRPCClientErrorLike } from '@trpc/client'
 import { ActionsToolbar } from 'components'
-import { useTranslation } from 'next-i18next'
+import useTranslation from 'next-translate/useTranslation'
 import { ReactNode } from 'react'
 import { AppRouter } from 'server/routers/_app'
 

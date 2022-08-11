@@ -2,7 +2,7 @@ import { Avatar, LinkBox, LinkOverlay, Stack, Text } from '@chakra-ui/react'
 import { Card, CardContent, CardHeader, Icon } from 'components'
 import resources from 'constants/resources'
 import { useHover, useTruncate } from 'hooks'
-import { useTranslation } from 'next-i18next'
+import useTranslation from 'next-translate/useTranslation'
 import Link from 'next/link'
 import { inferQueryOutput } from 'utils/trpc'
 
@@ -11,7 +11,7 @@ interface TimelineCardProps {
 }
 
 export default function TimelineCard({ record }: TimelineCardProps) {
-	const { t, i18n } = useTranslation('resources')
+	const { t, lang } = useTranslation('resources')
 	const { isHovered, listeners } = useHover()
 	const truncate = useTruncate()
 
@@ -37,7 +37,7 @@ export default function TimelineCard({ record }: TimelineCardProps) {
 						{t(`${record.category}.name`, { count: 1 })}
 					</Text>
 					<Text fontSize="sm" color="text-secondary">
-						{new Date(record.createdAt).toLocaleString(i18n.language, {
+						{new Date(record.createdAt).toLocaleString(lang, {
 							day: 'numeric',
 							month: 'long',
 							year: 'numeric',
