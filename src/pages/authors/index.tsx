@@ -7,7 +7,7 @@ import { trpc } from 'utils/trpc'
 import AuthorsList from 'views/authors/AuthorsList'
 
 const AuthorsPage: NextPage = () => {
-	const { t } = useTranslation('common')
+	const { t } = useTranslation()
 	const [query, setQuery] = useState<Query>({})
 
 	const { error, data } = trpc.useQuery(['author.list'], query)

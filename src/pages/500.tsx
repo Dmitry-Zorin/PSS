@@ -4,7 +4,7 @@ import { NextPage } from 'next'
 import useTranslation from 'next-translate/useTranslation'
 
 const Error500Page: NextPage = () => {
-	const { t } = useTranslation('common')
+	const { t } = useTranslation()
 	return (
 		<>
 			<Head title="500" />

@@ -3,7 +3,7 @@ import { ColorModeSwitch, CoolButtonLink } from 'components'
 import useTranslation from 'next-translate/useTranslation'
 
 export default function Index() {
-	const { t } = useTranslation('common')
+	const { t } = useTranslation()
 
 	return (
 		<Stack minH="100vh" bg="bg">

@@ -1,6 +1,7 @@
 {
 	"locales": ["en", "ru"],
 	"defaultLocale": "ru",
+	"defaultNS": "common",
 	"pages": {
 		"*": ["common", "resources", "fields", "about"],
 		"/": ["index"],

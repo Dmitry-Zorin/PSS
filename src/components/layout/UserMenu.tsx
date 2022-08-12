@@ -9,7 +9,7 @@ import { Icon, MenuIconButton } from 'components'
 import useTranslation from 'next-translate/useTranslation'
 
 export default function UserMenu() {
-	const { t } = useTranslation('common')
+	const { t } = useTranslation()
 	return (
 		<div>
 			<Menu>

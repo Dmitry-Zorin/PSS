@@ -1,4 +1,4 @@
-import { Box, Heading } from '@chakra-ui/react'
+import { Box, Heading, Stack } from '@chakra-ui/react'
 import { TRPCClientErrorLike } from '@trpc/client'
 import { ActionsToolbar } from 'components'
 import useTranslation from 'next-translate/useTranslation'
@@ -22,7 +22,7 @@ export default function MainArea({
 	rightActions,
 	fullSize,
 }: MainAreaProps) {
-	const { t } = useTranslation('common')
+	const { t } = useTranslation()
 
 	const heading = error ? t('error') : title
 
@@ -36,22 +36,21 @@ export default function MainArea({
 			) : (
 				<Box px={4} mr={{ '2xl': fullSize ? 0 : 32 }}>
 					<Box maxW={{ base: '3xl', lg: '4xl' }} mx="auto">
-						<Box
+						<Stack
 							as="article"
+							spacing={10}
 							maxW={{ base: '3xl', '2xl': '4xl' }}
 							w="full"
 							mx="auto"
 						>
 							{heading && (
-								<Box as="header" pb={10}>
-									<Heading
-										as="h1"
-										fontSize={{ base: '5xl', '2xl': '6xl' }}
-										lineHeight="none"
-									>
-										{heading}
-									</Heading>
-								</Box>
+								<Heading
+									as="h1"
+									fontSize={{ base: '5xl', '2xl': '6xl' }}
+									lineHeight="none"
+								>
+									{heading}
+								</Heading>
 							)}
 							{error ? (
 								<Heading as="h2" size="lg" color="red.500">
@@ -60,7 +59,7 @@ export default function MainArea({
 							) : (
 								<Box maxW="3xl">{children}</Box>
 							)}
-						</Box>
+						</Stack>
 					</Box>
 				</Box>
 			)}

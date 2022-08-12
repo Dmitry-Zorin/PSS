@@ -16,7 +16,7 @@ export default function CreateButton({
 	action,
 	...props
 }: LinkButtonProps) {
-	const { t } = useTranslation('common')
+	const { t } = useTranslation()
 
 	const button = (
 		<Button

@@ -1,4 +1,4 @@
-import { Heading, Stack, Text } from '@chakra-ui/react'
+import { Heading } from '@chakra-ui/react'
 import useTranslation from 'next-translate/useTranslation'
 
 export default function About() {

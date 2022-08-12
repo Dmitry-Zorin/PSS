@@ -1,6 +1,6 @@
+import useTranslation from 'next-translate/useTranslation'
 import NextHead from 'next/head'
 import { ReactElement } from 'react'
-import { useTranslation } from 'react-i18next'
 
 interface HeadProps {
 	children?: ReactElement[]
@@ -9,7 +9,7 @@ interface HeadProps {
 }
 
 export default function Head({ children, title, desc }: HeadProps) {
-	const { t } = useTranslation('common')
+	const { t } = useTranslation()
 
 	return (
 		<NextHead>

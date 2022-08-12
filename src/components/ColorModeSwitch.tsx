@@ -4,7 +4,7 @@ import { Icon, IconButton } from 'components'
 import useTranslation from 'next-translate/useTranslation'
 
 export default function ColorModeSwitch() {
-	const { t } = useTranslation('common')
+	const { t } = useTranslation()
 	const { colorMode, toggleColorMode } = useColorMode()
 
 	return (

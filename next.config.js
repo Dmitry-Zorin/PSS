@@ -1,5 +1,5 @@
-require('./src/server/env')
 const nextTranslate = require('next-translate')
+require('./src/server/env')
 
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -41,16 +41,6 @@ const nextConfig = {
 				],
 			},
 		]
-	},
-	experimental: {
-		swcPlugins: [
-			[
-				'next-superjson-plugin',
-				{
-					excluded: [],
-				},
-			],
-		],
 	},
 }
 

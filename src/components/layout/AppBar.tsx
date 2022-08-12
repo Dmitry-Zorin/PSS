@@ -8,9 +8,10 @@ interface AppBarProps extends StackProps {
 }
 
 export default function AppBar({ onMenuDrawerOpen, ...props }: AppBarProps) {
-	const { t } = useTranslation('common')
+	const { t } = useTranslation()
 	return (
 		<HStack
+			as="header"
 			spacing={0}
 			justify="flex-end"
 			color="text-tertiary"

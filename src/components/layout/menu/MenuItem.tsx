@@ -18,7 +18,7 @@ export interface MenuItemProps {
 }
 
 export default function MenuItem({ to, icon, text }: MenuItemProps) {
-	const { t } = useTranslation('common')
+	const { t } = useTranslation()
 	const router = useRouter()
 	const isActive = new RegExp(`^${to}($|\/)`).test(router.asPath)
 

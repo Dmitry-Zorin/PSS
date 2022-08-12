@@ -6,6 +6,7 @@ import { loggerLink } from '@trpc/client/links/loggerLink'
 import { withTRPC } from '@trpc/next'
 import queryClientConfig from 'constants/queryClientConfig'
 import { useScrollRestoration } from 'hooks'
+import Head from 'next/head'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { AppRouter } from 'server/routers/_app'
 import superjson from 'superjson'
@@ -64,6 +65,9 @@ export default withTRPC<AppRouter>({
 
 	return (
 		<ChakraProvider theme={theme}>
+			<Head>
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
+			</Head>
 			<Component {...pageProps} />
 			<ReactQueryDevtools />
 		</ChakraProvider>

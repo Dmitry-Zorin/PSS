@@ -9,7 +9,7 @@ export default function MenuGroupHeader({
 	text,
 	...props
 }: MenuGroupHeaderProps) {
-	const { t } = useTranslation('common')
+	const { t } = useTranslation()
 
 	return (
 		<Center h={12} pointerEvents="none" {...props}>

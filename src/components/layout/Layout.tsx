@@ -19,7 +19,7 @@ export default function Layout({ headTitle, ...props }: LayoutProps) {
 			{headTitle && <Head title={headTitle} />}
 			<Flex>
 				<Sidebar>{menu}</Sidebar>
-				<Box as="main" flexGrow={1} bg="bg" minH="100vh">
+				<Box as="main" flexGrow={1} minW={0} minH="100vh" bg="bg">
 					<AppBar onMenuDrawerOpen={onOpen} />
 					<MainArea {...props} />
 				</Box>
