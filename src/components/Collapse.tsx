@@ -1,6 +1,6 @@
 import { Box, BoxProps } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
-import { getSpringAnimation } from 'utils'
+import { getSpringAnimation } from 'utils/animation'
 
 type Orientation = 'vertical' | 'horizontal'
 

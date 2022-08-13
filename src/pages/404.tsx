@@ -27,16 +27,6 @@ const Error404Page: NextPage = () => {
 					<Text fontSize="4xl" color="text-secondary">
 						{t('errors.404.face')}
 					</Text>
-					<div>
-						<CoolButtonLink
-							to="/about"
-							colorScheme="primary"
-							color="bg"
-							bg="text-secondary"
-						>
-							{t('actions.retry')}
-						</CoolButtonLink>
-					</div>
 				</Stack>
 			</Center>
 		</>

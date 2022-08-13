@@ -3,10 +3,9 @@ import { useDebounce } from 'hooks'
 import { useRouter } from 'next/router'
 import { Dispatch, SetStateAction } from 'react'
 import { Query } from 'types'
-import { inferQueryOutput } from 'utils/trpc'
 
 interface AuthorsListProps {
-	data: inferQueryOutput<'author.list'>
+	data: any
 	query: Query
 	setQuery: Dispatch<SetStateAction<Query>>
 }

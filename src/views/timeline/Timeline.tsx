@@ -1,9 +1,9 @@
 import { List, ListItem } from '@chakra-ui/react'
-import { inferQueryOutput } from 'utils/trpc'
+import { GetPublicationsResponse } from 'server/services/publication'
 import TimelineCard from './TimelineCard'
 
 interface TimelineProps {
-	data: inferQueryOutput<'publication.list'>
+	data: GetPublicationsResponse
 }
 
 export default function Timeline({ data }: TimelineProps) {

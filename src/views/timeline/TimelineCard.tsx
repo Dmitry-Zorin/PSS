@@ -4,10 +4,10 @@ import resources from 'constants/resources'
 import { useHover, useTruncate } from 'hooks'
 import useTranslation from 'next-translate/useTranslation'
 import Link from 'next/link'
-import { inferQueryOutput } from 'utils/trpc'
+import { GetPublicationsResponse } from 'server/services/publication'
 
 interface TimelineCardProps {
-	record: inferQueryOutput<'publication.list'>['records'][number]
+	record: GetPublicationsResponse['records'][number]
 }
 
 export default function TimelineCard({ record }: TimelineCardProps) {

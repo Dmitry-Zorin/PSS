@@ -1,7 +1,7 @@
 import { Prisma, Publication } from '@prisma/client'
-import { TRPCError } from '@trpc/server'
+import httpError from 'http-errors'
 import prisma from 'server/prisma'
-import { getSearchFilter } from 'utils'
+import { getSearchFilter } from 'utils/filters'
 import {
 	CreatePublication,
 	GetPublicationFilters,
@@ -30,10 +30,12 @@ export async function findPublication(id: number) {
 		where: { id },
 	})
 	if (!record) {
-		throw new TRPCError({ code: 'NOT_FOUND' })
+		throw new httpError.NotFound('Публикация не найдена')
 	}
 	return record
 }
+
+export type GetPublicationResponse = Awaited<ReturnType<typeof findPublication>>
 
 export async function findPublications(filters: GetPublicationFilters) {
 	const {
@@ -61,19 +63,23 @@ export async function findPublications(filters: GetPublicationFilters) {
 		orderBy.unshift({ [sortField]: sortOrder })
 	}
 
-	return {
-		total: await prisma.publication.count({ where }),
-		records: await prisma.publication.findMany({
+	const [total, records] = await prisma.$transaction([
+		prisma.publication.count({ where }),
+		prisma.publication.findMany({
 			select: defaultPublicationSelect,
 			where,
 			orderBy,
 			skip,
 			take,
 		}),
-	}
+	])
+
+	return { records, total }
 }
 
-type List = ReturnType<typeof findPublications>
+export type GetPublicationsResponse = Awaited<
+	ReturnType<typeof findPublications>
+>
 
 export async function createPublication(publication: CreatePublication) {
 	const { type, writtenInYear, volumeInPages } = publication
@@ -88,6 +94,10 @@ export async function createPublication(publication: CreatePublication) {
 	})
 }
 
+export type CreatePublicationResponse = Awaited<
+	ReturnType<typeof createPublication>
+>
+
 export async function updatePublication(publication: UpdatePublication) {
 	const { id, ...data } = publication
 	return prisma.publication.update({
@@ -97,9 +107,17 @@ export async function updatePublication(publication: UpdatePublication) {
 	})
 }
 
+export type UpdatePublicationResponse = Awaited<
+	ReturnType<typeof updatePublication>
+>
+
 export async function deletePublication(id: number) {
 	return prisma.publication.delete({
 		select: defaultPublicationSelect,
 		where: { id },
 	})
 }
+
+export type DeletePublicationResponse = Awaited<
+	ReturnType<typeof deletePublication>
+>

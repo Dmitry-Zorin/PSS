@@ -7,10 +7,10 @@ import {
 	Text,
 } from '@chakra-ui/react'
 import Link from 'next/link'
-import { inferQueryOutput } from 'utils/trpc'
+import { GetPublicationsResponse } from 'server/services/publication'
 
 interface PublicationsListItemProps {
-	record: inferQueryOutput<'publication.list'>['records'][number]
+	record: GetPublicationsResponse['records'][number]
 	search?: string
 }
 

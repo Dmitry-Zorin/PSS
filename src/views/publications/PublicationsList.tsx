@@ -3,12 +3,12 @@ import { ActionsToolbar, CreateButton, Search } from 'components'
 import { useDebounce } from 'hooks'
 import { useRouter } from 'next/router'
 import { Dispatch, SetStateAction } from 'react'
+import { GetPublicationsResponse } from 'server/services/publication'
 import { Query } from 'types'
-import { inferQueryOutput } from 'utils/trpc'
 import PublicationsListItem from './PublicationsListItem'
 
 interface PublicationsListProps {
-	data?: inferQueryOutput<'publication.list'>
+	data?: GetPublicationsResponse
 	query: Query
 	setQuery: Dispatch<SetStateAction<Query>>
 }

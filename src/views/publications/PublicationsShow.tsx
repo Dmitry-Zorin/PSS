@@ -1,9 +1,9 @@
 import { SimpleGrid, Stack, Text } from '@chakra-ui/react'
 import { LabeledText } from 'components'
-import { inferQueryOutput } from 'utils'
+import { GetPublicationResponse } from 'server/services/publication'
 
 interface PublicationsShowProps {
-	data: inferQueryOutput<'publication.one'>
+	data: Exclude<GetPublicationResponse, null>
 }
 
 export default function PublicationsShow({ data }: PublicationsShowProps) {
