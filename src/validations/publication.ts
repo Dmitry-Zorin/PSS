@@ -6,15 +6,11 @@ import { z } from 'zod'
 
 const currentYear = new Date().getFullYear()
 
-function strictObject<T extends z.ZodRawShape>(object: T) {
-	return z.object(object).strict()
-}
-
-export const publicationIdSchema = strictObject({
+export const publicationIdSchema = z.strictObject({
 	id: preprocessToNumber(z.number().int()),
 })
 
-export const publicationSchema = strictObject({
+export const publicationSchema = z.strictObject({
 	title: z.string().min(8).max(300),
 	description: z.string().min(4).max(2000).optional().or(z.literal('')),
 	type: z.string().min(4).max(50).optional().or(z.literal('')),
@@ -44,13 +40,15 @@ export const updatePublicationSchema =
 
 export type UpdatePublication = z.infer<typeof updatePublicationSchema>
 
-export const publicationFiltersSchema = strictObject({
-	category: z.string(),
-	search: z.string(),
-	sortField: z.string(),
-	sortOrder: z.enum(['asc', 'desc']),
-	skip: preprocessToNumber(z.number().int()),
-	take: preprocessToNumber(z.number().int()),
-}).partial()
+export const publicationFiltersSchema = z
+	.strictObject({
+		category: z.string(),
+		search: z.string(),
+		sortField: z.string(),
+		sortOrder: z.enum(['asc', 'desc']),
+		skip: preprocessToNumber(z.number().int()),
+		take: preprocessToNumber(z.number().int()),
+	})
+	.partial()
 
 export type GetPublicationFilters = z.infer<typeof publicationFiltersSchema>

@@ -4,32 +4,27 @@ import '@fortawesome/fontawesome-svg-core/styles.css'
 import {
 	Hydrate,
 	QueryClient,
-	QueryClientConfig,
 	QueryClientProvider,
 } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { useScrollRestoration } from 'hooks'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
-import { useState } from 'react'
 import theme from 'theme'
 import '../../public/fonts/Golos-Text/Golos-Text.css'
 
 config.autoAddCss = false
 
-const queryClientConfig: QueryClientConfig = {
+const queryClient = new QueryClient({
 	defaultOptions: {
 		queries: {
 			staleTime: 60 * 1000,
 		},
 	},
-}
+})
 
 export default function App({ Component, pageProps }: AppProps) {
 	useScrollRestoration()
-
-	const [queryClient] = useState(new QueryClient(queryClientConfig))
-
 	return (
 		<>
 			<Head>

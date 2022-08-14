@@ -4,31 +4,50 @@ import { Layout, ListButton } from 'components'
 import DeleteButton from 'components/buttons/DeleteButton'
 import { useMutation, useQuery, useRouterQuery } from 'hooks'
 import { HttpError } from 'http-errors'
-import { GetServerSidePropsContext } from 'next'
+import { memoize } from 'lodash'
+import { GetStaticPaths, GetStaticPropsContext } from 'next'
 import useTranslation from 'next-translate/useTranslation'
 import { useRouter } from 'next/router'
+import prisma from 'server/prisma'
 import {
 	DeletePublicationResponse,
 	findPublication,
 	GetPublicationResponse,
 } from 'server/services/publication'
+import { isDevelopment } from 'utils/env'
 import { publicationIdSchema } from 'validations/publication'
 import PublicationsShow from 'views/publications/PublicationsShow'
 
-export const getServerSideProps = async ({
-	res,
+export const getStaticPaths: GetStaticPaths = memoize(async () => {
+	if (isDevelopment) {
+		return { paths: [], fallback: 'blocking' }
+	}
+
+	const publications = await prisma.publication.findMany()
+
+	return {
+		paths: publications.flatMap(({ id, category }) => {
+			return ['ru', 'en'].map((locale) => ({
+				params: {
+					category,
+					id: id.toString(),
+				},
+				locale,
+			}))
+		}),
+		fallback: 'blocking',
+	}
+})
+
+export const getStaticProps = async ({
 	params,
-}: GetServerSidePropsContext<{ id: string }>) => {
+}: GetStaticPropsContext<{ id: string; publication?: string }>) => {
 	const queryClient = new QueryClient()
 	const { id } = publicationIdSchema.parse({ id: params?.id })
 
 	try {
 		const data = await findPublication(id)
 		queryClient.setQueryData([`publications/${id}`], data)
-		res.setHeader(
-			'Cache-Control',
-			`s-maxage=1, stale-while-revalidate=${30 * 24 * 60 * 60}`,
-		)
 	} catch (err) {
 		if (err instanceof HttpError && err.status === 404) {
 			return {

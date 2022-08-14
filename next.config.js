@@ -1,7 +1,7 @@
 const nextTranslate = require('next-translate')
 require('./src/server/env')
 
-const isDev = process.env.NODE_ENV === 'development'
+const isDevelopment = process.env.NODE_ENV === 'development'
 
 const csp = [
 	"default-src 'self' vitals.vercel-insights.com",
@@ -36,7 +36,7 @@ const nextConfig = {
 					},
 					{
 						key: 'Content-Security-Policy',
-						value: isDev ? '' : csp.join(';'),
+						value: isDevelopment ? '' : csp.join(';'),
 					},
 				],
 			},

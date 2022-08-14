@@ -18,11 +18,15 @@ export default createRouter<NextApiRequest, NextApiResponse>()
 	})
 	.put(async (req, res) => {
 		const data = updatePublicationSchema.parse(req.body)
-		res.json(await updatePublication(data))
+		const record = await updatePublication(data)
+		res.revalidate(`/publications/${record.category}/${record.id}`)
+		res.json(record)
 	})
 	.delete(async (req, res) => {
 		const { id } = publicationIdSchema.parse(req.query)
-		res.json(await deletePublication(id))
+		const record = await deletePublication(id)
+		res.revalidate(`/publications/${record.category}/${record.id}`)
+		res.json(record)
 	})
 	.handler({
 		onError: handleError,
