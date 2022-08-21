@@ -11,7 +11,7 @@ export const stiffSpringConfig: Transition = {
 	type: 'spring',
 	stiffness: 180,
 	damping: 14,
-	mass: 0.4,
+	mass: 0.35,
 }
 
 export function getSpringAnimation(open: boolean) {

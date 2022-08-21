@@ -18,6 +18,9 @@ export default function Logo(props: LinkProps) {
 				lineHeight="none"
 				p={2}
 				_hover={{ textDecoration: 'none' }}
+				_focusVisible={{
+					shadow: '0 0 0 2px var(--chakra-colors-primary)',
+				}}
 				{...props}
 			>
 				PSS

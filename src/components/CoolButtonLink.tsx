@@ -8,8 +8,9 @@ export interface CoolButtonLinkProps extends ButtonProps {
 
 export default function CoolButtonLink({ to, ...props }: CoolButtonLinkProps) {
 	return (
-		<Link href={to}>
+		<Link href={to} passHref>
 			<Button
+				as="a"
 				fontSize="xl"
 				fontWeight="medium"
 				rounded="full"

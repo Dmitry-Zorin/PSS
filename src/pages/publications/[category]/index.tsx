@@ -1,77 +1,58 @@
 import { dehydrate, QueryClient } from '@tanstack/react-query'
-import { Layout } from 'components'
-import resources from 'constants/resources'
-import { useQuery, useRouterQuery } from 'hooks'
-import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
+import { CreateButton, Layout, Search } from 'components'
+import { useQuery, useUrlParams, useUrlQuery } from 'hooks'
+import { GetServerSideProps } from 'next'
 import useTranslation from 'next-translate/useTranslation'
-import { useEffect, useState } from 'react'
 import {
 	findPublications,
 	GetPublicationsResponse,
 } from 'server/services/publication'
-import { Query } from 'types'
-import { publicationFiltersSchema } from 'validations/publication'
+import { getPublicationsSchema } from 'validations/publication'
 import PublicationsList from 'views/publications/PublicationsList'
 
-export const getStaticPaths: GetStaticPaths = () => {
-	return {
-		paths: Object.keys(resources.publications).flatMap((category) => {
-			return ['ru', 'en'].map((locale) => ({
-				params: { category },
-				locale,
-			}))
-		}),
-		fallback: false,
-	}
-}
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+	query,
+	res,
+}) => {
 	const queryClient = new QueryClient()
-	const query = publicationFiltersSchema.parse(params)
+	const parsedQuery = getPublicationsSchema.parse(query)
 
-	await queryClient.prefetchQuery(['publications', params], () => {
-		return findPublications(query)
-	})
+	const response = await findPublications(parsedQuery)
+	await queryClient.setQueryData(['publications', query], response)
+
+	if (Object.keys(query).length === 1 && 'category' in query) {
+		res.setHeader(
+			'Cache-Control',
+			`s-maxage=1, stale-while-revalidate=${30 * 24 * 60 * 60}`,
+		)
+	}
 
 	return {
 		props: {
 			dehydratedState: dehydrate(queryClient),
 		},
-		revalidate: 1,
 	}
 }
 
-const PublicationsListPage: NextPage = () => {
+export default function PublicationsListPage() {
 	const { t } = useTranslation()
-	const { category } = useRouterQuery()
+	const { category } = useUrlParams()
+	const queryParams = useUrlQuery()
 
-	const [query, setQuery] = useState<Query>({ category })
-
-	useEffect(() => {
-		setQuery((query) => ({
-			...query,
-			category,
-		}))
-	}, [category])
-
-	const { error, data } = useQuery<GetPublicationsResponse>(
-		'publications',
-		query,
-		{
-			enabled: !!query.category,
-			keepPreviousData: true,
-		},
-	)
+	const { error, data } = useQuery<GetPublicationsResponse>('publications', {
+		category,
+		...queryParams,
+	})
 
 	return (
 		<Layout
 			fullSize
 			error={error}
-			headTitle={category && t(`menu.items.${category}`)}
+			headTitle={t(`layout.menu.items.${category}`)}
+			leftActions={<Search />}
+			rightActions={<CreateButton href={`/publications/${category}/create`} />}
 		>
-			<PublicationsList data={data} query={query} setQuery={setQuery} />
+			{data && <PublicationsList key={category} data={data} />}
 		</Layout>
 	)
 }
-
-export default PublicationsListPage

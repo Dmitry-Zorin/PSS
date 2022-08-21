@@ -33,9 +33,7 @@ export default function TimelineCard({ record }: TimelineCardProps) {
 					}
 				/>
 				<Stack spacing={0} flexGrow={1}>
-					<Text fontSize="md">
-						{t(`${record.category}.name`, { count: 1 })}
-					</Text>
+					<Text fontSize="md">{t(`${record.category}.name_one`)}</Text>
 					<Text fontSize="sm" color="text-secondary">
 						{new Date(record.createdAt).toLocaleString(lang, {
 							day: 'numeric',

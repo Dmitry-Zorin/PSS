@@ -1,17 +1,17 @@
-import { Head } from 'components'
-import { NextPage } from 'next'
 import useTranslation from 'next-translate/useTranslation'
+import Head from 'next/head'
 import Index from 'views/Index'
 
-const IndexPage: NextPage = () => {
+export default function IndexPage() {
 	const { t } = useTranslation()
 
 	return (
 		<>
-			<Head title={t('name')} desc={t('description')} />
+			<Head>
+				<title>{t('name')}</title>
+				<meta name="description" content={t('description')} />
+			</Head>
 			<Index />
 		</>
 	)
 }
-
-export default IndexPage

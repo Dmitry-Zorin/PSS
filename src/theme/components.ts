@@ -1,6 +1,49 @@
 import { ThemeComponents } from '@chakra-ui/react'
+import { mode } from '@chakra-ui/theme-tools'
+
+const inputField = {
+	minH: 10,
+	borderRadius: 'lg',
+	_placeholder: {
+		color: 'text-secondary',
+	},
+	_hover: {
+		borderColor: 'text-secondary',
+	},
+	_focusVisible: {
+		borderColor: 'primary',
+		shadow: '0 0 0 1px var(--chakra-colors-primary)',
+		_placeholder: {
+			color: 'text-secondary',
+		},
+	},
+}
 
 const components: ThemeComponents = {
+	Modal: {
+		baseStyle: {
+			dialog: {
+				bg: 'bg-layer-1',
+				mx: { base: 4, md: 6 },
+				mt: '15vh',
+				px: { base: 0, md: 6 },
+				py: 6,
+			},
+			header: {
+				pb: 4,
+			},
+			overlay: {
+				backdropFilter: 'blur(1px)',
+			},
+		},
+		sizes: {
+			xs: {
+				dialog: {
+					maxW: 64,
+				},
+			},
+		},
+	},
 	Container: {
 		baseStyle: {
 			px: 6,
@@ -15,63 +58,43 @@ const components: ThemeComponents = {
 		defaultProps: {
 			variant: 'ghost',
 		},
-		baseStyle: {
-			borderRadius: 'lg',
-			_focusVisible: {
-				shadow: 'outline',
-			},
-		},
 		variants: {
-			solid: {
+			solid: ({ colorScheme, ...props }) => ({
 				color: 'bg',
 				bg: 'primary',
 				_hover: {
-					bg: 'primary',
 					opacity: 0.9,
+					bg: 'primary',
 				},
 				_active: {
+					opacity: 0.85,
 					bg: 'primary',
-					opacity: 0.8,
 				},
-			},
+				_disabled: {
+					opacity: '0.15 !important',
+					bg: 'primary !important',
+				},
+				_focusVisible: {
+					shadow: 'outline',
+				},
+				...(colorScheme === 'red' && {
+					color: 'bg',
+					bg: mode('red.500', 'red.400')(props),
+				}),
+			}),
 			ghost: {
-				color: 'text-tertiary',
+				color: 'text-secondary',
+				px: 3,
 				_hover: {
 					color: 'primary',
-					bg: 'primary-alpha',
-					opacity: 0.9,
+					borderColor: 'border',
+					bg: 'bg-layer-2',
 				},
 				_active: {
-					bg: 'primary-alpha',
-					opacity: 0.8,
+					bg: 'bg-layer-1',
 				},
-			},
-		},
-	},
-	Textarea: {
-		baseStyle: {
-			element: {
-				color: 'text-tertiary',
-				_focus: {
-					color: 'text',
-				},
-			},
-		},
-		variants: {
-			outline: {
-				borderRadius: 'lg',
-				_placeholder: {
-					borderColor: 'primary',
-					color: 'text-tertiary',
-				},
-				_hover: {
-					borderColor: 'primary',
-				},
-				_focus: {
-					// borderColor: 'primary',
-					_placeholder: {
-						color: 'text-secondary',
-					},
+				_focusVisible: {
+					shadow: '0 0 0 2px var(--chakra-colors-primary)',
 				},
 			},
 		},
@@ -79,7 +102,7 @@ const components: ThemeComponents = {
 	Input: {
 		baseStyle: {
 			element: {
-				color: 'text-tertiary',
+				color: 'text-secondary',
 				_focus: {
 					color: 'text',
 				},
@@ -87,28 +110,36 @@ const components: ThemeComponents = {
 		},
 		variants: {
 			outline: {
-				field: {
-					borderRadius: 'lg',
-					_placeholder: {
-						borderColor: 'primary',
-						color: 'text-tertiary',
-					},
-					_hover: {
-						borderColor: 'primary',
-					},
-					_focus: {
-						// borderColor: 'primary',
-						_placeholder: {
-							color: 'text-secondary',
-						},
-					},
+				field: inputField,
+			},
+		},
+	},
+	Textarea: {
+		baseStyle: {
+			element: {
+				color: 'text-secondary',
+				_focus: {
+					color: 'text',
 				},
+			},
+		},
+		variants: {
+			outline: {
+				...inputField,
+				minH: '5.25rem',
 			},
 		},
 	},
 	FormLabel: {
 		baseStyle: {
 			mb: 1.5,
+		},
+	},
+	Form: {
+		baseStyle: {
+			helperText: {
+				color: 'text-secondary',
+			},
 		},
 	},
 	Tooltip: {
@@ -122,6 +153,9 @@ const components: ThemeComponents = {
 		},
 	},
 	Menu: {
+		defaultProps: {
+			autoSelect: false,
+		},
 		baseStyle: {
 			button: {
 				_focusVisible: {
@@ -130,15 +164,21 @@ const components: ThemeComponents = {
 			},
 			list: {
 				bg: 'bg-layer-1',
-				color: 'text-secondary',
-				borderRadius: 'lg',
-				p: 1,
+				zIndex: 'modal',
+				px: 1,
+			},
+			groupTitle: {
+				textAlign: 'center',
 			},
 			item: {
+				color: 'text-secondary',
 				borderRadius: 'md',
+				span: {
+					fontSize: 'md',
+				},
 				_focus: {
-					bg: 'bg-layer-3',
-					color: 'text',
+					bg: 'bg-layer-2',
+					color: 'primary',
 				},
 				_active: {
 					bg: 'bg-layer-2',
@@ -146,23 +186,9 @@ const components: ThemeComponents = {
 			},
 		},
 	},
-	Drawer: {
-		baseStyle: {
-			dialog: {
-				bg: 'bg-layer-1',
-			},
-		},
-		sizes: {
-			xs: {
-				dialog: {
-					maxW: '16rem',
-				},
-			},
-		},
-	},
 	Divider: {
 		baseStyle: {
-			opacity: 0.75,
+			opacity: 1,
 		},
 	},
 }

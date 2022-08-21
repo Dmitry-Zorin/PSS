@@ -9,6 +9,11 @@ type TapProps = BoxProps &
 
 export default function Tap({ isTapped, scale = 0.95, ...props }: TapProps) {
 	return (
-		<Box as={motion.div} animate={{ scale: isTapped ? scale : 1 }} {...props} />
+		<Box
+			as={motion.div}
+			animate={{ scale: isTapped ? scale : 1 }}
+			lineHeight={1}
+			{...props}
+		/>
 	)
 }

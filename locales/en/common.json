@@ -2,47 +2,74 @@
 	"name": "Publication Storage System",
 	"description": "This is a demo project showing what a storage system for scientific publications may look like",
 	"author": "Dmitry Zorin",
-	"menu": {
-		"items": {
-			"about": "About",
-			"timeline": "Timeline",
-			"authors": "Authors",
-			"publications": "Publications",
-			"articles": "Articles",
-			"abstracts": "Abstracts",
-			"monographs": "Monographs",
-			"dissertations": "Dissertations",
-			"patents": "Patents",
-			"reports": "Reports",
-			"programs": "Programs",
-			"textbooks": "Textbooks",
-			"characters": "Characters",
-			"admin": "Administration"
+	"layout": {
+		"appBar": {
+			"mainMenu": {
+				"label": "Open Main Menu"
+			},
+			"search": {
+				"label": "Search Publications",
+				"title": "Publications Search"
+			},
+			"colorModeMenu": {
+				"label": "Open Color Mode Menu",
+				"title": "Color Mode",
+				"items": {
+					"light": "Light",
+					"dark": "Dark",
+					"system": "System"
+				}
+			},
+			"languageMenu": {
+				"label": "Open Language Menu",
+				"title": "Language"
+			},
+			"userMenu": {
+				"title": "Account",
+				"label": "Open User Menu",
+				"items": {
+					"register": "Create Account",
+					"signIn": "Sign In",
+					"signOut": "Sign Out"
+				}
+			}
+		},
+		"menu": {
+			"items": {
+				"about": "About",
+				"timeline": "Timeline",
+				"authors": "Authors",
+				"publications": "Publications",
+				"articles": "Articles",
+				"abstracts": "Abstracts",
+				"monographs": "Monographs",
+				"dissertations": "Dissertations",
+				"patents": "Patents",
+				"reports": "Reports",
+				"programs": "Programs",
+				"textbooks": "Textbooks",
+				"characters": "Characters",
+				"admin": "Administration"
+			}
 		}
 	},
 	"actions": {
-		"go_back": "Go Back",
+		"back": "Back",
 		"retry": "Try Again",
 		"download": "Download",
 		"save": "Save",
 		"create": "Create",
 		"list": "List",
 		"submit": "Submit",
-		"delete": "Delete"
-	},
-	"labels": {
-		"menu": "Open Menu",
-		"user_menu": "Open User Menu",
-		"color_mode_switch": "Toggle Color Mode"
+		"delete": "Delete",
+		"search": "Search",
+		"add": "Add",
+		"remove": "Remove",
+		"cancel": "Cancel"
 	},
 	"errors": {
-		"404": {
-			"face": "¯\\_( ◉ _ ◉ )_/¯",
-			"name": "Page Not Found"
-		},
-		"500": {
-			"face": "¯\\_( ✖ ෴ ✖ )_/¯",
-			"name": "Internal Server Error"
-		}
+		"unknown": "Unknown Error",
+		"404": "Page Not Found",
+		"500": "Internal Server Error"
 	}
 }

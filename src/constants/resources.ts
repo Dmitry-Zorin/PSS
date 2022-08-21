@@ -1,5 +1,4 @@
 import {
-	faAddressCard,
 	faAward,
 	faBookOpen,
 	faCircleInfo,
@@ -11,6 +10,7 @@ import {
 	faPaste,
 	faSheetPlastic,
 	faTimeline,
+	faUserGraduate,
 } from '@fortawesome/free-solid-svg-icons'
 
 const resources = {
@@ -22,7 +22,7 @@ const resources = {
 			icon: faTimeline,
 		},
 		authors: {
-			icon: faAddressCard,
+			icon: faUserGraduate,
 		},
 	},
 	publications: {

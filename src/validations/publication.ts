@@ -1,19 +1,40 @@
+import { isBrowser } from 'utils/env'
 import {
 	preprocessToNumber,
 	transformEmptyStringToUndefined,
 } from 'utils/validation'
 import { z } from 'zod'
+import { idSchema } from './common'
+
+export const getPublicationsSchema = z
+	.strictObject({
+		category: z.string(),
+		search: z.string(),
+		sortField: z.string(),
+		sortOrder: z.enum(['asc', 'desc']),
+		page: preprocessToNumber(z.number().int()),
+		perPage: preprocessToNumber(z.number().int().max(100)),
+	})
+	.partial()
+
+export type GetPublications = z.infer<typeof getPublicationsSchema>
 
 const currentYear = new Date().getFullYear()
 
-export const publicationIdSchema = z.strictObject({
-	id: preprocessToNumber(z.number().int()),
-})
-
 export const publicationSchema = z.strictObject({
 	title: z.string().min(8).max(300),
-	description: z.string().min(4).max(2000).optional().or(z.literal('')),
-	type: z.string().min(4).max(50).optional().or(z.literal('')),
+	description: z
+		.string()
+		.min(4)
+		.max(2000)
+		.or(transformEmptyStringToUndefined())
+		.optional(),
+	type: z
+		.string()
+		.min(4)
+		.max(50)
+		.or(transformEmptyStringToUndefined())
+		.optional(),
 	writtenInYear: preprocessToNumber(
 		z
 			.number()
@@ -26,7 +47,19 @@ export const publicationSchema = z.strictObject({
 	volumeInPages: preprocessToNumber(z.number().int().min(1).max(100))
 		.or(transformEmptyStringToUndefined())
 		.optional(),
-	extraData: z.string().max(2000).optional().or(z.literal('')),
+	extraData: z
+		.string()
+		.max(2000)
+		.or(transformEmptyStringToUndefined())
+		.optional(),
+	file: isBrowser
+		? z
+				.instanceof(File)
+				.refine((file) => file.size < 1 * 1000 * 1000, {
+					message: 'Файл не дожен превышать 3МБ',
+				})
+				.optional()
+		: z.any(),
 })
 
 export const createPublicationSchema = publicationSchema.extend({
@@ -35,20 +68,6 @@ export const createPublicationSchema = publicationSchema.extend({
 
 export type CreatePublication = z.infer<typeof createPublicationSchema>
 
-export const updatePublicationSchema =
-	publicationSchema.merge(publicationIdSchema)
+export const updatePublicationSchema = publicationSchema.merge(idSchema)
 
 export type UpdatePublication = z.infer<typeof updatePublicationSchema>
-
-export const publicationFiltersSchema = z
-	.strictObject({
-		category: z.string(),
-		search: z.string(),
-		sortField: z.string(),
-		sortOrder: z.enum(['asc', 'desc']),
-		skip: preprocessToNumber(z.number().int()),
-		take: preprocessToNumber(z.number().int()),
-	})
-	.partial()
-
-export type GetPublicationFilters = z.infer<typeof publicationFiltersSchema>

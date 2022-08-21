@@ -5,16 +5,14 @@ import { ReactElement } from 'react'
 interface HeadProps {
 	children?: ReactElement[]
 	title: string
-	desc?: string
 }
 
-export default function Head({ children, title, desc }: HeadProps) {
+export default function Head({ children, title }: HeadProps) {
 	const { t } = useTranslation()
 
 	return (
 		<NextHead>
 			<title>{`${title} | ${t('name')}`}</title>
-			<meta name="description" content={desc} />
 			{children}
 		</NextHead>
 	)

@@ -8,8 +8,6 @@ export default function Sidebar({ children, ...props }: BoxProps) {
 			pos="sticky"
 			top={0}
 			h="100vh"
-			overflowX="hidden"
-			overflowY="auto"
 			flexShrink={0}
 			bg="bg-layer-1"
 			display={{

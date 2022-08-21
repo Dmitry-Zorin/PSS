@@ -5,8 +5,14 @@ export function transformEmptyStringToUndefined() {
 }
 
 export function preprocessToNumber(schema: z.ZodNumber) {
-	return z.preprocess<z.ZodNumber>(
-		(e) => (typeof e === 'string' ? +e || false : false),
-		schema,
-	)
+	return z.preprocess<z.ZodNumber>((e) => {
+		switch (typeof e) {
+			case 'number':
+				return e
+			case 'string':
+				return e === '' ? undefined : +e
+			default:
+				return undefined
+		}
+	}, schema)
 }

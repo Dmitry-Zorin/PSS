@@ -1,14 +1,12 @@
-import { extendTheme } from '@chakra-ui/react'
-import colors from './colors'
 import colorTokens from './colorTokens'
 import components from './components'
 
 const systemFonts =
 	'-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif'
 
-export default extendTheme({
+const theme = {
 	config: {
-		initialColorMode: 'system',
+		initialColorMode: 'system' as const,
 		disableTransitionOnChange: true,
 	},
 	fonts: {
@@ -16,7 +14,6 @@ export default extendTheme({
 		heading: `Golos Text, ${systemFonts}`,
 	},
 	fontSizes: {
-		'2xs': '0.75rem',
 		'sm-': '0.8125rem',
 		'md-': '0.9375rem',
 	},
@@ -28,6 +25,15 @@ export default extendTheme({
 		wider: '0.02rem',
 		widest: '0.04rem',
 	},
+	transition: {
+		duration: {
+			faster: '75ms',
+			fast: '100ms',
+			normal: '150ms',
+			slow: '200ms',
+			slower: '300ms',
+		},
+	},
 	styles: {
 		global: {
 			body: {
@@ -36,6 +42,16 @@ export default extendTheme({
 				fontSize: 'lg',
 				letterSpacing: 'normal',
 				scrollBehavior: 'smooth',
+				overflowX: 'hidden',
+				overflowY: 'scroll',
+				'::-webkit-scrollbar': {
+					bg: 'bg',
+					w: 2.5,
+				},
+				'::-webkit-scrollbar-thumb': {
+					bg: 'border',
+					borderRadius: 'full',
+				},
 			},
 			'*, *::before, &::after': {
 				borderColor: 'border',
@@ -45,9 +61,10 @@ export default extendTheme({
 			},
 		},
 	},
-	colors,
 	semanticTokens: {
 		colors: colorTokens,
 	},
 	components,
-})
+}
+
+export default theme

@@ -1,54 +1,31 @@
-import { Pseudos, SemanticValue } from '@chakra-ui/styled-system'
-import colors from './colors'
-
-function addAlpha(color: string, alpha: number) {
-	return color.replace(')', ` / ${alpha * 100}%)`)
-}
-
-const colorTokens: Record<string, SemanticValue<keyof Pseudos>> = {
+const colorTokens = {
 	primary: {
-		_light: `primary.500`,
-		_dark: `primary.200`,
-	},
-	'primary-alpha': {
-		_light: addAlpha(colors.primary[500]!, 0.1),
-		_dark: addAlpha(colors.primary[200]!, 0.1),
+		_light: `hsl(225 50% 54%)`,
+		_dark: `hsl(225 100% 80%)`,
 	},
 	bg: {
-		_light: 'bg.100',
-		_dark: 'bg.800',
+		_light: 'hsl(222 0% 100%)',
+		_dark: 'hsl(222 28% 16%)',
 	},
 	'bg-layer-1': {
-		_light: 'bg.200',
-		_dark: 'bg.700',
+		_light: 'hsl(222 10% 97%)',
+		_dark: 'hsl(222 28% 19%)',
 	},
 	'bg-layer-2': {
-		_light: 'bg.300',
-		_dark: 'bg.600',
-	},
-	'bg-layer-3': {
-		_light: 'bg.400',
-		_dark: 'bg.500',
+		_light: 'hsl(222 10% 94%)',
+		_dark: 'hsl(222 27% 22%)',
 	},
 	text: {
-		_light: 'text.500',
-		_dark: 'text.200',
+		_light: 'hsl(222 27% 25%)',
+		_dark: 'hsl(222 18% 94%)',
 	},
 	'text-secondary': {
-		_light: 'gray.600',
-		_dark: 'gray.300',
-	},
-	'text-tertiary': {
-		_light: 'gray.500',
-		_dark: 'gray.400',
-	},
-	'text-primary': {
-		_light: `primary.500`,
-		_dark: `primary.200`,
+		_light: 'hsl(222 15% 45%)',
+		_dark: 'hsl(222 23% 70%)',
 	},
 	border: {
-		_light: 'border.200',
-		_dark: 'border.500',
+		_light: 'hsl(222 13% 84%)',
+		_dark: 'hsl(222 25% 28%)',
 	},
 }
 

@@ -1,8 +1,11 @@
 {
+	"authors": {
+		"name_one": "Author",
+		"name_other": "Authors"
+	},
 	"articles": {
 		"name_one": "Article",
-		"name_other": "Articles",
-		"create": "Add article"
+		"name_other": "Articles"
 	},
 	"abstracts": {
 		"name_one": "Abstract",
@@ -32,12 +35,29 @@
 		"name_one": "Textbook",
 		"name_other": "Textbooks"
 	},
-	"authors": {
-		"name_one": "Author",
-		"name_other": "Authors"
-	},
 	"characters": {
 		"name_one": "Character",
 		"name_other": "Characters"
+	},
+	"fields": {
+		"name": "Name",
+		"title": "Title",
+		"description": "Description",
+		"file": "File",
+		"firstName": "First Name",
+		"lastName": "Last name",
+		"middleName": "Middle name",
+		"info": "Info",
+		"type": "Type",
+		"writtenInYear": "Written in (year)",
+		"volumeInPages": "Volume (in pages)",
+		"authors": "Authors",
+		"coauthors": "Coauthors",
+		"coauthor": "Coauthor",
+		"character": "Character",
+		"extraData": "Additional data"
+	},
+	"messages": {
+		"delete": "Are you sure you want to delete {{this}} {{resource}}?"
 	}
 }

@@ -12,7 +12,7 @@ export default function ActionsToolbar({
 	...props
 }: ActionsToolbarProps) {
 	return (
-		<HStack justify="space-between" py={4} {...props}>
+		<HStack justify="space-between" py={1} {...props}>
 			<Flex flexGrow={1}>{leftActions}</Flex>
 			{rightActions && <div>{rightActions}</div>}
 		</HStack>

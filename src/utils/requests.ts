@@ -1,8 +1,9 @@
+import { isBrowser } from 'framer-motion'
 import createHttpError from 'http-errors'
-import { transform } from 'lodash'
+import { isString, transform } from 'lodash'
 
 export function getBaseUrl() {
-	if (typeof window !== 'undefined') {
+	if (isBrowser) {
 		return ''
 	}
 	if (process.env.VERCEL_URL) {
@@ -18,7 +19,7 @@ function createQueryParams(params: QueryParams) {
 		params,
 		(result: QueryParams, value, key) => {
 			if (value) {
-				result[key] = typeof value === 'string' ? value : JSON.stringify(value)
+				result[key] = isString(value) ? value : JSON.stringify(value)
 			}
 		},
 	)
@@ -47,7 +48,7 @@ export async function query<T>(
 }
 
 export interface MutateOptions extends Omit<RequestInit, 'body'> {
-	body?: string | Record<string, unknown>
+	body?: Record<string, unknown>
 }
 
 export async function mutate<T>(
@@ -56,13 +57,23 @@ export async function mutate<T>(
 ): Promise<T> {
 	return fetchApi(`${getBaseUrl()}/api/${path}`, {
 		headers: {
-			'Content-Type': 'application/json',
+			'Content-Type': body?.file ? 'multipart/form-data' : 'application/json',
 		},
 		body: body
-			? typeof body === 'string'
-				? body
+			? body?.file
+				? createFormData(body)
 				: JSON.stringify(body)
 			: undefined,
 		...options,
 	})
+}
+
+export function createFormData(data: Record<string, any>) {
+	return transform(
+		data,
+		(formData, value, key) => {
+			formData.append(key, value)
+		},
+		new FormData(),
+	)
 }

@@ -1,24 +1,20 @@
 import { Box, Container, Heading, HStack, Stack, Text } from '@chakra-ui/react'
-import { ColorModeSwitch, CoolButtonLink } from 'components'
+import { ColorModeMenu, CoolButtonLink, LanguageMenu } from 'components'
 import useTranslation from 'next-translate/useTranslation'
 
 export default function Index() {
 	const { t } = useTranslation()
 
 	return (
-		<Stack minH="100vh" bg="bg">
-			<HStack justify="flex-end" p={{ base: 3, md: 6 }}>
-				<ColorModeSwitch />
+		<Stack spacing={4} minH="100vh" bg="bg" px={{ base: 2, md: 4 }} py={4}>
+			<HStack spacing={0} justify="flex-end">
+				<LanguageMenu />
+				<ColorModeMenu />
 			</HStack>
 			<Stack flexGrow={1}>
 				<Box flexGrow={1} />
-				<Stack
-					spacing={{ base: 6, md: 12 }}
-					align="center"
-					textAlign="center"
-					p={{ base: 3, md: 6 }}
-				>
-					<Stack spacing={{ base: 3, md: 6 }}>
+				<Stack spacing={{ base: 10, md: 12 }} align="center" textAlign="center">
+					<Stack>
 						<Heading
 							as="h2"
 							color="text-secondary"
@@ -35,7 +31,7 @@ export default function Index() {
 							{t('name_to', null, { fallback: 'name' })}
 						</Heading>
 					</Stack>
-					<Container maxW="xl" py={6}>
+					<Container maxW="xl">
 						<Text>{t('description')}</Text>
 					</Container>
 					<Box>
@@ -52,7 +48,7 @@ export default function Index() {
 				</Stack>
 				<Box flexGrow={2} />
 			</Stack>
-			<HStack justify="center" mt="auto" p={6}>
+			<HStack justify="center">
 				<Text color="text-secondary" fontSize="sm" fontWeight="light">
 					© 2022 {t('author')}
 				</Text>

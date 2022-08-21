@@ -1,43 +1,101 @@
 {
+	"authors": {
+		"gender": "m",
+		"name_one": "Автор",
+		"name_other": "Авторы",
+		"name_what": "автора",
+		"this": "этого"
+	},
 	"articles": {
+		"gender": "f",
 		"name_one": "Статья",
 		"name_other": "Статьи",
-		"create": "Добавить статью"
+		"name_what": "статью",
+		"this": "эту"
 	},
 	"abstracts": {
+		"gender": "m",
 		"name_one": "Автореферат",
-		"name_other": "Авторефераты"
+		"name_other": "Авторефераты",
+		"name_what": "автореферат",
+		"this": "этот"
 	},
 	"monographs": {
+		"gender": "f",
 		"name_one": "Монография",
-		"name_other": "Монографии"
+		"name_other": "Монографии",
+		"name_what": "монографию",
+		"this": "эту"
 	},
 	"dissertations": {
+		"gender": "f",
 		"name_one": "Диссертация",
-		"name_other": "Диссертации"
+		"name_other": "Диссертации",
+		"name_what": "диссертацию",
+		"this": "эту"
 	},
 	"patents": {
+		"gender": "m",
 		"name_one": "Патент",
-		"name_other": "Патенты"
+		"name_other": "Патенты",
+		"name_what": "патент",
+		"this": "этот"
 	},
 	"reports": {
+		"gender": "m",
 		"name_one": "Отчет",
-		"name_other": "Отчеты"
+		"name_other": "Отчеты",
+		"name_what": "отчет",
+		"this": "этот"
 	},
 	"programs": {
+		"gender": "f",
 		"name_one": "Программа",
-		"name_other": "Программы"
+		"name_other": "Программы",
+		"name_what": "программу",
+		"this": "эту"
 	},
 	"textbooks": {
+		"gender": "m",
 		"name_one": "Учебник",
-		"name_other": "Учебники"
-	},
-	"authors": {
-		"name_one": "Автор",
-		"name_other": "Авторы"
+		"name_other": "Учебники",
+		"name_what": "учебник",
+		"this": "этот"
 	},
 	"characters": {
+		"gender": "m",
 		"name_one": "Характер работы",
-		"name_other": "Характеры работы"
+		"name_other": "Характеры работы",
+		"name_what": "характер работы",
+		"this": "этот"
+	},
+	"fields": {
+		"name": "Название",
+		"title": "Название",
+		"description": "Описание",
+		"file": "Файл",
+		"firstName": "Имя",
+		"lastName": "Фамилия",
+		"middleName": "Отчество",
+		"info": "Дополнительная информация",
+		"type": "Тип работы",
+		"writtenInYear": "Год создания",
+		"volumeInPages": "Объем (в стр.)",
+		"authors": "Авторы",
+		"coauthors": "Соавторы",
+		"coauthor": "Соавтор",
+		"character": "Характер работы",
+		"extraData": "Дополнительные данные"
+	},
+	"events": {
+		"created_m": "добавлен",
+		"created_f": "добавлена",
+		"updated_m": "обнавлен",
+		"updated_f": "обнавлена",
+		"deleted_m": "удален",
+		"deleted_f": "удалена"
+	},
+	"messages": {
+		"delete": "Вы точно хотите удалить {{this}} {{resource}}"
 	}
 }

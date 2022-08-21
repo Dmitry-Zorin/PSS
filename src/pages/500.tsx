@@ -1,9 +1,8 @@
 import { Center, Divider, Heading, HStack, Stack, Text } from '@chakra-ui/react'
 import { Head, Logo } from 'components'
-import { NextPage } from 'next'
 import useTranslation from 'next-translate/useTranslation'
 
-const Error500Page: NextPage = () => {
+export default function Error500Page() {
 	const { t } = useTranslation()
 	return (
 		<>
@@ -20,17 +19,15 @@ const Error500Page: NextPage = () => {
 						<Divider orientation="vertical" />
 						<div>
 							<Heading as="h2" size="md">
-								{t('errors.500.name')}
+								{t('errors.500')}
 							</Heading>
 						</div>
 					</HStack>
 					<Text fontSize="4xl" color="text-secondary">
-						{t('errors.500.face')}
+						¯\_( ✖ ෴ ✖ )_/¯
 					</Text>
 				</Stack>
 			</Center>
 		</>
 	)
 }
-
-export default Error500Page

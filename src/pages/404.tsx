@@ -1,9 +1,8 @@
 import { Center, Divider, Heading, HStack, Stack, Text } from '@chakra-ui/react'
-import { CoolButtonLink, Head, Logo } from 'components'
-import { NextPage } from 'next'
+import { Head, Logo } from 'components'
 import useTranslation from 'next-translate/useTranslation'
 
-const Error404Page: NextPage = () => {
+export default function Error404Page() {
 	const { t } = useTranslation()
 	return (
 		<>
@@ -20,17 +19,15 @@ const Error404Page: NextPage = () => {
 						<Divider orientation="vertical" />
 						<div>
 							<Heading as="h2" size="md">
-								{t('errors.404.name')}
+								{t('errors.404')}
 							</Heading>
 						</div>
 					</HStack>
 					<Text fontSize="4xl" color="text-secondary">
-						{t('errors.404.face')}
+						¯\_( ◉ _ ◉ )_/¯
 					</Text>
 				</Stack>
 			</Center>
 		</>
 	)
 }
-
-export default Error404Page

@@ -3,45 +3,55 @@ import {
 	InputGroup,
 	InputLeftElement,
 	InputProps,
-	InputRightElement,
 } from '@chakra-ui/react'
-import { faClose, faSearch } from '@fortawesome/free-solid-svg-icons'
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { Icon } from 'components'
+import { useRedirect, useUrlQuery } from 'hooks'
 import useTranslation from 'next-translate/useTranslation'
 import { useEffect, useState } from 'react'
 
-interface SearchProps extends Omit<InputProps, 'onChange'> {
-	onChange: (search: string) => void
-}
+interface SearchProps extends InputProps {}
 
-export default function Search({ onChange, ...props }: SearchProps) {
-	const { t } = useTranslation('fields')
-	const [value, setValue] = useState('')
+export default function Search({ ...props }: SearchProps) {
+	const { t } = useTranslation()
+	const queryParams = useUrlQuery()
+	const redirect = useRedirect()
+	const [value, setValue] = useState(queryParams.search ?? '')
 
 	useEffect(() => {
-		onChange(value.trim())
-	}, [onChange, value])
+		setValue(queryParams.search ?? '')
+	}, [queryParams.search])
+
+	async function search() {
+		await redirect({ search: value || undefined })
+	}
 
 	return (
-		<InputGroup w={60}>
-			<InputLeftElement pointerEvents="none">
+		<InputGroup maxW={60} ml={2}>
+			<InputLeftElement>
 				<Icon icon={faSearch} />
 			</InputLeftElement>
 			<Input
 				value={value}
-				placeholder={t('search')}
+				placeholder={t('actions.search')}
 				onChange={(e) => setValue(e.target.value)}
+				onKeyDown={(e) => {
+					e.key === 'Enter' && search()
+				}}
 				{...props}
 			/>
-			{value && (
+			{/* {value && (
 				<InputRightElement
 					cursor="pointer"
-					onClick={() => setValue('')}
+					onClick={() => {
+						setValue('')
+						search()
+					}}
 					_hover={{ color: 'primary' }}
 				>
 					<Icon icon={faClose} />
 				</InputRightElement>
-			)}
+			)} */}
 		</InputGroup>
 	)
 }

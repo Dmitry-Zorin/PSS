@@ -1,15 +1,15 @@
 import { Stack } from '@chakra-ui/react'
-import { Author } from '@prisma/client'
 import { LabeledText } from 'components'
+import { GetAuthorResponse } from 'server/services/author'
 
 interface AuthorsShowProps {
-	data?: Author
+	data: GetAuthorResponse
 }
 
 export default function AuthorsShow({ data }: AuthorsShowProps) {
-	return data ? (
+	return (
 		<Stack spacing={12} pt={2}>
 			{data.info && <LabeledText label="info" text={data.info} />}
 		</Stack>
-	) : null
+	)
 }

@@ -7,12 +7,12 @@ import {
 } from 'server/services/publication'
 import {
 	createPublicationSchema,
-	publicationFiltersSchema,
+	getPublicationsSchema,
 } from 'validations/publication'
 
 export default createRouter<NextApiRequest, NextApiResponse>()
 	.get(async (req, res) => {
-		const filters = publicationFiltersSchema.parse(req.query)
+		const filters = getPublicationsSchema.parse(req.query)
 		res.json(await findPublications(filters))
 	})
 	.post(async (req, res) => {

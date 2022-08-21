@@ -2,9 +2,10 @@ import { Prisma, Publication } from '@prisma/client'
 import httpError from 'http-errors'
 import prisma from 'server/prisma'
 import { getSearchFilter } from 'utils/filters'
+import { Id } from 'validations/common'
 import {
 	CreatePublication,
-	GetPublicationFilters,
+	GetPublications,
 	UpdatePublication,
 } from 'validations/publication'
 
@@ -24,7 +25,7 @@ const defaultPublicationSelect = Prisma.validator<Prisma.PublicationSelect>()({
 	extraData: true,
 })
 
-export async function findPublication(id: number) {
+export async function findPublication(id: Id) {
 	const record = await prisma.publication.findUnique({
 		select: defaultPublicationSelect,
 		where: { id },
@@ -37,14 +38,14 @@ export async function findPublication(id: number) {
 
 export type GetPublicationResponse = Awaited<ReturnType<typeof findPublication>>
 
-export async function findPublications(filters: GetPublicationFilters) {
+export async function findPublications(filters: GetPublications) {
 	const {
 		category,
 		search,
 		sortField,
 		sortOrder = 'asc',
-		skip,
-		take = 25,
+		page = 1,
+		perPage = 1,
 	} = filters
 
 	const where = {
@@ -69,8 +70,8 @@ export async function findPublications(filters: GetPublicationFilters) {
 			select: defaultPublicationSelect,
 			where,
 			orderBy,
-			skip,
-			take,
+			skip: (page - 1) * perPage,
+			take: perPage,
 		}),
 	])
 
@@ -111,7 +112,7 @@ export type UpdatePublicationResponse = Awaited<
 	ReturnType<typeof updatePublication>
 >
 
-export async function deletePublication(id: number) {
+export async function deletePublication(id: Id) {
 	return prisma.publication.delete({
 		select: defaultPublicationSelect,
 		where: { id },

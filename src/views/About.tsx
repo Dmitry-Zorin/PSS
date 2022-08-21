@@ -14,7 +14,7 @@ export default function About() {
 					title: string
 					text: string
 				}[]
-			>('paragraphs', {}, { returnObjects: true }).map(({ title, text }) => (
+			>('paragraphs', null, { returnObjects: true }).map(({ title, text }) => (
 				<Stack as="section" spacing={3} key={title} pt={10}>
 					<Heading as="h3" fontSize="xl" fontWeight="bold">
 						{title}

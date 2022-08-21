@@ -11,62 +11,62 @@ import {
 } from '@chakra-ui/react'
 import { range as _range } from 'lodash'
 import useTranslation from 'next-translate/useTranslation'
-import { Path, UseFormRegister } from 'react-hook-form'
-import { FieldErrors } from 'react-hook-form/dist/types/errors'
+import { Path, useFormContext } from 'react-hook-form'
 import ResizeTextarea from 'react-textarea-autosize'
 
-interface MyFormControlProps {
+interface FormControlProps {
 	field: Path<any>
-	errors?: FieldErrors<any>
-	register?: UseFormRegister<any>
 	optional?: boolean
 	multiline?: boolean
 	number?: boolean
 	list?: string[]
 	range?: [number, number]
+	file?: boolean
 }
 
 export default function FormControl({
 	field,
-	errors,
-	register,
 	optional,
 	multiline,
 	number,
 	list,
 	range,
+	file,
 	...props
-}: MyFormControlProps & InputProps & TextareaProps) {
-	const { t } = useTranslation('fields')
+}: FormControlProps & InputProps & TextareaProps) {
+	const { t } = useTranslation('resources')
+	const {
+		register,
+		formState: { errors },
+	} = useFormContext()
 
 	const datalistOptions = range ? _range(...range) : list
 
 	const inputProps = {
 		type: number ? 'number' : 'text',
 		list: datalistOptions ? field : undefined,
-		...register?.(field),
+		...register(field),
 		...props,
 	}
 
 	return (
 		<ChakraFormControl isInvalid={!!errors?.[field]}>
 			<HStack justify="space-between">
-				<FormLabel>{t(field)}</FormLabel>
-				{optional && <FormHelperText>optional</FormHelperText>}
+				<FormLabel>{t(`fields.${field}`)}</FormLabel>
+				{optional && <FormHelperText>необязательно</FormHelperText>}
 			</HStack>
 			{multiline ? (
 				<Textarea
 					as={ResizeTextarea}
 					resize="none"
-					minH="unset"
 					overflow="hidden"
 					{...inputProps}
 				/>
 			) : (
 				<Input {...inputProps} />
 			)}
-			<FormErrorMessage mt={1.5}>
-				{errors?.[field]?.message as string | undefined}
+			<FormErrorMessage>
+				{errors[field]?.message as string | undefined}
 			</FormErrorMessage>
 			{/* {datalistOptions && (
 				<datalist id={field}>

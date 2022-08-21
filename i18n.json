@@ -3,8 +3,12 @@
 	"defaultLocale": "ru",
 	"defaultNS": "common",
 	"pages": {
-		"*": ["common", "resources", "fields", "about"],
+		"*": ["common"],
 		"/": ["index"],
-		"/about": ["about"]
+		"/about": ["about"],
+		"/timeline": ["resources"],
+		"rgx:/create$": ["resources"],
+		"/authors/[id]": ["resources"],
+		"/publications/[category]/[id]": ["resources"]
 	}
 }

@@ -1,7 +1,7 @@
 import { Layout } from 'components'
 import resources from 'constants/resources'
-import { useRouterQuery } from 'hooks'
-import { GetStaticPaths, NextPage } from 'next'
+import { useUrlParams } from 'hooks'
+import { GetStaticPaths } from 'next'
 import useTranslation from 'next-translate/useTranslation'
 import PublicationsCreate from 'views/publications/PublicationsCreate'
 
@@ -17,15 +17,20 @@ export const getStaticPaths: GetStaticPaths = () => {
 	}
 }
 
-const PublicationsCreatePage: NextPage = () => {
+export default function PublicationsCreatePage() {
 	const { t } = useTranslation('resources')
-	const { category } = useRouterQuery()
+	const { category } = useUrlParams()
 
 	return (
-		<Layout title={category && t(`${category}.create`)}>
+		<Layout
+			title={
+				category &&
+				`${t('common:actions.create')} ${t(`${category}.name_what`, null, {
+					fallback: t(`${category}.name_one`),
+				})}`
+			}
+		>
 			<PublicationsCreate />
 		</Layout>
 	)
 }
-
-export default PublicationsCreatePage

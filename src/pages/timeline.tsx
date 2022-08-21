@@ -1,13 +1,14 @@
 import { dehydrate, QueryClient } from '@tanstack/react-query'
 import { Layout } from 'components'
-import { useQuery } from 'hooks'
-import { GetStaticProps, NextPage } from 'next'
+import { useQuery, useUrlQuery } from 'hooks'
+import { isEmpty } from 'lodash'
+import { GetServerSideProps } from 'next'
 import useTranslation from 'next-translate/useTranslation'
 import {
 	findPublications,
 	GetPublicationsResponse,
 } from 'server/services/publication'
-import { publicationFiltersSchema } from 'validations/publication'
+import { getPublicationsSchema } from 'validations/publication'
 import TimelineView from 'views/timeline/Timeline'
 
 const defaultParams = {
@@ -15,41 +16,47 @@ const defaultParams = {
 	sortOrder: 'desc',
 }
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+	query,
+	res,
+}) => {
 	const queryClient = new QueryClient()
-	const query = publicationFiltersSchema.parse(params ?? defaultParams)
+	const queryParams = { ...defaultParams, ...query }
+	const parsedQuery = getPublicationsSchema.parse(queryParams)
 
-	await queryClient.prefetchQuery(['publications', defaultParams], () => {
-		return findPublications(query)
-	})
+	const response = await findPublications(parsedQuery)
+	await queryClient.setQueryData(['publications', queryParams], response)
+
+	if (isEmpty(query)) {
+		res.setHeader(
+			'Cache-Control',
+			`s-maxage=1, stale-while-revalidate=${30 * 24 * 60 * 60}`,
+		)
+	}
 
 	return {
 		props: {
 			dehydratedState: dehydrate(queryClient),
 		},
-		revalidate: 1,
 	}
 }
 
-const TimelinePage: NextPage = () => {
+export default function TimelinePage() {
 	const { t } = useTranslation()
+	const queryParams = useUrlQuery()
 
 	const { error, data } = useQuery<GetPublicationsResponse>(
 		'publications',
 		{
-			sortField: 'createdAt',
-			sortOrder: 'desc',
+			...defaultParams,
+			...queryParams,
 		},
-		{
-			keepPreviousData: true,
-		},
+		{},
 	)
 
 	return (
-		<Layout title={t('menu.items.timeline')} error={error}>
+		<Layout title={t('layout.menu.items.timeline')} error={error}>
 			{data && <TimelineView data={data} />}
 		</Layout>
 	)
 }
-
-export default TimelinePage

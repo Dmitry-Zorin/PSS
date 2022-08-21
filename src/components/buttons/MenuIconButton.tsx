@@ -14,6 +14,7 @@ export default function MenuIconButton({
 	return (
 		<MenuButton
 			as={IconButton}
+			bg="transparent"
 			icon={
 				<Tap isTapped={isTapped} scale={0.9}>
 					{icon}
