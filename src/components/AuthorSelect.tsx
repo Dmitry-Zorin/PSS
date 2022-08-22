@@ -1,6 +1,7 @@
 import {
 	Box,
 	Button,
+	chakra,
 	FormControl,
 	FormLabel,
 	HStack,
@@ -24,15 +25,19 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { Icon, IconButton } from 'components'
 import { AnimatePresence, motion } from 'framer-motion'
-import { getAuthorFullName } from 'helpers/authors'
 import { useQuery } from 'hooks'
-import { transform } from 'lodash'
+import { filter } from 'lodash'
 import useTranslation from 'next-translate/useTranslation'
-import { useState } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
 import { GetAuthorsResponse } from 'server/services/author'
 import { stiffSpringConfig } from 'utils/animation'
+import { Id } from 'validations/common'
 
-export default function AuthorSelect() {
+interface AuthorSelectProps {
+	setAuthorIds: Dispatch<SetStateAction<Id[]>>
+}
+
+export default function AuthorSelect({ setAuthorIds }: AuthorSelectProps) {
 	const { t } = useTranslation('resources')
 	const [search, setSearch] = useState<string | undefined>()
 	const [value, setValue] = useState('')
@@ -84,19 +89,26 @@ export default function AuthorSelect() {
 								type="checkbox"
 								value={selectedAuthors.map(({ id }) => id.toString())}
 								onChange={(ids) => {
-									return setSelectedAuthors(
-										transform(
-											data!.records,
-											(result: typeof selectedAuthors, value) => {
-												if (ids.includes(value.id.toString())) {
-													result.push({
-														id: value.id,
-														name: getAuthorFullName(value),
-													})
-												}
-											},
-										),
-									)
+									if (ids.length < selectedAuthors.length) {
+										return setAuthorIds((authorIds) => {
+											const newIds = authorIds.filter((e) => {
+												return ids.includes(e.toString())
+											})
+											setSelectedAuthors((authors) => {
+												return filter(authors, ({ id }) => newIds.includes(id))
+											})
+											return newIds
+										})
+									}
+									const newId: Id = +(ids as string[]).pop()!
+									setAuthorIds((authorIds) => [...authorIds, newId])
+									setSelectedAuthors((authors) => [
+										...authors,
+										{
+											id: newId,
+											name: data!.records.find((e) => e.id === newId)!.fullName,
+										},
+									])
 								}}
 							>
 								{data &&
@@ -105,7 +117,7 @@ export default function AuthorSelect() {
 											key={author.id}
 											value={author.id.toString()}
 										>
-											{getAuthorFullName(author)}
+											{author.fullName}
 										</MenuItemOption>
 									))}
 							</MenuOptionGroup>
@@ -115,7 +127,8 @@ export default function AuthorSelect() {
 				<List flexGrow={1}>
 					{!selectedAuthors.length && (
 						<ListItem h={0} color="text-secondary">
-							Чтобы добавить авторов нажмите &rarr;
+							Нажмите &quot;Добавить&quot;{' '}
+							<chakra.span fontWeight="semibold">&rarr;</chakra.span>
 						</ListItem>
 					)}
 					<AnimatePresence>
@@ -134,11 +147,11 @@ export default function AuthorSelect() {
 									<IconButton
 										aria-label={t('common:actions.remove')}
 										icon={<Icon icon={faCircleMinus} />}
-										onClick={() =>
-											setSelectedAuthors(
+										onClick={() => {
+											return setSelectedAuthors(
 												selectedAuthors.filter((e) => e.id !== id),
 											)
-										}
+										}}
 									/>
 									<Text>{name}</Text>
 								</HStack>

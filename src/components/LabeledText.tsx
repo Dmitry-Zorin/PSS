@@ -6,11 +6,13 @@ import {
 	Text,
 	TextProps,
 } from '@chakra-ui/react'
+import { isString, isNumber } from 'lodash'
 import useTranslation from 'next-translate/useTranslation'
+import { ReactElement } from 'react'
 
 interface LabeledTextProps extends TextProps {
 	label: string
-	text?: string | number | null
+	text?: ReactElement | string | number | null
 	stat?: boolean
 }
 
@@ -34,7 +36,7 @@ export default function LabeledText({
 			<Text fontSize="sm" fontWeight="medium" color="text-secondary">
 				{label}
 			</Text>
-			<Text {...props}>{text}</Text>
+			{isString(text) || isNumber(text) ? <Text {...props}>{text}</Text> : text}
 		</Stack>
 	)
 }

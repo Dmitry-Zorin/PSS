@@ -1,9 +1,10 @@
-import { Id } from 'validations/common'
 import { Author, Prisma } from '@prisma/client'
+import { addAuthorName } from 'helpers/authors'
 import httpError from 'http-errors'
 import prisma from 'server/prisma'
 import { getSearchFilter } from 'utils/filters'
 import { CreateAuthor, GetAuthors, UpdateAuthor } from 'validations/author'
+import { Id } from 'validations/common'
 
 const defaultAuthorSelect = Prisma.validator<Prisma.AuthorSelect>()({
 	id: true,
@@ -21,13 +22,23 @@ export async function findAuthor(id: Id) {
 	if (!record) {
 		throw new httpError.NotFound('Автор не найден')
 	}
-	return record
+	return addAuthorName(record)
 }
 
 export type GetAuthorResponse = Awaited<ReturnType<typeof findAuthor>>
 
 export async function findAuthors(filters: GetAuthors) {
-	const { search, page = 1, perPage = 1 } = filters
+	const { ids, search, page = 1, perPage = 1 } = filters
+
+	if (ids) {
+		const records = await prisma.author.findMany({
+			where: { id: { in: ids } },
+		})
+		return {
+			total: ids.length,
+			records: records.map(addAuthorName),
+		}
+	}
 
 	const where = getSearchFilter<Author>(search, [
 		'lastName',
@@ -46,7 +57,7 @@ export async function findAuthors(filters: GetAuthors) {
 		}),
 	])
 
-	return { records, total }
+	return { records: records.map(addAuthorName), total }
 }
 
 export type GetAuthorsResponse = Awaited<ReturnType<typeof findAuthors>>

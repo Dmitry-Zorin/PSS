@@ -1,16 +1,17 @@
 import { ButtonProps } from '@chakra-ui/react'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { Button, Icon } from 'components'
+import { isString } from 'lodash'
 import useTranslation from 'next-translate/useTranslation'
-import Link from 'next/link'
+import Link, { LinkProps } from 'next/link'
 
 export interface LinkButtonProps extends ButtonProps {
-	href?: string
+	href?: LinkProps['href']
 	icon: IconProp
 	action: string
 }
 
-export default function CreateButton({
+export default function LinkButton({
 	href,
 	icon,
 	action,
@@ -29,7 +30,11 @@ export default function CreateButton({
 	)
 
 	return href ? (
-		<Link href={href} passHref>
+		<Link
+			href={href}
+			as={isString(href) ? href : href.pathname ?? undefined}
+			passHref
+		>
 			{button}
 		</Link>
 	) : (

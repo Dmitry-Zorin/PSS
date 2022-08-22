@@ -1,4 +1,4 @@
-import { SimpleGrid, Stack, Text } from '@chakra-ui/react'
+import { List, ListItem, SimpleGrid, Stack, Text } from '@chakra-ui/react'
 import { LabeledText } from 'components'
 import { GetPublicationResponse } from 'server/services/publication'
 
@@ -12,6 +12,18 @@ export default function PublicationsShow({ data }: PublicationsShowProps) {
 			{data.description && <Text>{data.description}</Text>}
 			{data.extraData && (
 				<LabeledText label="extraData" text={data.extraData} />
+			)}
+			{data.authors && (
+				<LabeledText
+					label="authors"
+					text={
+						<List spacing={1}>
+							{data.authors.map((e) => (
+								<ListItem key={e.id}>{e.fullName}</ListItem>
+							))}
+						</List>
+					}
+				/>
 			)}
 			<SimpleGrid
 				columns={{ base: 2, lg: 4 }}

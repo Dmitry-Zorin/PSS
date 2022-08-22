@@ -11,7 +11,7 @@ import {
 	useDisclosure,
 } from '@chakra-ui/react'
 import { useQueryClient } from '@tanstack/react-query'
-import { Button, Layout, ListButton } from 'components'
+import { Button, EditButton, Layout } from 'components'
 import DeleteButton from 'components/buttons/DeleteButton'
 import { useEventToast, useMutation, useUrlParams } from 'hooks'
 import {
@@ -79,10 +79,15 @@ export default function PublicationsShowPage({
 			error={error}
 			headTitle={id && `${t(`${category}.name`, { count: 1 })} #${id}`}
 			title={data?.title}
-			leftActions={<ListButton href={`/publications/${category}`} />}
 			rightActions={
 				data && (
 					<>
+						<EditButton
+							href={{
+								pathname: `/publications/${category}/create`,
+								query: JSON.stringify(data),
+							}}
+						/>
 						<DeleteButton onClick={onOpen} isLoading={mutation.isLoading} />
 						<Modal
 							size="2xl"

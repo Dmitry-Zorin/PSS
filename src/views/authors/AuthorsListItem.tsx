@@ -1,6 +1,5 @@
 import { LinkBox, LinkOverlay, ListItem, Stack } from '@chakra-ui/react'
 import { Highlight } from 'components'
-import { getAuthorFullName } from 'helpers/authors'
 import { useUrlQuery } from 'hooks'
 import Link from 'next/link'
 import { GetAuthorsResponse } from 'server/services/author'
@@ -25,7 +24,7 @@ export default function AuthorsListItem({ record }: AuthorsListItemProps) {
 				<div>
 					<Link href={`/authors/${record.id}`} passHref>
 						<LinkOverlay flexGrow={1}>
-							<Highlight text={getAuthorFullName(record)} search={search} />
+							<Highlight text={record.fullName} search={search} />
 						</LinkOverlay>
 					</Link>
 				</div>

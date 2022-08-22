@@ -1,6 +1,7 @@
 import { isBrowser } from 'framer-motion'
 import createHttpError from 'http-errors'
-import { isString, transform } from 'lodash'
+import { transform } from 'lodash'
+import { stringify } from 'querystring'
 
 export function getBaseUrl() {
 	if (isBrowser) {
@@ -13,18 +14,6 @@ export function getBaseUrl() {
 }
 
 type QueryParams = Record<string, any>
-
-function createQueryParams(params: QueryParams) {
-	const serializedQuery = transform(
-		params,
-		(result: QueryParams, value, key) => {
-			if (value) {
-				result[key] = isString(value) ? value : JSON.stringify(value)
-			}
-		},
-	)
-	return new URLSearchParams(serializedQuery)
-}
 
 async function fetchApi(url: string, options?: RequestInit) {
 	const res = await fetch(url, options)
@@ -40,9 +29,7 @@ export async function query<T>(
 	options?: RequestInit,
 ): Promise<T> {
 	return fetchApi(
-		`${getBaseUrl()}/api/${path}${
-			params ? `?${createQueryParams(params)}` : ''
-		}`,
+		`${getBaseUrl()}/api/${path}${params ? `?${stringify(params)}` : ''}`,
 		options,
 	)
 }

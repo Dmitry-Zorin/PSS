@@ -10,7 +10,7 @@ export default function SubmitButton(
 			type="submit"
 			variant="solid"
 			icon={faCheck}
-			action="submit"
+			action="create"
 			{...props}
 		/>
 	)

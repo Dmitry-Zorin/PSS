@@ -19,7 +19,7 @@ export default function Form({
 	const formMethods = useForm({ resolver: zodResolver(schema) })
 	const {
 		handleSubmit,
-		formState: { isSubmitting },
+		formState: { errors, isSubmitting },
 	} = formMethods
 
 	return (

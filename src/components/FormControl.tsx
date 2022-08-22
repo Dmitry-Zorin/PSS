@@ -1,7 +1,6 @@
 import {
 	FormControl as ChakraFormControl,
 	FormErrorMessage,
-	FormHelperText,
 	FormLabel,
 	HStack,
 	Input,
@@ -45,6 +44,7 @@ export default function FormControl({
 	const inputProps = {
 		type: number ? 'number' : 'text',
 		list: datalistOptions ? field : undefined,
+		placeholder: props.placeholder ?? optional ? '-' : undefined,
 		...register(field),
 		...props,
 	}
@@ -53,7 +53,6 @@ export default function FormControl({
 		<ChakraFormControl isInvalid={!!errors?.[field]}>
 			<HStack justify="space-between">
 				<FormLabel>{t(`fields.${field}`)}</FormLabel>
-				{optional && <FormHelperText>необязательно</FormHelperText>}
 			</HStack>
 			{multiline ? (
 				<Textarea

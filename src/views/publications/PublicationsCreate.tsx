@@ -10,11 +10,10 @@ import {
 import { useEventToast, useMutation, useUrlParams } from 'hooks'
 import useTranslation from 'next-translate/useTranslation'
 import { useRouter } from 'next/router'
+import { useState } from 'react'
 import { CreatePublicationResponse } from 'server/services/publication'
-import {
-	CreatePublication,
-	createPublicationSchema,
-} from 'validations/publication'
+import { Id } from 'validations/common'
+import { CreatePublication, publicationSchema } from 'validations/publication'
 
 const currentYear = new Date().getFullYear()
 
@@ -25,6 +24,9 @@ export default function PublicationsCreate() {
 	const mutation = useMutation<CreatePublicationResponse>('publications')
 	const showToast = useEventToast(category, 'created')
 	const queryClient = useQueryClient()
+	const [authorIds, setAuthorIds] = useState<Id[]>([])
+
+	console.log(useUrlParams())
 
 	async function onSubmit(data: CreatePublication) {
 		const { id } = await mutation.mutateAsync({
@@ -33,6 +35,7 @@ export default function PublicationsCreate() {
 				...data,
 				category,
 				type: data.type || t(`${category}.name`, { count: 1 }),
+				authorIds,
 			},
 		})
 		showToast('success')
@@ -41,7 +44,7 @@ export default function PublicationsCreate() {
 	}
 
 	return (
-		<Form onSubmit={onSubmit} schema={createPublicationSchema}>
+		<Form onSubmit={onSubmit} schema={publicationSchema}>
 			<FormControl field="title" multiline minH={10} />
 			<FormControl field="description" multiline optional />
 			<Stack
@@ -70,7 +73,7 @@ export default function PublicationsCreate() {
 					optional
 				/>
 			</Stack>
-			<AuthorSelect />
+			<AuthorSelect setAuthorIds={setAuthorIds} />
 			<FormControl field="extraData" multiline optional />
 			<FileUpload />
 		</Form>

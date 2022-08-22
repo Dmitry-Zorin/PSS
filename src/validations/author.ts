@@ -7,6 +7,7 @@ import { idSchema } from './common'
 
 export const getAuthorsSchema = z
 	.strictObject({
+		ids: preprocessToNumber(z.number().int()).array().max(100),
 		search: z.string(),
 		page: preprocessToNumber(z.number().int()),
 		perPage: preprocessToNumber(z.number().int().max(100)),

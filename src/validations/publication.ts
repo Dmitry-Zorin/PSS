@@ -64,6 +64,8 @@ export const publicationSchema = z.strictObject({
 
 export const createPublicationSchema = publicationSchema.extend({
 	category: z.string().min(4).max(20),
+	type: z.string().min(4).max(50),
+	authorIds: preprocessToNumber(z.number().int()).array().max(10),
 })
 
 export type CreatePublication = z.infer<typeof createPublicationSchema>

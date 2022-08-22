@@ -1,4 +1,5 @@
 import { Prisma, Publication } from '@prisma/client'
+import { addAuthorNames } from 'helpers/authors'
 import httpError from 'http-errors'
 import prisma from 'server/prisma'
 import { getSearchFilter } from 'utils/filters'
@@ -23,6 +24,14 @@ const defaultPublicationSelect = Prisma.validator<Prisma.PublicationSelect>()({
 	volumeInPages: true,
 	coauthors: true,
 	extraData: true,
+	authors: {
+		select: {
+			id: true,
+			lastName: true,
+			firstName: true,
+			middleName: true,
+		},
+	},
 })
 
 export async function findPublication(id: Id) {
@@ -33,7 +42,7 @@ export async function findPublication(id: Id) {
 	if (!record) {
 		throw new httpError.NotFound('Публикация не найдена')
 	}
-	return record
+	return addAuthorNames(record)
 }
 
 export type GetPublicationResponse = Awaited<ReturnType<typeof findPublication>>
@@ -75,7 +84,7 @@ export async function findPublications(filters: GetPublications) {
 		}),
 	])
 
-	return { records, total }
+	return { records: records.map(addAuthorNames), total }
 }
 
 export type GetPublicationsResponse = Awaited<
@@ -83,14 +92,24 @@ export type GetPublicationsResponse = Awaited<
 >
 
 export async function createPublication(publication: CreatePublication) {
-	const { type, writtenInYear, volumeInPages } = publication
+	const {
+		writtenInYear = new Date().getFullYear(),
+		volumeInPages = 1,
+		authorIds,
+		...otherFields
+	} = publication
+
 	return prisma.publication.create({
 		select: defaultPublicationSelect,
 		data: {
-			...publication,
-			type: type || publication.category,
-			writtenInYear: writtenInYear || new Date().getFullYear(),
-			volumeInPages: volumeInPages || 1,
+			...otherFields,
+			writtenInYear,
+			volumeInPages,
+			...(authorIds && {
+				authors: {
+					connect: authorIds.map((id) => ({ id })),
+				},
+			}),
 		},
 	})
 }

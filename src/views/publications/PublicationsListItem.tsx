@@ -1,4 +1,14 @@
-import { LinkBox, LinkOverlay, ListItem, Stack, Text } from '@chakra-ui/react'
+import {
+	Badge,
+	HStack,
+	LinkBox,
+	LinkOverlay,
+	ListItem,
+	Stack,
+	Text,
+	Wrap,
+	WrapItem,
+} from '@chakra-ui/react'
 import { Highlight } from 'components'
 import { useTruncate, useUrlQuery } from 'hooks'
 import Link from 'next/link'
@@ -23,19 +33,30 @@ export default function PublicationsListItem({
 			py={3}
 			_hover={{ bg: 'bg-layer-1' }}
 		>
-			<Stack spacing={2}>
-				<div>
+			<Stack spacing={3}>
+				<HStack lineHeight="none">
 					<Link href={`/publications/${record.category}/${record.id}`} passHref>
 						<LinkOverlay flexGrow={1}>
 							<Highlight text={record.title} search={search} />
-							{` (${record.writtenInYear})`}
 						</LinkOverlay>
 					</Link>
-				</div>
+					<Text fontWeight="semibold">{record.writtenInYear}</Text>
+				</HStack>
 				{record.description && (
 					<Text fontSize="md" color="text-secondary">
 						<Highlight text={truncate(record.description)} search={search} />
 					</Text>
+				)}
+				{record.authors && (
+					<Wrap>
+						{record.authors.map((e) => (
+							<WrapItem key={e.id}>
+								<Badge px={1.5} py={0.5}>
+									{e.fullName}
+								</Badge>
+							</WrapItem>
+						))}
+					</Wrap>
 				)}
 			</Stack>
 		</LinkBox>

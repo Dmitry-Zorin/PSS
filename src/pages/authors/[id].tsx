@@ -1,7 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { Layout, ListButton } from 'components'
 import DeleteButton from 'components/buttons/DeleteButton'
-import { getAuthorFullName } from 'helpers/authors'
 import { useEventToast, useMutation, useUrlParams } from 'hooks'
 import {
 	GetStaticPaths,
@@ -61,7 +60,7 @@ export default function AuthorsShowPage({
 		<Layout
 			error={error}
 			headTitle={id && `${t(`${category}.name`, { count: 1 })} #${id}`}
-			title={data && getAuthorFullName(data)}
+			title={data && data.fullName}
 			leftActions={<ListButton href={`/authors`} />}
 			rightActions={
 				<DeleteButton

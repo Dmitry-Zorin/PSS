@@ -49,7 +49,7 @@ export default function PublicationsListPage() {
 			error={error}
 			headTitle={t(`layout.menu.items.publications`)}
 		>
-			<PublicationsList data={data} />
+			{data && <PublicationsList data={data} />}
 		</Layout>
 	)
 }

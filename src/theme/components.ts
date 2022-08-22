@@ -58,6 +58,9 @@ const components: ThemeComponents = {
 		defaultProps: {
 			variant: 'ghost',
 		},
+		baseStyle: {
+			borderRadius: 'lg',
+		},
 		variants: {
 			solid: ({ colorScheme, ...props }) => ({
 				color: 'bg',
@@ -189,6 +192,21 @@ const components: ThemeComponents = {
 	Divider: {
 		baseStyle: {
 			opacity: 1,
+		},
+	},
+	Badge: {
+		baseStyle: {
+			fontWeight: 'semibold',
+			borderRadius: 'md',
+			letterSpacing: 'wide',
+			px: 2,
+			py: 1,
+		},
+		variants: {
+			subtle: {
+				bg: 'bg-layer-2',
+				color: 'text',
+			},
 		},
 	},
 }
