@@ -1,3 +1,4 @@
+import { MAX_PER_PAGE } from './../constants/app'
 import {
 	preprocessToNumber,
 	transformEmptyStringToUndefined,
@@ -10,7 +11,7 @@ export const getAuthorsSchema = z
 		ids: preprocessToNumber(z.number().int()).array().max(100),
 		search: z.string(),
 		page: preprocessToNumber(z.number().int()),
-		perPage: preprocessToNumber(z.number().int().max(100)),
+		perPage: preprocessToNumber(z.number().int().max(MAX_PER_PAGE)),
 	})
 	.partial()
 

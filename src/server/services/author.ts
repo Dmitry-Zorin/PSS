@@ -6,6 +6,7 @@ import { getSearchFilter } from 'utils/filters'
 import { omitNull } from 'utils/helpers'
 import { CreateAuthor, GetAuthors, UpdateAuthor } from 'validations/author'
 import { Id } from 'validations/common'
+import { PER_PAGE } from './../../constants/app'
 
 const defaultAuthorSelect = Prisma.validator<Prisma.AuthorSelect>()({
 	id: true,
@@ -46,7 +47,7 @@ export async function findAuthor(id: Id) {
 export type GetAuthorResponse = Awaited<ReturnType<typeof findAuthor>>
 
 export async function findAuthors(filters: GetAuthors) {
-	const { ids, search, page = 1, perPage = 1 } = filters
+	const { ids, search, page = 1, perPage = PER_PAGE } = filters
 
 	if (ids) {
 		const records = await prisma.author.findMany({

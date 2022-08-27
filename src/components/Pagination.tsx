@@ -1,6 +1,7 @@
 import { HStack, Input, Stack, Text } from '@chakra-ui/react'
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons'
 import { Icon, IconButton } from 'components'
+import { PER_PAGE } from 'constants/app'
 import { useRedirect, useUrlQuery } from 'hooks'
 import { useEffect, useState } from 'react'
 
@@ -9,7 +10,10 @@ interface PaginationProps {
 	total: number
 }
 
-export default function Pagination({ perPage = 1, total }: PaginationProps) {
+export default function Pagination({
+	perPage = PER_PAGE,
+	total,
+}: PaginationProps) {
 	const queryParams = useUrlQuery()
 	const redirect = useRedirect()
 	const { page = '1' } = queryParams
@@ -54,7 +58,6 @@ export default function Pagination({ perPage = 1, total }: PaginationProps) {
 				<Text>из {maxPage}</Text>
 			</HStack>
 			<HStack justify="center">
-				{/* <Button onClick={() => changePage(1)}>1</Button> */}
 				<IconButton
 					aria-label="prev"
 					variant="solid"
@@ -71,7 +74,6 @@ export default function Pagination({ perPage = 1, total }: PaginationProps) {
 					onClick={() => changePage(Math.min(maxPage, +page + 1))}
 					disabled={page === maxPage.toString()}
 				/>
-				{/* <Button onClick={() => changePage(maxPage)}>{maxPage}</Button> */}
 			</HStack>
 		</Stack>
 	) : null

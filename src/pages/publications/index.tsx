@@ -1,5 +1,5 @@
 import { dehydrate, QueryClient } from '@tanstack/react-query'
-import { DEFAULT_CACHE_VALUE } from 'constants/constants'
+import { DEFAULT_CACHE_VALUE } from 'constants/app'
 import { GetServerSideProps } from 'next'
 import { findPublications } from 'server/services/publication'
 import { getPublicationsSchema } from 'validations/publication'

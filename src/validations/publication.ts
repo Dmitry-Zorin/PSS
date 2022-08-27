@@ -4,6 +4,7 @@ import {
 	transformEmptyStringToUndefined,
 } from 'utils/validation'
 import { z } from 'zod'
+import { MAX_PER_PAGE } from './../constants/app'
 
 export const getPublicationsSchema = z
 	.strictObject({
@@ -12,7 +13,7 @@ export const getPublicationsSchema = z
 		sortField: z.string(),
 		sortOrder: z.enum(['asc', 'desc']),
 		page: preprocessToNumber(z.number().int()),
-		perPage: preprocessToNumber(z.number().int().max(100)),
+		perPage: preprocessToNumber(z.number().int().max(MAX_PER_PAGE)),
 	})
 	.partial()
 

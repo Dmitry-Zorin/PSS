@@ -11,6 +11,7 @@ import {
 	GetPublications,
 	UpdatePublication,
 } from 'validations/publication'
+import { PER_PAGE } from './../../constants/app'
 
 const defaultPublicationSelect = Prisma.validator<Prisma.PublicationSelect>()({
 	id: true,
@@ -56,7 +57,7 @@ export async function findPublications(filters: GetPublications) {
 		sortField,
 		sortOrder = 'asc',
 		page = 1,
-		perPage = 1,
+		perPage = PER_PAGE,
 	} = filters
 
 	const where = {
