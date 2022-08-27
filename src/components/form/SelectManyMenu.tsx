@@ -45,7 +45,8 @@ export default function SelectManyMenu<Item extends { id: Id }>({
 					as={Button}
 					leftIcon={<Icon icon={faCirclePlus} boxSize={5} />}
 				>
-					{t('common:actions.add')}
+					{/* {t('common:actions.add')} */}
+					Выбрать авторов
 				</MenuButton>
 				<MenuList>
 					<Box px={1} pb={2}>
@@ -74,7 +75,7 @@ export default function SelectManyMenu<Item extends { id: Id }>({
 									value={selectedItems.map(({ id }) => id.toString())}
 									onChange={(ids) => {
 										if (ids.length > selectedItems.length) {
-											onAdd(+(ids as string[]).pop()!)
+											onAdd(+(ids as string[]).at(-1)!)
 										} else {
 											onRemove((ids as string[]).map((e) => +e))
 										}

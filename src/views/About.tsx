@@ -1,11 +1,12 @@
 import { Heading, Stack, Text } from '@chakra-ui/react'
+import { MainArea } from 'components'
 import useTranslation from 'next-translate/useTranslation'
 
 export default function About() {
 	const { t } = useTranslation('about')
 
 	return (
-		<>
+		<MainArea title={t('common:layout.menu.items.about')}>
 			<Heading as="h2" size="lg">
 				{t('subtitle')}
 			</Heading>
@@ -22,6 +23,6 @@ export default function About() {
 					<Text>{text}</Text>
 				</Stack>
 			))}
-		</>
+		</MainArea>
 	)
 }

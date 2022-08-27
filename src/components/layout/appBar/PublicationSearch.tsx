@@ -67,7 +67,7 @@ export default function PublicationSearch() {
 							<InputRightElement h="full" w={14}>
 								<Kbd
 									fontSize="md"
-									bg="bg"
+									bg="bg-layer-2"
 									borderColor="text-secondary"
 									px={2.5}
 									pt={0.5}

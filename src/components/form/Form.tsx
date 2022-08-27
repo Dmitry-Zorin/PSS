@@ -1,33 +1,50 @@
 import { Center, Stack, StackProps } from '@chakra-ui/react'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { SubmitButton } from 'components'
+import { SaveButton, SubmitButton } from 'components'
 import { ReactElement } from 'react'
-import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
+import {
+	FormProvider,
+	SubmitHandler,
+	useForm,
+	UseFormProps,
+} from 'react-hook-form'
+import { z, ZodType } from 'zod'
 
-interface FormProps extends StackProps {
+interface FormProps<T extends ZodType> extends StackProps {
 	children: ReactElement[]
-	onSubmit: SubmitHandler<any>
-	schema: any
+	onSubmit: SubmitHandler<z.infer<T>>
+	schema: T
+	defaultValues: UseFormProps['defaultValues']
+	useFormProps?: UseFormProps
 }
 
-export default function Form({
+export default function Form<T extends ZodType>({
 	children,
 	onSubmit,
 	schema,
+	defaultValues,
+	useFormProps,
 	...props
-}: FormProps) {
-	const formMethods = useForm({ resolver: zodResolver(schema) })
+}: FormProps<T>) {
+	const formMethods = useForm({
+		resolver: zodResolver(schema),
+		defaultValues,
+		...useFormProps,
+	})
+
 	const {
 		handleSubmit,
-		formState: { errors, isSubmitting },
+		formState: { isSubmitting },
 	} = formMethods
+
+	const Button = defaultValues ? SaveButton : SubmitButton
 
 	return (
 		<FormProvider {...formMethods}>
 			<Stack as="form" spacing={6} onSubmit={handleSubmit(onSubmit)} {...props}>
 				{children}
 				<Center pt={6}>
-					<SubmitButton size="lg" isLoading={isSubmitting} />
+					<Button size="lg" isLoading={isSubmitting} />
 				</Center>
 			</Stack>
 		</FormProvider>

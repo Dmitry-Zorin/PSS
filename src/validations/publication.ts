@@ -4,7 +4,6 @@ import {
 	transformEmptyStringToUndefined,
 } from 'utils/validation'
 import { z } from 'zod'
-import { idSchema } from './common'
 
 export const getPublicationsSchema = z
 	.strictObject({
@@ -66,10 +65,13 @@ export const createPublicationSchema = publicationSchema.extend({
 	category: z.string().min(4).max(20),
 	type: z.string().min(4).max(50),
 	authorIds: preprocessToNumber(z.number().int()).array().max(10),
+	coauthors: z.string().array(),
 })
 
 export type CreatePublication = z.infer<typeof createPublicationSchema>
 
-export const updatePublicationSchema = publicationSchema.merge(idSchema)
+export const updatePublicationSchema = publicationSchema.extend({
+	authorIds: preprocessToNumber(z.number().int()).array().max(10),
+})
 
 export type UpdatePublication = z.infer<typeof updatePublicationSchema>

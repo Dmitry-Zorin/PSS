@@ -16,7 +16,7 @@ export default createRouter<NextApiRequest, NextApiResponse>()
 	})
 	.put(async (req, res) => {
 		const data = updatePublicationSchema.parse(req.body)
-		const record = await updatePublication(data)
+		const record = await updatePublication(idSchema.parse(req.query).id, data)
 		res.revalidate(`/publications/${record.category}/${record.id}`)
 		res.json(record)
 	})

@@ -3,6 +3,7 @@ import { addAuthorName } from 'helpers/authors'
 import httpError from 'http-errors'
 import prisma from 'server/prisma'
 import { getSearchFilter } from 'utils/filters'
+import { omitNull } from 'utils/helpers'
 import { CreateAuthor, GetAuthors, UpdateAuthor } from 'validations/author'
 import { Id } from 'validations/common'
 
@@ -14,15 +15,32 @@ const defaultAuthorSelect = Prisma.validator<Prisma.AuthorSelect>()({
 	info: true,
 })
 
+const authorWithPublicationsSelect = Prisma.validator<Prisma.AuthorSelect>()({
+	...defaultAuthorSelect,
+	publications: {
+		select: {
+			category: true,
+			title: true,
+			type: true,
+			characterId: true,
+			publicationPlace: true,
+			writtenInYear: true,
+			volumeInPages: true,
+			coauthors: true,
+			extraData: true,
+		},
+	},
+})
+
 export async function findAuthor(id: Id) {
 	const record = await prisma.author.findUnique({
-		select: defaultAuthorSelect,
+		select: authorWithPublicationsSelect,
 		where: { id },
 	})
 	if (!record) {
 		throw new httpError.NotFound('Автор не найден')
 	}
-	return addAuthorName(record)
+	return omitNull(addAuthorName(record))
 }
 
 export type GetAuthorResponse = Awaited<ReturnType<typeof findAuthor>>
@@ -36,7 +54,7 @@ export async function findAuthors(filters: GetAuthors) {
 		})
 		return {
 			total: ids.length,
-			records: records.map(addAuthorName),
+			records: omitNull(records.map(addAuthorName)),
 		}
 	}
 
@@ -57,36 +75,42 @@ export async function findAuthors(filters: GetAuthors) {
 		}),
 	])
 
-	return { records: records.map(addAuthorName), total }
+	return { records: omitNull(records.map(addAuthorName)), total }
 }
 
 export type GetAuthorsResponse = Awaited<ReturnType<typeof findAuthors>>
 
 export async function createAuthor(author: CreateAuthor) {
-	return prisma.author.create({
-		select: defaultAuthorSelect,
-		data: author,
-	})
+	return omitNull(
+		await prisma.author.create({
+			select: defaultAuthorSelect,
+			data: omitNull(author),
+		}),
+	)
 }
 
 export type CreateAuthorResponse = Awaited<ReturnType<typeof createAuthor>>
 
 export async function updateAuthor(author: UpdateAuthor) {
 	const { id, ...data } = author
-	return prisma.author.update({
-		select: defaultAuthorSelect,
-		where: { id },
-		data,
-	})
+	return omitNull(
+		await prisma.author.update({
+			select: defaultAuthorSelect,
+			where: { id },
+			data,
+		}),
+	)
 }
 
 export type UpdateAuthorResponse = Awaited<ReturnType<typeof updateAuthor>>
 
 export async function deleteAuthor(id: Id) {
-	return prisma.author.delete({
-		select: defaultAuthorSelect,
-		where: { id },
-	})
+	return omitNull(
+		await prisma.author.delete({
+			select: defaultAuthorSelect,
+			where: { id },
+		}),
+	)
 }
 
 export type DeleteAuthorResponse = Awaited<ReturnType<typeof deleteAuthor>>

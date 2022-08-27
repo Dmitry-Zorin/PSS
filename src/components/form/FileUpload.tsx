@@ -65,10 +65,7 @@ function FileUpload2({ onChange }: FileUploadProps) {
 			borderStyle="dashed"
 			borderColor="border"
 			cursor="pointer"
-			_hover={{
-				bg: 'bg-layer-1',
-				borderColor: 'text-secondary',
-			}}
+			_hover={{ borderColor: 'text-secondary' }}
 			{...getRootProps()}
 		>
 			<input {...getInputProps()} />

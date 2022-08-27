@@ -1,23 +1,37 @@
 import { List, ListItem } from '@chakra-ui/react'
-import { Pagination } from 'components'
+import { MainArea, Pagination } from 'components'
+import { useQuery, useUrlQuery } from 'hooks'
+import useTranslation from 'next-translate/useTranslation'
 import { GetPublicationsResponse } from 'server/services/publication'
+import { defaultTimelineParams } from '../../pages/timeline'
 import TimelineCard from './TimelineCard'
 
-interface TimelineProps {
-	data: GetPublicationsResponse
-}
+export default function Timeline() {
+	const { t } = useTranslation()
+	const queryParams = useUrlQuery()
 
-export default function Timeline({ data }: TimelineProps) {
+	const { error, data } = useQuery<GetPublicationsResponse>(
+		'publications',
+		{
+			...defaultTimelineParams,
+			...queryParams,
+		},
+		{},
+	)
 	return (
-		<>
-			<List spacing={9}>
-				{data.records.map((e) => (
-					<ListItem key={e.id}>
-						<TimelineCard record={e} />
-					</ListItem>
-				))}
-			</List>
-			<Pagination total={data.total} />
-		</>
+		<MainArea title={t('layout.menu.items.timeline')} error={error}>
+			{data && (
+				<>
+					<List spacing={9}>
+						{data.records.map((e) => (
+							<ListItem key={e.id}>
+								<TimelineCard record={e} />
+							</ListItem>
+						))}
+					</List>
+					<Pagination total={data.total} />
+				</>
+			)}
+		</MainArea>
 	)
 }

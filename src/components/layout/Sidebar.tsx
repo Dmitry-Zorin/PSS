@@ -10,6 +10,8 @@ export default function Sidebar({ children, ...props }: BoxProps) {
 			h="100vh"
 			flexShrink={0}
 			bg="bg-layer-1"
+			borderRight="1px"
+			borderColor="border"
 			display={{
 				base: 'none',
 				md: 'block',

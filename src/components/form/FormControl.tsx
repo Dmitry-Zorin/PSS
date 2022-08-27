@@ -8,29 +8,22 @@ import {
 	Textarea,
 	TextareaProps,
 } from '@chakra-ui/react'
-import { range as _range } from 'lodash'
 import useTranslation from 'next-translate/useTranslation'
-import { Path, useFormContext } from 'react-hook-form'
+import { useFormContext } from 'react-hook-form'
 import ResizeTextarea from 'react-textarea-autosize'
 
 interface FormControlProps {
-	field: Path<any>
+	field: string
+	value?: string | number
 	optional?: boolean
 	multiline?: boolean
-	number?: boolean
-	list?: string[]
-	range?: [number, number]
-	file?: boolean
 }
 
 export default function FormControl({
 	field,
+	value,
 	optional,
 	multiline,
-	number,
-	list,
-	range,
-	file,
 	...props
 }: FormControlProps & InputProps & TextareaProps) {
 	const { t } = useTranslation('resources')
@@ -39,18 +32,15 @@ export default function FormControl({
 		formState: { errors },
 	} = useFormContext()
 
-	const datalistOptions = range ? _range(...range) : list
-
 	const inputProps = {
-		type: number ? 'number' : 'text',
-		list: datalistOptions ? field : undefined,
+		value,
 		placeholder: props.placeholder ?? optional ? '-' : undefined,
 		...register(field),
 		...props,
 	}
 
 	return (
-		<ChakraFormControl isInvalid={!!errors?.[field]}>
+		<ChakraFormControl isInvalid={!!errors[field]}>
 			<HStack justify="space-between">
 				<FormLabel>{t(`fields.${field}`)}</FormLabel>
 			</HStack>
@@ -67,13 +57,6 @@ export default function FormControl({
 			<FormErrorMessage>
 				{errors[field]?.message as string | undefined}
 			</FormErrorMessage>
-			{/* {datalistOptions && (
-				<datalist id={field}>
-					{datalistOptions.map((e) => (
-						<option key={e} value={e} />
-					))}
-				</datalist>
-			)} */}
 		</ChakraFormControl>
 	)
 }

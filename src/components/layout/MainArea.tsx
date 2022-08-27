@@ -1,12 +1,14 @@
 import { Box, Heading, Stack } from '@chakra-ui/react'
-import { ActionsToolbar } from 'components'
+import { ActionsToolbar, Head } from 'components'
+import { HeadProps } from 'components/Head'
 import { isString } from 'lodash'
 import useTranslation from 'next-translate/useTranslation'
 import { ReactNode } from 'react'
 
 export interface MainAreaProps {
-	error?: unknown
 	children: ReactNode
+	head?: Partial<HeadProps>
+	error?: unknown
 	title?: string
 	leftActions?: ReactNode
 	rightActions?: ReactNode
@@ -15,6 +17,7 @@ export interface MainAreaProps {
 
 export default function MainArea({
 	children,
+	head,
 	error,
 	title,
 	leftActions,
@@ -22,12 +25,13 @@ export default function MainArea({
 	fullSize,
 }: MainAreaProps) {
 	const { t } = useTranslation()
-	const shouldShowActions = leftActions || rightActions
 
+	const shouldShowActions = leftActions || rightActions
 	const heading = error ? t('error') : title
 
 	return (
 		<>
+			<Head title={head?.title ?? title ?? ''} desc={head?.desc} />
 			{shouldShowActions && (
 				<ActionsToolbar leftActions={leftActions} rightActions={rightActions} />
 			)}
@@ -48,8 +52,8 @@ export default function MainArea({
 									<Heading
 										as="h1"
 										fontSize={{ base: '3xl', sm: '5xl', '2xl': '6xl' }}
-										lineHeight={{ base: 'shorter', md: 'none' }}
-										pt={{ base: 6, md: shouldShowActions ? 6 : 0 }}
+										lineHeight={{ base: 'shorter', sm: 'none' }}
+										pt={{ base: 6, sm: shouldShowActions ? 6 : 0 }}
 									>
 										{heading}
 									</Heading>

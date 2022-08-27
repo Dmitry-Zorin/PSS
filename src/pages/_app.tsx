@@ -1,6 +1,8 @@
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
+import { Layout } from 'components'
 import { useScrollRestoration } from 'hooks'
+import { NextPage } from 'next'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
 import QueryProvider from 'providers/QueryProvider'
@@ -9,8 +11,17 @@ import '../../public/fonts/Golos-Text/Golos-Text.css'
 
 config.autoAddCss = false
 
-export default function App({ Component, pageProps }: AppProps) {
+type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+	useLayout?: boolean
+}
+
+type AppPropsWithLayout = AppProps & {
+	Component: NextPageWithLayout
+}
+
+export default function App({ Component, pageProps }: AppPropsWithLayout) {
 	useScrollRestoration()
+
 	return (
 		<>
 			<Head>
@@ -18,7 +29,13 @@ export default function App({ Component, pageProps }: AppProps) {
 			</Head>
 			<ThemeProvider>
 				<QueryProvider state={pageProps.dehydratedState}>
-					<Component {...pageProps} />
+					{Component?.useLayout === false ? (
+						<Component {...pageProps} />
+					) : (
+						<Layout>
+							<Component {...pageProps} />
+						</Layout>
+					)}
 				</QueryProvider>
 			</ThemeProvider>
 		</>

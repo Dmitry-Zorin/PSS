@@ -6,6 +6,7 @@
 		"moduleResolution": "node",
 		"jsx": "preserve",
 		"baseUrl": "src",
+		"typeRoots": ["./node_modules/type-fest/source"],
 		"noEmit": true,
 		"strict": true,
 		"allowJs": true,

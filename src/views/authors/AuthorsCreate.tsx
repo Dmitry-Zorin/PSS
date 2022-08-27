@@ -1,11 +1,13 @@
 import { useQueryClient } from '@tanstack/react-query'
-import { Form, FormControl } from 'components'
+import { Form, FormControl, MainArea } from 'components'
 import { useEventToast, useMutation } from 'hooks'
+import useTranslation from 'next-translate/useTranslation'
 import { useRouter } from 'next/router'
 import { CreateAuthorResponse } from 'server/services/author'
 import { authorSchema, CreateAuthor } from 'validations/author'
 
 export default function AuthorsCreate() {
+	const { t } = useTranslation('resources')
 	const router = useRouter()
 	const mutation = useMutation<CreateAuthorResponse>('authors')
 	const showToast = useEventToast('authors', 'created')
@@ -22,11 +24,17 @@ export default function AuthorsCreate() {
 	}
 
 	return (
-		<Form onSubmit={onSubmit} schema={authorSchema}>
-			<FormControl field="lastName" />
-			<FormControl field="firstName" />
-			<FormControl field="middleName" optional />
-			<FormControl field="info" multiline optional />
-		</Form>
+		<MainArea
+			title={`${t('common:actions.create')} ${t('authors.name_what', null, {
+				fallback: t('authors.name_one'),
+			})}`}
+		>
+			<Form onSubmit={onSubmit} schema={authorSchema} defaultValues={{}}>
+				<FormControl field="lastName" />
+				<FormControl field="firstName" />
+				<FormControl field="middleName" optional />
+				<FormControl field="info" multiline optional />
+			</Form>
+		</MainArea>
 	)
 }

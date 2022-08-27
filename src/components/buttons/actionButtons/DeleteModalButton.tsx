@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react'
 import { useQueryClient } from '@tanstack/react-query'
 import { Button } from 'components'
-import DeleteButton from 'components/buttons/DeleteButton'
+import DeleteButton from 'components/buttons/actionButtons/DeleteButton'
 import { useEventToast, useMutation } from 'hooks'
 import useTranslation from 'next-translate/useTranslation'
 import { useRouter } from 'next/router'

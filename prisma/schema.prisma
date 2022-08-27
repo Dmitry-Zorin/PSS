@@ -46,8 +46,8 @@ model Publication {
   character        Character? @relation(fields: [characterId], references: [id])
   characterId      Int?
   publicationPlace String?
-  writtenInYear    Int?
-  volumeInPages    Int?       @default(1)
+  writtenInYear    Int
+  volumeInPages    Int        @default(1)
   authors          Author[]
   coauthors        String[]
   extraData        String?

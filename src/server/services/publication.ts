@@ -2,7 +2,9 @@ import { Prisma, Publication } from '@prisma/client'
 import { addAuthorNames } from 'helpers/authors'
 import httpError from 'http-errors'
 import prisma from 'server/prisma'
+import { Jsonify } from 'type-fest'
 import { getSearchFilter } from 'utils/filters'
+import { omitNull } from 'utils/helpers'
 import { Id } from 'validations/common'
 import {
 	CreatePublication,
@@ -42,7 +44,7 @@ export async function findPublication(id: Id) {
 	if (!record) {
 		throw new httpError.NotFound('Публикация не найдена')
 	}
-	return addAuthorNames(record)
+	return omitNull(addAuthorNames(record))
 }
 
 export type GetPublicationResponse = Awaited<ReturnType<typeof findPublication>>
@@ -84,11 +86,11 @@ export async function findPublications(filters: GetPublications) {
 		}),
 	])
 
-	return { records: records.map(addAuthorNames), total }
+	return { records: omitNull(records.map(addAuthorNames)), total }
 }
 
-export type GetPublicationsResponse = Awaited<
-	ReturnType<typeof findPublications>
+export type GetPublicationsResponse = Jsonify<
+	Awaited<ReturnType<typeof findPublications>>
 >
 
 export async function createPublication(publication: CreatePublication) {
@@ -99,45 +101,61 @@ export async function createPublication(publication: CreatePublication) {
 		...otherFields
 	} = publication
 
-	return prisma.publication.create({
-		select: defaultPublicationSelect,
-		data: {
-			...otherFields,
-			writtenInYear,
-			volumeInPages,
-			...(authorIds && {
-				authors: {
-					connect: authorIds.map((id) => ({ id })),
-				},
-			}),
-		},
-	})
+	return omitNull(
+		await prisma.publication.create({
+			select: defaultPublicationSelect,
+			data: {
+				...otherFields,
+				writtenInYear,
+				volumeInPages,
+				...(authorIds && {
+					authors: {
+						connect: authorIds.map((id) => ({ id })),
+					},
+				}),
+			},
+		}),
+	)
 }
 
-export type CreatePublicationResponse = Awaited<
-	ReturnType<typeof createPublication>
+export type CreatePublicationResponse = Jsonify<
+	Awaited<ReturnType<typeof createPublication>>
 >
 
-export async function updatePublication(publication: UpdatePublication) {
-	const { id, ...data } = publication
-	return prisma.publication.update({
-		select: defaultPublicationSelect,
-		where: { id },
-		data,
-	})
+export async function updatePublication(
+	id: Id,
+	publication: UpdatePublication,
+) {
+	const { authorIds, ...data } = publication
+	return omitNull(
+		await prisma.publication.update({
+			select: defaultPublicationSelect,
+			where: { id },
+			data: {
+				...data,
+				...(authorIds && {
+					authors: {
+						set: authorIds.map((id) => ({ id })),
+					},
+				}),
+			},
+		}),
+	)
 }
 
-export type UpdatePublicationResponse = Awaited<
-	ReturnType<typeof updatePublication>
+export type UpdatePublicationResponse = Jsonify<
+	Awaited<ReturnType<typeof updatePublication>>
 >
 
 export async function deletePublication(id: Id) {
-	return prisma.publication.delete({
-		select: defaultPublicationSelect,
-		where: { id },
-	})
+	return omitNull(
+		await prisma.publication.delete({
+			select: defaultPublicationSelect,
+			where: { id },
+		}),
+	)
 }
 
-export type DeletePublicationResponse = Awaited<
-	ReturnType<typeof deletePublication>
+export type DeletePublicationResponse = Jsonify<
+	Awaited<ReturnType<typeof deletePublication>>
 >

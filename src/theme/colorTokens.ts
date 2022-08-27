@@ -5,18 +5,18 @@ const colorTokens = {
 	},
 	bg: {
 		_light: 'hsl(222 0% 100%)',
-		_dark: 'hsl(222 22% 16%)',
+		_dark: 'hsl(222 22% 17%)',
 	},
 	'bg-layer-1': {
 		_light: 'hsl(222 10% 97%)',
-		_dark: 'hsl(222 22% 19%)',
+		_dark: 'hsl(222 22% 20%)',
 	},
 	'bg-layer-2': {
 		_light: 'hsl(222 10% 94%)',
-		_dark: 'hsl(222 24% 22%)',
+		_dark: 'hsl(222 22% 23%)',
 	},
 	text: {
-		_light: 'hsl(222 22% 25%)',
+		_light: 'hsl(222 22% 26%)',
 		_dark: 'hsl(222 18% 94%)',
 	},
 	'text-secondary': {
@@ -24,8 +24,8 @@ const colorTokens = {
 		_dark: 'hsl(222 23% 70%)',
 	},
 	border: {
-		_light: 'hsl(222 13% 84%)',
-		_dark: 'hsl(222 22% 28%)',
+		_light: 'hsl(222 15% 86%)',
+		_dark: 'hsl(222 20% 26%)',
 	},
 }
 

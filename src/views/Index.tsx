@@ -1,5 +1,5 @@
 import { Box, Container, Heading, HStack, Stack, Text } from '@chakra-ui/react'
-import { ColorModeMenu, CoolButtonLink, LanguageMenu } from 'components'
+import { Button, ColorModeMenu, LanguageMenu } from 'components'
 import useTranslation from 'next-translate/useTranslation'
 
 export default function Index() {
@@ -35,15 +35,9 @@ export default function Index() {
 						<Text>{t('description')}</Text>
 					</Container>
 					<Box>
-						<CoolButtonLink
-							to="/about"
-							colorScheme="primary"
-							color="bg"
-							bg="text-secondary"
-							rightIcon={<>&rarr;</>}
-						>
+						<Button href="/about" variant="main" rightIcon={<>&rarr;</>}>
 							{t('get_started', null, { ns: 'index' })}
-						</CoolButtonLink>
+						</Button>
 					</Box>
 				</Stack>
 				<Box flexGrow={2} />

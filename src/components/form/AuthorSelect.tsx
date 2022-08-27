@@ -5,18 +5,21 @@ import { filter } from 'lodash'
 import useTranslation from 'next-translate/useTranslation'
 import { Dispatch, SetStateAction, useState } from 'react'
 import { GetAuthorsResponse } from 'server/services/author'
+import { GetPublicationResponse } from 'server/services/publication'
 import { Id } from 'validations/common'
 
 interface AuthorSelectProps {
+	authors?: GetPublicationResponse['authors']
 	setAuthorIds: Dispatch<SetStateAction<Id[]>>
 }
 
-export default function AuthorSelect({ setAuthorIds }: AuthorSelectProps) {
+export default function AuthorSelect({
+	authors = [],
+	setAuthorIds,
+}: AuthorSelectProps) {
 	const { t } = useTranslation('resources')
 	const [search, setSearch] = useState<string | undefined>()
-	const [selectedAuthors, setSelectedAuthors] = useState<
-		GetAuthorsResponse['records']
-	>([])
+	const [selectedAuthors, setSelectedAuthors] = useState(authors)
 
 	const { error, data } = useQuery<GetAuthorsResponse>(
 		'authors',
@@ -65,6 +68,9 @@ export default function AuthorSelect({ setAuthorIds }: AuthorSelectProps) {
 					getKey={(e) => e.id}
 					getText={(e) => e.fullName}
 					onRemove={({ id }) => {
+						setAuthorIds((authorIds) => {
+							return authorIds.filter((authorId) => authorId !== id)
+						})
 						setSelectedAuthors(selectedAuthors.filter((e) => e.id !== id))
 					}}
 				/>

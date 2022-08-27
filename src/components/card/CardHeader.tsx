@@ -8,6 +8,8 @@ export default function CardHeader(props: StackProps) {
 			py={2}
 			bg="bg-layer-1"
 			color="text-on-layer-1"
+			borderBottom="1px"
+			borderColor="border"
 			{...props}
 		/>
 	)

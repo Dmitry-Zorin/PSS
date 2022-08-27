@@ -1,11 +1,8 @@
-import { DeleteModalButton, EditButton, Layout } from 'components'
-import { useUrlParams } from 'hooks'
 import {
 	GetStaticPaths,
 	GetStaticPropsContext,
 	InferGetStaticPropsType,
 } from 'next'
-import useTranslation from 'next-translate/useTranslation'
 import prisma from 'server/prisma'
 import { findPublication } from 'server/services/publication'
 import { isDevelopment } from 'utils/env'
@@ -47,34 +44,5 @@ export default function PublicationsShowPage({
 	error,
 	data,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-	const { t } = useTranslation('resources')
-	const { id, category } = useUrlParams()
-
-	return (
-		<Layout
-			error={error}
-			headTitle={id && `${t(`${category}.name`, { count: 1 })} #${id}`}
-			title={data?.title}
-			rightActions={
-				data && (
-					<>
-						<EditButton
-							href={{
-								pathname: `/publications/${category}/create`,
-								query: JSON.stringify(data),
-							}}
-						/>
-						<DeleteModalButton
-							id={data.id}
-							name={data.title}
-							resource="publications"
-							subresource={category}
-						/>
-					</>
-				)
-			}
-		>
-			<PublicationsShow data={data!} />
-		</Layout>
-	)
+	return <PublicationsShow error={error} data={data} />
 }

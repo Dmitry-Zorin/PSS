@@ -28,6 +28,7 @@ const components: ThemeComponents = {
 				mt: '15vh',
 				px: { base: 0, md: 6 },
 				py: 6,
+				borderRadius: 'xl',
 			},
 			header: {
 				pb: 4,
@@ -77,9 +78,6 @@ const components: ThemeComponents = {
 					opacity: '0.15 !important',
 					bg: 'primary !important',
 				},
-				_focusVisible: {
-					shadow: 'outline',
-				},
 				...(colorScheme === 'red' && {
 					color: 'bg',
 					bg: mode('red.500', 'red.400')(props),
@@ -98,6 +96,24 @@ const components: ThemeComponents = {
 				},
 				_focusVisible: {
 					shadow: '0 0 0 2px var(--chakra-colors-primary)',
+				},
+			},
+			main: {
+				rounded: 'full',
+				colorScheme: 'primary',
+				color: 'bg',
+				bg: 'text-secondary',
+				fontSize: 'xl',
+				fontWeight: 'medium',
+				px: 9,
+				py: 7,
+				_hover: {
+					opacity: 0.9,
+					bg: 'primary',
+				},
+				_active: {
+					opacity: 0.85,
+					bg: 'primary',
 				},
 			},
 		},

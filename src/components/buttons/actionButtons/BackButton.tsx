@@ -1,14 +1,14 @@
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons'
-import { LinkButton } from 'components'
+import { ActionButton } from 'components'
 import { useRouter } from 'next/router'
-import { LinkButtonProps } from './LinkButton'
+import { ActionButtonProps } from '../ActionButton'
 
 export default function BackButton(
-	props: Omit<LinkButtonProps, 'icon' | 'action'>,
+	props: Omit<ActionButtonProps, 'icon' | 'action'>,
 ) {
 	const router = useRouter()
 	return (
-		<LinkButton
+		<ActionButton
 			icon={faAngleLeft}
 			action="back"
 			onClick={router.back}

@@ -1,8 +1,8 @@
-import { HttpError } from 'http-errors'
 import {
 	useQuery as useReactQuery,
 	UseQueryOptions,
 } from '@tanstack/react-query'
+import { HttpError } from 'http-errors'
 import { query } from 'utils/requests'
 
 export default function useQuery<Data>(
@@ -13,9 +13,6 @@ export default function useQuery<Data>(
 	return useReactQuery<Data, HttpError>(
 		[path, params].filter(Boolean),
 		() => query<Data>(path, params),
-		{
-			retry: 1,
-			...options,
-		},
+		options,
 	)
 }

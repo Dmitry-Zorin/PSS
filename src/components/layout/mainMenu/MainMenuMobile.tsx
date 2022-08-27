@@ -1,11 +1,4 @@
-import {
-	AlertDialogOverlay,
-	Box,
-	HStack,
-	Menu,
-	MenuList,
-	ModalOverlay,
-} from '@chakra-ui/react'
+import { Box, HStack, Menu, MenuList } from '@chakra-ui/react'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import { Icon, Logo, MainMenuGroupMobile, MenuIconButton } from 'components'
 import useTranslation from 'next-translate/useTranslation'

@@ -1,18 +1,19 @@
 import {
 	Stack,
+	StackProps,
 	Stat,
 	StatLabel,
 	StatNumber,
+	StatProps,
 	Text,
-	TextProps,
 } from '@chakra-ui/react'
-import { isString, isNumber } from 'lodash'
+import { isNumber, isString } from 'lodash'
 import useTranslation from 'next-translate/useTranslation'
 import { ReactElement } from 'react'
 
-interface LabeledTextProps extends TextProps {
+interface LabeledTextProps {
 	label: string
-	text?: ReactElement | string | number | null
+	text?: ReactElement | string | number
 	stat?: boolean
 }
 
@@ -21,22 +22,22 @@ export default function LabeledText({
 	text,
 	stat,
 	...props
-}: LabeledTextProps) {
+}: LabeledTextProps & StackProps & StatProps) {
 	const { t } = useTranslation('resources')
 	label = t(`fields.${label}`)
 	text ||= '-'
 
 	return stat ? (
-		<Stat>
+		<Stat {...props}>
 			<StatLabel color="text-secondary">{label}</StatLabel>
 			<StatNumber opacity={0.9}>{text}</StatNumber>
 		</Stat>
 	) : (
-		<Stack>
+		<Stack {...props}>
 			<Text fontSize="sm" fontWeight="medium" color="text-secondary">
 				{label}
 			</Text>
-			{isString(text) || isNumber(text) ? <Text {...props}>{text}</Text> : text}
+			{isString(text) || isNumber(text) ? <Text>{text}</Text> : text}
 		</Stack>
 	)
 }

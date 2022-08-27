@@ -1,15 +1,28 @@
 import { List } from '@chakra-ui/react'
-import { ActionsToolbar, CreateButton, Pagination, Search } from 'components'
+import {
+	ActionsToolbar,
+	CreateButton,
+	MainArea,
+	Pagination,
+	Search,
+} from 'components'
+import { useQuery, useUrlQuery } from 'hooks'
+import useTranslation from 'next-translate/useTranslation'
 import { GetAuthorsResponse } from 'server/services/author'
 import AuthorsListItem from './AuthorsListItem'
 
-interface AuthorsListProps {
-	data: GetAuthorsResponse
-}
+export default function AuthorsList() {
+	const { t } = useTranslation()
+	const queryParams = useUrlQuery()
 
-export default function AuthorsList({ data }: AuthorsListProps) {
+	const { error, data } = useQuery<GetAuthorsResponse>('authors', queryParams)
+
 	return (
-		<>
+		<MainArea
+			fullSize
+			error={error}
+			head={{ title: t('layout.menu.items.authors') }}
+		>
 			<ActionsToolbar
 				leftActions={<Search />}
 				rightActions={<CreateButton href={`/authors/create`} />}
@@ -24,6 +37,6 @@ export default function AuthorsList({ data }: AuthorsListProps) {
 					<Pagination total={data?.total} />
 				</>
 			)}
-		</>
+		</MainArea>
 	)
 }

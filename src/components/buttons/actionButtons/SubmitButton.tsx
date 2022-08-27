@@ -1,12 +1,12 @@
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
-import { LinkButton } from 'components'
-import { LinkButtonProps } from './LinkButton'
+import { ActionButton } from 'components'
+import { ActionButtonProps } from '../ActionButton'
 
 export default function SubmitButton(
-	props: Omit<LinkButtonProps, 'icon' | 'action'>,
+	props: Omit<ActionButtonProps, 'icon' | 'action'>,
 ) {
 	return (
-		<LinkButton
+		<ActionButton
 			type="submit"
 			variant="solid"
 			icon={faCheck}

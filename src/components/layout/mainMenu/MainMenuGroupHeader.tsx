@@ -1,4 +1,4 @@
-import { Box, Center, Divider, StackProps, Text } from '@chakra-ui/react'
+import { Box, Divider, Flex, StackProps, Text } from '@chakra-ui/react'
 import useTranslation from 'next-translate/useTranslation'
 
 export interface MainMenuGroupHeaderProps extends StackProps {
@@ -12,23 +12,26 @@ export default function MainMenuGroupHeader({
 	const { t } = useTranslation()
 
 	return (
-		<Box pt={1} pb={{ base: 3, lg: 0 }}>
-			<Divider pt={3} />
-			<Center
+		<Box pt={4} pb={{ base: 3, lg: 0 }}>
+			<Divider />
+			<Flex
+				align="center"
+				pl={6}
 				display={{ base: 'none', lg: 'flex' }}
 				pointerEvents="none"
 				h={12}
-				pt={1}
+				pt={2}
 				{...props}
 			>
 				<Text
-					fontSize={{ base: 'md', xl: 'sm' }}
-					fontWeight="medium"
+					fontSize="sm-"
 					color="text-secondary"
+					fontWeight="semibold"
+					letterSpacing="wide"
 				>
-					{t(`layout.menu.items.${text}`)}
+					{t(`layout.menu.items.${text}`).toUpperCase()}
 				</Text>
-			</Center>
+			</Flex>
 		</Box>
 	)
 }
