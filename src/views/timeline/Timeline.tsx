@@ -22,7 +22,7 @@ export default function Timeline() {
 		<MainArea title={t('layout.menu.items.timeline')} error={error}>
 			{data && (
 				<>
-					<List spacing={9}>
+					<List spacing={6}>
 						{data.records.map((e) => (
 							<ListItem key={e.id}>
 								<TimelineCard record={e} />

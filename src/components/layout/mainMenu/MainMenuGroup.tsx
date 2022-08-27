@@ -1,4 +1,4 @@
-import { Box, List } from '@chakra-ui/react'
+import { List } from '@chakra-ui/react'
 import { MainMenuGroupHeader, MainMenuItem } from 'components'
 
 export interface MainMenuGroupProps {
@@ -8,7 +8,7 @@ export interface MainMenuGroupProps {
 
 export default function MainMenuGroup({ heading, items }: MainMenuGroupProps) {
 	return (
-		<Box>
+		<>
 			{heading && <MainMenuGroupHeader text={heading} />}
 			<List>
 				{Object.entries(items).map(([name, info]) => {
@@ -22,6 +22,6 @@ export default function MainMenuGroup({ heading, items }: MainMenuGroupProps) {
 					)
 				})}
 			</List>
-		</Box>
+		</>
 	)
 }

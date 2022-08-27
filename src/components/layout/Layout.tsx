@@ -5,7 +5,7 @@ import { ReactNode } from 'react'
 
 export default function Layout({ children }: { children: ReactNode }) {
 	return (
-		<Flex>
+		<Flex maxW="7xl" mx="auto">
 			<Sidebar>
 				<MainMenu items={resources} />
 			</Sidebar>

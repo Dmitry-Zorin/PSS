@@ -4,6 +4,8 @@ export default function Card(props: StackProps) {
 	return (
 		<Stack
 			as="article"
+			spacing={0}
+			bg="bg-layer-1"
 			borderRadius="xl"
 			color="text"
 			overflow="hidden"

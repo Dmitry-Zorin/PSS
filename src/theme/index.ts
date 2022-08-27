@@ -37,7 +37,7 @@ const theme = {
 	styles: {
 		global: {
 			body: {
-				bg: 'bg-layer-1',
+				bg: 'bg',
 				color: 'text',
 				fontSize: 'lg',
 				letterSpacing: 'normal',

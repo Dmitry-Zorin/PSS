@@ -45,7 +45,7 @@ export default function MainMenuItem({ to, icon, text }: MainMenuItemProps) {
 						outline="none"
 						_hover={{
 							color: 'primary',
-							bg: 'bg-layer-2',
+							bg: 'bg-layer-1',
 						}}
 						_focusVisible={{
 							shadow: '0 0 0 2px var(--chakra-colors-primary)',

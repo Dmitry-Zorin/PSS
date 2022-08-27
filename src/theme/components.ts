@@ -4,6 +4,7 @@ import { mode } from '@chakra-ui/theme-tools'
 const inputField = {
 	minH: 10,
 	borderRadius: 'lg',
+	bg: 'bg-layer-1',
 	_placeholder: {
 		color: 'text-secondary',
 	},

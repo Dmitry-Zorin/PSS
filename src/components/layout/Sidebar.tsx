@@ -1,4 +1,4 @@
-import { Box, BoxProps, Center } from '@chakra-ui/react'
+import { Box, BoxProps, Flex } from '@chakra-ui/react'
 import { Logo } from 'components'
 
 export default function Sidebar({ children, ...props }: BoxProps) {
@@ -9,13 +9,10 @@ export default function Sidebar({ children, ...props }: BoxProps) {
 			top={0}
 			h="100vh"
 			flexShrink={0}
-			bg="bg-layer-1"
-			borderRight="1px"
+			display={{ base: 'none', md: 'block' }}
+			bg={{ base: 'bg-layer-1', lg: 'none' }}
+			borderRight={{ base: '1px', lg: 0 }}
 			borderColor="border"
-			display={{
-				base: 'none',
-				md: 'block',
-			}}
 			sx={{
 				'::-webkit-scrollbar': {
 					display: 'none',
@@ -23,9 +20,14 @@ export default function Sidebar({ children, ...props }: BoxProps) {
 			}}
 			{...props}
 		>
-			<Center h={14}>
+			<Flex
+				h={14}
+				align="center"
+				justify={{ base: 'center', lg: 'flex-start' }}
+				pl={{ lg: 8 }}
+			>
 				<Logo />
-			</Center>
+			</Flex>
 			{children}
 		</Box>
 	)

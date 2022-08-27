@@ -25,9 +25,9 @@ export default function UserMenu() {
 						<MenuItem icon={<Icon icon={faSignInAlt} />}>
 							{t('layout.appBar.userMenu.items.signIn')}
 						</MenuItem>
-						<MenuItem icon={<Icon icon={faSignOutAlt} />}>
+						{/* <MenuItem icon={<Icon icon={faSignOutAlt} />}>
 							{t('layout.appBar.userMenu.items.signOut')}
-						</MenuItem>
+						</MenuItem> */}
 					</MenuGroup>
 				</MenuList>
 			</Menu>

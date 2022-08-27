@@ -19,16 +19,16 @@ export default function ColorModeMenu() {
 		'system',
 	)
 
-	const { shouldUseSystemColorMode, setUseSystemColorMode } = useContext(
+	const { useSystemColorMode, setUseSystemColorMode } = useContext(
 		SystemColorModeContext,
 	)
 
 	useEffect(() => {
-		setOptionValue(shouldUseSystemColorMode ? 'system' : colorMode)
-		if (shouldUseSystemColorMode) {
+		setOptionValue(useSystemColorMode ? 'system' : colorMode)
+		if (useSystemColorMode) {
 			localStorage.removeItem('chakra-ui-color-mode')
 		}
-	}, [shouldUseSystemColorMode, colorMode])
+	}, [useSystemColorMode, colorMode])
 
 	return (
 		<div>

@@ -1,7 +1,7 @@
 import { Avatar, LinkBox, LinkOverlay, Stack, Text } from '@chakra-ui/react'
 import { Card, CardContent, CardHeader, Icon } from 'components'
 import resources from 'constants/resources'
-import { useHover, useTruncate } from 'hooks'
+import { useTruncate } from 'hooks'
 import useTranslation from 'next-translate/useTranslation'
 import Link from 'next/link'
 import { GetPublicationsResponse } from 'server/services/publication'
@@ -12,16 +12,11 @@ interface TimelineCardProps {
 
 export default function TimelineCard({ record }: TimelineCardProps) {
 	const { t, lang } = useTranslation('resources')
-	const { isHovered, listeners } = useHover()
 	const truncate = useTruncate()
 
 	return (
-		<LinkBox
-			as={Card}
-			// _hover={{ borderColor: 'text-secondary' }}
-			{...listeners}
-		>
-			<CardHeader bg={isHovered ? 'bg-layer-2' : 'bg-layer-1'}>
+		<LinkBox as={Card} _hover={{ bg: 'bg-layer-2' }}>
+			<CardHeader>
 				<Avatar
 					bg="transparent"
 					color="primary"
@@ -49,7 +44,7 @@ export default function TimelineCard({ record }: TimelineCardProps) {
 			</CardHeader>
 			<CardContent>
 				<Link href={`/publications/${record.category}/${record.id}`} passHref>
-					<LinkOverlay>{record.title}</LinkOverlay>
+					<LinkOverlay fontWeight="medium">{record.title}</LinkOverlay>
 				</Link>
 				{record.description && (
 					<Text fontSize="md" color="text-secondary">

@@ -9,17 +9,20 @@ import {
 	Wrap,
 	WrapItem,
 } from '@chakra-ui/react'
-import { Highlight } from 'components'
+import { Highlight, Icon } from 'components'
+import resources from 'constants/resources'
 import { useTruncate, useUrlQuery } from 'hooks'
 import Link from 'next/link'
 import { GetPublicationsResponse } from 'server/services/publication'
 
-interface PublicationsListItemProps {
+export interface PublicationsListItemProps {
 	record: GetPublicationsResponse['records'][number]
+	showIcon?: boolean
 }
 
 export default function PublicationsListItem({
 	record,
+	showIcon,
 }: PublicationsListItemProps) {
 	const { search } = useUrlQuery()
 	const truncate = useTruncate({ length: 200 })
@@ -34,13 +37,22 @@ export default function PublicationsListItem({
 			_hover={{ bg: 'bg-layer-1' }}
 		>
 			<Stack spacing={3}>
-				<HStack lineHeight="none">
+				<HStack spacing={3}>
+					{showIcon && (
+						<Icon
+							color="primary"
+							icon={
+								resources.publications[
+									record.category as keyof typeof resources.publications
+								].icon
+							}
+						/>
+					)}
 					<Link href={`/publications/${record.category}/${record.id}`} passHref>
-						<LinkOverlay flexGrow={1}>
+						<LinkOverlay flexGrow={1} lineHeight="none" fontWeight="medium">
 							<Highlight text={record.title} search={search} />
 						</LinkOverlay>
 					</Link>
-					<Text fontWeight="semibold">{record.writtenInYear}</Text>
 				</HStack>
 				{record.description && (
 					<Text fontSize="md" color="text-secondary">

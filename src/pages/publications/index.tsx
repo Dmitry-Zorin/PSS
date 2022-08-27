@@ -3,7 +3,7 @@ import { DEFAULT_CACHE_VALUE } from 'constants/app'
 import { GetServerSideProps } from 'next'
 import { findPublications } from 'server/services/publication'
 import { getPublicationsSchema } from 'validations/publication'
-import PublicationsList from 'views/publications/PublicationsList'
+import PublicationsListFull from 'views/publications/PublicationsListFull'
 
 export const getServerSideProps: GetServerSideProps = async ({
 	query,
@@ -12,8 +12,8 @@ export const getServerSideProps: GetServerSideProps = async ({
 	const queryClient = new QueryClient()
 	const parsedQuery = getPublicationsSchema.parse(query)
 
-	const records = await findPublications(parsedQuery)
-	await queryClient.setQueryData(['publications', query], records)
+	const response = await findPublications(parsedQuery)
+	await queryClient.setQueryData(['publications', query], response)
 
 	res.setHeader('Cache-Control', DEFAULT_CACHE_VALUE)
 
@@ -25,5 +25,5 @@ export const getServerSideProps: GetServerSideProps = async ({
 }
 
 export default function PublicationsListPage() {
-	return <PublicationsList />
+	return <PublicationsListFull />
 }

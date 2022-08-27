@@ -18,11 +18,7 @@ export default function AuthorsList() {
 	const { error, data } = useQuery<GetAuthorsResponse>('authors', queryParams)
 
 	return (
-		<MainArea
-			fullSize
-			error={error}
-			head={{ title: t('layout.menu.items.authors') }}
-		>
+		<MainArea error={error} head={{ title: t('layout.menu.items.authors') }}>
 			<ActionsToolbar
 				leftActions={<Search />}
 				rightActions={<CreateButton href={`/authors/create`} />}

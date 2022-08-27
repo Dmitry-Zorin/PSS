@@ -20,7 +20,7 @@ export default function Error({ status, message }: ErrorProps) {
 	return (
 		<>
 			<Head title={status.toString()} />
-			<Stack minH="100vh" bg="bg">
+			<Stack minH="100vh">
 				<HStack p={4}>
 					<Logo />
 				</HStack>

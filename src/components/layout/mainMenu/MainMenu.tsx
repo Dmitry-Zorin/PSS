@@ -8,7 +8,7 @@ export interface MainMenuProps extends BoxProps {
 
 export default function MainMenu({ items, ...props }: MainMenuProps) {
 	return (
-		<Box px={{ base: 2, lg: 4 }} w={{ lg: 64 }} {...props}>
+		<Box w={{ lg: 64 }} px={{ base: 2, lg: 4 }} pt={1} {...props}>
 			{Object.entries(items).map(([name, info]) => {
 				return (
 					<MainMenuGroup

@@ -23,11 +23,11 @@ export default function Search({ ...props }: SearchProps) {
 	}, [queryParams.search])
 
 	async function search() {
-		await redirect({ search: value || undefined })
+		await redirect({ search: value.trim() || undefined })
 	}
 
 	return (
-		<InputGroup maxW={60} ml={2}>
+		<InputGroup maxW={64} ml={2}>
 			<InputLeftElement>
 				<Icon icon={faSearch} />
 			</InputLeftElement>
@@ -40,18 +40,6 @@ export default function Search({ ...props }: SearchProps) {
 				}}
 				{...props}
 			/>
-			{/* {value && (
-				<InputRightElement
-					cursor="pointer"
-					onClick={() => {
-						setValue('')
-						search()
-					}}
-					_hover={{ color: 'primary' }}
-				>
-					<Icon icon={faClose} />
-				</InputRightElement>
-			)} */}
 		</InputGroup>
 	)
 }

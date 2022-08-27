@@ -6,7 +6,7 @@ export default function Index() {
 	const { t } = useTranslation()
 
 	return (
-		<Stack spacing={4} minH="100vh" bg="bg" px={{ base: 2, md: 4 }} py={4}>
+		<Stack spacing={4} minH="100vh" px={{ base: 2, md: 4 }} py={4}>
 			<HStack spacing={0} justify="flex-end">
 				<LanguageMenu />
 				<ColorModeMenu />

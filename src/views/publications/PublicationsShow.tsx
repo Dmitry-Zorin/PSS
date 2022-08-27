@@ -68,7 +68,7 @@ export default function PublicationsShow({
 								</List>
 							}
 						/>
-						{data.coauthors && (
+						{data.coauthors.length && (
 							<LabeledText
 								flexGrow={1}
 								label="coauthors"

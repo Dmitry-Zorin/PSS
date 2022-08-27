@@ -3,17 +3,17 @@ import {
 	ChakraProviderProps,
 	extendTheme,
 } from '@chakra-ui/react'
-import { createContext, useEffect, useState } from 'react'
+import { createContext, useState } from 'react'
 import theme from 'theme'
 import { isBrowser } from 'utils/env'
 
 interface ContextValue {
-	shouldUseSystemColorMode: boolean
+	useSystemColorMode: boolean
 	setUseSystemColorMode: (arg: boolean) => void
 }
 
 export const SystemColorModeContext = createContext<ContextValue>({
-	shouldUseSystemColorMode: true,
+	useSystemColorMode: true,
 	setUseSystemColorMode: (_) => {},
 })
 
@@ -25,7 +25,7 @@ export default function ThemeProvider(props: ChakraProviderProps) {
 	return (
 		<SystemColorModeContext.Provider
 			value={{
-				shouldUseSystemColorMode: useSystem,
+				useSystemColorMode: useSystem,
 				setUseSystemColorMode: (useSystem) => {
 					localStorage.setItem('system-color-mode', useSystem.toString())
 					setUseSystem(useSystem)
@@ -33,13 +33,11 @@ export default function ThemeProvider(props: ChakraProviderProps) {
 			}}
 		>
 			<SystemColorModeContext.Consumer>
-				{({ shouldUseSystemColorMode }) => (
+				{({ useSystemColorMode }) => (
 					<ChakraProvider
-						key={shouldUseSystemColorMode.toString()}
+						key={useSystemColorMode.toString()}
 						theme={extendTheme(theme, {
-							config: {
-								useSystemColorMode: shouldUseSystemColorMode,
-							},
+							config: { useSystemColorMode },
 						})}
 						{...props}
 					/>
