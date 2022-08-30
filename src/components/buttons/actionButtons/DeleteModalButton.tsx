@@ -41,7 +41,12 @@ export default function DeleteModalButton({
 
 	return (
 		<>
-			<DeleteButton onClick={onOpen} isLoading={mutation.isLoading} />
+			<DeleteButton
+				size="lg"
+				// variant="solid"
+				onClick={onOpen}
+				isLoading={mutation.isLoading}
+			/>
 			<Modal size="2xl" motionPreset="none" isOpen={isOpen} onClose={onClose}>
 				<ModalOverlay />
 				<ModalContent>

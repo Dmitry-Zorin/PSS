@@ -1,5 +1,4 @@
-import { List } from '@chakra-ui/react'
-import { MainArea, Pagination, Search } from 'components'
+import { MainArea, MainList, Search } from 'components'
 import { useQuery, useUrlQuery } from 'hooks'
 import useTranslation from 'next-translate/useTranslation'
 import { GetPublicationsResponse } from 'server/services/publication'
@@ -21,14 +20,11 @@ export default function PublicationsListFull() {
 			leftActions={<Search />}
 		>
 			{data && (
-				<>
-					<List borderBottom="1px" borderColor="border" pt={4}>
-						{data.records.map((e) => (
-							<PublicationsListItem key={e.id} record={e} showIcon />
-						))}
-					</List>
-					<Pagination total={data.total} />
-				</>
+				<MainList total={data.total}>
+					{data.records.map((e) => (
+						<PublicationsListItem key={e.id} record={e} showIcon />
+					))}
+				</MainList>
 			)}
 		</MainArea>
 	)

@@ -21,7 +21,7 @@ const colorTokens = {
 	},
 	'text-secondary': {
 		_light: 'hsl(222 15% 45%)',
-		_dark: 'hsl(222 23% 70%)',
+		_dark: 'hsl(222 23% 75%)',
 	},
 	border: {
 		_light: 'hsl(222 25% 88%)',

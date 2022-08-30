@@ -28,14 +28,7 @@ export default function PublicationsListItem({
 	const truncate = useTruncate({ length: 200 })
 
 	return (
-		<LinkBox
-			as={ListItem}
-			borderTop="1px"
-			borderColor="border"
-			px={{ base: 1, sm: 2 }}
-			py={3}
-			_hover={{ bg: 'bg-layer-1' }}
-		>
+		<LinkBox as={ListItem}>
 			<Stack spacing={3}>
 				<HStack spacing={3}>
 					{showIcon && (
@@ -65,6 +58,13 @@ export default function PublicationsListItem({
 							<WrapItem key={e.id}>
 								<Badge px={1.5} py={0.5}>
 									{e.fullName}
+								</Badge>
+							</WrapItem>
+						))}
+						{record.coauthors.map((name) => (
+							<WrapItem key={name}>
+								<Badge px={1.5} py={0.5}>
+									{name}
 								</Badge>
 							</WrapItem>
 						))}

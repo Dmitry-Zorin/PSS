@@ -11,6 +11,7 @@ module.exports = {
 		'/about': ['about'],
 		'/timeline': ['resources'],
 		'rgx:/create$': ['resources'],
+		'rgx:/edit/': ['resources'],
 		'/authors/[id]': ['resources'],
 		'/publications/[category]/[id]': ['resources'],
 	},

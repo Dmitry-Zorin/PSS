@@ -1,9 +1,8 @@
-import { List } from '@chakra-ui/react'
 import {
 	ActionsToolbar,
 	CreateButton,
 	MainArea,
-	Pagination,
+	MainList,
 	Search,
 } from 'components'
 import { useQuery, useUrlQuery } from 'hooks'
@@ -24,14 +23,11 @@ export default function AuthorsList() {
 				rightActions={<CreateButton href={`/authors/create`} />}
 			/>
 			{data && (
-				<>
-					<List borderBottom="1px" borderColor="border" pt={4}>
-						{data.records.map((e) => (
-							<AuthorsListItem key={e.id} record={e} />
-						))}
-					</List>
-					<Pagination total={data?.total} />
-				</>
+				<MainList total={data.total}>
+					{data.records.map((e) => (
+						<AuthorsListItem key={e.id} record={e} />
+					))}
+				</MainList>
 			)}
 		</MainArea>
 	)

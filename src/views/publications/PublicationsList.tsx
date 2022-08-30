@@ -1,5 +1,4 @@
-import { List } from '@chakra-ui/react'
-import { CreateButton, MainArea, Pagination, Search } from 'components'
+import { CreateButton, MainArea, MainList, Search } from 'components'
 import { useQuery, useUrlParams, useUrlQuery } from 'hooks'
 import useTranslation from 'next-translate/useTranslation'
 import { GetPublicationsResponse } from 'server/services/publication'
@@ -24,14 +23,11 @@ export default function PublicationsList() {
 			rightActions={<CreateButton href={`/publications/${category}/create`} />}
 		>
 			{data && (
-				<>
-					<List key={category} borderBottom="1px" borderColor="border" pt={4}>
-						{data.records.map((e) => (
-							<PublicationsListItem key={e.id} record={e} />
-						))}
-					</List>
-					<Pagination total={data.total} />
-				</>
+				<MainList key={category} total={data.total}>
+					{data.records.map((e) => (
+						<PublicationsListItem key={e.id} record={e} />
+					))}
+				</MainList>
 			)}
 		</MainArea>
 	)

@@ -45,7 +45,7 @@ export default function MainArea({
 							as="h1"
 							fontSize={{ base: '3xl', sm: '5xl', '2xl': '6xl' }}
 							lineHeight={{ base: 'shorter', sm: 'none' }}
-							pt={{ base: 6, sm: showActions ? 6 : 0 }}
+							pt={{ base: 6, sm: 0 }}
 						>
 							{heading}
 						</Heading>

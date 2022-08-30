@@ -1,3 +1,4 @@
+import { Box } from '@chakra-ui/react'
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import { Layout } from 'components'
@@ -30,7 +31,9 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 			<ThemeProvider>
 				<QueryProvider state={pageProps.dehydratedState}>
 					{Component?.useLayout === false ? (
-						<Component {...pageProps} />
+						<Box maxW="7xl" mx="auto">
+							<Component {...pageProps} />
+						</Box>
 					) : (
 						<Layout>
 							<Component {...pageProps} />

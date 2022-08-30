@@ -1,91 +1,85 @@
 import { Stack } from '@chakra-ui/react'
-import { useQueryClient } from '@tanstack/react-query'
 import {
 	AuthorSelect,
 	Coauthors,
+	DeleteModalButton,
 	FileUpload,
 	Form,
 	FormControl,
 	FormControlGroup,
 	MainArea,
 } from 'components'
-import { useEventToast, useMutation, useUrlParams } from 'hooks'
+import { useUrlParams } from 'hooks'
 import useTranslation from 'next-translate/useTranslation'
-import { useRouter } from 'next/router'
 import { useState } from 'react'
-import {
-	CreatePublicationResponse,
-	GetPublicationResponse,
-	UpdatePublicationResponse,
-} from 'server/services/publication'
+import { GetPublicationResponse } from 'server/services/publication'
 import { Id } from 'validations/common'
 import {
 	createPublicationSchema,
 	publicationSchema,
 } from 'validations/publication'
-import { z } from 'zod'
+import { useSubmitPublication } from './useSubmitPublication'
 
 const currentYear = new Date().getFullYear()
 
-export default function PublicationsCreate() {
-	const { t } = useTranslation('resources')
-	const queryClient = useQueryClient()
-	const router = useRouter()
+interface PublicationsCreateProps {
+	error: Error | null
+	data?: GetPublicationResponse
+}
 
-	const { category, data: dataString } = useUrlParams()
-	const rawData = dataString
-		? (JSON.parse(dataString) as GetPublicationResponse)
-		: undefined
-	const data = rawData
+export default function PublicationsCreate({
+	error,
+	data,
+}: PublicationsCreateProps) {
+	const { t } = useTranslation('resources')
+	const { category } = useUrlParams()
+
+	const [authorIds, setAuthorIds] = useState<Id[]>(
+		data?.authors.map((e) => e.id) ?? [],
+	)
+
+	const [coauthors, setCoauthors] = useState<string[]>([
+		...(data?.coauthors ?? []),
+		'',
+	])
+
+	const defaultValues = data
 		? createPublicationSchema
 				.strip()
 				.omit({
 					category: true,
 					authorIds: true,
+					coauthors: true,
 				})
 				.partial()
-				.parse(rawData)
+				.parse(data)
 		: undefined
-
-	const showToast = useEventToast(category, dataString ? 'updated' : 'created')
-	const mutation = useMutation<
-		typeof dataString extends string
-			? UpdatePublicationResponse
-			: CreatePublicationResponse
-	>(`publications${rawData ? `/${rawData.id}` : ''}`)
-	const [authorIds, setAuthorIds] = useState<Id[]>(
-		rawData?.authors.map((e) => e.id) ?? [],
-	)
-	const [coauthors, setCoauthors] = useState<string[]>(
-		rawData?.coauthors ?? [''],
-	)
-
-	async function onSubmit(data: z.infer<typeof publicationSchema>) {
-		console.log('data', data)
-		const { id } = await mutation.mutateAsync({
-			method: rawData ? 'put' : 'post',
-			body: {
-				...data,
-				authorIds,
-				coauthors,
-				...(!rawData && {
-					category,
-					type: data.type || t(`${category}.name`, { count: 1 }),
-				}),
-			},
-		})
-		showToast('success')
-		await queryClient.invalidateQueries(['publications'])
-		await router.push(`/publications/${category}/${id}`)
-	}
 
 	return (
 		<MainArea
+			error={error}
 			title={`${t('common:actions.create')} ${t(`${category}.name_what`, null, {
 				fallback: t(`${category}.name_one`),
 			})}`}
 		>
-			<Form onSubmit={onSubmit} schema={publicationSchema} defaultValues={data}>
+			<Form
+				onSubmit={useSubmitPublication(data, {
+					authorIds,
+					coauthors: coauthors.slice(0, -1),
+				})}
+				schema={publicationSchema}
+				defaultValues={defaultValues}
+				actions={
+					data && (
+						<DeleteModalButton
+							id={data.id}
+							name={data.title}
+							resource="publications"
+							subresource={category}
+						/>
+					)
+				}
+			>
 				<FormControl field="title" multiline minH={10} />
 				<FormControl field="description" multiline optional />
 				<Stack
@@ -112,7 +106,7 @@ export default function PublicationsCreate() {
 						optional
 					/>
 				</Stack>
-				<AuthorSelect authors={rawData?.authors} setAuthorIds={setAuthorIds} />
+				<AuthorSelect authors={data?.authors} setAuthorIds={setAuthorIds} />
 				<Coauthors {...{ coauthors, setCoauthors }} />
 				<FormControl field="extraData" multiline optional />
 				<FileUpload />

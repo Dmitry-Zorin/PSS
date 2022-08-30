@@ -1,4 +1,5 @@
 import { Prisma, Publication } from '@prisma/client'
+import { PER_PAGE } from 'constants/app'
 import { addAuthorNames } from 'helpers/authors'
 import httpError from 'http-errors'
 import prisma from 'server/prisma'
@@ -11,7 +12,6 @@ import {
 	GetPublications,
 	UpdatePublication,
 } from 'validations/publication'
-import { PER_PAGE } from './../../constants/app'
 
 const defaultPublicationSelect = Prisma.validator<Prisma.PublicationSelect>()({
 	id: true,
@@ -87,7 +87,7 @@ export async function findPublications(filters: GetPublications) {
 		}),
 	])
 
-	return { records: omitNull(records.map(addAuthorNames)), total }
+	return omitNull({ records: records.map(addAuthorNames), total })
 }
 
 export type GetPublicationsResponse = Jsonify<

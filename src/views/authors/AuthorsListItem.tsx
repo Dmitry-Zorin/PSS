@@ -1,4 +1,4 @@
-import { LinkBox, LinkOverlay, ListItem, Stack } from '@chakra-ui/react'
+import { LinkBox, LinkOverlay, ListItem } from '@chakra-ui/react'
 import { Highlight } from 'components'
 import { useUrlQuery } from 'hooks'
 import Link from 'next/link'
@@ -12,23 +12,12 @@ export default function AuthorsListItem({ record }: AuthorsListItemProps) {
 	const { search } = useUrlQuery()
 
 	return (
-		<LinkBox
-			as={ListItem}
-			borderTop="1px"
-			borderColor="border"
-			px={4}
-			py={4}
-			_hover={{ bg: 'bg-layer-1' }}
-		>
-			<Stack spacing={2}>
-				<div>
-					<Link href={`/authors/${record.id}`} passHref>
-						<LinkOverlay flexGrow={1}>
-							<Highlight text={record.fullName} search={search} />
-						</LinkOverlay>
-					</Link>
-				</div>
-			</Stack>
+		<LinkBox as={ListItem}>
+			<Link href={`/authors/${record.id}`} passHref>
+				<LinkOverlay flexGrow={1}>
+					<Highlight text={record.fullName} search={search} />
+				</LinkOverlay>
+			</Link>
 		</LinkBox>
 	)
 }

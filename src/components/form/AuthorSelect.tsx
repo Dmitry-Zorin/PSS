@@ -27,7 +27,10 @@ export default function AuthorSelect({
 			perPage: 100,
 			search: search,
 		},
-		{ keepPreviousData: true },
+		{
+			keepPreviousData: true,
+			staleTime: Infinity,
+		},
 	)
 
 	return (

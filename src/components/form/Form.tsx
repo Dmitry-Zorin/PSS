@@ -1,7 +1,7 @@
-import { Center, Stack, StackProps } from '@chakra-ui/react'
+import { HStack, Stack, StackProps } from '@chakra-ui/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SaveButton, SubmitButton } from 'components'
-import { ReactElement } from 'react'
+import { ReactElement, ReactNode } from 'react'
 import {
 	FormProvider,
 	SubmitHandler,
@@ -16,6 +16,7 @@ interface FormProps<T extends ZodType> extends StackProps {
 	schema: T
 	defaultValues: UseFormProps['defaultValues']
 	useFormProps?: UseFormProps
+	actions?: ReactNode
 }
 
 export default function Form<T extends ZodType>({
@@ -24,6 +25,7 @@ export default function Form<T extends ZodType>({
 	schema,
 	defaultValues,
 	useFormProps,
+	actions,
 	...props
 }: FormProps<T>) {
 	const formMethods = useForm({
@@ -34,8 +36,12 @@ export default function Form<T extends ZodType>({
 
 	const {
 		handleSubmit,
-		formState: { isSubmitting },
+		formState: { isSubmitting, errors },
 	} = formMethods
+
+	if (errors) {
+		console.log(errors)
+	}
 
 	const Button = defaultValues ? SaveButton : SubmitButton
 
@@ -43,9 +49,10 @@ export default function Form<T extends ZodType>({
 		<FormProvider {...formMethods}>
 			<Stack as="form" spacing={6} onSubmit={handleSubmit(onSubmit)} {...props}>
 				{children}
-				<Center pt={6}>
+				<HStack spacing={4} justify="space-evenly" pt={6}>
+					{actions}
 					<Button size="lg" isLoading={isSubmitting} />
-				</Center>
+				</HStack>
 			</Stack>
 		</FormProvider>
 	)

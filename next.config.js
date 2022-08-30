@@ -1,5 +1,8 @@
-const nextTranslate = require('next-translate')
 require('./src/server/env')
+const nextTranslate = require('next-translate')
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+	enabled: process.env.ANALYZE === 'true',
+})
 
 const isDevelopment = process.env.NODE_ENV === 'development'
 
@@ -54,4 +57,4 @@ const nextConfig = {
 	},
 }
 
-module.exports = nextTranslate(nextConfig)
+module.exports = withBundleAnalyzer(nextTranslate(nextConfig))

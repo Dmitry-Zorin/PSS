@@ -1,4 +1,5 @@
-import { cloneDeepWith } from 'lodash'
+import { isPlainObject, mapValues, pickBy } from 'lodash'
+import { PartialOnUndefinedDeep } from 'type-fest'
 
 export async function getSafeAsync<T>(fn: () => Promise<T>) {
 	const response: { data?: T; error?: unknown } = {}
@@ -20,22 +21,22 @@ type ReplaceNullWithUndefined<T> = T extends null
 				: ReplaceNullWithUndefined<T[K]>
 	  }
 
-export function omitNull<Object extends Record<string, unknown>>(
-	obj: Object,
-): ReplaceNullWithUndefined<Object>
-export function omitNull<Object extends Record<string, unknown>>(
-	obj: Object[],
-): ReplaceNullWithUndefined<Object>[]
-export function omitNull<Object extends Record<string, unknown>>(
-	obj: Object | Object[],
-) {
-	const omitNullObject = (obj: Object) => {
-		return cloneDeepWith(obj, (value) => {
-			return value ?? undefined
-		}) as ReplaceNullWithUndefined<Object>
+function _omitNull(value: any): any {
+	if (value === null) return undefined
+	if (Array.isArray(value)) {
+		return value.map(_omitNull)
 	}
-	if (Array.isArray(obj)) {
-		return obj.map(omitNullObject)
+	if (isPlainObject(value)) {
+		return pickBy(mapValues(value, _omitNull), _omitNull)
 	}
-	return omitNullObject(obj)
+	return value
+}
+
+export function omitNull<T>(
+	value: T,
+): PartialOnUndefinedDeep<
+	ReplaceNullWithUndefined<T>,
+	{ recurseIntoArrays: true }
+> {
+	return _omitNull(value)
 }

@@ -1,10 +1,6 @@
 import { List, ListItem, SimpleGrid, Stack, Text } from '@chakra-ui/react'
-import {
-	DeleteModalButton,
-	EditButton,
-	LabeledText,
-	MainArea,
-} from 'components'
+import { useQueryClient } from '@tanstack/react-query'
+import { EditButton, LabeledText, MainArea } from 'components'
 import { useUrlParams } from 'hooks'
 import { GetPublicationResponse } from 'server/services/publication'
 
@@ -18,6 +14,7 @@ export default function PublicationsShow({
 	data,
 }: PublicationsShowProps) {
 	const { category } = useUrlParams()
+	const queryClient = useQueryClient()
 
 	return (
 		<MainArea
@@ -29,20 +26,12 @@ export default function PublicationsShow({
 			title={data?.title}
 			rightActions={
 				data && (
-					<>
-						<EditButton
-							href={{
-								pathname: `/publications/${category}/create`,
-								query: { data: JSON.stringify(data) },
-							}}
-						/>
-						<DeleteModalButton
-							id={data.id}
-							name={data.title}
-							resource="publications"
-							subresource={category}
-						/>
-					</>
+					<EditButton
+						href={`/publications/${category}/edit/${data.id}`}
+						onClick={() => {
+							queryClient.setQueryData([`publications/${data.id}`], data)
+						}}
+					/>
 				)
 			}
 		>
