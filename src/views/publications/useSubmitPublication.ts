@@ -7,13 +7,10 @@ import {
 	GetPublicationResponse,
 	UpdatePublicationResponse,
 } from 'server/services/publication'
-import { publicationSchema } from 'validations/publication'
-import { z } from 'zod'
+import { omitEmptyStrings } from 'utils/form'
+import { PublicationFormData } from 'validations/publication'
 
-export const useSubmitPublication = (
-	data?: GetPublicationResponse,
-	additionalData?: Record<string, any>,
-) => {
+export const useSubmitPublication = (data?: GetPublicationResponse) => {
 	const { t } = useTranslation('resources')
 	const queryClient = useQueryClient()
 	const router = useRouter()
@@ -28,19 +25,21 @@ export const useSubmitPublication = (
 			: UpdatePublicationResponse
 	>(`publications${data ? `/${data.id}` : ''}`)
 
-	return async function onSubmit(
-		submitData: z.infer<typeof publicationSchema>,
-	) {
+	return async function onSubmit({
+		type,
+		authors,
+		coauthors,
+		...submitData
+	}: PublicationFormData) {
 		const { id } = await mutation.mutateAsync({
 			method: data ? 'put' : 'post',
-			body: {
+			body: omitEmptyStrings({
 				...submitData,
-				...additionalData,
-				...(!data && {
-					category,
-					type: submitData.type || t(`${category}.name`, { count: 1 }),
-				}),
-			},
+				type: type || t(`${category}.name`, { count: 1 }),
+				authorIds: authors.map(({ id }) => id),
+				coauthors: coauthors.length > 1 ? coauthors.slice(0, -1) : undefined,
+				...(!data && { category }),
+			}),
 		})
 		showToast('success')
 		await queryClient.invalidateQueries(['publications'])

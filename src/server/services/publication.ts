@@ -48,7 +48,9 @@ export async function findPublication(id: Id) {
 	return omitNull(addAuthorNames(record))
 }
 
-export type GetPublicationResponse = Awaited<ReturnType<typeof findPublication>>
+export type GetPublicationResponse = Jsonify<
+	Awaited<ReturnType<typeof findPublication>>
+>
 
 export async function findPublications(filters: GetPublications) {
 	const {
@@ -95,20 +97,13 @@ export type GetPublicationsResponse = Jsonify<
 >
 
 export async function createPublication(publication: CreatePublication) {
-	const {
-		writtenInYear = new Date().getFullYear(),
-		volumeInPages = 1,
-		authorIds,
-		...otherFields
-	} = publication
+	const { authorIds, ...otherFields } = publication
 
 	return omitNull(
 		await prisma.publication.create({
 			select: defaultPublicationSelect,
 			data: {
 				...otherFields,
-				writtenInYear,
-				volumeInPages,
 				...(authorIds && {
 					authors: {
 						connect: authorIds.map((id) => ({ id })),

@@ -1,9 +1,8 @@
 import { Stack } from '@chakra-ui/react'
 import {
-	AuthorSelect,
+	Authors,
 	Coauthors,
 	DeleteModalButton,
-	FileUpload,
 	Form,
 	FormControl,
 	FormControlGroup,
@@ -11,13 +10,8 @@ import {
 } from 'components'
 import { useUrlParams } from 'hooks'
 import useTranslation from 'next-translate/useTranslation'
-import { useState } from 'react'
 import { GetPublicationResponse } from 'server/services/publication'
-import { Id } from 'validations/common'
-import {
-	createPublicationSchema,
-	publicationSchema,
-} from 'validations/publication'
+import { publicationFormSchema } from 'validations/publication'
 import { useSubmitPublication } from './useSubmitPublication'
 
 const currentYear = new Date().getFullYear()
@@ -34,26 +28,16 @@ export default function PublicationsCreate({
 	const { t } = useTranslation('resources')
 	const { category } = useUrlParams()
 
-	const [authorIds, setAuthorIds] = useState<Id[]>(
-		data?.authors.map((e) => e.id) ?? [],
-	)
-
-	const [coauthors, setCoauthors] = useState<string[]>([
-		...(data?.coauthors ?? []),
-		'',
-	])
-
 	const defaultValues = data
-		? createPublicationSchema
-				.strip()
-				.omit({
-					category: true,
-					authorIds: true,
-					coauthors: true,
-				})
-				.partial()
-				.parse(data)
-		: undefined
+		? {
+				...publicationFormSchema.strip().partial().parse(data),
+				authors: data.authors,
+				coauthors: [...data.coauthors, ''],
+		  }
+		: {
+				authors: [],
+				coauthors: [''],
+		  }
 
 	return (
 		<MainArea
@@ -63,11 +47,8 @@ export default function PublicationsCreate({
 			})}`}
 		>
 			<Form
-				onSubmit={useSubmitPublication(data, {
-					authorIds,
-					coauthors: coauthors.slice(0, -1),
-				})}
-				schema={publicationSchema}
+				onSubmit={useSubmitPublication(data)}
+				schema={publicationFormSchema}
 				defaultValues={defaultValues}
 				actions={
 					data && (
@@ -106,10 +87,10 @@ export default function PublicationsCreate({
 						optional
 					/>
 				</Stack>
-				<AuthorSelect authors={data?.authors} setAuthorIds={setAuthorIds} />
-				<Coauthors {...{ coauthors, setCoauthors }} />
+				<Authors />
+				<Coauthors />
+				<FormControl field="publicationPlace" optional />
 				<FormControl field="extraData" multiline optional />
-				<FileUpload />
 			</Form>
 		</MainArea>
 	)

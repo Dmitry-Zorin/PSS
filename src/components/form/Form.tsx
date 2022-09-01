@@ -1,6 +1,7 @@
 import { HStack, Stack, StackProps } from '@chakra-ui/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SaveButton, SubmitButton } from 'components'
+import { isEmpty } from 'lodash'
 import { ReactElement, ReactNode } from 'react'
 import {
 	FormProvider,
@@ -8,7 +9,8 @@ import {
 	useForm,
 	UseFormProps,
 } from 'react-hook-form'
-import { z, ZodType } from 'zod'
+import { isDevelopment } from 'utils/env'
+import { object, z, ZodType } from 'zod'
 
 interface FormProps<T extends ZodType> extends StackProps {
 	children: ReactElement[]
@@ -36,11 +38,13 @@ export default function Form<T extends ZodType>({
 
 	const {
 		handleSubmit,
+		getValues,
 		formState: { isSubmitting, errors },
 	} = formMethods
 
-	if (errors) {
-		console.log(errors)
+	if (!isEmpty(errors) && isDevelopment) {
+		console.error(errors)
+		console.log(getValues())
 	}
 
 	const Button = defaultValues ? SaveButton : SubmitButton
@@ -49,7 +53,11 @@ export default function Form<T extends ZodType>({
 		<FormProvider {...formMethods}>
 			<Stack as="form" spacing={6} onSubmit={handleSubmit(onSubmit)} {...props}>
 				{children}
-				<HStack spacing={4} justify="space-evenly" pt={6}>
+				<HStack
+					spacing={4}
+					justify={actions ? 'space-between' : 'center'}
+					pt={6}
+				>
 					{actions}
 					<Button size="lg" isLoading={isSubmitting} />
 				</HStack>

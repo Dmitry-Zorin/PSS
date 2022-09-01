@@ -1,19 +1,15 @@
-import { isBrowser } from 'utils/env'
-import {
-	preprocessToNumber,
-	transformEmptyStringToUndefined,
-} from 'utils/validation'
+import { preprocessToNumber } from 'utils/validation'
 import { z } from 'zod'
-import { MAX_PER_PAGE } from './../constants/app'
+import { common } from './common'
 
 export const getPublicationsSchema = z
 	.strictObject({
 		category: z.string(),
-		search: z.string(),
+		search: common.search,
+		page: common.page,
+		perPage: common.perPage,
 		sortField: z.string(),
 		sortOrder: z.enum(['asc', 'desc']),
-		page: preprocessToNumber(z.number().int()),
-		perPage: preprocessToNumber(z.number().int().max(MAX_PER_PAGE)),
 	})
 	.partial()
 
@@ -21,53 +17,64 @@ export type GetPublications = z.infer<typeof getPublicationsSchema>
 
 const currentYear = new Date().getFullYear()
 
-export const publicationSchema = z.strictObject({
+const fields = {
 	title: z.string().min(8).max(300),
-	description: z
-		.string()
-		.max(2000)
-		.or(transformEmptyStringToUndefined())
-		.optional(),
-	type: z.string().max(50).or(transformEmptyStringToUndefined()).optional(),
+	description: z.string().max(2000),
+	category: z.string().max(20),
+	type: z.string().max(50),
+	publicationPlace: z.string().max(300),
 	writtenInYear: preprocessToNumber(
 		z
 			.number()
 			.int()
 			.min(currentYear - 100)
 			.max(currentYear),
-	)
-		.or(transformEmptyStringToUndefined())
-		.optional(),
-	volumeInPages: preprocessToNumber(z.number().int().max(100))
-		.or(transformEmptyStringToUndefined())
-		.optional(),
-	extraData: z
-		.string()
-		.max(2000)
-		.or(transformEmptyStringToUndefined())
-		.optional(),
-	file: isBrowser
-		? z
-				.instanceof(File)
-				.refine((file) => file.size < 1 * 1000 * 1000, {
-					message: 'Файл не дожен превышать 3МБ',
-				})
-				.optional()
-		: z.any(),
+	),
+	volumeInPages: preprocessToNumber(z.number().int().max(100)),
+	extraData: z.string().max(2000),
+	authors: z.object({ id: common.id }).array().min(1).max(10),
+	authorIds: common.ids.max(10),
+	coauthors: z.string().array(),
+}
+
+export const publicationFormSchema = z.strictObject({
+	title: fields.title,
+	description: fields.description.or(z.literal('')),
+	type: fields.type.or(z.literal('')),
+	writtenInYear: fields.writtenInYear.or(z.literal('')),
+	volumeInPages: fields.volumeInPages.or(z.literal('')),
+	authors: fields.authors,
+	coauthors: fields.coauthors,
+	publicationPlace: fields.publicationPlace.or(z.literal('')),
+	extraData: fields.extraData.or(z.literal('')),
 })
 
-export const createPublicationSchema = publicationSchema.extend({
-	category: z.string().max(20),
-	type: z.string().max(50),
-	authorIds: preprocessToNumber(z.number().int()).array().max(10),
-	coauthors: z.string().array(),
+export type PublicationFormData = z.infer<typeof publicationFormSchema>
+
+export const createPublicationSchema = z.strictObject({
+	title: fields.title,
+	description: fields.description.optional(),
+	category: fields.category,
+	type: fields.type,
+	writtenInYear: fields.writtenInYear.default(currentYear),
+	volumeInPages: fields.volumeInPages.default(1),
+	authorIds: fields.authorIds,
+	coauthors: fields.coauthors.optional(),
+	publicationPlace: fields.publicationPlace.optional(),
+	extraData: fields.extraData.optional(),
 })
 
 export type CreatePublication = z.infer<typeof createPublicationSchema>
 
-export const updatePublicationSchema = publicationSchema.extend({
-	authorIds: preprocessToNumber(z.number().int()).array().max(10),
-	coauthors: z.string().array(),
-})
+export const updatePublicationSchema = createPublicationSchema
+	.omit({ category: true })
+	.extend({
+		description: fields.description.or(z.literal(null)).default(null),
+		writtenInYear: fields.writtenInYear.default(currentYear),
+		volumeInPages: fields.volumeInPages.default(1),
+		coauthors: fields.coauthors.default([]),
+		publicationPlace: fields.publicationPlace.or(z.literal(null)).default(null),
+		extraData: fields.extraData.or(z.literal(null)).default(null),
+	})
 
 export type UpdatePublication = z.infer<typeof updatePublicationSchema>

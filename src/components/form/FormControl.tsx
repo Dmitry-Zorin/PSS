@@ -8,8 +8,9 @@ import {
 	Textarea,
 	TextareaProps,
 } from '@chakra-ui/react'
+import { useHandleFormError } from 'hooks'
 import useTranslation from 'next-translate/useTranslation'
-import { useFormContext } from 'react-hook-form'
+import { FieldError, useFormContext } from 'react-hook-form'
 import ResizeTextarea from 'react-textarea-autosize'
 
 interface FormControlProps {
@@ -27,6 +28,7 @@ export default function FormControl({
 	...props
 }: FormControlProps & InputProps & TextareaProps) {
 	const { t } = useTranslation('resources')
+	const handleError = useHandleFormError(field)
 	const {
 		register,
 		formState: { errors },
@@ -55,7 +57,7 @@ export default function FormControl({
 				<Input {...inputProps} />
 			)}
 			<FormErrorMessage>
-				{errors[field]?.message as string | undefined}
+				{handleError(errors[field] as FieldError | undefined)}
 			</FormErrorMessage>
 		</ChakraFormControl>
 	)

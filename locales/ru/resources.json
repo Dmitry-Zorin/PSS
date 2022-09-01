@@ -85,6 +85,7 @@
 		"coauthors": "Соавторы",
 		"coauthor": "Соавтор",
 		"character": "Характер работы",
+		"publicationPlace": "Место публикации",
 		"extraData": "Дополнительные данные"
 	},
 	"events": {
@@ -96,6 +97,6 @@
 		"deleted_f": "удалена"
 	},
 	"messages": {
-		"delete": "Вы точно хотите удалить {{this}} {{resource}}"
+		"delete": "Вы точно хотите удалить {{resource}}?"
 	}
 }

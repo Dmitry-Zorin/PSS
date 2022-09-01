@@ -2,8 +2,8 @@ import { List, ListItem } from '@chakra-ui/react'
 import { MainArea, Pagination } from 'components'
 import { useQuery, useUrlQuery } from 'hooks'
 import useTranslation from 'next-translate/useTranslation'
+import { defaultTimelineParams } from 'pages/timeline'
 import { GetPublicationsResponse } from 'server/services/publication'
-import { defaultTimelineParams } from '../../pages/timeline'
 import TimelineCard from './TimelineCard'
 
 export default function Timeline() {

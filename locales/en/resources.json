@@ -55,6 +55,7 @@
 		"coauthors": "Coauthors",
 		"coauthor": "Coauthor",
 		"character": "Character",
+		"publicationPlace": "Publication Place",
 		"extraData": "Additional data"
 	},
 	"messages": {

@@ -1,5 +1,7 @@
-import { Box, Flex, StackProps, Text } from '@chakra-ui/react'
+import { Box, Flex, Link, StackProps } from '@chakra-ui/react'
 import useTranslation from 'next-translate/useTranslation'
+import NextLink from 'next/link'
+import { useRouter } from 'next/router'
 
 export interface MainMenuGroupHeaderProps extends StackProps {
 	text: string
@@ -11,6 +13,9 @@ export default function MainMenuGroupHeader({
 }: MainMenuGroupHeaderProps) {
 	const { t } = useTranslation()
 
+	const router = useRouter()
+	const isActive = new RegExp(`^/${text}$`).test(router.asPath)
+
 	return (
 		<Box pt={{ base: 4, lg: 2 }}>
 			<Flex
@@ -21,15 +26,20 @@ export default function MainMenuGroupHeader({
 				pt={2}
 				{...props}
 			>
-				<Text
-					fontSize="sm-"
-					color="text-secondary"
-					fontWeight="semibold"
-					letterSpacing="wide"
-					pointerEvents="none"
-				>
-					{t(`layout.menu.items.${text}`).toUpperCase()}
-				</Text>
+				<NextLink href={`/${text}`} passHref>
+					<Link
+						fontSize="sm-"
+						color={isActive ? 'primary' : 'text-secondary'}
+						fontWeight="semibold"
+						letterSpacing="wide"
+						pointerEvents={text === 'publications' ? undefined : 'none'}
+						_hover={{
+							color: 'primary',
+						}}
+					>
+						{t(`layout.menu.items.${text}`).toUpperCase()}
+					</Link>
+				</NextLink>
 			</Flex>
 		</Box>
 	)

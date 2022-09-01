@@ -15,7 +15,7 @@ export default function MainMenuGroup({ heading, items }: MainMenuGroupProps) {
 					return (
 						<MainMenuItem
 							key={name}
-							to={`${heading ? `/${heading.toLowerCase()}` : ''}/${name}`}
+							href={`${heading ? `/${heading.toLowerCase()}` : ''}/${name}`}
 							text={name}
 							icon={info.icon}
 						/>

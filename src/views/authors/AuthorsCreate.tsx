@@ -4,7 +4,7 @@ import { useEventToast, useMutation } from 'hooks'
 import useTranslation from 'next-translate/useTranslation'
 import { useRouter } from 'next/router'
 import { CreateAuthorResponse } from 'server/services/author'
-import { authorSchema, CreateAuthor } from 'validations/author'
+import { authorFormSchema, CreateAuthor } from 'validations/author'
 
 export default function AuthorsCreate() {
 	const { t } = useTranslation('resources')
@@ -29,7 +29,7 @@ export default function AuthorsCreate() {
 				fallback: t('authors.name_one'),
 			})}`}
 		>
-			<Form onSubmit={onSubmit} schema={authorSchema} defaultValues={{}}>
+			<Form onSubmit={onSubmit} schema={authorFormSchema} defaultValues={{}}>
 				<FormControl field="lastName" />
 				<FormControl field="firstName" />
 				<FormControl field="middleName" optional />

@@ -12,15 +12,15 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 export interface MainMenuItemProps {
-	to: string
+	href: string
 	icon: IconProp
 	text: string
 }
 
-export default function MainMenuItem({ to, icon, text }: MainMenuItemProps) {
+export default function MainMenuItem({ href, icon, text }: MainMenuItemProps) {
 	const { t } = useTranslation()
 	const router = useRouter()
-	const isActive = new RegExp(`^${to}($|\\W)`).test(router.asPath)
+	const isActive = new RegExp(`^${href}($|\\W)`).test(router.asPath)
 	const translatedText = t(`layout.menu.items.${text}`)
 
 	return (
@@ -34,7 +34,7 @@ export default function MainMenuItem({ to, icon, text }: MainMenuItemProps) {
 			})}
 		>
 			<ListItem>
-				<Link href={to} passHref>
+				<Link href={href} passHref>
 					<HStack
 						as="a"
 						spacing={3}

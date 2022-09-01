@@ -1,55 +1,30 @@
-import { FormControl, FormLabel, Input, List } from '@chakra-ui/react'
-import { AnimatePresence, motion } from 'framer-motion'
-import { identity } from 'lodash'
+import { FormControl, FormErrorMessage, FormLabel } from '@chakra-ui/react'
+import { CoauthorInputList } from 'components'
 import useTranslation from 'next-translate/useTranslation'
-import { Dispatch, SetStateAction } from 'react'
-import { GetPublicationResponse } from 'server/services/publication'
-import { stiffSpringConfig } from 'utils/animation'
+import { FieldError, useFormContext } from 'react-hook-form'
 
-interface CoauthorsProps {
-	coauthors?: GetPublicationResponse['coauthors']
-	setCoauthors: Dispatch<SetStateAction<string[]>>
-}
-
-export default function Coauthors({ coauthors, setCoauthors }: CoauthorsProps) {
+export default function Coauthors() {
 	const { t } = useTranslation('resources')
 
+	const {
+		formState: { errors },
+	} = useFormContext()
+
+	function handleError(error?: FieldError) {
+		if (!error) return
+		switch (error.type) {
+			default:
+				return error.message
+		}
+	}
+
 	return (
-		<FormControl>
+		<FormControl isInvalid={!!errors.coauthors}>
 			<FormLabel>{t('fields.coauthors')}</FormLabel>
-			<List>
-				<AnimatePresence>
-					{coauthors?.map((name, i) => (
-						<motion.li
-							key={i}
-							initial={i ? { height: 0, opacity: 0 } : false}
-							animate={{ height: 'auto', opacity: 1 }}
-							exit={{ height: 0, opacity: 0 }}
-							transition={{
-								height: stiffSpringConfig,
-								opacity: { duration: 0.1 },
-							}}
-						>
-							<Input
-								mb={2}
-								value={name}
-								placeholder="-"
-								onChange={(e) => {
-									return setCoauthors((names) => {
-										const newNames = [...names]
-										newNames[i] = e.target.value
-										const newNamesFiltered = newNames.filter(identity)
-										if (names.at(-1) === '') {
-											newNamesFiltered.push('')
-										}
-										return newNamesFiltered
-									})
-								}}
-							/>
-						</motion.li>
-					))}
-				</AnimatePresence>
-			</List>
+			<CoauthorInputList />
+			<FormErrorMessage>
+				{handleError(errors.coauthors as FieldError | undefined)}
+			</FormErrorMessage>
 		</FormControl>
 	)
 }

@@ -1,5 +1,6 @@
 export { default as useDebounce } from './useDebounce'
 export { default as useEventToast } from './useEventToast'
+export { default as useHandleFormError } from './useHandleFormError'
 export { default as useHover } from './useHover'
 export { default as useIfDefined } from './useIfDefined'
 export { default as useMutation } from './useMutation'

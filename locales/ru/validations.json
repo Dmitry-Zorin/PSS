@@ -1,0 +1,18 @@
+{
+	"symbols": {
+		"name_one": "символа",
+		"name_few": "символов",
+		"name_many": "символов"
+	},
+	"authors": {
+		"name_one": "автора",
+		"name_few": "автора",
+		"name_many": "авторов"
+	},
+	"errors": {
+		"too_small": "Поле \"{{field}}\" должно содержать хотя бы {{count}}",
+		"too_big": "Поле \"{{field}}\" должно содержать не более {{count}}",
+		"authors_too_small": "Публикация должна иметь хотя бы {{count}}",
+		"authors_too_big": "Публикация должна иметь не более {{count}}"
+	}
+}

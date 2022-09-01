@@ -57,6 +57,7 @@ export default function SelectManyMenu<Item extends { id: Id }>({
 							<Input
 								value={value}
 								placeholder={t('common:actions.search')}
+								isInvalid={false}
 								onChange={(e) => setValue(e.target.value)}
 								onKeyDown={(e) => {
 									if (e.key === 'Enter') {

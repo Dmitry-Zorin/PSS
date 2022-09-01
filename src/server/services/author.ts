@@ -6,7 +6,7 @@ import { getSearchFilter } from 'utils/filters'
 import { omitNull } from 'utils/helpers'
 import { CreateAuthor, GetAuthors, UpdateAuthor } from 'validations/author'
 import { Id } from 'validations/common'
-import { PER_PAGE } from './../../constants/app'
+import { PER_PAGE } from 'constants/app'
 
 const defaultAuthorSelect = Prisma.validator<Prisma.AuthorSelect>()({
 	id: true,
@@ -53,10 +53,10 @@ export async function findAuthors(filters: GetAuthors) {
 		const records = await prisma.author.findMany({
 			where: { id: { in: ids } },
 		})
-		return {
+		return omitNull({
 			total: ids.length,
-			records: omitNull(records.map(addAuthorName)),
-		}
+			records: records.map(addAuthorName),
+		})
 	}
 
 	const where = getSearchFilter<Author>(search, [
@@ -76,7 +76,7 @@ export async function findAuthors(filters: GetAuthors) {
 		}),
 	])
 
-	return { records: omitNull(records.map(addAuthorName)), total }
+	return omitNull({ records: records.map(addAuthorName), total })
 }
 
 export type GetAuthorsResponse = Awaited<ReturnType<typeof findAuthors>>
@@ -85,7 +85,7 @@ export async function createAuthor(author: CreateAuthor) {
 	return omitNull(
 		await prisma.author.create({
 			select: defaultAuthorSelect,
-			data: omitNull(author),
+			data: author,
 		}),
 	)
 }

@@ -27,7 +27,7 @@ export default function SelectedItemsList<Item>({
 		<List flexGrow={1}>
 			{!items.length && (
 				<ListItem h={0} color="text-secondary">
-					{placeholder}
+					<Text lineHeight={10}>{placeholder}</Text>
 				</ListItem>
 			)}
 			<AnimatePresence>
