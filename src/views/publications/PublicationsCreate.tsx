@@ -17,7 +17,7 @@ import { useSubmitPublication } from './useSubmitPublication'
 const currentYear = new Date().getFullYear()
 
 interface PublicationsCreateProps {
-	error: Error | null
+	error?: Error | null
 	data?: GetPublicationResponse
 }
 

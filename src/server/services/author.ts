@@ -58,7 +58,7 @@ export async function findAuthor(id: Id) {
 	})
 }
 
-export type GetAuthorResponse = Jsonify<Awaited<ReturnType<typeof findAuthor>>>
+export type GetAuthorResponse = Awaited<ReturnType<typeof findAuthor>>
 
 export async function findAuthors(filters: GetAuthors) {
 	const { ids, search, page = 1, perPage = PER_PAGE } = filters

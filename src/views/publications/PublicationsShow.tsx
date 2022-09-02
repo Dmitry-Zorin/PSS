@@ -2,7 +2,7 @@ import { List, ListItem, SimpleGrid, Stack, Text } from '@chakra-ui/react'
 import { useQueryClient } from '@tanstack/react-query'
 import { EditButton, LabeledField, Link, MainArea } from 'components'
 import { useUrlParams } from 'hooks'
-import { GetPublicationResponse } from 'server/services/publication'
+import { GetPublicationResponse } from '../../server/services/publication'
 
 interface PublicationsShowProps {
 	error: unknown
