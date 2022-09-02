@@ -1,12 +1,13 @@
 import { Author, Prisma } from '@prisma/client'
-import { addAuthorName } from 'helpers/authors'
+import { PER_PAGE } from 'constants/app'
+import { addAuthorName, addAuthorNames } from 'helpers/authors'
 import httpError from 'http-errors'
 import prisma from 'server/prisma'
+import { Jsonify } from 'type-fest'
 import { getSearchFilter } from 'utils/filters'
 import { omitNull } from 'utils/helpers'
 import { CreateAuthor, GetAuthors, UpdateAuthor } from 'validations/author'
 import { Id } from 'validations/common'
-import { PER_PAGE } from 'constants/app'
 
 const defaultAuthorSelect = Prisma.validator<Prisma.AuthorSelect>()({
 	id: true,
@@ -20,15 +21,25 @@ const authorWithPublicationsSelect = Prisma.validator<Prisma.AuthorSelect>()({
 	...defaultAuthorSelect,
 	publications: {
 		select: {
-			category: true,
+			id: true,
 			title: true,
+			description: true,
+			category: true,
 			type: true,
 			characterId: true,
-			publicationPlace: true,
 			writtenInYear: true,
 			volumeInPages: true,
 			coauthors: true,
+			publicationPlace: true,
 			extraData: true,
+			authors: {
+				select: {
+					id: true,
+					lastName: true,
+					firstName: true,
+					middleName: true,
+				},
+			},
 		},
 	},
 })
@@ -41,10 +52,13 @@ export async function findAuthor(id: Id) {
 	if (!record) {
 		throw new httpError.NotFound('Автор не найден')
 	}
-	return omitNull(addAuthorName(record))
+	return omitNull({
+		...addAuthorName(record),
+		publications: record.publications.map(addAuthorNames),
+	})
 }
 
-export type GetAuthorResponse = Awaited<ReturnType<typeof findAuthor>>
+export type GetAuthorResponse = Jsonify<Awaited<ReturnType<typeof findAuthor>>>
 
 export async function findAuthors(filters: GetAuthors) {
 	const { ids, search, page = 1, perPage = PER_PAGE } = filters
@@ -79,7 +93,9 @@ export async function findAuthors(filters: GetAuthors) {
 	return omitNull({ records: records.map(addAuthorName), total })
 }
 
-export type GetAuthorsResponse = Awaited<ReturnType<typeof findAuthors>>
+export type GetAuthorsResponse = Jsonify<
+	Awaited<ReturnType<typeof findAuthors>>
+>
 
 export async function createAuthor(author: CreateAuthor) {
 	return omitNull(
@@ -90,20 +106,23 @@ export async function createAuthor(author: CreateAuthor) {
 	)
 }
 
-export type CreateAuthorResponse = Awaited<ReturnType<typeof createAuthor>>
+export type CreateAuthorResponse = Jsonify<
+	Awaited<ReturnType<typeof createAuthor>>
+>
 
-export async function updateAuthor(author: UpdateAuthor) {
-	const { id, ...data } = author
+export async function updateAuthor(id: Id, author: UpdateAuthor) {
 	return omitNull(
 		await prisma.author.update({
 			select: defaultAuthorSelect,
 			where: { id },
-			data,
+			data: author,
 		}),
 	)
 }
 
-export type UpdateAuthorResponse = Awaited<ReturnType<typeof updateAuthor>>
+export type UpdateAuthorResponse = Jsonify<
+	Awaited<ReturnType<typeof updateAuthor>>
+>
 
 export async function deleteAuthor(id: Id) {
 	return omitNull(
@@ -114,4 +133,6 @@ export async function deleteAuthor(id: Id) {
 	)
 }
 
-export type DeleteAuthorResponse = Awaited<ReturnType<typeof deleteAuthor>>
+export type DeleteAuthorResponse = Jsonify<
+	Awaited<ReturnType<typeof deleteAuthor>>
+>

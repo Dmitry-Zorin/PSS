@@ -10,6 +10,7 @@ export const getPublicationsSchema = z
 		perPage: common.perPage,
 		sortField: z.string(),
 		sortOrder: z.enum(['asc', 'desc']),
+		authorId: common.id,
 	})
 	.partial()
 

@@ -1,5 +1,4 @@
 import {
-	Box,
 	Button as ChakraButton,
 	ButtonProps as ChakraButtonProps,
 	forwardRef,
@@ -24,17 +23,9 @@ const Button = forwardRef<ButtonProps, 'button'>(
 				{...props}
 			>
 				<Tap isTapped={isTapped}>
-					{leftIcon && (
-						<Box as="span" lineHeight={2} mr={2}>
-							{leftIcon}
-						</Box>
-					)}
-					{children}
-					{rightIcon && (
-						<Box as="span" ml={2}>
-							{rightIcon}
-						</Box>
-					)}
+					{leftIcon && <div>{leftIcon}</div>}
+					<div>{children}</div>
+					{rightIcon && <div>{rightIcon}</div>}
 				</Tap>
 			</ChakraButton>
 		)

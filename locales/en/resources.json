@@ -56,7 +56,8 @@
 		"coauthor": "Coauthor",
 		"character": "Character",
 		"publicationPlace": "Publication Place",
-		"extraData": "Additional data"
+		"extraData": "Additional data",
+		"latestPublications": "Lastest Publications"
 	},
 	"messages": {
 		"delete": "Are you sure you want to delete {{this}} {{resource}}?"

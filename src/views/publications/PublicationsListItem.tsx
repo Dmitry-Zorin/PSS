@@ -13,15 +13,20 @@ import { Highlight, Icon } from 'components'
 import resources from 'constants/resources'
 import { useTruncate, useUrlQuery } from 'hooks'
 import Link from 'next/link'
+import { GetAuthorResponse } from 'server/services/author'
 import { GetPublicationsResponse } from 'server/services/publication'
 
 export interface PublicationsListItemProps {
-	record: GetPublicationsResponse['records'][number]
+	record:
+		| GetPublicationsResponse['records'][number]
+		| GetAuthorResponse['publications'][number]
+	simplified?: boolean
 	showIcon?: boolean
 }
 
 export default function PublicationsListItem({
 	record,
+	simplified,
 	showIcon,
 }: PublicationsListItemProps) {
 	const { search } = useUrlQuery()
@@ -52,7 +57,7 @@ export default function PublicationsListItem({
 						<Highlight text={truncate(record.description)} search={search} />
 					</Text>
 				)}
-				{record.authors && (
+				{!simplified && (
 					<Wrap>
 						{record.authors.map((e) => (
 							<WrapItem key={e.id}>

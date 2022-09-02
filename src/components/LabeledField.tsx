@@ -11,18 +11,18 @@ import { isNumber, isString } from 'lodash'
 import useTranslation from 'next-translate/useTranslation'
 import { ReactElement } from 'react'
 
-interface LabeledTextProps {
+interface LabeledFieldProps {
 	label: string
 	text?: ReactElement | string | number
 	stat?: boolean
 }
 
-export default function LabeledText({
+export default function LabeledField({
 	label,
 	text,
 	stat,
 	...props
-}: LabeledTextProps & StackProps & StatProps) {
+}: LabeledFieldProps & StackProps & StatProps) {
 	const { t } = useTranslation('resources')
 	label = t(`fields.${label}`)
 	text ||= '-'

@@ -1,7 +1,7 @@
-import { Box, BoxProps } from '@chakra-ui/react'
+import { HStack, StackProps } from '@chakra-ui/react'
 import { motion, MotionProps } from 'framer-motion'
 
-type TapProps = BoxProps &
+type TapProps = StackProps &
 	MotionProps & {
 		isTapped: boolean
 		scale?: number
@@ -9,10 +9,9 @@ type TapProps = BoxProps &
 
 export default function Tap({ isTapped, scale = 0.95, ...props }: TapProps) {
 	return (
-		<Box
+		<HStack
 			as={motion.div}
 			animate={{ scale: isTapped ? scale : 1 }}
-			lineHeight={1}
 			{...props}
 		/>
 	)

@@ -60,11 +60,21 @@ export async function findPublications(filters: GetPublications) {
 		sortOrder = 'asc',
 		page = 1,
 		perPage = PER_PAGE,
+		authorId,
 	} = filters
 
 	const where = {
 		AND: [
-			{ category },
+			{
+				category,
+				...(authorId && {
+					authors: {
+						some: {
+							id: authorId,
+						},
+					},
+				}),
+			},
 			getSearchFilter<Publication>(search, ['title', 'description']),
 		],
 	}

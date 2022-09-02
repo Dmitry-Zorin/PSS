@@ -1,14 +1,20 @@
-import { Stack } from '@chakra-ui/react'
-import { faDownload } from '@fortawesome/free-solid-svg-icons'
+import { Center, Flex, Stack } from '@chakra-ui/react'
+import { faCaretRight, faDownload } from '@fortawesome/free-solid-svg-icons'
 import { useQueryClient } from '@tanstack/react-query'
-import { Button, Icon, LabeledText, MainArea } from 'components'
-import DeleteButton from 'components/buttons/actionButtons/DeleteButton'
+import {
+	Button,
+	EditButton,
+	Icon,
+	LabeledField,
+	Link,
+	MainArea,
+	MainList,
+} from 'components'
 import { saveAs } from 'file-saver'
-import { useEventToast, useMutation, useUrlParams } from 'hooks'
 import { createDocx } from 'lib/docx'
-import { useRouter } from 'next/router'
+import useTranslation from 'next-translate/useTranslation'
 import { GetAuthorResponse } from 'server/services/author'
-import { DeletePublicationResponse } from 'server/services/publication'
+import PublicationsListItem from '../publications/PublicationsListItem'
 
 interface AuthorsShowProps {
 	error: unknown
@@ -16,43 +22,67 @@ interface AuthorsShowProps {
 }
 
 export default function AuthorsShow({ error, data }: AuthorsShowProps) {
-	// const { t } = useTranslation()
-	const { id, category } = useUrlParams()
-	const router = useRouter()
-	const showToast = useEventToast(category, 'deleted')
+	const { t } = useTranslation('author')
 	const queryClient = useQueryClient()
-
-	const mutation = useMutation<DeletePublicationResponse>(`authors/${id}`)
 
 	return (
 		<MainArea
 			error={error}
 			title={data && data.fullName}
 			rightActions={
-				<DeleteButton
-					onClick={async () => {
-						await mutation.mutateAsync({ method: 'delete' })
-						showToast('success')
-						await queryClient.invalidateQueries(['authors'])
-						await router.replace(`/authors`)
-					}}
-					isLoading={mutation.isLoading}
-				/>
+				data && (
+					<EditButton
+						href={`/authors/edit/${data.id}`}
+						onClick={() => {
+							queryClient.setQueryData([`authors/${data.id}`], data)
+						}}
+					/>
+				)
 			}
 		>
 			{data && (
 				<>
-					<Stack spacing={12} pt={2}>
-						{data?.info && <LabeledText label="info" text={data.info} />}
+					<Stack spacing={{ base: 8, sm: 10 }}>
+						{data?.info && <LabeledField label="info" text={data.info} />}
+						<LabeledField
+							label="latestPublications"
+							text={
+								<>
+									<MainList data={{ total: 10 }} pt={2}>
+										{data.publications.slice(0, 10).map((e) => (
+											<PublicationsListItem
+												key={e.id}
+												record={e}
+												simplified
+												showIcon
+											/>
+										))}
+									</MainList>
+									<Flex justify="flex-end" pt={1.5}>
+										<Link href={`/publications?authorId=${data.id}`}>
+											{t('viewAllPublications')}
+											<Icon icon={faCaretRight} ml="1px" mb="-1px" />
+										</Link>
+									</Flex>
+								</>
+							}
+						/>
+						<Center pt={6}>
+							<Button
+								variant="solid"
+								leftIcon={<Icon icon={faDownload} />}
+								onClick={async () => {
+									saveAs(
+										await createDocx(data),
+										`${t('publicationList:name')} (${data.fullName}).docx`,
+									)
+								}}
+								disabled={!data.publications.length}
+							>
+								{t('publicationList:download')}
+							</Button>
+						</Center>
 					</Stack>
-					<Button
-						leftIcon={<Icon icon={faDownload} />}
-						onClick={async () => {
-							saveAs(await createDocx(data), 'test.docx')
-						}}
-					>
-						Download
-					</Button>
 				</>
 			)}
 		</MainArea>

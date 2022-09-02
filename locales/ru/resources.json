@@ -86,7 +86,8 @@
 		"coauthor": "Соавтор",
 		"character": "Характер работы",
 		"publicationPlace": "Место публикации",
-		"extraData": "Дополнительные данные"
+		"extraData": "Дополнительные данные",
+		"latestPublications": "Последние публикации"
 	},
 	"events": {
 		"created_m": "добавлен",

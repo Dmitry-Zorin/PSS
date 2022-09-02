@@ -23,7 +23,11 @@ export default function Search({ ...props }: SearchProps) {
 	}, [queryParams.search])
 
 	async function search() {
-		await redirect({ search: value.trim() || undefined })
+		await redirect({
+			...queryParams,
+			search: value.trim() || undefined,
+			page: undefined,
+		})
 	}
 
 	return (

@@ -1,6 +1,6 @@
 import { List, ListItem, SimpleGrid, Stack, Text } from '@chakra-ui/react'
 import { useQueryClient } from '@tanstack/react-query'
-import { EditButton, LabeledText, MainArea } from 'components'
+import { EditButton, LabeledField, Link, MainArea } from 'components'
 import { useUrlParams } from 'hooks'
 import { GetPublicationResponse } from 'server/services/publication'
 
@@ -39,26 +39,28 @@ export default function PublicationsShow({
 				<Stack spacing={{ base: 8, sm: 10 }}>
 					{data.description && <Text>{data.description}</Text>}
 					{data.extraData && (
-						<LabeledText label="extraData" text={data.extraData} />
+						<LabeledField label="extraData" text={data.extraData} />
 					)}
 					<Stack
 						direction={{ base: 'column', md: 'row' }}
 						spacing={{ base: 8, sm: 10, md: 2 }}
 						align="top"
 					>
-						<LabeledText
+						<LabeledField
 							flexGrow={1}
 							label="authors"
 							text={
 								<List spacing={1}>
 									{data.authors.map((e) => (
-										<ListItem key={e.id}>{e.fullName}</ListItem>
+										<ListItem key={e.id}>
+											<Link href={`/authors/${e.id}`}>{e.fullName}</Link>
+										</ListItem>
 									))}
 								</List>
 							}
 						/>
 						{data.coauthors.length && (
-							<LabeledText
+							<LabeledField
 								flexGrow={1}
 								label="coauthors"
 								text={
@@ -76,10 +78,18 @@ export default function PublicationsShow({
 						spacingX={6}
 						spacingY={{ base: 8, sm: 10 }}
 					>
-						<LabeledText stat label="type" text={data.type} />
-						<LabeledText stat label="writtenInYear" text={data.writtenInYear} />
-						<LabeledText stat label="character" text={data.characterId} />
-						<LabeledText stat label="volumeInPages" text={data.volumeInPages} />
+						<LabeledField stat label="type" text={data.type} />
+						<LabeledField
+							stat
+							label="writtenInYear"
+							text={data.writtenInYear}
+						/>
+						<LabeledField stat label="character" text={data.characterId} />
+						<LabeledField
+							stat
+							label="volumeInPages"
+							text={data.volumeInPages}
+						/>
 					</SimpleGrid>
 				</Stack>
 			)}

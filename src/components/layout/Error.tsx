@@ -7,7 +7,7 @@ import {
 	Stack,
 	Text,
 } from '@chakra-ui/react'
-import { BackButton, Head, Logo } from 'components'
+import { Head, Logo } from 'components'
 import useTranslation from 'next-translate/useTranslation'
 
 interface ErrorProps {
@@ -37,10 +37,9 @@ export default function Error({ status, message }: ErrorProps) {
 									{t(`errors.${status}`)}
 								</Heading>
 							</HStack>
-							<Text fontSize="4xl" color="text-secondary">
+							<Text fontSize="5xl" color="text-secondary">
 								{message}
 							</Text>
-							<BackButton variant="main" />
 						</Stack>
 					</Center>
 					<Box flexGrow={2} />
