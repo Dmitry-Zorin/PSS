@@ -11,7 +11,6 @@ import {
 	MainList,
 } from 'components'
 import { saveAs } from 'file-saver'
-import { createDocx } from 'lib/docx'
 import useTranslation from 'next-translate/useTranslation'
 import { GetAuthorResponse } from 'server/services/author'
 import PublicationsListItem from '../publications/PublicationsListItem'
@@ -72,8 +71,9 @@ export default function AuthorsShow({ error, data }: AuthorsShowProps) {
 								variant="solid"
 								leftIcon={<Icon icon={faDownload} />}
 								onClick={async () => {
+									const docx = await import('lib/docx')
 									saveAs(
-										await createDocx(data),
+										await docx.createDocx(data),
 										`${t('publicationList:name')} (${data.fullName}).docx`,
 									)
 								}}

@@ -1,5 +1,6 @@
 require('./src/server/env')
 const nextTranslate = require('next-translate')
+
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
 	enabled: process.env.ANALYZE === 'true',
 })
@@ -46,6 +47,11 @@ const nextConfig = {
 		]
 	},
 	experimental: {
+		modularizeImports: {
+			lodash: {
+				transform: 'lodash/{{member}}',
+			},
+		},
 		swcPlugins: [
 			[
 				'next-superjson-plugin',

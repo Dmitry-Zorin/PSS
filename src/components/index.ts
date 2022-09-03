@@ -1,4 +1,3 @@
-export { default as Collapse } from './Collapse'
 export { default as Head } from './Head'
 export { default as Highlight } from './Highlight'
 export { default as Icon } from './Icon'
