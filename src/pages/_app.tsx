@@ -8,13 +8,12 @@ import { AppProps } from 'next/app'
 import Head from 'next/head'
 import QueryProvider from 'providers/QueryProvider'
 import ThemeProvider from 'providers/ThemeProvider'
-import { ReactElement, ReactNode } from 'react'
 import '../../public/fonts/Golos-Text/Golos-Text.css'
 
 config.autoAddCss = false
 
 type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
-	getLayout?: (page: ReactElement) => ReactNode
+	useLayout?: boolean
 }
 
 type AppPropsWithLayout = AppProps & {
@@ -24,8 +23,6 @@ type AppPropsWithLayout = AppProps & {
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
 	useScrollRestoration()
 
-	const getLayout = Component.getLayout ?? ((page) => <Layout>{page}</Layout>)
-
 	return (
 		<>
 			<Head>
@@ -33,7 +30,15 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 			</Head>
 			<ThemeProvider>
 				<QueryProvider state={pageProps.dehydratedState}>
-					{getLayout(<Component {...pageProps} />)}
+					{Component?.useLayout === false ? (
+						<Box maxW="7xl" mx="auto">
+							<Component {...pageProps} />
+						</Box>
+					) : (
+						<Layout>
+							<Component {...pageProps} />
+						</Layout>
+					)}
 				</QueryProvider>
 			</ThemeProvider>
 		</>

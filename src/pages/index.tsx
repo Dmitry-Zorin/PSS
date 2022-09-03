@@ -1,7 +1,5 @@
-import { BasicLayout } from 'components'
 import useTranslation from 'next-translate/useTranslation'
 import Head from 'next/head'
-import { ReactElement } from 'react'
 import Index from 'views/Index'
 
 function IndexPage() {
@@ -18,6 +16,6 @@ function IndexPage() {
 	)
 }
 
-IndexPage.getLayout = (page: ReactElement) => <BasicLayout>{page}</BasicLayout>
+IndexPage.useLayout = false
 
 export default IndexPage

@@ -1,12 +1,9 @@
-import { BasicLayout, Error } from 'components'
-import { ReactElement } from 'react'
+import { Error } from 'components'
 
 function Error404Page() {
 	return <Error status={404} message="¯\_( ◉ _ ◉ )_/¯" />
 }
 
-// Error404Page.getLayout = (page: ReactElement) => (
-// 	<BasicLayout>{page}</BasicLayout>
-// )
+Error404Page.useLayout = false
 
 export default Error404Page
