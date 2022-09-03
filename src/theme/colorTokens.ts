@@ -25,7 +25,7 @@ const colorTokens = {
 	},
 	border: {
 		_light: 'hsl(222 25% 88%)',
-		_dark: 'hsl(222 22% 28%)',
+		_dark: 'hsl(222 20% 28%)',
 	},
 }
 

@@ -3,11 +3,14 @@ import {
 	AlignmentType,
 	Document,
 	HeadingLevel,
+	IParagraphOptions,
+	ITableCellOptions,
 	Packer,
 	Paragraph,
 	Table,
 	TableCell,
 	TableRow,
+	TextRun,
 	VerticalAlign,
 	WidthType,
 } from 'docx'
@@ -32,6 +35,33 @@ const COLUMN_NAMES = [
 	'Соавторы',
 ]
 
+function createParagraph({ text, ...options }: IParagraphOptions) {
+	return new Paragraph({
+		...(text && {
+			children: [
+				new TextRun({
+					text: text,
+					color: '000000',
+				}),
+			],
+		}),
+		...options,
+	})
+}
+
+function createTableCell(options: ITableCellOptions) {
+	const spacing = 100
+	return new TableCell({
+		margins: {
+			top: spacing,
+			bottom: spacing,
+			left: spacing,
+			right: spacing,
+		},
+		...options,
+	})
+}
+
 export function createDocx(author: GetAuthorResponse) {
 	let index = 1
 
@@ -41,7 +71,7 @@ export function createDocx(author: GetAuthorResponse) {
 		return new TableRow({
 			tableHeader: true,
 			children: [
-				new TableCell({
+				createTableCell({
 					children: [
 						new Paragraph({
 							text: (index++).toString(),
@@ -49,32 +79,31 @@ export function createDocx(author: GetAuthorResponse) {
 						}),
 					],
 				}),
-				new TableCell({
+				createTableCell({
 					children: [
 						new Paragraph(`${publication.title} (${publication.type})`),
 					],
 				}),
-				new TableCell({
+				createTableCell({
 					children: [
 						new Paragraph({
-							text: '', // publication.characterId,
+							text: '-----', // publication.characterId,
 							alignment: AlignmentType.CENTER,
 						}),
 					],
 				}),
-				new TableCell({
+				createTableCell({
 					children: [
 						new Paragraph(
-							publication.extraData ||
-								`${
-									publication.publicationPlace
-										? `${publication.publicationPlace}, `
-										: ''
-								}${publication.writtenInYear}`,
+							`${
+								publication.publicationPlace
+									? `${publication.publicationPlace}, `
+									: ''
+							}${publication.writtenInYear}`,
 						),
 					],
 				}),
-				new TableCell({
+				createTableCell({
 					children: [
 						new Paragraph({
 							text: publication.volumeInPages.toString(),
@@ -82,8 +111,13 @@ export function createDocx(author: GetAuthorResponse) {
 						}),
 					],
 				}),
-				new TableCell({
-					children: publication.coauthors?.map((e) => new Paragraph(e)),
+				createTableCell({
+					children: [
+						...publication.authors
+							.filter((e) => e.id !== author.id)
+							.map((e) => new Paragraph(e.fullName)),
+						...publication.coauthors?.map((e) => new Paragraph(e)),
+					],
 				}),
 			],
 		})
@@ -107,7 +141,7 @@ export function createDocx(author: GetAuthorResponse) {
 		return [
 			new TableRow({
 				children: [
-					new TableCell({
+					createTableCell({
 						columnSpan: 6,
 						children: [
 							new Paragraph({
@@ -130,7 +164,7 @@ export function createDocx(author: GetAuthorResponse) {
 			rows: [
 				new TableRow({
 					children: COLUMN_NAMES.map((name) => {
-						return new TableCell({
+						return createTableCell({
 							verticalAlign: VerticalAlign.CENTER,
 							width: { size: 1, type: WidthType.DXA },
 							children: [
@@ -141,7 +175,7 @@ export function createDocx(author: GetAuthorResponse) {
 				}),
 				new TableRow({
 					children: COLUMN_NAMES.map((_, i) => {
-						return new TableCell({
+						return createTableCell({
 							children: [
 								new Paragraph({
 									text: (i + 1).toString(),
@@ -157,52 +191,60 @@ export function createDocx(author: GetAuthorResponse) {
 	}
 
 	function createDocument() {
+		const names = author.fullName.split(' ')
+
 		const heading1 = 'Форма №16'
 		const heading2 = 'СПИСОК'
 		const heading3 = 'научных и учебно-методических работ'
-		const heading4 = author.fullName
-		const footing1 = author.fullName
+		const heading4 = `${names[0].toUpperCase()} ${names.slice(1).join(' ')}`
+		const footing1 = `${names[0]} ${names
+			.map((e) => `${e[0].toUpperCase()}.`)
+			.slice(1)
+			.join('')}`
 		const footing2 = `«__» ________ ${new Date().getFullYear()} г`
 
 		return new Document({
 			sections: [
 				{
 					children: [
-						new Paragraph({
+						createParagraph({
 							text: heading1,
 							heading: HeadingLevel.HEADING_3,
 							alignment: AlignmentType.RIGHT,
 						}),
-						new Paragraph({
+						createParagraph({}),
+						createParagraph({
 							text: heading2,
 							heading: HeadingLevel.HEADING_1,
 							alignment: AlignmentType.CENTER,
+							spacing: { after: 50 },
 						}),
-						new Paragraph({
+						createParagraph({
 							text: heading3,
 							heading: HeadingLevel.HEADING_2,
 							alignment: AlignmentType.CENTER,
 						}),
-						new Paragraph({
+						createParagraph({
 							text: heading4,
 							heading: HeadingLevel.HEADING_2,
 							alignment: AlignmentType.CENTER,
+							spacing: { before: 100 },
 						}),
+						createParagraph({}),
 						createTable(),
-						...(author.info
-							? author.info.split(', ').map((e) => {
-									return new Paragraph({
-										text: e,
-										heading: HeadingLevel.HEADING_2,
-									})
-							  })
-							: []),
-						new Paragraph({
+						createParagraph({}),
+						createParagraph({
 							text: footing1,
 							heading: HeadingLevel.HEADING_2,
 							alignment: AlignmentType.RIGHT,
 						}),
-						new Paragraph({ text: footing2, heading: HeadingLevel.HEADING_2 }),
+						createParagraph({}),
+						createParagraph({
+							text: footing2,
+							heading: HeadingLevel.HEADING_2,
+							alignment: AlignmentType.RIGHT,
+						}),
+						createParagraph({}),
 					],
 				},
 			],
