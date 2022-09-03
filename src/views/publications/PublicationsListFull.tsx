@@ -20,7 +20,7 @@ export default function PublicationsListFull() {
 			leftActions={<Search />}
 		>
 			{data && (
-				<MainList data={data}>
+				<MainList total={data.total}>
 					{data.records.map((e) => (
 						<PublicationsListItem key={e.id} record={e} showIcon />
 					))}

@@ -68,6 +68,10 @@
 		"remove": "Remove",
 		"cancel": "Cancel"
 	},
+	"messages": {
+		"delete": "Are you sure you want to delete this?",
+		"notFound": "Not Found"
+	},
 	"errors": {
 		"unknown": "Unknown Error",
 		"404": "Page Not Found",

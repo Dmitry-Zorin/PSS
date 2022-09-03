@@ -31,7 +31,7 @@ export default function DeleteModalButton({
 	resource,
 	subresource,
 }: DeleteModalButtonProps) {
-	const { t } = useTranslation('resources')
+	const { t } = useTranslation()
 	const router = useRouter()
 	const showToast = useEventToast(subresource ?? resource, 'deleted')
 	const queryClient = useQueryClient()
@@ -41,12 +41,7 @@ export default function DeleteModalButton({
 
 	return (
 		<>
-			<DeleteButton
-				size="lg"
-				// variant="solid"
-				onClick={onOpen}
-				isLoading={mutation.isLoading}
-			/>
+			<DeleteButton size="lg" onClick={onOpen} isLoading={mutation.isLoading} />
 			<Modal size="2xl" motionPreset="none" isOpen={isOpen} onClose={onClose}>
 				<ModalOverlay />
 				<ModalContent>
@@ -60,7 +55,7 @@ export default function DeleteModalButton({
 					</ModalBody>
 					<ModalFooter>
 						<HStack spacing={4}>
-							<Button onClick={onClose}>{t('common:actions.cancel')}</Button>
+							<Button onClick={onClose}>{t('actions.cancel')}</Button>
 							<Button
 								variant="solid"
 								colorScheme="red"
@@ -73,7 +68,7 @@ export default function DeleteModalButton({
 									)
 								}}
 							>
-								{t('common:actions.delete')}
+								{t('actions.delete')}
 							</Button>
 						</HStack>
 					</ModalFooter>

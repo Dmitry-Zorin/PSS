@@ -23,7 +23,7 @@ export default function AuthorsList() {
 				rightActions={<CreateButton href={`/authors/create`} />}
 			/>
 			{data && (
-				<MainList data={data}>
+				<MainList total={data.total}>
 					{data.records.map((e) => (
 						<AuthorsListItem key={e.id} record={e} />
 					))}

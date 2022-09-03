@@ -12,6 +12,7 @@ import {
 } from 'components'
 import { saveAs } from 'file-saver'
 import useTranslation from 'next-translate/useTranslation'
+import { useEffect } from 'react'
 import { GetAuthorResponse } from 'server/services/author'
 import PublicationsListItem from '../publications/PublicationsListItem'
 
@@ -24,20 +25,17 @@ export default function AuthorsShow({ error, data }: AuthorsShowProps) {
 	const { t } = useTranslation('author')
 	const queryClient = useQueryClient()
 
+	useEffect(() => {
+		if (data) {
+			queryClient.setQueryData([`authors/${data.id}`], data)
+		}
+	}, [data, queryClient])
+
 	return (
 		<MainArea
 			error={error}
 			title={data && data.fullName}
-			rightActions={
-				data && (
-					<EditButton
-						href={`/authors/edit/${data.id}`}
-						onClick={() => {
-							queryClient.setQueryData([`authors/${data.id}`], data)
-						}}
-					/>
-				)
-			}
+			rightActions={data && <EditButton href={`/authors/edit/${data.id}`} />}
 		>
 			{data && (
 				<>
@@ -47,7 +45,10 @@ export default function AuthorsShow({ error, data }: AuthorsShowProps) {
 							label="latestPublications"
 							text={
 								<>
-									<MainList data={{ total: 10 }} pt={2}>
+									<MainList
+										total={data.publications.slice(0, 10).length}
+										pt={2}
+									>
 										{data.publications.slice(0, 10).map((e) => (
 											<PublicationsListItem
 												key={e.id}

@@ -96,8 +96,5 @@
 		"updated_f": "обнавлена",
 		"deleted_m": "удален",
 		"deleted_f": "удалена"
-	},
-	"messages": {
-		"delete": "Вы точно хотите удалить {{resource}}?"
 	}
 }
