@@ -41,48 +41,52 @@ export default function AuthorsShow({ error, data }: AuthorsShowProps) {
 				<>
 					<Stack spacing={{ base: 8, sm: 10 }}>
 						{data?.info && <LabeledField label="info" text={data.info} />}
-						<LabeledField
-							label="latestPublications"
-							text={
-								<>
-									<MainList
-										total={data.publications.slice(0, 10).length}
-										pt={2}
+						{data.publications.length && (
+							<>
+								<LabeledField
+									label="latestPublications"
+									text={
+										<>
+											<MainList
+												total={data.publications.slice(0, 10).length}
+												pt={2}
+											>
+												{data.publications.slice(0, 10).map((e) => (
+													<PublicationsListItem
+														key={e.id}
+														record={e}
+														simplified
+														showIcon
+													/>
+												))}
+											</MainList>
+											<Flex justify="flex-end" pt={1.5}>
+												<Link href={`/publications?authorId=${data.id}`}>
+													{t('viewAllPublications')}
+													<Icon icon={faCaretRight} ml="1px" mb="-1px" />
+												</Link>
+											</Flex>
+										</>
+									}
+								/>
+								<Center pt={6}>
+									<Button
+										variant="solid"
+										leftIcon={<Icon icon={faDownload} />}
+										onClick={async () => {
+											const docx = await import('lib/docx')
+											saveAs(
+												await docx.createDocx(data),
+												`${t('publicationList:name')} (${data.fullName}).docx`,
+											)
+										}}
+										disabled={!data.publications.length}
 									>
-										{data.publications.slice(0, 10).map((e) => (
-											<PublicationsListItem
-												key={e.id}
-												record={e}
-												simplified
-												showIcon
-											/>
-										))}
-									</MainList>
-									<Flex justify="flex-end" pt={1.5}>
-										<Link href={`/publications?authorId=${data.id}`}>
-											{t('viewAllPublications')}
-											<Icon icon={faCaretRight} ml="1px" mb="-1px" />
-										</Link>
-									</Flex>
-								</>
-							}
-						/>
-						<Center pt={6}>
-							<Button
-								variant="solid"
-								leftIcon={<Icon icon={faDownload} />}
-								onClick={async () => {
-									const docx = await import('lib/docx')
-									saveAs(
-										await docx.createDocx(data),
-										`${t('publicationList:name')} (${data.fullName}).docx`,
-									)
-								}}
-								disabled={!data.publications.length}
-							>
-								{t('publicationList:download')}
-							</Button>
-						</Center>
+										{t('publicationList:download')}
+									</Button>
+								</Center>
+							</>
+						)}
 					</Stack>
 				</>
 			)}

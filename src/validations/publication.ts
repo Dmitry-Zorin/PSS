@@ -22,7 +22,7 @@ const fields = {
 	title: z.string().min(8).max(300),
 	description: z.string().max(2000),
 	category: z.string().max(20),
-	type: z.string().max(50),
+	type: z.string().min(1).max(50),
 	writtenInYear: preprocessToNumber(
 		z
 			.number()

@@ -1,12 +1,12 @@
 {
 	"characters": {
-		"name_one": "символа",
-		"name_few": "символов",
+		"name_one": "символ",
+		"name_few": "символа",
 		"name_many": "символов"
 	},
 	"authors": {
 		"name_one": "автора",
-		"name_few": "автора",
+		"name_few": "авторов",
 		"name_many": "авторов"
 	},
 	"errors": {

@@ -1,35 +1,44 @@
-import { useQueryClient } from '@tanstack/react-query'
-import { Form, FormControl, MainArea } from 'components'
-import { useEventToast, useMutation } from 'hooks'
+import { DeleteModalButton, Form, FormControl, MainArea } from 'components'
 import useTranslation from 'next-translate/useTranslation'
-import { useRouter } from 'next/router'
-import { CreateAuthorResponse } from 'server/services/author'
-import { authorFormSchema, CreateAuthor } from 'validations/author'
+import { GetAuthorResponse } from 'server/services/author'
+import { authorFormSchema } from 'validations/author'
+import { useSubmitAuthor } from './useSubmitAuthor'
 
-export default function AuthorsCreate() {
+interface AuthorsCreateProps {
+	error?: Error | null
+	data?: GetAuthorResponse
+}
+
+export default function AuthorsCreate({ error, data }: AuthorsCreateProps) {
 	const { t } = useTranslation('resources')
-	const router = useRouter()
-	const mutation = useMutation<CreateAuthorResponse>('authors')
-	const showToast = useEventToast('authors', 'created')
-	const queryClient = useQueryClient()
 
-	async function onSubmit(data: CreateAuthor) {
-		const { id } = await mutation.mutateAsync({
-			method: 'post',
-			body: data,
-		})
-		showToast('success')
-		await queryClient.invalidateQueries(['authors'])
-		await router.push(`/authors/${id}`)
-	}
+	const defaultValues = data
+		? { ...authorFormSchema.strip().partial().parse(data) }
+		: {}
 
 	return (
 		<MainArea
-			title={`${t('common:actions.create')} ${t('authors.name_what', null, {
-				fallback: t('authors.name_one'),
-			})}`}
+			error={error}
+			title={`${t(`common:actions.${data ? 'edit' : 'create'}`)} ${t(
+				'authors.name_what',
+				null,
+				{ fallback: t('authors.name_one') },
+			)}`}
 		>
-			<Form onSubmit={onSubmit} schema={authorFormSchema} defaultValues={{}}>
+			<Form
+				onSubmit={useSubmitAuthor(data)}
+				schema={authorFormSchema}
+				defaultValues={defaultValues}
+				actions={
+					data && (
+						<DeleteModalButton
+							id={data.id}
+							name={data.fullName}
+							resource="authors"
+						/>
+					)
+				}
+			>
 				<FormControl field="lastName" />
 				<FormControl field="firstName" />
 				<FormControl field="middleName" optional />

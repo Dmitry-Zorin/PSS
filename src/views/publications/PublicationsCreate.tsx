@@ -42,9 +42,11 @@ export default function PublicationsCreate({
 	return (
 		<MainArea
 			error={error}
-			title={`${t('common:actions.create')} ${t(`${category}.name_what`, null, {
-				fallback: t(`${category}.name_one`),
-			})}`}
+			title={`${t(`common:actions.${data ? 'edit' : 'create'}`)} ${t(
+				`${category}.name_what`,
+				null,
+				{ fallback: t(`${category}.name_one`) },
+			)}`}
 		>
 			<Form
 				onSubmit={useSubmitPublication(data)}
