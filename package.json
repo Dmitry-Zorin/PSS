@@ -8,7 +8,7 @@
 		"lint": "next lint",
 		"tsc": "tsc",
 		"migrate": "prisma generate && prisma db push",
-		"vercel-build": "prisma generate && next build"
+		"vercel-build": "npm run migrate && next build"
 	},
 	"dependencies": {
 		"@chakra-ui/react": "^2.2.8",
