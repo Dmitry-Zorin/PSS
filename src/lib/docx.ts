@@ -87,7 +87,7 @@ export function createDocx(author: GetAuthorResponse) {
 				createTableCell({
 					children: [
 						new Paragraph({
-							text: '-----', // publication.characterId,
+							text: publication.character || '-',
 							alignment: AlignmentType.CENTER,
 						}),
 					],
@@ -123,9 +123,7 @@ export function createDocx(author: GetAuthorResponse) {
 		})
 	}
 
-	function createCategoryRows(category: Category, isRecent = false) {
-		const recentPostfix = ', опубликованные за последние три года'
-
+	function createCategoryRows(category: Category) {
 		const categoryPublications = author.publications.filter((e) => {
 			return (
 				resources.publications[
@@ -145,9 +143,7 @@ export function createDocx(author: GetAuthorResponse) {
 						columnSpan: 6,
 						children: [
 							new Paragraph({
-								text: `${CATEGORY_TITLES[category]}${
-									isRecent ? recentPostfix : ''
-								}`,
+								text: CATEGORY_TITLES[category],
 								alignment: AlignmentType.CENTER,
 							}),
 						],

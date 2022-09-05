@@ -63,6 +63,8 @@ export default function PublicationsCreate({
 			>
 				<FormControl field="title" multiline minH={10} />
 				<FormControl field="description" multiline optional />
+				<Authors />
+				<Coauthors />
 				<Stack
 					as={FormControlGroup}
 					direction={{ base: 'column', md: 'row' }}
@@ -87,9 +89,8 @@ export default function PublicationsCreate({
 						optional
 					/>
 				</Stack>
-				<Authors />
-				<Coauthors />
 				<FormControl field="publicationPlace" optional />
+				<FormControl field="character" optional />
 				<FormControl field="extraData" multiline optional />
 			</Form>
 		</MainArea>

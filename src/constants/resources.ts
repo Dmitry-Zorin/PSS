@@ -7,7 +7,6 @@ import {
 	faFileLines,
 	faGraduationCap,
 	faNewspaper,
-	faPaste,
 	faSheetPlastic,
 	faTimeline,
 	faUserGraduate,
@@ -57,11 +56,6 @@ const resources = {
 		textbooks: {
 			icon: faBookOpen,
 			category: 'C',
-		},
-	},
-	admin: {
-		characters: {
-			icon: faPaste,
 		},
 	},
 }

@@ -23,7 +23,6 @@ const fields = {
 	description: z.string().max(2000),
 	category: z.string().max(20),
 	type: z.string().max(50),
-	publicationPlace: z.string().max(300),
 	writtenInYear: preprocessToNumber(
 		z
 			.number()
@@ -32,10 +31,12 @@ const fields = {
 			.max(currentYear),
 	),
 	volumeInPages: preprocessToNumber(z.number().int().max(100)),
-	extraData: z.string().max(2000),
 	authors: z.object({ id: common.id }).array().min(1).max(10),
 	authorIds: common.ids.max(10),
 	coauthors: z.string().array(),
+	publicationPlace: z.string().max(300),
+	character: z.string().max(50),
+	extraData: z.string().max(2000),
 }
 
 export const publicationFormSchema = z.strictObject({
@@ -47,6 +48,7 @@ export const publicationFormSchema = z.strictObject({
 	authors: fields.authors,
 	coauthors: fields.coauthors,
 	publicationPlace: fields.publicationPlace.or(z.literal('')),
+	character: fields.character.or(z.literal('')),
 	extraData: fields.extraData.or(z.literal('')),
 })
 
@@ -62,6 +64,7 @@ export const createPublicationSchema = z.strictObject({
 	authorIds: fields.authorIds,
 	coauthors: fields.coauthors.optional(),
 	publicationPlace: fields.publicationPlace.optional(),
+	character: fields.character.optional(),
 	extraData: fields.extraData.optional(),
 })
 
@@ -75,6 +78,7 @@ export const updatePublicationSchema = createPublicationSchema
 		volumeInPages: fields.volumeInPages.default(1),
 		coauthors: fields.coauthors.default([]),
 		publicationPlace: fields.publicationPlace.or(z.literal(null)).default(null),
+		character: fields.publicationPlace.or(z.literal(null)).default(null),
 		extraData: fields.extraData.or(z.literal(null)).default(null),
 	})
 

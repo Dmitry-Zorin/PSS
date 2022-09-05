@@ -39,6 +39,7 @@ export default function AuthorSelect() {
 				error={error}
 				items={data?.records}
 				selectedItems={authors}
+				buttonText={t('authors.add')}
 				search={setSearch}
 				getText={(e) => e.fullName}
 				onAdd={(id) => {
@@ -52,7 +53,7 @@ export default function AuthorSelect() {
 				items={authors}
 				placeholder={
 					<>
-						Выбирите хотя бы одного автора
+						{t('authors.select')}
 						<chakra.span fontWeight="medium"> &rarr;</chakra.span>
 					</>
 				}

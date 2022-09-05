@@ -38,9 +38,23 @@ export default function PublicationsShow({
 			{data && (
 				<Stack spacing={{ base: 8, sm: 10 }}>
 					{data.description && <Text>{data.description}</Text>}
-					{data.extraData && (
-						<LabeledField label="extraData" text={data.extraData} />
-					)}
+					<SimpleGrid
+						columns={{ base: 2, sm: 3 }}
+						spacingX={6}
+						spacingY={{ base: 8, sm: 10 }}
+					>
+						<LabeledField stat label="type" text={data.type} />
+						<LabeledField
+							stat
+							label="writtenInYear"
+							text={data.writtenInYear}
+						/>
+						<LabeledField
+							stat
+							label="volumeInPages"
+							text={data.volumeInPages}
+						/>
+					</SimpleGrid>
 					<Stack
 						direction={{ base: 'column', md: 'row' }}
 						spacing={{ base: 8, sm: 10, md: 2 }}
@@ -73,24 +87,18 @@ export default function PublicationsShow({
 							/>
 						)}
 					</Stack>
-					<SimpleGrid
-						columns={{ base: 2, lg: 4 }}
-						spacingX={6}
-						spacingY={{ base: 8, sm: 10 }}
-					>
-						<LabeledField stat label="type" text={data.type} />
+					{data.publicationPlace && (
 						<LabeledField
-							stat
-							label="writtenInYear"
-							text={data.writtenInYear}
+							label="publicationPlace"
+							text={data.publicationPlace}
 						/>
-						<LabeledField stat label="character" text={data.characterId} />
-						<LabeledField
-							stat
-							label="volumeInPages"
-							text={data.volumeInPages}
-						/>
-					</SimpleGrid>
+					)}
+					{data.character && (
+						<LabeledField label="character" text={data.character} />
+					)}
+					{data.extraData && (
+						<LabeledField label="extraData" text={data.extraData} />
+					)}
 				</Stack>
 			)}
 		</MainArea>

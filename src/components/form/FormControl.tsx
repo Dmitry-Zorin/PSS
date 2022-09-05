@@ -28,7 +28,7 @@ export default function FormControl({
 	...props
 }: FormControlProps & InputProps & TextareaProps) {
 	const { t } = useTranslation('resources')
-	const handleError = useHandleFormError(field)
+	const handleError = useHandleFormError(field, { type: props.type })
 	const {
 		register,
 		formState: { errors },

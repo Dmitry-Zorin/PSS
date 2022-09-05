@@ -1,0 +1,18 @@
+{
+	"characters": {
+		"name_one": "character",
+		"name_other": "characters"
+	},
+	"authors": {
+		"name_one": "author",
+		"name_other": "authors"
+	},
+	"errors": {
+		"string_too_small": "{{field}} must contain at least {{count}}",
+		"string_too_big": "{{field}} must contain not more than {{count}}",
+		"number_too_small": "{{field}} must be not less than {{count}}",
+		"number_too_big": "{{field}} must be not more than {{count}}",
+		"authors_too_small": "Publication must have at least {{count}}",
+		"authors_too_big": "Publication must have not more than {{count}}"
+	}
+}

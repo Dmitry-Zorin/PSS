@@ -1,5 +1,5 @@
 {
-	"symbols": {
+	"characters": {
 		"name_one": "символа",
 		"name_few": "символов",
 		"name_many": "символов"
@@ -10,8 +10,10 @@
 		"name_many": "авторов"
 	},
 	"errors": {
-		"too_small": "Поле \"{{field}}\" должно содержать хотя бы {{count}}",
-		"too_big": "Поле \"{{field}}\" должно содержать не более {{count}}",
+		"string_too_small": "Поле \"{{field}}\" должно содержать хотя бы {{count}}",
+		"string_too_big": "Поле \"{{field}}\" должно содержать не более {{count}}",
+		"number_too_small": "Значение поля \"{{field}}\" должно быть не менее {{count}}",
+		"number_too_big": "Значение поля \"{{field}}\" должно быть не более {{count}}",
 		"authors_too_small": "Публикация должна иметь хотя бы {{count}}",
 		"authors_too_big": "Публикация должна иметь не более {{count}}"
 	}

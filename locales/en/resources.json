@@ -1,7 +1,9 @@
 {
 	"authors": {
 		"name_one": "Author",
-		"name_other": "Authors"
+		"name_other": "Authors",
+		"add": "Add Authors",
+		"select": "Select at least one author"
 	},
 	"articles": {
 		"name_one": "Article",
@@ -43,7 +45,6 @@
 		"name": "Name",
 		"title": "Title",
 		"description": "Description",
-		"file": "File",
 		"firstName": "First Name",
 		"lastName": "Last name",
 		"middleName": "Middle name",

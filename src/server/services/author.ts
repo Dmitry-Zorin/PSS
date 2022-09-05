@@ -26,11 +26,11 @@ const authorWithPublicationsSelect = Prisma.validator<Prisma.AuthorSelect>()({
 			description: true,
 			category: true,
 			type: true,
-			characterId: true,
 			writtenInYear: true,
 			volumeInPages: true,
 			coauthors: true,
 			publicationPlace: true,
+			character: true,
 			extraData: true,
 			authors: {
 				select: {

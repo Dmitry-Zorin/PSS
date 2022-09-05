@@ -4,76 +4,67 @@
 		"name_one": "Автор",
 		"name_other": "Авторы",
 		"name_what": "автора",
-		"this": "этого"
+		"add": "Добавить авторов",
+		"select": "Выбирите хотя бы одного автора"
 	},
 	"articles": {
 		"gender": "f",
 		"name_one": "Статья",
 		"name_other": "Статьи",
-		"name_what": "статью",
-		"this": "эту"
+		"name_what": "статью"
 	},
 	"abstracts": {
 		"gender": "m",
 		"name_one": "Автореферат",
 		"name_other": "Авторефераты",
-		"name_what": "автореферат",
-		"this": "этот"
+		"name_what": "автореферат"
 	},
 	"monographs": {
 		"gender": "f",
 		"name_one": "Монография",
 		"name_other": "Монографии",
-		"name_what": "монографию",
-		"this": "эту"
+		"name_what": "монографию"
 	},
 	"dissertations": {
 		"gender": "f",
 		"name_one": "Диссертация",
 		"name_other": "Диссертации",
-		"name_what": "диссертацию",
-		"this": "эту"
+		"name_what": "диссертацию"
 	},
 	"patents": {
 		"gender": "m",
 		"name_one": "Патент",
 		"name_other": "Патенты",
-		"name_what": "патент",
-		"this": "этот"
+		"name_what": "патент"
 	},
 	"reports": {
 		"gender": "m",
 		"name_one": "Отчет",
 		"name_other": "Отчеты",
-		"name_what": "отчет",
-		"this": "этот"
+		"name_what": "отчет"
 	},
 	"programs": {
 		"gender": "f",
 		"name_one": "Программа",
 		"name_other": "Программы",
-		"name_what": "программу",
-		"this": "эту"
+		"name_what": "программу"
 	},
 	"textbooks": {
 		"gender": "m",
 		"name_one": "Учебник",
 		"name_other": "Учебники",
-		"name_what": "учебник",
-		"this": "этот"
+		"name_what": "учебник"
 	},
 	"characters": {
 		"gender": "m",
 		"name_one": "Характер работы",
 		"name_other": "Характеры работы",
-		"name_what": "характер работы",
-		"this": "этот"
+		"name_what": "характер работы"
 	},
 	"fields": {
 		"name": "Название",
 		"title": "Название",
 		"description": "Описание",
-		"file": "Файл",
 		"firstName": "Имя",
 		"lastName": "Фамилия",
 		"middleName": "Отчество",

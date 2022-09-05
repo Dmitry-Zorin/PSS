@@ -4,7 +4,6 @@ import {
 	LanguageMenu,
 	MainMenuMobile,
 	PublicationSearch,
-	UserMenu,
 } from 'components'
 import resources from 'constants/resources'
 
@@ -24,7 +23,6 @@ export default function AppBar(props: StackProps) {
 			<PublicationSearch />
 			<ColorModeMenu />
 			<LanguageMenu />
-			<UserMenu />
 		</HStack>
 	)
 }

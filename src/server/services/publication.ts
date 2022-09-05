@@ -21,7 +21,7 @@ const defaultPublicationSelect = Prisma.validator<Prisma.PublicationSelect>()({
 	title: true,
 	description: true,
 	type: true,
-	characterId: true,
+	character: true,
 	publicationPlace: true,
 	writtenInYear: true,
 	volumeInPages: true,

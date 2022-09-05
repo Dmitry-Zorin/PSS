@@ -20,6 +20,7 @@ interface SelectManyMenuProps<Item extends { id: Id }> {
 	error?: Error | null
 	items?: Item[]
 	selectedItems: Item[]
+	buttonText?: string
 	search: (value?: string) => void
 	getText: (item: Item) => string
 	onAdd: (id: Id) => void
@@ -30,6 +31,7 @@ export default function SelectManyMenu<Item extends { id: Id }>({
 	error,
 	items,
 	selectedItems,
+	buttonText,
 	search,
 	getText,
 	onAdd,
@@ -45,8 +47,7 @@ export default function SelectManyMenu<Item extends { id: Id }>({
 					as={Button}
 					leftIcon={<Icon icon={faCirclePlus} boxSize={5} />}
 				>
-					{/* {t('common:actions.add')} */}
-					Выбрать авторов
+					{buttonText || t('common:actions.add')}
 				</MenuButton>
 				<MenuList>
 					<Box px={1} pb={2}>

@@ -7,19 +7,6 @@ generator client {
   provider = "prisma-client-js"
 }
 
-enum Role {
-  USER
-  ADMIN
-}
-
-model User {
-  id       Int      @id @default(autoincrement())
-  joinedAt DateTime @default(now())
-  username String   @unique
-  password String
-  role     Role     @default(USER)
-}
-
 model Author {
   id           Int           @id @default(autoincrement())
   lastName     String
@@ -29,25 +16,18 @@ model Author {
   publications Publication[]
 }
 
-model Character {
-  id           Int           @id @default(autoincrement())
-  name         String
-  publications Publication[]
-}
-
 model Publication {
-  id               Int        @id @default(autoincrement())
-  createdAt        DateTime   @default(now())
-  updatedAt        DateTime   @updatedAt
+  id               Int      @id @default(autoincrement())
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
   category         String
-  title            String     @unique
+  title            String   @unique
   description      String?
   type             String
-  character        Character? @relation(fields: [characterId], references: [id])
-  characterId      Int?
+  character        String?
   publicationPlace String?
   writtenInYear    Int
-  volumeInPages    Int        @default(1)
+  volumeInPages    Int      @default(1)
   authors          Author[]
   coauthors        String[]
   extraData        String?
