@@ -67,7 +67,7 @@
 		"cancel": "Cancel"
 	},
 	"messages": {
-		"delete": "Are you sure you want to delete this?",
+		"delete": "Are you sure you want to delete {{this}}?",
 		"notFound": "Not Found"
 	},
 	"errors": {

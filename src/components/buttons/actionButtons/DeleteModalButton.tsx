@@ -47,7 +47,17 @@ export default function DeleteModalButton({
 				<ModalContent>
 					<ModalHeader>
 						<Heading as="h1" size="lg">
-							{t('messages.delete')}
+							{t('messages.delete', {
+								this: t(
+									`resources:${subresource ?? resource}.name_delete`,
+									{},
+									{
+										fallback: `this ${t(
+											`resources:${subresource ?? resource}.name_one`,
+										).toLowerCase()}`,
+									},
+								),
+							})}
 						</Heading>
 					</ModalHeader>
 					<ModalBody>

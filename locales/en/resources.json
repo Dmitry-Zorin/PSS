@@ -37,10 +37,6 @@
 		"name_one": "Textbook",
 		"name_other": "Textbooks"
 	},
-	"characters": {
-		"name_one": "Character",
-		"name_other": "Characters"
-	},
 	"fields": {
 		"name": "Name",
 		"title": "Title",
