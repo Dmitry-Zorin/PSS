@@ -15,7 +15,7 @@ export default function TimelineCard({ record }: TimelineCardProps) {
 	const truncate = useTruncate()
 
 	return (
-		<LinkBox as={Card} _hover={{ bg: 'bg-layer-2' }}>
+		<LinkBox as={Card} role="group" _hover={{ bg: 'bg-layer-1' }}>
 			<CardHeader>
 				<Avatar
 					bg="transparent"

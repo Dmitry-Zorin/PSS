@@ -5,7 +5,6 @@ export default function Card(props: StackProps) {
 		<Stack
 			as="article"
 			spacing={0}
-			bg="bg-layer-1"
 			borderRadius="xl"
 			color="text"
 			overflow="hidden"

@@ -8,11 +8,11 @@ const colorTokens = {
 		_dark: 'hsl(222 22% 19%)',
 	},
 	'bg-layer-1': {
-		_light: 'hsl(222 25% 97%)',
+		_light: 'hsl(222 15% 97%)',
 		_dark: 'hsl(222 22% 22%)',
 	},
 	'bg-layer-2': {
-		_light: 'hsl(222 20% 94%)',
+		_light: 'hsl(222 15% 94%)',
 		_dark: 'hsl(222 21% 25%)',
 	},
 	text: {
