@@ -32,8 +32,10 @@ export const getStaticProps = async ({
 	params,
 }: GetStaticPropsContext<{ id: string; publication?: string }>) => {
 	const { id } = idSchema.parse({ id: params?.id })
+	const props = await getSafeAsync(() => findAuthor(id))
+	console.log('Props:', props)
 	return {
-		props: await getSafeAsync(() => findAuthor(id)),
+		props,
 	}
 }
 

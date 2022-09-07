@@ -49,6 +49,7 @@ export async function findAuthor(id: Id) {
 		select: authorWithPublicationsSelect,
 		where: { id },
 	})
+	console.log(`author (${id}):`, record)
 	if (!record) {
 		throw new httpError.NotFound('Автор не найден')
 	}
