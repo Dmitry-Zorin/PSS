@@ -1,3 +1,4 @@
+import { Spinner } from 'components'
 import { useQuery, useUrlParams } from 'hooks'
 import { GetAuthorResponse } from 'server/services/author'
 import AuthorsCreate from './AuthorsCreate'
@@ -14,5 +15,9 @@ export default function AuthorsEdit() {
 		},
 	)
 
-	return isLoading ? null : <AuthorsCreate error={error} data={data} />
+	return (
+		<Spinner isLoading={isLoading}>
+			<AuthorsCreate error={error} data={data} />
+		</Spinner>
+	)
 }
