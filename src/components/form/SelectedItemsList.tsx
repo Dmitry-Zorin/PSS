@@ -2,6 +2,7 @@ import { HStack, List, ListItem, Text } from '@chakra-ui/react'
 import { faCircleMinus } from '@fortawesome/free-solid-svg-icons'
 import { Icon, IconButton } from 'components'
 import { AnimatePresence, motion } from 'framer-motion'
+import { useIsFirstRender } from 'hooks'
 import useTranslation from 'next-translate/useTranslation'
 import { Attributes, ReactNode } from 'react'
 import { stiffSpringConfig } from 'utils/animation'
@@ -22,6 +23,7 @@ export default function SelectedItemsList<Item>({
 	onRemove,
 }: SelectedItemsListProps<Item>) {
 	const { t } = useTranslation('resources')
+	const showAnimation = !useIsFirstRender()
 
 	return (
 		<List flexGrow={1}>
@@ -34,7 +36,7 @@ export default function SelectedItemsList<Item>({
 				{items.map((item) => (
 					<motion.li
 						key={getKey(item)}
-						initial={{ height: 0, opacity: 0 }}
+						initial={showAnimation ? { height: 0, opacity: 0 } : false}
 						animate={{ height: 'auto', opacity: 1 }}
 						exit={{ height: 0, opacity: 0 }}
 						transition={{

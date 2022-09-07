@@ -21,6 +21,7 @@ export default createRouter<NextApiRequest, NextApiResponse>()
 		await Promise.all([
 			res.revalidate(`/publications/${record.category}/${id}`),
 			res.revalidate(`/en/publications/${record.category}/${id}`),
+			...data.authorIds.map((id) => res.revalidate(`/authors/${id}`)),
 		])
 		res.json(record)
 	})

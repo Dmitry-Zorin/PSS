@@ -31,18 +31,22 @@ export const useSubmitPublication = (data?: GetPublicationResponse) => {
 		coauthors,
 		...submitData
 	}: PublicationFormData) {
-		const { id } = await mutation.mutateAsync({
-			method: data ? 'put' : 'post',
-			body: omitEmptyStrings({
-				...submitData,
-				type: type || t(`${category}.name`, { count: 1 }),
-				authorIds: authors.map(({ id }) => id),
-				coauthors: coauthors.length > 1 ? coauthors.slice(0, -1) : undefined,
-				...(!data && { category }),
-			}),
-		})
-		showToast('success')
-		await queryClient.invalidateQueries(['publications'])
-		await router.push(`/publications/${category}/${id}`)
+		try {
+			const { id } = await mutation.mutateAsync({
+				method: data ? 'put' : 'post',
+				body: omitEmptyStrings({
+					...submitData,
+					type: type || t(`${category}.name`, { count: 1 }),
+					authorIds: authors.map(({ id }) => id),
+					coauthors: coauthors.length > 1 ? coauthors.slice(0, -1) : undefined,
+					...(!data && { category }),
+				}),
+			})
+			showToast('success')
+			await queryClient.invalidateQueries(['publications'])
+			await router.push(`/publications/${category}/${id}`)
+		} catch (error) {
+			showToast('error', { error })
+		}
 	}
 }

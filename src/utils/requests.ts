@@ -1,6 +1,5 @@
 import { isBrowser } from 'framer-motion'
 import createHttpError from 'http-errors'
-import { transform } from 'lodash'
 import { stringify } from 'querystring'
 
 export function getBaseUrl() {
@@ -46,21 +45,7 @@ export async function mutate<T>(
 		headers: {
 			'Content-Type': body?.file ? 'multipart/form-data' : 'application/json',
 		},
-		body: body
-			? body?.file
-				? createFormData(body)
-				: JSON.stringify(body)
-			: undefined,
+		body: body ? JSON.stringify(body) : undefined,
 		...options,
 	})
-}
-
-export function createFormData(data: Record<string, any>) {
-	return transform(
-		data,
-		(formData, value, key) => {
-			formData.append(key, value)
-		},
-		new FormData(),
-	)
 }

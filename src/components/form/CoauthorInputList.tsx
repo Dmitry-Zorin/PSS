@@ -1,14 +1,14 @@
 import { Input, List } from '@chakra-ui/react'
 import { AnimatePresence, motion } from 'framer-motion'
+import { useIsFirstRender } from 'hooks'
 import { identity } from 'lodash'
-import { useEffect, useState } from 'react'
 import { useController, useFormContext } from 'react-hook-form'
 import { GetPublicationResponse } from 'server/services/publication'
 import { stiffSpringConfig } from 'utils/animation'
 
 export default function CoauthorInputList() {
 	const { control } = useFormContext<GetPublicationResponse>()
-	const [showAnimation, setShowAnimation] = useState(false)
+	const showAnimation = !useIsFirstRender()
 
 	const {
 		field: { value: names, onChange: setNames },
@@ -16,10 +16,6 @@ export default function CoauthorInputList() {
 		name: 'coauthors',
 		control,
 	})
-
-	useEffect(() => {
-		setShowAnimation(true)
-	}, [])
 
 	return (
 		<List>

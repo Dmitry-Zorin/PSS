@@ -71,12 +71,16 @@ export default function DeleteModalButton({
 								colorScheme="red"
 								isLoading={mutation.isLoading}
 								onClick={async () => {
-									await mutation.mutateAsync({ method: 'delete' })
-									showToast('success')
-									await queryClient.invalidateQueries([resource])
-									await router.replace(
-										`/${resource}${subresource ? `/${subresource}` : ''}`,
-									)
+									try {
+										await mutation.mutateAsync({ method: 'delete' })
+										showToast('success')
+										await queryClient.invalidateQueries([resource])
+										await router.replace(
+											`/${resource}${subresource ? `/${subresource}` : ''}`,
+										)
+									} catch (error) {
+										showToast('error', { error })
+									}
 								}}
 							>
 								{t('actions.delete')}

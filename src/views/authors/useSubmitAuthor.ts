@@ -20,12 +20,16 @@ export const useSubmitAuthor = (data?: GetAuthorResponse) => {
 	>(`authors${data ? `/${data.id}` : ''}`)
 
 	return async function onSubmit(submitData: AuthorFormData) {
-		const { id } = await mutation.mutateAsync({
-			method: data ? 'put' : 'post',
-			body: omitEmptyStrings(submitData),
-		})
-		showToast('success')
-		await queryClient.invalidateQueries(['authors'])
-		await router.push(`/authors/${id}`)
+		try {
+			const { id } = await mutation.mutateAsync({
+				method: data ? 'put' : 'post',
+				body: omitEmptyStrings(submitData),
+			})
+			showToast('success')
+			await queryClient.invalidateQueries(['authors'])
+			await router.push(`/authors/${id}`)
+		} catch (error) {
+			showToast('error', { error })
+		}
 	}
 }
