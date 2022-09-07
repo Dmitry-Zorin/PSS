@@ -13,7 +13,9 @@ export const getServerSideProps: GetServerSideProps = async ({
 	const parsedQuery = getAuthorsSchema.parse(query)
 
 	const response = await findAuthors(parsedQuery)
-	await queryClient.setQueryData(['authors', query], response)
+	await queryClient.setQueryData(['authors', query], response, {
+		updatedAt: Date.now(),
+	})
 
 	res.setHeader('Cache-Control', DEFAULT_CACHE_VALUE)
 

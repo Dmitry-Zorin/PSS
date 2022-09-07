@@ -13,7 +13,9 @@ export const getServerSideProps: GetServerSideProps = async ({
 	const parsedQuery = getPublicationsSchema.parse(query)
 
 	const response = await findPublications(parsedQuery)
-	await queryClient.setQueryData(['publications', query], response)
+	await queryClient.setQueryData(['publications', query], response, {
+		updatedAt: Date.now(),
+	})
 
 	res.setHeader('Cache-Control', DEFAULT_CACHE_VALUE)
 
