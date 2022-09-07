@@ -18,7 +18,10 @@ export default createRouter<NextApiRequest, NextApiResponse>()
 		const { id } = idSchema.parse(req.query)
 		const data = updatePublicationSchema.parse(req.body)
 		const record = await updatePublication(id, data)
-		await res.revalidate(`/publications/${record.category}/${id}`)
+		await Promise.all([
+			res.revalidate(`/publications/${record.category}/${id}`),
+			res.revalidate(`en/publications/${record.category}/${id}`),
+		])
 		res.json(record)
 	})
 	.delete(async (req, res) => {
