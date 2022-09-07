@@ -82,6 +82,14 @@ const components: ThemeComponents = {
 				...(colorScheme === 'red' && {
 					color: 'bg',
 					bg: mode('red.500', 'red.400')(props),
+					_hover: {
+						opacity: 0.8,
+						bg: mode('red.500', 'red.400')(props),
+					},
+					_active: {
+						opacity: 0.7,
+						bg: mode('red.500', 'red.400')(props),
+					},
 				}),
 			}),
 			ghost: {
