@@ -27,7 +27,7 @@ export default function MainArea({
 	const { t } = useTranslation()
 
 	const showActions = leftActions || rightActions
-	const heading = error ? t('error') : title
+	const heading = error ? t('messages.error') : title
 
 	return (
 		<>
