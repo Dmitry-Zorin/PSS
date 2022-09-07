@@ -41,7 +41,7 @@ export default function DeleteModalButton({
 
 	return (
 		<>
-			<DeleteButton size="lg" onClick={onOpen} isLoading={mutation.isLoading} />
+			<DeleteButton size="lg" onClick={onOpen} />
 			<Modal size="2xl" motionPreset="none" isOpen={isOpen} onClose={onClose}>
 				<ModalOverlay />
 				<ModalContent>
@@ -69,6 +69,7 @@ export default function DeleteModalButton({
 							<Button
 								variant="solid"
 								colorScheme="red"
+								isLoading={mutation.isLoading}
 								onClick={async () => {
 									await mutation.mutateAsync({ method: 'delete' })
 									showToast('success')
