@@ -18,6 +18,6 @@ export default function Spinner({ children, isLoading }: SpinnerProps) {
 			/>
 		</Center>
 	) : (
-		<>children</>
+		<>{children}</>
 	)
 }
