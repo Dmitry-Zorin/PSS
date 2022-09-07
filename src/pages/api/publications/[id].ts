@@ -20,7 +20,7 @@ export default createRouter<NextApiRequest, NextApiResponse>()
 		const record = await updatePublication(id, data)
 		await Promise.all([
 			res.revalidate(`/publications/${record.category}/${id}`),
-			res.revalidate(`en/publications/${record.category}/${id}`),
+			res.revalidate(`/en/publications/${record.category}/${id}`),
 		])
 		res.json(record)
 	})
