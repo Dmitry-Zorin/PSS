@@ -7,22 +7,25 @@ export default function About() {
 
 	return (
 		<MainArea title={t('common:layout.menu.items.about')}>
-			<Heading as="h2" size="lg">
-				{t('subtitle')}
-			</Heading>
-			{t<
-				{
-					title: string
-					text: string
-				}[]
-			>('paragraphs', null, { returnObjects: true }).map(({ title, text }) => (
-				<Stack as="section" spacing={3} key={title} pt={10}>
-					<Heading as="h3" fontSize="xl" fontWeight="bold">
-						{title}
-					</Heading>
-					<Text>{text}</Text>
-				</Stack>
-			))}
+			<Stack spacing={8}>
+				<Text>{t('common:description')}.</Text>
+				<Heading as="h2" size="lg">
+					{t('subtitle')}
+				</Heading>
+				{t<
+					{
+						title: string
+						text: string
+					}[]
+				>('sections', null, { returnObjects: true }).map(({ title, text }) => (
+					<Stack as="section" spacing={2} key={title}>
+						<Heading as="h3" fontSize="xl" fontWeight="bold">
+							{title}
+						</Heading>
+						<Text>{text}</Text>
+					</Stack>
+				))}
+			</Stack>
 		</MainArea>
 	)
 }

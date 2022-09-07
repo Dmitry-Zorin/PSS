@@ -41,7 +41,7 @@
 		"name": "Name",
 		"title": "Title",
 		"description": "Description",
-		"firstName": "First Name",
+		"firstName": "First name",
 		"lastName": "Last name",
 		"middleName": "Middle name",
 		"info": "Info",
@@ -52,8 +52,8 @@
 		"coauthors": "Coauthors",
 		"coauthor": "Coauthor",
 		"character": "Character",
-		"publicationPlace": "Publication Place",
+		"publicationPlace": "Publication place",
 		"extraData": "Additional data",
-		"latestPublications": "Lastest Publications"
+		"latestPublications": "Latest publications"
 	}
 }

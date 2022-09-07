@@ -39,7 +39,7 @@ export default function MainArea({
 						rightActions={rightActions}
 					/>
 				)}
-				<Stack as="article" spacing={{ base: 8, sm: 10 }}>
+				<Stack as="article" spacing={8}>
 					{heading && (
 						<Heading
 							as="h1"
