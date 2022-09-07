@@ -30,8 +30,10 @@ export default function Pagination({
 			return
 		}
 		await redirect({
-			...queryParams,
-			page: pageNumber > 1 ? pageNumber : undefined,
+			query: {
+				...queryParams,
+				page: pageNumber > 1 ? pageNumber : undefined,
+			},
 		})
 	}
 

@@ -1,6 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query'
-import { useEventToast, useMutation } from 'hooks'
-import { useRouter } from 'next/router'
+import { useEventToast, useMutation, useRedirect } from 'hooks'
 import {
 	CreateAuthorResponse,
 	GetAuthorResponse,
@@ -11,7 +10,7 @@ import { AuthorFormData } from 'validations/author'
 
 export const useSubmitAuthor = (data?: GetAuthorResponse) => {
 	const queryClient = useQueryClient()
-	const router = useRouter()
+	const redirect = useRedirect()
 
 	const showToast = useEventToast('authors', data ? 'updated' : 'created')
 
@@ -27,7 +26,7 @@ export const useSubmitAuthor = (data?: GetAuthorResponse) => {
 			})
 			showToast('success')
 			await queryClient.invalidateQueries(['authors'])
-			await router.push(`/authors/${id}`)
+			await redirect({ url: `/authors/${id}`, prefetch: true })
 		} catch (error) {
 			showToast('error', { error })
 		}

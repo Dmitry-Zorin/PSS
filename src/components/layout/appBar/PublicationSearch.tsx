@@ -20,14 +20,17 @@ import { useState } from 'react'
 
 export default function PublicationSearch() {
 	const { t } = useTranslation()
-	const redirect = useRedirect('/publications')
+	const redirect = useRedirect()
 	const { isOpen, onOpen, onClose } = useDisclosure()
 	const [value, setValue] = useState('')
 
 	async function search() {
 		if (value) {
 			onClose()
-			await redirect({ search: value.trim() })
+			await redirect({
+				url: '/publications',
+				query: { search: value.trim() },
+			})
 		}
 	}
 

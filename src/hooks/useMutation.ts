@@ -12,7 +12,6 @@ export default function useMutation<Data = unknown>(
 	return useReactQueryMutation<Data, HttpError, MutateOptions>(
 		[path],
 		(variables) => {
-			console.log(variables)
 			return mutate<Data>(path, variables)
 		},
 		options,

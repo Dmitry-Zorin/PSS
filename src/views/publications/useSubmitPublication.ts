@@ -1,7 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query'
-import { useEventToast, useMutation, useUrlParams } from 'hooks'
+import { useEventToast, useMutation, useRedirect, useUrlParams } from 'hooks'
 import useTranslation from 'next-translate/useTranslation'
-import { useRouter } from 'next/router'
 import {
 	CreatePublicationResponse,
 	GetPublicationResponse,
@@ -13,7 +12,7 @@ import { PublicationFormData } from 'validations/publication'
 export const useSubmitPublication = (data?: GetPublicationResponse) => {
 	const { t } = useTranslation('resources')
 	const queryClient = useQueryClient()
-	const router = useRouter()
+	const redirect = useRedirect()
 
 	const { category } = useUrlParams()
 
@@ -44,10 +43,7 @@ export const useSubmitPublication = (data?: GetPublicationResponse) => {
 			})
 			showToast('success')
 			await queryClient.invalidateQueries(['publications'])
-			await router.push(`/publications/${category}/${id}`, undefined, {
-				shallow: true,
-			})
-			await router.push(`/publications/${category}/${id}`)
+			await redirect({ url: `/publications/${category}/${id}`, prefetch: true })
 		} catch (error) {
 			showToast('error', { error })
 		}

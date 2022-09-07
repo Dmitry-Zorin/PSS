@@ -45,8 +45,13 @@ export default function MainList({ children, total, ...props }: MainListProps) {
 		if (authorData) {
 			const tag = {
 				text: authorData.fullName,
-				onClick: () => {
-					redirect({ ...queryParams, authorId: undefined })
+				onClick: async () => {
+					await redirect({
+						query: {
+							...queryParams,
+							authorId: undefined,
+						},
+					})
 				},
 			}
 			setTags((tags) => [...tags, tag])
@@ -55,8 +60,14 @@ export default function MainList({ children, total, ...props }: MainListProps) {
 		if (queryParams.search) {
 			const tag = {
 				text: queryParams.search,
-				onClick: () => {
-					redirect({ ...queryParams, search: undefined, page: undefined })
+				onClick: async () => {
+					await redirect({
+						query: {
+							...queryParams,
+							search: undefined,
+							page: undefined,
+						},
+					})
 				},
 			}
 			setTags((tags) => [...tags, tag])

@@ -1,13 +1,25 @@
 import { useRouter } from 'next/router'
 import { parseUrl, StringifiableRecord, stringifyUrl } from 'query-string'
 
-export default function useRedirect(url?: string) {
+interface RedirectOptions {
+	url?: string
+	query?: StringifiableRecord
+	prefetch?: boolean
+}
+
+export default function useRedirect() {
 	const router = useRouter()
-	return (query: StringifiableRecord) => {
+
+	return async (options?: RedirectOptions) => {
+		if (options?.prefetch && options?.url) {
+			await router.prefetch(options.url, undefined, {
+				unstable_skipClientCache: true,
+			})
+		}
 		return router.push(
 			stringifyUrl({
-				url: url ?? parseUrl(router.asPath).url,
-				query,
+				url: options?.url ?? parseUrl(router.asPath).url,
+				query: options?.query,
 			}),
 		)
 	}

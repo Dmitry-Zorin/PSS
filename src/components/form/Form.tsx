@@ -42,8 +42,6 @@ export default function Form<T extends ZodType>({
 		formState: { isSubmitting, errors },
 	} = formMethods
 
-	console.log(getValues(), errors)
-
 	if (!isEmpty(errors) && isDevelopment) {
 		console.error(errors)
 		console.log(getValues())
