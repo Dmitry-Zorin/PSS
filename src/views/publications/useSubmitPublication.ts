@@ -44,6 +44,9 @@ export const useSubmitPublication = (data?: GetPublicationResponse) => {
 			})
 			showToast('success')
 			await queryClient.invalidateQueries(['publications'])
+			await router.push(`/publications/${category}/${id}`, undefined, {
+				shallow: true,
+			})
 			await router.push(`/publications/${category}/${id}`)
 		} catch (error) {
 			showToast('error', { error })
