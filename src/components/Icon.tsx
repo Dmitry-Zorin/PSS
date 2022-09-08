@@ -4,6 +4,8 @@ import {
 	FontAwesomeIconProps,
 } from '@fortawesome/react-fontawesome'
 
-export default function Icon(props: IconProps & FontAwesomeIconProps) {
+export default function Icon(
+	props: IconProps & Omit<FontAwesomeIconProps, 'display'>,
+) {
 	return <ChakraIcon as={FontAwesomeIcon} {...props} />
 }

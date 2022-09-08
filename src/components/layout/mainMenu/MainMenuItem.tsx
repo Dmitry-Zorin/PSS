@@ -1,6 +1,7 @@
 import {
 	HStack,
 	ListItem,
+	ListItemProps,
 	Text,
 	Tooltip,
 	useBreakpointValue,
@@ -11,16 +12,25 @@ import useTranslation from 'next-translate/useTranslation'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-export interface MainMenuItemProps {
+export interface MainMenuItemProps extends ListItemProps {
 	href: string
 	icon: IconProp
 	text: string
+	heading?: boolean
 }
 
-export default function MainMenuItem({ href, icon, text }: MainMenuItemProps) {
+export default function MainMenuItem({
+	href,
+	icon,
+	text,
+	heading,
+	...props
+}: MainMenuItemProps) {
 	const { t } = useTranslation()
 	const router = useRouter()
-	const isActive = new RegExp(`^${href}($|\\W)`).test(router.asPath)
+	const isActive = new RegExp(`^${href}($|\\${heading ? '?' : 'W'})`).test(
+		router.asPath,
+	)
 	const translatedText = t(`layout.menu.items.${text}`)
 
 	return (
@@ -33,7 +43,7 @@ export default function MainMenuItem({ href, icon, text }: MainMenuItemProps) {
 				lg: true,
 			})}
 		>
-			<ListItem>
+			<ListItem {...props}>
 				<Link href={href} passHref>
 					<HStack
 						as="a"
@@ -55,8 +65,7 @@ export default function MainMenuItem({ href, icon, text }: MainMenuItemProps) {
 						<Text
 							fontSize="md"
 							display={{
-								base: 'block',
-								md: 'none',
+								base: 'none',
 								lg: 'block',
 							}}
 						>

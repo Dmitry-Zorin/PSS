@@ -36,12 +36,12 @@ export default function PublicationsShow({
 			}
 		>
 			{data && (
-				<Stack spacing={{ base: 8, sm: 10 }}>
+				<Stack spacing={{ base: 8, md: 10 }}>
 					{data.description && <Text>{data.description}</Text>}
 					<SimpleGrid
-						columns={{ base: 2, sm: 3 }}
+						columns={{ base: 1, md: 3 }}
 						spacingX={6}
-						spacingY={{ base: 8, sm: 10 }}
+						spacingY={{ base: 8, md: 10 }}
 					>
 						<LabeledField stat label="type" text={data.type} />
 						<LabeledField
@@ -57,7 +57,7 @@ export default function PublicationsShow({
 					</SimpleGrid>
 					<Stack
 						direction={{ base: 'column', md: 'row' }}
-						spacing={{ base: 8, sm: 10, md: 2 }}
+						spacing={{ base: 8, md: 2 }}
 						align="top"
 					>
 						<LabeledField

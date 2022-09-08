@@ -1,18 +1,17 @@
 # PSS - Publication Storage System
 
-Publication Storage System
+This is a demo project showing what a storage system for scientific publications may look like
 
 ## Main Scripts
 
+### `npm run build`
+
+Build the project
+
 ### `npm start`
 
-Start the project in development mode
+Start the project
 
-### `npm run debug`
+### `npm run dev`
 
-Start the project in development mode with a debugger attached to the server
-
-## Packages
-
-- [@PSS/client](client/README.md)
-- [@PSS/server](server/README.md)
+Start the project in the development mode

@@ -1,4 +1,4 @@
-import { MenuDivider, MenuGroup, MenuItem } from '@chakra-ui/react'
+import { Center, MenuGroup, MenuItem } from '@chakra-ui/react'
 import { Icon } from 'components'
 import useTranslation from 'next-translate/useTranslation'
 import Link from 'next/link'
@@ -11,11 +11,23 @@ export default function MainMenuGroupMobile({
 	const { t } = useTranslation()
 	return (
 		<>
-			{heading && <MenuDivider mt={3} />}
-			<MenuGroup
-				title={heading && t(`layout.menu.items.${heading}`)}
-				pt={heading && 1}
-			>
+			<MenuGroup pt={heading && 1}>
+				{heading && (
+					<Link href={`/${heading}`} passHref>
+						<MenuItem
+							as="a"
+							fontSize="sm-"
+							fontWeight="semibold"
+							letterSpacing="wide"
+							mt={3}
+							_hover={{
+								bg: 'bg-layer-1',
+							}}
+						>
+							{t(`layout.menu.items.${heading}`).toUpperCase()}
+						</MenuItem>
+					</Link>
+				)}
 				{Object.entries(items).map(([name, info]) => {
 					return (
 						<Link
