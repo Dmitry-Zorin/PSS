@@ -15,6 +15,7 @@ import {
 	WidthType,
 } from 'docx'
 import { GetAuthorResponse } from 'server/services/author'
+import { UpdateAuthorResponse } from './../server/services/author'
 
 const categories = ['A', 'B', 'C'] as const
 
@@ -62,7 +63,7 @@ function createTableCell(options: ITableCellOptions) {
 	})
 }
 
-export function createDocx(author: GetAuthorResponse) {
+export function createDocx(author: GetAuthorResponse | UpdateAuthorResponse) {
 	let index = 1
 
 	function createPublicationRow(

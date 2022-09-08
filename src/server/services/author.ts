@@ -111,13 +111,15 @@ export type CreateAuthorResponse = Jsonify<
 >
 
 export async function updateAuthor(id: Id, author: UpdateAuthor) {
-	return omitNull(
-		await prisma.author.update({
-			select: defaultAuthorSelect,
-			where: { id },
-			data: author,
-		}),
-	)
+	const record = await prisma.author.update({
+		select: authorWithPublicationsSelect,
+		where: { id },
+		data: author,
+	})
+	return omitNull({
+		...addAuthorName(record),
+		publications: record.publications.map(addAuthorNames),
+	})
 }
 
 export type UpdateAuthorResponse = Jsonify<

@@ -13,12 +13,12 @@ import {
 import { saveAs } from 'file-saver'
 import useTranslation from 'next-translate/useTranslation'
 import { useEffect } from 'react'
-import { GetAuthorResponse } from 'server/services/author'
+import { GetAuthorResponse, UpdateAuthorResponse } from 'server/services/author'
 import PublicationsListItem from '../publications/PublicationsListItem'
 
 interface AuthorsShowProps {
 	error: unknown
-	data?: GetAuthorResponse
+	data?: GetAuthorResponse | UpdateAuthorResponse
 }
 
 export default function AuthorsShow({ error, data }: AuthorsShowProps) {
@@ -31,65 +31,75 @@ export default function AuthorsShow({ error, data }: AuthorsShowProps) {
 		}
 	}, [data, queryClient])
 
+	if (!data) {
+		return <MainArea error={error} />
+	}
+
+	const updateData = queryClient.getQueryData<UpdateAuthorResponse>([
+		`authors/${data.id}`,
+		'update',
+	])
+
+	if (updateData) {
+		data = updateData
+		queryClient.removeQueries([`authors/${data.id}`, 'update'])
+	}
+
 	return (
 		<MainArea
 			error={error}
-			title={data && data.fullName}
-			rightActions={data && <EditButton href={`/authors/edit/${data.id}`} />}
+			title={data.fullName}
+			rightActions={<EditButton href={`/authors/edit/${data.id}`} />}
 		>
-			{data && (
-				<>
-					<Stack spacing={{ base: 8, sm: 10 }}>
-						{data?.info && <LabeledField label="info" text={data.info} />}
-						{data.publications.length && (
-							<>
-								<LabeledField
-									label="latestPublications"
-									text={
-										<>
-											<MainList
-												total={data.publications.slice(0, 10).length}
-												pt={2}
-											>
-												{data.publications.slice(0, 10).map((e) => (
-													<PublicationsListItem
-														key={e.id}
-														record={e}
-														simplified
-														showIcon
-													/>
-												))}
-											</MainList>
-											<Flex justify="flex-end" pt={1.5}>
-												<Link href={`/publications?authorId=${data.id}`}>
-													{t('viewAllPublications')}
-													<Icon icon={faCaretRight} ml="1px" mb="-1px" />
-												</Link>
-											</Flex>
-										</>
-									}
-								/>
-								<Center pt={6}>
-									<Button
-										variant="solid"
-										leftIcon={<Icon icon={faDownload} />}
-										onClick={async () => {
-											const docx = await import('lib/docx')
-											saveAs(
-												await docx.createDocx(data),
-												`${t('publicationList:name')} (${data.fullName}).docx`,
-											)
-										}}
-										disabled={!data.publications.length}
+			<Stack spacing={{ base: 8, sm: 10 }}>
+				{data.info && <LabeledField label="info" text={data.info} />}
+				{data.publications.length && (
+					<>
+						<LabeledField
+							label="latestPublications"
+							text={
+								<>
+									<MainList
+										total={data.publications.slice(0, 10).length}
+										pt={2}
 									>
-										{t('publicationList:download')}
-									</Button>
-								</Center>
-							</>
-						)}
-					</Stack>
-				</>
-			)}
+										{data.publications.slice(0, 10).map((e) => (
+											<PublicationsListItem
+												key={e.id}
+												record={e}
+												simplified
+												showIcon
+											/>
+										))}
+									</MainList>
+									<Flex justify="flex-end" pt={1.5}>
+										<Link href={`/publications?authorId=${data.id}`}>
+											{t('viewAllPublications')}
+											<Icon icon={faCaretRight} ml="1px" mb="-1px" />
+										</Link>
+									</Flex>
+								</>
+							}
+						/>
+						<Center pt={6}>
+							<Button
+								variant="solid"
+								leftIcon={<Icon icon={faDownload} />}
+								onClick={async () => {
+									const docx = await import('lib/docx')
+									saveAs(
+										await docx.createDocx(data!),
+										`${t('publicationList:name')} (${data!.fullName}).docx`,
+									)
+								}}
+								disabled={!data.publications.length}
+							>
+								{t('publicationList:download')}
+							</Button>
+						</Center>
+					</>
+				)}
+			</Stack>
 		</MainArea>
 	)
 }

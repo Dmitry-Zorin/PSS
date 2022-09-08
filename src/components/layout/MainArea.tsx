@@ -6,7 +6,7 @@ import useTranslation from 'next-translate/useTranslation'
 import { ReactNode } from 'react'
 
 export interface MainAreaProps {
-	children: ReactNode
+	children?: ReactNode
 	head?: Partial<HeadProps>
 	error?: unknown
 	title?: string

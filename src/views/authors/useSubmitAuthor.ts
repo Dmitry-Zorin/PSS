@@ -20,13 +20,14 @@ export const useSubmitAuthor = (data?: GetAuthorResponse) => {
 
 	return async function onSubmit(submitData: AuthorFormData) {
 		try {
-			const { id } = await mutation.mutateAsync({
+			const record = await mutation.mutateAsync({
 				method: data ? 'put' : 'post',
 				body: omitEmptyStrings(submitData),
 			})
 			showToast('success')
 			await queryClient.invalidateQueries(['authors'])
-			await redirect({ url: `/authors/${id}`, prefetch: true })
+			await queryClient.setQueryData([`authors/${record.id}`, 'update'], record)
+			await redirect({ url: `/authors/${record.id}` })
 		} catch (error) {
 			showToast('error', { error })
 		}

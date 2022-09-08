@@ -31,7 +31,7 @@ export const useSubmitPublication = (data?: GetPublicationResponse) => {
 		...submitData
 	}: PublicationFormData) {
 		try {
-			const { id } = await mutation.mutateAsync({
+			const record = await mutation.mutateAsync({
 				method: data ? 'put' : 'post',
 				body: omitEmptyStrings({
 					...submitData,
@@ -43,7 +43,11 @@ export const useSubmitPublication = (data?: GetPublicationResponse) => {
 			})
 			showToast('success')
 			await queryClient.invalidateQueries(['publications'])
-			await redirect({ url: `/publications/${category}/${id}`, prefetch: true })
+			await queryClient.setQueryData(
+				[`publications/${record.id}`, 'update'],
+				record,
+			)
+			await redirect({ url: `/publications/${category}/${record.id}` })
 		} catch (error) {
 			showToast('error', { error })
 		}

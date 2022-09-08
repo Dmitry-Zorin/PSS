@@ -132,18 +132,20 @@ export async function updatePublication(
 ) {
 	const { authorIds, ...data } = publication
 	return omitNull(
-		await prisma.publication.update({
-			select: defaultPublicationSelect,
-			where: { id },
-			data: {
-				...data,
-				...(authorIds && {
-					authors: {
-						set: authorIds.map((id) => ({ id })),
-					},
-				}),
-			},
-		}),
+		addAuthorNames(
+			await prisma.publication.update({
+				select: defaultPublicationSelect,
+				where: { id },
+				data: {
+					...data,
+					...(authorIds && {
+						authors: {
+							set: authorIds.map((id) => ({ id })),
+						},
+					}),
+				},
+			}),
+		),
 	)
 }
 
