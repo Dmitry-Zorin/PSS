@@ -7,7 +7,6 @@ import prisma from 'server/prisma'
 import { findPublication } from 'server/services/publication'
 import { isDevelopment } from 'utils/env'
 import { getSafeAsync } from 'utils/helpers'
-import { idSchema } from 'validations/common'
 import PublicationsShow from 'views/publications/PublicationsShow'
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -34,9 +33,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps = async ({
 	params,
 }: GetStaticPropsContext<{ id: string; publication?: string }>) => {
-	const { id } = idSchema.parse({ id: params?.id })
 	return {
-		props: await getSafeAsync(() => findPublication(id)),
+		props: await getSafeAsync(() => findPublication(+params!.id)),
 	}
 }
 

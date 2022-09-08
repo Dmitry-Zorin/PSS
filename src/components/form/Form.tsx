@@ -10,9 +10,9 @@ import {
 	UseFormProps,
 } from 'react-hook-form'
 import { isDevelopment } from 'utils/env'
-import { object, z, ZodType } from 'zod'
+import { z } from 'zod'
 
-interface FormProps<T extends ZodType> extends StackProps {
+interface FormProps<T extends z.ZodType> extends StackProps {
 	children: ReactElement[]
 	onSubmit: SubmitHandler<z.infer<T>>
 	schema: T
@@ -21,7 +21,7 @@ interface FormProps<T extends ZodType> extends StackProps {
 	actions?: ReactNode
 }
 
-export default function Form<T extends ZodType>({
+export default function Form<T extends z.ZodType>({
 	children,
 	onSubmit,
 	schema,

@@ -6,17 +6,16 @@ import {
 	findPublication,
 	updatePublication,
 } from 'server/services/publication'
-import { idSchema } from 'validations/common'
+import { parseBody, parseId } from 'utils/parsers'
 import { updatePublicationSchema } from 'validations/publication'
 
 export default createRouter<NextApiRequest, NextApiResponse>()
 	.get(async (req, res) => {
-		const { id } = idSchema.parse(req.query)
-		res.json(await findPublication(id))
+		res.json(await findPublication(parseId(req.query)))
 	})
 	.put(async (req, res) => {
-		const { id } = idSchema.parse(req.query)
-		const data = updatePublicationSchema.parse(req.body)
+		const id = parseId(req.query)
+		const data = parseBody(updatePublicationSchema, req.body)
 		const record = await updatePublication(id, data)
 		await Promise.all([
 			res.revalidate(`/publications/${record.category}/${id}`),
@@ -26,7 +25,7 @@ export default createRouter<NextApiRequest, NextApiResponse>()
 		res.json(record)
 	})
 	.delete(async (req, res) => {
-		const { id } = idSchema.parse(req.query)
+		const id = parseId(req.query)
 		const record = await deletePublication(id)
 		await res.revalidate(`/publications/${record.category}/${id}`)
 		res.json(record)

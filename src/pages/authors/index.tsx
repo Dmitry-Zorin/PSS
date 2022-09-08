@@ -10,7 +10,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 	res,
 }) => {
 	const queryClient = new QueryClient()
-	const parsedQuery = getAuthorsSchema.parse(query)
+	const parsedQuery = getAuthorsSchema.strip().parse(query)
 
 	const response = await findAuthors(parsedQuery)
 	await queryClient.setQueryData(['authors', query], response, {

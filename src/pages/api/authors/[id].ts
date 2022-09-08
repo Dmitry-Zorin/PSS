@@ -2,23 +2,23 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { createRouter } from 'next-connect'
 import { deleteAuthor, findAuthor, updateAuthor } from 'server/services/author'
 import handleError from 'server/services/handleError'
+import { parseBody, parseId } from 'utils/parsers'
 import { updateAuthorSchema } from 'validations/author'
-import { idSchema } from 'validations/common'
 
 export default createRouter<NextApiRequest, NextApiResponse>()
 	.get(async (req, res) => {
-		const { id } = idSchema.parse(req.query)
+		const id = parseId(req.query)
 		res.json(await findAuthor(id))
 	})
 	.put(async (req, res) => {
-		const { id } = idSchema.parse(req.query)
-		const data = updateAuthorSchema.parse(req.body)
-		const record = await updateAuthor(id, data)
+		const id = parseId(req.query)
+		const body = parseBody(updateAuthorSchema, req.body)
+		const record = await updateAuthor(id, body)
 		await res.revalidate(`/authors/${id}`)
 		res.json(record)
 	})
 	.delete(async (req, res) => {
-		const { id } = idSchema.parse(req.query)
+		const id = parseId(req.query)
 		const record = await deleteAuthor(id)
 		await res.revalidate(`/authors/${id}`)
 		res.json(record)

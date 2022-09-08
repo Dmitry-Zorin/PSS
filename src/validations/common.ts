@@ -3,10 +3,10 @@ import { preprocessToNumber } from 'utils/validation'
 import { z } from 'zod'
 
 const _common = {
-	id: preprocessToNumber(z.number().int()),
+	id: preprocessToNumber(z.number().int().positive()),
 	search: z.string(),
-	page: preprocessToNumber(z.number().int()),
-	perPage: preprocessToNumber(z.number().int().max(MAX_PER_PAGE)),
+	page: preprocessToNumber(z.number().int().positive()),
+	perPage: preprocessToNumber(z.number().int().positive().max(MAX_PER_PAGE)),
 }
 
 export const common = {
@@ -18,4 +18,4 @@ export const idSchema = z.strictObject({
 	id: common.id,
 })
 
-export type Id = z.infer<typeof idSchema>['id']
+export type Id = z.infer<typeof common.id>

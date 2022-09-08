@@ -7,7 +7,6 @@ import prisma from 'server/prisma'
 import { findAuthor } from 'server/services/author'
 import { isDevelopment } from 'utils/env'
 import { getSafeAsync } from 'utils/helpers'
-import { idSchema } from 'validations/common'
 import AuthorsShow from 'views/authors/AuthorsShow'
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -31,9 +30,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps = async ({
 	params,
 }: GetStaticPropsContext<{ id: string; publication?: string }>) => {
-	const { id } = idSchema.parse({ id: params?.id })
 	return {
-		props: await getSafeAsync(() => findAuthor(id)),
+		props: await getSafeAsync(() => findAuthor(+params!.id)),
 	}
 }
 

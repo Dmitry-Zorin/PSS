@@ -6,7 +6,6 @@ export function getSearchFilter<T>(
 		? {
 				AND: search
 					.trim()
-					// .replace(/[^\p{L}\s]/gu, '')
 					.split(/\s+/)
 					.flatMap((word) => ({
 						OR: fields.map((field) => ({
