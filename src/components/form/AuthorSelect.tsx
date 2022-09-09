@@ -21,17 +21,10 @@ export default function AuthorSelect() {
 		control,
 	})
 
-	const { isLoading, error, data } = useQuery<GetAuthorsResponse>(
-		'authors',
-		{
-			perPage: 100,
-			search: search,
-		},
-		{
-			keepPreviousData: true,
-			staleTime: Infinity,
-		},
-	)
+	const { isLoading, error, data } = useQuery<GetAuthorsResponse>('authors', {
+		perPage: 100,
+		search: search,
+	})
 
 	return (
 		<Stack direction="row-reverse" align="flex-start">

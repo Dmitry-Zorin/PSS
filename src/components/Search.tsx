@@ -10,9 +10,7 @@ import { useRedirect, useUrlQuery } from 'hooks'
 import useTranslation from 'next-translate/useTranslation'
 import { useEffect, useState } from 'react'
 
-interface SearchProps extends InputProps {}
-
-export default function Search({ ...props }: SearchProps) {
+export default function Search({ ...props }: InputProps) {
 	const { t } = useTranslation()
 	const queryParams = useUrlQuery()
 	const redirect = useRedirect()

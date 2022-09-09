@@ -65,7 +65,7 @@ export default function SelectManyMenu<Item extends { id: Id }>({
 								onKeyDown={(e) => {
 									if (e.key === 'Enter') {
 										e.preventDefault()
-										search(value || undefined)
+										search(value.trim() || undefined)
 									}
 								}}
 							/>
