@@ -2,7 +2,7 @@ import { Center, Spinner as ChakraSpinner } from '@chakra-ui/react'
 import { ReactNode } from 'react'
 
 interface SpinnerProps {
-	children: ReactNode
+	children?: ReactNode
 	isLoading: boolean
 }
 

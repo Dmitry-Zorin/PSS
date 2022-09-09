@@ -21,7 +21,7 @@ export default function AuthorSelect() {
 		control,
 	})
 
-	const { error, data } = useQuery<GetAuthorsResponse>(
+	const { isLoading, error, data } = useQuery<GetAuthorsResponse>(
 		'authors',
 		{
 			perPage: 100,
@@ -36,6 +36,7 @@ export default function AuthorSelect() {
 	return (
 		<Stack direction="row-reverse" align="flex-start">
 			<SelectManyMenu
+				isLoading={isLoading}
 				error={error}
 				items={data?.records}
 				selectedItems={authors}

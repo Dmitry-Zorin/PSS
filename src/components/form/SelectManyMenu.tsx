@@ -11,13 +11,14 @@ import {
 	MenuOptionGroup,
 } from '@chakra-ui/react'
 import { faCirclePlus, faSearch } from '@fortawesome/free-solid-svg-icons'
-import { Icon } from 'components'
+import { Icon, Spinner } from 'components'
 import useTranslation from 'next-translate/useTranslation'
 import { useState } from 'react'
 import { Id } from 'validations/common'
 
 interface SelectManyMenuProps<Item extends { id: Id }> {
-	error?: Error | null
+	isLoading: boolean
+	error: Error | null
 	items?: Item[]
 	selectedItems: Item[]
 	buttonText?: string
@@ -28,6 +29,7 @@ interface SelectManyMenuProps<Item extends { id: Id }> {
 }
 
 export default function SelectManyMenu<Item extends { id: Id }>({
+	isLoading,
 	error,
 	items,
 	selectedItems,
@@ -69,27 +71,29 @@ export default function SelectManyMenu<Item extends { id: Id }>({
 							/>
 						</InputGroup>
 					</Box>
-					{error
-						? error.message
-						: items && (
-								<MenuOptionGroup
-									type="checkbox"
-									value={selectedItems.map(({ id }) => id.toString())}
-									onChange={(ids) => {
-										if (ids.length > selectedItems.length) {
-											onAdd(+(ids as string[]).at(-1)!)
-										} else {
-											onRemove((ids as string[]).map((e) => +e))
-										}
-									}}
-								>
-									{items.map((item) => (
-										<MenuItemOption key={item.id} value={item.id.toString()}>
-											{getText(item)}
-										</MenuItemOption>
-									))}
-								</MenuOptionGroup>
-						  )}
+					<Spinner isLoading={isLoading}>
+						{error
+							? error.message
+							: items && (
+									<MenuOptionGroup
+										type="checkbox"
+										value={selectedItems.map(({ id }) => id.toString())}
+										onChange={(ids) => {
+											if (ids.length > selectedItems.length) {
+												onAdd(+(ids as string[]).at(-1)!)
+											} else {
+												onRemove((ids as string[]).map((e) => +e))
+											}
+										}}
+									>
+										{items.map((item) => (
+											<MenuItemOption key={item.id} value={item.id.toString()}>
+												{getText(item)}
+											</MenuItemOption>
+										))}
+									</MenuOptionGroup>
+							  )}
+					</Spinner>
 				</MenuList>
 			</Menu>
 		</div>
