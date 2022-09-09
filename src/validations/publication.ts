@@ -20,9 +20,9 @@ const currentYear = new Date().getFullYear()
 
 const fields = {
 	title: z.string().min(8).max(300),
-	description: z.string().max(2000),
-	category: z.string().max(20),
-	type: z.string().min(1).max(50),
+	description: z.string().max(5000),
+	category: z.string().max(50),
+	type: z.string().min(1).max(100),
 	writtenInYear: preprocessToNumber(
 		z
 			.number()
@@ -36,7 +36,7 @@ const fields = {
 	coauthors: z.string().array(),
 	publicationPlace: z.string().max(300),
 	character: z.string().max(50),
-	extraData: z.string().max(2000),
+	extraData: z.string().max(5000),
 }
 
 export const publicationFormSchema = z.strictObject({
