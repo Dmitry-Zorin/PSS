@@ -20,14 +20,24 @@ export default createRouter<NextApiRequest, NextApiResponse>()
 		await Promise.all([
 			res.revalidate(`/publications/${record.category}/${id}`),
 			res.revalidate(`/en/publications/${record.category}/${id}`),
-			...data.authorIds.map((id) => res.revalidate(`/authors/${id}`)),
+			...data.authorIds.flatMap((id) => [
+				res.revalidate(`/authors/${id}`),
+				res.revalidate(`/en/authors/${id}`),
+			]),
 		])
 		res.json(record)
 	})
 	.delete(async (req, res) => {
 		const id = parseId(req.query)
 		const record = await deletePublication(id)
-		await res.revalidate(`/publications/${record.category}/${id}`)
+		await Promise.all([
+			res.revalidate(`/publications/${record.category}/${id}`),
+			res.revalidate(`/en/publications/${record.category}/${id}`),
+			...record.authors.flatMap(({ id }) => [
+				res.revalidate(`/authors/${id}`),
+				res.revalidate(`/en/authors/${id}`),
+			]),
+		])
 		res.json(record)
 	})
 	.handler({

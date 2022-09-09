@@ -30,7 +30,7 @@ const fields = {
 			.min(currentYear - 100)
 			.max(currentYear),
 	),
-	volumeInPages: preprocessToNumber(z.number().int().max(1000)),
+	volumeInPages: preprocessToNumber(z.number().int().min(1).max(1000)),
 	authors: z.object({ id: common.id }).array().min(1).max(10),
 	authorIds: common.ids.max(10),
 	coauthors: z.string().array(),

@@ -66,19 +66,21 @@ export default function PublicationsShow({
 					spacing={{ base: 8, md: 2 }}
 					align="top"
 				>
-					<LabeledField
-						flexGrow={1}
-						label="authors"
-						text={
-							<List spacing={1}>
-								{data.authors.map((e) => (
-									<ListItem key={e.id}>
-										<Link href={`/authors/${e.id}`}>{e.fullName}</Link>
-									</ListItem>
-								))}
-							</List>
-						}
-					/>
+					{data.authors.length && (
+						<LabeledField
+							flexGrow={1}
+							label="authors"
+							text={
+								<List spacing={1}>
+									{data.authors.map((e) => (
+										<ListItem key={e.id}>
+											<Link href={`/authors/${e.id}`}>{e.fullName}</Link>
+										</ListItem>
+									))}
+								</List>
+							}
+						/>
+					)}
 					{data.coauthors.length && (
 						<LabeledField
 							flexGrow={1}

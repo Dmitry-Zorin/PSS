@@ -30,7 +30,11 @@ export default function PublicationsCreate({
 
 	const defaultValues = data
 		? {
-				...publicationFormSchema.strip().partial().parse(data),
+				...publicationFormSchema
+					.strip()
+					.partial()
+					.omit({ authors: true })
+					.parse(data),
 				authors: data.authors,
 				coauthors: [...data.coauthors, ''],
 		  }

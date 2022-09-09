@@ -129,7 +129,7 @@ export type UpdateAuthorResponse = Jsonify<
 export async function deleteAuthor(id: Id) {
 	return omitNull(
 		await prisma.author.delete({
-			select: defaultAuthorSelect,
+			select: authorWithPublicationsSelect,
 			where: { id },
 		}),
 	)
