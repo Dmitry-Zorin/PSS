@@ -18,13 +18,14 @@ export default createRouter<NextApiRequest, NextApiResponse>()
 	})
 	.post(async (req, res) => {
 		const data = parseBody(createPublicationSchema, req.body)
+		const record = await createPublication(data)
 		await Promise.all(
 			data.authorIds.flatMap((id) => [
 				res.revalidate(`/authors/${id}`),
 				res.revalidate(`/en/authors/${id}`),
 			]),
 		)
-		res.json(await createPublication(data))
+		res.json(record)
 	})
 	.handler({
 		onError: handleError,

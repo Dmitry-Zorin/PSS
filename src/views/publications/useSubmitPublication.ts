@@ -43,10 +43,12 @@ export const useSubmitPublication = (data?: GetPublicationResponse) => {
 			})
 			showToast('success')
 			await queryClient.invalidateQueries(['publications'])
-			await queryClient.setQueryData(
-				[`publications/${record.id}`, 'update'],
-				record,
-			)
+			if (data) {
+				await queryClient.setQueryData(
+					[`publications/${record.id}`, 'update'],
+					record,
+				)
+			}
 			await redirect({ url: `/publications/${category}/${record.id}` })
 		} catch (error) {
 			showToast('error', { error })

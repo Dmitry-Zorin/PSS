@@ -26,7 +26,12 @@ export const useSubmitAuthor = (data?: GetAuthorResponse) => {
 			})
 			showToast('success')
 			await queryClient.invalidateQueries(['authors'])
-			await queryClient.setQueryData([`authors/${record.id}`, 'update'], record)
+			if (data) {
+				await queryClient.setQueryData(
+					[`authors/${record.id}`, 'update'],
+					record,
+				)
+			}
 			await redirect({ url: `/authors/${record.id}` })
 		} catch (error) {
 			showToast('error', { error })
