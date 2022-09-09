@@ -1,6 +1,6 @@
 import { Prisma, Publication } from '@prisma/client'
 import { PER_PAGE } from 'constants/app'
-import { addAuthorNames } from 'helpers/authors'
+import { formatAuthors } from 'helpers/authors'
 import httpError from 'http-errors'
 import prisma from 'server/prisma'
 import { Jsonify } from 'type-fest'
@@ -29,13 +29,29 @@ const defaultPublicationSelect = Prisma.validator<Prisma.PublicationSelect>()({
 	extraData: true,
 	authors: {
 		select: {
-			id: true,
-			lastName: true,
-			firstName: true,
-			middleName: true,
+			author: {
+				select: {
+					id: true,
+					lastName: true,
+					firstName: true,
+					middleName: true,
+				},
+			},
+			order: true,
 		},
 	},
 })
+
+function formatPublication(
+	record: Prisma.PublicationGetPayload<{
+		select: typeof defaultPublicationSelect
+	}>,
+) {
+	return omitNull({
+		...record,
+		authors: formatAuthors(record.authors),
+	})
+}
 
 export async function findPublication(id: Id) {
 	const record = await prisma.publication.findUnique({
@@ -45,7 +61,7 @@ export async function findPublication(id: Id) {
 	if (!record) {
 		throw new httpError.NotFound('Публикация не найдена')
 	}
-	return omitNull(addAuthorNames(record))
+	return formatPublication(record)
 }
 
 export type GetPublicationResponse = Awaited<ReturnType<typeof findPublication>>
@@ -68,7 +84,7 @@ export async function findPublications(filters: GetPublications) {
 				...(authorId && {
 					authors: {
 						some: {
-							id: authorId,
+							authorId,
 						},
 					},
 				}),
@@ -97,7 +113,7 @@ export async function findPublications(filters: GetPublications) {
 		}),
 	])
 
-	return omitNull({ records: records.map(addAuthorNames), total })
+	return omitNull({ records: records.map(formatPublication), total })
 }
 
 export type GetPublicationsResponse = Jsonify<
@@ -105,18 +121,21 @@ export type GetPublicationsResponse = Jsonify<
 >
 
 export async function createPublication(publication: CreatePublication) {
-	const { authorIds, ...otherFields } = publication
+	const { authorIds, ...data } = publication
 
-	return omitNull(
+	return formatPublication(
 		await prisma.publication.create({
 			select: defaultPublicationSelect,
 			data: {
-				...otherFields,
-				...(authorIds && {
-					authors: {
-						connect: authorIds.map((id) => ({ id })),
+				...data,
+				authors: {
+					createMany: {
+						data: authorIds.map((id, i) => ({
+							authorId: id,
+							order: i + 1,
+						})),
 					},
-				}),
+				},
 			},
 		}),
 	)
@@ -131,22 +150,32 @@ export async function updatePublication(
 	publication: UpdatePublication,
 ) {
 	const { authorIds, ...data } = publication
-	return omitNull(
-		addAuthorNames(
-			await prisma.publication.update({
-				select: defaultPublicationSelect,
-				where: { id },
-				data: {
-					...data,
-					...(authorIds && {
-						authors: {
-							set: authorIds.map((id) => ({ id })),
-						},
-					}),
+	const [, record] = await prisma.$transaction([
+		prisma.publication.update({
+			where: { id },
+			data: {
+				authors: {
+					deleteMany: {},
 				},
-			}),
-		),
-	)
+			},
+		}),
+		prisma.publication.update({
+			select: defaultPublicationSelect,
+			where: { id },
+			data: {
+				...data,
+				authors: {
+					createMany: {
+						data: authorIds.map((id, i) => ({
+							authorId: id,
+							order: i + 1,
+						})),
+					},
+				},
+			},
+		}),
+	])
+	return formatPublication(record)
 }
 
 export type UpdatePublicationResponse = Jsonify<
@@ -154,7 +183,7 @@ export type UpdatePublicationResponse = Jsonify<
 >
 
 export async function deletePublication(id: Id) {
-	return omitNull(
+	return formatPublication(
 		await prisma.publication.delete({
 			select: defaultPublicationSelect,
 			where: { id },

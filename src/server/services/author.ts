@@ -1,6 +1,6 @@
 import { Author, Prisma } from '@prisma/client'
 import { PER_PAGE } from 'constants/app'
-import { addAuthorName, addAuthorNames } from 'helpers/authors'
+import { addAuthorName, formatAuthors } from 'helpers/authors'
 import httpError from 'http-errors'
 import prisma from 'server/prisma'
 import { Jsonify } from 'type-fest'
@@ -21,28 +21,51 @@ const authorWithPublicationsSelect = Prisma.validator<Prisma.AuthorSelect>()({
 	...defaultAuthorSelect,
 	publications: {
 		select: {
-			id: true,
-			title: true,
-			description: true,
-			category: true,
-			type: true,
-			writtenInYear: true,
-			volumeInPages: true,
-			coauthors: true,
-			publicationPlace: true,
-			character: true,
-			extraData: true,
-			authors: {
+			publication: {
 				select: {
 					id: true,
-					lastName: true,
-					firstName: true,
-					middleName: true,
+					title: true,
+					description: true,
+					category: true,
+					type: true,
+					writtenInYear: true,
+					volumeInPages: true,
+					coauthors: true,
+					publicationPlace: true,
+					character: true,
+					extraData: true,
+					authors: {
+						select: {
+							author: {
+								select: {
+									id: true,
+									lastName: true,
+									firstName: true,
+									middleName: true,
+								},
+							},
+							order: true,
+						},
+					},
 				},
 			},
 		},
 	},
 })
+
+function formatAuthor(
+	record: Prisma.AuthorGetPayload<{
+		select: typeof authorWithPublicationsSelect
+	}>,
+) {
+	return omitNull({
+		...addAuthorName(record),
+		publications: record.publications.map(({ publication }) => ({
+			...publication,
+			authors: formatAuthors(publication.authors),
+		})),
+	})
+}
 
 export async function findAuthor(id: Id) {
 	const record = await prisma.author.findUnique({
@@ -52,10 +75,7 @@ export async function findAuthor(id: Id) {
 	if (!record) {
 		throw new httpError.NotFound('Автор не найден')
 	}
-	return omitNull({
-		...addAuthorName(record),
-		publications: record.publications.map(addAuthorNames),
-	})
+	return formatAuthor(record)
 }
 
 export type GetAuthorResponse = Awaited<ReturnType<typeof findAuthor>>
@@ -116,10 +136,7 @@ export async function updateAuthor(id: Id, author: UpdateAuthor) {
 		where: { id },
 		data: author,
 	})
-	return omitNull({
-		...addAuthorName(record),
-		publications: record.publications.map(addAuthorNames),
-	})
+	return formatAuthor(record)
 }
 
 export type UpdateAuthorResponse = Jsonify<
@@ -127,7 +144,7 @@ export type UpdateAuthorResponse = Jsonify<
 >
 
 export async function deleteAuthor(id: Id) {
-	return omitNull(
+	return formatAuthor(
 		await prisma.author.delete({
 			select: authorWithPublicationsSelect,
 			where: { id },

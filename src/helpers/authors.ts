@@ -17,16 +17,13 @@ export function addAuthorName<Name extends AuthorName>(author: Name) {
 	return { ...author, fullName: getAuthorName(author) }
 }
 
-export function addAuthorNames<T extends { authors: AuthorName[] }>({
-	authors,
-	...record
-}: T) {
-	return {
-		...record,
-		authors: authors.map((e) => {
-			return { ...e, fullName: getAuthorName(e) } as T['authors'][number] & {
-				fullName: string
-			}
-		}),
-	}
+export function formatAuthors<Name extends AuthorName>(
+	authors: { author: Name; order: number }[],
+) {
+	return authors
+		.sort((a, b) => a.order - b.order)
+		.map(({ author }) => ({
+			...author,
+			fullName: getAuthorName(author),
+		}))
 }
