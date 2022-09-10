@@ -144,12 +144,31 @@ export type UpdateAuthorResponse = Jsonify<
 >
 
 export async function deleteAuthor(id: Id) {
-	return formatAuthor(
-		await prisma.author.delete({
-			select: authorWithPublicationsSelect,
+	const publications = await prisma.publication.findMany({
+		select: {
+			id: true,
+			category: true,
+		},
+		where: {
+			authors: {
+				some: {
+					authorId: id,
+				},
+			},
+		},
+	})
+
+	const [, record] = await prisma.$transaction([
+		prisma.authorToPublication.deleteMany({
+			where: { authorId: id },
+		}),
+		prisma.author.delete({
+			select: defaultAuthorSelect,
 			where: { id },
 		}),
-	)
+	])
+
+	return { ...record, publications }
 }
 
 export type DeleteAuthorResponse = Jsonify<

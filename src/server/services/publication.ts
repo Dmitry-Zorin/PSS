@@ -13,20 +13,25 @@ import {
 	UpdatePublication,
 } from 'validations/publication'
 
+const publicationWithoutAuthorsSelect =
+	Prisma.validator<Prisma.PublicationSelect>()({
+		id: true,
+		createdAt: true,
+		updatedAt: true,
+		category: true,
+		title: true,
+		description: true,
+		type: true,
+		character: true,
+		publicationPlace: true,
+		writtenInYear: true,
+		volumeInPages: true,
+		coauthors: true,
+		extraData: true,
+	})
+
 const defaultPublicationSelect = Prisma.validator<Prisma.PublicationSelect>()({
-	id: true,
-	createdAt: true,
-	updatedAt: true,
-	category: true,
-	title: true,
-	description: true,
-	type: true,
-	character: true,
-	publicationPlace: true,
-	writtenInYear: true,
-	volumeInPages: true,
-	coauthors: true,
-	extraData: true,
+	...publicationWithoutAuthorsSelect,
 	authors: {
 		select: {
 			author: {
@@ -183,12 +188,23 @@ export type UpdatePublicationResponse = Jsonify<
 >
 
 export async function deletePublication(id: Id) {
-	return formatPublication(
-		await prisma.publication.delete({
-			select: defaultPublicationSelect,
+	const authorToPublication = await prisma.authorToPublication.findMany({
+		select: { authorId: true },
+		where: { publicationId: id },
+	})
+	const [, record] = await prisma.$transaction([
+		prisma.authorToPublication.deleteMany({
+			where: { publicationId: id },
+		}),
+		prisma.publication.delete({
+			select: publicationWithoutAuthorsSelect,
 			where: { id },
 		}),
-	)
+	])
+	return {
+		...record,
+		authorIds: authorToPublication.map((e) => e.authorId),
+	}
 }
 
 export type DeletePublicationResponse = Jsonify<

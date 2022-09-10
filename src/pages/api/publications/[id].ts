@@ -33,7 +33,7 @@ export default createRouter<NextApiRequest, NextApiResponse>()
 		await Promise.all([
 			res.revalidate(`/publications/${record.category}/${id}`),
 			res.revalidate(`/en/publications/${record.category}/${id}`),
-			...record.authors.flatMap(({ id }) => [
+			...record.authorIds.flatMap((id) => [
 				res.revalidate(`/authors/${id}`),
 				res.revalidate(`/en/authors/${id}`),
 			]),
