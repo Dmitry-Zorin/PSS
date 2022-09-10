@@ -20,14 +20,14 @@ model Publication {
   id               Int                   @id @default(autoincrement())
   createdAt        DateTime              @default(now())
   updatedAt        DateTime              @updatedAt
-  category         String
+  type             String
   title            String                @unique
   description      String?
-  type             String
-  character        String?
+  typeName         String
+  publicationForm  String?
   publicationPlace String?
-  writtenInYear    Int
-  volumeInPages    Int                   @default(1)
+  publicationYear  Int
+  pageCount        Int                   @default(1)
   authors          AuthorToPublication[]
   coauthors        String[]
   extraData        String?

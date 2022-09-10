@@ -17,10 +17,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
 	const publications = await prisma.publication.findMany()
 
 	return {
-		paths: publications.flatMap(({ id, category }) => {
+		paths: publications.flatMap(({ id, type }) => {
 			return ['ru', 'en'].map((locale) => ({
 				params: {
-					category,
+					type,
 					id: id.toString(),
 				},
 				locale,

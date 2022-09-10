@@ -41,12 +41,12 @@ export default function PublicationsListItem({
 							color="primary"
 							icon={
 								resources.publications[
-									record.category as keyof typeof resources.publications
+									record.type as keyof typeof resources.publications
 								].icon
 							}
 						/>
 					)}
-					<Link href={`/publications/${record.category}/${record.id}`} passHref>
+					<Link href={`/publications/${record.type}/${record.id}`} passHref>
 						<LinkOverlay flexGrow={1} lineHeight="none" fontWeight="medium">
 							<Highlight text={record.title} search={search} />
 						</LinkOverlay>

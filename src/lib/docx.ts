@@ -82,13 +82,13 @@ export function createDocx(author: GetAuthorResponse | UpdateAuthorResponse) {
 				}),
 				createTableCell({
 					children: [
-						new Paragraph(`${publication.title} (${publication.type})`),
+						new Paragraph(`${publication.title} (${publication.typeName})`),
 					],
 				}),
 				createTableCell({
 					children: [
 						new Paragraph({
-							text: publication.character || '-',
+							text: publication.publicationForm || '-',
 							alignment: AlignmentType.CENTER,
 						}),
 					],
@@ -100,14 +100,14 @@ export function createDocx(author: GetAuthorResponse | UpdateAuthorResponse) {
 								publication.publicationPlace
 									? `${publication.publicationPlace}, `
 									: ''
-							}${publication.writtenInYear}`,
+							}${publication.publicationYear}`,
 						),
 					],
 				}),
 				createTableCell({
 					children: [
 						new Paragraph({
-							text: publication.volumeInPages.toString(),
+							text: publication.pageCount.toString(),
 							alignment: AlignmentType.CENTER,
 						}),
 					],
@@ -127,9 +127,8 @@ export function createDocx(author: GetAuthorResponse | UpdateAuthorResponse) {
 	function createCategoryRows(category: Category) {
 		const categoryPublications = author.publications.filter((e) => {
 			return (
-				resources.publications[
-					e.category as keyof typeof resources.publications
-				].category === category
+				resources.publications[e.type as keyof typeof resources.publications]
+					.category === category
 			)
 		})
 

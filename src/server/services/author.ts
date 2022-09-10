@@ -26,13 +26,13 @@ const authorWithPublicationsSelect = Prisma.validator<Prisma.AuthorSelect>()({
 					id: true,
 					title: true,
 					description: true,
-					category: true,
 					type: true,
-					writtenInYear: true,
-					volumeInPages: true,
+					typeName: true,
+					publicationYear: true,
+					pageCount: true,
 					coauthors: true,
 					publicationPlace: true,
-					character: true,
+					publicationForm: true,
 					extraData: true,
 					authors: {
 						select: {
@@ -147,7 +147,7 @@ export async function deleteAuthor(id: Id) {
 	const publications = await prisma.publication.findMany({
 		select: {
 			id: true,
-			category: true,
+			type: true,
 		},
 		where: {
 			authors: {

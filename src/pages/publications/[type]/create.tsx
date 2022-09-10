@@ -4,9 +4,9 @@ import PublicationsCreate from 'views/publications/PublicationsCreate'
 
 export const getStaticPaths: GetStaticPaths = () => {
 	return {
-		paths: Object.keys(resources.publications).flatMap((category) => {
+		paths: Object.keys(resources.publications).flatMap((type) => {
 			return ['ru', 'en'].map((locale) => ({
-				params: { category },
+				params: { type },
 				locale,
 			}))
 		}),

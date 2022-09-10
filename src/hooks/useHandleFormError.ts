@@ -24,7 +24,7 @@ export default function useHandleFormError(
 					count,
 				})}${
 					type === 'string'
-						? ` ${t('characters.name', {
+						? ` ${t('publicationForms.name', {
 								count,
 						  })}`
 						: ''

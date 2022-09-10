@@ -18,8 +18,8 @@ export default createRouter<NextApiRequest, NextApiResponse>()
 		const data = parseBody(updatePublicationSchema, req.body)
 		const record = await updatePublication(id, data)
 		await Promise.all([
-			res.revalidate(`/publications/${record.category}/${id}`),
-			res.revalidate(`/en/publications/${record.category}/${id}`),
+			res.revalidate(`/publications/${record.type}/${id}`),
+			res.revalidate(`/en/publications/${record.type}/${id}`),
 			...data.authorIds.flatMap((id) => [
 				res.revalidate(`/authors/${id}`),
 				res.revalidate(`/en/authors/${id}`),
@@ -31,8 +31,8 @@ export default createRouter<NextApiRequest, NextApiResponse>()
 		const id = parseId(req.query)
 		const record = await deletePublication(id)
 		await Promise.all([
-			res.revalidate(`/publications/${record.category}/${id}`),
-			res.revalidate(`/en/publications/${record.category}/${id}`),
+			res.revalidate(`/publications/${record.type}/${id}`),
+			res.revalidate(`/en/publications/${record.type}/${id}`),
 			...record.authorIds.flatMap((id) => [
 				res.revalidate(`/authors/${id}`),
 				res.revalidate(`/en/authors/${id}`),

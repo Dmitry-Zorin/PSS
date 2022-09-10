@@ -8,8 +8,8 @@ export default function useQueryFilters(initialValue: QueryFilters) {
 	const [queryFilters, setQueryFilters] = useState(initialValue)
 
 	const queryFiltersHelper = useConst({
-		switchCategory(category: string) {
-			setQueryFilters((filters) => ({ ...filters, category }))
+		switchType(type: string) {
+			setQueryFilters((filters) => ({ ...filters, type }))
 		},
 		search(value: string) {
 			setQueryFilters((filters) => ({

@@ -18,14 +18,14 @@ const publicationWithoutAuthorsSelect =
 		id: true,
 		createdAt: true,
 		updatedAt: true,
-		category: true,
+		type: true,
 		title: true,
 		description: true,
-		type: true,
-		character: true,
+		typeName: true,
+		publicationForm: true,
 		publicationPlace: true,
-		writtenInYear: true,
-		volumeInPages: true,
+		publicationYear: true,
+		pageCount: true,
 		coauthors: true,
 		extraData: true,
 	})
@@ -73,7 +73,7 @@ export type GetPublicationResponse = Awaited<ReturnType<typeof findPublication>>
 
 export async function findPublications(filters: GetPublications) {
 	const {
-		category,
+		type,
 		search,
 		sortField,
 		sortOrder = 'asc',
@@ -85,7 +85,7 @@ export async function findPublications(filters: GetPublications) {
 	const where = {
 		AND: [
 			{
-				category,
+				type,
 				...(authorId && {
 					authors: {
 						some: {
@@ -99,7 +99,7 @@ export async function findPublications(filters: GetPublications) {
 	}
 
 	const orderBy: { [key in keyof Partial<Publication>]: 'asc' | 'desc' }[] = [
-		{ writtenInYear: 'desc' },
+		{ publicationYear: 'desc' },
 		{ createdAt: 'desc' },
 	]
 

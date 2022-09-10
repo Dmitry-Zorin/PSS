@@ -26,7 +26,7 @@ export default function PublicationsCreate({
 	data,
 }: PublicationsCreateProps) {
 	const { t } = useTranslation('resources')
-	const { category } = useUrlParams()
+	const { type } = useUrlParams()
 
 	const defaultValues = data
 		? {
@@ -47,9 +47,9 @@ export default function PublicationsCreate({
 		<MainArea
 			error={error}
 			title={`${t(`common:actions.${data ? 'edit' : 'create'}`)} ${t(
-				`${category}.name_what`,
+				`${type}.name_what`,
 				null,
-				{ fallback: t(`${category}.name_one`) },
+				{ fallback: t(`${type}.name_one`) },
 			)}`}
 		>
 			<Form
@@ -62,7 +62,7 @@ export default function PublicationsCreate({
 							id={data.id}
 							name={data.title}
 							resource="publications"
-							subresource={category}
+							subresource={type}
 						/>
 					)
 				}
@@ -78,25 +78,25 @@ export default function PublicationsCreate({
 					align="flex-start"
 				>
 					<FormControl
-						field="type"
-						placeholder={t(`${category}.name`, { count: 1 })}
+						field="typeName"
+						placeholder={t(`${type}.name`, { count: 1 })}
 						optional
 					/>
 					<FormControl
-						field="writtenInYear"
+						field="publicationYear"
 						type="number"
 						placeholder={currentYear.toString()}
 						optional
 					/>
 					<FormControl
-						field="volumeInPages"
+						field="pageCount"
 						type="number"
 						placeholder="1"
 						optional
 					/>
 				</Stack>
 				<FormControl field="publicationPlace" optional />
-				<FormControl field="character" optional />
+				<FormControl field="publicationForm" optional />
 				<FormControl field="extraData" multiline optional />
 			</Form>
 		</MainArea>

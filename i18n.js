@@ -13,6 +13,6 @@ module.exports = {
 		'rgx:/create$': ['resources', 'validations'],
 		'rgx:/edit/': ['resources', 'validations'],
 		'/authors/[id]': ['resources', 'author', 'publicationList'],
-		'/publications/[category]/[id]': ['resources'],
+		'/publications/[type]/[id]': ['resources'],
 	},
 }

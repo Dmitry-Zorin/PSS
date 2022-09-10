@@ -14,9 +14,9 @@ export const useSubmitPublication = (data?: GetPublicationResponse) => {
 	const queryClient = useQueryClient()
 	const redirect = useRedirect()
 
-	const { category } = useUrlParams()
+	const { type } = useUrlParams()
 
-	const showToast = useEventToast(category, data ? 'updated' : 'created')
+	const showToast = useEventToast(type, data ? 'updated' : 'created')
 
 	const mutation = useMutation<
 		typeof data extends undefined
@@ -25,7 +25,7 @@ export const useSubmitPublication = (data?: GetPublicationResponse) => {
 	>(`publications${data ? `/${data.id}` : ''}`)
 
 	return async function onSubmit({
-		type,
+		typeName,
 		authors,
 		coauthors,
 		...submitData
@@ -35,10 +35,10 @@ export const useSubmitPublication = (data?: GetPublicationResponse) => {
 				method: data ? 'put' : 'post',
 				body: omitEmptyStrings({
 					...submitData,
-					type: type || t(`${category}.name`, { count: 1 }),
+					typeName: typeName || t(`${type}.name`, { count: 1 }),
 					authorIds: authors.map(({ id }) => id),
 					coauthors: coauthors.length > 1 ? coauthors.slice(0, -1) : undefined,
-					...(!data && { category }),
+					...(!data && { type }),
 				}),
 			})
 			showToast('success')
@@ -49,7 +49,7 @@ export const useSubmitPublication = (data?: GetPublicationResponse) => {
 					record,
 				)
 			}
-			await redirect({ url: `/publications/${category}/${record.id}` })
+			await redirect({ url: `/publications/${type}/${record.id}` })
 		} catch (error) {
 			showToast('error', { error })
 		}

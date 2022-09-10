@@ -24,7 +24,7 @@ export default function TimelineCard({ record }: TimelineCardProps) {
 						<Icon
 							icon={
 								resources.publications[
-									record.category as keyof typeof resources['publications']
+									record.type as keyof typeof resources['publications']
 								].icon
 							}
 							boxSize={6}
@@ -32,18 +32,23 @@ export default function TimelineCard({ record }: TimelineCardProps) {
 					}
 				/>
 				<Stack spacing={0} flexGrow={1}>
-					<Text fontSize="md">{t(`${record.category}.name_one`)}</Text>
+					<Text fontSize="md">{t(`${record.type}.name_one`)}</Text>
 					<Text fontSize="sm" color="text-secondary">
-						{new Date(record.createdAt).toLocaleString(lang, {
-							day: 'numeric',
-							month: 'long',
-							year: 'numeric',
-						})}
+						{t(`events.created_${t(`${record.type}.gender`)}`, null, {
+							fallback: 'created',
+						})}{' '}
 					</Text>
 				</Stack>
+				<Text fontSize="sm" color="text-secondary" pr={2}>
+					{new Date(record.createdAt).toLocaleString(lang, {
+						day: 'numeric',
+						month: 'long',
+						year: 'numeric',
+					})}
+				</Text>
 			</CardHeader>
 			<CardContent>
-				<Link href={`/publications/${record.category}/${record.id}`} passHref>
+				<Link href={`/publications/${record.type}/${record.id}`} passHref>
 					<LinkOverlay fontWeight="medium">{record.title}</LinkOverlay>
 				</Link>
 				{record.description && (

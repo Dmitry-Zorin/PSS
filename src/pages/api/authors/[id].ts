@@ -17,9 +17,9 @@ export default createRouter<NextApiRequest, NextApiResponse>()
 		await Promise.all([
 			res.revalidate(`/authors/${id}`),
 			res.revalidate(`/en/authors/${id}`),
-			...record.publications.flatMap(({ id, category }) => [
-				res.revalidate(`/publications/${category}/${id}`),
-				res.revalidate(`/en/publications/${category}/${id}`),
+			...record.publications.flatMap(({ id, type }) => [
+				res.revalidate(`/publications/${type}/${id}`),
+				res.revalidate(`/en/publications/${type}/${id}`),
 			]),
 		])
 		res.json(record)
@@ -30,9 +30,9 @@ export default createRouter<NextApiRequest, NextApiResponse>()
 		await Promise.all([
 			res.revalidate(`/authors/${id}`),
 			res.revalidate(`/en/authors/${id}`),
-			...record.publications.flatMap(({ id, category }) => [
-				res.revalidate(`/publications/${category}/${id}`),
-				res.revalidate(`/en/publications/${category}/${id}`),
+			...record.publications.flatMap(({ id, type }) => [
+				res.revalidate(`/publications/${type}/${id}`),
+				res.revalidate(`/en/publications/${type}/${id}`),
 			]),
 		])
 		res.json(record)

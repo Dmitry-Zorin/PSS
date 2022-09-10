@@ -6,24 +6,24 @@ import PublicationsListItem from './PublicationsListItem'
 
 export default function PublicationsList() {
 	const { t } = useTranslation()
-	const { category } = useUrlParams()
+	const { type } = useUrlParams()
 	const queryParams = useUrlQuery()
 
 	const { error, data } = useQuery<GetPublicationsResponse>('publications', {
-		category,
+		type,
 		...queryParams,
 	})
 
 	return (
 		<MainArea
 			fullWidth
-			head={{ title: t(`layout.menu.items.${category}`) }}
+			head={{ title: t(`layout.menu.items.${type}`) }}
 			error={error}
 			leftActions={<Search />}
-			rightActions={<CreateButton href={`/publications/${category}/create`} />}
+			rightActions={<CreateButton href={`/publications/${type}/create`} />}
 		>
 			{data && (
-				<MainList key={category} total={data.total}>
+				<MainList key={type} total={data.total}>
 					{data.records.map((e) => (
 						<PublicationsListItem key={e.id} record={e} />
 					))}

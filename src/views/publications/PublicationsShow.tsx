@@ -16,7 +16,7 @@ export default function PublicationsShow({
 	error,
 	data,
 }: PublicationsShowProps) {
-	const { category } = useUrlParams()
+	const { type } = useUrlParams()
 	const queryClient = useQueryClient()
 
 	if (!data) {
@@ -43,7 +43,7 @@ export default function PublicationsShow({
 			title={data.title}
 			rightActions={
 				<EditButton
-					href={`/publications/${category}/edit/${data.id}`}
+					href={`/publications/${type}/edit/${data.id}`}
 					onClick={() => {
 						queryClient.setQueryData([`publications/${data!.id}`], data)
 					}}
@@ -57,9 +57,13 @@ export default function PublicationsShow({
 					spacingX={6}
 					spacingY={{ base: 8, md: 10 }}
 				>
-					<LabeledField stat label="type" text={data.type} />
-					<LabeledField stat label="writtenInYear" text={data.writtenInYear} />
-					<LabeledField stat label="volumeInPages" text={data.volumeInPages} />
+					<LabeledField stat label="typeName" text={data.typeName} />
+					<LabeledField
+						stat
+						label="publicationYear"
+						text={data.publicationYear}
+					/>
+					<LabeledField stat label="pageCount" text={data.pageCount} />
 				</SimpleGrid>
 				<Stack
 					direction={{ base: 'column', md: 'row' }}
@@ -98,8 +102,8 @@ export default function PublicationsShow({
 				{data.publicationPlace && (
 					<LabeledField label="publicationPlace" text={data.publicationPlace} />
 				)}
-				{data.character && (
-					<LabeledField label="character" text={data.character} />
+				{data.publicationForm && (
+					<LabeledField label="publicationForm" text={data.publicationForm} />
 				)}
 				{data.extraData && (
 					<LabeledField label="extraData" text={data.extraData} />
