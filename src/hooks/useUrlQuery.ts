@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { parse, parseUrl } from 'query-string'
+import { parseUrl } from 'query-string'
 
 export default function useUrlQuery() {
 	const router = useRouter()

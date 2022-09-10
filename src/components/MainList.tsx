@@ -1,21 +1,7 @@
-import {
-	Badge,
-	Divider,
-	HStack,
-	List,
-	ListProps,
-	Stack,
-	Text,
-	Wrap,
-	WrapItem,
-} from '@chakra-ui/react'
-import { faBan, faClose } from '@fortawesome/free-solid-svg-icons'
-import { Icon, Pagination } from 'components'
-import { useQuery, useRedirect, useUrlQuery } from 'hooks'
+import { Divider, HStack, List, ListProps, Stack, Text } from '@chakra-ui/react'
+import { faBan } from '@fortawesome/free-solid-svg-icons'
+import { Icon, Pagination, Tags } from 'components'
 import useTranslation from 'next-translate/useTranslation'
-import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
-import { GetAuthorResponse } from 'server/services/author'
 
 interface MainListProps extends ListProps {
 	total: number
@@ -23,78 +9,10 @@ interface MainListProps extends ListProps {
 
 export default function MainList({ children, total, ...props }: MainListProps) {
 	const { t } = useTranslation()
-	const router = useRouter()
-	const redirect = useRedirect()
-	const queryParams = useUrlQuery()
-
-	const [tags, setTags] = useState<{ text: string; onClick: () => void }[]>([])
-
-	const { data: authorData } = useQuery<GetAuthorResponse>(
-		`authors/${queryParams.authorId}`,
-		undefined,
-		{ enabled: !!queryParams.authorId, staleTime: Infinity },
-	)
-
-	useEffect(() => {
-		setTags([])
-	}, [router.asPath])
-
-	useEffect(() => {
-		if (tags.length) return
-
-		if (authorData) {
-			const tag = {
-				text: authorData.fullName,
-				onClick: async () => {
-					await redirect({
-						query: {
-							...queryParams,
-							authorId: undefined,
-						},
-					})
-				},
-			}
-			setTags((tags) => [...tags, tag])
-		}
-
-		if (queryParams.search) {
-			const tag = {
-				text: queryParams.search,
-				onClick: async () => {
-					await redirect({
-						query: {
-							...queryParams,
-							search: undefined,
-							page: undefined,
-						},
-					})
-				},
-			}
-			setTags((tags) => [...tags, tag])
-		}
-	}, [authorData, queryParams, redirect, tags.length])
 
 	return (
 		<>
-			{!!tags.length && (
-				<Wrap spacing={3} px={2} pt={2}>
-					{tags.map((tag) => (
-						<WrapItem key={tag.text}>
-							<Badge
-								fontSize="sm"
-								cursor="pointer"
-								_hover={{ bg: 'bg-layer-1' }}
-								onClick={tag.onClick}
-							>
-								<HStack spacing={1}>
-									<Text>{tag.text}</Text>
-									<Icon icon={faClose} />
-								</HStack>
-							</Badge>
-						</WrapItem>
-					))}
-				</Wrap>
-			)}
+			<Tags />
 			{total ? (
 				<>
 					<List
