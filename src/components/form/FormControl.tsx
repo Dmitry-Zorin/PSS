@@ -29,6 +29,7 @@ export default function FormControl({
 }: FormControlProps & InputProps & TextareaProps) {
 	const { t } = useTranslation('resources')
 	const handleError = useHandleFormError(field, { type: props.type })
+
 	const {
 		register,
 		formState: { errors },
@@ -36,7 +37,7 @@ export default function FormControl({
 
 	const inputProps = {
 		value,
-		placeholder: props.placeholder ?? optional ? '-' : undefined,
+		placeholder: props.placeholder ?? optional ? '...' : undefined,
 		...register(field),
 		...props,
 	}

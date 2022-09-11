@@ -34,7 +34,7 @@ export default function CoauthorInputList() {
 						<Input
 							mb={2}
 							value={name}
-							placeholder="-"
+							placeholder="..."
 							onChange={(e) => {
 								const newNames = [...names]
 								newNames[i] = e.target.value
