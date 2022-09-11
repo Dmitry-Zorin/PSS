@@ -1,9 +1,7 @@
 {
 	"authors": {
 		"name_one": "Author",
-		"name_other": "Authors",
-		"add": "Add Authors",
-		"select": "Select at least one author"
+		"name_other": "Authors"
 	},
 	"articles": {
 		"name_one": "Article",

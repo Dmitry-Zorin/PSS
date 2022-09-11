@@ -4,9 +4,7 @@
 		"name_one": "Автор",
 		"name_other": "Авторы",
 		"name_what": "автора",
-		"name_delete": "этого автора",
-		"add": "Добавить авторов",
-		"select": "Выберите хотя бы одного автора"
+		"name_delete": "этого автора"
 	},
 	"articles": {
 		"gender": "f",

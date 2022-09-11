@@ -1,4 +1,4 @@
-import { Spinner } from 'components'
+import { Loading } from 'components'
 import { useQuery, useUrlParams } from 'hooks'
 import { GetPublicationResponse } from 'server/services/publication'
 import PublicationsCreate from './PublicationsCreate'
@@ -16,8 +16,8 @@ export default function PublicationsEdit() {
 	)
 
 	return (
-		<Spinner isLoading={isLoading}>
+		<Loading isLoading={isLoading}>
 			<PublicationsCreate error={error} data={data} />
-		</Spinner>
+		</Loading>
 	)
 }

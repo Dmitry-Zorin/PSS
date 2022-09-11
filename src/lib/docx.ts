@@ -116,8 +116,8 @@ export function createDocx(author: GetAuthorResponse | UpdateAuthorResponse) {
 					children: [
 						...publication.authors
 							.filter((e) => e.id !== author.id)
-							.map((e) => new Paragraph(e.fullName)),
-						...publication.coauthors?.map((e) => new Paragraph(e)),
+							.map((e) => new Paragraph(`${e.fullName},`)),
+						...publication.coauthors?.map((e) => new Paragraph(`${e},`)),
 					],
 				}),
 			],

@@ -1,7 +1,7 @@
 import { FormControl, FormErrorMessage, FormLabel } from '@chakra-ui/react'
-import { CoauthorInputList } from 'components'
 import useTranslation from 'next-translate/useTranslation'
 import { FieldError, useFormContext } from 'react-hook-form'
+import CoauthorInputList from './CoauthorInputList'
 
 export default function Coauthors() {
 	const { t } = useTranslation('resources')

@@ -51,9 +51,20 @@ export default function PublicationsShow({
 			}
 		>
 			<Stack spacing={{ base: 8, md: 10 }}>
-				{data.description && <Text>{data.description}</Text>}
+				{data.description && (
+					<Text whiteSpace="pre-wrap">{data.description}</Text>
+				)}
+				{data.extraData && (
+					<LabeledField
+						label="extraData"
+						text={<Text whiteSpace="pre-wrap">{data.extraData}</Text>}
+					/>
+				)}
+				{data.publicationPlace && (
+					<LabeledField label="publicationPlace" text={data.publicationPlace} />
+				)}
 				<SimpleGrid
-					columns={{ base: 1, md: 3 }}
+					columns={{ base: 1, md: 2 }}
 					spacingX={6}
 					spacingY={{ base: 8, md: 10 }}
 				>
@@ -63,13 +74,12 @@ export default function PublicationsShow({
 						label="publicationYear"
 						text={data.publicationYear}
 					/>
+					<LabeledField
+						stat
+						label="publicationForm"
+						text={data.publicationForm}
+					/>
 					<LabeledField stat label="pageCount" text={data.pageCount} />
-				</SimpleGrid>
-				<Stack
-					direction={{ base: 'column', md: 'row' }}
-					spacing={{ base: 8, md: 2 }}
-					align="top"
-				>
 					{data.authors.length && (
 						<LabeledField
 							flexGrow={1}
@@ -98,16 +108,7 @@ export default function PublicationsShow({
 							}
 						/>
 					)}
-				</Stack>
-				{data.publicationPlace && (
-					<LabeledField label="publicationPlace" text={data.publicationPlace} />
-				)}
-				{data.publicationForm && (
-					<LabeledField label="publicationForm" text={data.publicationForm} />
-				)}
-				{data.extraData && (
-					<LabeledField label="extraData" text={data.extraData} />
-				)}
+				</SimpleGrid>
 			</Stack>
 		</MainArea>
 	)

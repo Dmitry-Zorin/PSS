@@ -1,17 +1,18 @@
-import { Stack } from '@chakra-ui/react'
+import { SimpleGrid } from '@chakra-ui/react'
 import {
-	Authors,
-	Coauthors,
+	CancelButton,
 	DeleteModalButton,
 	Form,
 	FormControl,
-	FormControlGroup,
 	MainArea,
 } from 'components'
 import { useUrlParams } from 'hooks'
 import useTranslation from 'next-translate/useTranslation'
 import { GetPublicationResponse } from 'server/services/publication'
 import { publicationFormSchema } from 'validations/publication'
+import Authors from './components/Authors'
+import Coauthors from './components/Coauthors'
+import PublicationForm from './components/PublicationForm'
 import { useSubmitPublication } from './useSubmitPublication'
 
 const currentYear = new Date().getFullYear()
@@ -39,6 +40,7 @@ export default function PublicationsCreate({
 				coauthors: [...data.coauthors, ''],
 		  }
 		: {
+				publicationForm: 'Печатная',
 				authors: [],
 				coauthors: [''],
 		  }
@@ -57,13 +59,15 @@ export default function PublicationsCreate({
 				schema={publicationFormSchema}
 				defaultValues={defaultValues}
 				actions={
-					data && (
+					data ? (
 						<DeleteModalButton
 							id={data.id}
 							name={data.title}
 							resource="publications"
 							subresource={type}
 						/>
+					) : (
+						<CancelButton href={`/publications/${type}`} />
 					)
 				}
 			>
@@ -71,12 +75,7 @@ export default function PublicationsCreate({
 				<FormControl field="description" multiline optional />
 				<Authors />
 				<Coauthors />
-				<Stack
-					as={FormControlGroup}
-					direction={{ base: 'column', md: 'row' }}
-					spacing={6}
-					align="flex-start"
-				>
+				<SimpleGrid columns={{ base: 1, sm: 2 }} spacing={6}>
 					<FormControl
 						field="typeName"
 						placeholder={t(`${type}.name`, { count: 1 })}
@@ -88,15 +87,15 @@ export default function PublicationsCreate({
 						placeholder={currentYear.toString()}
 						optional
 					/>
+					<PublicationForm />
 					<FormControl
 						field="pageCount"
 						type="number"
 						placeholder="1"
 						optional
 					/>
-				</Stack>
+				</SimpleGrid>
 				<FormControl field="publicationPlace" optional />
-				<FormControl field="publicationForm" optional />
 				<FormControl field="extraData" multiline optional />
 			</Form>
 		</MainArea>

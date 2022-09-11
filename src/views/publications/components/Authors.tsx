@@ -1,7 +1,7 @@
 import { FormControl, FormErrorMessage, FormLabel } from '@chakra-ui/react'
-import { AuthorSelect } from 'components'
 import useTranslation from 'next-translate/useTranslation'
 import { FieldError, useFormContext } from 'react-hook-form'
+import AuthorSelect from './AuthorSelect'
 
 export default function Authors() {
 	const { t } = useTranslation('resources')

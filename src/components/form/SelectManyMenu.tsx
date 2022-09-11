@@ -1,23 +1,18 @@
 import {
-	Box,
-	Button,
-	Input,
-	InputGroup,
-	InputLeftElement,
 	Menu,
 	MenuButton,
 	MenuItemOption,
 	MenuList,
 	MenuOptionGroup,
 } from '@chakra-ui/react'
-import { faCirclePlus, faSearch } from '@fortawesome/free-solid-svg-icons'
-import { Icon, Spinner } from 'components'
+import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
+import { Button, Icon, Loading, MenuSearch } from 'components'
 import useTranslation from 'next-translate/useTranslation'
-import { useState } from 'react'
 import { Id } from 'validations/common'
 
 interface SelectManyMenuProps<Item extends { id: Id }> {
 	isLoading: boolean
+	isPreviousData: boolean
 	error: Error | null
 	items?: Item[]
 	selectedItems: Item[]
@@ -30,17 +25,16 @@ interface SelectManyMenuProps<Item extends { id: Id }> {
 
 export default function SelectManyMenu<Item extends { id: Id }>({
 	isLoading,
+	isPreviousData,
 	error,
 	items,
 	selectedItems,
-	buttonText,
 	search,
 	getText,
 	onAdd,
 	onRemove,
 }: SelectManyMenuProps<Item>) {
 	const { t } = useTranslation('resources')
-	const [value, setValue] = useState('')
 
 	return (
 		<div>
@@ -49,29 +43,11 @@ export default function SelectManyMenu<Item extends { id: Id }>({
 					as={Button}
 					leftIcon={<Icon icon={faCirclePlus} boxSize={5} />}
 				>
-					{buttonText || t('common:actions.add')}
+					{t('common:actions.add')}
 				</MenuButton>
-				<MenuList>
-					<Box px={1} pb={2}>
-						<InputGroup>
-							<InputLeftElement>
-								<Icon icon={faSearch} />
-							</InputLeftElement>
-							<Input
-								value={value}
-								placeholder={t('common:actions.search')}
-								isInvalid={false}
-								onChange={(e) => setValue(e.target.value)}
-								onKeyDown={(e) => {
-									if (e.key === 'Enter') {
-										e.preventDefault()
-										search(value.trim() || undefined)
-									}
-								}}
-							/>
-						</InputGroup>
-					</Box>
-					<Spinner isLoading={isLoading}>
+				<MenuList rootProps={{ transition: 'transform 0.5s ease' }}>
+					<MenuSearch search={search} isLoading={isPreviousData} />
+					<Loading isLoading={isLoading}>
 						{error
 							? error.message
 							: items && (
@@ -93,7 +69,7 @@ export default function SelectManyMenu<Item extends { id: Id }>({
 										))}
 									</MenuOptionGroup>
 							  )}
-					</Spinner>
+					</Loading>
 				</MenuList>
 			</Menu>
 		</div>
