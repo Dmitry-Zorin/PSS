@@ -69,7 +69,9 @@ export async function findPublication(id: Id) {
 	return formatPublication(record)
 }
 
-export type GetPublicationResponse = Awaited<ReturnType<typeof findPublication>>
+export type GetPublicationResponse = Jsonify<
+	Awaited<ReturnType<typeof findPublication>>
+>
 
 export async function findPublications(filters: GetPublications) {
 	const {

@@ -21,7 +21,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 
 	return {
 		props: {
-			dehydratedState: dehydrate(queryClient),
+			dehydratedState: JSON.parse(JSON.stringify(dehydrate(queryClient))),
 		},
 	}
 }

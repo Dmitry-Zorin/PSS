@@ -18,7 +18,6 @@ export const getServerSideProps: GetServerSideProps = async ({
 	const queryClient = new QueryClient()
 	const queryParams = { ...defaultTimelineParams, ...query }
 	const parsedQuery = parseQuery(getPublicationsSchema, queryParams)
-	// const parsedQuery = getPublicationsSchema.strip().parse(queryParams)
 
 	const response = await findPublications(parsedQuery)
 	await queryClient.setQueryData(['publications', queryParams], response, {
@@ -29,7 +28,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 
 	return {
 		props: {
-			dehydratedState: dehydrate(queryClient),
+			dehydratedState: JSON.parse(JSON.stringify(dehydrate(queryClient))),
 		},
 	}
 }

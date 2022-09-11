@@ -52,14 +52,6 @@ const nextConfig = {
 				transform: 'lodash/{{member}}',
 			},
 		},
-		swcPlugins: [
-			[
-				'next-superjson-plugin',
-				{
-					excluded: [],
-				},
-			],
-		],
 	},
 }
 

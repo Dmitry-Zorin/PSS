@@ -30,8 +30,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps = async ({
 	params,
 }: GetStaticPropsContext<{ id: string; publication?: string }>) => {
+	const record = await getSafeAsync(() => findAuthor(+params!.id))
 	return {
-		props: await getSafeAsync(() => findAuthor(+params!.id)),
+		props: JSON.parse(JSON.stringify(record)),
 	}
 }
 
