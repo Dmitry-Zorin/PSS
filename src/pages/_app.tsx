@@ -12,15 +12,16 @@ import '../../public/fonts/Golos-Text/Golos-Text.css'
 
 config.autoAddCss = false
 
-type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
-	useLayout?: boolean
+type AppPropsWithLayout<P = {}> = AppProps<P> & {
+	Component: NextPage<P> & {
+		useLayout?: boolean
+	}
 }
 
-type AppPropsWithLayout = AppProps & {
-	Component: NextPageWithLayout
-}
-
-export default function App({ Component, pageProps }: AppPropsWithLayout) {
+export default function App({
+	Component,
+	pageProps,
+}: AppPropsWithLayout<{ dehydratedState: unknown }>) {
 	useScrollRestoration()
 
 	return (
