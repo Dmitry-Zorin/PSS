@@ -1,5 +1,11 @@
 import { useQueryClient } from '@tanstack/react-query'
-import { useEventToast, useMutation, useRedirect, useUrlParams } from 'hooks'
+import {
+	useEventToast,
+	useMutation,
+	usePersistedForm,
+	useRedirect,
+	useUrlParams,
+} from 'hooks'
 import useTranslation from 'next-translate/useTranslation'
 import {
 	CreatePublicationResponse,
@@ -13,6 +19,7 @@ export const useSubmitPublication = (data?: GetPublicationResponse) => {
 	const { t } = useTranslation('resources')
 	const queryClient = useQueryClient()
 	const redirect = useRedirect()
+	const { clearForm } = usePersistedForm()
 
 	const { type } = useUrlParams()
 
@@ -35,7 +42,7 @@ export const useSubmitPublication = (data?: GetPublicationResponse) => {
 				method: data ? 'put' : 'post',
 				body: omitEmptyStrings({
 					...submitData,
-					typeName: typeName || t(`${type}.name`, { count: 1 }),
+					typeName: typeName ?? t(`${type}.name`, { count: 1 }),
 					authorIds: authors.map(({ id }) => id),
 					coauthors: coauthors.length > 1 ? coauthors.slice(0, -1) : undefined,
 					...(!data && { type }),
@@ -50,6 +57,7 @@ export const useSubmitPublication = (data?: GetPublicationResponse) => {
 				)
 			}
 			await redirect({ url: `/publications/${type}/${record.id}` })
+			clearForm()
 		} catch (error) {
 			showToast('error', { error })
 		}

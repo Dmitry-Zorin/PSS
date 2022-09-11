@@ -1,4 +1,11 @@
-import { DeleteModalButton, Form, FormControl, MainArea } from 'components'
+import {
+	CancelButton,
+	DeleteModalButton,
+	Form,
+	FormControl,
+	MainArea,
+} from 'components'
+import { usePersistedForm } from 'hooks'
 import useTranslation from 'next-translate/useTranslation'
 import { GetAuthorResponse } from 'server/services/author'
 import { authorFormSchema } from 'validations/author'
@@ -11,6 +18,7 @@ interface AuthorsCreateProps {
 
 export default function AuthorsCreate({ error, data }: AuthorsCreateProps) {
 	const { t } = useTranslation('resources')
+	const { clearForm } = usePersistedForm()
 
 	const defaultValues = data
 		? { ...authorFormSchema.strip().partial().parse(data) }
@@ -28,14 +36,16 @@ export default function AuthorsCreate({ error, data }: AuthorsCreateProps) {
 			<Form
 				onSubmit={useSubmitAuthor(data)}
 				schema={authorFormSchema}
-				defaultValues={defaultValues}
+				useFormProps={{ defaultValues }}
 				actions={
-					data && (
+					data ? (
 						<DeleteModalButton
 							id={data.id}
 							name={data.fullName}
 							resource="authors"
 						/>
+					) : (
+						<CancelButton href="/authors" onClick={() => clearForm()} />
 					)
 				}
 			>

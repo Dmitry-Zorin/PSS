@@ -45,7 +45,7 @@ export default function SelectManyMenu<Item extends { id: Id }>({
 				>
 					{t('common:actions.add')}
 				</MenuButton>
-				<MenuList rootProps={{ transition: 'transform 0.5s ease' }}>
+				<MenuList>
 					<MenuSearch search={search} isLoading={isPreviousData} />
 					<Loading isLoading={isLoading}>
 						{error

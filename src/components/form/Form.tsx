@@ -1,14 +1,17 @@
 import { HStack, Stack, StackProps } from '@chakra-ui/react'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { SaveButton, SubmitButton } from 'components'
-import { isEmpty } from 'lodash'
-import { ReactElement, ReactNode } from 'react'
+import { SaveButton } from 'components'
+import { usePersistedForm } from 'hooks'
+import { forEach, isEmpty } from 'lodash'
+import { ReactElement, ReactNode, useCallback } from 'react'
 import {
 	FormProvider,
+	Path,
 	SubmitHandler,
 	useForm,
 	UseFormProps,
 } from 'react-hook-form'
+import useFormPersist, { FormPersistConfig } from 'react-hook-form-persist'
 import { isDevelopment } from 'utils/env'
 import { z } from 'zod'
 
@@ -16,38 +19,50 @@ interface FormProps<T extends z.ZodType> extends StackProps {
 	children: ReactElement[]
 	onSubmit: SubmitHandler<z.infer<T>>
 	schema: T
-	defaultValues: UseFormProps['defaultValues']
-	useFormProps?: UseFormProps
+	useFormProps?: UseFormProps<z.infer<T>>
 	actions?: ReactNode
+	persistConfig?: Partial<FormPersistConfig>
 }
 
 export default function Form<T extends z.ZodType>({
 	children,
 	onSubmit,
 	schema,
-	defaultValues,
 	useFormProps,
 	actions,
+	persistConfig,
 	...props
 }: FormProps<T>) {
-	const formMethods = useForm({
+	const { formKey, formState } = usePersistedForm<z.infer<T>>()
+
+	const formMethods = useForm<z.infer<T>>({
 		resolver: zodResolver(schema),
-		defaultValues,
 		...useFormProps,
 	})
 
 	const {
 		handleSubmit,
 		getValues,
+		setValue,
+		watch,
 		formState: { isSubmitting, errors },
 	} = formMethods
+
+	useFormPersist(formKey, {
+		watch,
+		setValue,
+		onDataRestored: useCallback(() => {
+			forEach(formState ?? {}, (value, key) => {
+				setValue(key as Path<z.infer<T>>, value)
+			})
+		}, [formState, setValue]),
+		...persistConfig,
+	})
 
 	if (!isEmpty(errors) && isDevelopment) {
 		console.error(errors)
 		console.log(getValues())
 	}
-
-	const Button = defaultValues ? SaveButton : SubmitButton
 
 	return (
 		<FormProvider {...formMethods}>
@@ -59,7 +74,7 @@ export default function Form<T extends z.ZodType>({
 					pt={6}
 				>
 					{actions}
-					<Button size="lg" isLoading={isSubmitting} />
+					<SaveButton size="lg" isLoading={isSubmitting} />
 				</HStack>
 			</Stack>
 		</FormProvider>

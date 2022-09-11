@@ -6,7 +6,7 @@ import {
 	FormControl,
 	MainArea,
 } from 'components'
-import { useUrlParams } from 'hooks'
+import { usePersistedForm, useUrlParams } from 'hooks'
 import useTranslation from 'next-translate/useTranslation'
 import { GetPublicationResponse } from 'server/services/publication'
 import { publicationFormSchema } from 'validations/publication'
@@ -27,6 +27,7 @@ export default function PublicationsCreate({
 	data,
 }: PublicationsCreateProps) {
 	const { t } = useTranslation('resources')
+	const { clearForm } = usePersistedForm()
 	const { type } = useUrlParams()
 
 	const defaultValues = data
@@ -40,9 +41,9 @@ export default function PublicationsCreate({
 				coauthors: [...data.coauthors, ''],
 		  }
 		: {
-				publicationForm: 'Печатная',
 				authors: [],
 				coauthors: [''],
+				publicationForm: 'Печатная',
 		  }
 
 	return (
@@ -57,7 +58,7 @@ export default function PublicationsCreate({
 			<Form
 				onSubmit={useSubmitPublication(data)}
 				schema={publicationFormSchema}
-				defaultValues={defaultValues}
+				useFormProps={{ defaultValues }}
 				actions={
 					data ? (
 						<DeleteModalButton
@@ -67,7 +68,10 @@ export default function PublicationsCreate({
 							subresource={type}
 						/>
 					) : (
-						<CancelButton href={`/publications/${type}`} />
+						<CancelButton
+							href={`/publications/${type}`}
+							onClick={() => clearForm()}
+						/>
 					)
 				}
 			>

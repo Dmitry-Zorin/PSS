@@ -7,7 +7,7 @@ import { GetPublicationResponse } from 'server/services/publication'
 import { stiffSpringConfig } from 'utils/animation'
 
 export default function CoauthorInputList() {
-	const { control } = useFormContext<GetPublicationResponse>()
+	const { control } = useFormContext<Partial<GetPublicationResponse>>()
 	const showAnimation = !useIsFirstRender()
 
 	const {

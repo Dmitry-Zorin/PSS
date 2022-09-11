@@ -25,6 +25,8 @@ export default function useEventToast(resource: string, event: string) {
 					? t(`common:errors.${props.error.status}`)
 					: t('common:messages.error')
 				: eventTitle,
+			description:
+				props?.error instanceof HttpError ? props.error.message : undefined,
 			...props,
 		})
 	}

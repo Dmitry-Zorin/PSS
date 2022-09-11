@@ -1,5 +1,10 @@
 import { useQueryClient } from '@tanstack/react-query'
-import { useEventToast, useMutation, useRedirect } from 'hooks'
+import {
+	useEventToast,
+	useMutation,
+	usePersistedForm,
+	useRedirect,
+} from 'hooks'
 import {
 	CreateAuthorResponse,
 	GetAuthorResponse,
@@ -11,7 +16,7 @@ import { AuthorFormData } from 'validations/author'
 export const useSubmitAuthor = (data?: GetAuthorResponse) => {
 	const queryClient = useQueryClient()
 	const redirect = useRedirect()
-
+	const { clearForm } = usePersistedForm()
 	const showToast = useEventToast('authors', data ? 'updated' : 'created')
 
 	const mutation = useMutation<
@@ -33,6 +38,7 @@ export const useSubmitAuthor = (data?: GetAuthorResponse) => {
 				)
 			}
 			await redirect({ url: `/authors/${record.id}` })
+			clearForm()
 		} catch (error) {
 			showToast('error', { error })
 		}

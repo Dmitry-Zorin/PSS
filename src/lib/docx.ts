@@ -88,7 +88,7 @@ export function createDocx(author: GetAuthorResponse | UpdateAuthorResponse) {
 				createTableCell({
 					children: [
 						new Paragraph({
-							text: publication.publicationForm || '-',
+							text: publication.publicationForm ?? '-',
 							alignment: AlignmentType.CENTER,
 						}),
 					],

@@ -25,7 +25,7 @@ export default function PublicationFormMenu() {
 	return (
 		<Menu>
 			<MenuButton as={Button} w="full" p={0}>
-				<Input value={value} readOnly />
+				<Input value={value ?? ''} readOnly />
 			</MenuButton>
 			<MenuList>
 				<MenuOptionGroup type="radio" value={value}>
