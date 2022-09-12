@@ -30,7 +30,7 @@ export default function AuthorSelect() {
 		)
 
 	return (
-		<Stack direction="column-reverse" align="flex-start">
+		<Stack>
 			<SelectManyMenu
 				isLoading={isLoading}
 				isPreviousData={isPreviousData}

@@ -5,7 +5,7 @@ import {
 	MenuList,
 	MenuOptionGroup,
 } from '@chakra-ui/react'
-import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import { Button, Icon, Loading, MenuSearch } from 'components'
 import useTranslation from 'next-translate/useTranslation'
 import { Id } from 'validations/common'
@@ -41,7 +41,8 @@ export default function SelectManyMenu<Item extends { id: Id }>({
 			<Menu closeOnSelect={false}>
 				<MenuButton
 					as={Button}
-					leftIcon={<Icon icon={faCirclePlus} boxSize={5} />}
+					variant="outline"
+					leftIcon={<Icon icon={faPlusCircle} />}
 				>
 					{t('common:actions.add')}
 				</MenuButton>
@@ -63,7 +64,11 @@ export default function SelectManyMenu<Item extends { id: Id }>({
 										}}
 									>
 										{items.map((item) => (
-											<MenuItemOption key={item.id} value={item.id.toString()}>
+											<MenuItemOption
+												key={item.id}
+												value={item.id.toString()}
+												icon={<Icon icon={faCheck} />}
+											>
 												{getText(item)}
 											</MenuItemOption>
 										))}

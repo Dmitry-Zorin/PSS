@@ -97,13 +97,28 @@ const components: ThemeComponents = {
 				px: 3,
 				_hover: {
 					color: 'primary',
-					borderColor: 'border',
 					bg: 'bg-layer-2',
 				},
 				_active: {
 					bg: 'bg-layer-1',
 				},
 				_focusVisible: {
+					shadow: '0 0 0 2px var(--chakra-colors-primary)',
+				},
+			},
+			outline: {
+				bg: 'bg-layer-1',
+				borderColor: 'border',
+				color: 'text-secondary',
+				_hover: {
+					color: 'primary',
+					bg: 'bg-layer-2',
+				},
+				_active: {
+					bg: 'bg-layer-1',
+				},
+				_focusVisible: {
+					borderColor: 'transparent',
 					shadow: '0 0 0 2px var(--chakra-colors-primary)',
 				},
 			},

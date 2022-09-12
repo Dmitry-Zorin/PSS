@@ -1,13 +1,20 @@
 import {
 	Button,
 	Input,
+	InputGroup,
+	InputRightElement,
 	Menu,
 	MenuButton,
 	MenuItemOption,
 	MenuList,
 	MenuOptionGroup,
 } from '@chakra-ui/react'
-import { faCheck } from '@fortawesome/free-solid-svg-icons'
+import {
+	faAngleDown,
+	faCaretDown,
+	faCheck,
+	faChevronDown,
+} from '@fortawesome/free-solid-svg-icons'
 import { Icon } from 'components'
 import { useController, useFormContext } from 'react-hook-form'
 import { GetPublicationResponse } from 'server/services/publication'
@@ -24,8 +31,23 @@ export default function PublicationFormMenu() {
 
 	return (
 		<Menu>
-			<MenuButton as={Button} w="full" p={0}>
-				<Input value={value ?? ''} readOnly />
+			<MenuButton
+				as={Button}
+				role="group"
+				w="full"
+				p={0}
+				_hover={{ color: 'text-secondary' }}
+			>
+				<InputGroup>
+					<Input
+						value={value}
+						readOnly
+						_groupHover={{ borderColor: 'text-secondary' }}
+					/>
+					<InputRightElement>
+						<Icon icon={faCaretDown} />
+					</InputRightElement>
+				</InputGroup>
 			</MenuButton>
 			<MenuList>
 				<MenuOptionGroup type="radio" value={value}>
