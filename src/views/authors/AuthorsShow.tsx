@@ -53,7 +53,7 @@ export default function AuthorsShow({ error, data }: AuthorsShowProps) {
 		>
 			<Stack spacing={{ base: 8, sm: 10 }}>
 				{data.info && <LabeledField label="info" text={data.info} />}
-				{data.publications.length && (
+				{!!data.publications.length && (
 					<>
 						<LabeledField
 							label="latestPublications"

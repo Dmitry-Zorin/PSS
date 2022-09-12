@@ -80,7 +80,7 @@ export default function PublicationsShow({
 						text={data.publicationForm}
 					/>
 					<LabeledField stat label="pageCount" text={data.pageCount} />
-					{data.authors.length && (
+					{!!data.authors.length && (
 						<LabeledField
 							flexGrow={1}
 							label="authors"
@@ -95,7 +95,7 @@ export default function PublicationsShow({
 							}
 						/>
 					)}
-					{data.coauthors.length && (
+					{!!data.coauthors.length && (
 						<LabeledField
 							flexGrow={1}
 							label="coauthors"
