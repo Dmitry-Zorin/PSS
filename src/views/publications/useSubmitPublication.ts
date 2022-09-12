@@ -42,7 +42,7 @@ export const useSubmitPublication = (data?: GetPublicationResponse) => {
 				method: data ? 'put' : 'post',
 				body: omitEmptyStrings({
 					...submitData,
-					typeName: typeName ?? t(`${type}.name`, { count: 1 }),
+					typeName: typeName || t(`${type}.name`, { count: 1 }),
 					authorIds: authors.map(({ id }) => id),
 					coauthors: coauthors.length > 1 ? coauthors.slice(0, -1) : undefined,
 					...(!data && { type }),
