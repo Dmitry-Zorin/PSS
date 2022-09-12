@@ -38,7 +38,7 @@ export default function SelectManyMenu<Item extends { id: Id }>({
 
 	return (
 		<div>
-			<Menu closeOnSelect={false}>
+			<Menu closeOnSelect={false} placement="bottom-start" flip={false}>
 				<MenuButton
 					as={Button}
 					variant="outline"
@@ -46,7 +46,20 @@ export default function SelectManyMenu<Item extends { id: Id }>({
 				>
 					{t('common:actions.add')}
 				</MenuButton>
-				<MenuList>
+				<MenuList
+					maxH={96}
+					overflowY="auto"
+					sx={{
+						'::-webkit-scrollbar': {
+							bg: 'transparent',
+							w: 2,
+						},
+						'::-webkit-scrollbar-thumb': {
+							bg: 'border',
+							borderRadius: 'full',
+						},
+					}}
+				>
 					<MenuSearch search={search} isLoading={isPreviousData} />
 					<Loading isLoading={isLoading}>
 						{error
