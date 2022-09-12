@@ -30,7 +30,7 @@ export default function PublicationFormMenu() {
 	})
 
 	return (
-		<Menu>
+		<Menu matchWidth>
 			<MenuButton
 				as={Button}
 				role="group"

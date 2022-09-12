@@ -52,7 +52,10 @@ export default function PublicationsShow({
 		>
 			<Stack spacing={{ base: 8, md: 10 }}>
 				{data.description && (
-					<Text whiteSpace="pre-wrap">{data.description}</Text>
+					<LabeledField
+						label="description"
+						text={<Text whiteSpace="pre-wrap">{data.description}</Text>}
+					/>
 				)}
 				{data.extraData && (
 					<LabeledField
