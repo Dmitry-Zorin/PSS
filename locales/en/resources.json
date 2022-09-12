@@ -38,7 +38,7 @@
 	"fields": {
 		"name": "Name",
 		"title": "Title",
-		"description": "Description",
+		"description": "Annotation",
 		"firstName": "First Name",
 		"lastName": "Last Name",
 		"middleName": "Middle Name",

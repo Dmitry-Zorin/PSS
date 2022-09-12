@@ -65,7 +65,7 @@
 	"fields": {
 		"name": "Название",
 		"title": "Название",
-		"description": "Описание",
+		"description": "Аннотация",
 		"firstName": "Имя",
 		"lastName": "Фамилия",
 		"middleName": "Отчество",
