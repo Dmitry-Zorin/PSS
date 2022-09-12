@@ -13,6 +13,7 @@ export interface MainAreaProps {
 	leftActions?: ReactNode
 	rightActions?: ReactNode
 	fullWidth?: boolean
+	capsTitle?: boolean
 }
 
 export default function MainArea({
@@ -23,31 +24,37 @@ export default function MainArea({
 	leftActions,
 	rightActions,
 	fullWidth,
+	capsTitle,
 }: MainAreaProps) {
 	const { t } = useTranslation()
 
 	const showActions = leftActions || rightActions
-	const heading = error ? t('messages.error') : title
+	const heading = error ? t('messages.error') : title ?? head?.title
+
+	const actionsToolbar = showActions && (
+		<ActionsToolbar leftActions={leftActions} rightActions={rightActions} />
+	)
 
 	return (
 		<>
 			<Head title={head?.title ?? title ?? ''} desc={head?.desc} />
 			<Box px={2} pb={16}>
-				{showActions && (
-					<ActionsToolbar
-						leftActions={leftActions}
-						rightActions={rightActions}
-					/>
-				)}
+				{!fullWidth && actionsToolbar}
 				<Stack as="article" spacing={8}>
 					{heading && (
 						<Heading
 							as="h1"
-							fontSize={{ base: '3xl', sm: '5xl', '2xl': '6xl' }}
-							lineHeight={{ base: 'shorter', sm: 'none' }}
+							fontSize={
+								capsTitle
+									? { base: '2xl', sm: '4xl', '2xl': '5xl' }
+									: { base: '3xl', sm: '5xl', '2xl': '6xl' }
+							}
+							lineHeight={
+								capsTitle ? 'shorter' : { base: 'shorter', sm: 'none' }
+							}
 							pt={{ base: 6, sm: 0 }}
 						>
-							{heading}
+							{capsTitle ? heading.toUpperCase() : heading}
 						</Heading>
 					)}
 					{error ? (
@@ -59,7 +66,10 @@ export default function MainArea({
 								: t('errors.unknown')}
 						</Heading>
 					) : (
-						<Box maxW={fullWidth ? undefined : '3xl'}>{children}</Box>
+						<Box maxW={fullWidth ? undefined : '3xl'}>
+							{fullWidth && actionsToolbar}
+							{children}
+						</Box>
 					)}
 				</Stack>
 			</Box>

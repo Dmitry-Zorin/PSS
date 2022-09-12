@@ -31,7 +31,7 @@ export default function Search({ ...props }: InputProps) {
 	}
 
 	return (
-		<InputGroup maxW={64} ml={2}>
+		<InputGroup maxW={64}>
 			<InputLeftElement>
 				<Icon icon={faSearch} />
 			</InputLeftElement>

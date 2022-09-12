@@ -1,5 +1,5 @@
 import { Avatar, LinkBox, LinkOverlay, Stack, Text } from '@chakra-ui/react'
-import { Card, CardContent, CardHeader, Icon } from 'components'
+import { AuthorTags, Card, CardContent, CardHeader, Icon } from 'components'
 import resources from 'constants/resources'
 import { useTruncate } from 'hooks'
 import useTranslation from 'next-translate/useTranslation'
@@ -56,6 +56,11 @@ export default function TimelineCard({ record }: TimelineCardProps) {
 						{truncate(record.description)}
 					</Text>
 				)}
+				<AuthorTags
+					authors={record.authors}
+					coauthors={record.coauthors}
+					pt={1}
+				/>
 			</CardContent>
 		</LinkBox>
 	)

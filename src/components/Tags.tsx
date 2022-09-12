@@ -7,7 +7,7 @@ export default function Tags() {
 	const tags = useTags()
 
 	return tags.length ? (
-		<Wrap spacing={3} px={2} pt={2}>
+		<Wrap spacing={3} pt={1} pb={3}>
 			{tags.map((tag) => (
 				<WrapItem key={tag.text}>
 					<Badge

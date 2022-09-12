@@ -18,7 +18,7 @@ export default function MainList({ children, total, ...props }: MainListProps) {
 					<List
 						borderBottom="1px"
 						borderColor="border"
-						pt={4}
+						pt={2}
 						sx={{
 							'> li': {
 								borderTop: '1px',
@@ -35,7 +35,7 @@ export default function MainList({ children, total, ...props }: MainListProps) {
 					<Pagination total={total} />
 				</>
 			) : (
-				<Stack spacing={4} pt={4} align="center">
+				<Stack spacing={4} pt={2} align="center">
 					<Divider />
 					<HStack color="text-secondary" fontSize="2xl">
 						<Icon icon={faBan} boxSize={5} />

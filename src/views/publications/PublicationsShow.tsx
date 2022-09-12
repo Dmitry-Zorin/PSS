@@ -1,7 +1,15 @@
-import { List, ListItem, SimpleGrid, Stack, Text } from '@chakra-ui/react'
+import {
+	Badge,
+	List,
+	ListItem,
+	SimpleGrid,
+	Stack,
+	Text,
+} from '@chakra-ui/react'
 import { useQueryClient } from '@tanstack/react-query'
-import { EditButton, LabeledField, Link, MainArea } from 'components'
+import { EditButton, LabeledField, MainArea } from 'components'
 import { useUrlParams } from 'hooks'
+import Link from 'next/link'
 import {
 	GetPublicationResponse,
 	UpdatePublicationResponse,
@@ -35,6 +43,7 @@ export default function PublicationsShow({
 
 	return (
 		<MainArea
+			capsTitle
 			head={{
 				title: data.title,
 				desc: data.description,
@@ -71,36 +80,26 @@ export default function PublicationsShow({
 					spacingX={6}
 					spacingY={{ base: 8, md: 10 }}
 				>
-					<LabeledField stat label="typeName" text={data.typeName} />
-					<LabeledField
-						stat
-						label="publicationYear"
-						text={data.publicationYear}
-					/>
-					<LabeledField
-						stat
-						label="publicationForm"
-						text={data.publicationForm}
-					/>
-					<LabeledField stat label="pageCount" text={data.pageCount} />
 					{!!data.authors.length && (
 						<LabeledField
-							flexGrow={1}
 							label="authors"
 							text={
 								<List spacing={1}>
 									{data.authors.map((e) => (
 										<ListItem key={e.id}>
-											<Link href={`/authors/${e.id}`}>{e.fullName}</Link>
+											<Link href={`/authors/${e.id}`} passHref>
+												<Badge as="a" _hover={{ color: 'primary' }}>
+													{e.fullName}
+												</Badge>
+											</Link>
 										</ListItem>
 									))}
 								</List>
 							}
 						/>
 					)}
-					{!!data.coauthors.length && (
+					{!!data.coauthors.length ? (
 						<LabeledField
-							flexGrow={1}
 							label="coauthors"
 							text={
 								<List spacing={1}>
@@ -110,7 +109,17 @@ export default function PublicationsShow({
 								</List>
 							}
 						/>
+					) : (
+						<div />
 					)}
+					<LabeledField label="typeName" text={data.typeName} />
+					<LabeledField label="publicationForm" text={data.publicationForm} />
+					<LabeledField
+						stat
+						label="publicationYear"
+						text={data.publicationYear}
+					/>
+					<LabeledField stat label="pageCount" text={data.pageCount} />
 				</SimpleGrid>
 			</Stack>
 		</MainArea>

@@ -2,7 +2,7 @@ import { TruncateOptions } from 'lodash'
 import { truncate } from 'lodash/fp'
 
 const defaultOptions: TruncateOptions = {
-	length: 400,
+	length: 300,
 	separator: /\W? /,
 }
 

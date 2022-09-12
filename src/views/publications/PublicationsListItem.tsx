@@ -1,15 +1,12 @@
 import {
-	Badge,
 	HStack,
 	LinkBox,
 	LinkOverlay,
 	ListItem,
 	Stack,
 	Text,
-	Wrap,
-	WrapItem,
 } from '@chakra-ui/react'
-import { Highlight, Icon } from 'components'
+import { AuthorTags, Highlight, Icon } from 'components'
 import resources from 'constants/resources'
 import { useTruncate, useUrlQuery } from 'hooks'
 import Link from 'next/link'
@@ -34,7 +31,7 @@ export default function PublicationsListItem({
 
 	return (
 		<LinkBox as={ListItem}>
-			<Stack spacing={3}>
+			<Stack spacing={3} py={1}>
 				<HStack spacing={3}>
 					{showIcon && (
 						<Icon
@@ -58,22 +55,7 @@ export default function PublicationsListItem({
 					</Text>
 				)}
 				{!simplified && (
-					<Wrap>
-						{record.authors.map((e) => (
-							<WrapItem key={e.id}>
-								<Badge px={1.5} py={0.5}>
-									{e.fullName}
-								</Badge>
-							</WrapItem>
-						))}
-						{record.coauthors.map((name) => (
-							<WrapItem key={name}>
-								<Badge px={1.5} py={0.5}>
-									{name}
-								</Badge>
-							</WrapItem>
-						))}
-					</Wrap>
+					<AuthorTags authors={record.authors} coauthors={record.coauthors} />
 				)}
 			</Stack>
 		</LinkBox>

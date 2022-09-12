@@ -1,3 +1,4 @@
+export { default as AuthorTags } from './AuthorTags'
 export { default as Head } from './Head'
 export { default as Highlight } from './Highlight'
 export { default as Icon } from './Icon'
