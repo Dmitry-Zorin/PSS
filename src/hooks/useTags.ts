@@ -38,19 +38,21 @@ export default function useTags() {
 		}
 
 		if (queryParams.search) {
-			const tag = {
-				text: queryParams.search,
-				onClick: async () => {
-					await redirect({
-						query: {
-							...queryParams,
-							search: undefined,
-							page: undefined,
-						},
-					})
-				},
-			}
-			newTags.push(tag)
+			const words = queryParams.search.split(' ')
+			newTags.push(
+				...words.map((word, i) => ({
+					text: word,
+					onClick: async () => {
+						await redirect({
+							query: {
+								...queryParams,
+								search: words.filter((_, j) => i !== j).join(' '),
+								page: undefined,
+							},
+						})
+					},
+				})),
+			)
 		}
 
 		setTags(newTags)
