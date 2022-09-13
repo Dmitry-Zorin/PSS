@@ -1,5 +1,6 @@
 import {
 	faAward,
+	faBook,
 	faBookOpen,
 	faCircleInfo,
 	faCode,
@@ -25,6 +26,9 @@ const resources = {
 		},
 	},
 	publications: {
+		_metadata: {
+			icon: faBook,
+		},
 		articles: {
 			icon: faNewspaper,
 			category: 'A',

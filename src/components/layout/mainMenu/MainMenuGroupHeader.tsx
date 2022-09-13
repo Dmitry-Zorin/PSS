@@ -1,4 +1,4 @@
-import { Box, Flex, StackProps } from '@chakra-ui/react'
+import { Flex, StackProps } from '@chakra-ui/react'
 import { Link } from 'components'
 import useTranslation from 'next-translate/useTranslation'
 import { useRouter } from 'next/router'
@@ -18,22 +18,24 @@ export default function MainMenuGroupHeader({
 
 	return (
 		<Flex
+			as={Link}
+			href={`/${text}`}
 			display={{ base: 'none', lg: 'flex' }}
 			align="center"
-			pl={6}
-			h={12}
-			pt={4}
+			fontSize="sm-"
+			color={isActive ? 'primary' : 'text-secondary'}
+			fontWeight="semibold"
+			letterSpacing="wide"
+			borderRadius="lg"
+			h={10}
+			px={6}
+			mt={4}
+			_focusVisible={{
+				shadow: '0 0 0 2px var(--chakra-colors-primary)',
+			}}
 			{...props}
 		>
-			<Link
-				href={`/${text}`}
-				fontSize="sm-"
-				color={isActive ? 'primary' : 'text-secondary'}
-				fontWeight="semibold"
-				letterSpacing="wide"
-			>
-				{t(`layout.menu.items.${text}`).toUpperCase()}
-			</Link>
+			{t(`layout.menu.items.${text}`).toUpperCase()}
 		</Flex>
 	)
 }

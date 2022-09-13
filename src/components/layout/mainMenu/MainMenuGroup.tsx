@@ -1,5 +1,4 @@
 import { List } from '@chakra-ui/react'
-import { faEllipsis } from '@fortawesome/free-solid-svg-icons'
 import { MainMenuGroupHeader, MainMenuItem } from 'components'
 
 export interface MainMenuGroupProps {
@@ -18,11 +17,14 @@ export default function MainMenuGroup({ heading, items }: MainMenuGroupProps) {
 						display={{ base: 'block', lg: 'none' }}
 						href={`/${heading}`}
 						text={heading}
-						icon={faEllipsis}
-						mt={2}
+						icon={items._metadata.icon}
+						mt={4}
 					/>
 				)}
 				{Object.entries(items).map(([name, info]) => {
+					if (name.startsWith('_')) {
+						return undefined
+					}
 					return (
 						<MainMenuItem
 							key={name}

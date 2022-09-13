@@ -9,12 +9,7 @@ import {
 	MenuList,
 	MenuOptionGroup,
 } from '@chakra-ui/react'
-import {
-	faAngleDown,
-	faCaretDown,
-	faCheck,
-	faChevronDown,
-} from '@fortawesome/free-solid-svg-icons'
+import { faCaretDown, faCheck } from '@fortawesome/free-solid-svg-icons'
 import { Icon } from 'components'
 import { useController, useFormContext } from 'react-hook-form'
 import { GetPublicationResponse } from 'server/services/publication'
@@ -40,6 +35,7 @@ export default function PublicationFormMenu() {
 			>
 				<InputGroup>
 					<Input
+						tabIndex={-1}
 						value={value}
 						readOnly
 						_groupHover={{ borderColor: 'text-secondary' }}
