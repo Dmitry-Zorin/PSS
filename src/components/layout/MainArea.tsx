@@ -29,7 +29,7 @@ export default function MainArea({
 	const { t } = useTranslation()
 
 	const showActions = leftActions || rightActions
-	const heading = error ? t('messages.error') : title ?? head?.title
+	const heading = error ? t('words.error') : title ?? head?.title
 
 	const actionsToolbar = showActions && (
 		<ActionsToolbar leftActions={leftActions} rightActions={rightActions} />

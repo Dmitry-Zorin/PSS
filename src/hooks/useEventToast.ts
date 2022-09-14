@@ -23,7 +23,7 @@ export default function useEventToast(resource: string, event: string) {
 			title: props?.error
 				? props.error instanceof HttpError
 					? t(`common:errors.${props.error.status}`)
-					: t('common:messages.error')
+					: t('common:words.error')
 				: eventTitle,
 			description:
 				props?.error instanceof HttpError ? props.error.message : undefined,

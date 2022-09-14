@@ -63,10 +63,11 @@
 		"search": "Search",
 		"add": "Add",
 		"remove": "Remove",
-		"cancel": "Cancel"
+		"cancel": "Cancel",
+		"next": "Next Page",
+		"prev": "Previous Page"
 	},
 	"messages": {
-		"error": "Error",
 		"delete": "Are you sure you want to delete {{this}}?",
 		"notFound": "Not Found"
 	},
@@ -75,5 +76,10 @@
 		"400": "Bad Request",
 		"404": "Page Not Found",
 		"500": "Internal Server Error"
+	},
+	"words": {
+		"error": "Error",
+		"page": "Page",
+		"of": "of"
 	}
 }

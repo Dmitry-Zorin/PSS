@@ -3,6 +3,7 @@ import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons'
 import { Icon, IconButton } from 'components'
 import { PER_PAGE } from 'constants/app'
 import { useRedirect, useUrlQuery } from 'hooks'
+import useTranslation from 'next-translate/useTranslation'
 import { useEffect, useState } from 'react'
 
 interface PaginationProps {
@@ -14,6 +15,7 @@ export default function Pagination({
 	perPage = PER_PAGE,
 	total,
 }: PaginationProps) {
+	const { t } = useTranslation()
 	const queryParams = useUrlQuery()
 	const redirect = useRedirect()
 	const { page = '1' } = queryParams
@@ -40,10 +42,10 @@ export default function Pagination({
 	return total > perPage ? (
 		<Stack pt={6}>
 			<HStack justify="flex-end">
-				<Text>Страница </Text>
+				<Text>{t('words.page')}</Text>
 				<Input
 					type="number"
-					w={14}
+					w={12}
 					value={desiredPage}
 					min={1}
 					max={maxPage}
@@ -57,20 +59,20 @@ export default function Pagination({
 						return setDesiredPage(e.target.value.slice(0, 3))
 					}}
 				/>
-				<Text>из {maxPage}</Text>
+				<Text>{`${t('words.of')} ${maxPage}`}</Text>
 			</HStack>
 			<HStack justify="center">
 				<IconButton
-					aria-label="prev"
-					variant="solid"
+					aria-label={t('actions.prev')}
+					variant="outline"
 					w={16}
 					icon={<Icon icon={faAngleLeft} />}
 					onClick={() => changePage(Math.max(1, +page - 1))}
 					disabled={page === '1'}
 				/>
 				<IconButton
-					aria-label="next"
-					variant="solid"
+					aria-label={t('actions.next')}
+					variant="outline"
 					w={16}
 					icon={<Icon icon={faAngleRight} />}
 					onClick={() => changePage(Math.min(maxPage, +page + 1))}
