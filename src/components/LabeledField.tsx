@@ -11,7 +11,7 @@ import { isNumber, isString } from 'lodash'
 import useTranslation from 'next-translate/useTranslation'
 import { ReactElement } from 'react'
 
-interface LabeledFieldProps {
+export interface LabeledFieldProps {
 	label: string
 	text?: ReactElement | string | number
 	stat?: boolean

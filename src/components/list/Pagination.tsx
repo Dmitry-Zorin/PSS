@@ -45,18 +45,18 @@ export default function Pagination({
 				<Text>{t('words.page')}</Text>
 				<Input
 					type="number"
+					textAlign="right"
 					w={12}
+					pl={1}
+					pr={3}
 					value={desiredPage}
 					min={1}
 					max={maxPage}
-					onKeyDown={(e) => {
-						e.key === 'Enter' && changePage(desiredPage)
-					}}
-					pl={1}
-					pr={3}
-					textAlign="right"
 					onChange={(e) => {
 						return setDesiredPage(e.target.value.slice(0, 3))
+					}}
+					onKeyDown={(e) => {
+						e.key === 'Enter' && changePage(desiredPage)
 					}}
 				/>
 				<Text>{`${t('words.of')} ${maxPage}`}</Text>

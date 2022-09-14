@@ -95,8 +95,7 @@
 		"publicationForm": "Форма публикации",
 		"publicationPlace": "Место публикации",
 		"extraData": "Дополнительные данные",
-		"latestPublications": "Последние публикации",
-		"publicationsCount": "Кол-во публикаций"
+		"latestPublications": "Последние публикации"
 	},
 	"events": {
 		"created_m": "добавлен",

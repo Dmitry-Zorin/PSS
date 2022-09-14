@@ -18,6 +18,7 @@ export default function TimelineCard({ record }: TimelineCardProps) {
 		<LinkBox as={Card} role="group" _hover={{ bg: 'bg-layer-1' }}>
 			<CardHeader>
 				<Avatar
+					boxSize={10}
 					bg="transparent"
 					color="primary"
 					icon={

@@ -56,7 +56,6 @@
 		"publicationForm": "Publication Form",
 		"publicationPlace": "Publication Place",
 		"extraData": "Additional Data",
-		"latestPublications": "Latest publications",
-		"publicationsCount": "Number of publications"
+		"latestPublications": "Latest publications"
 	}
 }

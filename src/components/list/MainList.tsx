@@ -1,11 +1,10 @@
 import { Divider, HStack, List, ListProps, Stack, Text } from '@chakra-ui/react'
 import { faBan } from '@fortawesome/free-solid-svg-icons'
-import { Icon, LabeledField, Pagination, Tags } from 'components'
-import { PER_PAGE } from 'constants/app'
-import { capitalize } from 'lodash'
+import { Icon, Pagination, SearchInfo, Tags } from 'components'
 import useTranslation from 'next-translate/useTranslation'
+import { ComponentProps } from 'react'
 
-interface MainListProps extends ListProps {
+export interface MainListProps extends ListProps {
 	resource?: string
 	data: {
 		records?: unknown[]
@@ -27,36 +26,10 @@ export default function MainList({
 				<>
 					{resource && data.records && (
 						<>
-							<HStack align="flex-end">
-								<LabeledField
-									stat
-									skipTranslation
-									label={capitalize(
-										t('messages.foundTotal', {
-											items: t(
-												`resources:${resource}.name_what_many`,
-												{},
-												{ fallback: t(`resources:${resource}.name_other`) },
-											),
-										}),
-									)}
-									text={data.total}
-								/>
-								<LabeledField
-									stat
-									skipTranslation
-									label={capitalize(
-										t('messages.shownPerPage', {
-											items: t(
-												`resources:${resource}.name_what_many`,
-												{},
-												{ fallback: t(`resources:${resource}.name_other`) },
-											),
-										}),
-									)}
-									text={Math.min(data.records.length, PER_PAGE)}
-								/>
-							</HStack>
+							<SearchInfo
+								resource={resource}
+								data={data as ComponentProps<typeof SearchInfo>['data']}
+							/>
 							<Tags />
 						</>
 					)}

@@ -1,5 +1,9 @@
 import { Center, Flex, Stack } from '@chakra-ui/react'
-import { faCaretRight, faFileWord } from '@fortawesome/free-solid-svg-icons'
+import {
+	faBook,
+	faCaretRight,
+	faFileWord,
+} from '@fortawesome/free-solid-svg-icons'
 import { useQueryClient } from '@tanstack/react-query'
 import {
 	Button,
@@ -9,6 +13,7 @@ import {
 	Link,
 	MainArea,
 	MainList,
+	Stat,
 } from 'components'
 import { saveAs } from 'file-saver'
 import useTranslation from 'next-translate/useTranslation'
@@ -55,10 +60,10 @@ export default function AuthorsShow({ error, data }: AuthorsShowProps) {
 				{data.info && <LabeledField label="info" text={data.info} />}
 				{!!data.publications.length && (
 					<>
-						<LabeledField
-							stat
-							label="publicationsCount"
+						<Stat
+							label={t('publicationsCount')}
 							text={data.publications.length}
+							icon={faBook}
 						/>
 						<LabeledField
 							label="latestPublications"
