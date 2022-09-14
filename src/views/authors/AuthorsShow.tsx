@@ -1,9 +1,5 @@
 import { Center, Flex, Stack } from '@chakra-ui/react'
-import {
-	faCaretRight,
-	faDownload,
-	faFileWord,
-} from '@fortawesome/free-solid-svg-icons'
+import { faCaretRight, faFileWord } from '@fortawesome/free-solid-svg-icons'
 import { useQueryClient } from '@tanstack/react-query'
 import {
 	Button,
@@ -55,19 +51,21 @@ export default function AuthorsShow({ error, data }: AuthorsShowProps) {
 			title={data.fullName}
 			rightActions={<EditButton href={`/authors/edit/${data.id}`} />}
 		>
-			<Stack spacing={{ base: 8, sm: 10 }}>
+			<Stack spacing={8}>
 				{data.info && <LabeledField label="info" text={data.info} />}
 				{!!data.publications.length && (
 					<>
 						<LabeledField
+							stat
+							label="publicationsCount"
+							text={data.publications.length}
+						/>
+						<LabeledField
 							label="latestPublications"
 							text={
 								<>
-									<MainList
-										total={data.publications.slice(0, 10).length}
-										pt={2}
-									>
-										{data.publications.slice(0, 10).map((e) => (
+									<MainList total={5} pt={2}>
+										{data.publications.slice(0, 5).map((e) => (
 											<PublicationsListItem
 												key={e.id}
 												record={e}
@@ -85,7 +83,7 @@ export default function AuthorsShow({ error, data }: AuthorsShowProps) {
 								</>
 							}
 						/>
-						<Center pt={6}>
+						<Center>
 							<Button
 								variant="solid"
 								leftIcon={<Icon icon={faFileWord} />}

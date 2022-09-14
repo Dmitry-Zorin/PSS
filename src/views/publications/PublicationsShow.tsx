@@ -59,7 +59,7 @@ export default function PublicationsShow({
 				/>
 			}
 		>
-			<Stack spacing={{ base: 8, md: 10 }}>
+			<Stack spacing={8}>
 				{data.description && (
 					<LabeledField
 						label="description"
