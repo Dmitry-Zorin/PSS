@@ -1,5 +1,9 @@
 import { Center, Flex, Stack } from '@chakra-ui/react'
-import { faCaretRight, faDownload } from '@fortawesome/free-solid-svg-icons'
+import {
+	faCaretRight,
+	faDownload,
+	faFileWord,
+} from '@fortawesome/free-solid-svg-icons'
 import { useQueryClient } from '@tanstack/react-query'
 import {
 	Button,
@@ -84,7 +88,7 @@ export default function AuthorsShow({ error, data }: AuthorsShowProps) {
 						<Center pt={6}>
 							<Button
 								variant="solid"
-								leftIcon={<Icon icon={faDownload} />}
+								leftIcon={<Icon icon={faFileWord} />}
 								onClick={async () => {
 									const docx = await import('lib/docx')
 									saveAs(

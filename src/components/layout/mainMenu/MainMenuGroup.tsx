@@ -1,4 +1,4 @@
-import { List } from '@chakra-ui/react'
+import { Box, Divider, List } from '@chakra-ui/react'
 import { MainMenuGroupHeader, MainMenuItem } from 'components'
 import { ResourceKey, ResourceValue } from 'constants/resources'
 
@@ -12,15 +12,17 @@ export default function MainMenuGroup({ heading, info }: MainMenuGroupProps) {
 		<>
 			{heading && <MainMenuGroupHeader text={heading} />}
 			<List>
-				{heading && (
-					<MainMenuItem
-						heading
-						display={{ base: 'block', lg: 'none' }}
-						href={`/${heading}`}
-						text={heading}
-						icon={'icon' in info ? info.icon : undefined}
-						mt={4}
-					/>
+				{heading && 'icon' in info && (
+					<Box display={{ base: 'block', lg: 'none' }}>
+						<MainMenuItem
+							heading
+							href={`/${heading}`}
+							text={heading}
+							icon={info.icon}
+							mt={4}
+						/>
+						<Divider w={7} mx="auto" my={1} />
+					</Box>
 				)}
 				{Object.entries(info.items).map(([name, info]) => {
 					return (
