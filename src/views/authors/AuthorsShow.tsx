@@ -1,22 +1,18 @@
-import { Center, Flex, Stack } from '@chakra-ui/react'
-import {
-	faBook,
-	faCaretRight,
-	faFileWord,
-} from '@fortawesome/free-solid-svg-icons'
+import { Center, LinkBox, LinkOverlay, ListItem, Stack } from '@chakra-ui/react'
+import { faBook, faFileWord } from '@fortawesome/free-solid-svg-icons'
 import { useQueryClient } from '@tanstack/react-query'
 import {
 	Button,
 	EditButton,
 	Icon,
 	LabeledField,
-	Link,
 	MainArea,
 	MainList,
 	Stat,
 } from 'components'
 import { saveAs } from 'file-saver'
 import useTranslation from 'next-translate/useTranslation'
+import Link from 'next/link'
 import { useEffect } from 'react'
 import { GetAuthorResponse, UpdateAuthorResponse } from 'server/services/author'
 import PublicationsListItem from '../publications/PublicationsListItem'
@@ -78,13 +74,22 @@ export default function AuthorsShow({ error, data }: AuthorsShowProps) {
 												showIcon
 											/>
 										))}
+										{data.publications.length > 5 && (
+											<LinkBox as={ListItem} align="center">
+												<Link
+													href={`/publications?authorId=${data.id}`}
+													passHref
+												>
+													<LinkOverlay
+														color="text-secondary"
+														_hover={{ color: 'text' }}
+													>
+														{t('viewAll')}
+													</LinkOverlay>
+												</Link>
+											</LinkBox>
+										)}
 									</MainList>
-									<Flex justify="flex-end" pt={1.5}>
-										<Link href={`/publications?authorId=${data.id}`}>
-											{t('viewAllPublications')}
-											<Icon icon={faCaretRight} ml="1px" mb="-1px" />
-										</Link>
-									</Flex>
 								</>
 							}
 						/>
