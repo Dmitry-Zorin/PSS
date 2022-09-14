@@ -15,7 +15,7 @@ import { useRouter } from 'next/router'
 
 export interface MainMenuItemProps extends ListItemProps {
 	href: string
-	icon: IconProp
+	icon?: IconProp
 	text: string
 	heading?: boolean
 }
@@ -53,7 +53,7 @@ export default function MainMenuItem({
 						shadow: '0 0 0 2px var(--chakra-colors-primary)',
 					}}
 				>
-					<Icon icon={icon} boxSize="1.125rem" />
+					{icon && <Icon icon={icon} boxSize="1.125rem" />}
 					<Text
 						fontSize="md"
 						display={{

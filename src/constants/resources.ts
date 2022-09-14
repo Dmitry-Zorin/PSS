@@ -15,53 +15,61 @@ import {
 
 const resources = {
 	main: {
-		about: {
-			icon: faCircleInfo,
-		},
-		timeline: {
-			icon: faTimeline,
-		},
-		authors: {
-			icon: faUserGraduate,
+		items: {
+			about: {
+				icon: faCircleInfo,
+			},
+			timeline: {
+				icon: faTimeline,
+			},
+			authors: {
+				icon: faUserGraduate,
+			},
 		},
 	},
 	publications: {
-		_metadata: {
-			icon: faBook,
-		},
-		articles: {
-			icon: faNewspaper,
-			category: 'A',
-		},
-		abstracts: {
-			icon: faSheetPlastic,
-			category: 'A',
-		},
-		dissertations: {
-			icon: faGraduationCap,
-			category: 'A',
-		},
-		monographs: {
-			icon: faFileLines,
-			category: 'A',
-		},
-		patents: {
-			icon: faAward,
-			category: 'B',
-		},
-		reports: {
-			icon: faFileInvoice,
-			category: 'B',
-		},
-		programs: {
-			icon: faCode,
-			category: 'B',
-		},
-		textbooks: {
-			icon: faBookOpen,
-			category: 'C',
+		icon: faBook,
+		items: {
+			articles: {
+				icon: faNewspaper,
+				category: 'A',
+			},
+			abstracts: {
+				icon: faSheetPlastic,
+				category: 'A',
+			},
+			dissertations: {
+				icon: faGraduationCap,
+				category: 'A',
+			},
+			monographs: {
+				icon: faFileLines,
+				category: 'A',
+			},
+			patents: {
+				icon: faAward,
+				category: 'B',
+			},
+			reports: {
+				icon: faFileInvoice,
+				category: 'B',
+			},
+			programs: {
+				icon: faCode,
+				category: 'B',
+			},
+			textbooks: {
+				icon: faBookOpen,
+				category: 'C',
+			},
 		},
 	},
 }
+
+export type Resources = typeof resources
+
+export type ResourceKey = keyof Resources
+
+export type ResourceValue = Resources[ResourceKey]
 
 export default resources

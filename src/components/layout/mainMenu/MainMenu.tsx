@@ -1,9 +1,9 @@
 import { Box, BoxProps } from '@chakra-ui/react'
-import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { MainMenuGroup } from 'components'
+import { ResourceKey, Resources } from 'constants/resources'
 
 export interface MainMenuProps extends BoxProps {
-	items: Record<string, Record<string, { icon: IconProp }>>
+	items: Resources
 }
 
 export default function MainMenu({ items, ...props }: MainMenuProps) {
@@ -13,8 +13,8 @@ export default function MainMenu({ items, ...props }: MainMenuProps) {
 				return (
 					<MainMenuGroup
 						key={name}
-						heading={name === 'main' ? undefined : name}
-						items={info}
+						heading={name === 'main' ? undefined : (name as ResourceKey)}
+						info={info}
 					/>
 				)
 			})}

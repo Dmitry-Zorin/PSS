@@ -1,4 +1,4 @@
-import { Center, MenuGroup, MenuItem } from '@chakra-ui/react'
+import { MenuGroup, MenuItem } from '@chakra-ui/react'
 import { Icon } from 'components'
 import useTranslation from 'next-translate/useTranslation'
 import Link from 'next/link'
@@ -6,7 +6,7 @@ import { MainMenuGroupProps } from './MainMenuGroup'
 
 export default function MainMenuGroupMobile({
 	heading,
-	items,
+	info,
 }: MainMenuGroupProps) {
 	const { t } = useTranslation()
 	return (
@@ -28,7 +28,7 @@ export default function MainMenuGroupMobile({
 						</MenuItem>
 					</Link>
 				)}
-				{Object.entries(items).map(([name, info]) => {
+				{Object.entries(info.items).map(([name, info]) => {
 					return (
 						<Link
 							key={name}

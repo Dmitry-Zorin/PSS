@@ -1,4 +1,4 @@
-import resources from 'constants/resources'
+import resources, { Resources } from 'constants/resources'
 import {
 	AlignmentType,
 	Document,
@@ -14,8 +14,7 @@ import {
 	VerticalAlign,
 	WidthType,
 } from 'docx'
-import { GetAuthorResponse } from 'server/services/author'
-import { UpdateAuthorResponse } from './../server/services/author'
+import { GetAuthorResponse, UpdateAuthorResponse } from 'server/services/author'
 
 const categories = ['A', 'B', 'C'] as const
 
@@ -127,8 +126,9 @@ export function createDocx(author: GetAuthorResponse | UpdateAuthorResponse) {
 	function createCategoryRows(category: Category) {
 		const categoryPublications = author.publications.filter((e) => {
 			return (
-				resources.publications[e.type as keyof typeof resources.publications]
-					.category === category
+				resources.publications.items[
+					e.type as keyof Resources['publications']['items']
+				].category === category
 			)
 		})
 

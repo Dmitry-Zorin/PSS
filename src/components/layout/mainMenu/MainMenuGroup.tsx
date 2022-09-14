@@ -1,12 +1,13 @@
 import { List } from '@chakra-ui/react'
 import { MainMenuGroupHeader, MainMenuItem } from 'components'
+import { ResourceKey, ResourceValue } from 'constants/resources'
 
 export interface MainMenuGroupProps {
-	heading?: string
-	items: Record<string, any>
+	heading?: ResourceKey
+	info: ResourceValue
 }
 
-export default function MainMenuGroup({ heading, items }: MainMenuGroupProps) {
+export default function MainMenuGroup({ heading, info }: MainMenuGroupProps) {
 	return (
 		<>
 			{heading && <MainMenuGroupHeader text={heading} />}
@@ -17,14 +18,11 @@ export default function MainMenuGroup({ heading, items }: MainMenuGroupProps) {
 						display={{ base: 'block', lg: 'none' }}
 						href={`/${heading}`}
 						text={heading}
-						icon={items._metadata.icon}
+						icon={'icon' in info ? info.icon : undefined}
 						mt={4}
 					/>
 				)}
-				{Object.entries(items).map(([name, info]) => {
-					if (name.startsWith('_')) {
-						return undefined
-					}
+				{Object.entries(info.items).map(([name, info]) => {
 					return (
 						<MainMenuItem
 							key={name}

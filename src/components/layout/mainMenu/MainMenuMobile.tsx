@@ -1,6 +1,7 @@
 import { Box, HStack, Menu, MenuList } from '@chakra-ui/react'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import { Icon, Logo, MainMenuGroupMobile, MenuIconButton } from 'components'
+import { ResourceKey } from 'constants/resources'
 import useTranslation from 'next-translate/useTranslation'
 import { MainMenuProps } from './MainMenu'
 
@@ -22,8 +23,8 @@ export default function MainMenuMobile({ items }: MainMenuProps) {
 						return (
 							<MainMenuGroupMobile
 								key={name}
-								heading={name === 'main' ? undefined : name}
-								items={info}
+								heading={name === 'main' ? undefined : (name as ResourceKey)}
+								info={info}
 							/>
 						)
 					})}

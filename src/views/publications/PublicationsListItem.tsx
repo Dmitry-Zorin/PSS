@@ -7,7 +7,7 @@ import {
 	Text,
 } from '@chakra-ui/react'
 import { AuthorTags, Highlight, Icon } from 'components'
-import resources from 'constants/resources'
+import resources, { Resources } from 'constants/resources'
 import { useTruncate, useUrlQuery } from 'hooks'
 import Link from 'next/link'
 import { GetAuthorResponse } from 'server/services/author'
@@ -37,8 +37,8 @@ export default function PublicationsListItem({
 						<Icon
 							color="primary"
 							icon={
-								resources.publications[
-									record.type as keyof typeof resources.publications
+								resources.publications.items[
+									record.type as keyof Resources['publications']['items']
 								].icon
 							}
 						/>

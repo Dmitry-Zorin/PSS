@@ -1,6 +1,6 @@
 import { Avatar, LinkBox, LinkOverlay, Stack, Text } from '@chakra-ui/react'
 import { AuthorTags, Card, CardContent, CardHeader, Icon } from 'components'
-import resources from 'constants/resources'
+import resources, { Resources } from 'constants/resources'
 import { useTruncate } from 'hooks'
 import useTranslation from 'next-translate/useTranslation'
 import Link from 'next/link'
@@ -23,8 +23,8 @@ export default function TimelineCard({ record }: TimelineCardProps) {
 					icon={
 						<Icon
 							icon={
-								resources.publications[
-									record.type as keyof typeof resources['publications']
+								resources.publications.items[
+									record.type as keyof Resources['publications']['items']
 								].icon
 							}
 							boxSize={6}
