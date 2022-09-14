@@ -29,7 +29,7 @@ export default function Timeline() {
 							</ListItem>
 						))}
 					</List>
-					<Pagination total={data.total} />
+					<Pagination data={data} />
 				</>
 			)}
 		</MainArea>

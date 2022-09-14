@@ -69,7 +69,10 @@
 	},
 	"messages": {
 		"delete": "Are you sure you want to delete {{this}}?",
-		"notFound": "Not Found"
+		"notFound": "Not Found",
+		"foundTotal": "Total {{items}} found",
+		"shownPerPage": "{{items}} per page",
+		"searchFilters": "Search filters"
 	},
 	"errors": {
 		"unknown": "Unknown Error",

@@ -15,16 +15,18 @@ interface LabeledFieldProps {
 	label: string
 	text?: ReactElement | string | number
 	stat?: boolean
+	skipTranslation?: boolean
 }
 
 export default function LabeledField({
 	label,
 	text,
 	stat,
+	skipTranslation,
 	...props
 }: LabeledFieldProps & StackProps & StatProps) {
 	const { t } = useTranslation('resources')
-	label = t(`fields.${label}`)
+	label = skipTranslation ? label : t(`fields.${label}`)
 	text ||= '-'
 
 	return stat ? (

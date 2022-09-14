@@ -64,7 +64,7 @@ export default function AuthorsShow({ error, data }: AuthorsShowProps) {
 							label="latestPublications"
 							text={
 								<>
-									<MainList total={5} pt={2}>
+									<MainList data={{ total: 5 }} pt={2}>
 										{data.publications.slice(0, 5).map((e) => (
 											<PublicationsListItem
 												key={e.id}

@@ -12,7 +12,10 @@ module.exports = {
 		'/timeline': ['resources'],
 		'rgx:/create$': ['resources', 'validations'],
 		'rgx:/edit/': ['resources', 'validations'],
+		'/authors': ['resources'],
 		'/authors/[id]': ['resources', 'author', 'publicationList'],
+		'/publications': ['resources'],
+		'/publications/[type]': ['resources'],
 		'/publications/[type]/[id]': ['resources'],
 	},
 }

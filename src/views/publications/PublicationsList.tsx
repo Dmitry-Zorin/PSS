@@ -23,7 +23,7 @@ export default function PublicationsList() {
 			rightActions={<CreateButton href={`/publications/${type}/create`} />}
 		>
 			{data && (
-				<MainList key={type} total={data.total}>
+				<MainList key={type} resource={type} data={data}>
 					{data.records.map((e) => (
 						<PublicationsListItem key={e.id} record={e} />
 					))}

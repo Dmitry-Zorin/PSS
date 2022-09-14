@@ -70,7 +70,10 @@
 	},
 	"messages": {
 		"delete": "Вы точно хотите удалить {{this}}?",
-		"notFound": "Ничего не найдено"
+		"notFound": "Ничего не найдено",
+		"foundTotal": "Всего найдено {{items}}",
+		"shownPerPage": "{{items}} на странице",
+		"searchFilters": "Критерии поиска"
 	},
 	"errors": {
 		"unknown": "Произошла неизвестная ошибка",

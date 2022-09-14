@@ -1,4 +1,4 @@
-import { Box, Heading, Stack } from '@chakra-ui/react'
+import { Heading, Stack } from '@chakra-ui/react'
 import { ActionsToolbar, Head } from 'components'
 import { HeadProps } from 'components/Head'
 import { isString } from 'lodash'
@@ -38,7 +38,7 @@ export default function MainArea({
 	return (
 		<>
 			<Head title={head?.title ?? title ?? ''} desc={head?.desc} />
-			<Box px={2} pb={16}>
+			<Stack spacing={4} px={2} pb={16}>
 				{!fullWidth && actionsToolbar}
 				<Stack as="article" spacing={8}>
 					{heading && (
@@ -66,13 +66,13 @@ export default function MainArea({
 								: t('errors.unknown')}
 						</Heading>
 					) : (
-						<Box maxW={fullWidth ? undefined : '3xl'}>
+						<Stack spacing={6} maxW={fullWidth ? undefined : '3xl'}>
 							{fullWidth && actionsToolbar}
 							{children}
-						</Box>
+						</Stack>
 					)}
 				</Stack>
-			</Box>
+			</Stack>
 		</>
 	)
 }

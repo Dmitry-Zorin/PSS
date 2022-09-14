@@ -4,13 +4,22 @@
 		"name_one": "Автор",
 		"name_other": "Авторы",
 		"name_what": "автора",
+		"name_what_many": "авторов",
 		"name_delete": "этого автора"
+	},
+	"publications": {
+		"gender": "f",
+		"name_one": "Публикация",
+		"name_other": "Публикации",
+		"name_what": "публикацию",
+		"name_what_many": "публикаций"
 	},
 	"articles": {
 		"gender": "f",
 		"name_one": "Статья",
 		"name_other": "Статьи",
 		"name_what": "статью",
+		"name_what_many": "статей",
 		"name_delete": "эту статью"
 	},
 	"abstracts": {
@@ -18,6 +27,7 @@
 		"name_one": "Автореферат",
 		"name_other": "Авторефераты",
 		"name_what": "автореферат",
+		"name_what_many": "авторефератов",
 		"name_delete": "этот реферат"
 	},
 	"monographs": {
@@ -25,6 +35,7 @@
 		"name_one": "Монография",
 		"name_other": "Монографии",
 		"name_what": "монографию",
+		"name_what_many": "монографий",
 		"name_delete": "эту монографию"
 	},
 	"dissertations": {
@@ -32,6 +43,7 @@
 		"name_one": "Диссертация",
 		"name_other": "Диссертации",
 		"name_what": "диссертацию",
+		"name_what_many": "диссертаций",
 		"name_delete": "эту диссертацию"
 	},
 	"patents": {
@@ -39,6 +51,7 @@
 		"name_one": "Патент",
 		"name_other": "Патенты",
 		"name_what": "патент",
+		"name_what_many": "патентов",
 		"name_delete": "этот патент"
 	},
 	"reports": {
@@ -46,6 +59,7 @@
 		"name_one": "Отчет",
 		"name_other": "Отчеты",
 		"name_what": "отчет",
+		"name_what_many": "отчетов",
 		"name_delete": "этот отчет"
 	},
 	"programs": {
@@ -53,6 +67,7 @@
 		"name_one": "Программа",
 		"name_other": "Программы",
 		"name_what": "программу",
+		"name_what_many": "программ",
 		"name_delete": "эту программу"
 	},
 	"textbooks": {
@@ -60,6 +75,7 @@
 		"name_one": "Учебник",
 		"name_other": "Учебники",
 		"name_what": "учебник",
+		"name_what_many": "учебников",
 		"name_delete": "этот учебник"
 	},
 	"fields": {

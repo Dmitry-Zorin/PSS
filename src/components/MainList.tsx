@@ -1,24 +1,68 @@
 import { Divider, HStack, List, ListProps, Stack, Text } from '@chakra-ui/react'
 import { faBan } from '@fortawesome/free-solid-svg-icons'
-import { Icon, Pagination, Tags } from 'components'
+import { Icon, LabeledField, Pagination, Tags } from 'components'
+import { PER_PAGE } from 'constants/app'
+import { capitalize } from 'lodash'
 import useTranslation from 'next-translate/useTranslation'
 
 interface MainListProps extends ListProps {
-	total: number
+	resource?: string
+	data: {
+		records?: unknown[]
+		total?: number
+	}
 }
 
-export default function MainList({ children, total, ...props }: MainListProps) {
+export default function MainList({
+	children,
+	resource,
+	data,
+	...props
+}: MainListProps) {
 	const { t } = useTranslation()
 
 	return (
 		<>
-			<Tags />
-			{total ? (
+			{data.total ? (
 				<>
+					{resource && data.records && (
+						<>
+							<HStack align="flex-end">
+								<LabeledField
+									stat
+									skipTranslation
+									label={capitalize(
+										t('messages.foundTotal', {
+											items: t(
+												`resources:${resource}.name_what_many`,
+												{},
+												{ fallback: t(`resources:${resource}.name_other`) },
+											),
+										}),
+									)}
+									text={data.total}
+								/>
+								<LabeledField
+									stat
+									skipTranslation
+									label={capitalize(
+										t('messages.shownPerPage', {
+											items: t(
+												`resources:${resource}.name_what_many`,
+												{},
+												{ fallback: t(`resources:${resource}.name_other`) },
+											),
+										}),
+									)}
+									text={Math.min(data.records.length, PER_PAGE)}
+								/>
+							</HStack>
+							<Tags />
+						</>
+					)}
 					<List
 						borderBottom="1px"
 						borderColor="border"
-						pt={2}
 						sx={{
 							'> li': {
 								borderTop: '1px',
@@ -32,10 +76,10 @@ export default function MainList({ children, total, ...props }: MainListProps) {
 					>
 						{children}
 					</List>
-					<Pagination total={total} />
+					<Pagination total={data.total} />
 				</>
 			) : (
-				<Stack spacing={4} pt={2} align="center">
+				<Stack spacing={4} align="center">
 					<Divider />
 					<HStack color="text-secondary" fontSize="2xl">
 						<Icon icon={faBan} boxSize={5} />

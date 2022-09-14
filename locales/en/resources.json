@@ -3,6 +3,10 @@
 		"name_one": "Author",
 		"name_other": "Authors"
 	},
+	"publications": {
+		"name_one": "Publication",
+		"name_other": "Publications"
+	},
 	"articles": {
 		"name_one": "Article",
 		"name_other": "Articles"
