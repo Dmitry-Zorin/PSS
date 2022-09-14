@@ -35,9 +35,9 @@ export default function PublicationFormMenu() {
 			>
 				<InputGroup>
 					<Input
+						readOnly
 						tabIndex={-1}
 						value={value}
-						readOnly
 						_groupHover={{ borderColor: 'text-secondary' }}
 					/>
 					<InputRightElement>

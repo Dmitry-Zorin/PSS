@@ -81,6 +81,7 @@ export default function SelectManyMenu<Item extends { id: Id }>({
 												key={item.id}
 												value={item.id.toString()}
 												icon={<Icon icon={faCheck} />}
+												_checked={{ color: 'text' }}
 											>
 												{getText(item)}
 											</MenuItemOption>
