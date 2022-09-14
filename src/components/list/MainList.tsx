@@ -22,17 +22,17 @@ export default function MainList({
 
 	return (
 		<>
+			{resource && (
+				<>
+					<SearchInfo
+						resource={resource}
+						data={data as ComponentProps<typeof SearchInfo>['data']}
+					/>
+					<Tags />
+				</>
+			)}
 			{data.total ? (
 				<>
-					{resource && data.records && (
-						<>
-							<SearchInfo
-								resource={resource}
-								data={data as ComponentProps<typeof SearchInfo>['data']}
-							/>
-							<Tags />
-						</>
-					)}
 					<List
 						borderBottom="1px"
 						borderColor="border"
@@ -52,7 +52,7 @@ export default function MainList({
 					<Pagination total={data.total} />
 				</>
 			) : (
-				<Stack spacing={4} align="center">
+				<Stack spacing={5} align="center">
 					<Divider />
 					<HStack color="text-secondary" fontSize="2xl">
 						<Icon icon={faBan} boxSize={5} />

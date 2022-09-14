@@ -27,7 +27,7 @@ export default function LabeledField({
 }: LabeledFieldProps & StackProps & StatProps) {
 	const { t } = useTranslation('resources')
 	label = skipTranslation ? label : t(`fields.${label}`)
-	text ||= '-'
+	text = text === '' ? '-' : text
 
 	return stat ? (
 		<Stat {...props}>

@@ -27,7 +27,10 @@ function _omitNull(value: any): any {
 		return value.map(_omitNull)
 	}
 	if (isPlainObject(value)) {
-		return pickBy(mapValues(value, _omitNull), _omitNull)
+		return pickBy(
+			mapValues(value, _omitNull),
+			(e) => _omitNull(e) !== undefined,
+		)
 	}
 	return value
 }
