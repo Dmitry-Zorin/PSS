@@ -14,7 +14,7 @@ export default function Tags() {
 						fontSize="sm"
 						cursor="pointer"
 						_hover={{ bg: 'bg-layer-1' }}
-						onClick={tag.onClick}
+						onClick={tag.remove}
 					>
 						<HStack spacing={1}>
 							<Text>{tag.text}</Text>
