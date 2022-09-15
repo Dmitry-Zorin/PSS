@@ -50,6 +50,7 @@ export default function AuthorSelect() {
 				items={authors}
 				getKey={(e) => e.id}
 				getText={(e) => e.fullName}
+				onReorder={setAuthors}
 				onRemove={({ id }) => {
 					setAuthors(authors.filter((e) => e.id !== id))
 				}}

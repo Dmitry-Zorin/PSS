@@ -65,7 +65,8 @@
 		"remove": "Remove",
 		"cancel": "Cancel",
 		"next": "Next Page",
-		"prev": "Previous Page"
+		"prev": "Previous Page",
+		"reorder": "Reorder"
 	},
 	"messages": {
 		"delete": "Are you sure you want to delete {{this}}?",
