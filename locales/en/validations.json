@@ -1,7 +1,7 @@
 {
-	"publicationForms": {
-		"name_one": "publicationForm",
-		"name_other": "publicationForms"
+	"characters": {
+		"name_one": "character",
+		"name_other": "characters"
 	},
 	"authors": {
 		"name_one": "author",
