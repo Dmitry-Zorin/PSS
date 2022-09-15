@@ -48,6 +48,7 @@ export default function SelectManyMenu<Item extends { id: Id }>({
 				</MenuButton>
 				<MenuList
 					maxH={96}
+					maxW="calc(100vw - 2rem)"
 					overflowY="auto"
 					sx={{
 						'::-webkit-scrollbar': {

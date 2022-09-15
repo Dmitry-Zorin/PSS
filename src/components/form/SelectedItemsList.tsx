@@ -1,4 +1,4 @@
-import { HStack, List, Text } from '@chakra-ui/react'
+import { HStack, List, Text, useMediaQuery } from '@chakra-ui/react'
 import { faCircleMinus, faUpDown } from '@fortawesome/free-solid-svg-icons'
 import { Icon, IconButton, ReorderItem } from 'components'
 import { AnimatePresence, Reorder } from 'framer-motion'
@@ -25,6 +25,7 @@ export default function SelectedItemsList<Item>({
 	const { t } = useTranslation('resources')
 	const showAnimation = !useIsFirstRender()
 	const constraintsRef = useRef(null)
+	const [isTouchDevice] = useMediaQuery('(hover: none)')
 
 	return (
 		<List
@@ -39,7 +40,7 @@ export default function SelectedItemsList<Item>({
 					<ReorderItem
 						key={getKey(item)}
 						value={item}
-						dragConstraints={constraintsRef}
+						dragConstraints={isTouchDevice ? undefined : constraintsRef}
 						initial={showAnimation ? { height: 0, opacity: 0 } : false}
 						animate={{ height: 'auto', opacity: 1 }}
 						exit={{ height: 0, opacity: 0 }}
@@ -55,15 +56,17 @@ export default function SelectedItemsList<Item>({
 									icon={<Icon icon={faCircleMinus} />}
 									onClick={() => onRemove(item)}
 								/>
-								<IconButton
-									aria-label={t('common:actions.reorder')}
-									icon={<Icon icon={faUpDown} />}
-									tabIndex={-1}
-									bg={isActive ? 'bg-layer-1 !important' : undefined}
-									cursor={isActive ? 'grabbing' : 'grab'}
-									_active={{ cursor: 'grabbing' }}
-									onPointerDown={(e) => dragControls.start(e)}
-								/>
+								{!isTouchDevice && (
+									<IconButton
+										aria-label={t('common:actions.reorder')}
+										icon={<Icon icon={faUpDown} />}
+										tabIndex={-1}
+										bg={isActive ? 'bg-layer-1 !important' : undefined}
+										cursor={isActive ? 'grabbing' : 'grab'}
+										_active={{ cursor: 'grabbing' }}
+										onPointerDown={(e) => dragControls.start(e)}
+									/>
+								)}
 								<Text px={2}>{getText(item)}</Text>
 							</HStack>
 						)}
