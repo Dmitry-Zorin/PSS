@@ -15,6 +15,8 @@ export default function Sidebar({ children, ...props }: BoxProps) {
 			bg={{ base: 'bg-layer-1', lg: 'none' }}
 			borderRight={{ base: '1px', lg: 0 }}
 			borderColor="border"
+			overflow="auto"
+			pb={10}
 			sx={{
 				'::-webkit-scrollbar': {
 					display: 'none',
